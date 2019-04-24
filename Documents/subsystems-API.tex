@@ -1,0 +1,84 @@
+\documentclass[10pt,twoside,a4paper]{report}
+
+\usepackage{polski}
+\usepackage{geometry}
+\usepackage{indentfirst}
+\usepackage{sectsty}
+\usepackage{helvet}
+\usepackage{caption}
+\usepackage{multirow}
+\usepackage{makecell}
+\usepackage{array}
+\usepackage{subcaption}
+\usepackage{graphicx}
+
+\graphicspath{ {./images/} }
+
+\chapternumberfont{\Large}
+\chaptertitlefont{\huge}
+
+\usepackage[font={normalsize,it}]{caption}
+
+\linespread{1.5}
+\usepackage[table]{xcolor}
+\usepackage{fourier} 
+\renewcommand\theadalign{bc}
+\renewcommand\theadfont{\bfseries}
+
+\newgeometry{tmargin=3cm, bmargin=3cm, lmargin=2.5cm, rmargin=2.5cm}
+
+\begin{document}
+
+\paragraph{Podsystem zarządzania danymi użytkowników}
+\begin{itemize}
+\item AddAccount()
+\item DeleteAccount()
+\item UpdateAccount()
+\item AuthenticateUser()
+\item FindUser(Name)
+\item ClearAccountHistory() - bilety, podróże i oceny
+
+\item AddObjectToFavourites()
+\item AddVisitedObject(Category, Rating) - nie wiem, czy to nie będzie w polecającym.
+Można by stąd wziąć tylko informacje i niech reszta się dzieje w polecającym.
+\item ClearRatingsHistory()
+
+\item AddTicket(Image, Data)
+\item UpdateTicket()
+\item GetTicket(Key)
+\item GetTickets()
+\item DeleteTicket(Key)
+\item ClearTickets()
+
+\item AddTravel()
+\item UpdateTravel()
+\item GetTravel(Key)
+\item GetTravels()
+\item DeleteTravel(Key)
+\item ClearTravels()
+
+\item AddFriend()
+\item DeleteFriend()
+\item GetFriends()
+\item FindFriend(Key)
+\end{itemize}
+
+\paragraph{Podsystem usług społecznościowych}
+\begin{itemize}
+\item InviteNewUser(Mail)
+\item InviteFriend()
+\item DeleteFriend()
+\item SendMessage(User, Text/Image)
+
+\item ShareTravel(Mode) - jak w google docs można zaprosić do wyświetlania lub edycji
+\item SharePlace() - pokaż znajomemu nowe, ciekawe miejsce
+\item ShareOnFacebook/Instagram() - priorytet: niski
+\end{itemize}
+
+\paragraph{Podsystem wyszukiwania}
+\begin{itemize}
+\item FindRoutes()
+\item FindTouristObject(Category)
+\end{itemize}
+
+\end{document}
