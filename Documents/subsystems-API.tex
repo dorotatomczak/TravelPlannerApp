@@ -99,4 +99,36 @@ Można by stąd wziąć tylko informacje i niech reszta się dzieje w polecając
 \item takeScan()- cos jeszcze? ;p 
 \end{itemize}
 
+
+\paragraph{GUI}
+\begin{itemize}
+\item funkcje nasłuchujące akcji użytkownika, zaktualizuj tekst tu zmien kolor tam, itp.
+\end{itemize}
+
+\paragraph{Presenter}
+rozdzielanie pracy na podsystemy, wywołuje funkcje z innych zależnych podsystemów
+\begin{itemize}
+\item UpdateLocalData()
+\item UpdateRemoteData()
+\item ManageScanning()
+\end{itemize}
+
+\paragraph{Podsystem zarządzania plikami}
+\begin{itemize}
+\item WriteUserData/ReadUserData
+\begin{itemize}
+\item WriteFriendsList()
+\item ReadFriendsList()
+\item WriteVisitedPlaces() - z ocenami
+\item ReadVisitedPlaces()
+\item WriteUserInfo() - login, e-mail, itp.
+\item ReadUserInfo()
+\end{itemize}
+\item WriteTravelPlan()
+\item ReadTravelPlan()
+\item WriteDayPlan()
+\item ReadDayPlan()
+\end{itemize}
+
+
 \end{document}
