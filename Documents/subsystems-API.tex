@@ -130,5 +130,46 @@ rozdzielanie pracy na podsystemy, wywołuje funkcje z innych zależnych podsyste
 \item ReadDayPlan()
 \end{itemize}
 
+\paragraph{Podsystem kontaktu serwera z aplikacją}
+\begin{itemize}
+\item InitializeConnection()
+\item Disconnect()
+\item SendUserData()
+\item SendTravelData()
+\item SendDayPrograme()
+\item SendLocalization()
+\item UpdateChanges() – nie wiem czy nie za ogólnie
+\item ChargeTravel() – jak nie będziemy mieć połączenia z Internetem
+\item SendPreferences()-może być w SendUserData ? 
+
+\end{itemize}
+
+\paragraph{Podsystem kontaktu z serwerem}
+\begin{itemize}
+\item InitializeConnection()
+\item Disconnect()
+\item LoadDataFromGoogle()
+\item LoadDataFromHere()
+\item UpdateUserData()
+\item UpdateTravelData()
+\item UpdateDayProgram()
+\item SendMaps()
+\item SetUserData() – dane osobowe mail, imie,nazwisko,numer telefonu,znajomi itp
+\item SetTravelData()
+\item SetDayPrograme()
+\item SetLocalization()
+
+\end{itemize}
+
+\paragraph{Podsystem polecający}
+\begin{itemize}
+\item ChargeMarksFromGoogle() – czy to  może jest w  LoadDataFromGoogle()
+\item DetermineHierarchyOfPreferences() –na jakich typach atrakcji najbardziej użytkownikowi zależy
+\item FindPreferencesInGoogle() – jeśli użytkownik jeszcze nie ma preferencji to wybieray te najbardziej polecane z Google
+\item FindUserPreferences() – jeśli użytkownik ma preferencje to znajdujemy miejsca, które najbardziej mu odpowiadają
+\item SetPreferences(Location) – użytkownik ocenia daną lokację jednocześnie ustawiając preferencję ( podnosi w hierarchii dane kategorie – słowa klucze np. muzeum)
+\item FindBestEquivalent()- znajduje jak najbardziej zbliżoną kategoriami do danej atrakcji lokalizację – takie coś jak zobacz też, inni którzy tam byli ocenili wysoko także takie miejsca
+
+\end{itemize}
 
 \end{document}
