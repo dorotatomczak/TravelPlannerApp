@@ -11,6 +11,8 @@
 \usepackage{array}
 \usepackage{subcaption}
 \usepackage{graphicx}
+\usepackage{enumitem}% http://ctan.org/pkg/enumitem
+\setlist[itemize]{noitemsep, topsep=0pt}
 
 \graphicspath{ {./images/} }
 
@@ -28,6 +30,8 @@
 \newgeometry{tmargin=3cm, bmargin=3cm, lmargin=2.5cm, rmargin=2.5cm}
 
 \begin{document}
+\chapter*{Pusta strona 1}
+\chapter*{Pusta strona 2}
 %dodanie nienumerowanych rozdziałów do spisu treści
 \addcontentsline{toc}{chapter}{Streszczenie}
 \addcontentsline{toc}{chapter}{Wykaz najważniejszych oznaczeń i skrótów}
@@ -172,7 +176,7 @@ Po dodaniu nowego elementu do planu podróży można go było edytować, usuną�
 \par Korzystanie z aplikacji umożliwiało użytkownikom otrzymanie zniżek na poszczególne usługi na przykład: taksówki (pre-booked taxis) czy wypożyczenie samochodu (car hire).
 Aplikacja posiadała także informacje na temat lokalnej kuchni (kafelek Food \& Drink). Zawierał on krótki opis charakterystycznej dla danego rejonu kuchni, wypunktowane lokalne specjalności kuchni(ang.local specialities), polecane miejsca do jedzenia „na mieście” (ang. Dining out) , a także wskazówki na temat ‘”nocnego życia” (ang. Nightlife). Zakładka „Top Spots” zawierała najbardziej polecane miejsca w poszczególnych kategoriach: ekskluzywne posiłki (ang.high-end dining), budżetowe posiłki (ang. on a budget), miejsca przyjazne rodzinom (ang.family-friendly), śniadania i przekąski (ang. breakfast \& brunch), obiady(ang.lunch),posiłki wegetariańskie (ang.vegetarian-friendly),bary (ang.vodka bars), piwowarnie kraftowe (ang.craft beer) oraz kawiarnie tematyczne(ang.themed cafes). Po wybraniu danej kategorii istniała opcja sortowania propozycji według odległości. Można było także przefiltrować wyniki ze względu na godziny otwarcia (ang. Open now) a także wcześniej zapisanych pozycji (ang. only saved places).
 \par Kafelek Zwiedzaj (ang. getting around) umożliwiał sprawdzenie poszczególnych kategorii transportu: on arrival (taxi, ride service, train, bus), public transport (ticket, metro, bus, train, tram), taxi (ang. taxi/ride service), driving, walking \& biking. Każda kategoria była wystarczająco szczegółowo opisana. Zawierała informacje na temat cen, możliwości dojazdu, czasu trwania, możliwych korkach oraz na przykład numerów telefonów do taksówek.
-\par Aplikacja zawierała także wskazówki związane z zakupami (w ang. Need to know). Informowała użytkownika o najpopularniejszych godzinach otwarcia sklepów, gdzie znajduje się najwięcej sklepów (ang. Shopping districts). Można było tam także znaleźć przykładowe sklepy (ang. Markets) oraz galerie handlowe (ang. Malls).
+\par Aplikacja zawierała także wskazówki związane z zakupami (ang. Need to know). Informowała użytkownika o najpopularniejszych godzinach otwarcia sklepów, gdzie znajduje się najwięcej sklepów (ang. Shopping districts). Można było tam także znaleźć przykładowe sklepy (ang. Markets) oraz galerie handlowe (ang. Malls).
  
 \begin{figure}[h]
 \begin{subfigure}{0.5\textwidth}
@@ -191,29 +195,29 @@ Aplikacja posiadała także informacje na temat lokalnej kuchni (kafelek Food \&
 \label{fig:image2}
 \end{figure}
 
-\par Zaplanowana przez użytkownika wycieczka została automatycznie przypisana do konta Google. Istniała możliwość udostępnienia jej znajomym. Można było połączyć kilka wycieczek. Po pobraniu informacji na temat danej wycieczki, istniała możliwość powrotu do planu gdy telefon jest offline.
-\par Niestety aplikacja była dostępna tylko w języku angielskim. Posiadała także kilka innych wad. Podczas wyszukiwania odpowiedniego hotelu aplikacja wyświetla listę miejsc. Przykładowo przy wyszukiwaniu hotelu można było wybrać sklep meblowy. Brakowało także podpowiedzi przy niektórych polach np. cartype. Aplikacja nie zawsze dodawała informacje z gmaila. Nie można było samemu dodać atrakcji za pomocą informacji z Google Maps,a także dodać ręcznie maili z rezerwacjami.
+\par Zaplanowana przez użytkownika wycieczka została automatycznie przypisana do konta Google. Istniała możliwość udostępnienia jej znajomym. Można było połączyć kilka wycieczek. Po pobraniu informacji na temat danej wycieczki, istniała możliwość powrotu do planu, gdy telefon jest offline.
+\par Niestety aplikacja była dostępna tylko w języku angielskim. Posiadała także kilka innych wad. Podczas wyszukiwania odpowiedniego hotelu aplikacja wyświetla listę miejsc. Przykładowo przy wyszukiwaniu hotelu można było wybrać sklep meblowy. Brakowało także podpowiedzi przy niektórych polach np. cartype. Aplikacja nie zawsze dodawała informacje z serwisu gmail. Nie można było samemu dodać atrakcji za pomocą informacji z Google Maps,a także dodać ręcznie maili z rezerwacjami.
 
 \section{Sygic Travel - Planuj podróż (Anna Malizjusz)}
 
 \par Planowanie podróży umożliwia również aplikacja Sygic Travel: Planuj Podróż, która została pobrana z serwisu Google Play. Jej duża zaleta to możliwość korzystania z większości funkcji w języku polskim oraz brak konieczności tworzenia konta. Jedyną opcją niedostępną dla niezalogowanego użytkownika była synchronizacja z innymi urządzeniami.
-\par Podstawowymi informacjami potrzebnymi do rozpoczęcia planowania podróży były cel, data rozpoczęcia oraz data zakończenia (rys. 1 <numer rysunku>). Opcjonalnie można było podać miejsce przybycia oraz zakwaterowania. Wygodny wybór daty umożliwił wyświetlany kalendarz, a miejsca należało wybrać z podanej listy. Istniała również możliwość filtrowania podanych miejsc po nazwie.
-\par Po stworzeniu podróży został wyświetlony interfejs oferujący różne opcje (rys. 2 <numer rysunku>). Po wybraniu mapy można zobaczyć mapę miejsca docelowego z zaznaczonymi atrakcjami. Listę atrakcji można też zobaczyć wybierając opcję miejsca. W obu przypadkach można wybrać kategorie, np. zwiedzanie, zakupy, relaks oraz tagi, np. zwierzęta mile widziane (ang. pets allowed), a także możliwe było dodanie miejsca do odwiedzenia w danym dniu. Dodatkowo zaprezentowano szacunkowy czas dotarcia do celu piechotą z miejsca zakwaterowania. Ta część aplikacji nie została przetłumaczona i była dostępna tylko w języku angielskim. Analogicznie można było przeglądać dostępne kwatery po wybraniu opcji hotele. Dostępne były typowe opcje pomocne w poszukiwaniu zakwaterowania, takie jak wybór średniej oceny, przyznanych gwiazdek, typu zakwaterowania czy udogodnień, np. darmowe Wi-Fi (ang. free hotel Wi-Fi) lub klimatyzacja (ang. air conditioning).
+\par Podstawowymi informacjami potrzebnymi do rozpoczęcia planowania podróży były cel, data rozpoczęcia oraz data zakończenia (rys.~\ref{fig:STsubim1}). Opcjonalnie można było podać miejsce przybycia oraz zakwaterowania. Wygodny wybór daty umożliwił wyświetlany kalendarz, a miejsca należało wybrać z podanej listy. Istniała również możliwość filtrowania podanych miejsc po nazwie.
+\par Po stworzeniu podróży został wyświetlony interfejs oferujący różne opcje (rys.~\ref{fig:STsubim2}). Po wybraniu mapy można zobaczyć mapę miejsca docelowego z zaznaczonymi atrakcjami. Listę atrakcji można też zobaczyć wybierając opcję miejsca. W obu przypadkach można wybrać kategorie, np. zwiedzanie, zakupy, relaks oraz tagi, np. zwierzęta mile widziane (ang. pets allowed), a także możliwe było dodanie miejsca do odwiedzenia w danym dniu. Dodatkowo zaprezentowano szacunkowy czas dotarcia do celu piechotą z miejsca zakwaterowania. Ta część aplikacji nie została przetłumaczona i była dostępna tylko w języku angielskim. Analogicznie można było przeglądać dostępne kwatery po wybraniu opcji hotele. Dostępne były typowe opcje pomocne w poszukiwaniu zakwaterowania, takie jak wybór średniej oceny, przyznanych gwiazdek, typu zakwaterowania czy udogodnień, np. darmowe Wi-Fi (ang. free hotel Wi-Fi) lub klimatyzacja (ang. air conditioning).
 \begin{figure}[h]
 \begin{subfigure}{0.5\textwidth}
 \centering
 \includegraphics[width=0.9\linewidth, width=5cm]{sygictravel1}
 \caption{Tworzenie nowej podróży.}
-\label{fig:subim1}
+\label{fig:STsubim1}
 \end{subfigure}
 \begin{subfigure}{0.5\textwidth}
 \centering
 \includegraphics[width=0.9\linewidth, width=5cm]{sygictravel2}
 \caption{Menu główne.}
-\label{fig:subim2}
+\label{fig:STsubim2}
 \end{subfigure}
 \caption{Sygic Travel - Planuj podróż.}
-\label{fig:image2}
+\label{fig:STimage}
 \end{figure}
 \par Innego typu funkcjami aplikacji były wycieczki i aktywności oraz wynajem samochodów. Pierwsza opcja umożliwiała wyszukiwanie wycieczek, a także ich rezerwację oraz płatność. Druga wyszukiwała oferty wynajmu samochodów, wyświetlała wszystkie dostępne informacje oraz umożliwiała rezerwację. W obu funkcjach udostępniono możliwość filtrowania wyników. Poważną wadą wyszukiwarki samochodów do wynajęcia stanowił niejasny komunikat o błędzie w przypadku podania dat z przeszłości, który sugerował sprawdzenie zaznaczonych pól nie wskazując możliwego rozwiązania problemu.
 \par Kolejna ciekawa opcja to wycieczka wideo (ang. video tour), która była dostępna tylko dla bardziej popularnych celów podróży. Po wybraniu tej opcji użytkownikowi wyświetlany był film wraz z angielskim komentarzem z jednodniowej wycieczki po wybranym mieście. Prezentowano charakterystyczne i warte odwiedzenia zabytki i atrakcje turystyczne, a użytkownikowi umożliwiono ingerowanie w pokazywany obraz. Filmy oferowały widok 360° po obróceniu telefonu.
@@ -246,10 +250,91 @@ Aplikacja posiadała także informacje na temat lokalnej kuchni (kafelek Food \&
 \par Ostatnia funkcjonalność, wyszukiwanie atrakcji, zabytków, ciekawych wydarzeń. Wymagane ramy czasowe oraz lokalizacja. Rezultaty mogły być przeglądane po cenie lub popularności. Nie umożliwiono użytkownikowi oceny odległości między zaproponowanymi miejscami tak jak w przypadku noclegu, ale pomocny był przybliżony czas, który należy przeznaczyć na każdą z atrakcji.
 \par Wszystkie rezerwacje wykonane za pomocą aplikacji Expedia, można było przeglądać w zakładce Wycieczki (ang. Trips) i takim zestawem dzielić się ze współtowarzyszami podróży również korzystających z aplikacji.
 
+\chapter{Specyfikacja wymagań systemowych - ekstrakt (Anna Malizjusz)}
+\par W celu lepszego zrozumienia wymagań projektu inżynierskiego przygotowano dokument SWS (Specyfikacji Wymagań Systemowych) w całości umieszczony na załączonej do pracy płycie~CD. Dokonano identyfikacji udziałowców projektu i otoczenia systemu z uwzględnieniem użytkowników oraz systemów zewnętrznych. Wyróżniono cele projektu oraz wymagania, których spełnienie będzie kluczowe dla końcowej akceptacji systemu. Poniżej przedstawiono najistotniejsze elementy SWS, które miały największy wpływ na projekt i~implementacje systemu.
+\newline
+\newline
+\noindent Wyróżniono udziałowców, których wpływ na system powinien być największy:
+
+\begin{itemize}
+\item programiści,
+\item promotor,
+\item użytkownik.
+\end{itemize}
+
+\noindent A także dokumenty, które należało uwzględnić w pracy:
+
+\begin{itemize}
+\item regulamin aplikacji,
+\item rozporządzenie o ochronie danych osobowych (RODO).
+\end{itemize}
+
+\par Zidentyfikowano docelowego użytkownika, którym jest młody człowiek, bardzo często student o ograniczonym budżecie i czasie, który może poświęcić na planowanie podróży. Posiada smartfona z dostępem do internetu oraz używa systemu operacyjnego Android. Chce podróżować i kontaktować się z przyjaciółmi poprzez aplikację. Często zapomina o terminach i~koniecznych dokumentach, więc potrzebuje przypomnień oraz dostępu do skanów przy pomocy telefonu.
+
+\par Wyróżniono systemy zewnętrzne, z którymi zintegrowano aplikację. Skupiono się na dostępie do zewnętrznego API udostępnionego przez serwis Here \cite{Here}, które umożliwiało dostęp do map, nawigacji i wyszukiwania obiektów takich jak hotele, restauracje, zabytki, itp. Zaletą serwisu był darmowy dostęp do danych. Here umożliwiało wykonanie 250 tys. zapytań miesięcznie bez dodatkowych opłat, a każdy kolejny tysiąc kosztował 1\$, co zostało uznane za wystarczające dla testowania aplikacji. Uwzględniono również system GPS, który był niezbędny do zrealizowania podstawowych funkcjonalności, np.~wyszukiwania obiektów w pobliżu aktualnej lokalizacji. W tym celu zdecydowano skorzystać z możliwości oferowanych przez serwis Google Play w paczce \textit{com.google.android.gms.location}\cite{gms.location}.
+
+\par
+\noindent \newline Określono najważniejsze cele projektu:
+
+\begin{itemize}
+\item zwiększenie zadowolenia z podróży,
+\item zaspokajanie potrzeb informacyjnych użytkowników,
+\item zoptymalizowanie trasy,
+\item zmniejszenie ilości spóźnień,
+\item ułatwienie komunikacji pomiędzy użytkownikami,
+\item ułatwienie możliwości koordynacji planu dnia przez użytkownika,
+\item skrócenie czasu oczekiwania na dany środek transportu,
+\item zmniejszenie czasu przeznaczonego na planowanie podróży,
+\item zmniejszenie poziomu stresu użytkowników podczas planowania podróży.
+\end{itemize}
+
+\par
+\noindent\newline Zidentyfikowano wymagania funkcjonalne, które jednocześnie stanowiły kryteria akceptacyjne projektu: 
+
+\begin{itemize}
+\item rejestracja i logowanie użytkownika,
+\item dodanie, przeglądanie i edycja planu podróży i planu dnia,
+\item wyszukanie elementu w pobliżu danej lokalizacji,
+\item wygenerowanie planu dnia/podróży,
+\item wyszukanie i zaproszenie innego użytkownika do wyświetlania lub edycji podróży,
+\item dodanie oceny do planu dnia, podróży lub odwiedzonego miejsca,
+\item otrzymanie propozycji na podstawie ocen,
+\item wyszukanie transportu między lokalizacjami,
+\item wyszukanie najkrótszej trasy,
+\item skanowanie biletów i innych dokumentów potrzebnych w trakcie podróży,
+\item zapisywanie podróży i dokumentów na urządzeniu, aby możliwe było korzystanie z nich bez dostępu do internetu.
+\end{itemize}
+
+\par
+\noindent Wyróźniono dodatkowe wymagania, które nie były niezbędne do realizacji projektu, ale znacznie zwiększały możliwości aplikacji: 
+
+\begin{itemize}
+\item wyszukanie zakwaterowania,
+\item powiadomienie o obiekcie w okolicy,
+\item powiadomienie o opóźnieniu,
+\item oznaczenie elementu z planu dnia jako wykonany,
+\item powiadomienia dotyczące lotów,
+\item przeglądanie statystyk zrealizowanych podróży,
+\item udostępnianie zrealizowanego punktu planu dnia w mediach społecznościowych.
+\end{itemize}
+
+\par Dodatkowo zostały określone wymagania jakościowe, które dotyczyły aplikacji. Ze względu na RODO przetwarzanie danych użytkowników ograniczono do minimum i~zdecydowano o wyświetlaniu użytkownikom informacji o sposobie używania danych. Postanowiono skorzystać z bezpiecznych algorytmów szyfrowania i uwierzytelniania, aby zapewnić danym bezpieczeństwo. 
+Zobowiązano się do zapewnienia autentyczności proponowanych podróży, tj. sugerowany czas spędzony w danym obiekcie jest zbliżony do rzeczywistego i trafności polecanych obiektów. Zapytania użytkowników będą obsługiwane nie dłużej niż 5~s., a układanie planu dnia będzie trwać maksymalnie 10~s.
+
+\par Za docelowe urządzenie przyjęto smartfon z systemem operacyjnym Android, którego minimalna wersja to 5.0 (Lollipop), co miało zapewnić obsługę ponad 94\% urządzeń z systemem Android (dane aktualne na dzień 05.05.2019\cite{Android usage}). Spodziewane wymiary urządzeń to od~115.20~mm~x~58.60~mm do~242,8~mm~x~189,7~mm. Zaplanowano rozszerzenie działania aplikacji na telefony z systemem operacyjnym iOS.
+
+\par Zwrócono uwagę na zagwarantowanie czytelności interfejsu użytkownika. Zaplanowano użycie stonowanych, niejaskrawych kolorów i ograniczenie dostępnych informacji na jednym ekranie z możliwością przejścia do kolejnych stron lub filtrowania wyników. Dostępne ma być powiększenie ekranu.
+
 
 \chapter{Podsumowanie}
-\chapter*{Wykaz literatury}
-\addcontentsline{toc}{chapter}{Wykaz literatury} 
+%\chapter*{Wykaz literatury}
+\bibliographystyle{plain}
+\begin{thebibliography}{1}
+\addcontentsline{toc}{chapter}{Bibliografia}
+  \bibitem{Here} developer.here.com
+  \bibitem{gms.location} developers.google.com/android/reference/com/google/android/gms/location/package-summary
+  \bibitem{Android usage} gs.statcounter.com/android-version-market-share/mobile-tablet/worldwide
+\end{thebibliography}
 
 \listoffigures
 \listoftables
