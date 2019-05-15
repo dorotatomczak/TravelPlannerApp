@@ -11,16 +11,20 @@ import android.view.MenuItem;
 
 import com.github.travelplannerapp.R;
 
+import javax.inject.Inject;
+
+import dagger.android.AndroidInjection;
+
 public class TravelsActivity extends AppCompatActivity implements TravelsContract.View {
 
-    private TravelsContract.Presenter presenter;
+    @Inject
+    TravelsPresenter presenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        AndroidInjection.inject(this);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_travels);
-
-        presenter = new TravelsPresenter(this);
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);

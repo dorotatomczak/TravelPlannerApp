@@ -10,17 +10,20 @@ import android.widget.Button;
 import com.github.travelplannerapp.travels.TravelsActivity;
 import com.github.travelplannerapp.R;
 
+import javax.inject.Inject;
+
+import dagger.android.AndroidInjection;
+
 public class LoginActivity extends AppCompatActivity implements LoginContract.View {
 
-    LoginContract.Presenter presenter;
+    @Inject
+    LoginPresenter presenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        AndroidInjection.inject(this);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-
-        //set up presenter
-        presenter =  new LoginPresenter(this);
 
         //set up toolbar
         Toolbar toolbar = findViewById(R.id.toolbar);
