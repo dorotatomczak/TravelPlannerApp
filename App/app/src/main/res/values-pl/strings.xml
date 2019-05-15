@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">TravelPlannerApp</string>
+    <string name="action_settings">Ustawienia</string>
+    <string name="sign_in">Zaloguj się</string>
+</resources>

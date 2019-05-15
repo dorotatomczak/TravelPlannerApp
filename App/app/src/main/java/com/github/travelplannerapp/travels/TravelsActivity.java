@@ -1,4 +1,4 @@
-package com.github.travelplannerapp;
+package com.github.travelplannerapp.travels;
 
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -9,12 +9,19 @@ import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 
-public class MainActivity extends AppCompatActivity {
+import com.github.travelplannerapp.R;
+
+public class TravelsActivity extends AppCompatActivity implements TravelsContract.View {
+
+    private TravelsContract.Presenter presenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_travels);
+
+        presenter = new TravelsPresenter(this);
+
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
