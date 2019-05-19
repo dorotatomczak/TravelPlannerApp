@@ -4,13 +4,13 @@ import dagger.Module
 import dagger.Provides
 
 /**
- * Define LoginActivity-specific dependencies here.
+ * Define SignInActivity-specific dependencies here.
  */
 @Module
 class TravelsModule {
 
     @Provides
-    internal fun provideLobbyPresenter(travelsView: TravelsContract.View): TravelsPresenter {
+    internal fun provideTravelsPresenter(travelsView: TravelsContract.View): TravelsPresenter {
         return TravelsPresenter(travelsView)
     }
 }

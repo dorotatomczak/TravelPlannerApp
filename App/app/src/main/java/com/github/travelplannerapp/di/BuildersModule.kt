@@ -1,8 +1,8 @@
 package com.github.travelplannerapp.di
 
-import com.github.travelplannerapp.login.LoginActivity
-import com.github.travelplannerapp.login.LoginModule
-import com.github.travelplannerapp.login.LoginViewModel
+import com.github.travelplannerapp.signIn.SignInActivity
+import com.github.travelplannerapp.signIn.SignInModule
+import com.github.travelplannerapp.signIn.SignInViewModel
 import com.github.travelplannerapp.travels.TravelsActivity
 import com.github.travelplannerapp.travels.TravelsModule
 import com.github.travelplannerapp.travels.TravelsViewModel
@@ -16,8 +16,8 @@ import dagger.android.ContributesAndroidInjector
 @Module
 abstract class BuildersModule {
 
-    @ContributesAndroidInjector(modules = [LoginViewModel::class, LoginModule::class])
-    internal abstract fun bindLoginActivity(): LoginActivity
+    @ContributesAndroidInjector(modules = [SignInViewModel::class, SignInModule::class])
+    internal abstract fun bindLoginActivity(): SignInActivity
 
     @ContributesAndroidInjector(modules = [TravelsViewModel::class, TravelsModule::class])
     internal abstract fun bindTravelsActivity(): TravelsActivity
