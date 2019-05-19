@@ -1,6 +1,6 @@
-package com.github.travelplannerapp.login
+package com.github.travelplannerapp.signIn
 
-interface LoginContract {
+interface SignInContract {
     interface View {
         fun showTravels()
     }

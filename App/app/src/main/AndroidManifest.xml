@@ -11,7 +11,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".login.LoginActivity"
+            android:name=".signIn.SignInActivity"
             android:label="@string/sign_in"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
