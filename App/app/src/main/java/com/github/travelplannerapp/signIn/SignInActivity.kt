@@ -15,7 +15,7 @@ import kotlinx.android.synthetic.main.activity_sign_in.*
 class SignInActivity : AppCompatActivity(), SignInContract.View {
 
     @Inject
-    lateinit var presenter: SignInPresenter
+    lateinit var presenter: SignInContract.Presenter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         AndroidInjection.inject(this)

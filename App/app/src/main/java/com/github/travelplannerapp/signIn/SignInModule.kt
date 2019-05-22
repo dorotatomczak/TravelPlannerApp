@@ -10,7 +10,7 @@ import dagger.Provides
 class SignInModule {
 
     @Provides
-    internal fun provideSignInPresenter(signInView: SignInContract.View): SignInPresenter {
+    internal fun provideSignInPresenter(signInView: SignInContract.View): SignInContract.Presenter {
         return SignInPresenter(signInView)
     }
 }

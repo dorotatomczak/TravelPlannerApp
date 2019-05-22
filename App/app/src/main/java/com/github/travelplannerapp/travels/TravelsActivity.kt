@@ -3,6 +3,7 @@ package com.github.travelplannerapp.travels
 import android.os.Bundle
 import android.support.design.widget.Snackbar
 import android.support.v7.app.AppCompatActivity
+import android.support.v7.widget.LinearLayoutManager
 import android.view.Menu
 import android.view.MenuItem
 
@@ -13,10 +14,11 @@ import javax.inject.Inject
 import dagger.android.AndroidInjection
 import kotlinx.android.synthetic.main.activity_travels.*
 
+
 class TravelsActivity : AppCompatActivity(), TravelsContract.View {
 
     @Inject
-    lateinit var presenter: TravelsPresenter
+    lateinit var presenter: TravelsContract.Presenter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         AndroidInjection.inject(this)
@@ -29,6 +31,10 @@ class TravelsActivity : AppCompatActivity(), TravelsContract.View {
             Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                     .setAction("Action", null).show()
         }
+
+        //TODO("check if can use dagger2 with adapter")
+        recyclerViewTravels.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+        recyclerViewTravels.adapter = TravelsAdapter(presenter)
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {

@@ -10,7 +10,7 @@ import dagger.Provides
 class TravelsModule {
 
     @Provides
-    internal fun provideTravelsPresenter(travelsView: TravelsContract.View): TravelsPresenter {
+    internal fun provideTravelsPresenter(travelsView: TravelsContract.View): TravelsContract.Presenter {
         return TravelsPresenter(travelsView)
     }
 }
