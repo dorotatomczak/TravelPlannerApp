@@ -11,8 +11,10 @@
 \usepackage{array}
 \usepackage{subcaption}
 \usepackage{graphicx}
+\usepackage[section]{placeins}
 \usepackage{enumitem}% http://ctan.org/pkg/enumitem
 \setlist[itemize]{noitemsep, topsep=0pt}
+\setlist[enumerate]{noitemsep, topsep=0pt}
 
 \graphicspath{ {./images/} }
 
@@ -325,9 +327,107 @@ Zobowiązano się do zapewnienia autentyczności proponowanych podróży, tj. su
 
 \par Zwrócono uwagę na zagwarantowanie czytelności interfejsu użytkownika. Zaplanowano użycie stonowanych, niejaskrawych kolorów i ograniczenie dostępnych informacji na jednym ekranie z możliwością przejścia do kolejnych stron lub filtrowania wyników. Dostępne ma być powiększenie ekranu.
 
+\chapter{Projekt systemu (ktoś)}
+%coś
+%coś
+%coś
+%coś
+%coś
+\section{Scenariusze użycia}
+\par Zaprojektowano scenariusze użycia w celu dokładnego określenia sposobów, w które użytkownicy będą korzystać z aplikacji. Wyróżniono najważniejsze:
+\begin{enumerate}
+  \item Stworzenie planu dnia.
+  \item Wygenerowanie planu dnia.
+  \item Stworzenie planu podróży.
+  \item Interakcje z innymi użytkownikami aplikacji.
+  \item Interakcje serwera z aplikacją w czasie trwania podróży.
+\end{enumerate}
+
+\subsection{Stworzenie planu dnia}
+
+\subsection{Wygenerowanie planu dnia}
+
+\subsection{Stworzenie planu podróży}
+
+\subsection{Interakcje z innymi użytkownikami aplikacji (Anna Malizjusz)}
+\par Martyna wyjeżdża na wakacje razem z~koleżanką, więc chce udostępnić jej swój plan podróży. Zaprasza nowego użytkownika do skorzystania z aplikacji (rys.~\ref{fig:inviteFriend}), po czym dodaje znajomego (rys.~\ref{fig:addFriend}) i~zaprasza koleżankę do edytowania podróży (rys.~\ref{fig:shareTravel}).
+\FloatBarrier
+\subsubsection{Zapraszanie użytkownika do aplikacji}
+
+\noindent Warunki początkowe:
+\begin{enumerate}
+  \item Użytkownik jest zalogowany.
+  \item Aplikacja ma dostęp do internetu.
+  \item Użytkownik wybrał z menu opcję "Znajomi".
+\end{enumerate}
+\par
+\noindent\newline
+Warunki końcowe:
+\begin{enumerate}
+  \item Wiadomość e-mail została wysłana lub napotkano błąd.
+  \item Użytkownik otrzymał informację o pomyślnym wysłaniu zaproszenia lub błędzie.
+\end{enumerate}
+
+\noindent\newline
+\begin{figure}[h]
+\centering
+\includegraphics[width=\linewidth]{inviteFriend}
+\caption{Zapraszanie użytkownika do skorzystania z aplikacji.}
+\label{fig:inviteFriend}
+\end{figure}
+\FloatBarrier
+\subsubsection{Dodawanie znajomego}
+
+\noindent Warunki początkowe:
+\begin{enumerate}
+  \item Użytkownik jest zalogowany.
+  \item Aplikacja ma dostęp do internetu.
+  \item Użytkownik wybrał z menu opcję "Znajomi".
+\end{enumerate}
+\par
+\noindent\newline
+Warunki końcowe:
+\begin{enumerate}
+  \item Użytkownik otrzymał informację o rezultacie.
+  \item Drugi użytkownik otrzymał informację zaproszenie.
+\end{enumerate}
+
+\noindent\newline
+\begin{figure}[h]
+\centering
+\includegraphics[width=\linewidth]{addFriend}
+\caption{Dodanie użytkownika do znajomych.}
+\label{fig:addFriend}
+\end{figure}
+\FloatBarrier
+\subsubsection{Udostępnienie podróży}
+
+\noindent Warunki początkowe:
+\begin{enumerate}
+  \item Użytkownik jest zalogowany.
+  \item Aplikacja ma dostęp do internetu.
+  \item Użytkownik wybrał podróż do udostępnienia.
+  \item Użytkownik docelowy jest znajomym użytkownika udostępniającego.
+\end{enumerate}
+\par
+\noindent\newline
+Warunki końcowe:
+\begin{enumerate}
+  \item Użytkownik otrzymał informację o rezultacie.
+  \item Drugi użytkownik otrzymał informację o udostępnionej podróży.
+\end{enumerate}
+
+\noindent\newline
+\begin{figure}[h]
+\centering
+\includegraphics[width=\linewidth]{shareTravel}
+\caption{Udostępnienie podróży.}
+\label{fig:addFriend}
+\end{figure}
+
+\subsection{Interakcje serwera z aplikacją w czasie trwania podróży}
 
 \chapter{Podsumowanie}
-%\chapter*{Wykaz literatury}
 \bibliographystyle{plain}
 \begin{thebibliography}{1}
 \addcontentsline{toc}{chapter}{Bibliografia}
