@@ -92,7 +92,7 @@ Expedia & \makecell{4.2/5 \\ (172035 ocen)} & ponad 10 mln & 4.8/5 (551.9K ocen)
 \centering
 \includegraphics[width=0.9\linewidth, width=5cm]{tripit2}
 \caption{Opcje transportu taksówką.}
-\label{fig:TIsubim1}
+\label{fig:TIsubim2}
 \end{subfigure}
 \caption{TripIt: Travel Planner.}
 \label{fig:TIimage1}
@@ -426,6 +426,30 @@ Warunki końcowe:
 \end{figure}
 
 \subsection{Interakcje serwera z aplikacją w czasie trwania podróży}
+\par Martyna wraz z koleżanką odbywają zaplanowaną poprzez aplikację podróż. W drodze do jednej z atrakcji aplikacja powiadamia Martynę o interesującym obiekcie znajdującym się niedaleko miejsca, w którym przebywają. Dziewczyny ruszają do wskazanej lokalizacji. Tracą poczucie czasu, więc aplikacja informuje je, że jeśli się nie pośpieszą, nie zdążą dojść do następnego punktu planu dnia przed jego zamknięciem (rys.~\ref{fig:whileTravelling}).
+
+\noindent\newline Warunki początkowe:
+\begin{enumerate}
+  \item Użytkownik jest zalogowany.
+  \item Aplikacja ma dostęp do internetu.
+  \item Aplikacja ma dostęp do lokalizacji użytkownika.
+  \item Użytkownik nie zablokował powiadomień od aplikacji.
+  \item Użytkownik utworzył plan podróży i jest w określonym miejscu i czasie.
+\end{enumerate}
+\par
+\noindent\newline
+Warunki końcowe:
+\begin{enumerate}
+  \item Użytkownik otrzymał odpowiednie powiadomienie.
+\end{enumerate}
+
+\noindent\newline
+\begin{figure}[h]
+\centering
+\includegraphics[width=\linewidth]{whileTravelling}
+\caption{Otrzymywanie powiadomień podczas trwania podróży.}
+\label{fig:whileTravelling}
+\end{figure}
 
 \chapter{Podsumowanie}
 \bibliographystyle{plain}
