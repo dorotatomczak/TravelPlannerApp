@@ -327,12 +327,36 @@ Zobowiązano się do zapewnienia autentyczności proponowanych podróży, tj. su
 
 \par Zwrócono uwagę na zagwarantowanie czytelności interfejsu użytkownika. Zaplanowano użycie stonowanych, niejaskrawych kolorów i ograniczenie dostępnych informacji na jednym ekranie z możliwością przejścia do kolejnych stron lub filtrowania wyników. Dostępne ma być powiększenie ekranu.
 
-\chapter{Projekt systemu (ktoś)}
-%coś
-%coś
-%coś
-%coś
-%coś
+\chapter{Projekt systemu (Magdalena Solecka)}
+\par System postanowiono podzielić na następujące komponenty:
+\begin{itemize}
+\item Po stronie serwera:
+\begin{itemize}
+\item Podsystem planowania (ang. Planning subsystem)
+\item Podsystem wyszukiwania (ang. Search subsystem)
+\item Podsystem zarządzania danymi użytkownika (ang. User Data Management Subsystem)
+\item Podsystem polecający (ang. Recommendation Subsystem)
+\item Podsystem usług społecznościowych (ang. Social Services Subsystem)
+\item Podsystem zarządzania (ang. Management Subsystem)
+\end{itemize}
+\item Po stronie aplikacji mobilnej:
+\begin{itemize}
+\item GUI
+\item Prezenter (ang. Presenter)
+\item Podsystem zarządzania plikami (ang. File Management Subsystem)
+\item Podsystem skanowania (ang. Scanning Subsystem)
+\end{itemize}
+\end{itemize}
+\par Kontakt klienta mobilnego z aplikacją serwerową zaplanowano poprzez interfejs komunikacji (ang. communication interface). Zależności pomiędzy podsystemami zostały przedstawione na diagramie poniżej.
+
+\indent\newline
+\begin{figure}[h]
+\centering
+\includegraphics[width=\linewidth]{subsystems}
+\caption{Diagram komponentow systemu.}
+\label{fig:subsystems}
+\end{figure}
+
 \section{Scenariusze użycia}
 \par Zaprojektowano scenariusze użycia w celu dokładnego określenia sposobów, w które użytkownicy będą korzystać z aplikacji. Wyróżniono najważniejsze:
 \begin{enumerate}
@@ -345,8 +369,6 @@ Zobowiązano się do zapewnienia autentyczności proponowanych podróży, tj. su
 
 \subsection{Stworzenie planu dnia}
 \par Martyna widzi pusty ekran planu dnia. Wpisuje miasto docelowe wyjazdu - Paryż. Wybiera przycisk "+" i wybiera atrakcje. Ukazuje się przed ną ekran wyszukiwania ze znakiem wyszukiwania,a po chwili z wynikami wyszukiwania w formie listy atrakcji. Wybiera jeden z elementów listy – katedra Notre Dame i czyta jej opis. Wybiera przycisk "Dodaj". Widzi ponownie ekran planu Dnia z dodaną przez siebie atrakcją. Wybiera w ten sposób kilka kolejnych atrakcji. Ponownie wybiera przycisk "+" i wybiera restauracje. Ponownie widzi ekran wyszukiwania z listą restauracji. Wybiera pasujący jej obiekt i przy użyciu przycisku "Dodaj" zostaje on dodany do  planu dnia który ponownie wyświetla się przed nią. Użytkownik wybiera przycisk "Ułóż" i czeka aż aplikacja zakończy obliczanie najbardziej optymalnej trasy. Po kilku sekundach plan dnia jest już gotowy. Martyna stwierdza jednak że potrzebuje w ciągu dnia odpoczynku dlatego postanawia przesunąć zwiedzanie katedry Notre Dame na następny dzień. Wybiera element z katedrą i przycisk "Przenieś", a następnie numer dnia podróży. Następnie stwierdza, że właściwie nie interesuje jej sztuka sakralna, więc usuwa element z planu przesuwając go w prawo.
-
-
 
 \noindent\newline Warunki początkowe:
 \begin{enumerate}
