@@ -32,7 +32,7 @@ class TravelsActivity : AppCompatActivity(), TravelsContract.View {
                     .setAction("Action", null).show()
         }
 
-        //TODO("check if can use dagger2 with adapter")
+        //TODO("[Dorota] check if can use dagger2 with adapter")
         recyclerViewTravels.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         recyclerViewTravels.adapter = TravelsAdapter(presenter)
     }
