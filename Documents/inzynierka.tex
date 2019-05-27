@@ -347,7 +347,7 @@ Zobowiązano się do zapewnienia autentyczności proponowanych podróży, tj. su
 \item Podsystem skanowania (ang. Scanning Subsystem)
 \end{itemize}
 \end{itemize}
-\par Kontakt klienta mobilnego z aplikacją serwerową zaplanowano poprzez interfejs komunikacji (ang. communication interface). Zależności pomiędzy podsystemami zostały przedstawione na diagramie poniżej.
+\par Kontakt klienta mobilnego z aplikacją serwerową zaplanowano poprzez interfejs komunikacji (ang. communication interface). Zależności pomiędzy podsystemami zostały przedstawione na diagramie (rys.~\ref{fig:subsystems}).
 
 \indent\newline
 \begin{figure}[h]
@@ -367,7 +367,7 @@ Zobowiązano się do zapewnienia autentyczności proponowanych podróży, tj. su
   \item Interakcje serwera z aplikacją w czasie trwania podróży.
 \end{enumerate}
 
-\subsection{Stworzenie planu dnia}
+\subsection{Stworzenie planu dnia (Magdalena Solecka)}
 \par Martyna widzi pusty ekran planu dnia. Wpisuje miasto docelowe wyjazdu - Paryż. Wybiera przycisk "+" i wybiera atrakcje. Ukazuje się przed ną ekran wyszukiwania ze znakiem wyszukiwania,a po chwili z wynikami wyszukiwania w formie listy atrakcji. Wybiera jeden z elementów listy – katedra Notre Dame i czyta jej opis. Wybiera przycisk "Dodaj". Widzi ponownie ekran planu Dnia z dodaną przez siebie atrakcją. Wybiera w ten sposób kilka kolejnych atrakcji. Ponownie wybiera przycisk "+" i wybiera restauracje. Ponownie widzi ekran wyszukiwania z listą restauracji. Wybiera pasujący jej obiekt i przy użyciu przycisku "Dodaj" zostaje on dodany do  planu dnia który ponownie wyświetla się przed nią. Użytkownik wybiera przycisk "Ułóż" i czeka aż aplikacja zakończy obliczanie najbardziej optymalnej trasy. Po kilku sekundach plan dnia jest już gotowy. Martyna stwierdza jednak że potrzebuje w ciągu dnia odpoczynku dlatego postanawia przesunąć zwiedzanie katedry Notre Dame na następny dzień. Wybiera element z katedrą i przycisk "Przenieś", a następnie numer dnia podróży. Następnie stwierdza, że właściwie nie interesuje jej sztuka sakralna, więc usuwa element z planu przesuwając go w prawo.
 
 \noindent\newline Warunki początkowe:
@@ -384,10 +384,35 @@ Warunki końcowe:
   \item Użytkownik stworzył plan dnia.
 \end{enumerate}
 
-\subsection{Wygenerowanie planu dnia}
+\subsection{Wygenerowanie planu dnia (Anna Malizjusz)}
+\par Martyna stworzyła wyjazd, lecz nie ma pomysłu na spędzenie dnia. Wybiera w aplikacji swoją podróż, po czym generuje przyciskiem plan dnia. Zostaje wyświetlony rezultat, który może dowolnie modyfikować. (rys.~\ref{fig:generateDayPlan}).
 
-\subsection{Stworzenie planu podróży}
-\par Martyna pragnie zaplanować podróż za pomocą aplikacji poprzez aplikację podróż.  (rys.~\ref{fig:addTravel}).
+\noindent Warunki początkowe:
+\begin{enumerate}
+  \item Użytkownik jest zalogowany.
+  \item Aplikacja ma dostęp do internetu.
+  \item Użytkownik wybrał podróż.
+\end{enumerate}
+\par
+\noindent\newline
+Warunki końcowe:
+\begin{enumerate}
+  \item Wyświetlono proponowany plan podróży.
+\end{enumerate}
+
+\noindent\newline
+\begin{figure}[h]
+\centering
+\includegraphics[width=\linewidth]{generateDayPlan}
+\caption{Generowanie planu dnia.}
+\label{fig:generateDayPlan}
+\end{figure}
+\FloatBarrier
+
+
+\subsection{Stworzenie planu podróży (Karolina Makuch)}
+\FloatBarrier
+\par Martyna pragnie zaplanować podróż za pomocą aplikacji poprzez aplikację podróż.  (rys.~\ref{fig:whileTravelling}).
 
 \noindent\newline Warunki początkowe:
 \begin{enumerate}
@@ -405,11 +430,12 @@ Warunki końcowe:
 \noindent\newline
 \begin{figure}[h]
 \centering
-\includegraphics[width=\linewidth]{addTravel}
+\includegraphics[width=\linewidth]{whileTravelling}
 \caption{Tworzenie planu podróży.}
 \label{fig:whileTravelling}
 \end{figure}
 
+\FloatBarrier
 \subsection{Interakcje z innymi użytkownikami aplikacji (Anna Malizjusz)}
 \par Martyna wyjeżdża na wakacje razem z~koleżanką, więc chce udostępnić jej swój plan podróży. Zaprasza nowego użytkownika do skorzystania z aplikacji (rys.~\ref{fig:inviteFriend}), po czym dodaje znajomego (rys.~\ref{fig:addFriend}) i~zaprasza koleżankę do edytowania podróży (rys.~\ref{fig:shareTravel}).
 \FloatBarrier
@@ -483,10 +509,10 @@ Warunki końcowe:
 \centering
 \includegraphics[width=\linewidth]{shareTravel}
 \caption{Udostępnienie podróży.}
-\label{fig:addFriend}
+\label{fig:shareTravel}
 \end{figure}
 
-\subsection{Interakcje serwera z aplikacją w czasie trwania podróży}
+\subsection{Interakcje serwera z aplikacją w czasie trwania podróży (Dorota Tomczak)}
 \par Martyna wraz z koleżanką odbywają zaplanowaną poprzez aplikację podróż. W drodze do jednej z atrakcji aplikacja powiadamia Martynę o interesującym obiekcie znajdującym się niedaleko miejsca, w którym przebywają. Dziewczyny ruszają do wskazanej lokalizacji. Tracą poczucie czasu, więc aplikacja informuje je, że jeśli się nie pośpieszą, nie zdążą dojść do następnego punktu planu dnia przed jego zamknięciem (rys.~\ref{fig:whileTravelling}).
 
 \noindent\newline Warunki początkowe:
