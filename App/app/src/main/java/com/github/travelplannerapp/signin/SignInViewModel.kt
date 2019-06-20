@@ -1,4 +1,4 @@
-package com.github.travelplannerapp.signIn
+package com.github.travelplannerapp.signin
 
 import dagger.Binds
 import dagger.Module

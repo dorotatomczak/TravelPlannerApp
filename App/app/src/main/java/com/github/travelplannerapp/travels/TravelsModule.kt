@@ -4,7 +4,7 @@ import dagger.Module
 import dagger.Provides
 
 /**
- * Define SignInActivity-specific dependencies here.
+ * Define TravelsActivity-specific dependencies here.
  */
 @Module
 class TravelsModule {

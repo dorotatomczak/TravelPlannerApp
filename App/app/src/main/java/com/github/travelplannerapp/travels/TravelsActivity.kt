@@ -1,13 +1,15 @@
 package com.github.travelplannerapp.travels
 
+import android.content.Intent
 import android.os.Bundle
-import android.support.design.widget.Snackbar
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.view.Menu
 import android.view.MenuItem
 
 import com.github.travelplannerapp.R
+import com.github.travelplannerapp.addtravel.AddTravelActivity
+import com.github.travelplannerapp.traveldetails.TravelDetailsActivity
 
 import javax.inject.Inject
 
@@ -27,12 +29,11 @@ class TravelsActivity : AppCompatActivity(), TravelsContract.View {
 
         setSupportActionBar(toolbarTravels)
 
-        fabTravels.setOnClickListener { view ->
-            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                    .setAction("Action", null).show()
+        fabTravels.setOnClickListener {
+            showAddTravel()
         }
 
-        //TODO("[Dorota] check if can use dagger2 with adapter")
+        //TODO("[Dorota] check if possible to use dagger2 with adapter")
         recyclerViewTravels.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         recyclerViewTravels.adapter = TravelsAdapter(presenter)
     }
@@ -53,6 +54,16 @@ class TravelsActivity : AppCompatActivity(), TravelsContract.View {
         return if (id == R.id.action_settings) {
             true
         } else super.onOptionsItemSelected(item)
+    }
 
+    override fun showAddTravel() {
+        val intent = Intent(this, AddTravelActivity::class.java)
+        startActivity(intent)
+    }
+
+    override fun showTravelDetails(travel: String) {
+        val intent = Intent(this, TravelDetailsActivity::class.java)
+        intent.putExtra(TravelDetailsActivity.EXTRA_TRAVEL_ID, travel)
+        startActivity(intent)
     }
 }
