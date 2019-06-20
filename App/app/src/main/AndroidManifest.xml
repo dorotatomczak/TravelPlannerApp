@@ -10,7 +10,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".traveldetails.TravelDetailsActivity" />
+        <activity
+            android:name=".traveldetails.TravelDetailsActivity"
+            android:theme="@style/AppTheme.NoActionBar"/>
         <activity android:name=".addtravel.AddTravelActivity" />
         <activity
             android:name=".signin.SignInActivity"

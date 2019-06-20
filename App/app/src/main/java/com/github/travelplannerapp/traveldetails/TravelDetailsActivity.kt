@@ -21,6 +21,8 @@ class TravelDetailsActivity : AppCompatActivity(), TravelDetailsContract.View {
         AndroidInjection.inject(this)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_travel_details)
+
+        setSupportActionBar(toolbarTravelDetails)
     }
 
     override fun onResume() {
@@ -28,7 +30,7 @@ class TravelDetailsActivity : AppCompatActivity(), TravelDetailsContract.View {
         presenter.loadTravel()
     }
 
-    override fun showTravelName(name: String) {
-        textViewNameTravelDetails.text = name
+    override fun setTitle(title: String) {
+        toolbarTravelDetails.title = title
     }
 }
