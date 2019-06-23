@@ -8,28 +8,46 @@ import android.view.Menu
 import android.view.MenuItem
 
 import com.github.travelplannerapp.R
+import com.github.travelplannerapp.communication.CommunicationService
 
 import javax.inject.Inject
 
 import dagger.android.AndroidInjection
 import kotlinx.android.synthetic.main.activity_travels.*
-
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 
 class TravelsActivity : AppCompatActivity(), TravelsContract.View {
 
     @Inject
     lateinit var presenter: TravelsContract.Presenter
+    lateinit var server: CommunicationService
 
     override fun onCreate(savedInstanceState: Bundle?) {
         AndroidInjection.inject(this)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_travels)
+        server = CommunicationService()
+        server.init()
 
         setSupportActionBar(toolbarTravels)
 
         fabTravels.setOnClickListener { view ->
             Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                     .setAction("Action", null).show()
+        }
+
+        contactServer.setOnClickListener { view ->
+                GlobalScope.launch{
+                    try {
+                        val response = server.getExampleData(1, view)
+                        Snackbar.make(view, response, Snackbar.LENGTH_LONG)
+                                .setAction("Action", null).show()
+                    }
+                    catch(err: Throwable){
+                        println("some exception handling")
+                    }
+               }
         }
 
         //TODO("[Dorota] check if can use dagger2 with adapter")
@@ -55,4 +73,7 @@ class TravelsActivity : AppCompatActivity(), TravelsContract.View {
         } else super.onOptionsItemSelected(item)
 
     }
+}
+fun sendGet() {
+
 }

@@ -5,7 +5,9 @@ buildscript {
     repositories {
         google()
         jcenter()
-        
+        maven {
+            url 'http://maven.petrikainulainen.net/repo'
+        }
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:3.4.1'
@@ -20,7 +22,6 @@ allprojects {
     repositories {
         google()
         jcenter()
-        
     }
 }
 
