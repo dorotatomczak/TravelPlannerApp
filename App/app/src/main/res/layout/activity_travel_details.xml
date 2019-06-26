@@ -49,10 +49,11 @@ tools:context=".traveldetails.TravelDetailsActivity">
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-    <TextView
-        android:id="@+id/textViewTravelDetailsName"
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recyclerViewTravelDetails"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="match_parent"
+        tools:listitem="@layout/item_tile" />
 
 </android.support.v4.widget.NestedScrollView>
 

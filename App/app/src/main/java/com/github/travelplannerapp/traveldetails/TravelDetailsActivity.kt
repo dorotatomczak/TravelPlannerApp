@@ -2,6 +2,7 @@ package com.github.travelplannerapp.traveldetails
 
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.support.v7.widget.StaggeredGridLayoutManager
 import com.github.travelplannerapp.R
 import dagger.android.AndroidInjection
 import javax.inject.Inject
@@ -23,6 +24,10 @@ class TravelDetailsActivity : AppCompatActivity(), TravelDetailsContract.View {
         setContentView(R.layout.activity_travel_details)
 
         setSupportActionBar(toolbarTravelDetails)
+
+        recyclerViewTravelDetails.setHasFixedSize(true)
+        recyclerViewTravelDetails.layoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
+        recyclerViewTravelDetails.adapter = TravelDetailsAdapter(presenter)
     }
 
     override fun onResume() {

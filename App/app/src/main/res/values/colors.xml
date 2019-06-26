@@ -3,4 +3,10 @@
     <color name="colorPrimary">#008577</color>
     <color name="colorPrimaryDark">#00574B</color>
     <color name="colorAccent">#D81B60</color>
+    <color name="white">#FFFFFF</color>
+    <color name="alabaster">#EAF2E3</color>
+    <color name="raspberryGlace">#845A6D</color>
+    <color name="neonCarrot">#F9A03F</color>
+    <color name="moonstoneBlue">#73BFB8</color>
+    <color name="sunsetOrange">#F25757</color>
 </resources>

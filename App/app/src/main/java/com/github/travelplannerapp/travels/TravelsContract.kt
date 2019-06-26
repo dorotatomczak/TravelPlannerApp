@@ -1,5 +1,6 @@
 package com.github.travelplannerapp.travels
 
+//TODO [Dorota] Display message when list of travels is empty
 interface TravelsContract {
     interface View {
         fun showAddTravel()

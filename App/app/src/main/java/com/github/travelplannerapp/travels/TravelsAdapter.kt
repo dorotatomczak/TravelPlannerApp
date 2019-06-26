@@ -22,7 +22,7 @@ class TravelsAdapter (val presenter: TravelsContract.Presenter):RecyclerView.Ada
         presenter.onBindTravelsAtPosition(position, holder)
     }
 
-    class TravelsViewHolder(val presenter: TravelsContract.Presenter, override val containerView: View) : RecyclerView.ViewHolder(containerView),
+    inner class TravelsViewHolder(val presenter: TravelsContract.Presenter, override val containerView: View) : RecyclerView.ViewHolder(containerView),
             LayoutContainer, TravelsContract.TravelItemView, View.OnClickListener {
 
         init {
