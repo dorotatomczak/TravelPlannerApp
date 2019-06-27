@@ -7,4 +7,5 @@
     <string name="tickets">Bilety</string>
     <string name="transport">Transport</string>
     <string name="accommodation">Nocleg</string>
+    <string name="no_travels">Nie masz żadnej podróży</string>
 </resources>

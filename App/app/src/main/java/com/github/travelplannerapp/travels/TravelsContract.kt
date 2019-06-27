@@ -6,6 +6,10 @@ interface TravelsContract {
         fun showAddTravel()
         //TODO [Dorota] Change to int (travel id) after database is implemented
         fun showTravelDetails(travel: String)
+
+        fun showTravels()
+
+        fun showNoTravels()
     }
 
     interface TravelItemView {
@@ -13,6 +17,8 @@ interface TravelsContract {
     }
 
     interface Presenter{
+
+        fun loadTravels()
 
         fun getTravelsCount() : Int
 

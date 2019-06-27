@@ -6,4 +6,5 @@
     <string name="tickets">Tickets</string>
     <string name="transport">Transport</string>
     <string name="accommodation">Accommodation</string>
+    <string name="no_travels">You have no travels</string>
 </resources>

@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 
 import com.github.travelplannerapp.R
 import com.github.travelplannerapp.addtravel.AddTravelActivity
@@ -38,6 +39,11 @@ class TravelsActivity : AppCompatActivity(), TravelsContract.View {
         recyclerViewTravels.adapter = TravelsAdapter(presenter)
     }
 
+    override fun onResume() {
+        super.onResume()
+        presenter.loadTravels()
+    }
+
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         // Inflate the menu; this adds items to the action bar if it is present.
         menuInflater.inflate(R.menu.menu_main, menu)
@@ -49,7 +55,6 @@ class TravelsActivity : AppCompatActivity(), TravelsContract.View {
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         val id = item.itemId
-
 
         return if (id == R.id.action_settings) {
             true
@@ -65,5 +70,15 @@ class TravelsActivity : AppCompatActivity(), TravelsContract.View {
         val intent = Intent(this, TravelDetailsActivity::class.java)
         intent.putExtra(TravelDetailsActivity.EXTRA_TRAVEL_ID, travel)
         startActivity(intent)
+    }
+
+    override fun showNoTravels() {
+        textViewNoTravels.visibility = View.VISIBLE
+        recyclerViewTravels.visibility = View.GONE
+    }
+
+    override fun showTravels(){
+        textViewNoTravels.visibility = View.GONE
+        recyclerViewTravels.visibility = View.VISIBLE
     }
 }
