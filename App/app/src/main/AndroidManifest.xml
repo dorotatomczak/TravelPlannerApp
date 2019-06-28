@@ -10,9 +10,13 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".transport.TransportActivity"></activity>
+        <activity android:name=".tickets.TicketsActivity" />
+        <activity android:name=".accommodation.AccommodationActivity" />
+        <activity android:name=".dayplans.DayPlansActivity" />
         <activity
             android:name=".traveldetails.TravelDetailsActivity"
-            android:theme="@style/AppTheme.NoActionBar"/>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".addtravel.AddTravelActivity" />
         <activity
             android:name=".signin.SignInActivity"

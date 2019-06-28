@@ -1,11 +1,23 @@
 package com.github.travelplannerapp.di
 
+import com.github.travelplannerapp.accommodation.AccommodationActivity
+import com.github.travelplannerapp.accommodation.AccommodationModule
+import com.github.travelplannerapp.accommodation.AccommodationViewModel
 import com.github.travelplannerapp.addtravel.AddTravelActivity
 import com.github.travelplannerapp.addtravel.AddTravelModule
 import com.github.travelplannerapp.addtravel.AddTravelViewModel
+import com.github.travelplannerapp.dayplans.DayPlansActivity
+import com.github.travelplannerapp.dayplans.DayPlansModule
+import com.github.travelplannerapp.dayplans.DayPlansViewModel
 import com.github.travelplannerapp.signin.SignInActivity
 import com.github.travelplannerapp.signin.SignInModule
 import com.github.travelplannerapp.signin.SignInViewModel
+import com.github.travelplannerapp.tickets.TicketsActivity
+import com.github.travelplannerapp.tickets.TicketsModule
+import com.github.travelplannerapp.tickets.TicketsViewModel
+import com.github.travelplannerapp.transport.TransportActivity
+import com.github.travelplannerapp.transport.TransportModule
+import com.github.travelplannerapp.transport.TransportViewModel
 import com.github.travelplannerapp.traveldetails.TravelDetailsActivity
 import com.github.travelplannerapp.traveldetails.TravelDetailsModule
 import com.github.travelplannerapp.traveldetails.TravelDetailsViewModel
@@ -33,6 +45,18 @@ abstract class BuildersModule {
 
     @ContributesAndroidInjector(modules = [TravelDetailsViewModel::class, TravelDetailsModule::class])
     internal abstract fun bindTravelDetailsActivity(): TravelDetailsActivity
+
+    @ContributesAndroidInjector(modules = [DayPlansViewModel::class, DayPlansModule::class])
+    internal abstract fun bindDayPlansActivity(): DayPlansActivity
+
+    @ContributesAndroidInjector(modules = [AccommodationViewModel::class, AccommodationModule::class])
+    internal abstract fun bindAccommodationActivity(): AccommodationActivity
+
+    @ContributesAndroidInjector(modules = [TicketsViewModel::class, TicketsModule::class])
+    internal abstract fun bindTicketsActivity(): TicketsActivity
+
+    @ContributesAndroidInjector(modules = [TransportViewModel::class, TransportModule::class])
+    internal abstract fun bindTransportActivity(): TransportActivity
 
     // Add bindings for other sub-components here
 }

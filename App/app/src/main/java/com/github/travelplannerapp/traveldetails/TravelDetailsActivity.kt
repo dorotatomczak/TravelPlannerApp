@@ -1,10 +1,17 @@
 package com.github.travelplannerapp.traveldetails
 
+import android.app.Activity
+import android.content.Intent
+import android.net.Uri
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.v7.widget.StaggeredGridLayoutManager
 import android.widget.Toast
 import com.github.travelplannerapp.R
+import com.github.travelplannerapp.accommodation.AccommodationActivity
+import com.github.travelplannerapp.dayplans.DayPlansActivity
+import com.github.travelplannerapp.tickets.TicketsActivity
+import com.github.travelplannerapp.transport.TransportActivity
 import dagger.android.AndroidInjection
 import javax.inject.Inject
 
@@ -41,18 +48,22 @@ class TravelDetailsActivity : AppCompatActivity(), TravelDetailsContract.View {
     }
 
     override fun showDayPlans() {
-        Toast.makeText(this, getString(R.string.day_plans), Toast.LENGTH_SHORT).show()
+        val intent = Intent(this, DayPlansActivity::class.java)
+        startActivity(intent)
     }
 
     override fun showTransport() {
-        Toast.makeText(this, getString(R.string.transport), Toast.LENGTH_SHORT).show()
+        val intent = Intent(this, TransportActivity::class.java)
+        startActivity(intent)
     }
 
     override fun showAccommodation() {
-        Toast.makeText(this, getString(R.string.accommodation), Toast.LENGTH_SHORT).show()
+        val intent = Intent(this, AccommodationActivity::class.java)
+        startActivity(intent)
     }
 
     override fun showTickets() {
-        Toast.makeText(this, getString(R.string.tickets), Toast.LENGTH_SHORT).show()
+        val intent = Intent(this, TicketsActivity::class.java)
+        startActivity(intent)
     }
 }
