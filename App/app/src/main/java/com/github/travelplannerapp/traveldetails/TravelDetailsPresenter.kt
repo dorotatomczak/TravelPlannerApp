@@ -8,10 +8,12 @@ class TravelDetailsPresenter (private var travelId: String, view: TravelDetailsC
         view.setTitle(travelId)
     }
 
-    override fun onBindTileAtPosition(position: Int, itemView: TravelDetailsContract.TileItemView) {
-        itemView.setBackgroundColor(position)
-        itemView.setImage(position)
-        itemView.setName(position)
-        itemView.setHeight(position)
+    override fun openCategory(category: Category.CategoryType) {
+        when (category) {
+            Category.CategoryType.DAY_PLANS -> view.showDayPlans()
+            Category.CategoryType.TRANSPORT -> view.showTransport()
+            Category.CategoryType.ACCOMMODATION -> view.showAccommodation()
+            Category.CategoryType.TICKETS -> view.showTickets()
+        }
     }
 }

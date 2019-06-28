@@ -12,24 +12,26 @@ import kotlinx.android.synthetic.main.item_tile.*
 
 class TravelDetailsAdapter (val presenter: TravelDetailsContract.Presenter): RecyclerView.Adapter<TravelDetailsAdapter.TravelDetailsViewHolder>(){
 
-    //TODO([Dorota] Possibly change icons, names, colors in the future, these are temporary)
-    //TODO([Dorota] Adjust heights to user's screen height)
+    //TODO([Dorota] Adjust heights to fill remaining space on the screen)
     //TODO([Dorota] Investigate how to better store these values and where, should the adapter communicate with presenter or is it unnecessary)
-    var tileImages = listOf(R.drawable.ic_place, R.drawable.ic_plane, R.drawable.ic_hotel, R.drawable.ic_ticket)
-    var tileColors = listOf(R.color.sunsetOrange, R.color.moonstoneBlue, R.color.raspberryGlace, R.color.neonCarrot)
-    var tileNames = listOf(R.string.day_plans, R.string.transport, R.string.accommodation, R.string.tickets)
-    var tileHeights = listOf(500, 800, 1000, 700)
+    var categories = listOf(Category(Category.CategoryType.DAY_PLANS, R.string.day_plans, R.drawable.ic_place, R.color.sunsetOrange, 1000),
+            Category(Category.CategoryType.TRANSPORT, R.string.transport, R.drawable.ic_plane, R.color.moonstoneBlue, 700),
+            Category(Category.CategoryType.ACCOMMODATION, R.string.accommodation, R.drawable.ic_hotel, R.color.raspberryGlace, 800),
+            Category(Category.CategoryType.TICKETS, R.string.tickets, R.drawable.ic_ticket, R.color.neonCarrot, 500))
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TravelDetailsViewHolder {
         return TravelDetailsViewHolder(presenter, LayoutInflater.from(parent.context)
                 .inflate(R.layout.item_tile, parent, false));    }
 
     override fun getItemCount(): Int {
-        return tileNames.size
+        return categories.size
     }
 
     override fun onBindViewHolder(holder: TravelDetailsViewHolder, position: Int) {
-        presenter.onBindTileAtPosition(position, holder)
+        holder.setName(position)
+        holder.setImage(position)
+        holder.setMinHeight(position)
+        holder.setBackgroundColor(position)
     }
 
     inner class TravelDetailsViewHolder(val presenter: TravelDetailsContract.Presenter, override val containerView: View) : RecyclerView.ViewHolder(containerView),
@@ -40,23 +42,23 @@ class TravelDetailsAdapter (val presenter: TravelDetailsContract.Presenter): Rec
         }
 
         override fun onClick(v: View?) {
-            TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+            presenter.openCategory(categories[adapterPosition].type)
         }
 
         override fun setBackgroundColor(tileIndex: Int) {
-            linearLayoutItemTile.setBackgroundColor(ContextCompat.getColor(containerView.context, tileColors[tileIndex]))
+            linearLayoutItemTile.setBackgroundColor(ContextCompat.getColor(containerView.context, categories[tileIndex].color))
         }
 
         override fun setImage(tileIndex: Int) {
-            imageViewItemTile.setImageDrawable(ContextCompat.getDrawable(containerView.context, tileImages[tileIndex]))
+            imageViewItemTile.setImageDrawable(ContextCompat.getDrawable(containerView.context, categories[tileIndex].icon))
         }
 
         override fun setName(tileIndex: Int) {
-            textViewItemTileName.text = containerView.context.getString(tileNames[tileIndex])
+            textViewItemTileName.text = containerView.context.getString(categories[tileIndex].name)
         }
 
-        override fun setHeight(tileIndex: Int) {
-            cardViewItemTile.layoutParams =  LayoutParams(LayoutParams.MATCH_PARENT, tileHeights[tileIndex])
+        override fun setMinHeight(tileIndex: Int) {
+            cardViewItemTile.layoutParams =  LayoutParams(LayoutParams.MATCH_PARENT, categories[tileIndex].minHeight)
         }
     }
 }

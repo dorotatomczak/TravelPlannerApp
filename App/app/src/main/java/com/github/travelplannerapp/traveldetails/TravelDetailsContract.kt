@@ -4,18 +4,21 @@ interface TravelDetailsContract {
 
     interface View {
         fun setTitle(title: String)
+        fun showDayPlans()
+        fun showTransport()
+        fun showAccommodation()
+        fun showTickets()
     }
 
     interface TileItemView {
         fun setBackgroundColor(tileIndex: Int)
         fun setImage(tileIndex: Int)
         fun setName(tileIndex: Int)
-        fun setHeight(tileIndex: Int)
+        fun setMinHeight(tileIndex: Int)
     }
 
     interface Presenter {
         fun loadTravel()
-//        fun getTilesCount(): Int
-        fun onBindTileAtPosition(position: Int, itemView: TileItemView)
+        fun openCategory(category: Category.CategoryType)
     }
 }
