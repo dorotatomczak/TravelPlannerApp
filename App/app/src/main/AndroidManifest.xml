@@ -10,7 +10,17 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".transport.TransportActivity"></activity>
+        <activity
+            android:name=".launcher.LauncherActivity"
+            android:label="@string/app_name"
+            android:launchMode="singleInstance"
+            android:theme="@android:style/Theme.NoDisplay">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".transport.TransportActivity" />
         <activity android:name=".tickets.TicketsActivity" />
         <activity android:name=".accommodation.AccommodationActivity" />
         <activity android:name=".dayplans.DayPlansActivity" />
@@ -21,13 +31,7 @@
         <activity
             android:name=".signin.SignInActivity"
             android:label="@string/sign_in"
-            android:theme="@style/AppTheme.NoActionBar">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+            android:theme="@style/AppTheme.NoActionBar"/>
         <activity
             android:name=".travels.TravelsActivity"
             android:label="@string/app_name"

@@ -9,6 +9,9 @@ import com.github.travelplannerapp.addtravel.AddTravelViewModel
 import com.github.travelplannerapp.dayplans.DayPlansActivity
 import com.github.travelplannerapp.dayplans.DayPlansModule
 import com.github.travelplannerapp.dayplans.DayPlansViewModel
+import com.github.travelplannerapp.launcher.LauncherActivity
+import com.github.travelplannerapp.launcher.LauncherModule
+import com.github.travelplannerapp.launcher.LauncherViewModel
 import com.github.travelplannerapp.signin.SignInActivity
 import com.github.travelplannerapp.signin.SignInModule
 import com.github.travelplannerapp.signin.SignInViewModel
@@ -33,6 +36,9 @@ import dagger.android.ContributesAndroidInjector
  */
 @Module
 abstract class BuildersModule {
+
+    @ContributesAndroidInjector(modules = [LauncherViewModel::class, LauncherModule::class])
+    internal abstract fun bindLauncherActivity(): LauncherActivity
 
     @ContributesAndroidInjector(modules = [SignInViewModel::class, SignInModule::class])
     internal abstract fun bindLoginActivity(): SignInActivity
