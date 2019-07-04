@@ -10,6 +10,8 @@ interface TravelsContract {
         fun showTravels()
 
         fun showNoTravels()
+
+        fun showSnackbar(message: String)
     }
 
     interface TravelItemView {
@@ -25,5 +27,7 @@ interface TravelsContract {
         fun onBindTravelsAtPosition(position: Int, itemView: TravelItemView)
 
         fun openTravelDetails(position: Int)
+
+        fun contactServer()
     }
 }

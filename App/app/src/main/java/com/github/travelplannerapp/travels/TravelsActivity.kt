@@ -7,6 +7,7 @@ import android.support.v7.widget.LinearLayoutManager
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import android.support.design.widget.Snackbar
 
 import com.github.travelplannerapp.R
 import com.github.travelplannerapp.addtravel.AddTravelActivity
@@ -32,6 +33,10 @@ class TravelsActivity : AppCompatActivity(), TravelsContract.View {
 
         fabTravels.setOnClickListener {
             showAddTravel()
+        }
+
+        fabContactServer.setOnClickListener {
+            presenter.contactServer()
         }
 
         //TODO("[Dorota] check if possible to use dagger2 with adapter")
@@ -80,5 +85,10 @@ class TravelsActivity : AppCompatActivity(), TravelsContract.View {
     override fun showTravels(){
         textViewNoTravels.visibility = View.GONE
         recyclerViewTravels.visibility = View.VISIBLE
+    }
+
+    override fun showSnackbar(message: String) {
+        Snackbar.make(coordinatorLayoutTravels, message, Snackbar.LENGTH_LONG)
+                .setAction("Action", null).show()
     }
 }
