@@ -49,4 +49,12 @@
         android:layout_margin="@dimen/fab_margin"
         app:srcCompat="@drawable/ic_add" />
 
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/contactServer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|start"
+        android:layout_margin="@dimen/contServer_margin"
+        app:srcCompat="@android:drawable/ic_menu_month" />
+
 </android.support.design.widget.CoordinatorLayout>
