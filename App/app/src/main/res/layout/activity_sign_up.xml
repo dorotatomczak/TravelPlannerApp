@@ -1,9 +1,85 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".signup.SignUpActivity">
 
-</android.support.constraint.ConstraintLayout>
+    <android.support.design.widget.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:theme="@style/AppTheme.AppBarOverlay">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbarSignUp"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorPrimary"
+            app:popupTheme="@style/AppTheme.PopupOverlay"
+            app:title="@string/sign_up" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/sign_in_background"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/textViewSignIn"
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:background="#00000000"
+                android:text="@string/create_an_account"
+                android:textAlignment="center"
+                android:textColor="#22ffffff"
+                android:textSize="20sp" />
+
+            <EditText
+                android:id="@+id/editTextEmail"
+                android:layout_width="200dp"
+                android:layout_height="45dp"
+                android:layout_marginTop="10dp"
+                android:paddingStart="10dp"
+                android:background="#22ffffff"
+                android:drawableStart="@drawable/icons8_face_id_24"
+                android:hint="@string/email"
+                android:inputType="textEmailAddress"
+                android:textColor="#ffffff" />
+
+            <EditText
+                android:id="@+id/editTextPassword"
+                android:layout_width="200dp"
+                android:layout_height="45dp"
+                android:paddingStart="10dp"
+                android:background="#22ffffff"
+                android:drawableStart="@drawable/icons8_password_filled_24"
+                android:hint="@string/password"
+                android:inputType="textPassword"
+                android:textColor="#ffffff" />
+
+            <EditText
+                android:id="@+id/editTextConfirmPassword"
+                android:layout_width="200dp"
+                android:layout_height="45dp"
+                android:paddingStart="10dp"
+                android:background="#22ffffff"
+                android:drawableStart="@drawable/icons8_password_filled_24"
+                android:hint="@string/confirmPassword"
+                android:inputType="textPassword"
+                android:textColor="#ffffff" />
+
+            <Button
+                android:id="@+id/buttonSignUp"
+                android:textStyle="bold"
+                android:layout_width="200dp"
+                android:layout_height="45dp"
+                android:layout_marginTop="30dp"
+                android:background="@drawable/button_sign_in_style"
+                android:text="@string/sign_up"
+                android:textColor="#ffffff" />
+
+        </LinearLayout>
+    </android.support.design.widget.AppBarLayout>
+</android.support.design.widget.CoordinatorLayout>

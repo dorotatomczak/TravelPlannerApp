@@ -8,4 +8,10 @@
     <string name="transport">Transport</string>
     <string name="accommodation">Nocleg</string>
     <string name="no_travels">Nie masz żadnej podróży</string>
+    <string name="password">hasło</string>
+    <string name="email">e-mail</string>
+    <string name="sign_up">Utwórz konto</string>
+    <string name="sign_in_to_your_account">Zaloguj się</string>
+    <string name="create_an_account">Utwórz konto</string>
+    <string name="confirmPassword">powtórz hasło</string>
 </resources>
