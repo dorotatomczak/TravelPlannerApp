@@ -8,7 +8,7 @@
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:theme="@style/AppTheme.AppBarOverlay">
 
         <android.support.v7.widget.Toolbar
@@ -17,15 +17,66 @@
             android:layout_height="?attr/actionBarSize"
             android:background="?attr/colorPrimary"
             app:popupTheme="@style/AppTheme.PopupOverlay"
-            app:title="@string/sign_in"/>
+            app:title="@string/sign_in" />
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/sign_in_background"
+            android:gravity="center"
+            android:orientation="vertical">
+            <!--TODO("adjust marginTop for visually acceptable spaces between gui elements")-->
+            <TextView
+                android:id="@+id/textViewSignIn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@color/transparent"
+                android:text="@string/sign_in_to_your_account"
+                android:textAlignment="center"
+                android:textColor="@color/seeThroughWhite"
+                android:textSize="@dimen/text_size_title_small" />
+
+            <EditText
+                android:id="@+id/editTextEmail"
+                android:layout_width="@dimen/edit_text_width"
+                android:layout_height="@dimen/edit_text_height"
+                android:layout_marginTop="10dp"
+                android:paddingStart="@dimen/text_padding_start"
+                android:background="@color/seeThroughWhite"
+                android:drawableStart="@drawable/ic_mail"
+                android:hint="@string/email"
+                android:inputType="textEmailAddress"
+                android:textColor="@color/white" />
+
+            <EditText
+                android:id="@+id/editTextPassword"
+                android:layout_width="@dimen/edit_text_width"
+                android:layout_height="@dimen/edit_text_height"
+                android:paddingStart="@dimen/text_padding_start"
+                android:background="@color/seeThroughWhite"
+                android:drawableStart="@drawable/ic_lock"
+                android:hint="@string/password"
+                android:inputType="textPassword"
+                android:textColor="@color/white" />
+
+            <Button
+                android:id="@+id/buttonSignIn"
+                android:layout_width="@dimen/button_width"
+                android:layout_height="@dimen/button_height"
+                android:layout_marginTop="30dp"
+                android:background="@drawable/button_sign_in_style"
+                android:text="@string/sign_in"
+                android:textColor="@color/white" />
+
+            <Button
+                android:id="@+id/buttonSignUp"
+                android:layout_width="@dimen/button_width"
+                android:layout_height="@dimen/button_height"
+                android:layout_marginTop="30dp"
+                android:background="@drawable/button_sign_up_style"
+                android:text="@string/sign_up"
+                android:textColor="@color/white" />
+
+        </LinearLayout>
     </android.support.design.widget.AppBarLayout>
-
-    <Button
-        android:id="@+id/buttonSignIn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:text="@string/sign_in"/>
-
 </android.support.design.widget.CoordinatorLayout>

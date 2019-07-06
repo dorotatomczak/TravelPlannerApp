@@ -6,6 +6,7 @@ import android.os.Bundle
 
 import com.github.travelplannerapp.travels.TravelsActivity
 import com.github.travelplannerapp.R
+import com.github.travelplannerapp.signup.SignUpActivity
 
 import javax.inject.Inject
 
@@ -27,10 +28,16 @@ class SignInActivity : AppCompatActivity(), SignInContract.View {
 
         //set up button
         buttonSignIn.setOnClickListener { presenter.signIn() }
+        buttonSignUp.setOnClickListener { presenter.signUp() }
     }
 
     override fun showTravels() {
         val intent = Intent(this, TravelsActivity::class.java)
+        startActivity(intent)
+    }
+
+    override fun showSignUp() {
+        val intent = Intent(this, SignUpActivity::class.java)
         startActivity(intent)
     }
 }
