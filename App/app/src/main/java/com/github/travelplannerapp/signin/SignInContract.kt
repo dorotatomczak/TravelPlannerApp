@@ -1,4 +1,4 @@
-package com.github.travelplannerapp.signIn
+package com.github.travelplannerapp.signin
 
 interface SignInContract {
     interface View {

@@ -1,58 +1,52 @@
 package com.github.travelplannerapp.travels
 
+import android.content.Intent
 import android.os.Bundle
-import android.support.design.widget.Snackbar
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
+import android.support.design.widget.Snackbar
 
 import com.github.travelplannerapp.R
-import com.github.travelplannerapp.communication.CommunicationService
+import com.github.travelplannerapp.addtravel.AddTravelActivity
+import com.github.travelplannerapp.traveldetails.TravelDetailsActivity
 
 import javax.inject.Inject
 
 import dagger.android.AndroidInjection
 import kotlinx.android.synthetic.main.activity_travels.*
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
+
 
 class TravelsActivity : AppCompatActivity(), TravelsContract.View {
 
     @Inject
     lateinit var presenter: TravelsContract.Presenter
-    lateinit var server: CommunicationService
 
     override fun onCreate(savedInstanceState: Bundle?) {
         AndroidInjection.inject(this)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_travels)
-        server = CommunicationService()
-        server.init()
 
         setSupportActionBar(toolbarTravels)
 
-        fabTravels.setOnClickListener { view ->
-            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                    .setAction("Action", null).show()
+        fabTravels.setOnClickListener {
+            showAddTravel()
         }
 
-        contactServer.setOnClickListener { view ->
-                GlobalScope.launch{
-                    try {
-                        val response = server.getExampleData(1, view)
-                        Snackbar.make(view, response, Snackbar.LENGTH_LONG)
-                                .setAction("Action", null).show()
-                    }
-                    catch(err: Throwable){
-                        println("some exception handling")
-                    }
-               }
+        fabContactServer.setOnClickListener {
+            presenter.contactServer()
         }
 
-        //TODO("[Dorota] check if can use dagger2 with adapter")
+        //TODO("[Dorota] check if possible to use dagger2 with adapter")
         recyclerViewTravels.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         recyclerViewTravels.adapter = TravelsAdapter(presenter)
+    }
+
+    override fun onResume() {
+        super.onResume()
+        presenter.loadTravels()
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -67,13 +61,34 @@ class TravelsActivity : AppCompatActivity(), TravelsContract.View {
         // as you specify a parent activity in AndroidManifest.xml.
         val id = item.itemId
 
-
         return if (id == R.id.action_settings) {
             true
         } else super.onOptionsItemSelected(item)
-
     }
-}
-fun sendGet() {
 
+    override fun showAddTravel() {
+        val intent = Intent(this, AddTravelActivity::class.java)
+        startActivity(intent)
+    }
+
+    override fun showTravelDetails(travel: String) {
+        val intent = Intent(this, TravelDetailsActivity::class.java)
+        intent.putExtra(TravelDetailsActivity.EXTRA_TRAVEL_ID, travel)
+        startActivity(intent)
+    }
+
+    override fun showNoTravels() {
+        textViewNoTravels.visibility = View.VISIBLE
+        recyclerViewTravels.visibility = View.GONE
+    }
+
+    override fun showTravels(){
+        textViewNoTravels.visibility = View.GONE
+        recyclerViewTravels.visibility = View.VISIBLE
+    }
+
+    override fun showSnackbar(message: String) {
+        Snackbar.make(coordinatorLayoutTravels, message, Snackbar.LENGTH_LONG)
+                .setAction("Action", null).show()
+    }
 }

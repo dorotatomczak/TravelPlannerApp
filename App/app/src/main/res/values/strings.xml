@@ -2,4 +2,9 @@
     <string name="app_name" translatable="false">TravelPlannerApp</string>
     <string name="action_settings">Settings</string>
     <string name="sign_in">Sign In</string>
+    <string name="day_plans">Day Plans</string>
+    <string name="tickets">Tickets</string>
+    <string name="transport">Transport</string>
+    <string name="accommodation">Accommodation</string>
+    <string name="no_travels">You have no travels</string>
 </resources>

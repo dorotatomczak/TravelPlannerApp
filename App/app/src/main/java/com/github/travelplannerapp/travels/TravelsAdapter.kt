@@ -8,10 +8,10 @@ import com.github.travelplannerapp.R
 import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.item_travel.*
 
-class TravelsAdapter (private val presenter: TravelsContract.Presenter):RecyclerView.Adapter<TravelsAdapter.TravelsViewHolder>(){
+class TravelsAdapter (val presenter: TravelsContract.Presenter):RecyclerView.Adapter<TravelsAdapter.TravelsViewHolder>(){
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TravelsViewHolder {
-        return TravelsViewHolder(LayoutInflater.from(parent.context)
+        return TravelsViewHolder(presenter, LayoutInflater.from(parent.context)
                 .inflate(R.layout.item_travel, parent, false));    }
 
     override fun getItemCount(): Int {
@@ -20,11 +20,19 @@ class TravelsAdapter (private val presenter: TravelsContract.Presenter):Recycler
 
     override fun onBindViewHolder(holder: TravelsViewHolder, position: Int) {
         presenter.onBindTravelsAtPosition(position, holder)
-
     }
 
-    class TravelsViewHolder(override val containerView: View) : RecyclerView.ViewHolder(containerView),
-            LayoutContainer, TravelsContract.TravelItemView  {
+    inner class TravelsViewHolder(val presenter: TravelsContract.Presenter, override val containerView: View) : RecyclerView.ViewHolder(containerView),
+            LayoutContainer, TravelsContract.TravelItemView, View.OnClickListener {
+
+        init {
+            containerView.setOnClickListener(this)
+        }
+
+        override fun onClick(v: View?) {
+            presenter.openTravelDetails(adapterPosition)
+        }
+
         override fun setName(name: String) {
             textViewItemTravelName.text = name
         }

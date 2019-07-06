@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".travels.TravelsActivity">
+    tools:context=".travels.TravelsActivity"
+    android:id="@+id/coordinatorLayoutTravels">
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
@@ -20,11 +21,26 @@
 
     </android.support.design.widget.AppBarLayout>
 
+    <TextView
+        android:id="@+id/textViewNoTravels"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/no_travels"
+        android:textSize="@dimen/text_size_info"
+        android:gravity="center_horizontal"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        android:visibility="gone"/>
+
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recyclerViewTravels"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        tools:listitem="@layout/item_travel"
+        android:layout_marginTop="@dimen/margin_vertical"
+        android:layout_marginLeft="@dimen/margin_horizontal"
+        android:layout_marginRight="@dimen/margin_horizontal"
+        android:visibility="visible"/>
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fabTravels"
@@ -32,14 +48,14 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
         android:layout_margin="@dimen/fab_margin"
-        app:srcCompat="@android:drawable/ic_dialog_email" />
+        app:srcCompat="@drawable/ic_add" />
 
     <android.support.design.widget.FloatingActionButton
-        android:id="@+id/contactServer"
+        android:id="@+id/fabContactServer"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|start"
-        android:layout_margin="@dimen/contServer_margin"
+        android:layout_margin="@dimen/fab_margin"
         app:srcCompat="@android:drawable/ic_menu_month" />
 
 </android.support.design.widget.CoordinatorLayout>

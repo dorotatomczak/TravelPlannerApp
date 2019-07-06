@@ -3,4 +3,9 @@
     <string name="app_name">TravelPlannerApp</string>
     <string name="action_settings">Ustawienia</string>
     <string name="sign_in">Zaloguj się</string>
+    <string name="day_plans">Plany dni</string>
+    <string name="tickets">Bilety</string>
+    <string name="transport">Transport</string>
+    <string name="accommodation">Nocleg</string>
+    <string name="no_travels">Nie masz żadnej podróży</string>
 </resources>

@@ -14,13 +14,10 @@ import java.util.concurrent.TimeUnit
 class CommunicationService {
     // Volley guide
     //https://guides.codepath.com/android/Networking-with-the-Volley-Library
-    lateinit var serverUrl: String
 
-    fun init() {
-        //10.0.2.2 is "localhost" but on computer
-        //localhost via emulator is emulator itself
-        serverUrl = "http://10.0.2.2:8080"
-    }
+    //10.0.2.2 is "localhost" but on computer
+    //localhost via emulator is emulator itself
+    private var serverUrl: String = "http://10.0.2.2:8080"
 
     fun getExampleData(type: Int, view: View): String {
         var response = "empty"
