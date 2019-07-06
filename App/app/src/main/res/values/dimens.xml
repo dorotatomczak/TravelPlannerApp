@@ -5,12 +5,13 @@
     <dimen name="text_size_item">32sp</dimen>
     <dimen name="text_size_tile">24sp</dimen>
     <dimen name="text_size_info">24sp</dimen>
+    <dimen name="text_size_title_small">20sp</dimen>
     <dimen name="image_size_tile">100dp</dimen>
-    <dimen name="button_radius">20dp</dimen>
-    <dimen name="button_stroke_width">2dp</dimen>
     <dimen name="edit_text_width">200dp</dimen>
     <dimen name="edit_text_height">45dp</dimen>
+    <dimen name="button_radius">20dp</dimen>
+    <dimen name="button_stroke_width">2dp</dimen>
     <dimen name="button_width">200dp</dimen>
     <dimen name="button_height">45dp</dimen>
-    <dimen name="heading1">20sp</dimen>
+    <dimen name="text_padding_start">10dp</dimen>
 </resources>

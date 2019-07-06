@@ -25,7 +25,7 @@
             android:background="@drawable/sign_in_background"
             android:gravity="center"
             android:orientation="vertical">
-
+            <!--TODO("adjust marginTop for visually acceptable spaces between gui elements")-->
             <TextView
                 android:id="@+id/textViewSignIn"
                 android:layout_width="wrap_content"
@@ -34,16 +34,16 @@
                 android:text="@string/create_an_account"
                 android:textAlignment="center"
                 android:textColor="@color/seeThroughWhite"
-                android:textSize="@dimen/heading1" />
+                android:textSize="@dimen/text_size_title_small" />
 
             <EditText
                 android:id="@+id/editTextEmail"
                 android:layout_width="@dimen/edit_text_width"
                 android:layout_height="@dimen/edit_text_height"
                 android:layout_marginTop="10dp"
-                android:paddingStart="10dp"
+                android:paddingStart="@dimen/text_padding_start"
                 android:background="@color/seeThroughWhite"
-                android:drawableStart="@drawable/ic_mail_black_24dp"
+                android:drawableStart="@drawable/ic_mail"
                 android:hint="@string/email"
                 android:inputType="textEmailAddress"
                 android:textColor="@color/white" />
@@ -52,9 +52,9 @@
                 android:id="@+id/editTextPassword"
                 android:layout_width="@dimen/edit_text_width"
                 android:layout_height="@dimen/edit_text_height"
-                android:paddingStart="10dp"
+                android:paddingStart="@dimen/text_padding_start"
                 android:background="@color/seeThroughWhite"
-                android:drawableStart="@drawable/ic_lock_outline_black_24dp"
+                android:drawableStart="@drawable/ic_lock"
                 android:hint="@string/password"
                 android:inputType="textPassword"
                 android:textColor="@color/white" />
@@ -63,10 +63,10 @@
                 android:id="@+id/editTextConfirmPassword"
                 android:layout_width="@dimen/edit_text_width"
                 android:layout_height="@dimen/edit_text_height"
-                android:paddingStart="10dp"
+                android:paddingStart="@dimen/text_padding_start"
                 android:background="@color/seeThroughWhite"
-                android:drawableStart="@drawable/ic_lock_outline_black_24dp"
-                android:hint="@string/confirmPassword"
+                android:drawableStart="@drawable/ic_lock"
+                android:hint="@string/confirm_password"
                 android:inputType="textPassword"
                 android:textColor="@color/white" />
 

@@ -7,10 +7,10 @@
     <string name="transport">Transport</string>
     <string name="accommodation">Accommodation</string>
     <string name="no_travels">You have no travels</string>
-    <string name="password"> password</string>
-    <string name="email"> e-mail</string>
+    <string name="password">password</string>
+    <string name="email">e-mail</string>
     <string name="sign_up">Sign Up</string>
     <string name="sign_in_to_your_account">Sign in to your account</string>
     <string name="create_an_account">Create an account</string>
-    <string name="confirmPassword">confrm password</string>
+    <string name="confirm_password">confirm password</string>
 </resources>
