@@ -77,7 +77,7 @@
             android:layout_height="@dimen/button_height"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="24dp"
-            android:background="@drawable/button_sign_in_style"
+            android:background="@drawable/button_style"
             android:text="@string/sign_up"
             android:textColor="@color/white"
             android:textSize="@dimen/text_size_button"/>
@@ -91,7 +91,7 @@
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="40dp"
-        android:background="@drawable/button_sign_up_style"
+        android:background="@drawable/button_transparent_style"
         android:text="@string/sign_in"
         android:textColor="@color/white"
         android:textSize="@dimen/text_size_button"/>
