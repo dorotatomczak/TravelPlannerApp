@@ -1,3 +1,4 @@
+import data.HTTPCharger
 import java.net.ServerSocket
 import java.util.*
 
@@ -10,6 +11,9 @@ class Server {
             val messageByte = ByteArray(1000)
             var end = false
             var dataString = ""
+            val h=HTTPCharger()
+            h.testURLs()
+
             while (true) {
                 server.accept().use { socket ->
 
