@@ -25,8 +25,7 @@ class SignUpActivity : AppCompatActivity(), SignUpContract.View {
     }
 
     override fun showSignIn() {
-        val intent = Intent(this, SignInActivity::class.java)
-        startActivity(intent)
+        // Goes back to previously started SignInActivity
         finish()
     }
 }

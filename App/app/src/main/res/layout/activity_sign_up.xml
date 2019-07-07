@@ -22,7 +22,7 @@
             android:background="@color/transparent"
             android:text="@string/create_an_account"
             android:textAlignment="center"
-            android:textColor="@color/white"
+            android:textColor="@color/seeThroughWhite"
             android:textSize="@dimen/text_size_title_small" />
 
         <LinearLayout
@@ -31,7 +31,7 @@
             android:layout_gravity="center_horizontal"
             android:background="@drawable/round_background"
             android:orientation="vertical"
-            android:padding="@dimen/small_padding">
+            android:padding="@dimen/padding_small">
 
             <EditText
                 android:id="@+id/editTextEmail"
@@ -39,7 +39,7 @@
                 android:layout_height="@dimen/edit_text_height"
                 android:background="@color/transparent"
                 android:drawableStart="@drawable/ic_mail"
-                android:drawablePadding="@dimen/small_padding"
+                android:drawablePadding="@dimen/padding_small"
                 android:hint="@string/email"
                 android:inputType="textEmailAddress"
                 android:textColor="@color/black"
@@ -51,7 +51,7 @@
                 android:layout_height="@dimen/edit_text_height"
                 android:background="@color/transparent"
                 android:drawableStart="@drawable/ic_lock"
-                android:drawablePadding="@dimen/small_padding"
+                android:drawablePadding="@dimen/padding_small"
                 android:hint="@string/password"
                 android:inputType="textPassword"
                 android:textColor="@color/black"
@@ -63,7 +63,7 @@
                 android:layout_height="@dimen/edit_text_height"
                 android:background="@color/transparent"
                 android:drawableStart="@drawable/ic_lock"
-                android:drawablePadding="@dimen/small_padding"
+                android:drawablePadding="@dimen/padding_small"
                 android:hint="@string/confirm_password"
                 android:inputType="textPassword"
                 android:textColor="@color/black"
