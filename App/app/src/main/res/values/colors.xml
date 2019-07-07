@@ -11,7 +11,7 @@
     <color name="moonstoneBlue">#73BFB8</color>
     <color name="sunsetOrange">#F25757</color>
     <color name="transparent">#00000000</color>
-    <color name="seeThroughWhite">#22FFFFFF</color>
+    <color name="seeThroughWhite">#75FFFFFF</color>
     <color name="shadyWhite">#99FFFFFF</color>
     <color name="black">#000000</color>
 </resources>

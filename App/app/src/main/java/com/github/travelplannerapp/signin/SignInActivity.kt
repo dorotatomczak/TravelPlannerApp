@@ -23,10 +23,7 @@ class SignInActivity : AppCompatActivity(), SignInContract.View {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_sign_in)
 
-        //set up toolbar
-        setSupportActionBar(toolbarSignIn)
-
-        //set up button
+        //set up buttons
         buttonSignIn.setOnClickListener { presenter.signIn() }
         buttonSignUp.setOnClickListener { presenter.signUp() }
     }
@@ -34,6 +31,7 @@ class SignInActivity : AppCompatActivity(), SignInContract.View {
     override fun showTravels() {
         val intent = Intent(this, TravelsActivity::class.java)
         startActivity(intent)
+        finish()
     }
 
     override fun showSignUp() {
