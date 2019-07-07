@@ -12,15 +12,14 @@
         android:layout_height="match_parent"
         android:orientation="vertical"
         android:gravity="center"
-        android:background="@color/neonCarrot"
-        >
+        android:background="@color/neonCarrot">
+
         <ImageView
             android:id="@+id/imageViewItemTile"
             android:layout_width="@dimen/image_size_tile"
             android:layout_height="@dimen/image_size_tile"
             android:src="@drawable/ic_place"
-            android:contentDescription="@string/day_plans"
-            />
+            android:contentDescription="@string/day_plans" />
 
         <TextView
             android:id="@+id/textViewItemTileName"
@@ -30,6 +29,7 @@
             android:textAlignment="center"
             android:textColor="@color/white"
             android:textSize="@dimen/text_size_tile" />
+
     </LinearLayout>
 
 </android.support.v7.widget.CardView>
