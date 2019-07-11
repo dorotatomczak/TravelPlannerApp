@@ -1,24 +1,26 @@
 package com.github.travelplannerapp.travels
 
+import android.util.Log
 import com.github.travelplannerapp.BasePresenter
 import com.github.travelplannerapp.communication.CommunicationService
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
+import retrofit2.Retrofit
+import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
+import retrofit2.converter.gson.GsonConverterFactory
 
 class TravelsPresenter(view: TravelsContract.View) : BasePresenter<TravelsContract.View>(view), TravelsContract.Presenter {
 
-    private var server: CommunicationService = CommunicationService()
+
     private var travels = listOf<String>()
+    private var server: CommunicationService = CommunicationService()
 
     override fun loadTravels() {
-        //TODO [Dorota] When database is implemented load travels from it, these values are temporary
-        travels = listOf("Elbląg", "Gdańsk", "Toruń", "Olsztyn")
+        val requestInterface = Retrofit.Builder()
+                .baseUrl(server.getUrl())
+                .addConverterFactory(GsonConverterFactory.create())
+                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+                .build().create(TravelsContract.ServerAPI::class.java)
 
-        if (travels.isEmpty()){
-            view.showNoTravels()
-        }else{
-            view.showTravels()
-        }
+        view.loadTravels(requestInterface, this::handleResponse)
     }
 
     override fun onBindTravelsAtPosition(position: Int, itemView: TravelsContract.TravelItemView) {
@@ -34,19 +36,15 @@ class TravelsPresenter(view: TravelsContract.View) : BasePresenter<TravelsContra
         val travel = travels[position]
         view.showTravelDetails(travel)
     }
+    override fun handleResponse(myTravels: List<String>) {
 
-    //TODO [Dorota] Presenter should use an Interactor, meaning it delegates the data pulling job
-    // to another class and gets its results to render the view
-    override fun contactServer() {
-        GlobalScope.launch{
-            try {
-//                val response = server.getExampleData(1, view)
-                val response = "200"
-                view.showSnackbar(response)
-            }
-            catch(err: Throwable){
-                println("some exception handling")
-            }
+        travels = ArrayList(myTravels)
+
+        if (travels.isEmpty()){
+            view.showNoTravels()
+        }else{
+            view.showTravels()
         }
+
     }
 }
