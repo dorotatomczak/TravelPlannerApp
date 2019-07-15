@@ -15,4 +15,7 @@ class ServerController {
     fun greeting(@RequestParam(value = "name", defaultValue = "World") name: String) =
             Greeting(counter.incrementAndGet(), "Hello, $name")
 
+    @GetMapping("/travels")
+    fun travels() = listOf("Gdańsk", "Elbląg", "Toruń", "Olsztyn")
+
 }

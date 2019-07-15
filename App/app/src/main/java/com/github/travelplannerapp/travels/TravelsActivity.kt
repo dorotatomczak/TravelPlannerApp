@@ -1,6 +1,7 @@
 package com.github.travelplannerapp.travels
 
 import android.content.Intent
+import android.databinding.DataBindingUtil
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
@@ -8,6 +9,7 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.support.design.widget.Snackbar
+import android.util.Log
 
 import com.github.travelplannerapp.R
 import com.github.travelplannerapp.addtravel.AddTravelActivity
@@ -16,27 +18,30 @@ import com.github.travelplannerapp.traveldetails.TravelDetailsActivity
 import javax.inject.Inject
 
 import dagger.android.AndroidInjection
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.disposables.Disposable
+import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_travels.*
+import retrofit2.Retrofit
 
 
 class TravelsActivity : AppCompatActivity(), TravelsContract.View {
 
     @Inject
     lateinit var presenter: TravelsContract.Presenter
+    private var myCompositeDisposable: CompositeDisposable? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         AndroidInjection.inject(this)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_travels)
+        myCompositeDisposable = CompositeDisposable()
 
         setSupportActionBar(toolbarTravels)
 
         fabTravels.setOnClickListener {
             showAddTravel()
-        }
-
-        fabContactServer.setOnClickListener {
-            presenter.contactServer()
         }
 
         //TODO("[Dorota] check if possible to use dagger2 with adapter")
@@ -47,6 +52,11 @@ class TravelsActivity : AppCompatActivity(), TravelsContract.View {
     override fun onResume() {
         super.onResume()
         presenter.loadTravels()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        myCompositeDisposable?.clear()
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -82,7 +92,7 @@ class TravelsActivity : AppCompatActivity(), TravelsContract.View {
         recyclerViewTravels.visibility = View.GONE
     }
 
-    override fun showTravels(){
+    override fun showTravels() {
         textViewNoTravels.visibility = View.GONE
         recyclerViewTravels.visibility = View.VISIBLE
     }
@@ -90,5 +100,12 @@ class TravelsActivity : AppCompatActivity(), TravelsContract.View {
     override fun showSnackbar(message: String) {
         Snackbar.make(coordinatorLayoutTravels, message, Snackbar.LENGTH_LONG)
                 .setAction("Action", null).show()
+    }
+
+    override fun loadTravels(requestInterface: TravelsContract.ServerAPI, handleResponse: (myTravels: List<String>) -> Unit) {
+        myCompositeDisposable?.add(requestInterface.getTravels()
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe(handleResponse))
     }
 }

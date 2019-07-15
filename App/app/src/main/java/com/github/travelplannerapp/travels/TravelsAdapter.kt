@@ -1,6 +1,8 @@
 package com.github.travelplannerapp.travels
 
+import android.databinding.BindingAdapter
 import android.support.v7.widget.RecyclerView
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -37,4 +39,20 @@ class TravelsAdapter (val presenter: TravelsContract.Presenter):RecyclerView.Ada
             textViewItemTravelName.text = name
         }
     }
+    /*@BindingAdapter({"entries", "layout"})
+public static <T> void setEntries(ViewGroup viewGroup,
+                                  List<T> entries, int layoutId) {
+    viewGroup.removeAllViews();
+    if (entries != null) {
+        LayoutInflater inflater = (LayoutInflater)
+            viewGroup.getContext()
+                .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        for (int i = 0; i < entries.size(); i++) {
+            T entry = entries.get(i);
+            ViewDataBinding binding = DataBindingUtil
+                .inflate(inflater, layoutId, viewGroup, true);
+            binding.setVariable(BR.data, entry);
+        }
+    }
+}*/
 }
