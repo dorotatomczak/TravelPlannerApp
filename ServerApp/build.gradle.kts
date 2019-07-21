@@ -3,8 +3,8 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 plugins {
 	id("org.springframework.boot") version "2.1.6.RELEASE"
 	id("io.spring.dependency-management") version "1.0.7.RELEASE"
-	kotlin("jvm") version "1.2.71"
-	kotlin("plugin.spring") version "1.2.71"
+	kotlin("jvm") version "1.3.41"
+	kotlin("plugin.spring") version "1.3.41"
 }
 
 group = "com.github.travelplannerapp"
@@ -21,6 +21,7 @@ dependencies {
 	implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
 	implementation("org.springframework.boot:spring-boot-starter-web")
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
+	implementation ("postgresql:postgresql:9.1-901-1.jdbc4")
 }
 
 tasks.withType<KotlinCompile> {
