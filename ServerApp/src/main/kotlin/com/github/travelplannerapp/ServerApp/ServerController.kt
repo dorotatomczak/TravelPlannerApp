@@ -25,6 +25,7 @@ class ServerController {
         println("-------------------------")
         val connector=HEREConnector()
         connector.printKeys()
+        connector.verifyKeys()
     }
 
 
