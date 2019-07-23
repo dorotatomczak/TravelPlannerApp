@@ -23,6 +23,15 @@ class HEREConnector {
         sendRequest(example_request)
 
     }
+    private fun readResponse()//simple getting variables in pattern
+    {
+        val regex = """([\w\s]+) is (\d+) years old""".toRegex()
+        val matchResult = regex.find("Mickey Mouse is 95 years old")
+        val (name, age) = matchResult!!.destructured
+
+        println("name: "+name+" age: "+age)
+
+    }
     private fun sendRequest(address:String)
     {
         val url=URL(address)
@@ -38,6 +47,7 @@ class HEREConnector {
         }
         println(response)
         File("exampleRequest.txt").writeText(response)
+        readResponse()
     }
 
 
