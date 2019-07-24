@@ -2,8 +2,10 @@ package com.github.travelplannerapp.ServerApp.db.repositories
 
 import com.github.travelplannerapp.ServerApp.db.DbConnection
 import com.github.travelplannerapp.ServerApp.db.dao.User
+import org.springframework.stereotype.Component
 import java.sql.ResultSet
 
+@Component
 class UserRepository : IUserRepository {
 
     override fun get(id: Int): User? {
