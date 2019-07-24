@@ -48,7 +48,6 @@ class UserRepository : IUserRepository {
         ps.setString(2, obj.email)
         ps.setString(3, obj.password)
         ps.executeUpdate()
-        println("repo: added one user")
     }
 
     override fun add(objs: MutableList<User>) {
@@ -73,7 +72,6 @@ class UserRepository : IUserRepository {
                         "WHERE id=?")
         ps.setInt(1, id)
         ps.executeUpdate()
-        println("repo: deleted user with id $id")
     }
 
     override fun deleteAll() {
@@ -81,6 +79,5 @@ class UserRepository : IUserRepository {
                 .conn
                 .prepareStatement("DELETE FROM app_user")
         ps.executeUpdate()
-        println("repo: deleted all users")
     }
 }

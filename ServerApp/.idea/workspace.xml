@@ -2,10 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="e44ff4f1-85a1-4feb-8196-908c5252cfdf" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/src/test/kotlin/com/github/travelplannerapp/ServerApp/db/UserRepositoryTest.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/com/github/travelplannerapp/ServerApp/ServerController.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/com/github/travelplannerapp/ServerApp/ServerController.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/com/github/travelplannerapp/ServerApp/db/DbConnection.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/com/github/travelplannerapp/ServerApp/db/DbConnection.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle.kts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/kotlin/com/github/travelplannerapp/ServerApp/db/repositories/UserRepository.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/com/github/travelplannerapp/ServerApp/db/repositories/UserRepository.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.properties" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/classes/" />
     <ignored path="$PROJECT_DIR$/.gradle/" />
@@ -86,14 +87,44 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/kotlin/com/github/travelplannerapp/ServerApp/db/repositories/UserRepository.kt">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="124">
-              <caret line="77" lean-forward="true" selection-start-line="77" selection-end-line="77" />
+            <state relative-caret-position="73">
+              <caret line="11" column="18" lean-forward="true" selection-start-line="11" selection-start-column="17" selection-end-line="11" selection-end-column="18" />
               <folding>
                 <element signature="e#63#206#0" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/kotlin/com/github/travelplannerapp/ServerApp/db/dao/User.kt">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="17">
+              <caret line="1" lean-forward="true" selection-start-line="1" selection-end-line="1" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/test/kotlin/com/github/travelplannerapp/ServerApp/db/UserRepositoryTest.kt">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="136">
+              <caret line="8" column="21" lean-forward="true" selection-start-line="8" selection-start-column="21" selection-end-line="8" selection-end-column="21" />
+              <folding>
+                <element signature="e#50#313#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/main/resources/application.properties">
+          <provider selected="true" editor-type-id="text-editor">
+            <state>
+              <caret column="16" selection-start-column="16" selection-end-column="16" />
             </state>
           </provider>
         </entry>
@@ -112,10 +143,10 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Kotlin File" />
         <option value="Kotlin Interface" />
         <option value="Kotlin Class" />
         <option value="Kotlin Object" />
+        <option value="Kotlin File" />
       </list>
     </option>
   </component>
@@ -125,16 +156,17 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/src/main/kotlin/com/github/travelplannerapp/ServerApp/db/dao/User.kt" />
         <option value="$PROJECT_DIR$/src/main/kotlin/com/github/travelplannerapp/ServerApp/ServerAppApplication.kt" />
         <option value="$PROJECT_DIR$/src/main/kotlin/com/github/travelplannerapp/ServerApp/DataModels.kt" />
         <option value="$PROJECT_DIR$/src/main/kotlin/com/github/travelplannerapp/ServerApp/db/repositories/IRepository.kt" />
-        <option value="$PROJECT_DIR$/build.gradle.kts" />
-        <option value="$PROJECT_DIR$/src/main/resources/application.properties" />
         <option value="$PROJECT_DIR$/src/main/kotlin/com/github/travelplannerapp/ServerApp/db/repositories/IUserRepository.kt" />
         <option value="$PROJECT_DIR$/src/main/kotlin/com/github/travelplannerapp/ServerApp/ServerController.kt" />
         <option value="$PROJECT_DIR$/src/main/kotlin/com/github/travelplannerapp/ServerApp/db/DbConnection.kt" />
+        <option value="$PROJECT_DIR$/build.gradle.kts" />
+        <option value="$PROJECT_DIR$/src/main/kotlin/com/github/travelplannerapp/ServerApp/db/dao/User.kt" />
         <option value="$PROJECT_DIR$/src/main/kotlin/com/github/travelplannerapp/ServerApp/db/repositories/UserRepository.kt" />
+        <option value="$PROJECT_DIR$/src/test/kotlin/com/github/travelplannerapp/ServerApp/db/UserRepositoryTest.kt" />
+        <option value="$PROJECT_DIR$/src/main/resources/application.properties" />
       </list>
     </option>
   </component>
@@ -199,28 +231,17 @@
               <item name="ServerApp" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="main" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-              <item name="resources" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="ServerApp" type="b2602c69:ProjectViewProjectNode" />
-              <item name="ServerApp" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="test" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-            </path>
-            <path>
-              <item name="ServerApp" type="b2602c69:ProjectViewProjectNode" />
-              <item name="ServerApp" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="test" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-              <item name="kotlin" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="ServerApp" type="b2602c69:ProjectViewProjectNode" />
-              <item name="ServerApp" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="test" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
               <item name="kotlin" type="462c0819:PsiDirectoryNode" />
               <item name="ServerApp" type="462c0819:PsiDirectoryNode" />
+              <item name="db" type="462c0819:PsiDirectoryNode" />
+              <item name="dao" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="ServerApp" type="b2602c69:ProjectViewProjectNode" />
+              <item name="ServerApp" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="resources" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -253,84 +274,91 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Kotlin.com.github.travelplannerapp.serverapp.ServerAppApplicationKt">
-    <configuration name="ServerApp [clean build]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
-      <ExternalSystemSettings>
-        <option name="executionName" />
-        <option name="externalProjectPath" value="$PROJECT_DIR$" />
-        <option name="externalSystemIdString" value="GRADLE" />
-        <option name="scriptParameters" value="" />
-        <option name="taskDescriptions">
-          <list />
-        </option>
-        <option name="taskNames">
-          <list>
-            <option value="clean" />
-            <option value="build" />
-          </list>
-        </option>
-        <option name="vmOptions" value="" />
-      </ExternalSystemSettings>
-      <GradleScriptDebugEnabled>true</GradleScriptDebugEnabled>
-      <method v="2" />
-    </configuration>
-    <configuration name="com.github.travelplannerapp.serverapp.ServerAppApplicationKt" type="JetRunConfigurationType" factoryName="Kotlin" temporary="true" nameIsGenerated="true">
-      <module name="ServerApp.main" />
-      <option name="VM_PARAMETERS" value="" />
-      <option name="PROGRAM_PARAMETERS" value="" />
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
-      <option name="ALTERNATIVE_JRE_PATH" value="C:\Program Files\Java\jdk1.8.0_144\jre" />
-      <option name="PASS_PARENT_ENVS" value="true" />
-      <option name="MAIN_CLASS_NAME" value="com.github.travelplannerapp.serverapp.ServerAppApplicationKt" />
-      <option name="WORKING_DIRECTORY" value="" />
+  <component name="RunManager" selected="JUnit.UserRepositoryTest">
+    <configuration name="All in ServerApp.test" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="ServerApp.test" />
+      <option name="PACKAGE_NAME" value="" />
+      <option name="TEST_OBJECT" value="package" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="build.gradle.kts" type="KotlinStandaloneScriptRunConfigurationType" factoryName="Kotlin script" temporary="true" nameIsGenerated="true">
-      <module name="ServerApp" />
-      <option name="filePath" value="$PROJECT_DIR$/build.gradle.kts" />
-      <option name="vmParameters" />
-      <option name="alternativeJrePath" />
-      <option name="programParameters" />
-      <option name="passParentEnvs" value="true" />
-      <option name="workingDirectory" value="$PROJECT_DIR$" />
-      <option name="isAlternativeJrePathEnabled" value="false" />
-      <option name="VM_PARAMETERS" />
-      <option name="PROGRAM_PARAMETERS" />
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
-      <option name="ALTERNATIVE_JRE_PATH" />
-      <option name="PASS_PARENT_ENVS" value="true" />
-      <option name="MAIN_CLASS_NAME" />
-      <option name="WORKING_DIRECTORY" />
-      <option name="filePath" value="$PROJECT_DIR$/build.gradle.kts" />
-      <option name="vmParameters" />
-      <option name="alternativeJrePath" />
-      <option name="programParameters" />
-      <option name="passParentEnvs" value="true" />
-      <option name="workingDirectory" value="$PROJECT_DIR$" />
-      <option name="isAlternativeJrePathEnabled" value="false" />
-      <option name="VM_PARAMETERS" />
-      <option name="PROGRAM_PARAMETERS" />
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
-      <option name="ALTERNATIVE_JRE_PATH" />
-      <option name="PASS_PARENT_ENVS" value="true" />
-      <option name="MAIN_CLASS_NAME" />
-      <option name="WORKING_DIRECTORY" />
+    <configuration name="ServerAppApplicationTests" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="ServerApp.test" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.github.travelplannerapp.ServerApp.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.github.travelplannerapp.ServerApp" />
+      <option name="MAIN_CLASS_NAME" value="com.github.travelplannerapp.ServerApp.ServerAppApplicationTests" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="UserRepositoryTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="ServerApp.test" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.github.travelplannerapp.ServerApp.db.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.github.travelplannerapp.ServerApp.db" />
+      <option name="MAIN_CLASS_NAME" value="com.github.travelplannerapp.ServerApp.db.UserRepositoryTest" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="UserRepositoryTest.whenGetCalledOnExistingIdExpectOneUserReturned" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="ServerApp.test" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.github.travelplannerapp.ServerApp.db.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.github.travelplannerapp.ServerApp.db" />
+      <option name="MAIN_CLASS_NAME" value="com.github.travelplannerapp.ServerApp.db.UserRepositoryTest" />
+      <option name="METHOD_NAME" value="whenGetCalledOnExistingIdExpectOneUserReturned" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="UserRepositoryTest.whenGetCalledOnNonExistingIdExpectNullReturned" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="ServerApp.test" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.github.travelplannerapp.ServerApp.db.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.github.travelplannerapp.ServerApp.db" />
+      <option name="MAIN_CLASS_NAME" value="com.github.travelplannerapp.ServerApp.db.UserRepositoryTest" />
+      <option name="METHOD_NAME" value="whenGetCalledOnNonExistingIdExpectNullReturned" />
+      <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
     <list>
-      <item itemvalue="Gradle.ServerApp [clean build]" />
-      <item itemvalue="Kotlin.com.github.travelplannerapp.serverapp.ServerAppApplicationKt" />
-      <item itemvalue="Kotlin script.build.gradle.kts" />
+      <item itemvalue="JUnit.All in ServerApp.test" />
+      <item itemvalue="JUnit.ServerAppApplicationTests" />
+      <item itemvalue="JUnit.UserRepositoryTest" />
+      <item itemvalue="JUnit.UserRepositoryTest.whenGetCalledOnExistingIdExpectOneUserReturned" />
+      <item itemvalue="JUnit.UserRepositoryTest.whenGetCalledOnNonExistingIdExpectNullReturned" />
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Kotlin.com.github.travelplannerapp.serverapp.ServerAppApplicationKt" />
-        <item itemvalue="Gradle.ServerApp [clean build]" />
-        <item itemvalue="Kotlin script.build.gradle.kts" />
+        <item itemvalue="JUnit.UserRepositoryTest" />
+        <item itemvalue="JUnit.UserRepositoryTest.whenGetCalledOnExistingIdExpectOneUserReturned" />
+        <item itemvalue="JUnit.UserRepositoryTest.whenGetCalledOnNonExistingIdExpectNullReturned" />
+        <item itemvalue="JUnit.ServerAppApplicationTests" />
+        <item itemvalue="JUnit.All in ServerApp.test" />
       </list>
     </recent_temporary>
   </component>
@@ -346,6 +374,38 @@
       <updated>1562420555069</updated>
     </task>
     <servers />
+  </component>
+  <component name="TestHistory">
+    <history-entry file="UserRepositoryTest - 2019.07.24 at 15h 43m 12s.xml">
+      <configuration name="UserRepositoryTest" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="UserRepositoryTest_whenGetCalledOnExistingIdExpectOneUserReturned - 2019.07.24 at 15h 49m 46s.xml">
+      <configuration name="UserRepositoryTest.whenGetCalledOnExistingIdExpectOneUserReturned" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="UserRepositoryTest_whenGetCalledOnExistingIdExpectOneUserReturned - 2019.07.24 at 15h 51m 26s.xml">
+      <configuration name="UserRepositoryTest.whenGetCalledOnExistingIdExpectOneUserReturned" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="UserRepositoryTest_whenGetCalledOnNonExistingIdExpectNullReturned - 2019.07.24 at 15h 53m 10s.xml">
+      <configuration name="UserRepositoryTest.whenGetCalledOnNonExistingIdExpectNullReturned" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="UserRepositoryTest_whenGetCalledOnNonExistingIdExpectNullReturned - 2019.07.24 at 15h 56m 54s.xml">
+      <configuration name="UserRepositoryTest.whenGetCalledOnNonExistingIdExpectNullReturned" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="UserRepositoryTest_whenGetCalledOnNonExistingIdExpectNullReturned - 2019.07.24 at 16h 00m 45s.xml">
+      <configuration name="UserRepositoryTest.whenGetCalledOnNonExistingIdExpectNullReturned" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="UserRepositoryTest_whenGetCalledOnNonExistingIdExpectNullReturned - 2019.07.24 at 16h 01m 02s.xml">
+      <configuration name="UserRepositoryTest.whenGetCalledOnNonExistingIdExpectNullReturned" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="UserRepositoryTest - 2019.07.24 at 16h 04m 27s.xml">
+      <configuration name="UserRepositoryTest" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="UserRepositoryTest_whenGetCalledOnExistingIdExpectOneUserReturned - 2019.07.24 at 16h 17m 10s.xml">
+      <configuration name="UserRepositoryTest.whenGetCalledOnExistingIdExpectOneUserReturned" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="UserRepositoryTest - 2019.07.24 at 16h 17m 24s.xml">
+      <configuration name="UserRepositoryTest" configurationId="JUnit" />
+    </history-entry>
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -407,13 +467,6 @@
     <entry file="file://$PROJECT_DIR$/src/main/kotlin/Server.kt" />
     <entry file="file://$PROJECT_DIR$/src/main/kotlin/ServerController.kt" />
     <entry file="file://$PROJECT_DIR$/HELP.md" />
-    <entry file="file://$PROJECT_DIR$/src/main/kotlin/com/github/travelplannerapp/ServerApp/db/dao/User.kt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="68">
-          <caret line="4" column="29" selection-start-line="4" selection-start-column="29" selection-end-line="4" selection-end-column="29" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/kotlin/com/github/travelplannerapp/ServerApp/db/repositories/IRepository.kt">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="221">
@@ -454,24 +507,10 @@
     <entry file="file://$PROJECT_DIR$/src/main/resources/application.properites">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/resources/application.properties">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret column="16" selection-start-column="16" selection-end-column="16" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/build.gradle.kts">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="102">
-          <caret line="6" column="43" selection-start-line="6" selection-start-column="43" selection-end-line="6" selection-end-column="43" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/kotlin/com/github/travelplannerapp/ServerApp/db/DbConnection.kt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="136">
-          <caret line="9" column="1" selection-start-line="9" selection-start-column="1" selection-end-line="9" selection-end-column="1" />
+        <state relative-caret-position="153">
+          <caret line="24" column="22" selection-start-line="24" selection-start-column="22" selection-end-line="24" selection-end-column="22" />
         </state>
       </provider>
     </entry>
@@ -492,13 +531,44 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/kotlin/com/github/travelplannerapp/ServerApp/db/DbConnection.kt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="136">
+          <caret line="9" column="1" selection-start-line="9" selection-start-column="1" selection-end-line="9" selection-end-column="1" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/kotlin/com/github/travelplannerapp/ServerApp/db/dao/User.kt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="17">
+          <caret line="1" lean-forward="true" selection-start-line="1" selection-end-line="1" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/kotlin/com/github/travelplannerapp/ServerApp/db/repositories/UserRepository.kt">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="124">
-          <caret line="77" lean-forward="true" selection-start-line="77" selection-end-line="77" />
+        <state relative-caret-position="73">
+          <caret line="11" column="18" lean-forward="true" selection-start-line="11" selection-start-column="17" selection-end-line="11" selection-end-column="18" />
           <folding>
             <element signature="e#63#206#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/test/kotlin/com/github/travelplannerapp/ServerApp/db/UserRepositoryTest.kt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="136">
+          <caret line="8" column="21" lean-forward="true" selection-start-line="8" selection-start-column="21" selection-end-line="8" selection-end-column="21" />
+          <folding>
+            <element signature="e#50#313#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/resources/application.properties">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret column="16" selection-start-column="16" selection-end-column="16" />
         </state>
       </provider>
     </entry>
