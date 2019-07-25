@@ -1,0 +1,4 @@
+#Thu Jul 25 20:55:15 CEST 2019
+base.0=C\:\\Programowanie\\TravelPlannerApp\\App\\opencv\\build\\intermediates\\dex\\debug\\mergeDexDebug\\out
+path.0=classes.dex
+renamed.0=classes.dex
