@@ -2,13 +2,14 @@ package com.github.travelplannerapp.travels
 
 import android.content.Intent
 import android.os.Bundle
-import android.support.design.widget.NavigationView
-import android.support.v7.app.AppCompatActivity
-import android.support.v7.widget.LinearLayoutManager
+import com.google.android.material.navigation.NavigationView
+import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.LinearLayoutManager
 import android.view.View
-import android.support.design.widget.Snackbar
-import android.support.v7.app.ActionBarDrawerToggle
+import com.google.android.material.snackbar.Snackbar
+import androidx.appcompat.app.ActionBarDrawerToggle
 import android.view.MenuItem
+import androidx.recyclerview.widget.RecyclerView
 
 import com.github.travelplannerapp.R
 import com.github.travelplannerapp.addtravel.AddTravelActivity
@@ -49,7 +50,7 @@ class TravelsActivity : AppCompatActivity(), TravelsContract.View, NavigationVie
             presenter.contactServer()
         }
 
-        recyclerViewTravels.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+        recyclerViewTravels.layoutManager = LinearLayoutManager(this, RecyclerView.VERTICAL, false)
         recyclerViewTravels.adapter = TravelsAdapter(presenter)
     }
 

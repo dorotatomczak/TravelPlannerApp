@@ -3,9 +3,9 @@ package com.github.travelplannerapp.traveldetails
 import android.app.Activity
 import android.content.Intent
 import android.net.Uri
-import android.support.v7.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.support.v7.widget.StaggeredGridLayoutManager
+import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import android.widget.Toast
 import com.github.travelplannerapp.R
 import com.github.travelplannerapp.accommodation.AccommodationActivity
