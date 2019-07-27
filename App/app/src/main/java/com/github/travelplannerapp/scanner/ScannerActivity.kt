@@ -9,6 +9,7 @@ import android.support.v4.app.ActivityCompat
 import android.support.v4.content.ContextCompat
 import com.github.travelplannerapp.R
 import dagger.android.AndroidInjection
+import kotlinx.android.synthetic.main.activity_scanner.*
 import org.opencv.android.OpenCVLoader
 import javax.inject.Inject
 
@@ -29,6 +30,8 @@ class ScannerActivity : AppCompatActivity(), ScannerContract.View {
 
         verifyPermissions()
         initOpenCV()
+
+        buttonScan.setOnClickListener { presenter.takeScan() }
     }
 
     private fun initOpenCV(){

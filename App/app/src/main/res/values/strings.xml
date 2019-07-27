@@ -18,4 +18,5 @@
     <string name="drawer_close" translatable="false">Drawer closed</string>
     <string name="scanner_permissions_failure">You need to grant camera and storage permissions</string>
     <string name="scanner_initialization_failure">Scanner initialization failed</string>
+    <string name="scan">Scan</string>
 </resources>

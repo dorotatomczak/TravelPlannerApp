@@ -16,4 +16,5 @@
     <string name="menu_sign_out">Wyloguj się</string>
     <string name="scanner_permissions_failure">"Musisz przyznać uprawnienia do kamery i pamięci masowej "</string>
     <string name="scanner_initialization_failure">Inicjalizacja skanera nie powiodła się</string>
+    <string name="scan">Skanuj</string>
 </resources>
