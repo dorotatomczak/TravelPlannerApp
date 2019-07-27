@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">TravelPlannerApp</string>
-    <string name="action_settings">Ustawienia</string>
+    <string name="menu_settings">Ustawienia</string>
     <string name="sign_in">Zaloguj się</string>
     <string name="day_plans">Plany dni</string>
     <string name="tickets">Bilety</string>
@@ -14,4 +13,5 @@
     <string name="sign_in_to_your_account">Zaloguj się na swoje konto</string>
     <string name="create_an_account">Utwórz konto</string>
     <string name="confirm_password">powtórz hasło</string>
+    <string name="menu_sign_out">Wyloguj się</string>
 </resources>

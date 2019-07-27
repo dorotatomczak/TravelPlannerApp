@@ -1,6 +1,5 @@
 package com.github.travelplannerapp.travels
 
-import android.util.Log
 import com.github.travelplannerapp.BasePresenter
 import com.github.travelplannerapp.communication.CommunicationService
 import retrofit2.Retrofit

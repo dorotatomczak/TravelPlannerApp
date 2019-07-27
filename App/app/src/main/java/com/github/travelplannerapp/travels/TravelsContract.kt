@@ -41,6 +41,5 @@ interface TravelsContract {
     interface ServerAPI{
         @GET("/travels")
         fun getTravels(): Observable<List<String>>
-
     }
 }
