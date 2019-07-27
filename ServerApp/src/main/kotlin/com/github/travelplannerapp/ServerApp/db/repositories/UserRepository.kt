@@ -9,75 +9,75 @@ import java.sql.ResultSet
 class UserRepository : IUserRepository {
 
     override fun get(id: Int): User? {
-        val ps = DbConnection
+        val statement = DbConnection
                 .conn
                 .prepareStatement("SELECT * FROM app_user WHERE id=?")
-        ps.setInt(1, id)
-        val rs: ResultSet = ps.executeQuery()
-        if (rs.next()) {
-            return User(rs.getInt(1),
-                    rs.getString(2),
-                    rs.getString(3),
-                    rs.getString(4))
+        statement.setInt(1, id)
+        val result: ResultSet = statement.executeQuery()
+        if (result.next()) {
+            return User(result.getInt(1),
+                    result.getString(2),
+                    result.getString(3),
+                    result.getString(4))
         }
         return null
     }
 
     override fun getAll(): MutableList<User> {
         var users = mutableListOf<User>()
-        val ps = DbConnection
+        val statement = DbConnection
                 .conn
                 .prepareStatement("SELECT * FROM app_user")
-        val rs = ps.executeQuery()
-        while (rs.next()) {
-            var user = User(rs.getInt(1),
-                    rs.getString(2),
-                    rs.getString(3),
-                    rs.getString(4))
+        val result = statement.executeQuery()
+        while (result.next()) {
+            var user = User(result.getInt(1),
+                    result.getString(2),
+                    result.getString(3),
+                    result.getString(4))
             users.add(user)
         }
         return users
     }
 
     override fun add(obj: User) {
-        val ps = DbConnection
+        val statement = DbConnection
                 .conn
                 .prepareStatement("INSERT INTO app_user (name,email,password) " +
                         "VALUES (?,?,?)")
-        ps.setString(1, obj.name)
-        ps.setString(2, obj.email)
-        ps.setString(3, obj.password)
-        ps.executeUpdate()
+        statement.setString(1, obj.name)
+        statement.setString(2, obj.email)
+        statement.setString(3, obj.password)
+        statement.executeUpdate()
     }
 
     override fun add(objs: MutableList<User>) {
-        val ps = DbConnection
+        val statement = DbConnection
                 .conn
                 .prepareStatement("INSERT INTO app_user (name,email,password) " +
                         "VALUES (?,?,?)")
         objs.iterator().forEach { obj ->
             run {
-                ps.setString(1, obj.name)
-                ps.setString(2, obj.email)
-                ps.setString(3, obj.password)
-                ps.executeUpdate()
+                statement.setString(1, obj.name)
+                statement.setString(2, obj.email)
+                statement.setString(3, obj.password)
+                statement.executeUpdate()
             }
         }
     }
 
     override fun delete(id: Int) {
-        val ps = DbConnection
+        val statement = DbConnection
                 .conn
                 .prepareStatement("DELETE FROM app_user " +
                         "WHERE id=?")
-        ps.setInt(1, id)
-        ps.executeUpdate()
+        statement.setInt(1, id)
+        statement.executeUpdate()
     }
 
     override fun deleteAll() {
-        val ps = DbConnection
+        val statement = DbConnection
                 .conn
                 .prepareStatement("DELETE FROM app_user")
-        ps.executeUpdate()
+        statement.executeUpdate()
     }
 }
