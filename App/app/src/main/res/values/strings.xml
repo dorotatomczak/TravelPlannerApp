@@ -16,4 +16,6 @@
     <string name="menu_sign_out">Sign Out</string>
     <string name="drawer_open" translatable="false">Drawer opened</string>
     <string name="drawer_close" translatable="false">Drawer closed</string>
+    <string name="scanner_permissions_failure">You need to grant camera and storage permissions</string>
+    <string name="scanner_initialization_failure">Scanner initialization failed</string>
 </resources>
