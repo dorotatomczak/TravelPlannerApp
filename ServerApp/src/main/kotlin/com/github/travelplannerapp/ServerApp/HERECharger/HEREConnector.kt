@@ -11,6 +11,17 @@ class HEREConnector {
     val MY_APP_ID = "PFVgm9cqOc2OlIyiFZOO"
     val MY_APP_TOKEN = "OrWU0j5Bb1XI5Yj-YLIhVQ"
 
+    public fun findPlaceByText(text:String,latitude:String,longitude:String){
+        val request="https://places.cit.api.here.com/places/v1/"+
+                "autosuggest?at=${latitude},${longitude}"+
+                "&q=${text}"+
+                "&app_id=${MY_APP_ID}"+
+                "&app_code=${MY_APP_TOKEN}"
+        println(request)
+
+        sendRequest(request)
+    }
+
     public fun verifyKeys(){
         val example_request="https://route.api.here.com/routing/7.2/calculateroute.json" +
                 "?app_id=${MY_APP_ID}" +
@@ -23,6 +34,7 @@ class HEREConnector {
         sendRequest(example_request)
 
     }
+
     private fun readResponse()//simple getting variables in pattern
     {
         val regex = """([\w\s]+) is (\d+) years old""".toRegex()
@@ -41,12 +53,14 @@ class HEREConnector {
             println("\nSent  request to URL : $url;")
             inputStream.bufferedReader().use {
                 it.lines().forEach { line ->
-                        response=line;
+                        response+='\n'+line;
+
                 }
+
             }
         }
-        println(response)
-        File("exampleRequest.txt").writeText(response)
+        //println(response)
+        File("place.txt").writeText(response)
         //readResponse()
     }
     public fun printKeys()

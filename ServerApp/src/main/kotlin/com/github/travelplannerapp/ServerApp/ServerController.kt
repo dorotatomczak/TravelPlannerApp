@@ -31,9 +31,11 @@ class ServerController {
     @GetMapping("/PLACE")
     fun getPLACE()
     {
+        val connector=HEREConnector()
+        connector.printKeys()
+        connector.findPlaceByText("chrysler","40.74917","-73.98529")
 
-        val  p = Place ("aa","place1","polska",10.2,11.3,"restaurant","hahsf",2.3)
-        p.printPlace()
+
     }
 
 
