@@ -7,7 +7,7 @@ public class UserLocation {
     public fun decodeLocation(locationString: String) {
         var readWord = ""
          var country = ""
-         var alpha3 = ""s
+         var alpha3 = ""
         var positionLatitude = 0.0
          var positionLongitude = 0.0
         println(locationString)
