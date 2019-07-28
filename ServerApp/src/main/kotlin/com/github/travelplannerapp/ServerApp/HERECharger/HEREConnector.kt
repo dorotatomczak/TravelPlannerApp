@@ -47,11 +47,8 @@ class HEREConnector {
         }
         println(response)
         File("exampleRequest.txt").writeText(response)
-        readResponse()
+        //readResponse()
     }
-
-
-
     public fun printKeys()
     {
         println(MY_APP_ID)

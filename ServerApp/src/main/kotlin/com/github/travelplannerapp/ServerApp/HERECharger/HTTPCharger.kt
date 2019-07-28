@@ -30,6 +30,7 @@ public var response:String="";
                      if(line.contains("country",false)&&line.contains("position",false)){
 
                          response=line;
+                         println(response);
 
                 }
                     }

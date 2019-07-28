@@ -1,13 +1,15 @@
 package com.github.travelplannerapp.ServerApp.HERECharger
+import com.github.travelplannerapp.ServerApp.Data.Location
 
 public class UserLocation {
-    private var country = ""
-    private var alpha3 = ""
-    private var positionLatitude = 0.0
-    private var positionLongitude = 0.0
+    private var l=  Location()
 
     public fun decodeLocation(locationString: String) {
         var readWord = ""
+         var country = ""
+         var alpha3 = ""s
+        var positionLatitude = 0.0
+         var positionLongitude = 0.0
         println(locationString)
 
 
@@ -49,13 +51,15 @@ public class UserLocation {
         }
         positionLongitude = readWord.toDouble()
 
+        l.setCountry(country)
+        l.setLatitude(positionLatitude)
+        l.setLongitude(positionLongitude)
+
     }
 
     public fun printUserLocation() {
 
-        println("User location");
-        println(country)
-        println(alpha3)
-        println(positionLatitude)
+
+        l.printLocation()
     }
 }
