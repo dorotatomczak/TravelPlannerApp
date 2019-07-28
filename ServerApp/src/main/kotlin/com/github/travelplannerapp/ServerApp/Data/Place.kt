@@ -2,59 +2,69 @@ package com.github.travelplannerapp.ServerApp.Data
 
 public class Place {
 
-//    title:Chrysler Building
-//    highlightedTitle:<b>Chrysler</b> Building
-//    vicinity:405 Lexington Ave<br/>New York, NY 10017
-//    highlightedVicinity:405 Lexington Ave<br/>New York, NY 10017
-//    position: [ 40.75196,-73.97565 ]
-//    category:sights-museums
-//    categoryTitle:Atrakcje turystyczne i muzea
-//    href:https://places.cit.api.here.com/places/v1/places/840dr5ru-08bf72d1a15f41228438fb017f83a84c;context=Zmxvdy1pZD0yNzVlMTIxZi1lZDgyLTUwMmYtYmM3NC1lZjU3ODRhOWRiN2FfMTU2NDM0NDM5OTk1MF80MjM0XzI1MTMmcmFuaz0x?app_id=PFVgm9cqOc2OlIyiFZOO&app_code=OrWU0j5Bb1XI5Yj-YLIhVQ
-//    type:urn:nlp-types:place
-//    resultType:place
-//    id:840dr5ru-08bf72d1a15f41228438fb017f83a84c
-//    distance:871
 
+    private var id:String=""
     private var title:String="";
     private var vicinity:String="";
-    private var position:Location=Location();
-    private var category="";
-    private var categoryTitle=""
-    private var href="";
-    private var user_rate:Double=0.0;
+    private var position:Position=Position();
+    private var category:String="";
+    private var categoryTitle:String=""
+    private var href:String="";
+    private var resultType:String=""
+    private var distance:Double=0.0;
 
-    constructor (id:String,name:String,country:String,latitude:Double,longitude:Double,category:String,url:String,user_rate:Double){
+    constructor ( id:String, title:String,vicinity:String,latitude:Double,longitude:Double,category:String,categoryTitle:String,href:String,resultType:String,distance:Double){
         this.id=id;
-        this.name=name;
-        location.setCountry(country)
-        location.setLatitude(latitude)
-        location.setLongitude(longitude)
+        this.title=title;
+        this.vicinity=vicinity;
+        this.position.setLatitude(latitude);
+        this.position.setLongitude(longitude);
+        this.category=category;
+        this.categoryTitle=categoryTitle;
+        this.href=href;
+        this.resultType=resultType;
+        this.distance=distance;
     }
-    public fun getID():String?{
+    public fun getId():String{
         return id;
     }
-    public fun getName():String?{
-        return name;
+    public fun getTitle():String{
+        return title;
     }
-    public fun getLocation():Location?{
-        return location;
+    public fun getDistance():Double{
+        return distance;
     }
-    public fun getCategory():String?{
+    public fun getHref():String{
+        return href;
+    }
+    public fun getResultType():String{
+        return resultType;
+    }
+
+    public fun getCategory():String{
         return category;
     }
-    public fun getIcon():String?{
-        return icons_url;
+    public fun getCategoryTitle():String{
+        return categoryTitle;
     }
-    public fun getRate():Double?{
-        return user_rate;
+    public fun getVicinity():String{
+        return vicinity;
     }
+    public fun getPosition():Position{
+        return position;
+    }
+    
     public fun printPlace(){
         println("Place: ")
         println(this.id)
-        println(this.name)
-        location.printLocation();
-        println(this.category)
-        println(this.icons_url)
-        println(this.user_rate)
+        println(this.title);
+        println(this.vicinity);
+        println(this.position);
+        println(this.position);
+        println(this.category);
+        println(this.categoryTitle);
+        println(this.href);
+        println(this.resultType);
+        println(this.distance);
     }
 }
