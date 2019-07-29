@@ -16,10 +16,10 @@ class ScannerSelectionImageView : ImageView {
     companion object {
         const val DEFAULT_BORDER_COLOR = R.color.colorAccent
         const val DEFAULT_BACKGROUND_COLOR = -0x80000000
-        const val DEFAULT_CIRCLE_RADIUS = 30f
-        const val DEFAULT_PADDING_TOP = 100f
-        const val DEFAULT_PADDING_BOTTOM = 150f
-        const val DEFAULT_PADDING_VERTICAL = 100f
+        const val DEFAULT_CIRCLE_RADIUS = 16f
+        const val DEFAULT_PADDING_TOP = 50f
+        const val DEFAULT_PADDING_BOTTOM = 100f
+        const val DEFAULT_PADDING_VERTICAL = 50f
     }
 
     private var circleRadius: Float? = null
@@ -55,14 +55,14 @@ class ScannerSelectionImageView : ImageView {
 
         circlePaint = borderPaint
 
-        circleRadius = attributes.getFloat(R.styleable.ScannerSelectionImageView_circleRadius,
+        circleRadius = attributes.getDimension(R.styleable.ScannerSelectionImageView_circleRadius,
                 DEFAULT_CIRCLE_RADIUS)
 
-        paddingTop = attributes.getFloat(R.styleable.ScannerSelectionImageView_paddingTop,
+        paddingTop = attributes.getDimension(R.styleable.ScannerSelectionImageView_paddingTop,
         DEFAULT_PADDING_TOP)
-        paddingBottom = attributes.getFloat(R.styleable.ScannerSelectionImageView_paddingBottom,
+        paddingBottom = attributes.getDimension(R.styleable.ScannerSelectionImageView_paddingBottom,
                 DEFAULT_PADDING_BOTTOM)
-        paddingVertical = attributes.getFloat(R.styleable.ScannerSelectionImageView_paddingVertical,
+        paddingVertical = attributes.getDimension(R.styleable.ScannerSelectionImageView_paddingVertical,
                 DEFAULT_PADDING_VERTICAL)
 
         attributes.recycle()

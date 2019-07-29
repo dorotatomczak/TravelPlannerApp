@@ -3,11 +3,11 @@
 <resources>
 
     <declare-styleable name="ScannerSelectionImageView">
-        <attr name="circleRadius" format="float"/>
+        <attr name="circleRadius" format="dimension"/>
         <attr name="borderColor" format="color"/>
-        <attr name="paddingBottom" format="float"/>
-        <attr name="paddingTop" format="float"/>
-        <attr name="paddingVertical" format="float"/>
+        <attr name="paddingBottom" format="dimension"/>
+        <attr name="paddingTop" format="dimension"/>
+        <attr name="paddingVertical" format="dimension"/>
     </declare-styleable>
 
 </resources>
