@@ -1,65 +1,58 @@
 package com.github.travelplannerapp.ServerApp.HERECharger
 
-import java.io.File
 import java.net.URL
 import java.net.URLConnection
 
 class HEREConnector {
+
     val MY_APP_ID = "PFVgm9cqOc2OlIyiFZOO"
     val MY_APP_TOKEN = "OrWU0j5Bb1XI5Yj-YLIhVQ"
 
-    public fun findPlaceByText(text:String,latitude:String,longitude:String){
+    public fun findPlaceByText(text:String,latitude:String,longitude:String):String{
+
         val request="https://places.cit.api.here.com/places/v1/"+
                 "autosuggest?at=${latitude},${longitude}"+
                 "&q=${text}"+
                 "&app_id=${MY_APP_ID}"+
                 "&app_code=${MY_APP_TOKEN}"
-        println(request)
 
-        sendRequest(request)
+        println(request)
+       return sendRequest(request,"jsonResponse")
     }
 
-    public fun verifyKeys(){
-        val example_request="https://route.api.here.com/routing/7.2/calculateroute.json" +
+    public fun findBestWay(first_latitude:String,first_longitude:String,second_latitude:String,
+                           second_longitude:String,mode:String,transport:String,traffic:String):String{
+
+        val request="https://route.api.here.com/routing/7.2/calculateroute.json" +
                 "?app_id=${MY_APP_ID}" +
                 "&app_code=${MY_APP_TOKEN}" +
-                "&waypoint0=geo!52.5,13.4" +
-                "&waypoint1=geo!52.5,13.45" +
-                "&mode=fastest;car;traffic:disabled"
-        println(example_request)
+                "&waypoint0=geo!${first_latitude},${first_longitude}" +
+                "&waypoint1=geo!${second_latitude},${second_longitude}" +
+                "&mode=${mode};${transport};traffic:${traffic}"
 
-        sendRequest(example_request)
-
+        println(request)
+        return sendRequest(request,"response")
     }
 
-    private fun readResponse()//simple getting variables in pattern
-    {
-        val regex = """([\w\s]+) is (\d+) years old""".toRegex()
-        val matchResult = regex.find("Mickey Mouse is 95 years old")
-        val (name, age) = matchResult!!.destructured
-
-        println("name: "+name+" age: "+age)
-
-    }
-    private fun sendRequest(address:String)
+    private fun sendRequest(address:String,match:String):String
     {
         val url=URL(address)
-        var response="";
+        var response=""
         with(url.openConnection() as URLConnection) {
 
-            println("\nSent  request to URL : $url;")
+            println("\nSent  request to URL : $url")
             inputStream.bufferedReader().use {
                 it.lines().forEach { line ->
-                    if(line.contains("jsonResponse", ignoreCase = true))
+                    if(line.contains(match, ignoreCase = true))
                         response=line;
+
 
                 }
 
             }
         }
         println(response)
-        File("place.txt").writeText(response)
-        //readResponse()
+        return response;
     }
     public fun printKeys()
     {
