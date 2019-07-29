@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<resources>
+
+    <declare-styleable name="ScannerSelectionImageView">
+        <attr name="circleRadius" format="float"/>
+        <attr name="borderColor" format="color"/>
+        <attr name="paddingBottom" format="float"/>
+        <attr name="paddingTop" format="float"/>
+        <attr name="paddingVertical" format="float"/>
+    </declare-styleable>
+
+</resources>

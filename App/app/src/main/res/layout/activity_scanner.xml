@@ -9,7 +9,12 @@
     <com.github.travelplannerapp.scanner.ScannerSelectionImageView
         android:id="@+id/imageViewSelection"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        app:borderColor="@color/colorAccent"
+        app:circleRadius="30"
+        app:paddingBottom="150"
+        app:paddingVertical="100"
+        app:paddingTop="100"/>
 
     <Button
         android:id="@+id/buttonScan"

@@ -14,8 +14,18 @@ import java.util.ArrayList
 class ScannerSelectionImageView : ImageView {
 
     companion object {
-        const val CIRCLE_RADIUS = 30f
+        const val DEFAULT_BORDER_COLOR = R.color.colorAccent
+        const val DEFAULT_BACKGROUND_COLOR = -0x80000000
+        const val DEFAULT_CIRCLE_RADIUS = 30f
+        const val DEFAULT_PADDING_TOP = 100f
+        const val DEFAULT_PADDING_BOTTOM = 150f
+        const val DEFAULT_PADDING_VERTICAL = 100f
     }
+
+    private var circleRadius: Float? = null
+    private var paddingTop: Float? = null
+    private var paddingBottom: Float? = null
+    private var paddingVertical: Float? = null
 
     private var backgroundPaint: Paint = Paint()
     private var borderPaint: Paint = Paint()
@@ -32,14 +42,30 @@ class ScannerSelectionImageView : ImageView {
     constructor(context: Context) : this(context, null)
     constructor(context: Context, attrs: AttributeSet?) : this(context, attrs, 0)
     constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : super(context, attrs, defStyleAttr) {
-        backgroundPaint.color = -0x80000000
 
-        borderPaint.color = ContextCompat.getColor(context, R.color.colorAccent)
+        val attributes = context.obtainStyledAttributes(attrs, R.styleable.ScannerSelectionImageView)
+
+        backgroundPaint.color = DEFAULT_BACKGROUND_COLOR
+
+        borderPaint.color = attributes.getColor(R.styleable.ScannerSelectionImageView_borderColor,
+                ContextCompat.getColor(context, DEFAULT_BORDER_COLOR))
         borderPaint.isAntiAlias = true
         borderPaint.style = Paint.Style.STROKE
         borderPaint.strokeWidth = 8f
 
         circlePaint = borderPaint
+
+        circleRadius = attributes.getFloat(R.styleable.ScannerSelectionImageView_circleRadius,
+                DEFAULT_CIRCLE_RADIUS)
+
+        paddingTop = attributes.getFloat(R.styleable.ScannerSelectionImageView_paddingTop,
+        DEFAULT_PADDING_TOP)
+        paddingBottom = attributes.getFloat(R.styleable.ScannerSelectionImageView_paddingBottom,
+                DEFAULT_PADDING_BOTTOM)
+        paddingVertical = attributes.getFloat(R.styleable.ScannerSelectionImageView_paddingVertical,
+                DEFAULT_PADDING_VERTICAL)
+
+        attributes.recycle()
     }
 
     private fun isAnyPointNull(): Boolean{
@@ -78,10 +104,10 @@ class ScannerSelectionImageView : ImageView {
         canvas.drawPath(backgroundPath, backgroundPaint)
         canvas.drawPath(selectionPath, borderPaint)
 
-        canvas.drawCircle(upperLeftPoint!!.x, upperLeftPoint!!.y, CIRCLE_RADIUS, circlePaint)
-        canvas.drawCircle(upperRightPoint!!.x, upperRightPoint!!.y, CIRCLE_RADIUS, circlePaint)
-        canvas.drawCircle(lowerRightPoint!!.x, lowerRightPoint!!.y, CIRCLE_RADIUS, circlePaint)
-        canvas.drawCircle(lowerLeftPoint!!.x, lowerLeftPoint!!.y, CIRCLE_RADIUS, circlePaint)
+        canvas.drawCircle(upperLeftPoint!!.x, upperLeftPoint!!.y, circleRadius!!, circlePaint)
+        canvas.drawCircle(upperRightPoint!!.x, upperRightPoint!!.y, circleRadius!!, circlePaint)
+        canvas.drawCircle(lowerRightPoint!!.x, lowerRightPoint!!.y, circleRadius!!, circlePaint)
+        canvas.drawCircle(lowerLeftPoint!!.x, lowerLeftPoint!!.y, circleRadius!!, circlePaint)
     }
 
     override fun onTouchEvent(event: MotionEvent): Boolean {
@@ -110,18 +136,17 @@ class ScannerSelectionImageView : ImageView {
                 }
             }
             MotionEvent.ACTION_DOWN -> {
-                val p = 100
-                if (event.x < upperLeftPoint!!.x + p && event.x > upperLeftPoint!!.x - p &&
-                        event.y < upperLeftPoint!!.y + p && event.y > upperLeftPoint!!.y - p) {
+                if (event.x < upperLeftPoint!!.x + paddingVertical!! && event.x > upperLeftPoint!!.x - paddingVertical!! &&
+                        event.y < upperLeftPoint!!.y + paddingBottom!! && event.y > upperLeftPoint!!.y - paddingTop!!) {
                     lastTouchedPoint = upperLeftPoint
-                } else if (event.x < upperRightPoint!!.x + p && event.x > upperRightPoint!!.x - p &&
-                        event.y < upperRightPoint!!.y + p && event.y > upperRightPoint!!.y - p) {
+                } else if (event.x < upperRightPoint!!.x + paddingVertical!! && event.x > upperRightPoint!!.x - paddingVertical!! &&
+                        event.y < upperRightPoint!!.y + paddingBottom!! && event.y > upperRightPoint!!.y - paddingTop!!) {
                     lastTouchedPoint = upperRightPoint
-                } else if (event.x < lowerRightPoint!!.x + p && event.x > lowerRightPoint!!.x - p &&
-                        event.y < lowerRightPoint!!.y + p && event.y > lowerRightPoint!!.y - p) {
+                } else if (event.x < lowerRightPoint!!.x + paddingVertical!! && event.x > lowerRightPoint!!.x - paddingVertical!! &&
+                        event.y < lowerRightPoint!!.y + paddingTop!! && event.y > lowerRightPoint!!.y - paddingBottom!!) {
                     lastTouchedPoint = lowerRightPoint
-                } else if (event.x < lowerLeftPoint!!.x + p && event.x > lowerLeftPoint!!.x - p &&
-                        event.y < lowerLeftPoint!!.y + p && event.y > lowerLeftPoint!!.y - p) {
+                } else if (event.x < lowerLeftPoint!!.x + paddingVertical!! && event.x > lowerLeftPoint!!.x - paddingVertical!! &&
+                        event.y < lowerLeftPoint!!.y + paddingTop!! && event.y > lowerLeftPoint!!.y - paddingBottom!!) {
                     lastTouchedPoint = lowerLeftPoint
                 } else {
                     lastTouchedPoint = null
@@ -233,13 +258,7 @@ class ScannerSelectionImageView : ImageView {
      * padding)
      */
     private fun setDefaultSelection() {
-        val rect = RectF()
-
-        val padding = 100f
-        rect.right = width - padding
-        rect.bottom = height - padding
-        rect.top = padding
-        rect.left = padding
+        val rect = RectF(paddingVertical!!, paddingTop!!, width - paddingVertical!!, height - paddingBottom!!)
 
         val pts = getCornersFromRect(rect)
         upperLeftPoint = PointF(pts[0], pts[1])
