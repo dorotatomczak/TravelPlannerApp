@@ -1,11 +1,8 @@
 package com.github.travelplannerapp.ServerApp.HERECharger
 
 import java.io.File
-import java.io.OutputStreamWriter
-import java.net.HttpURLConnection
 import java.net.URL
 import java.net.URLConnection
-import java.net.URLEncoder
 
 class HEREConnector {
     val MY_APP_ID = "PFVgm9cqOc2OlIyiFZOO"
@@ -53,13 +50,14 @@ class HEREConnector {
             println("\nSent  request to URL : $url;")
             inputStream.bufferedReader().use {
                 it.lines().forEach { line ->
-                        response+='\n'+line;
+                    if(line.contains("jsonResponse", ignoreCase = true))
+                        response=line;
 
                 }
 
             }
         }
-        //println(response)
+        println(response)
         File("place.txt").writeText(response)
         //readResponse()
     }

@@ -50,16 +50,9 @@ public class UserLocation {
             }
         }
         positionLongitude = readWord.toDouble()
-
-        l.setCountry(country)
-        l.setLatitude(positionLatitude)
-        l.setLongitude(positionLongitude)
-
     }
 
     public fun printUserLocation() {
-
-
         l.printLocation()
     }
 }

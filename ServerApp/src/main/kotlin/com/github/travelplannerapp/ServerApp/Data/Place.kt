@@ -2,7 +2,6 @@ package com.github.travelplannerapp.ServerApp.Data
 
 public class Place {
 
-
     private var id:String=""
     private var title:String="";
     private var vicinity:String="";
@@ -13,7 +12,8 @@ public class Place {
     private var resultType:String=""
     private var distance:Double=0.0;
 
-    constructor ( id:String, title:String,vicinity:String,latitude:Double,longitude:Double,category:String,categoryTitle:String,href:String,resultType:String,distance:Double){
+    constructor ( id:String, title:String,vicinity:String,latitude:Double,longitude:Double,category:String,
+                  categoryTitle:String,href:String,resultType:String,distance:Double){
         this.id=id;
         this.title=title;
         this.vicinity=vicinity;
@@ -53,7 +53,7 @@ public class Place {
     public fun getPosition():Position{
         return position;
     }
-    
+
     public fun printPlace(){
         println("Place: ")
         println(this.id)
