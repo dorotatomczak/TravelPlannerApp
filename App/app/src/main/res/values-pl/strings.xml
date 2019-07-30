@@ -14,4 +14,5 @@
     <string name="create_an_account">Utwórz konto</string>
     <string name="confirm_password">powtórz hasło</string>
     <string name="menu_sign_out">Wyloguj się</string>
+    <string name="server_connection_error">Błąd połączenia z serwerem</string>
 </resources>

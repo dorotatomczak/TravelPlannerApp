@@ -102,6 +102,6 @@ class TravelsActivity : AppCompatActivity(), TravelsContract.View, NavigationVie
         myCompositeDisposable?.add(requestInterface.getTravels()
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
-                .subscribe(handleResponse))
+                .subscribe(handleResponse, { showSnackbar(resources.getString(R.string.server_connection_error)) }))
     }
 }
