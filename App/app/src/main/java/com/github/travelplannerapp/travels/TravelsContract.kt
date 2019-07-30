@@ -4,7 +4,6 @@ import io.reactivex.Observable
 import retrofit2.http.GET
 
 
-//TODO [Dorota] Display message when list of travels is empty
 interface TravelsContract {
     interface View {
         fun showAddTravel()

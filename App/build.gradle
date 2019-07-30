@@ -47,4 +47,5 @@ ext {
     gsonVersion = '2.6.0'
     rxJava2Version = '2.3.0'
     rxAndroidVersion = '2.0.1'
+    roomVersion = '1.1.1'
 }

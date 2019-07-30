@@ -9,9 +9,6 @@ androidExtensions {
 
 android {
     compileSdkVersion 28
-    dataBinding {
-        enabled = true
-    }
     defaultConfig {
         applicationId "com.github.travelplannerapp"
         minSdkVersion rootProject.ext.minSdkVersion
@@ -63,8 +60,10 @@ dependencies {
     implementation "com.squareup.retrofit2:converter-gson:$rootProject.gsonVersion"
     implementation "io.reactivex.rxjava2:rxandroid:$rootProject.rxAndroidVersion"
     implementation "com.squareup.retrofit2:adapter-rxjava2:$rootProject.rxJava2Version"
-    implementation 'android.arch.persistence.room:runtime:1.1.1'
-    annotationProcessor 'android.arch.persistence.room:compiler:1.1.1'
+
+    // Database dependencies
+    implementation "android.arch.persistence.room:runtime:$rootProject.roomVersion"
+    annotationProcessor "android.arch.persistence.room:compiler:$rootProject.roomVersion"
 
 
 }
