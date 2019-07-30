@@ -2,13 +2,14 @@ package com.github.travelplannerapp.travels
 
 import android.content.Intent
 import android.os.Bundle
-import android.support.design.widget.NavigationView
-import android.support.v7.app.AppCompatActivity
-import android.support.v7.widget.LinearLayoutManager
+import com.google.android.material.navigation.NavigationView
+import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.LinearLayoutManager
 import android.view.View
-import android.support.design.widget.Snackbar
-import android.support.v7.app.ActionBarDrawerToggle
+import com.google.android.material.snackbar.Snackbar
+import androidx.appcompat.app.ActionBarDrawerToggle
 import android.view.MenuItem
+import androidx.recyclerview.widget.RecyclerView
 
 import com.github.travelplannerapp.R
 import com.github.travelplannerapp.addtravel.AddTravelActivity
@@ -17,20 +18,23 @@ import com.github.travelplannerapp.traveldetails.TravelDetailsActivity
 import javax.inject.Inject
 
 import dagger.android.AndroidInjection
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_travels.*
-
 
 class TravelsActivity : AppCompatActivity(), TravelsContract.View, NavigationView.OnNavigationItemSelectedListener {
 
     @Inject
     lateinit var presenter: TravelsContract.Presenter
-
+    private var myCompositeDisposable: CompositeDisposable? = null
     private lateinit var toggle: ActionBarDrawerToggle
 
     override fun onCreate(savedInstanceState: Bundle?) {
         AndroidInjection.inject(this)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_travels)
+        myCompositeDisposable = CompositeDisposable()
 
         setSupportActionBar(toolbarTravels)
         supportActionBar?.setHomeButtonEnabled(true)
@@ -45,17 +49,18 @@ class TravelsActivity : AppCompatActivity(), TravelsContract.View, NavigationVie
             showAddTravel()
         }
 
-        fabContactServer.setOnClickListener {
-            presenter.contactServer()
-        }
-
-        recyclerViewTravels.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+        recyclerViewTravels.layoutManager = LinearLayoutManager(this, RecyclerView.VERTICAL, false)
         recyclerViewTravels.adapter = TravelsAdapter(presenter)
     }
 
     override fun onResume() {
         super.onResume()
         presenter.loadTravels()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        myCompositeDisposable?.clear()
     }
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
@@ -83,7 +88,7 @@ class TravelsActivity : AppCompatActivity(), TravelsContract.View, NavigationVie
         recyclerViewTravels.visibility = View.GONE
     }
 
-    override fun showTravels(){
+    override fun showTravels() {
         textViewNoTravels.visibility = View.GONE
         recyclerViewTravels.visibility = View.VISIBLE
     }
@@ -91,5 +96,12 @@ class TravelsActivity : AppCompatActivity(), TravelsContract.View, NavigationVie
     override fun showSnackbar(message: String) {
         Snackbar.make(coordinatorLayoutTravels, message, Snackbar.LENGTH_LONG)
                 .setAction("Action", null).show()
+    }
+
+    override fun loadTravels(requestInterface: TravelsContract.ServerAPI, handleResponse: (myTravels: List<String>) -> Unit) {
+        myCompositeDisposable?.add(requestInterface.getTravels()
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe(handleResponse))
     }
 }
