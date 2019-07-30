@@ -19,8 +19,6 @@ build/
 *.iws
 *.iml
 *.ipr
-.idea/misc.xml
-.idea/workspace.xml
 out/
 
 
