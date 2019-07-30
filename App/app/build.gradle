@@ -54,9 +54,18 @@ dependencies {
     androidTestImplementation "com.android.support.test:runner:$rootProject.runnerVersion"
     androidTestImplementation "com.android.support:support-annotations:$rootProject.supportLibraryVersion"
 
-    // ?
+    // JSON and http requests dependencies
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$rootProject.courtinessVersion"
-    implementation "com.android.volley:volley:$rootProject.volleyVersion"
+    implementation "com.squareup.retrofit2:retrofit:$rootProject.retrofitVersion"
+    implementation "com.squareup.retrofit2:converter-gson:$rootProject.gsonVersion"
+    implementation "io.reactivex.rxjava2:rxandroid:$rootProject.rxAndroidVersion"
+    implementation "com.squareup.retrofit2:adapter-rxjava2:$rootProject.rxJava2Version"
+
+    // Database dependencies
+    implementation "android.arch.persistence.room:runtime:$rootProject.roomVersion"
+    annotationProcessor "android.arch.persistence.room:compiler:$rootProject.roomVersion"
+
+
 }
 repositories {
     mavenCentral()
