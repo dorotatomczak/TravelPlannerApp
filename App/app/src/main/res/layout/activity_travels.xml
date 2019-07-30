@@ -30,15 +30,15 @@
 
         </com.google.android.material.appbar.AppBarLayout>
 
-        <TextView
-            android:id="@+id/textViewNoTravels"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/no_travels"
-            android:textSize="@dimen/text_size_info"
-            android:gravity="center_horizontal"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior"
-            android:visibility="gone"/>
+    <TextView
+        android:id="@+id/textViewNoTravels"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/no_travels"
+        android:textSize="@dimen/text_size_info"
+        android:gravity="center_horizontal"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        android:visibility="visible"/>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerViewTravels"
@@ -49,7 +49,7 @@
             android:layout_marginTop="@dimen/margin_vertical"
             android:layout_marginLeft="@dimen/margin_horizontal"
             android:layout_marginRight="@dimen/margin_horizontal"
-            android:visibility="visible"/>
+            android:visibility="gone"/>
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/fabTravels"
@@ -68,7 +68,7 @@
             app:srcCompat="@android:drawable/ic_menu_month" />
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
-    
+
     <com.google.android.material.navigation.NavigationView
         android:id="@+id/navigationViewTravels"
         android:layout_width="wrap_content"
