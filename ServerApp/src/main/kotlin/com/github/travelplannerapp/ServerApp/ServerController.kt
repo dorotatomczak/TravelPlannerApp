@@ -1,6 +1,6 @@
 package com.github.travelplannerapp.serverapp
 
-
+import com.github.travelplannerapp.ServerApp.db.repositories.TravelRepository
 import com.github.travelplannerapp.ServerApp.db.repositories.UserRepository
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.web.bind.annotation.GetMapping
@@ -15,14 +15,18 @@ class ServerController {
 
     @Autowired
     lateinit var userRepository: UserRepository
+    @Autowired
+    lateinit var travelRepository: TravelRepository
 
     @GetMapping("/greeting")
     fun greeting(@RequestParam(value = "name", defaultValue = "World") name: String) =
             Greeting(counter.incrementAndGet(), "Hello, $name")
 
-
     @GetMapping("/travels")
-    fun travels() = listOf("Gdańsk", "Elbląg", "Toruń", "Olsztyn")
+    // no database
+    //fun travels() = listOf("Gdańsk", "Elbląg", "Toruń", "Olsztyn")
+    // database
+    fun travels() = travelRepository.getAllTravelsByUserName("Angelina Johnson").map{ travel -> travel.name}
 
     @GetMapping("/db")
     fun getUser() = Greeting(counter.incrementAndGet(), "Hello, ${userRepository.get(18)!!.name}")
