@@ -19,4 +19,5 @@
     <string name="scanner_permissions_failure">You need to grant camera and storage permissions</string>
     <string name="scanner_initialization_failure">Scanner initialization failed</string>
     <string name="scan">Scan</string>
+    <string name="scanner_connection_failure">Scanner connection error</string>
 </resources>
