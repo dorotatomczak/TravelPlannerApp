@@ -36,6 +36,7 @@
         android:layout_height="wrap_content"
         android:text="@string/no_travels"
         android:textSize="@dimen/text_size_info"
+        android:layout_marginTop="@dimen/margin_vertical"
         android:gravity="center_horizontal"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
         android:visibility="visible"/>
@@ -58,14 +59,6 @@
             android:layout_gravity="bottom|end"
             android:layout_margin="@dimen/fab_margin"
             app:srcCompat="@drawable/ic_add" />
-
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/fabContactServer"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom|start"
-            android:layout_margin="@dimen/fab_margin"
-            app:srcCompat="@android:drawable/ic_menu_month" />
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 

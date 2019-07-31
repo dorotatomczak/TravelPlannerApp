@@ -16,4 +16,5 @@
     <string name="menu_sign_out">Sign Out</string>
     <string name="drawer_open" translatable="false">Drawer opened</string>
     <string name="drawer_close" translatable="false">Drawer closed</string>
+    <string name="server_connection_error">Server connection error</string>
 </resources>
