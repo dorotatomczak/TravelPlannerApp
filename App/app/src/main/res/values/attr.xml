@@ -7,7 +7,7 @@
         <attr name="borderColor" format="color"/>
         <attr name="paddingBottom" format="dimension"/>
         <attr name="paddingTop" format="dimension"/>
-        <attr name="paddingVertical" format="dimension"/>
+        <attr name="paddingHorizontal" format="dimension"/>
     </declare-styleable>
 
 </resources>

@@ -1,32 +1,53 @@
 package com.github.travelplannerapp.tickets
 
+import android.Manifest
 import android.app.Activity
 import android.content.Intent
+import android.content.pm.PackageManager
+import android.net.Uri
 import android.os.Bundle
+import android.os.Environment
+import android.provider.MediaStore
 import android.view.MenuItem
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
+import androidx.core.content.FileProvider
 import com.github.travelplannerapp.R
 import com.github.travelplannerapp.scanner.ScannerActivity
 import com.google.android.material.navigation.NavigationView
 import com.google.android.material.snackbar.Snackbar
 import dagger.android.AndroidInjection
 import kotlinx.android.synthetic.main.activity_tickets.*
+import java.io.File
+import java.io.IOException
+import java.text.SimpleDateFormat
+import java.util.*
 
 import javax.inject.Inject
 
-class TicketsActivity : AppCompatActivity(), TicketsContract.View,  NavigationView.OnNavigationItemSelectedListener {
+class TicketsActivity : AppCompatActivity(), TicketsContract.View, NavigationView.OnNavigationItemSelectedListener {
+
+    companion object {
+        const val REQUEST_PERMISSIONS = 0
+        const val REQUEST_TAKE_PHOTO = 1
+    }
+
+    private val requiredPermissions = arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE,
+            Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA)
 
     @Inject
     lateinit var presenter: TicketsContract.Presenter
 
     private lateinit var toggle: ActionBarDrawerToggle
 
+    private var photoUri: Uri? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         AndroidInjection.inject(this)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_tickets)
-
         setSupportActionBar(toolbarTickets)
         supportActionBar?.setHomeButtonEnabled(true)
 
@@ -37,13 +58,8 @@ class TicketsActivity : AppCompatActivity(), TicketsContract.View,  NavigationVi
         navigationViewTickets.setNavigationItemSelectedListener(this)
 
         fabTickets.setOnClickListener {
-            showScanner()
+            presenter.onAddTravelClick()
         }
-    }
-
-    private fun showScanner(){
-        val intent = Intent(this, ScannerActivity::class.java)
-        startActivityForResult(intent, ScannerActivity.REQUEST_SCANNER)
     }
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
@@ -53,17 +69,90 @@ class TicketsActivity : AppCompatActivity(), TicketsContract.View,  NavigationVi
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         when (requestCode) {
-            ScannerActivity.REQUEST_SCANNER -> {
+            REQUEST_TAKE_PHOTO -> {
                 if (resultCode == Activity.RESULT_OK) {
-                    val result = data?.getStringExtra(ScannerActivity.REQUEST_SCANNER_RESULT)
-                    if (result != null) showSnackbar(result)
+                    photoUri?.let {showScanner()}
+                }
+            }
+            ScannerActivity.REQUEST_SCANNER -> {
+                if (resultCode == Activity.RESULT_OK && data != null) {
+                    val messageCode = data.getIntExtra(ScannerActivity.REQUEST_SCANNER_RESULT,
+                            R.string.scanner_general_failure)
+                    showSnackbar(messageCode)
                 }
             }
         }
     }
 
-    private fun showSnackbar(message: String) {
-        Snackbar.make(coordinatorLayoutTickets, message, Snackbar.LENGTH_SHORT)
+    override fun verifyPermissions(): Boolean {
+        if (ContextCompat.checkSelfPermission(this.applicationContext,
+                        requiredPermissions[0]) != PackageManager.PERMISSION_GRANTED
+                || ContextCompat.checkSelfPermission(this.applicationContext,
+                        requiredPermissions[1]) != PackageManager.PERMISSION_GRANTED
+                || ContextCompat.checkSelfPermission(this.applicationContext,
+                        requiredPermissions[2]) != PackageManager.PERMISSION_GRANTED) {
+            return false
+        }
+        return true
+    }
+
+    override fun requestPermissions() {
+        ActivityCompat.requestPermissions(this, requiredPermissions, REQUEST_PERMISSIONS)
+    }
+
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+        when (requestCode) {
+            REQUEST_PERMISSIONS -> {
+                if ((grantResults.isEmpty() || grantResults[0] != PackageManager.PERMISSION_GRANTED)) {
+                    showSnackbar(R.string.scanner_permissions_failure)
+                } else {
+                    openCamera()
+                }
+            }
+        }
+    }
+
+    override fun openCamera() {
+        Intent(MediaStore.ACTION_IMAGE_CAPTURE).also { takePhotoIntent ->
+            takePhotoIntent.resolveActivity(packageManager)?.also {
+                val photoFile: File? = try {
+                    createImageFile()
+                } catch (ex: IOException) {
+                    showSnackbar(R.string.scanner_initialization_failure)
+                    null
+                }
+                photoFile?.also {
+                    photoUri = FileProvider.getUriForFile(
+                            this,
+                            "com.github.travelplannerapp.fileprovider",
+                            it
+                    )
+                    takePhotoIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoUri)
+                    startActivityForResult(takePhotoIntent, REQUEST_TAKE_PHOTO)
+                }
+            }
+        }
+    }
+
+    private fun showSnackbar(messageCode: Int) {
+        Snackbar.make(coordinatorLayoutTickets, getString(messageCode), Snackbar.LENGTH_SHORT)
                 .setAction("Action", null).show()
+    }
+
+    @Throws(IOException::class)
+    private fun createImageFile(): File {
+        val timeStamp: String = SimpleDateFormat("yyyyMMdd_HHmmss").format(Date())
+        val storageDir: File? = getExternalFilesDir(Environment.DIRECTORY_PICTURES)
+        return File.createTempFile(
+                "JPEG_${timeStamp}_",
+                ".jpg",
+                storageDir
+        )
+    }
+
+    private fun showScanner() {
+        val intent = Intent(this, ScannerActivity::class.java)
+        intent.putExtra(ScannerActivity.PHOTO_URI_EXTRA, photoUri)
+        startActivityForResult(intent, ScannerActivity.REQUEST_SCANNER)
     }
 }

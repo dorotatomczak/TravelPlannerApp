@@ -1,7 +1,9 @@
 package com.github.travelplannerapp.scanner
 
 interface ScannerContract {
-    interface View
+    interface View {
+        fun closeScanner()
+    }
     interface Presenter {
         fun takeScan()
     }

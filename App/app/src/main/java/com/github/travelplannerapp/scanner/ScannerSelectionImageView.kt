@@ -19,13 +19,13 @@ class ScannerSelectionImageView : ImageView {
         const val DEFAULT_CIRCLE_RADIUS = 16f
         const val DEFAULT_PADDING_TOP = 50f
         const val DEFAULT_PADDING_BOTTOM = 100f
-        const val DEFAULT_PADDING_VERTICAL = 50f
+        const val DEFAULT_PADDING_Horizontal = 50f
     }
 
     private var circleRadius: Float? = null
     private var paddingTop: Float? = null
     private var paddingBottom: Float? = null
-    private var paddingVertical: Float? = null
+    private var paddingHorizontal: Float? = null
 
     private var backgroundPaint: Paint = Paint()
     private var borderPaint: Paint = Paint()
@@ -47,11 +47,13 @@ class ScannerSelectionImageView : ImageView {
 
         backgroundPaint.color = DEFAULT_BACKGROUND_COLOR
 
-        borderPaint.color = attributes.getColor(R.styleable.ScannerSelectionImageView_borderColor,
-                ContextCompat.getColor(context, DEFAULT_BORDER_COLOR))
-        borderPaint.isAntiAlias = true
-        borderPaint.style = Paint.Style.STROKE
-        borderPaint.strokeWidth = 8f
+        borderPaint.apply {
+            color = attributes.getColor(R.styleable.ScannerSelectionImageView_borderColor,
+                    ContextCompat.getColor(context, DEFAULT_BORDER_COLOR))
+            isAntiAlias = true
+            style = Paint.Style.STROKE
+            strokeWidth = 8f
+        }
 
         circlePaint = borderPaint
 
@@ -59,16 +61,16 @@ class ScannerSelectionImageView : ImageView {
                 DEFAULT_CIRCLE_RADIUS)
 
         paddingTop = attributes.getDimension(R.styleable.ScannerSelectionImageView_paddingTop,
-        DEFAULT_PADDING_TOP)
+                DEFAULT_PADDING_TOP)
         paddingBottom = attributes.getDimension(R.styleable.ScannerSelectionImageView_paddingBottom,
                 DEFAULT_PADDING_BOTTOM)
-        paddingVertical = attributes.getDimension(R.styleable.ScannerSelectionImageView_paddingVertical,
-                DEFAULT_PADDING_VERTICAL)
+        paddingHorizontal = attributes.getDimension(R.styleable.ScannerSelectionImageView_paddingHorizontal,
+                DEFAULT_PADDING_Horizontal)
 
-        attributes.recycle()
+        attributes.recycle()t
     }
 
-    private fun isAnyPointNull(): Boolean{
+    private fun isAnyPointNull(): Boolean {
         if (upperLeftPoint == null || upperRightPoint == null || lowerRightPoint == null || lowerLeftPoint == null) {
             return true
         }
@@ -88,26 +90,31 @@ class ScannerSelectionImageView : ImageView {
 
         if (isAnyPointNull()) return
 
-        selectionPath.reset()
-        selectionPath.fillType = Path.FillType.EVEN_ODD
-        selectionPath.moveTo(upperLeftPoint!!.x, upperLeftPoint!!.y)
-        selectionPath.lineTo(upperRightPoint!!.x, upperRightPoint!!.y)
-        selectionPath.lineTo(lowerRightPoint!!.x, lowerRightPoint!!.y)
-        selectionPath.lineTo(lowerLeftPoint!!.x, lowerLeftPoint!!.y)
-        selectionPath.close()
+        selectionPath.apply {
+            reset()
+            fillType = Path.FillType.EVEN_ODD
+            moveTo(upperLeftPoint!!.x, upperLeftPoint!!.y)
+            lineTo(upperRightPoint!!.x, upperRightPoint!!.y)
+            lineTo(lowerRightPoint!!.x, lowerRightPoint!!.y)
+            lineTo(lowerLeftPoint!!.x, lowerLeftPoint!!.y)
+            close()
+        }
 
-        backgroundPath.reset()
-        backgroundPath.fillType = Path.FillType.EVEN_ODD
-        backgroundPath.addRect(0f, 0f, width.toFloat(), height.toFloat(), Path.Direction.CW)
-        backgroundPath.addPath(selectionPath)
+        backgroundPath.apply {
+            reset()
+            fillType = Path.FillType.EVEN_ODD
+            addRect(0f, 0f, width.toFloat(), height.toFloat(), Path.Direction.CW)
+            addPath(selectionPath)
+        }
 
-        canvas.drawPath(backgroundPath, backgroundPaint)
-        canvas.drawPath(selectionPath, borderPaint)
-
-        canvas.drawCircle(upperLeftPoint!!.x, upperLeftPoint!!.y, circleRadius!!, circlePaint)
-        canvas.drawCircle(upperRightPoint!!.x, upperRightPoint!!.y, circleRadius!!, circlePaint)
-        canvas.drawCircle(lowerRightPoint!!.x, lowerRightPoint!!.y, circleRadius!!, circlePaint)
-        canvas.drawCircle(lowerLeftPoint!!.x, lowerLeftPoint!!.y, circleRadius!!, circlePaint)
+        canvas.apply {
+            drawPath(backgroundPath, backgroundPaint)
+            drawPath(selectionPath, borderPaint)
+            drawCircle(upperLeftPoint!!.x, upperLeftPoint!!.y, circleRadius!!, circlePaint)
+            drawCircle(upperRightPoint!!.x, upperRightPoint!!.y, circleRadius!!, circlePaint)
+            drawCircle(lowerRightPoint!!.x, lowerRightPoint!!.y, circleRadius!!, circlePaint)
+            drawCircle(lowerLeftPoint!!.x, lowerLeftPoint!!.y, circleRadius!!, circlePaint)
+        }
     }
 
     override fun onTouchEvent(event: MotionEvent): Boolean {
@@ -136,16 +143,16 @@ class ScannerSelectionImageView : ImageView {
                 }
             }
             MotionEvent.ACTION_DOWN -> {
-                if (event.x < upperLeftPoint!!.x + paddingVertical!! && event.x > upperLeftPoint!!.x - paddingVertical!! &&
+                if (event.x < upperLeftPoint!!.x + paddingHorizontal!! && event.x > upperLeftPoint!!.x - paddingHorizontal!! &&
                         event.y < upperLeftPoint!!.y + paddingBottom!! && event.y > upperLeftPoint!!.y - paddingTop!!) {
                     lastTouchedPoint = upperLeftPoint
-                } else if (event.x < upperRightPoint!!.x + paddingVertical!! && event.x > upperRightPoint!!.x - paddingVertical!! &&
+                } else if (event.x < upperRightPoint!!.x + paddingHorizontal!! && event.x > upperRightPoint!!.x - paddingHorizontal!! &&
                         event.y < upperRightPoint!!.y + paddingBottom!! && event.y > upperRightPoint!!.y - paddingTop!!) {
                     lastTouchedPoint = upperRightPoint
-                } else if (event.x < lowerRightPoint!!.x + paddingVertical!! && event.x > lowerRightPoint!!.x - paddingVertical!! &&
+                } else if (event.x < lowerRightPoint!!.x + paddingHorizontal!! && event.x > lowerRightPoint!!.x - paddingHorizontal!! &&
                         event.y < lowerRightPoint!!.y + paddingTop!! && event.y > lowerRightPoint!!.y - paddingBottom!!) {
                     lastTouchedPoint = lowerRightPoint
-                } else if (event.x < lowerLeftPoint!!.x + paddingVertical!! && event.x > lowerLeftPoint!!.x - paddingVertical!! &&
+                } else if (event.x < lowerLeftPoint!!.x + paddingHorizontal!! && event.x > lowerLeftPoint!!.x - paddingHorizontal!! &&
                         event.y < lowerLeftPoint!!.y + paddingTop!! && event.y > lowerLeftPoint!!.y - paddingBottom!!) {
                     lastTouchedPoint = lowerLeftPoint
                 } else {
@@ -206,11 +213,13 @@ class ScannerSelectionImageView : ImageView {
      */
     fun getPoints(): List<PointF?> {
         val list = ArrayList<PointF?>()
-        if (!isAnyPointNull()){
-            list.add(viewPointToImagePoint(upperLeftPoint!!))
-            list.add(viewPointToImagePoint(upperRightPoint!!))
-            list.add(viewPointToImagePoint(lowerRightPoint!!))
-            list.add(viewPointToImagePoint(lowerLeftPoint!!))
+        if (!isAnyPointNull()) {
+            list.apply {
+                add(viewPointToImagePoint(upperLeftPoint!!))
+                add(viewPointToImagePoint(upperRightPoint!!))
+                add(viewPointToImagePoint(lowerRightPoint!!))
+                add(viewPointToImagePoint(lowerLeftPoint!!))
+            }
         }
         return list
     }
@@ -258,7 +267,7 @@ class ScannerSelectionImageView : ImageView {
      * padding)
      */
     private fun setDefaultSelection() {
-        val rect = RectF(paddingVertical!!, paddingTop!!, width - paddingVertical!!, height - paddingBottom!!)
+        val rect = RectF(paddingHorizontal!!, paddingTop!!, width - paddingHorizontal!!, height - paddingBottom!!)
 
         val pts = getCornersFromRect(rect)
         upperLeftPoint = PointF(pts[0], pts[1])
