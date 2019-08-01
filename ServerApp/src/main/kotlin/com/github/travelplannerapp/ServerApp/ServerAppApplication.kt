@@ -1,4 +1,4 @@
-package com.github.travelplannerapp.ServerApp
+package com.github.travelplannerapp.serverapp
 
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication

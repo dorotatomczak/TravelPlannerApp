@@ -1,4 +1,4 @@
-package com.github.travelplannerapp.ServerApp
+package com.github.travelplannerapp.serverapp
 
 import com.github.travelplannerapp.ServerApp.db.repositories.TravelRepository
 import com.github.travelplannerapp.ServerApp.db.repositories.UserRepository
