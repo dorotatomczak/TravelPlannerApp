@@ -29,7 +29,8 @@ class ScannerActivity : AppCompatActivity(), ScannerContract.View {
 
         val photoPath = intent.getStringExtra(PHOTO_PATH_EXTRA)
         val photoUri: Uri? = Uri.parse(photoPath)
-        if (photoUri != null) imageViewSelection.setImageURI(photoUri) else returnResultAndFinish(R.string.scanner_initialization_failure)
+        if (photoUri != null) imageViewSelection.setImageURI(photoUri)
+        else returnResultAndFinish(R.string.scanner_initialization_failure)
     }
 
     private fun returnResultAndFinish(messageCode: Int) {
