@@ -1,4 +1,4 @@
-package com.github.travelplannerapp.serverapp
+package com.github.travelplannerapp.ServerApp
 
 import com.github.travelplannerapp.ServerApp.db.repositories.TravelRepository
 import com.github.travelplannerapp.ServerApp.db.repositories.UserRepository
@@ -10,6 +10,9 @@ import java.util.concurrent.atomic.AtomicLong
 
 @RestController
 class ServerController {
+    companion object {
+        const val databseActive = false
+    }
 
     val counter = AtomicLong()
 
@@ -23,13 +26,13 @@ class ServerController {
             Greeting(counter.incrementAndGet(), "Hello, $name")
 
     @GetMapping("/travels")
-    // no database
-    //fun travels() = listOf("Gdańsk", "Elbląg", "Toruń", "Olsztyn")
-    // database
-    fun travels() = travelRepository.getAllTravelsByUserName("Angelina Johnson").map{ travel -> travel.name}
+    fun travels(@RequestParam(value = "name") name: String): List<String> {
+        if (databseActive) {
+            return travelRepository.getAllTravelsByUserName(name).map { travel -> travel.name }
+        }
+        return listOf("Gdańsk", "Elbląg", "Toruń", "Olsztyn", "Szczecin")
+    }
 
     @GetMapping("/db")
     fun getUser() = Greeting(counter.incrementAndGet(), "Hello, ${userRepository.get(18)!!.name}")
-
-
 }

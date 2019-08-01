@@ -2,6 +2,7 @@ package com.github.travelplannerapp.travels
 
 import io.reactivex.Observable
 import retrofit2.http.GET
+import retrofit2.http.Query
 
 
 interface TravelsContract {
@@ -39,6 +40,6 @@ interface TravelsContract {
 
     interface ServerAPI{
         @GET("/travels")
-        fun getTravels(): Observable<List<String>>
+        fun getTravels(@Query("name") name: String): Observable<List<String>>
     }
 }
