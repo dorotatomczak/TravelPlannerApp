@@ -18,9 +18,7 @@ class TravelRepository : ITravelRepository {
         statement.setInt(1, id)
         val result = statement.executeQuery()
         while (result.next()) {
-            var travel = Travel(result.getInt(1),
-                    result.getString(2))
-            travels.add(travel)
+            travels.add(mapResultToObject(result))
         }
         return travels
     }
@@ -38,9 +36,7 @@ class TravelRepository : ITravelRepository {
         statement.setString(1, name)
         val result = statement.executeQuery()
         while (result.next()) {
-            var travel = Travel(result.getInt(1),
-                    result.getString(2))
-            travels.add(travel)
+            travels.add(mapResultToObject(result))
         }
         return travels
     }
@@ -52,8 +48,7 @@ class TravelRepository : ITravelRepository {
         statement.setInt(1, id)
         val result: ResultSet = statement.executeQuery()
         if (result.next()) {
-            return Travel(result.getInt(1),
-                    result.getString(2))
+            return mapResultToObject(result)
         }
         return null
     }
@@ -65,9 +60,7 @@ class TravelRepository : ITravelRepository {
                 .prepareStatement("SELECT * FROM travel")
         val result = statement.executeQuery()
         while (result.next()) {
-            var travel = Travel(result.getInt(1),
-                    result.getString(2))
-            travels.add(travel)
+            travels.add(mapResultToObject(result))
         }
         return travels
     }
@@ -108,5 +101,10 @@ class TravelRepository : ITravelRepository {
                 .conn
                 .prepareStatement("DELETE FROM travel")
         statement.executeUpdate()
+    }
+
+    override fun mapResultToObject(result: ResultSet): Travel {
+        return Travel(result.getInt(1),
+                result.getString(2))
     }
 }

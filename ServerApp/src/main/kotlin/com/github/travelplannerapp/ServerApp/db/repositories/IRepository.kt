@@ -1,5 +1,7 @@
 package com.github.travelplannerapp.ServerApp.db.repositories
 
+import java.sql.ResultSet
+
 interface IRepository<T> {
     fun get(id: Int): T?
     fun getAll(): MutableList<T>
@@ -10,5 +12,5 @@ interface IRepository<T> {
     fun delete(id: Int)
     fun deleteAll()
 
-    // TODO[Magda] fun find(predicate) if possible
+    fun mapResultToObject(result: ResultSet): T
 }

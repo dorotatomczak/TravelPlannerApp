@@ -15,10 +15,7 @@ class UserRepository : IUserRepository {
         statement.setInt(1, id)
         val result: ResultSet = statement.executeQuery()
         if (result.next()) {
-            return User(result.getInt(1),
-                    result.getString(2),
-                    result.getString(3),
-                    result.getString(4))
+            return mapResultToObject(result)
         }
         return null
     }
@@ -30,11 +27,7 @@ class UserRepository : IUserRepository {
                 .prepareStatement("SELECT * FROM app_user")
         val result = statement.executeQuery()
         while (result.next()) {
-            var user = User(result.getInt(1),
-                    result.getString(2),
-                    result.getString(3),
-                    result.getString(4))
-            users.add(user)
+            users.add(mapResultToObject(result))
         }
         return users
     }
@@ -79,5 +72,12 @@ class UserRepository : IUserRepository {
                 .conn
                 .prepareStatement("DELETE FROM app_user")
         statement.executeUpdate()
+    }
+
+    override fun mapResultToObject(result: ResultSet): User {
+        return User(result.getInt(1),
+                result.getString(2),
+                result.getString(3),
+                result.getString(4))
     }
 }
