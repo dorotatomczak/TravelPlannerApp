@@ -8,6 +8,21 @@ import java.sql.ResultSet
 @Component
 class UserRepository : IUserRepository {
 
+    override fun getUserByEmail(email: String): User? {
+        val statement = DbConnection
+                .conn
+                .prepareStatement("SELECT * FROM app_user WHERE email=?")
+        statement.setString(1, email)
+        val result: ResultSet = statement.executeQuery()
+        if (result.next()) {
+            return User(result.getInt(1),
+                    result.getString(2),
+                    result.getString(3),
+                    result.getString(4))
+        }
+        return null
+    }
+
     override fun get(id: Int): User? {
         val statement = DbConnection
                 .conn
