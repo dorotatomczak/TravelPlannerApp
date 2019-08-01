@@ -67,7 +67,7 @@ class ScannerSelectionImageView : ImageView {
         paddingHorizontal = attributes.getDimension(R.styleable.ScannerSelectionImageView_paddingHorizontal,
                 DEFAULT_PADDING_Horizontal)
 
-        attributes.recycle()t
+        attributes.recycle()
     }
 
     private fun isAnyPointNull(): Boolean {

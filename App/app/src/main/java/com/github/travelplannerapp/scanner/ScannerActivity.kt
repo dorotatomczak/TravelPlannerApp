@@ -7,7 +7,6 @@ import androidx.appcompat.app.AppCompatActivity
 import com.github.travelplannerapp.R
 import dagger.android.AndroidInjection
 import kotlinx.android.synthetic.main.activity_scanner.*
-import org.opencv.android.OpenCVLoader
 import javax.inject.Inject
 
 class ScannerActivity : AppCompatActivity(), ScannerContract.View {
@@ -18,7 +17,7 @@ class ScannerActivity : AppCompatActivity(), ScannerContract.View {
     companion object {
         const val REQUEST_SCANNER = 3
         const val REQUEST_SCANNER_RESULT = "REQUEST_SCANNER_RESULT"
-        const val PHOTO_URI_EXTRA = "PHOTO_URI_EXTRA"
+        const val PHOTO_PATH_EXTRA = "PHOTO_PATH_EXTRA"
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -28,7 +27,8 @@ class ScannerActivity : AppCompatActivity(), ScannerContract.View {
 
         buttonScan.setOnClickListener { presenter.takeScan() }
 
-        val photoUri: Uri? = intent.getParcelableExtra(PHOTO_URI_EXTRA)
+        val photoPath = intent.getStringExtra(PHOTO_PATH_EXTRA)
+        val photoUri: Uri? = Uri.parse(photoPath)
         if (photoUri != null) imageViewSelection.setImageURI(photoUri) else returnResultAndFinish(R.string.scanner_initialization_failure)
     }
 
@@ -42,14 +42,5 @@ class ScannerActivity : AppCompatActivity(), ScannerContract.View {
 
     override fun closeScanner() {
         returnResultAndFinish(R.string.scanner_success)
-    }
-
-    private fun initOpenCV(){
-        if (!OpenCVLoader.initDebug()) {
-            val resultIntent = Intent()
-            resultIntent.putExtra(REQUEST_SCANNER_RESULT, resources.getString(R.string.scanner_initialization_failure))
-            setResult(RESULT_OK, resultIntent)
-            finish()
-        }
     }
 }

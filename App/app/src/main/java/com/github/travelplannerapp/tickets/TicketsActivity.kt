@@ -42,7 +42,7 @@ class TicketsActivity : AppCompatActivity(), TicketsContract.View, NavigationVie
 
     private lateinit var toggle: ActionBarDrawerToggle
 
-    private var photoUri: Uri? = null
+    private var photoPath: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         AndroidInjection.inject(this)
@@ -71,7 +71,7 @@ class TicketsActivity : AppCompatActivity(), TicketsContract.View, NavigationVie
         when (requestCode) {
             REQUEST_TAKE_PHOTO -> {
                 if (resultCode == Activity.RESULT_OK) {
-                    photoUri?.let {showScanner()}
+                    photoPath?.let {showScanner()}
                 }
             }
             ScannerActivity.REQUEST_SCANNER -> {
@@ -122,12 +122,12 @@ class TicketsActivity : AppCompatActivity(), TicketsContract.View, NavigationVie
                     null
                 }
                 photoFile?.also {
-                    photoUri = FileProvider.getUriForFile(
+                    val photoURI: Uri = FileProvider.getUriForFile(
                             this,
                             "com.github.travelplannerapp.fileprovider",
                             it
                     )
-                    takePhotoIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoUri)
+                    takePhotoIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI)
                     startActivityForResult(takePhotoIntent, REQUEST_TAKE_PHOTO)
                 }
             }
@@ -141,18 +141,20 @@ class TicketsActivity : AppCompatActivity(), TicketsContract.View, NavigationVie
 
     @Throws(IOException::class)
     private fun createImageFile(): File {
-        val timeStamp: String = SimpleDateFormat("yyyyMMdd_HHmmss").format(Date())
+        val timeStamp: String = SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(Date())
         val storageDir: File? = getExternalFilesDir(Environment.DIRECTORY_PICTURES)
         return File.createTempFile(
                 "JPEG_${timeStamp}_",
                 ".jpg",
                 storageDir
-        )
+        ).apply {
+            photoPath = absolutePath
+        }
     }
 
     private fun showScanner() {
         val intent = Intent(this, ScannerActivity::class.java)
-        intent.putExtra(ScannerActivity.PHOTO_URI_EXTRA, photoUri)
+        intent.putExtra(ScannerActivity.PHOTO_PATH_EXTRA, photoPath)
         startActivityForResult(intent, ScannerActivity.REQUEST_SCANNER)
     }
 }
