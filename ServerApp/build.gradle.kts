@@ -16,7 +16,6 @@ repositories {
 }
 
 dependencies {
-	implementation("HERE-sdk-javadoc")
 	implementation ("com.google.code.gson:gson:2.8.0")
 	implementation("org.locationtech.jts:jts-core:1.15.0")
 	implementation("org.springframework.boot:spring-boot-starter")
