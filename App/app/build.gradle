@@ -26,9 +26,9 @@ android {
     kotlinOptions {
         jvmTarget = '1.8'
     }
-        compileOptions {
-            sourceCompatibility JavaVersion.VERSION_1_8
-            targetCompatibility JavaVersion.VERSION_1_8
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
 
     }
 }
@@ -48,6 +48,9 @@ dependencies {
     implementation "com.google.dagger:dagger-android-support:$rootProject.daggerVersion"
     kapt "com.google.dagger:dagger-compiler:$rootProject.daggerVersion"
     kapt "com.google.dagger:dagger-android-processor:$rootProject.daggerVersion"
+
+    // Scanner
+    implementation project(':opencv')
 
     //Testing
     testImplementation "junit:junit:$rootProject.junitVersion"
