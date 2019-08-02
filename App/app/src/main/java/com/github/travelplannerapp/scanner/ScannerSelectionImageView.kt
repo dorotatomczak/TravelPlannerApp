@@ -231,17 +231,16 @@ class ScannerSelectionImageView : ImageView {
      *
      * NOTE: Calling this method will invalidate the view
      *
-     * @param points A list of points. Passing null will set the selector to the default selection.
+     * @param points An array of points. Passing null will set the selector to the default selection.
      */
-    fun setPoints(points: List<PointF>?) {
-        if (points != null) {
-            upperLeftPoint = imagePointToViewPoint(points[0])
-            upperRightPoint = imagePointToViewPoint(points[1])
-            lowerRightPoint = imagePointToViewPoint(points[2])
-            lowerLeftPoint = imagePointToViewPoint(points[3])
-        } else {
-            setDefaultSelection()
+    fun setPoints(points: Array<org.opencv.core.Point>?) {
+        if (points != null){
+            upperLeftPoint = imagePointToViewPoint(PointF(points[0].x.toFloat(), points[0].y.toFloat()))
+            upperRightPoint = imagePointToViewPoint(PointF(points[1].x.toFloat(), points[1].y.toFloat()))
+            lowerRightPoint = imagePointToViewPoint(PointF(points[2].x.toFloat(), points[2].y.toFloat()))
+            lowerLeftPoint = imagePointToViewPoint(PointF(points[3].x.toFloat(), points[3].y.toFloat()))
         }
+        else setDefaultSelection()
 
         invalidate()
     }

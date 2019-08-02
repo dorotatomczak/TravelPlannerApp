@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.github.travelplannerapp.R
 import dagger.android.AndroidInjection
 import kotlinx.android.synthetic.main.activity_scanner.*
+import org.opencv.android.OpenCVLoader
 import javax.inject.Inject
 
 class ScannerActivity : AppCompatActivity(), ScannerContract.View {
@@ -25,11 +26,16 @@ class ScannerActivity : AppCompatActivity(), ScannerContract.View {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_scanner)
 
+        initOpenCv()
+
         buttonScan.setOnClickListener { presenter.takeScan() }
 
         val photoPath = intent.getStringExtra(PHOTO_PATH_EXTRA)
         val photoUri: Uri? = Uri.parse(photoPath)
-        if (photoUri != null) imageViewSelection.setImageURI(photoUri)
+        if (photoUri != null) {
+            imageViewSelection.setImageURI(photoUri)
+            imageViewSelection.setPoints(Scanner.findCorners(photoPath))
+        }
         else returnResultAndFinish(R.string.scanner_initialization_failure)
     }
 
@@ -43,5 +49,11 @@ class ScannerActivity : AppCompatActivity(), ScannerContract.View {
 
     override fun closeScanner() {
         returnResultAndFinish(R.string.scanner_success)
+    }
+
+    private fun initOpenCv() {
+        if (!OpenCVLoader.initDebug()) {
+            returnResultAndFinish(R.string.scanner_initialization_failure)
+        }
     }
 }
