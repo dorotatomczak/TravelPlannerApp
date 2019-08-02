@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".scanner.ScannerActivity">
+
+    <com.github.travelplannerapp.scanner.ScannerSelectionImageView
+        android:id="@+id/imageViewSelection"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:borderColor="@color/colorAccent"
+        app:circleRadius="16dp"
+        app:paddingBottom="100dp"
+        app:paddingHorizontal="50dp"
+        app:paddingTop="50dp"/>
+
+    <Button
+        android:id="@+id/buttonScan"
+        android:layout_width="@dimen/button_width"
+        android:layout_height="@dimen/button_height"
+        android:layout_alignParentBottom="true"
+        android:layout_centerInParent="true"
+        android:layout_marginBottom="@dimen/margin_vertical"
+        android:background="@drawable/button_style"
+        android:text="@string/scan"
+        android:textColor="@color/white"
+        android:textSize="@dimen/text_size_button"/>
+
+</RelativeLayout>

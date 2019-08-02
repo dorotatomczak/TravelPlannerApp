@@ -3,19 +3,34 @@
     package="com.github.travelplannerapp">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application
+        android:name=".App"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:name=".App"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme"
+        android:usesCleartextTraffic="true">
+
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="com.github.travelplannerapp.fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths"/>
+        </provider>
+
         <activity
+            android:name=".launcher.LauncherActivity"
             android:label="@string/app_name"
             android:launchMode="singleInstance"
-            android:name=".launcher.LauncherActivity"
             android:theme="@android:style/Theme.NoDisplay">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -24,21 +39,23 @@
             </intent-filter>
         </activity>
         <activity
-            android:label="@string/sign_in"
-            android:name=".signin.SignInActivity" />
+            android:name=".signin.SignInActivity"
+            android:label="@string/sign_in" />
         <activity
-            android:label="@string/sign_up"
-            android:name=".signup.SignUpActivity" />
+            android:name=".signup.SignUpActivity"
+            android:label="@string/sign_up" />
         <activity
-            android:label="@string/app_name"
             android:name=".travels.TravelsActivity"
+            android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
             </intent-filter>
         </activity>
         <activity android:name=".transport.TransportActivity" />
-        <activity android:name=".tickets.TicketsActivity" />
+        <activity android:name=".tickets.TicketsActivity"
+            android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name=".scanner.ScannerActivity"/>
         <activity android:name=".accommodation.AccommodationActivity" />
         <activity android:name=".dayplans.DayPlansActivity" />
         <activity
@@ -46,4 +63,5 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".addtravel.AddTravelActivity" />
     </application>
+
 </manifest>

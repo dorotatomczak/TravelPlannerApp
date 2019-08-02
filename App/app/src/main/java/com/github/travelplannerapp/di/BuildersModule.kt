@@ -12,6 +12,9 @@ import com.github.travelplannerapp.dayplans.DayPlansViewModel
 import com.github.travelplannerapp.launcher.LauncherActivity
 import com.github.travelplannerapp.launcher.LauncherModule
 import com.github.travelplannerapp.launcher.LauncherViewModel
+import com.github.travelplannerapp.scanner.ScannerActivity
+import com.github.travelplannerapp.scanner.ScannerModule
+import com.github.travelplannerapp.scanner.ScannerViewModel
 import com.github.travelplannerapp.signin.SignInActivity
 import com.github.travelplannerapp.signin.SignInModule
 import com.github.travelplannerapp.signin.SignInViewModel
@@ -66,6 +69,9 @@ abstract class BuildersModule {
 
     @ContributesAndroidInjector(modules = [TicketsViewModel::class, TicketsModule::class])
     internal abstract fun bindTicketsActivity(): TicketsActivity
+
+    @ContributesAndroidInjector(modules = [ScannerViewModel::class, ScannerModule::class])
+    internal abstract fun bindScannerActivity(): ScannerActivity
 
     @ContributesAndroidInjector(modules = [TransportViewModel::class, TransportModule::class])
     internal abstract fun bindTransportActivity(): TransportActivity

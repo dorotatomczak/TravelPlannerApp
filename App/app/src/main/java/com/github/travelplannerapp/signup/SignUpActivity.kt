@@ -1,7 +1,7 @@
 package com.github.travelplannerapp.signup
 
 import android.content.Intent
-import android.support.v7.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.github.travelplannerapp.R
 import com.github.travelplannerapp.signin.SignInActivity
