@@ -10,7 +10,7 @@ class TravelsPresenter(view: TravelsContract.View) : BasePresenter<TravelsContra
 
 
     private var travels = listOf<String>()
-    private var server: CommunicationService = CommunicationService()
+    private var server = CommunicationService
 
     override fun loadTravels() {
         val requestInterface = Retrofit.Builder()

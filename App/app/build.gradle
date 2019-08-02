@@ -68,7 +68,8 @@ dependencies {
     implementation "androidx.room:room-runtime:$rootProject.roomVersion"
     annotationProcessor "androidx.room:room-compiler:$rootProject.roomVersion"
 
-
+    // authentication and security
+    implementation "com.squareup.retrofit2:converter-scalars:$rootProject.converter_scalarsVersion"
 }
 repositories {
     mavenCentral()

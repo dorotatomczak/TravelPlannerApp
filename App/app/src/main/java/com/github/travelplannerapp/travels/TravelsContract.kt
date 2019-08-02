@@ -40,6 +40,6 @@ interface TravelsContract {
 
     interface ServerAPI{
         @GET("/travels")
-        fun getTravels(@Query("name") name: String): Observable<List<String>>
+        fun getTravels(@Query("name") name: String, @Query("auth") auth: String): Observable<List<String>>
     }
 }

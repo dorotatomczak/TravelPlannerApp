@@ -51,4 +51,5 @@ ext {
     rxJava2Version = '2.3.0'
     rxAndroidVersion = '2.0.1'
     roomVersion = '2.1.0'
+    converter_scalarsVersion = '2.1.0'
 }

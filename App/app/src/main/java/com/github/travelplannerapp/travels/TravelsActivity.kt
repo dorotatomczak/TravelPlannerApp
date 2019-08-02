@@ -1,7 +1,9 @@
 package com.github.travelplannerapp.travels
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import com.google.android.material.navigation.NavigationView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -99,7 +101,14 @@ class TravelsActivity : AppCompatActivity(), TravelsContract.View, NavigationVie
     }
 
     override fun loadTravels(requestInterface: TravelsContract.ServerAPI, handleResponse: (myTravels: List<String>) -> Unit) {
-        myCompositeDisposable?.add(requestInterface.getTravels("Angelina Johnson")
+        val sharedPref = getSharedPreferences(resources.getString(R.string.auth_settings),
+                Context.MODE_PRIVATE)
+        val email = sharedPref.getString(resources.getString(R.string.email_shared_pref),
+                "default").toString()
+        val authToken = sharedPref.getString(resources.getString(R.string.auth_token_shared_pref),
+                "default").toString()
+
+        myCompositeDisposable?.add(requestInterface.getTravels(email, authToken)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
                 .subscribe(handleResponse, { showSnackbar(resources.getString(R.string.server_connection_failure)) }))
