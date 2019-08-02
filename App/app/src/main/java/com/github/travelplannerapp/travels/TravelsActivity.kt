@@ -99,7 +99,7 @@ class TravelsActivity : AppCompatActivity(), TravelsContract.View, NavigationVie
     }
 
     override fun loadTravels(requestInterface: TravelsContract.ServerAPI, handleResponse: (myTravels: List<String>) -> Unit) {
-        myCompositeDisposable?.add(requestInterface.getTravels()
+        myCompositeDisposable?.add(requestInterface.getTravels("Angelina Johnson")
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
                 .subscribe(handleResponse, { showSnackbar(resources.getString(R.string.server_connection_failure)) }))
