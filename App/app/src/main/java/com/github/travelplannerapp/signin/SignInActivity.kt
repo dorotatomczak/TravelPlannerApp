@@ -17,6 +17,7 @@ import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_sign_in.*
 import android.content.Context
 import android.util.Log
+import com.github.travelplannerapp.communication.ServerApi
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.activity_travels.*
 
@@ -45,7 +46,7 @@ class SignInActivity : AppCompatActivity(), SignInContract.View {
         myCompositeDisposable?.clear()
     }
 
-    override fun authorize(requestInterface: SignInContract.ServerAPI, jsonLoginRequest: String,
+    override fun authorize(requestInterface: ServerApi, jsonLoginRequest: String,
                            handleLoginResponse: (jsonString: String) -> Unit) {
         myCompositeDisposable?.add(requestInterface.authenticate(jsonLoginRequest)
                 .observeOn(AndroidSchedulers.mainThread())

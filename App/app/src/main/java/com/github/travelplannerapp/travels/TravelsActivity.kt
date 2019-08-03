@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView
 
 import com.github.travelplannerapp.R
 import com.github.travelplannerapp.addtravel.AddTravelActivity
+import com.github.travelplannerapp.communication.ServerApi
 import com.github.travelplannerapp.traveldetails.TravelDetailsActivity
 
 import javax.inject.Inject
@@ -100,7 +101,7 @@ class TravelsActivity : AppCompatActivity(), TravelsContract.View, NavigationVie
                 .setAction("Action", null).show()
     }
 
-    override fun loadTravels(requestInterface: TravelsContract.ServerAPI, handleResponse: (myTravels: List<String>) -> Unit) {
+    override fun loadTravels(requestInterface: ServerApi, handleResponse: (myTravels: List<String>) -> Unit) {
         val sharedPref = getSharedPreferences(resources.getString(R.string.auth_settings),
                 Context.MODE_PRIVATE)
         val email = sharedPref.getString(resources.getString(R.string.email_shared_pref),
