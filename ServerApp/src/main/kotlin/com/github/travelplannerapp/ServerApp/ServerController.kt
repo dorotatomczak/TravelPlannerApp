@@ -37,12 +37,12 @@ class ServerController {
     lateinit var userManagement: UserManagement
 
     @GetMapping("/travels")
-    fun travels(@RequestParam(value = "name") name: String,@RequestParam(value = "auth") auth: String): List<String> {
-        if (databseActive && userManagement.verifyUser(name, auth)) {
-            return travelRepository.getAllTravelsByUserName(name, auth).map { travel -> travel.name }
+    fun travels(@RequestParam(value = "email") email: String,@RequestParam(value = "auth") auth: String): List<String> {
+        if (databseActive && userManagement.verifyUser(email, auth)) {
+            return travelRepository.getAllTravelsByUserEmail(email, auth).map { travel -> travel.name }
         }
         //for tests without database
-        print("name: $name") // TODO [Ania} delete/move when we have database on Korlub's server
+        print("name: $email") // TODO [Ania} delete/move when we have database on Korlub's server
         print("auth: $auth") // TODO [Ania} delete when we have database on Korlub's server
         return listOf("Gdańsk", "Elbląg", "Toruń", "Olsztyn", "Szczecin")
     }
@@ -71,7 +71,7 @@ class ServerController {
             .compact()
 
         if (databseActive){
-            userRepository.add(User(0,"", loginRequest.email, loginRequest.password,
+            userRepository.add(User(0, loginRequest.email, loginRequest.password,
                 accessToken,  Timestamp.from(expiryDate)))
         }
         val jsonLoginAnswer = JsonLoginAnswer(accessToken, LOGIN_ANSWER.OK)

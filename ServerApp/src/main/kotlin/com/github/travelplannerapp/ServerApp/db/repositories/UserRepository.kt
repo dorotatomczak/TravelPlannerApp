@@ -4,7 +4,6 @@ import com.github.travelplannerapp.ServerApp.db.DbConnection
 import com.github.travelplannerapp.ServerApp.db.dao.User
 import org.springframework.stereotype.Component
 import java.sql.ResultSet
-import java.time.LocalDate
 
 @Component
 class UserRepository : IUserRepository {
@@ -28,7 +27,7 @@ class UserRepository : IUserRepository {
         statement.setInt(1, id)
         val result: ResultSet = statement.executeQuery()
         if (result.next()) {
-            return mapResultToObject(result)
+            return User(result)
         }
         return null
     }
@@ -40,7 +39,7 @@ class UserRepository : IUserRepository {
                         .prepareStatement("SELECT * FROM app_user")
         val result = statement.executeQuery()
         while (result.next()) {
-            users.add(mapResultToObject(result))
+            users.add(User(result))
         }
         return users
     }
@@ -52,11 +51,10 @@ class UserRepository : IUserRepository {
                 "INSERT INTO app_user (name,email,password,authToken,expirationDate) " +
                         "VALUES (?,?,?,?,?)"
             )
-        statement.setString(1, obj.name)
-        statement.setString(2, obj.email)
-        statement.setString(3, obj.password)
-        statement.setString(4, obj.authToken)
-        statement.setTimestamp(5, obj.expirationDate)
+        statement.setString(1, obj.email)
+        statement.setString(2, obj.password)
+        statement.setString(3, obj.authToken)
+        statement.setTimestamp(4, obj.expirationDate)
         statement.executeUpdate()
     }
 
@@ -69,11 +67,10 @@ class UserRepository : IUserRepository {
             )
         objs.iterator().forEach { obj ->
             run {
-                statement.setString(1, obj.name)
-                statement.setString(2, obj.email)
-                statement.setString(3, obj.password)
-                statement.setString(4, obj.authToken)
-                statement.setTimestamp(5, obj.expirationDate)
+                statement.setString(1, obj.email)
+                statement.setString(2, obj.password)
+                statement.setString(3, obj.authToken)
+                statement.setTimestamp(4, obj.expirationDate)
                 statement.executeUpdate()
             }
         }
@@ -95,9 +92,5 @@ class UserRepository : IUserRepository {
             .conn
             .prepareStatement("DELETE FROM app_user")
         statement.executeUpdate()
-    }
-
-    override fun mapResultToObject(result: ResultSet): User {
-        return User(result)
     }
 }

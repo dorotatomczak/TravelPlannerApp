@@ -20,12 +20,12 @@ class TravelRepository : ITravelRepository {
         statement.setInt(1, id)
         val result = statement.executeQuery()
         while (result.next()) {
-            travels.add(mapResultToObject(result))
+            travels.add(Travel(result))
         }
         return travels
     }
 
-    override fun getAllTravelsByUserName(name: String, authToken: String): MutableList<Travel> {
+    override fun getAllTravelsByUserEmail(email: String, authToken: String): MutableList<Travel> {
         var travels = mutableListOf<Travel>()
         val statement = DbConnection.conn
                 .prepareStatement(
@@ -34,12 +34,12 @@ class TravelRepository : ITravelRepository {
                     "ON travel.id = app_user_travel.travel_id " +
                     "INNER JOIN app_user " +
                     "ON app_user_travel.app_user_id = app_user.id " +
-                    "WHERE app_user.name = ?"
+                    "WHERE app_user.email = ?"
                 )
-        statement.setString(1, name)
+        statement.setString(1, email)
         val result = statement.executeQuery()
         while (result.next()) {
-            travels.add(mapResultToObject(result))
+            travels.add(Travel(result))
         }
         return travels
     }
@@ -51,7 +51,7 @@ class TravelRepository : ITravelRepository {
         statement.setInt(1, id)
         val result: ResultSet = statement.executeQuery()
         if (result.next()) {
-            return mapResultToObject(result)
+            return Travel(result)
         }
         return null
     }
@@ -63,7 +63,7 @@ class TravelRepository : ITravelRepository {
                 .prepareStatement("SELECT * FROM travel")
         val result = statement.executeQuery()
         while (result.next()) {
-            travels.add(mapResultToObject(result))
+            travels.add(Travel(result))
         }
         return travels
     }
@@ -111,12 +111,5 @@ class TravelRepository : ITravelRepository {
                 .conn
                 .prepareStatement("DELETE FROM travel")
         statement.executeUpdate()
-    }
-
-    override fun mapResultToObject(result: ResultSet): Travel {
-        return Travel(
-            result.getInt(1),
-            result.getString(2)
-        )
     }
 }
