@@ -1,9 +1,6 @@
 package com.github.travelplannerapp.travels
 
-import io.reactivex.Observable
-import retrofit2.http.GET
-import retrofit2.http.Query
-
+import com.github.travelplannerapp.communication.ServerApi
 
 interface TravelsContract {
     interface View {
@@ -17,7 +14,7 @@ interface TravelsContract {
 
         fun showSnackbar(message: String)
 
-        fun loadTravels(requestInterface: ServerAPI, handleResponse: (myTravels: List<String>) -> Unit)
+        fun loadTravels(requestInterface: ServerApi, handleResponse: (myTravels: List<String>) -> Unit)
     }
 
     interface TravelItemView {
@@ -36,10 +33,5 @@ interface TravelsContract {
 
         fun handleResponse(myTravels: List<String>)
 
-    }
-
-    interface ServerAPI{
-        @GET("/travels")
-        fun getTravels(@Query("name") name: String): Observable<List<String>>
     }
 }
