@@ -6,7 +6,7 @@ import java.net.URLConnection
 class HereLoader {
     private val MY_APP_ID = "PFVgm9cqOc2OlIyiFZOO"
     private val MY_APP_TOKEN = "OrWU0j5Bb1XI5Yj-YLIhVQ"
-    private val bestWayResponseFilter = "resposnse"
+    private val bestWayResponseFilter = "response"
     private val findPlaceResponseFilter = "jsonResponse"
 
     fun findPlaceByText(text: String, latitude: String, longitude: String): String {

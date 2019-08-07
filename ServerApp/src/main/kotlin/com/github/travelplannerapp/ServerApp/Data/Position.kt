@@ -1,8 +1,6 @@
 package com.github.travelplannerapp.ServerApp.Data
 
-class Position(
-        private val latitude: Double,
-        private val longitude: Double) {
+class Position(private val latitude: Double, private val longitude: Double) {
     //TEMPORARY
     fun printPosition() {
         println("Position: ")
