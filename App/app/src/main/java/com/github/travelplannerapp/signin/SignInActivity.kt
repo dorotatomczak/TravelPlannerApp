@@ -16,17 +16,15 @@ import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_sign_in.*
 import android.content.Context
-import android.util.Log
 import com.github.travelplannerapp.communication.ServerApi
 import com.google.android.material.snackbar.Snackbar
-import kotlinx.android.synthetic.main.activity_travels.*
 
 
 class SignInActivity : AppCompatActivity(), SignInContract.View {
 
     @Inject
     lateinit var presenter: SignInContract.Presenter
-    private var myCompositeDisposable = CompositeDisposable()
+    var myCompositeDisposable = CompositeDisposable()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         AndroidInjection.inject(this)
@@ -43,12 +41,12 @@ class SignInActivity : AppCompatActivity(), SignInContract.View {
 
     override fun onDestroy() {
         super.onDestroy()
-        myCompositeDisposable?.clear()
+        myCompositeDisposable.clear()
     }
 
     override fun authorize(requestInterface: ServerApi, jsonLoginRequest: String,
                            handleLoginResponse: (jsonString: String) -> Unit) {
-        myCompositeDisposable?.add(requestInterface.authenticate(jsonLoginRequest)
+        myCompositeDisposable.add(requestInterface.authenticate(jsonLoginRequest)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
                 .subscribe(handleLoginResponse, { showSnackbar(resources.getString(R.string.server_connection_failure)) }))
@@ -72,8 +70,8 @@ class SignInActivity : AppCompatActivity(), SignInContract.View {
     }
 
     override fun showSnackbar(message: String) {
-        Snackbar.make(coordinatorLayoutTravels, message, Snackbar.LENGTH_LONG)
-                .setAction("Action", null).show()
+        Snackbar.make(linearLayoutSignIn, message, Snackbar.LENGTH_LONG)
+                .setAction("OK", null).show()
     }
 
     override fun showSnackbar(id: Int) {

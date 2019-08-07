@@ -23,14 +23,16 @@ object CommunicationService {
             .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
             .build()
             .create(ServerApi::class.java)
-
 }
 
 interface ServerApi {
 
     @GET("/travels")
-    fun getTravels(@Query("name") name: String, @Query("auth") auth: String): Observable<List<String>>
+    fun getTravels(@Query("email") name: String, @Query("auth") auth: String): Observable<List<String>>
 
     @POST("/authenticate")
     fun authenticate(@Body jsonString: String): Observable<String>
+
+    @POST("/register")
+    fun register(@Body jsonString: String): Observable<String>
 }
