@@ -8,8 +8,8 @@ class User(
     var id: Int = -1,
     var email: String,
     var password: String,
-    var authToken: String,
-    val expirationDate: Timestamp
+    var authToken: String?,
+    val expirationDate: Timestamp?
 ) {
     constructor(result: ResultSet) :
             this(

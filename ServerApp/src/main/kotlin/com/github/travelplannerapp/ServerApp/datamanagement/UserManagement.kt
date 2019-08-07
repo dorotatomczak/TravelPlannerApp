@@ -11,7 +11,7 @@ class UserManagement : IUserManagement {
     lateinit var userRepository: UserRepository
     override fun verifyUser(email: String, auth: String): Boolean{
         val user = userRepository.getUserByEmail(email)
-        return (user?.authToken == auth
-                && user.expirationDate.before(java.sql.Date.valueOf(LocalDate.now())))
+        return (user?.authToken!! == auth
+                && user.expirationDate!!.before(java.sql.Date.valueOf(LocalDate.now())))
     }
 }

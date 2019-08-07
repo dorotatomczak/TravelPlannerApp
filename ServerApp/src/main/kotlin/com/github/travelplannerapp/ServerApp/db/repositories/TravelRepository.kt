@@ -12,10 +12,10 @@ class TravelRepository : ITravelRepository {
         val statement = DbConnection
                 .conn
                 .prepareStatement(
-                    "SELECT travel.id, travel.name " +
-                    "FROM travel INNER JOIN app_user_travel " +
-                    "on travel.id = app_user_travel.travel_id " +
-                    "where app_user_travel.app_user_id = ?"
+                        "SELECT travel.id, travel.name " +
+                                "FROM travel INNER JOIN app_user_travel " +
+                                "on travel.id = app_user_travel.travel_id " +
+                                "where app_user_travel.app_user_id = ?"
                 )
         statement.setInt(1, id)
         val result = statement.executeQuery()
@@ -29,12 +29,12 @@ class TravelRepository : ITravelRepository {
         var travels = mutableListOf<Travel>()
         val statement = DbConnection.conn
                 .prepareStatement(
-                    "SELECT travel.id, travel.name " +
-                    "FROM travel INNER JOIN app_user_travel " +
-                    "ON travel.id = app_user_travel.travel_id " +
-                    "INNER JOIN app_user " +
-                    "ON app_user_travel.app_user_id = app_user.id " +
-                    "WHERE app_user.email = ?"
+                        "SELECT travel.id, travel.name " +
+                                "FROM travel INNER JOIN app_user_travel " +
+                                "ON travel.id = app_user_travel.travel_id " +
+                                "INNER JOIN app_user " +
+                                "ON app_user_travel.app_user_id = app_user.id " +
+                                "WHERE app_user.email = ?"
                 )
         statement.setString(1, email)
         val result = statement.executeQuery()
@@ -72,8 +72,8 @@ class TravelRepository : ITravelRepository {
         val statement = DbConnection
                 .conn
                 .prepareStatement(
-                    "INSERT INTO travel (name) " +
-                    "VALUES (?)"
+                        "INSERT INTO travel (name) " +
+                                "VALUES (?)"
                 )
         statement.setString(1, obj.name)
         statement.executeUpdate()
@@ -83,8 +83,8 @@ class TravelRepository : ITravelRepository {
         val statement = DbConnection
                 .conn
                 .prepareStatement(
-                    "INSERT INTO travel (name) " +
-                    "VALUES (?)"
+                        "INSERT INTO travel (name) " +
+                                "VALUES (?)"
                 )
         objs.iterator()
                 .forEach { obj ->
@@ -99,8 +99,8 @@ class TravelRepository : ITravelRepository {
         val statement = DbConnection
                 .conn
                 .prepareStatement(
-                    "DELETE FROM travel " +
-                    "WHERE id=?"
+                        "DELETE FROM travel " +
+                                "WHERE id=?"
                 )
         statement.setInt(1, id)
         statement.executeUpdate()
