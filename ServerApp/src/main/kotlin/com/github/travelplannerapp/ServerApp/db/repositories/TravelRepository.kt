@@ -7,6 +7,12 @@ import java.sql.ResultSet
 
 @Component
 class TravelRepository : ITravelRepository {
+    companion object {
+        const val insertStatement = "INSERT INTO travel (name) VALUES (?)"
+        const val selectStatement = "SELECT * FROM travel"
+        const val deleteStatement = "DELETE FROM travel "
+    }
+
     override fun getAllTravelsByUserId(id: Int): MutableList<Travel> {
         var travels = mutableListOf<Travel>()
         val statement = DbConnection
@@ -47,7 +53,7 @@ class TravelRepository : ITravelRepository {
     override fun get(id: Int): Travel? {
         val statement = DbConnection
                 .conn
-                .prepareStatement("SELECT * FROM travel WHERE id=?")
+                .prepareStatement(selectStatement + "WHERE id=?")
         statement.setInt(1, id)
         val result: ResultSet = statement.executeQuery()
         if (result.next()) {
@@ -60,7 +66,7 @@ class TravelRepository : ITravelRepository {
         var travels = mutableListOf<Travel>()
         val statement = DbConnection
                 .conn
-                .prepareStatement("SELECT * FROM travel")
+                .prepareStatement(selectStatement)
         val result = statement.executeQuery()
         while (result.next()) {
             travels.add(Travel(result))
@@ -71,10 +77,7 @@ class TravelRepository : ITravelRepository {
     override fun add(obj: Travel) {
         val statement = DbConnection
                 .conn
-                .prepareStatement(
-                        "INSERT INTO travel (name) " +
-                                "VALUES (?)"
-                )
+                .prepareStatement(insertStatement)
         statement.setString(1, obj.name)
         statement.executeUpdate()
     }
@@ -82,10 +85,7 @@ class TravelRepository : ITravelRepository {
     override fun add(objs: MutableList<Travel>) {
         val statement = DbConnection
                 .conn
-                .prepareStatement(
-                        "INSERT INTO travel (name) " +
-                                "VALUES (?)"
-                )
+                .prepareStatement(insertStatement)
         objs.iterator()
                 .forEach { obj ->
                     run {
@@ -98,10 +98,7 @@ class TravelRepository : ITravelRepository {
     override fun delete(id: Int) {
         val statement = DbConnection
                 .conn
-                .prepareStatement(
-                        "DELETE FROM travel " +
-                                "WHERE id=?"
-                )
+                .prepareStatement(deleteStatement + "WHERE id=?")
         statement.setInt(1, id)
         statement.executeUpdate()
     }
@@ -109,7 +106,7 @@ class TravelRepository : ITravelRepository {
     override fun deleteAll() {
         val statement = DbConnection
                 .conn
-                .prepareStatement("DELETE FROM travel")
+                .prepareStatement(deleteStatement)
         statement.executeUpdate()
     }
 }

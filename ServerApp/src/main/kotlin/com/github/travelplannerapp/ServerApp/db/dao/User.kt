@@ -5,18 +5,18 @@ import java.sql.Timestamp
 
 
 class User(
-    var id: Int = -1,
     var email: String,
     var password: String,
-    var authToken: String?,
-    val expirationDate: Timestamp?
+    var authToken: String? = null,
+    val expirationDate: Timestamp? = null,
+    var id: Int = -1
 ) {
     constructor(result: ResultSet) :
             this(
-                result.getInt(1),
                 result.getString(2),
                 result.getString(3),
                 result.getString(4),
-                result.getTimestamp(5)
+                result.getTimestamp(5),
+                result.getInt(1)
             )
 }

@@ -8,11 +8,18 @@ import java.sql.Timestamp
 
 @Component
 class UserRepository : IUserRepository {
+    companion object {
+        const val insertStatement = "INSERT INTO app_user (email,password,authToken,expirationDate) " +
+                "VALUES (?,?,?,?) "
+        const val selectStatement = "SELECT * FROM app_user "
+        const val deleteStatement = "DELETE FROM app_user "
+        const val updateStatement = "UPDATE app_user "
+    }
 
     override fun getUserByEmail(email: String): User? {
         val statement = DbConnection
                 .conn
-                .prepareStatement("SELECT * FROM app_user WHERE email=?")
+                .prepareStatement(selectStatement + "WHERE email=?")
         statement.setString(1, email)
         val result: ResultSet = statement.executeQuery()
         if (result.next()) {
@@ -24,7 +31,7 @@ class UserRepository : IUserRepository {
     override fun get(id: Int): User? {
         val statement = DbConnection
                 .conn
-                .prepareStatement("SELECT * FROM app_user WHERE id=?")
+                .prepareStatement(selectStatement + "WHERE id=?")
         statement.setInt(1, id)
         val result: ResultSet = statement.executeQuery()
         if (result.next()) {
@@ -37,7 +44,7 @@ class UserRepository : IUserRepository {
         var users = mutableListOf<User>()
         val statement = DbConnection
                 .conn
-                .prepareStatement("SELECT * FROM app_user")
+                .prepareStatement(selectStatement)
         val result = statement.executeQuery()
         while (result.next()) {
             users.add(User(result))
@@ -48,10 +55,7 @@ class UserRepository : IUserRepository {
     override fun add(obj: User) {
         val statement = DbConnection
                 .conn
-                .prepareStatement(
-                        "INSERT INTO app_user (name,email,password,authToken,expirationDate) " +
-                                "VALUES (?,?,?,?,?)"
-                )
+                .prepareStatement(insertStatement)
         statement.setString(1, obj.email)
         statement.setString(2, obj.password)
         statement.setString(3, obj.authToken)
@@ -62,10 +66,7 @@ class UserRepository : IUserRepository {
     override fun add(objs: MutableList<User>) {
         val statement = DbConnection
                 .conn
-                .prepareStatement(
-                        "INSERT INTO app_user (name,email,password,authToken,expirationDate) " +
-                                "VALUES (?,?,?,?,?)"
-                )
+                .prepareStatement(insertStatement)
         objs.iterator().forEach { obj ->
             run {
                 statement.setString(1, obj.email)
@@ -81,7 +82,7 @@ class UserRepository : IUserRepository {
         val statement = DbConnection
                 .conn
                 .prepareStatement(
-                        "UPDATE app_user " +
+                        updateStatement +
                                 "SET expirationdate = ?, " +
                                 "authtoken = ? " +
                                 "WHERE email = ? "
@@ -95,10 +96,7 @@ class UserRepository : IUserRepository {
     override fun delete(id: Int) {
         val statement = DbConnection
                 .conn
-                .prepareStatement(
-                        "DELETE FROM app_user " +
-                                "WHERE id=?"
-                )
+                .prepareStatement(deleteStatement + "WHERE id=?")
         statement.setInt(1, id)
         statement.executeUpdate()
     }
@@ -106,7 +104,7 @@ class UserRepository : IUserRepository {
     override fun deleteAll() {
         val statement = DbConnection
                 .conn
-                .prepareStatement("DELETE FROM app_user")
+                .prepareStatement(deleteStatement)
         statement.executeUpdate()
     }
 }

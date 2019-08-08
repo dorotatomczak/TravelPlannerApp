@@ -45,10 +45,9 @@ class ServerController {
 
     @GetMapping("/db")
     fun getTravel(): User?  {
-            val expiryDate = Instant.now().plusSeconds(3600*24)
-            userRepository.updateUserAuthByEmail("jan.kowalski@gmail.com","test",Timestamp.from(expiryDate))
             return userRepository.getUserByEmail("jan.kowalski@gmail.com")
     }
+
     @PostMapping("/authenticate")
     fun authenticate(@RequestBody request: String): String {
         val loginRequest = Gson().fromJson(request, JsonLoginRequest::class.java)
@@ -74,7 +73,6 @@ class ServerController {
         val jsonLoginAnswer = JsonLoginAnswer(accessToken, LOGIN_ANSWER.OK)
         return Gson().toJson(jsonLoginAnswer)
     }
-
 
     fun generateRandomString():String{
         val charPool : List<Char> = ('a'..'z') + ('A'..'Z') + ('0'..'9')
