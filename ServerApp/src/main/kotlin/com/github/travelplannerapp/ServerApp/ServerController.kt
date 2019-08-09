@@ -1,6 +1,6 @@
 package com.github.travelplannerapp.ServerApp
 
-
+import com.github.travelplannerapp.ServerApp.HereCharger.HereLoader
 import com.github.travelplannerapp.ServerApp.datamanagement.UserManagement
 import com.github.travelplannerapp.ServerApp.db.dao.User
 import com.github.travelplannerapp.ServerApp.db.repositories.TravelRepository
@@ -36,6 +36,13 @@ class ServerController {
     @Autowired
     lateinit var userManagement: UserManagement
 
+    @GetMapping("/here")
+    fun getExampleDataFromHere() {
+        val connector = HereLoader()
+        connector.findPlaceByText("chrysler", "40.74917", "-73.98529")
+        connector.findBestWay("40.74917", "-73.98529", "45.74917",
+                "-72.98529", "fastest", "car", "disabled")
+    }
     @GetMapping("/travels")
     fun travels(@RequestParam(value = "name") name: String,@RequestParam(value = "auth") auth: String): List<String> {
         if (databseActive && userManagement.verifyUser(name, auth)) {
