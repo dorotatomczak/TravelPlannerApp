@@ -7,39 +7,45 @@ import java.sql.ResultSet
 
 @Component
 class TravelRepository : ITravelRepository {
+    companion object {
+        const val insertStatement = "INSERT INTO travel (name) VALUES (?)"
+        const val selectStatement = "SELECT * FROM travel"
+        const val deleteStatement = "DELETE FROM travel "
+    }
+
     override fun getAllTravelsByUserId(id: Int): MutableList<Travel> {
         var travels = mutableListOf<Travel>()
         val statement = DbConnection
                 .conn
                 .prepareStatement(
-                    "SELECT travel.id, travel.name " +
-                    "FROM travel INNER JOIN app_user_travel " +
-                    "on travel.id = app_user_travel.travel_id " +
-                    "where app_user_travel.app_user_id = ?"
+                        "SELECT travel.id, travel.name " +
+                                "FROM travel INNER JOIN app_user_travel " +
+                                "on travel.id = app_user_travel.travel_id " +
+                                "where app_user_travel.app_user_id = ?"
                 )
         statement.setInt(1, id)
         val result = statement.executeQuery()
         while (result.next()) {
-            travels.add(mapResultToObject(result))
+            travels.add(Travel(result))
         }
         return travels
     }
 
-    override fun getAllTravelsByUserName(name: String, authToken: String): MutableList<Travel> {
+    override fun getAllTravelsByUserEmail(email: String, authToken: String): MutableList<Travel> {
         var travels = mutableListOf<Travel>()
         val statement = DbConnection.conn
                 .prepareStatement(
-                    "SELECT travel.id, travel.name " +
-                    "FROM travel INNER JOIN app_user_travel " +
-                    "ON travel.id = app_user_travel.travel_id " +
-                    "INNER JOIN app_user " +
-                    "ON app_user_travel.app_user_id = app_user.id " +
-                    "WHERE app_user.name = ?"
+                        "SELECT travel.id, travel.name " +
+                                "FROM travel INNER JOIN app_user_travel " +
+                                "ON travel.id = app_user_travel.travel_id " +
+                                "INNER JOIN app_user " +
+                                "ON app_user_travel.app_user_id = app_user.id " +
+                                "WHERE app_user.email = ?"
                 )
-        statement.setString(1, name)
+        statement.setString(1, email)
         val result = statement.executeQuery()
         while (result.next()) {
-            travels.add(mapResultToObject(result))
+            travels.add(Travel(result))
         }
         return travels
     }
@@ -47,11 +53,11 @@ class TravelRepository : ITravelRepository {
     override fun get(id: Int): Travel? {
         val statement = DbConnection
                 .conn
-                .prepareStatement("SELECT * FROM travel WHERE id=?")
+                .prepareStatement(selectStatement + "WHERE id=?")
         statement.setInt(1, id)
         val result: ResultSet = statement.executeQuery()
         if (result.next()) {
-            return mapResultToObject(result)
+            return Travel(result)
         }
         return null
     }
@@ -60,10 +66,10 @@ class TravelRepository : ITravelRepository {
         var travels = mutableListOf<Travel>()
         val statement = DbConnection
                 .conn
-                .prepareStatement("SELECT * FROM travel")
+                .prepareStatement(selectStatement)
         val result = statement.executeQuery()
         while (result.next()) {
-            travels.add(mapResultToObject(result))
+            travels.add(Travel(result))
         }
         return travels
     }
@@ -71,10 +77,7 @@ class TravelRepository : ITravelRepository {
     override fun add(obj: Travel) {
         val statement = DbConnection
                 .conn
-                .prepareStatement(
-                    "INSERT INTO travel (name) " +
-                    "VALUES (?)"
-                )
+                .prepareStatement(insertStatement)
         statement.setString(1, obj.name)
         statement.executeUpdate()
     }
@@ -82,10 +85,7 @@ class TravelRepository : ITravelRepository {
     override fun add(objs: MutableList<Travel>) {
         val statement = DbConnection
                 .conn
-                .prepareStatement(
-                    "INSERT INTO travel (name) " +
-                    "VALUES (?)"
-                )
+                .prepareStatement(insertStatement)
         objs.iterator()
                 .forEach { obj ->
                     run {
@@ -98,10 +98,7 @@ class TravelRepository : ITravelRepository {
     override fun delete(id: Int) {
         val statement = DbConnection
                 .conn
-                .prepareStatement(
-                    "DELETE FROM travel " +
-                    "WHERE id=?"
-                )
+                .prepareStatement(deleteStatement + "WHERE id=?")
         statement.setInt(1, id)
         statement.executeUpdate()
     }
@@ -109,14 +106,7 @@ class TravelRepository : ITravelRepository {
     override fun deleteAll() {
         val statement = DbConnection
                 .conn
-                .prepareStatement("DELETE FROM travel")
+                .prepareStatement(deleteStatement)
         statement.executeUpdate()
-    }
-
-    override fun mapResultToObject(result: ResultSet): Travel {
-        return Travel(
-            result.getInt(1),
-            result.getString(2)
-        )
     }
 }

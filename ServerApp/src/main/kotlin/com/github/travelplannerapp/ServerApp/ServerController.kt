@@ -12,7 +12,6 @@ import com.google.gson.Gson
 import io.jsonwebtoken.Jwts
 import io.jsonwebtoken.SignatureAlgorithm
 import org.springframework.beans.factory.annotation.Autowired
-import java.util.concurrent.atomic.AtomicLong
 import org.springframework.web.bind.annotation.*
 import java.sql.Timestamp
 import java.time.Instant
@@ -23,9 +22,6 @@ import kotlin.streams.asSequence
 
 @RestController
 class ServerController {
-    companion object {
-        const val databseActive = false
-    }
 
     //val counter = AtomicLong()
 
@@ -44,18 +40,20 @@ class ServerController {
                 "-72.98529", "fastest", "car", "disabled")
     }
     @GetMapping("/travels")
-    fun travels(@RequestParam(value = "name") name: String,@RequestParam(value = "auth") auth: String): List<String> {
-        if (databseActive && userManagement.verifyUser(name, auth)) {
-            return travelRepository.getAllTravelsByUserName(name, auth).map { travel -> travel.name }
+    fun travels(@RequestParam(value = "email") email: String,@RequestParam(value = "auth") auth: String): List<String> {
+        if (userManagement.verifyUser(email, auth)) {
+            return travelRepository.getAllTravelsByUserEmail(email, auth).map { travel -> travel.name }
         }
         //for tests without database
-        print("name: $name") // TODO [Ania} delete/move when we have database on Korlub's server
+        print("email: $email") // TODO [Ania} delete/move when we have database on Korlub's server
         print("auth: $auth") // TODO [Ania} delete when we have database on Korlub's server
         return listOf("Gdańsk", "Elbląg", "Toruń", "Olsztyn", "Szczecin")
     }
 
-    /*@GetMapping("/db")
-    fun getUser() = Greeting(counter.incrementAndGet(), "Hello, ${userRepository.get(18)!!.name}")*/
+    @GetMapping("/db")
+    fun getTravel(): User?  {
+            return userRepository.getUserByEmail("jan.kowalski@gmail.com")
+    }
 
     @PostMapping("/authenticate")
     fun authenticate(@RequestBody request: String): String {
@@ -72,26 +70,23 @@ class ServerController {
         val randomString = generateRandomString() // TODO [Ania] change to defined somewhere key if needed
 
         val accessToken = Jwts.builder()
-            .setClaims(claims)
-            .setExpiration(Date.from(expiryDate))
-            .signWith(SignatureAlgorithm.HS256, randomString)
-            .compact()
+                .setClaims(claims)
+                .setExpiration(Date.from(expiryDate))
+                .signWith(SignatureAlgorithm.HS256, randomString)
+                .compact()
 
-        if (databseActive){
-            userRepository.add(User(0,"", loginRequest.email, loginRequest.password,
-                accessToken,  Timestamp.from(expiryDate)))
-        }
+        userRepository.updateUserAuthByEmail(loginRequest.email, accessToken, Timestamp.from(expiryDate))
+
         val jsonLoginAnswer = JsonLoginAnswer(accessToken, LOGIN_ANSWER.OK)
         return Gson().toJson(jsonLoginAnswer)
     }
 
-
     fun generateRandomString():String{
         val charPool : List<Char> = ('a'..'z') + ('A'..'Z') + ('0'..'9')
         return ThreadLocalRandom.current()
-            .ints(10, 0, charPool.size)
-            .asSequence()
-            .map(charPool::get)
-            .joinToString("")
+                .ints(10, 0, charPool.size)
+                .asSequence()
+                .map(charPool::get)
+                .joinToString("")
     }
 }
