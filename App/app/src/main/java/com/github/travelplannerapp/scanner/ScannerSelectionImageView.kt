@@ -128,14 +128,11 @@ class ScannerSelectionImageView : ImageView {
                 val eventPoint = PointF(event.x, event.y)
 
                 // Determine if the shape will still be convex when we apply the users next drag
-                if (lastTouchedPoint === upperLeftPoint) {
-                    isConvex = isConvexQuadrilateral(eventPoint, upperRightPoint!!, lowerRightPoint!!, lowerLeftPoint!!)
-                } else if (lastTouchedPoint === upperRightPoint) {
-                    isConvex = isConvexQuadrilateral(upperLeftPoint!!, eventPoint, lowerRightPoint!!, lowerLeftPoint!!)
-                } else if (lastTouchedPoint === lowerRightPoint) {
-                    isConvex = isConvexQuadrilateral(upperLeftPoint!!, upperRightPoint!!, eventPoint, lowerLeftPoint!!)
-                } else if (lastTouchedPoint === lowerLeftPoint) {
-                    isConvex = isConvexQuadrilateral(upperLeftPoint!!, upperRightPoint!!, lowerRightPoint!!, eventPoint)
+                when {
+                    lastTouchedPoint === upperLeftPoint -> isConvex = isConvexQuadrilateral(eventPoint, upperRightPoint!!, lowerRightPoint!!, lowerLeftPoint!!)
+                    lastTouchedPoint === upperRightPoint -> isConvex = isConvexQuadrilateral(upperLeftPoint!!, eventPoint, lowerRightPoint!!, lowerLeftPoint!!)
+                    lastTouchedPoint === lowerRightPoint -> isConvex = isConvexQuadrilateral(upperLeftPoint!!, upperRightPoint!!, eventPoint, lowerLeftPoint!!)
+                    lastTouchedPoint === lowerLeftPoint -> isConvex = isConvexQuadrilateral(upperLeftPoint!!, upperRightPoint!!, lowerRightPoint!!, eventPoint)
                 }
 
                 if (isConvex && lastTouchedPoint != null) {
@@ -143,20 +140,16 @@ class ScannerSelectionImageView : ImageView {
                 }
             }
             MotionEvent.ACTION_DOWN -> {
-                if (event.x < upperLeftPoint!!.x + paddingHorizontal!! && event.x > upperLeftPoint!!.x - paddingHorizontal!! &&
-                        event.y < upperLeftPoint!!.y + paddingBottom!! && event.y > upperLeftPoint!!.y - paddingTop!!) {
-                    lastTouchedPoint = upperLeftPoint
-                } else if (event.x < upperRightPoint!!.x + paddingHorizontal!! && event.x > upperRightPoint!!.x - paddingHorizontal!! &&
-                        event.y < upperRightPoint!!.y + paddingBottom!! && event.y > upperRightPoint!!.y - paddingTop!!) {
-                    lastTouchedPoint = upperRightPoint
-                } else if (event.x < lowerRightPoint!!.x + paddingHorizontal!! && event.x > lowerRightPoint!!.x - paddingHorizontal!! &&
-                        event.y < lowerRightPoint!!.y + paddingTop!! && event.y > lowerRightPoint!!.y - paddingBottom!!) {
-                    lastTouchedPoint = lowerRightPoint
-                } else if (event.x < lowerLeftPoint!!.x + paddingHorizontal!! && event.x > lowerLeftPoint!!.x - paddingHorizontal!! &&
-                        event.y < lowerLeftPoint!!.y + paddingTop!! && event.y > lowerLeftPoint!!.y - paddingBottom!!) {
-                    lastTouchedPoint = lowerLeftPoint
-                } else {
-                    lastTouchedPoint = null
+                when {
+                    event.x < upperLeftPoint!!.x + paddingHorizontal!! && event.x > upperLeftPoint!!.x - paddingHorizontal!! &&
+                            event.y < upperLeftPoint!!.y + paddingBottom!! && event.y > upperLeftPoint!!.y - paddingTop!! -> lastTouchedPoint = upperLeftPoint
+                    event.x < upperRightPoint!!.x + paddingHorizontal!! && event.x > upperRightPoint!!.x - paddingHorizontal!! &&
+                            event.y < upperRightPoint!!.y + paddingBottom!! && event.y > upperRightPoint!!.y - paddingTop!! -> lastTouchedPoint = upperRightPoint
+                    event.x < lowerRightPoint!!.x + paddingHorizontal!! && event.x > lowerRightPoint!!.x - paddingHorizontal!! &&
+                            event.y < lowerRightPoint!!.y + paddingTop!! && event.y > lowerRightPoint!!.y - paddingBottom!! -> lastTouchedPoint = lowerRightPoint
+                    event.x < lowerLeftPoint!!.x + paddingHorizontal!! && event.x > lowerLeftPoint!!.x - paddingHorizontal!! &&
+                            event.y < lowerLeftPoint!!.y + paddingTop!! && event.y > lowerLeftPoint!!.y - paddingBottom!! -> lastTouchedPoint = lowerLeftPoint
+                    else -> lastTouchedPoint = null
                 }
             }
         }
@@ -211,14 +204,14 @@ class ScannerSelectionImageView : ImageView {
      *
      * @return A list of points translated to map to the image
      */
-    fun getPoints(): List<PointF?> {
-        val list = ArrayList<PointF?>()
+    fun getPoints(): List<PointF> {
+        val list = ArrayList<PointF>()
         if (!isAnyPointNull()) {
             list.apply {
-                add(viewPointToImagePoint(upperLeftPoint!!))
-                add(viewPointToImagePoint(upperRightPoint!!))
-                add(viewPointToImagePoint(lowerRightPoint!!))
-                add(viewPointToImagePoint(lowerLeftPoint!!))
+                viewPointToImagePoint(upperLeftPoint!!)?.let { add(it) }
+                viewPointToImagePoint(upperRightPoint!!)?.let { add(it) }
+                viewPointToImagePoint(lowerRightPoint!!)?.let { add(it) }
+                viewPointToImagePoint(lowerLeftPoint!!)?.let { add(it) }
             }
         }
         return list
@@ -233,12 +226,12 @@ class ScannerSelectionImageView : ImageView {
      *
      * @param points An array of points. Passing null will set the selector to the default selection.
      */
-    fun setPoints(points: Array<org.opencv.core.Point>?) {
+    fun setPoints(points: Array<PointF>?) {
         if (points != null){
-            upperLeftPoint = imagePointToViewPoint(PointF(points[0].x.toFloat(), points[0].y.toFloat()))
-            upperRightPoint = imagePointToViewPoint(PointF(points[1].x.toFloat(), points[1].y.toFloat()))
-            lowerRightPoint = imagePointToViewPoint(PointF(points[2].x.toFloat(), points[2].y.toFloat()))
-            lowerLeftPoint = imagePointToViewPoint(PointF(points[3].x.toFloat(), points[3].y.toFloat()))
+            upperLeftPoint = imagePointToViewPoint(points[0])
+            upperRightPoint = imagePointToViewPoint(points[1])
+            lowerRightPoint = imagePointToViewPoint(points[2])
+            lowerLeftPoint = imagePointToViewPoint(points[3])
         }
         else setDefaultSelection()
 

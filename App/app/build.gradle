@@ -51,6 +51,7 @@ dependencies {
 
     // Scanner
     implementation project(':opencv')
+    implementation 'androidx.exifinterface:exifinterface:1.0.0'
 
     //Testing
     testImplementation "junit:junit:$rootProject.junitVersion"
