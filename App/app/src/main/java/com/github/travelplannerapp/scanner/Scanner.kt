@@ -1,120 +1,79 @@
 package com.github.travelplannerapp.scanner
 
+import android.graphics.PointF
 import org.opencv.core.*
 import org.opencv.imgcodecs.Imgcodecs.imread
 import org.opencv.imgproc.Imgproc.*
 import java.util.*
-
+import android.graphics.Bitmap
+import org.opencv.android.Utils
+import org.opencv.core.Mat
 
 object Scanner {
 
-    /**
-     * Attempt to find the four corner points for the largest contour in the image.
-     *
-     * @return A list of points, or null if a valid rectangle cannot be found.
-     */
-    fun findCorners(photoPath: String): Array<Point>? {
-        var corners: Array<Point>? = null
-
-        val photo = imread(photoPath)
-        val edges = detectEdges(photo)
-        val largestContour = findLargestContour(edges)
-
-        largestContour?.let {
-            corners = sortCorners(largestContour.toArray())
-            it.release()}
-
-        edges.release()
-        photo.release()
-
-        return corners
+    fun cropAndScan(photoPath: String, corners: List<PointF>, scaleRatio: Int): Mat? {
+        return if (corners.size == 4) {
+            val photo = imread(photoPath)
+            val convertedCorners = convertPointfToPoint(corners)
+            val transformed = perspectiveTransform(photo, convertedCorners, scaleRatio)
+            applyThreshold(transformed)
+        } else null
     }
 
-    private fun downScalePhoto(photoPath: String, percent: Int): Mat {
-        val photo = imread(photoPath)
-        val resizedPhoto = Mat()
-        val scaleSize = Size((photo.width() * percent) / 100.0, (photo.height() * percent) / 100.0)
-        resize(photo, resizedPhoto, scaleSize, 0.0, 0.0, INTER_AREA)
-        return resizedPhoto
+    private fun convertPointfToPoint(points: List<PointF>): List<Point> {
+        val convertedPoints = ArrayList<Point>()
+        points.forEach { convertedPoints.add(Point(it.x.toDouble(), it.y.toDouble())) }
+        return convertedPoints
     }
 
-    /**
-     * Detect the edges in the given Mat
-     * @param src A valid Mat object
-     * @return A Mat processed to find edges
-     */
-    private fun detectEdges(photo: Mat): Mat {
-        val edges = Mat(photo.size(), CvType.CV_8UC1)
-        cvtColor(photo, edges, COLOR_RGB2GRAY, 4)
-        Canny(edges, edges, 80.0, 100.0)
-        return edges
+    private fun perspectiveTransform(photo: Mat, pts: List<Point>, ratio: Int): Mat {
+
+        val maxWidth = photo.size().width * 1f / ratio.toFloat()
+        val maxHeight = photo.size().height * 1f / ratio.toFloat()
+
+        val resultMat = Mat(maxHeight.toInt(), maxWidth.toInt(), CvType.CV_8UC4)
+
+        val srcMat = Mat(4, 1, CvType.CV_32FC2)
+        val dstMat = Mat(4, 1, CvType.CV_32FC2)
+        srcMat.put(0, 0, pts[0].x * ratio, pts[0].y * ratio, pts[1].x * ratio, pts[1].y * ratio,
+                pts[2].x * ratio, pts[2].y * ratio, pts[3].x * ratio, pts[3].y * ratio)
+        dstMat.put(0, 0, 0.0, 0.0, maxWidth, 0.0, maxWidth, maxHeight, 0.0, maxHeight)
+
+        val warpMat = getPerspectiveTransform(srcMat, dstMat)
+        warpPerspective(photo, resultMat, warpMat, resultMat.size())
+
+        srcMat.release()
+        dstMat.release()
+        warpMat.release()
+
+        return resultMat
     }
 
     /**
-     * Find the largest 4 point contour in the given Mat.
-     *
-     * @param src A valid Mat
-     * @return The largest contour as a Mat
-     */
-    private fun findLargestContour(edges: Mat): MatOfPoint2f? {
-        val contours = ArrayList<MatOfPoint>()
-        findContours(edges, contours, Mat(), RETR_LIST, CHAIN_APPROX_SIMPLE)
-
-        contours.sortWith(Comparator { o1, o2 ->
-            val area1 = contourArea(o1)
-            val area2 = contourArea(o2)
-            (area2 - area1).toInt()
-        })
-        if (contours.size > 5) contours.subList(4, contours.size - 1).clear()
-
-        var largest: MatOfPoint2f? = null
-        for (contour in contours) {
-            val approx = MatOfPoint2f()
-            val c = MatOfPoint2f()
-            contour.convertTo(c, CvType.CV_32FC2)
-            approxPolyDP(c, approx, arcLength(c, true) * 0.02, true)
-
-            if (approx.total() == 4L && contourArea(contour) > 150) {
-                largest = approx
-                break
-            }
-        }
-
-        return largest
-    }
-
-    /**
-     * Sort the corners
-     *
-     * The order of the points after sorting:
-     * 0------->1
-     * ^        |
-     * |        v
-     * 3<-------2
+     * Apply a threshold to give the "scanned" look
      *
      * NOTE:
-     * Based off of http://www.pyimagesearch.com/2014/08/25/4-point-opencv-getperspective-transform-example/
-     *
-     * @param src The points to sort
-     * @return An array of sorted points
+     * See the following link for more info http://docs.opencv.org/3.1.0/d7/d4d/tutorial_py_thresholding.html#gsc.tab=0
+     * @param photo A valid Mat
+     * @return The processed Mat
      */
-    private fun sortCorners(src: Array<Point>): Array<Point>? {
-        val srcPoints = ArrayList(listOf(*src))
-        val sortedCorners = arrayOf<Point?>(null, null, null, null)
+    private fun applyThreshold(photo: Mat): Mat {
+        cvtColor(photo, photo, COLOR_BGR2GRAY)
 
-        val sumComparator = Comparator<Point> { lhs, rhs -> java.lang.Double.valueOf(lhs.y + lhs.x).compareTo(rhs.y + rhs.x) }
-        val differenceComparator = Comparator<Point> { lhs, rhs -> java.lang.Double.valueOf(lhs.y - lhs.x).compareTo(rhs.y - rhs.x) }
+        GaussianBlur(photo, photo, Size(5.0, 5.0), 0.0)
+        adaptiveThreshold(photo, photo, 255.0, ADAPTIVE_THRESH_GAUSSIAN_C, THRESH_BINARY, 11, 2.0)
 
-        sortedCorners[0] = Collections.min(srcPoints, sumComparator)        // Upper left has the minimal sum
-        sortedCorners[2] = Collections.max(srcPoints, sumComparator)        // Lower right has the maximal sum
-        sortedCorners[1] = Collections.min(srcPoints, differenceComparator) // Upper right has the minimal difference
-        sortedCorners[3] = Collections.max(srcPoints, differenceComparator) // Lower left has the maximal difference
+        return photo
+    }
 
-        if (sortedCorners.contains(null)) {
-            return null
-        } else {
-            return arrayOf(sortedCorners[0]!!, sortedCorners[1]!!, sortedCorners[2]!!, sortedCorners[3]!!)
-        }
+    fun convertMatToBitmap(input: Mat): Bitmap? {
+        val rgb = Mat()
+        cvtColor(input, rgb, COLOR_BGR2RGB)
+
+        val bmp = Bitmap.createBitmap(rgb.cols(), rgb.rows(), Bitmap.Config.ARGB_8888)
+        Utils.matToBitmap(rgb, bmp)
+//https://developer.android.com/topic/performance/graphics/load-bitmap
+        return bmp
     }
 
 }

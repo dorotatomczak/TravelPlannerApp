@@ -22,6 +22,8 @@ class ScannerSelectionImageView : ImageView {
         const val DEFAULT_PADDING_Horizontal = 50f
     }
 
+    var scaleRatio: Int = 1
+
     private var circleRadius: Float? = null
     private var paddingTop: Float? = null
     private var paddingBottom: Float? = null
@@ -68,6 +70,11 @@ class ScannerSelectionImageView : ImageView {
                 DEFAULT_PADDING_Horizontal)
 
         attributes.recycle()
+    }
+
+    fun setImageBitmap(bm: Bitmap?, scaleRatio: Int) {
+        this.scaleRatio = scaleRatio
+        super.setImageBitmap(bm)
     }
 
     private fun isAnyPointNull(): Boolean {
@@ -227,13 +234,12 @@ class ScannerSelectionImageView : ImageView {
      * @param points An array of points. Passing null will set the selector to the default selection.
      */
     fun setPoints(points: Array<PointF>?) {
-        if (points != null){
+        if (points != null) {
             upperLeftPoint = imagePointToViewPoint(points[0])
             upperRightPoint = imagePointToViewPoint(points[1])
             lowerRightPoint = imagePointToViewPoint(points[2])
             lowerLeftPoint = imagePointToViewPoint(points[3])
-        }
-        else setDefaultSelection()
+        } else setDefaultSelection()
 
         invalidate()
     }

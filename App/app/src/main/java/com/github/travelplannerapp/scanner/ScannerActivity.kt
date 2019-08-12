@@ -30,17 +30,23 @@ class ScannerActivity : AppCompatActivity(), ScannerContract.View {
 
         initOpenCv()
 
-        buttonScan.setOnClickListener { presenter.takeScan() }
+        buttonScan.setOnClickListener {
+            photoPath?.let {
+                presenter.takeScan(it, imageViewSelection.getPoints(),
+                        imageViewSelection.scaleRatio)
+            }
+        }
 
         photoPath = intent.getStringExtra(PHOTO_PATH_EXTRA)
         if (photoPath != null) {
-            imageViewSelection.setImageBitmap(BitmapHelper.decodeBitmapFromFile(photoPath!!,
-                    resources.displayMetrics.widthPixels, resources.displayMetrics.heightPixels))
+            val (bitmap, scaleRatio) = BitmapHelper.decodeBitmapFromFile(photoPath!!,
+                    resources.displayMetrics.widthPixels, resources.displayMetrics.heightPixels)
+            imageViewSelection.setImageBitmap(bitmap, scaleRatio)
 //            imageViewSelection.setPoints(Scanner.findCorners(photoPath))
         } else returnResultAndFinish(R.string.scanner_initialization_failure)
     }
 
-    private fun returnResultAndFinish(messageCode: Int) {
+    override fun returnResultAndFinish(messageCode: Int) {
         val resultIntent = Intent().apply {
             putExtra(REQUEST_SCANNER_RESULT, messageCode)
         }
@@ -50,6 +56,11 @@ class ScannerActivity : AppCompatActivity(), ScannerContract.View {
 
     override fun closeScanner() {
         returnResultAndFinish(R.string.scanner_success)
+    }
+
+    override fun showPreview(scan: Mat) {
+        val scanBitmap = Scanner.convertMatToBitmap(scan)
+        scanBitmap?.let { imageViewSelection.setImageBitmap(scanBitmap) }
     }
 
     private fun initOpenCv() {

@@ -8,18 +8,22 @@ import kotlin.math.roundToInt
 
 object BitmapHelper {
 
+    data class ResizedBitmap(val bitmap: Bitmap, val scaleRatio: Int)
+
     fun decodeBitmapFromFile(
             path: String,
             reqWidth: Int,
             reqHeight: Int
-    ): Bitmap {
+    ): ResizedBitmap {
+        var scaleRatio: Int
         // First decode with inJustDecodeBounds=true to check dimensions
-        return BitmapFactory.Options().run {
+        val bitmap = BitmapFactory.Options().run {
             inJustDecodeBounds = true
             BitmapFactory.decodeFile(path, this)
 
             // Calculate inSampleSize
             inSampleSize = calculateInSampleSize(this, reqWidth, reqHeight)
+            scaleRatio = inSampleSize
 
             // Decode bitmap with inSampleSize set
             inJustDecodeBounds = false
@@ -27,6 +31,8 @@ object BitmapHelper {
             val bitmap = BitmapFactory.decodeFile(path, this)
             rotateBitmapIfRequired(bitmap, path)
         }
+
+        return ResizedBitmap(bitmap, scaleRatio)
     }
 
     private fun calculateInSampleSize(options: BitmapFactory.Options, reqWidth: Int, reqHeight: Int): Int {
@@ -51,11 +57,11 @@ object BitmapHelper {
 
         val ei = ExifInterface(path)
 
-        when (ei.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL)) {
-            ExifInterface.ORIENTATION_ROTATE_90 -> return rotateBitmap(bitmap, 90)
-            ExifInterface.ORIENTATION_ROTATE_180 -> return rotateBitmap(bitmap, 180)
-            ExifInterface.ORIENTATION_ROTATE_270 -> return rotateBitmap(bitmap, 270)
-            else -> return bitmap
+        return when (ei.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL)) {
+            ExifInterface.ORIENTATION_ROTATE_90 -> rotateBitmap(bitmap, 90)
+            ExifInterface.ORIENTATION_ROTATE_180 -> rotateBitmap(bitmap, 180)
+            ExifInterface.ORIENTATION_ROTATE_270 -> rotateBitmap(bitmap, 270)
+            else -> bitmap
         }
     }
 
