@@ -27,15 +27,14 @@ class TravelsPresenter(view: TravelsContract.View) : BasePresenter<TravelsContra
         val travel = travels[position]
         view.showTravelDetails(travel)
     }
-    override fun handleResponse(myTravels: List<String>) {
 
+    override fun handleResponse(myTravels: List<String>) {
         travels = ArrayList(myTravels)
 
-        if (travels.isEmpty()){
+        if (travels.isEmpty()) {
             view.showNoTravels()
-        }else{
+        } else {
             view.showTravels()
         }
-
     }
 }

@@ -33,11 +33,9 @@ class SignInPresenter(view: SignInContract.View) : BasePresenter<SignInContract.
 
     override fun handleLoginResponse(jsonString: String) {
         val answer = Gson().fromJson(jsonString, JsonLoginAnswer::class.java)
-        if (answer.result == LOGIN_ANSWER.OK) {
-            view.signIn(answer.authorizationToken, email)
-        } else {
-            view.showSnackbar(answer.authorizationToken)
+        when (answer.result) {
+            LOGIN_ANSWER.OK -> view.signIn(answer.authorizationToken, email)
+            LOGIN_ANSWER.ERROR -> view.showSnackbar(R.string.sing_in_error)
         }
-
     }
 }
