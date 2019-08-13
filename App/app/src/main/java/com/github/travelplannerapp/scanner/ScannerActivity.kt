@@ -1,7 +1,10 @@
 package com.github.travelplannerapp.scanner
 
 import android.content.Intent
+import android.graphics.Bitmap
 import android.os.Bundle
+import android.widget.ImageView
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.github.travelplannerapp.R
 import dagger.android.AndroidInjection
@@ -54,18 +57,27 @@ class ScannerActivity : AppCompatActivity(), ScannerContract.View {
         finish()
     }
 
-    override fun closeScanner() {
-        returnResultAndFinish(R.string.scanner_success)
-    }
-
-    override fun showPreview(scan: Mat) {
-        val scanBitmap = Scanner.convertMatToBitmap(scan)
-        scanBitmap?.let { imageViewSelection.setImageBitmap(scanBitmap) }
-    }
-
     private fun initOpenCv() {
         if (!OpenCVLoader.initDebug()) {
             returnResultAndFinish(R.string.scanner_initialization_failure)
         }
+    }
+
+    override fun showScanResultDialog(scan: Bitmap) {
+        val dialog = AlertDialog.Builder(this)
+        val imageView =  ImageView(this)
+        imageView.setImageBitmap(scan)
+        dialog.setView(imageView)
+
+        dialog.setPositiveButton(R.string.save) { _, _ ->
+            //TODO [Dorota] Save scan and send to server
+            returnResultAndFinish(R.string.scanner_success)
+        }
+
+        dialog.setNegativeButton(R.string.cancel) { _, _ ->
+            finish()
+        }
+
+        dialog.show()
     }
 }

@@ -8,7 +8,7 @@ class ScannerPresenter(view: ScannerContract.View) : BasePresenter<ScannerContra
 
     override fun takeScan(photoPath: String, corners: List<PointF>, scaleRatio: Int) {
         val scan = Scanner.cropAndScan(photoPath, corners, scaleRatio)
-        if (scan != null) view.showPreview(scan)
+        if (scan != null) view.showScanResultDialog(scan)
         else view.returnResultAndFinish(R.string.scanner_general_failure)
     }
 

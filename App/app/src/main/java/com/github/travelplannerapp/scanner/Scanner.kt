@@ -11,16 +11,17 @@ import org.opencv.core.Mat
 
 object Scanner {
 
-    fun cropAndScan(photoPath: String, corners: List<PointF>, scaleRatio: Int): Mat? {
+    fun cropAndScan(photoPath: String, corners: List<PointF>, scaleRatio: Int): Bitmap? {
         return if (corners.size == 4) {
             val photo = imread(photoPath)
-            val convertedCorners = convertPointfToPoint(corners)
+            val convertedCorners = convertPointFsToPoints(corners)
             val transformed = perspectiveTransform(photo, convertedCorners, scaleRatio)
-            applyThreshold(transformed)
+            val scan = applyThreshold(transformed)
+            convertMatToBitmap(scan)
         } else null
     }
 
-    private fun convertPointfToPoint(points: List<PointF>): List<Point> {
+    private fun convertPointFsToPoints(points: List<PointF>): List<Point> {
         val convertedPoints = ArrayList<Point>()
         points.forEach { convertedPoints.add(Point(it.x.toDouble(), it.y.toDouble())) }
         return convertedPoints
@@ -49,14 +50,6 @@ object Scanner {
         return resultMat
     }
 
-    /**
-     * Apply a threshold to give the "scanned" look
-     *
-     * NOTE:
-     * See the following link for more info http://docs.opencv.org/3.1.0/d7/d4d/tutorial_py_thresholding.html#gsc.tab=0
-     * @param photo A valid Mat
-     * @return The processed Mat
-     */
     private fun applyThreshold(photo: Mat): Mat {
         cvtColor(photo, photo, COLOR_BGR2GRAY)
 
@@ -66,13 +59,11 @@ object Scanner {
         return photo
     }
 
-    fun convertMatToBitmap(input: Mat): Bitmap? {
+    private fun convertMatToBitmap(input: Mat): Bitmap? {
         val rgb = Mat()
         cvtColor(input, rgb, COLOR_BGR2RGB)
-
         val bmp = Bitmap.createBitmap(rgb.cols(), rgb.rows(), Bitmap.Config.ARGB_8888)
         Utils.matToBitmap(rgb, bmp)
-//https://developer.android.com/topic/performance/graphics/load-bitmap
         return bmp
     }
 

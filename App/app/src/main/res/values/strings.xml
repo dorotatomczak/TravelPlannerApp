@@ -22,4 +22,6 @@
     <string name="scanner_general_failure">Something bad happened to scanner</string>
     <string name="scanner_success">Scanner success</string>
     <string name="server_connection_failure">Server connection failed</string>
+    <string name="save">save</string>
+    <string name="cancel">cancel</string>
 </resources>
