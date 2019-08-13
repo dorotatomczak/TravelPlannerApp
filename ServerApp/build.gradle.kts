@@ -16,6 +16,8 @@ repositories {
 }
 
 dependencies {
+	implementation ("com.google.code.gson:gson:2.8.0")
+	implementation("org.locationtech.jts:jts-core:1.15.0")
 	implementation("org.springframework.boot:spring-boot-starter")
 	implementation("org.jetbrains.kotlin:kotlin-reflect")
 	implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
@@ -23,6 +25,13 @@ dependencies {
 	implementation ("postgresql:postgresql:9.1-901-1.jdbc4")
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
 	testImplementation("io.mockk:mockk:1.9.3.kotlin12")
+
+	// authentication and security
+	implementation("io.jsonwebtoken:jjwt:0.9.1")
+	implementation("org.apache.commons:commons-lang3:3.0")
+	implementation("javax.xml.bind:jaxb-api:2.2.12")
+
+	implementation("com.squareup.retrofit2:converter-gson:2.6.0")
 }
 
 tasks.withType<KotlinCompile> {
@@ -31,3 +40,4 @@ tasks.withType<KotlinCompile> {
 		jvmTarget = "1.8"
 	}
 }
+

@@ -4,36 +4,38 @@ import com.github.travelplannerapp.ServerApp.db.DbConnection
 import com.github.travelplannerapp.ServerApp.db.dao.User
 import org.springframework.stereotype.Component
 import java.sql.ResultSet
+import java.sql.Timestamp
 
 @Component
 class UserRepository : IUserRepository {
+    companion object {
+        const val insertStatement = "INSERT INTO app_user (email,password,authToken,expirationDate) " +
+                "VALUES (?,?,?,?) "
+        const val selectStatement = "SELECT * FROM app_user "
+        const val deleteStatement = "DELETE FROM app_user "
+        const val updateStatement = "UPDATE app_user "
+    }
 
     override fun getUserByEmail(email: String): User? {
         val statement = DbConnection
-                        .conn
-                        .prepareStatement("SELECT * FROM app_user WHERE email=?")
+                .conn
+                .prepareStatement(selectStatement + "WHERE email=?")
         statement.setString(1, email)
         val result: ResultSet = statement.executeQuery()
         if (result.next()) {
-            return User(result.getInt(1),
-                    result.getString(2),
-                    result.getString(3),
-                    result.getString(4))
+            return User(result)
         }
         return null
     }
 
     override fun get(id: Int): User? {
         val statement = DbConnection
-                        .conn
-                        .prepareStatement("SELECT * FROM app_user WHERE id=?")
+                .conn
+                .prepareStatement(selectStatement + "WHERE id=?")
         statement.setInt(1, id)
         val result: ResultSet = statement.executeQuery()
         if (result.next()) {
-            return User(result.getInt(1),
-                    result.getString(2),
-                    result.getString(3),
-                    result.getString(4))
+            return User(result)
         }
         return null
     }
@@ -41,58 +43,68 @@ class UserRepository : IUserRepository {
     override fun getAll(): MutableList<User> {
         var users = mutableListOf<User>()
         val statement = DbConnection
-                        .conn
-                        .prepareStatement("SELECT * FROM app_user")
+                .conn
+                .prepareStatement(selectStatement)
         val result = statement.executeQuery()
         while (result.next()) {
-            var user = User(result.getInt(1),
-                    result.getString(2),
-                    result.getString(3),
-                    result.getString(4))
-            users.add(user)
+            users.add(User(result))
         }
         return users
     }
 
     override fun add(obj: User) {
         val statement = DbConnection
-                        .conn
-                        .prepareStatement("INSERT INTO app_user (name,email,password) " +
-                                "VALUES (?,?,?)")
-        statement.setString(1, obj.name)
-        statement.setString(2, obj.email)
-        statement.setString(3, obj.password)
+                .conn
+                .prepareStatement(insertStatement)
+        statement.setString(1, obj.email)
+        statement.setString(2, obj.password)
+        statement.setString(3, obj.authToken)
+        statement.setTimestamp(4, obj.expirationDate)
         statement.executeUpdate()
     }
 
     override fun add(objs: MutableList<User>) {
         val statement = DbConnection
-                        .conn
-                        .prepareStatement("INSERT INTO app_user (name,email,password) " +
-                                "VALUES (?,?,?)")
+                .conn
+                .prepareStatement(insertStatement)
         objs.iterator().forEach { obj ->
             run {
-                statement.setString(1, obj.name)
-                statement.setString(2, obj.email)
-                statement.setString(3, obj.password)
+                statement.setString(1, obj.email)
+                statement.setString(2, obj.password)
+                statement.setString(3, obj.authToken)
+                statement.setTimestamp(4, obj.expirationDate)
                 statement.executeUpdate()
             }
         }
     }
 
+    override fun updateUserAuthByEmail(email: String, authToken: String, expirationDate: Timestamp) {
+        val statement = DbConnection
+                .conn
+                .prepareStatement(
+                        updateStatement +
+                                "SET expirationdate = ?, " +
+                                "authtoken = ? " +
+                                "WHERE email = ? "
+                )
+        statement.setTimestamp(1, expirationDate)
+        statement.setString(2, authToken)
+        statement.setString(3, email)
+        statement.executeUpdate()
+    }
+
     override fun delete(id: Int) {
         val statement = DbConnection
-                        .conn
-                        .prepareStatement("DELETE FROM app_user " +
-                                "WHERE id=?")
+                .conn
+                .prepareStatement(deleteStatement + "WHERE id=?")
         statement.setInt(1, id)
         statement.executeUpdate()
     }
 
     override fun deleteAll() {
         val statement = DbConnection
-                        .conn
-                        .prepareStatement("DELETE FROM app_user")
+                .conn
+                .prepareStatement(deleteStatement)
         statement.executeUpdate()
     }
 }

@@ -6,5 +6,5 @@ import java.sql.DriverManager
 object DbConnection {
 
     val conn: Connection = DriverManager
-            .getConnection("jdbc:postgresql://localhost/travelplanner?user=postgres&password=password")
+            .getConnection("jdbc:postgresql://balarama.db.elephantsql.com:5432/tpcqgcqq?user=tpcqgcqq&password=q1aVOwAJo98H9NcLE4zLIXarlPaIi46e")
 }
