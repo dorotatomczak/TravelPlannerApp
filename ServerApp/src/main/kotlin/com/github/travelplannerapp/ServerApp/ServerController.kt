@@ -1,17 +1,17 @@
 package com.github.travelplannerapp.ServerApp
 
 import com.github.travelplannerapp.ServerApp.HereCharger.HereLoader
+import com.github.travelplannerapp.ServerApp.datamanagement.TravelManagement
 import com.github.travelplannerapp.ServerApp.datamanagement.UserManagement
 import com.github.travelplannerapp.ServerApp.db.dao.User
 import com.github.travelplannerapp.ServerApp.db.repositories.TravelRepository
 import com.github.travelplannerapp.ServerApp.db.repositories.UserRepository
+import com.github.travelplannerapp.ServerApp.jsondatamodels.JsonAddTravelRequest
 import com.github.travelplannerapp.ServerApp.jsondatamodels.JsonLoginRequest
 import com.github.travelplannerapp.ServerApp.jsondatamodels.LOGIN_ANSWER
 import com.google.gson.Gson
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.web.bind.annotation.*
-import java.sql.Timestamp
-import java.time.Instant
 
 @RestController
 class ServerController {
@@ -22,6 +22,8 @@ class ServerController {
     lateinit var travelRepository: TravelRepository
     @Autowired
     lateinit var userManagement: UserManagement
+    @Autowired
+    lateinit var travelManagement: TravelManagement
 
     @GetMapping("/here")
     fun getExampleDataFromHere() {
@@ -30,6 +32,7 @@ class ServerController {
         connector.findBestWay("40.74917", "-73.98529", "45.74917",
                 "-72.98529", "fastest", "car", "disabled")
     }
+
     @GetMapping("/travels")
     fun travels(@RequestParam(value = "email") email: String, @RequestParam(value = "auth") auth: String): List<String> {
         if (userManagement.verifyUser(email, auth)) {
@@ -52,7 +55,7 @@ class ServerController {
             return Gson().toJson(jsonLoginAnswer)
         }
 
-        val authToken = userManagement.UpdateAuthorizationToken(loginRequest)
+        val authToken = userManagement.updateAuthorizationToken(loginRequest)
         jsonLoginAnswer.authorizationToken = authToken
 
         return Gson().toJson(jsonLoginAnswer)
@@ -66,4 +69,11 @@ class ServerController {
         return Gson().toJson(jsonLoginAnswer)
     }
 
+    @PostMapping("/addtravel")
+    fun addTravel(@RequestBody request: String): String {
+        val addTravelRequest = Gson().fromJson(request, JsonAddTravelRequest::class.java)
+        val jsonAddTravelAnswer = travelManagement.addTravel(addTravelRequest)
+
+        return Gson().toJson(jsonAddTravelAnswer)
+    }
 }

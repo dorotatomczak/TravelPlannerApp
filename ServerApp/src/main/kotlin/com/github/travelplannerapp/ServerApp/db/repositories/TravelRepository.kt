@@ -8,7 +8,7 @@ import java.sql.ResultSet
 @Component
 class TravelRepository : ITravelRepository {
     companion object {
-        const val insertStatement = "INSERT INTO travel (name) VALUES (?)"
+        const val insertStatement = "INSERT INTO travel (id, name) VALUES (?, ?)"
         const val selectStatement = "SELECT * FROM travel"
         const val deleteStatement = "DELETE FROM travel "
     }
@@ -74,14 +74,16 @@ class TravelRepository : ITravelRepository {
         return travels
     }
 
-    override fun add(obj: Travel) {
+    override fun add(obj: Travel): Boolean {
         val statement = DbConnection
                 .conn
                 .prepareStatement(insertStatement)
-        statement.setString(1, obj.name)
-        statement.executeUpdate()
+        statement.setInt(1, obj.id)
+        statement.setString(2, obj.name)
+        return statement.executeUpdate() > 0
     }
 
+    //TODO SOLVE INSERT WITH ID PROBLEM
     override fun add(objs: MutableList<Travel>) {
         val statement = DbConnection
                 .conn
@@ -95,18 +97,31 @@ class TravelRepository : ITravelRepository {
                 }
     }
 
-    override fun delete(id: Int) {
+    override fun delete(id: Int): Boolean {
         val statement = DbConnection
                 .conn
                 .prepareStatement(deleteStatement + "WHERE id=?")
         statement.setInt(1, id)
-        statement.executeUpdate()
+        return statement.executeUpdate() > 0
     }
 
-    override fun deleteAll() {
+    override fun deleteAll(): Boolean {
         val statement = DbConnection
                 .conn
                 .prepareStatement(deleteStatement)
-        statement.executeUpdate()
+        return statement.executeUpdate() > 0
+    }
+
+    override fun getNextId(): Int {
+        val statement = DbConnection.conn
+                .prepareStatement(
+                        "SELECT nextval(pg_get_serial_sequence('app_user', 'id')) AS new_id;"
+                )
+        val result = statement.executeQuery()
+        var id = -1
+        while (result.next()) {
+            id = result.getInt(1)
+        }
+        return id
     }
 }

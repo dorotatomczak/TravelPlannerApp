@@ -52,7 +52,7 @@ class UserRepository : IUserRepository {
         return users
     }
 
-    override fun add(obj: User) {
+    override fun add(obj: User): Boolean {
         val statement = DbConnection
                 .conn
                 .prepareStatement(insertStatement)
@@ -60,7 +60,7 @@ class UserRepository : IUserRepository {
         statement.setString(2, obj.password)
         statement.setString(3, obj.authToken)
         statement.setTimestamp(4, obj.expirationDate)
-        statement.executeUpdate()
+        return statement.executeUpdate() > 0
     }
 
     override fun add(objs: MutableList<User>) {
@@ -78,7 +78,7 @@ class UserRepository : IUserRepository {
         }
     }
 
-    override fun updateUserAuthByEmail(email: String, authToken: String, expirationDate: Timestamp) {
+    override fun updateUserAuthByEmail(email: String, authToken: String, expirationDate: Timestamp): Boolean {
         val statement = DbConnection
                 .conn
                 .prepareStatement(
@@ -90,21 +90,21 @@ class UserRepository : IUserRepository {
         statement.setTimestamp(1, expirationDate)
         statement.setString(2, authToken)
         statement.setString(3, email)
-        statement.executeUpdate()
+        return statement.executeUpdate() > 0
     }
 
-    override fun delete(id: Int) {
+    override fun delete(id: Int): Boolean {
         val statement = DbConnection
                 .conn
                 .prepareStatement(deleteStatement + "WHERE id=?")
         statement.setInt(1, id)
-        statement.executeUpdate()
+        return statement.executeUpdate() > 0
     }
 
-    override fun deleteAll() {
+    override fun deleteAll(): Boolean {
         val statement = DbConnection
                 .conn
                 .prepareStatement(deleteStatement)
-        statement.executeUpdate()
+        return statement.executeUpdate() > 0
     }
 }
