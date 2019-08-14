@@ -22,7 +22,7 @@ class ScannerSelectionImageView : ImageView {
         const val DEFAULT_PADDING_Horizontal = 50f
     }
 
-    var scaleRatio: Int = 1
+    var scaleRatio = 1
 
     private var circleRadius: Float? = null
     private var paddingTop: Float? = null
