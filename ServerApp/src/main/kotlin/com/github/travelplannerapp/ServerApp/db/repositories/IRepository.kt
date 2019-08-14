@@ -9,6 +9,4 @@ interface IRepository<T> {
 
     fun delete(id: Int)
     fun deleteAll()
-
-    // TODO[Magda] fun find(predicate) if possible
 }
