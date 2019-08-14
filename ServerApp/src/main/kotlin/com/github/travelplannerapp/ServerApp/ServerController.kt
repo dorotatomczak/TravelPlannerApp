@@ -10,8 +10,6 @@ import com.github.travelplannerapp.ServerApp.jsondatamodels.LOGIN_ANSWER
 import com.google.gson.Gson
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.web.bind.annotation.*
-import java.sql.Timestamp
-import java.time.Instant
 
 @RestController
 class ServerController {
@@ -52,7 +50,7 @@ class ServerController {
             return Gson().toJson(jsonLoginAnswer)
         }
 
-        val authToken = userManagement.UpdateAuthorizationToken(loginRequest)
+        val authToken = userManagement.updateAuthorizationToken(loginRequest)
         jsonLoginAnswer.authorizationToken = authToken
 
         return Gson().toJson(jsonLoginAnswer)
