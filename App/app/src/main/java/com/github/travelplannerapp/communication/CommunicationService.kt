@@ -14,7 +14,7 @@ import retrofit2.http.Query
 object CommunicationService {
     //10.0.2.2 is "localhost" but on computer
     //localhost via emulator is emulator itself
-    private const val serverUrl: String = "http://192.168.1.104:9090/"
+    private const val serverUrl: String = "http://10.0.2.2:8080/"
 
     val serverApi = Retrofit.Builder()
             .baseUrl(serverUrl)

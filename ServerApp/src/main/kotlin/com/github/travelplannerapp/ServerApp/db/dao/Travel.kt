@@ -6,7 +6,7 @@ class Travel (var name: String,
               var id: Int = -1) {
     constructor(result: ResultSet) :
             this(
-                result.getString(2),
-                result.getInt(1)
+                result.getString("name"),
+                result.getInt("id")
             )
 }

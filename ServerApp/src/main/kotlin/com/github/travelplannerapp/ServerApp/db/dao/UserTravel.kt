@@ -9,8 +9,8 @@ class UserTravel (
 ){
     constructor(result: ResultSet) :
             this(
-                    result.getInt(2),
-                    result.getInt(3),
-                    result.getInt(1)
+                    result.getInt("app_user_id"),
+                    result.getInt("travel_id"),
+                    result.getInt("id")
             )
 }

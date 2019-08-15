@@ -12,9 +12,13 @@ class TravelManagement : ITravelManagement {
 
     @Autowired
     lateinit var travelTransaction: TravelTransaction
+    @Autowired
+    lateinit var userManagement: UserManagement
 
-    override fun addTravel(loginRequest: JsonAddTravelRequest): JsonAddTravelAnswer {
-        return if (travelTransaction.addTravel(loginRequest.travelName, loginRequest.email))
+    override fun addTravel(addTravelRequest: JsonAddTravelRequest): JsonAddTravelAnswer {
+
+        return if (userManagement.verifyUser(addTravelRequest.email, addTravelRequest.auth) &&
+                travelTransaction.addTravel(addTravelRequest.travelName, addTravelRequest.email))
             JsonAddTravelAnswer(ADD_TRAVEL_RESULT.OK)
         else JsonAddTravelAnswer(ADD_TRAVEL_RESULT.ERROR)
     }

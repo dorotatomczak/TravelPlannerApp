@@ -8,8 +8,9 @@ import java.sql.ResultSet
 @Component
 class TravelRepository : ITravelRepository {
     companion object {
-        const val insertStatement = "INSERT INTO travel (id, name) VALUES (?, ?)"
-        const val selectStatement = "SELECT * FROM travel"
+        const val insertStatementWithId = "INSERT INTO travel (id, name) VALUES (?, ?) "
+        const val insertStatement = "INSERT INTO travel (name) VALUES (?) "
+        const val selectStatement = "SELECT * FROM travel "
         const val deleteStatement = "DELETE FROM travel "
     }
 
@@ -77,13 +78,12 @@ class TravelRepository : ITravelRepository {
     override fun add(obj: Travel): Boolean {
         val statement = DbConnection
                 .conn
-                .prepareStatement(insertStatement)
+                .prepareStatement(insertStatementWithId)
         statement.setInt(1, obj.id)
         statement.setString(2, obj.name)
         return statement.executeUpdate() > 0
     }
 
-    //TODO SOLVE INSERT WITH ID PROBLEM
     override fun add(objs: MutableList<Travel>) {
         val statement = DbConnection
                 .conn

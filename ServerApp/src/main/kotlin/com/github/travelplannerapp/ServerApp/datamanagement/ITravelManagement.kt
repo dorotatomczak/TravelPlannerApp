@@ -4,5 +4,5 @@ import com.github.travelplannerapp.ServerApp.jsondatamodels.JsonAddTravelAnswer
 import com.github.travelplannerapp.ServerApp.jsondatamodels.JsonAddTravelRequest
 
 interface ITravelManagement {
-    fun addTravel(loginRequest: JsonAddTravelRequest): JsonAddTravelAnswer
+    fun addTravel(addTravelRequest: JsonAddTravelRequest): JsonAddTravelAnswer
 }
