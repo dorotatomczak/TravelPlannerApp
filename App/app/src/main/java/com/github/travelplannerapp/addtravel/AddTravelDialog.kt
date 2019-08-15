@@ -9,21 +9,14 @@ import androidx.fragment.app.DialogFragment
 import com.github.travelplannerapp.R
 
 class AddTravelDialog : DialogFragment() {
-    companion object {
-        fun newInstance(): AddTravelDialog {
-            val dialog = AddTravelDialog()
-            return dialog
-        }
-    }
-
-    lateinit var editText: EditText
+    lateinit var travelName: EditText
     var onOk: (() -> Unit)? = null
     var onCancel: (() -> Unit)? = null
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val view = activity!!.layoutInflater.inflate(R.layout.activity_add_travel, null)
 
-        editText = view.findViewById(R.id.editTextTravelName)
+        travelName = view.findViewById(R.id.editTextTravelName)
 
         val builder = AlertDialog.Builder(context!!)
                 .setView(view)

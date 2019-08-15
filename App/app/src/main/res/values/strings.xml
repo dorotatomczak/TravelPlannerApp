@@ -32,4 +32,6 @@
     <string name="sing_up_diff_passwords">Passwords are different</string>
     <string name="travel_name">Travel name…</string>
     <string name="new_travel">New travel</string>
+    <string name="add_travel_error">Error when adding travel</string>
+    <string name="add_travel_ok">Travel successfully added</string>
 </resources>

@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.github.travelplannerapp.R
 import com.github.travelplannerapp.addtravel.AddTravelDialog
 import com.github.travelplannerapp.communication.ServerApi
+import com.github.travelplannerapp.jsondatamodels.ADD_TRAVEL_ANSWER
 import com.github.travelplannerapp.traveldetails.TravelDetailsActivity
 
 import javax.inject.Inject
@@ -75,11 +76,18 @@ class TravelsActivity : AppCompatActivity(), TravelsContract.View, NavigationVie
     }
 
     override fun showAddTravel() {
-        val dialog = AddTravelDialog.newInstance()
+        val dialog = AddTravelDialog()
         dialog.onOk = {
-            val text = dialog.editText.text
+            val sharedPref = getSharedPreferences(resources.getString(R.string.auth_settings),
+                    Context.MODE_PRIVATE)
+            val email = sharedPref.getString(resources.getString(R.string.email_shared_pref),
+                    "default").toString()
+            val authToken = sharedPref.getString(resources.getString(R.string.auth_token_shared_pref),
+                    "default").toString()
+            val travelName = dialog.travelName.text.toString()
+            presenter.addTravel(email, authToken, travelName)
         }
-        dialog.show(supportFragmentManager, "editDescription")
+        dialog.show(supportFragmentManager, "Add travel dialog")
     }
 
     override fun showTravelDetails(travel: String) {
@@ -103,6 +111,14 @@ class TravelsActivity : AppCompatActivity(), TravelsContract.View, NavigationVie
                 .setAction("Action", null).show()
     }
 
+    override fun showAddTravelResult(result: ADD_TRAVEL_ANSWER) {
+        when (result) {
+            // TODO [Magda] refresh travels list
+            ADD_TRAVEL_ANSWER.OK -> showSnackbar(resources.getString(R.string.add_travel_ok))
+            ADD_TRAVEL_ANSWER.ERROR -> showSnackbar(resources.getString(R.string.add_travel_error))
+        }
+    }
+
     override fun loadTravels(requestInterface: ServerApi, handleResponse: (myTravels: List<String>) -> Unit) {
         val sharedPref = getSharedPreferences(resources.getString(R.string.auth_settings),
                 Context.MODE_PRIVATE)
@@ -118,10 +134,10 @@ class TravelsActivity : AppCompatActivity(), TravelsContract.View, NavigationVie
     }
 
     override fun addTravel(requestInterface: ServerApi, jsonAddTravelRequest: String,
-                           handleResponse: (jsonString: String) -> Unit){
+                           handleAddTravelResponse: (jsonString: String) -> Unit) {
         myCompositeDisposable?.add(requestInterface.addTravel(jsonAddTravelRequest)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
-                .subscribe(handleResponse, { showSnackbar(resources.getString(R.string.server_connection_failure)) }))
+                .subscribe(handleAddTravelResponse, { showSnackbar(resources.getString(R.string.server_connection_failure)) }))
     }
 }

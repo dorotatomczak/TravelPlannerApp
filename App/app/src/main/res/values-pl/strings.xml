@@ -27,4 +27,6 @@
     <string name="sing_up_diff_passwords">Hasła są różne</string>
     <string name="travel_name">Nazwa podróży…</string>
     <string name="new_travel">Nowa podróż</string>
+    <string name="add_travel_error">Wystąpił problem podczas dodawania podróży</string>
+    <string name="add_travel_ok">Podróż pomyślnie dodana</string>
 </resources>
