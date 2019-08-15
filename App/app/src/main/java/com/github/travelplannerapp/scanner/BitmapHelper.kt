@@ -4,6 +4,10 @@ import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.Matrix
 import androidx.exifinterface.media.ExifInterface
+import java.io.File
+import java.io.FileOutputStream
+import java.io.IOException
+import java.io.OutputStream
 import kotlin.math.roundToInt
 
 object BitmapHelper {
@@ -33,6 +37,21 @@ object BitmapHelper {
         }
 
         return ResizedBitmap(bitmap, scaleRatio)
+    }
+
+    fun bitmapToFile(bitmap: Bitmap, cacheDir: File): File? {
+        cacheDir.mkdirs()
+
+        return try {
+            val shareFile = File.createTempFile("SCAN_", ".jpg", cacheDir)
+            val output: OutputStream = FileOutputStream(shareFile)
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 85, output)
+            output.flush()
+            output.close()
+            shareFile
+        } catch (ex: IOException) {
+            null
+        }
     }
 
     private fun calculateInSampleSize(options: BitmapFactory.Options, reqWidth: Int, reqHeight: Int): Int {

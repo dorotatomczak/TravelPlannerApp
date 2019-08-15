@@ -6,10 +6,17 @@ import com.github.travelplannerapp.ServerApp.db.dao.User
 import com.github.travelplannerapp.ServerApp.db.repositories.TravelRepository
 import com.github.travelplannerapp.ServerApp.db.repositories.UserRepository
 import com.github.travelplannerapp.ServerApp.jsondatamodels.JsonLoginRequest
-import com.github.travelplannerapp.ServerApp.jsondatamodels.LOGIN_ANSWER
+import com.github.travelplannerapp.ServerApp.jsondatamodels.JsonScanUploadResponse
+import com.github.travelplannerapp.ServerApp.jsondatamodels.LoginResponse
+import com.github.travelplannerapp.ServerApp.jsondatamodels.ScanUploadResponse
+import com.github.travelplannerapp.ServerApp.service.FileStorageService
 import com.google.gson.Gson
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.web.bind.annotation.*
+import org.springframework.web.multipart.MultipartFile
+import org.springframework.web.bind.annotation.RequestParam
+import org.springframework.web.bind.annotation.PostMapping
+
 
 @RestController
 class ServerController {
@@ -20,6 +27,8 @@ class ServerController {
     lateinit var travelRepository: TravelRepository
     @Autowired
     lateinit var userManagement: UserManagement
+    @Autowired
+    lateinit var fileStorageService: FileStorageService
 
     @GetMapping("/here")
     fun getExampleDataFromHere() {
@@ -46,7 +55,7 @@ class ServerController {
         val loginRequest = Gson().fromJson(request, JsonLoginRequest::class.java)
 
         val jsonLoginAnswer = userManagement.authenticateUser(loginRequest)
-        if (jsonLoginAnswer.result != LOGIN_ANSWER.OK) {
+        if (jsonLoginAnswer.result != LoginResponse.OK) {
             return Gson().toJson(jsonLoginAnswer)
         }
 
@@ -62,6 +71,17 @@ class ServerController {
         val jsonLoginAnswer = userManagement.addUser(loginRequest)
 
         return Gson().toJson(jsonLoginAnswer)
+    }
+
+    @PostMapping("/uploadScan")
+    fun uploadFile(
+            @RequestHeader("authorization") auth: String,
+            @RequestParam("email") email: String,
+            @RequestParam("file") file: MultipartFile): String {
+        return if (userManagement.verifyUser(email, auth)) {
+            val response = fileStorageService.storeFile(file, email)
+            Gson().toJson(response)
+        } else Gson().toJson(JsonScanUploadResponse(ScanUploadResponse.ERROR))
     }
 
 }

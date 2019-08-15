@@ -14,7 +14,7 @@
     <string name="create_an_account">Utwórz konto</string>
     <string name="confirm_password">powtórz hasło</string>
     <string name="menu_sign_out">Wyloguj się</string>
-    <string name="scanner_general_failure">Coś złego stało się ze skanerem</string>
+    <string name="scanner_general_failure">Coś poszło nie tak ze skanerem</string>
     <string name="scanner_success">Sukces skanera</string>
     <string name="server_connection_failure">Błąd połączenia z serwerem</string>
     <string name="scan">Skanuj</string>
@@ -27,4 +27,5 @@
     <string name="sing_up_email_error">Konto już istnieje</string>
     <string name="sing_in_error">Błędny email lub hasło</string>
     <string name="sing_up_diff_passwords">Hasła są różne</string>
+    <string name="scan_upload_failure">Coś poszło nie tak podczas przesyłania skanu</string>
 </resources>

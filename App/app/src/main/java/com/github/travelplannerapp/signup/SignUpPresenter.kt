@@ -3,9 +3,9 @@ package com.github.travelplannerapp.signup
 import com.github.travelplannerapp.BasePresenter
 import com.github.travelplannerapp.R
 import com.github.travelplannerapp.communication.CommunicationService
-import com.github.travelplannerapp.jsondatamodels.JsonLoginAnswer
+import com.github.travelplannerapp.jsondatamodels.JsonLoginResponse
 import com.github.travelplannerapp.jsondatamodels.JsonLoginRequest
-import com.github.travelplannerapp.jsondatamodels.LOGIN_ANSWER
+import com.github.travelplannerapp.jsondatamodels.LoginResponse
 import com.github.travelplannerapp.utils.PasswordUtils
 import com.google.gson.Gson
 
@@ -35,10 +35,10 @@ class SignUpPresenter(view: SignUpContract.View) : BasePresenter<SignUpContract.
     }
 
     override fun handleSignUpResponse(jsonString: String) {
-        val answer = Gson().fromJson(jsonString, JsonLoginAnswer::class.java)
-        when (answer.result) {
-            LOGIN_ANSWER.OK -> view.signUp()
-            LOGIN_ANSWER.ERROR -> view.showSnackbar(R.string.sing_up_email_error, null)
+        val response = Gson().fromJson(jsonString, JsonLoginResponse::class.java)
+        when (response.result) {
+            LoginResponse.OK -> view.signUp()
+            LoginResponse.ERROR -> view.showSnackbar(R.string.sing_up_email_error, null)
         }
     }
 }

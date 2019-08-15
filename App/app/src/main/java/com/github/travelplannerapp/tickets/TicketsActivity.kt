@@ -14,6 +14,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
+import com.github.travelplannerapp.BuildConfig
 import com.github.travelplannerapp.R
 import com.github.travelplannerapp.scanner.ScannerActivity
 import com.google.android.material.navigation.NavigationView
@@ -115,7 +116,7 @@ class TicketsActivity : AppCompatActivity(), TicketsContract.View, NavigationVie
     override fun openCamera() {
         Intent(MediaStore.ACTION_IMAGE_CAPTURE).also { takePhotoIntent ->
             takePhotoIntent.resolveActivity(packageManager)?.also {
-                val photoFile: File? = try {
+                val photoFile = try {
                     createImageFile()
                 } catch (ex: IOException) {
                     showSnackbar(R.string.scanner_initialization_failure)
@@ -124,7 +125,7 @@ class TicketsActivity : AppCompatActivity(), TicketsContract.View, NavigationVie
                 photoFile?.also {
                     val photoURI: Uri = FileProvider.getUriForFile(
                             this,
-                            "com.github.travelplannerapp.fileprovider",
+                            BuildConfig.APPLICATION_ID + ".fileprovider",
                             it
                     )
                     takePhotoIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI)

@@ -2,10 +2,9 @@ package com.github.travelplannerapp.ServerApp.datamanagement
 
 import com.github.travelplannerapp.ServerApp.db.dao.User
 import com.github.travelplannerapp.ServerApp.db.repositories.UserRepository
-import com.github.travelplannerapp.ServerApp.jsondatamodels.JsonLoginAnswer
+import com.github.travelplannerapp.ServerApp.jsondatamodels.JsonLoginResponse
 import com.github.travelplannerapp.ServerApp.jsondatamodels.JsonLoginRequest
-import com.github.travelplannerapp.ServerApp.jsondatamodels.LOGIN_ANSWER
-import com.google.gson.Gson
+import com.github.travelplannerapp.ServerApp.jsondatamodels.LoginResponse
 import io.jsonwebtoken.Jwts
 import io.jsonwebtoken.SignatureAlgorithm
 import org.springframework.beans.factory.annotation.Autowired
@@ -15,7 +14,6 @@ import java.time.Instant
 import java.time.LocalDate
 import java.util.*
 import java.util.concurrent.ThreadLocalRandom
-import kotlin.math.absoluteValue
 import kotlin.streams.asSequence
 
 @Component
@@ -29,12 +27,12 @@ class UserManagement : IUserManagement {
                 && user.expirationDate!!.after(java.sql.Date.valueOf(LocalDate.now())))
     }
 
-    override fun authenticateUser(loginRequest: JsonLoginRequest): JsonLoginAnswer {
+    override fun authenticateUser(loginRequest: JsonLoginRequest): JsonLoginResponse {
         val user = userRepository.getUserByEmail(loginRequest.email)
         if (user == null || user.password != loginRequest.password) {
-            return JsonLoginAnswer("", LOGIN_ANSWER.ERROR)
+            return JsonLoginResponse("", LoginResponse.ERROR)
         }
-        return JsonLoginAnswer("", LOGIN_ANSWER.OK)
+        return JsonLoginResponse("", LoginResponse.OK)
     }
 
     override fun updateAuthorizationToken(loginRequest: JsonLoginRequest): String {
@@ -65,16 +63,16 @@ class UserManagement : IUserManagement {
         return accessToken
     }
 
-    override fun addUser(loginRequest: JsonLoginRequest): JsonLoginAnswer {
+    override fun addUser(loginRequest: JsonLoginRequest): JsonLoginResponse {
         val user = userRepository.getUserByEmail(loginRequest.email)
         if (user != null) {
-            return JsonLoginAnswer("", LOGIN_ANSWER.ERROR)
+            return JsonLoginResponse("", LoginResponse.ERROR)
         }
 
         val newUser = User(loginRequest.email, loginRequest.password)
         userRepository.add(newUser)
 
-        return JsonLoginAnswer("", LOGIN_ANSWER.OK)
+        return JsonLoginResponse("", LoginResponse.OK)
     }
 
     // private function

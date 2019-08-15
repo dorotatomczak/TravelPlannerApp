@@ -1,11 +1,11 @@
 package com.github.travelplannerapp.ServerApp.jsondatamodels
 
-class JsonLoginAnswer(
+class JsonLoginResponse(
     var authorizationToken: String,
-    var result: LOGIN_ANSWER
+    var result: LoginResponse
 )
 
-enum class LOGIN_ANSWER{
+enum class LoginResponse{
     OK,
     ERROR
 }

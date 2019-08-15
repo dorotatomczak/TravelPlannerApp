@@ -5,10 +5,9 @@ import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.converter.scalars.ScalarsConverterFactory
-import retrofit2.http.Body
-import retrofit2.http.GET
-import retrofit2.http.POST
-import retrofit2.http.Query
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
+import retrofit2.http.*
 
 
 object CommunicationService {
@@ -35,4 +34,8 @@ interface ServerApi {
 
     @POST("/register")
     fun register(@Body jsonString: String): Observable<String>
+
+    @Multipart
+    @POST("/uploadScan")
+    fun uploadScan(@Header("Authorization") auth: String, @Part("email") email: RequestBody, @Part file: MultipartBody.Part): Observable<String>
 }
