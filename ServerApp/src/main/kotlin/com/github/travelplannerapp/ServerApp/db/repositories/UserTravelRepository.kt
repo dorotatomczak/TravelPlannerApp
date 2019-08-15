@@ -2,8 +2,10 @@ package com.github.travelplannerapp.ServerApp.db.repositories
 
 import com.github.travelplannerapp.ServerApp.db.DbConnection
 import com.github.travelplannerapp.ServerApp.db.dao.UserTravel
+import org.springframework.stereotype.Component
 import java.sql.ResultSet
 
+@Component
 class UserTravelRepository : IUserTravelRepository {
     companion object {
         const val insertStatement = "INSERT INTO app_user_travel (app_user_id, travel_id) VALUES (?, ?) "

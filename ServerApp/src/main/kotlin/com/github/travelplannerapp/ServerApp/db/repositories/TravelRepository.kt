@@ -31,7 +31,7 @@ class TravelRepository : ITravelRepository {
         return travels
     }
 
-    override fun getAllTravelsByUserEmail(email: String, authToken: String): MutableList<Travel> {
+    override fun getAllTravelsByUserEmail(email: String): MutableList<Travel> {
         var travels = mutableListOf<Travel>()
         val statement = DbConnection.conn
                 .prepareStatement(

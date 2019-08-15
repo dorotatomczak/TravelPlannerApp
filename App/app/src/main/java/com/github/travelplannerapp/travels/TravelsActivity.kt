@@ -3,7 +3,6 @@ package com.github.travelplannerapp.travels
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import com.google.android.material.navigation.NavigationView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -14,7 +13,7 @@ import android.view.MenuItem
 import androidx.recyclerview.widget.RecyclerView
 
 import com.github.travelplannerapp.R
-import com.github.travelplannerapp.addtravel.AddTravelActivity
+import com.github.travelplannerapp.addtravel.AddTravelDialog
 import com.github.travelplannerapp.communication.ServerApi
 import com.github.travelplannerapp.traveldetails.TravelDetailsActivity
 
@@ -76,8 +75,11 @@ class TravelsActivity : AppCompatActivity(), TravelsContract.View, NavigationVie
     }
 
     override fun showAddTravel() {
-        val intent = Intent(this, AddTravelActivity::class.java)
-        startActivity(intent)
+        val dialog = AddTravelDialog.newInstance()
+        dialog.onOk = {
+            val text = dialog.editText.text
+        }
+        dialog.show(supportFragmentManager, "editDescription")
     }
 
     override fun showTravelDetails(travel: String) {
@@ -110,6 +112,14 @@ class TravelsActivity : AppCompatActivity(), TravelsContract.View, NavigationVie
                 "default").toString()
 
         myCompositeDisposable?.add(requestInterface.getTravels(email, authToken)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe(handleResponse, { showSnackbar(resources.getString(R.string.server_connection_failure)) }))
+    }
+
+    override fun addTravel(requestInterface: ServerApi, jsonAddTravelRequest: String,
+                           handleResponse: (jsonString: String) -> Unit){
+        myCompositeDisposable?.add(requestInterface.addTravel(jsonAddTravelRequest)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
                 .subscribe(handleResponse, { showSnackbar(resources.getString(R.string.server_connection_failure)) }))

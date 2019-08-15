@@ -30,4 +30,6 @@
     <string name="sing_up_email_error">Account exists</string>
     <string name="sing_in_error">Email or password is incorrect</string>
     <string name="sing_up_diff_passwords">Passwords are different</string>
+    <string name="travel_name">Travel name…</string>
+    <string name="new_travel">New travel</string>
 </resources>
