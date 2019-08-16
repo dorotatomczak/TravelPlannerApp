@@ -21,12 +21,12 @@ class SignInPresenter(view: SignInContract.View) : BasePresenter<SignInContract.
     override fun signIn(email: String, password: String) {
         val requestInterface = CommunicationService.serverApi
 
-        val pwd = PasswordUtils().hashPassword(password)
-        if (pwd == null) {
+        val hashedPassword = PasswordUtils().hashPassword(password)
+        if (hashedPassword == null) {
             view.showSnackbar(R.string.try_again)
         } else {
             this.email = email
-            val requestBody = Gson().toJson(JsonLoginRequest(email, password))
+            val requestBody = Gson().toJson(JsonLoginRequest(email, hashedPassword))
             view.authorize(requestInterface, requestBody, this::handleLoginResponse)
         }
     }

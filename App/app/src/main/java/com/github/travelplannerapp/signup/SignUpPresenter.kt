@@ -20,12 +20,12 @@ class SignUpPresenter(view: SignUpContract.View) : BasePresenter<SignUpContract.
             view.showSnackbar(R.string.sing_up_diff_passwords, null)
         }
 
-        val pwd = PasswordUtils().hashPassword(password)
-        if (pwd == null) {
+        val hashedPassword = PasswordUtils().hashPassword(password)
+        if (hashedPassword == null) {
             view.showSnackbar(R.string.try_again, null)
         } else {
             this.email = email
-            val requestBody = Gson().toJson(JsonLoginRequest(email, password))
+            val requestBody = Gson().toJson(JsonLoginRequest(email, hashedPassword))
             view.sendSignUpRequest(requestInterface, requestBody, this::handleSignUpResponse)
         }
     }

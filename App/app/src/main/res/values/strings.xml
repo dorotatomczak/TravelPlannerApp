@@ -19,9 +19,11 @@
     <string name="scanner_permissions_failure">You need to grant camera and storage permissions</string>
     <string name="scanner_initialization_failure">Scanner initialization failed</string>
     <string name="scan">Scan</string>
-    <string name="scanner_general_failure">Something\'s bad happened to scanner</string>
+    <string name="scanner_general_failure">Something bad happened to scanner</string>
     <string name="scanner_success">Scanner success</string>
     <string name="server_connection_failure">Server connection failed</string>
+    <string name="save">save</string>
+    <string name="cancel">cancel</string>
     <string name="auth_token_shared_pref" translatable="false">auth_token</string>
     <string name="email_shared_pref" translatable="false">email</string>
     <string name="try_again">Something went wrong. Please try again</string>

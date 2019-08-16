@@ -52,4 +52,7 @@ ext {
     rxAndroidVersion = '2.0.1'
     roomVersion = '2.1.0'
     converter_scalarsVersion = '2.1.0'
+    runnerVersion = '1.2.0'
+    exifinterfaceVersion = '1.0.0'
+    annotationVersion = '1.0.0'
 }

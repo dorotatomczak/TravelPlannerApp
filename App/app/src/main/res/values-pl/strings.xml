@@ -20,6 +20,8 @@
     <string name="scan">Skanuj</string>
     <string name="scanner_initialization_failure">Inicjalizacja skanera nie powiodła się</string>
     <string name="scanner_permissions_failure">Musisz przyznać uprawnienia do kamery i pamięci masowej</string>
+    <string name="save">zapisz</string>
+    <string name="cancel">anuluj</string>
     <string name="try_again" >Spróbuj ponownie</string>
     <string name="sing_up_successful">Twoje konto zostało utworzone</string>
     <string name="sing_up_email_error">Konto już istnieje</string>
