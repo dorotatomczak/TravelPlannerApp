@@ -11,9 +11,9 @@ class LauncherPresenter (view: LauncherContract.View) : BasePresenter<LauncherCo
             view.showSignIn()
         }
     }
-
-    //TODO([Dorota] check in SharedPreferences if user is already logged in)
+    
     private fun isLoggedIn(): Boolean {
-        return false
+        val (email, token) = view.getCredentials()
+        return !(email.isNullOrEmpty() || token.isNullOrEmpty())
     }
 }
