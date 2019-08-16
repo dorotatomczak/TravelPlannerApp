@@ -3,20 +3,17 @@ package com.github.travelplannerapp.travels
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
-import com.google.android.material.navigation.NavigationView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import android.view.View
 import com.google.android.material.snackbar.Snackbar
-import androidx.appcompat.app.ActionBarDrawerToggle
-import android.view.MenuItem
 import androidx.recyclerview.widget.RecyclerView
 
 import com.github.travelplannerapp.R
 import com.github.travelplannerapp.addtravel.AddTravelActivity
 import com.github.travelplannerapp.communication.ServerApi
 import com.github.travelplannerapp.traveldetails.TravelDetailsActivity
+import com.github.travelplannerapp.utils.DrawerUtils
 
 import javax.inject.Inject
 
@@ -26,12 +23,11 @@ import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_travels.*
 
-class TravelsActivity : AppCompatActivity(), TravelsContract.View, NavigationView.OnNavigationItemSelectedListener {
+class TravelsActivity : AppCompatActivity(), TravelsContract.View {
 
     @Inject
     lateinit var presenter: TravelsContract.Presenter
     private var myCompositeDisposable: CompositeDisposable? = null
-    private lateinit var toggle: ActionBarDrawerToggle
 
     override fun onCreate(savedInstanceState: Bundle?) {
         AndroidInjection.inject(this)
@@ -39,14 +35,10 @@ class TravelsActivity : AppCompatActivity(), TravelsContract.View, NavigationVie
         setContentView(R.layout.activity_travels)
         myCompositeDisposable = CompositeDisposable()
 
+        // Set up toolbar
         setSupportActionBar(toolbarTravels)
         supportActionBar?.setHomeButtonEnabled(true)
-
-        toggle = ActionBarDrawerToggle(this, drawerLayoutTravels, toolbarTravels, R.string.drawer_open, R.string.drawer_close)
-        drawerLayoutTravels.addDrawerListener(toggle)
-        toggle.syncState()
-
-        navigationViewTravels.setNavigationItemSelectedListener(this)
+        DrawerUtils.getDrawer(this, toolbarTravels)
 
         fabTravels.setOnClickListener {
             showAddTravel()
@@ -64,15 +56,6 @@ class TravelsActivity : AppCompatActivity(), TravelsContract.View, NavigationVie
     override fun onDestroy() {
         super.onDestroy()
         myCompositeDisposable?.clear()
-    }
-
-    override fun onNavigationItemSelected(item: MenuItem): Boolean {
-        //TODO [Dorota] Showing snackbar is only temporary
-        when (item.itemId) {
-            R.id.menuMainSettings -> showSnackbar(getString(R.string.menu_settings))
-            R.id.menuMainSignOut -> showSnackbar(getString(R.string.menu_sign_out))
-        }
-        return true
     }
 
     override fun showAddTravel() {
