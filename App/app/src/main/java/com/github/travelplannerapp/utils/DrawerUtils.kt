@@ -5,19 +5,21 @@ import com.mikepenz.materialdrawer.Drawer
 import com.mikepenz.materialdrawer.DrawerBuilder
 import com.mikepenz.materialdrawer.model.PrimaryDrawerItem
 import android.app.Activity
+import android.content.Context
 import android.view.View
 import androidx.appcompat.widget.Toolbar
 import com.github.travelplannerapp.R
-
+import android.content.Intent
+import com.github.travelplannerapp.signin.SignInActivity
 
 object DrawerUtils {
 
     fun getDrawer(activity: Activity, toolbar: Toolbar) {
 
-        val drawerItemSettings= PrimaryDrawerItem().withIdentifier(0)
-                .withName(R.string.menu_settings).withIcon(R.drawable.ic_settings)
+        val drawerItemSettings = PrimaryDrawerItem().withIdentifier(Menu.SETTINGS.ordinal.toLong())
+                .withName(Menu.SETTINGS.color).withIcon(Menu.SETTINGS.icon)
         val drawerItemSignOut = PrimaryDrawerItem()
-                .withIdentifier(1).withName(R.string.menu_sign_out).withIcon(R.drawable.ic_sign_out)
+                .withIdentifier(Menu.SIGN_OUT.ordinal.toLong()).withName(Menu.SIGN_OUT.color).withIcon(Menu.SIGN_OUT.icon)
 
         DrawerBuilder()
                 .withActivity(activity)
@@ -32,10 +34,39 @@ object DrawerUtils {
                 )
                 .withOnDrawerItemClickListener(object : Drawer.OnDrawerItemClickListener {
                     override fun onItemClick(view: View?, position: Int, drawerItem: IDrawerItem<*>): Boolean {
-                        // do something with the clicked item :D
-                        return false
+                        view?.let { Menu.getItem(position).onClick(it) }
+                        return true
                     }
                 })
                 .build()
+    }
+
+    enum class Menu(val color: Int, val icon: Int) : OnMenuItemClickListener {
+        SETTINGS(R.string.menu_settings, R.drawable.ic_settings) {
+            override fun onClick(view: View) {
+                //TODO Add SettingsActivity
+            }
+        },
+        SIGN_OUT(R.string.menu_sign_out, R.drawable.ic_sign_out) {
+            override fun onClick(view: View) {
+                val sharedPref = view.context.getSharedPreferences(view.context.resources.getString(R.string.auth_settings),
+                        Context.MODE_PRIVATE)
+                sharedPref.edit().clear().apply()
+
+                val intent = Intent(view.context, SignInActivity::class.java)
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+                view.context.startActivity(intent)
+            }
+        };
+
+        companion object {
+            fun getItem(index: Int): Menu {
+                return values()[index]
+            }
+        }
+    }
+
+    interface OnMenuItemClickListener {
+        fun onClick(view: View)
     }
 }
