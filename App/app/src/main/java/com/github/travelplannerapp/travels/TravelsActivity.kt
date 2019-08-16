@@ -87,12 +87,12 @@ class TravelsActivity : AppCompatActivity(), TravelsContract.View {
     override fun loadTravels(requestInterface: ServerApi, handleResponse: (myTravels: List<String>) -> Unit) {
         val sharedPref = getSharedPreferences(resources.getString(R.string.auth_settings),
                 Context.MODE_PRIVATE)
-        val email = sharedPref.getString(resources.getString(R.string.email_shared_pref),
+        val userId = sharedPref.getString(resources.getString(R.string.user_id_shared_pref),
                 "default").toString()
         val authToken = sharedPref.getString(resources.getString(R.string.auth_token_shared_pref),
                 "default").toString()
 
-        myCompositeDisposable?.add(requestInterface.getTravels(email, authToken)
+        myCompositeDisposable?.add(requestInterface.getTravels(userId.toInt(), authToken)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
                 .subscribe(handleResponse, { showSnackbar(resources.getString(R.string.server_connection_failure)) }))

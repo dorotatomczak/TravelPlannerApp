@@ -70,12 +70,13 @@ class SignInActivity : AppCompatActivity(), SignInContract.View {
         startActivityForResult(intent, SignUpActivity.REQUEST_SIGN_UP)
     }
 
-    override fun signIn(authToken: String, email: String) {
+    override fun signIn(authToken: String, email: String, userId: String) {
         val sharedPref = getSharedPreferences(resources.getString(R.string.auth_settings),
                 Context.MODE_PRIVATE)
         val editor = sharedPref.edit()
         editor.putString(resources.getString(R.string.auth_token_shared_pref), authToken)
         editor.putString(resources.getString(R.string.email_shared_pref), email)
+        editor.putString(resources.getString(R.string.user_id_shared_pref), userId)
         editor.apply()
 
         val intent = Intent(this, TravelsActivity::class.java)

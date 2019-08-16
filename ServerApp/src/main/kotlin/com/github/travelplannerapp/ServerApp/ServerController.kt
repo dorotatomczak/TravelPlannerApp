@@ -29,9 +29,9 @@ class ServerController {
                 "-72.98529", "fastest", "car", "disabled")
     }
     @GetMapping("/travels")
-    fun travels(@RequestParam(value = "email") email: String, @RequestParam(value = "auth") auth: String): List<String> {
-        if (userManagement.verifyUser(email, auth)) {
-            return travelRepository.getAllTravelsByUserEmail(email, auth).map { travel -> travel.name }
+    fun travels(@RequestParam(value = "userId") userId: Int, @RequestParam(value = "auth") auth: String): List<String> {
+        if (userManagement.verifyUser(userId, auth)) {
+            return travelRepository.getAllTravelsByUserId(userId).map { travel -> travel.name }
         }
         return listOf("Gdańsk", "Elbląg", "Toruń", "Olsztyn", "Szczecin")
     }

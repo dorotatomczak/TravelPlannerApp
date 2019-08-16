@@ -32,4 +32,5 @@
     <string name="sing_up_email_error">Account exists</string>
     <string name="sing_in_error">Email or password is incorrect</string>
     <string name="sing_up_diff_passwords">Passwords are different</string>
+    <string name="user_id_shared_pref" translatable="false">userid</string>
 </resources>
