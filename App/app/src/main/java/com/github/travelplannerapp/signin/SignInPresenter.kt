@@ -1,6 +1,5 @@
 package com.github.travelplannerapp.signin
 
-import android.util.Log
 import com.github.travelplannerapp.BasePresenter
 import com.github.travelplannerapp.R
 import com.github.travelplannerapp.communication.CommunicationService
@@ -19,15 +18,13 @@ class SignInPresenter(view: SignInContract.View) : BasePresenter<SignInContract.
     }
 
     override fun signIn(email: String, password: String) {
-        val requestInterface = CommunicationService.serverApi
-
         val hashedPassword = PasswordUtils().hashPassword(password)
         if (hashedPassword == null) {
             view.showSnackbar(R.string.try_again)
         } else {
             this.email = email
             val requestBody = Gson().toJson(JsonLoginRequest(email, hashedPassword))
-            view.authorize(requestInterface, requestBody, this::handleLoginResponse)
+            view.authorize(CommunicationService.serverApi, requestBody, this::handleLoginResponse)
         }
     }
 
