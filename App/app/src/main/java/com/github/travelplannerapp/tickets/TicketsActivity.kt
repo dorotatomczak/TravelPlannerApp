@@ -19,6 +19,7 @@ import com.github.travelplannerapp.utils.DrawerUtils
 import com.google.android.material.snackbar.Snackbar
 import dagger.android.AndroidInjection
 import kotlinx.android.synthetic.main.activity_tickets.*
+import kotlinx.android.synthetic.main.toolbar.*
 import java.io.File
 import java.io.IOException
 import java.text.SimpleDateFormat
@@ -46,9 +47,9 @@ class TicketsActivity : AppCompatActivity(), TicketsContract.View {
         setContentView(R.layout.activity_tickets)
 
         // Set up toolbar
-        setSupportActionBar(toolbarTickets)
+        setSupportActionBar(toolbar)
         supportActionBar?.setHomeButtonEnabled(true)
-        DrawerUtils.getDrawer(this, toolbarTickets)
+        DrawerUtils.getDrawer(this, toolbar)
 
         fabTickets.setOnClickListener {
             presenter.onAddTravelClick()

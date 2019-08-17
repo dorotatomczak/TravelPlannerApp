@@ -22,6 +22,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_travels.*
+import kotlinx.android.synthetic.main.toolbar.*
 
 class TravelsActivity : AppCompatActivity(), TravelsContract.View {
 
@@ -36,9 +37,9 @@ class TravelsActivity : AppCompatActivity(), TravelsContract.View {
         myCompositeDisposable = CompositeDisposable()
 
         // Set up toolbar
-        setSupportActionBar(toolbarTravels)
+        setSupportActionBar(toolbar)
         supportActionBar?.setHomeButtonEnabled(true)
-        DrawerUtils.getDrawer(this, toolbarTravels)
+        DrawerUtils.getDrawer(this, toolbar)
 
         fabTravels.setOnClickListener {
             showAddTravel()
