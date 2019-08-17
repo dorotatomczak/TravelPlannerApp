@@ -22,6 +22,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_travels.*
+import kotlinx.android.synthetic.main.fab_add.*
 import kotlinx.android.synthetic.main.toolbar.*
 
 class TravelsActivity : AppCompatActivity(), TravelsContract.View {
@@ -41,7 +42,7 @@ class TravelsActivity : AppCompatActivity(), TravelsContract.View {
         supportActionBar?.setHomeButtonEnabled(true)
         DrawerUtils.getDrawer(this, toolbar)
 
-        fabTravels.setOnClickListener {
+        fabAdd.setOnClickListener {
             showAddTravel()
         }
 
