@@ -1,6 +1,5 @@
 package com.github.travelplannerapp.travels
 
-import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import com.google.android.material.navigation.NavigationView
@@ -32,10 +31,6 @@ class TravelsActivity : AppCompatActivity(), TravelsContract.View, NavigationVie
     lateinit var presenter: TravelsContract.Presenter
     private var myCompositeDisposable: CompositeDisposable? = null
     private lateinit var toggle: ActionBarDrawerToggle
-
-    companion object {
-        private const val TAG = "Add travel"
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         AndroidInjection.inject(this)
@@ -80,13 +75,13 @@ class TravelsActivity : AppCompatActivity(), TravelsContract.View, NavigationVie
     }
 
     override fun showAddTravel() {
-        val dialog = AddTravelDialog()
-        dialog.onOk = {
+        val addTravelDialog = AddTravelDialog()
+        addTravelDialog.onOk = {
             val sessionCredentials = SharedPreferencesUtils.getSessionCredentials(this)
-            val travelName = dialog.travelName.text.toString()
+            val travelName = addTravelDialog.travelName.text.toString()
             presenter.addTravel(sessionCredentials.email, sessionCredentials.authToken, travelName)
         }
-        dialog.show(supportFragmentManager, TAG)
+        addTravelDialog.show(supportFragmentManager, addTravelDialog.TAG)
     }
 
     override fun showTravelDetails(travel: String) {
@@ -113,7 +108,6 @@ class TravelsActivity : AppCompatActivity(), TravelsContract.View, NavigationVie
 
     override fun showAddTravelResult(result: ADD_TRAVEL_ANSWER) {
         when (result) {
-            // TODO [Magda] refresh travels list
             ADD_TRAVEL_ANSWER.OK -> presenter.loadTravels()
             ADD_TRAVEL_ANSWER.ERROR -> showSnackbar(resources.getString(R.string.add_travel_error))
         }
