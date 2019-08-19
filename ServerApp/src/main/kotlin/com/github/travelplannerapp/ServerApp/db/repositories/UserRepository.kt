@@ -9,11 +9,11 @@ import java.sql.Timestamp
 @Component
 class UserRepository : IUserRepository {
     companion object {
-        const val insertStatement = "INSERT INTO app_user (email,password,authToken,expirationDate) " +
+        private const val insertStatement = "INSERT INTO app_user (email,password,authToken,expirationDate) " +
                 "VALUES (?,?,?,?) "
-        const val selectStatement = "SELECT * FROM app_user "
-        const val deleteStatement = "DELETE FROM app_user "
-        const val updateStatement = "UPDATE app_user "
+        private const val selectStatement = "SELECT * FROM app_user "
+        private const val deleteStatement = "DELETE FROM app_user "
+        private const val updateStatement = "UPDATE app_user "
     }
 
     override fun getUserByEmail(email: String): User? {

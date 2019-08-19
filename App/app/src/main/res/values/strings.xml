@@ -28,12 +28,12 @@
     <string name="email_shared_pref" translatable="false">email</string>
     <string name="try_again">Something went wrong. Please try again</string>
     <string name="auth_settings" translatable="false">auth_settings</string>
-    <string name="sing_up_successful">Your account has been created</string>
-    <string name="sing_up_email_error">Account exists</string>
-    <string name="sing_in_error">Email or password is incorrect</string>
-    <string name="sing_up_diff_passwords">Passwords are different</string>
+    <string name="sign_up_successful">Your account has been created</string>
+    <string name="sign_up_email_error">Account exists</string>
+    <string name="sign_in_error">Email or password is incorrect</string>
+    <string name="sign_up_diff_passwords">Passwords are different</string>
     <string name="travel_name">Travel name…</string>
     <string name="new_travel">New travel</string>
     <string name="add_travel_error">Error when adding travel</string>
-    <string name="add_travel_ok">Travel successfully added</string>
+    <string name="add_travel_ok">Travel added successfully</string>
 </resources>

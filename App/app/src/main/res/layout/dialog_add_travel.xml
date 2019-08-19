@@ -10,7 +10,7 @@
         android:background="@color/colorPrimaryDark">
 
         <TextView
-            android:id="@+id/textViewSignIn"
+            android:id="@+id/textViewAddTravel"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/margin_add_travel"

@@ -23,10 +23,10 @@
     <string name="save">zapisz</string>
     <string name="cancel">anuluj</string>
     <string name="try_again" >Spróbuj ponownie</string>
-    <string name="sing_up_successful">Twoje konto zostało utworzone</string>
-    <string name="sing_up_email_error">Konto już istnieje</string>
-    <string name="sing_in_error">Błędny email lub hasło</string>
-    <string name="sing_up_diff_passwords">Hasła są różne</string>
+    <string name="sign_up_successful">Twoje konto zostało utworzone</string>
+    <string name="sign_up_email_error">Konto już istnieje</string>
+    <string name="sign_in_error">Błędny email lub hasło</string>
+    <string name="sign_up_diff_passwords">Hasła są różne</string>
     <string name="travel_name">Nazwa podróży…</string>
     <string name="new_travel">Nowa podróż</string>
     <string name="add_travel_error">Wystąpił problem podczas dodawania podróży</string>

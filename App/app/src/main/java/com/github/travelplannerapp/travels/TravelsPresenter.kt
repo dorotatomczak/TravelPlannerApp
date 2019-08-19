@@ -48,7 +48,7 @@ class TravelsPresenter(view: TravelsContract.View) : BasePresenter<TravelsContra
     }
 
     override fun handleAddTravelResponse(jsonString: String) {
-        val answer = Gson().fromJson(jsonString, JsonAddTravelAnswer::class.java)
-        view.showAddTravelResult(answer.result)
+        val response = Gson().fromJson(jsonString, JsonAddTravelAnswer::class.java)
+        view.showAddTravelResult(response.result)
     }
 }

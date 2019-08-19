@@ -8,9 +8,9 @@ import java.sql.ResultSet
 @Component
 class UserTravelRepository : IUserTravelRepository {
     companion object {
-        const val insertStatement = "INSERT INTO app_user_travel (app_user_id, travel_id) VALUES (?, ?) "
-        const val selectStatement = "SELECT * FROM app_user_travel "
-        const val deleteStatement = "DELETE FROM app_user_travel "
+        private const val insertStatement = "INSERT INTO app_user_travel (app_user_id, travel_id) VALUES (?, ?) "
+        private const val selectStatement = "SELECT * FROM app_user_travel "
+        private const val deleteStatement = "DELETE FROM app_user_travel "
     }
 
     override fun get(id: Int): UserTravel? {

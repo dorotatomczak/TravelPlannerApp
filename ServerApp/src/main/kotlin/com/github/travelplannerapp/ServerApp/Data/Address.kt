@@ -4,7 +4,7 @@ class Address(
         val text: String,
         val house: String,
         val street: String,
-        val postaCode: String,
+        val postalCode: String,
         val district: String,
         val city: String,
         val county: String,
@@ -18,7 +18,7 @@ class Address(
         println(text)
         println(house)
         println(street)
-        println(postaCode)
+        println(postalCode)
         println(district)
         println(city)
         println(county)

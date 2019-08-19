@@ -11,9 +11,6 @@ import com.google.android.material.snackbar.Snackbar
 import androidx.appcompat.app.ActionBarDrawerToggle
 import android.view.MenuItem
 import androidx.recyclerview.widget.RecyclerView
-
-import com.github.travelplannerapp.R
-import com.github.travelplannerapp.addtravel.AddTravelDialog
 import com.github.travelplannerapp.communication.ServerApi
 import com.github.travelplannerapp.jsondatamodels.ADD_TRAVEL_ANSWER
 import com.github.travelplannerapp.traveldetails.TravelDetailsActivity
@@ -25,6 +22,9 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_travels.*
+import com.github.travelplannerapp.R
+import com.github.travelplannerapp.addtravel.AddTravelDialog
+import com.github.travelplannerapp.utils.SharedPreferencesUtils
 
 class TravelsActivity : AppCompatActivity(), TravelsContract.View, NavigationView.OnNavigationItemSelectedListener {
 
@@ -32,6 +32,10 @@ class TravelsActivity : AppCompatActivity(), TravelsContract.View, NavigationVie
     lateinit var presenter: TravelsContract.Presenter
     private var myCompositeDisposable: CompositeDisposable? = null
     private lateinit var toggle: ActionBarDrawerToggle
+
+    companion object {
+        private const val TAG = "Add travel"
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         AndroidInjection.inject(this)
@@ -78,16 +82,11 @@ class TravelsActivity : AppCompatActivity(), TravelsContract.View, NavigationVie
     override fun showAddTravel() {
         val dialog = AddTravelDialog()
         dialog.onOk = {
-            val sharedPref = getSharedPreferences(resources.getString(R.string.auth_settings),
-                    Context.MODE_PRIVATE)
-            val email = sharedPref.getString(resources.getString(R.string.email_shared_pref),
-                    "default").toString()
-            val authToken = sharedPref.getString(resources.getString(R.string.auth_token_shared_pref),
-                    "default").toString()
+            val sessionCredentials = SharedPreferencesUtils.getSessionCredentials(this)
             val travelName = dialog.travelName.text.toString()
-            presenter.addTravel(email, authToken, travelName)
+            presenter.addTravel(sessionCredentials.email, sessionCredentials.authToken, travelName)
         }
-        dialog.show(supportFragmentManager, "Add travel dialog")
+        dialog.show(supportFragmentManager, TAG)
     }
 
     override fun showTravelDetails(travel: String) {
@@ -114,20 +113,15 @@ class TravelsActivity : AppCompatActivity(), TravelsContract.View, NavigationVie
     override fun showAddTravelResult(result: ADD_TRAVEL_ANSWER) {
         when (result) {
             // TODO [Magda] refresh travels list
-            ADD_TRAVEL_ANSWER.OK -> showSnackbar(resources.getString(R.string.add_travel_ok))
+            ADD_TRAVEL_ANSWER.OK -> presenter.loadTravels()
             ADD_TRAVEL_ANSWER.ERROR -> showSnackbar(resources.getString(R.string.add_travel_error))
         }
     }
 
     override fun loadTravels(requestInterface: ServerApi, handleResponse: (myTravels: List<String>) -> Unit) {
-        val sharedPref = getSharedPreferences(resources.getString(R.string.auth_settings),
-                Context.MODE_PRIVATE)
-        val email = sharedPref.getString(resources.getString(R.string.email_shared_pref),
-                "default").toString()
-        val authToken = sharedPref.getString(resources.getString(R.string.auth_token_shared_pref),
-                "default").toString()
+        val sessionCredentials = SharedPreferencesUtils.getSessionCredentials(this)
 
-        myCompositeDisposable?.add(requestInterface.getTravels(email, authToken)
+        myCompositeDisposable?.add(requestInterface.getTravels(sessionCredentials.email, sessionCredentials.authToken)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
                 .subscribe(handleResponse, { showSnackbar(resources.getString(R.string.server_connection_failure)) }))

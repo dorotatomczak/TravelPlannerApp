@@ -3,15 +3,14 @@ package com.github.travelplannerapp.ServerApp.db.repositories
 import com.github.travelplannerapp.ServerApp.db.DbConnection
 import com.github.travelplannerapp.ServerApp.db.dao.Travel
 import org.springframework.stereotype.Component
-import java.sql.ResultSet
 
 @Component
 class TravelRepository : ITravelRepository {
     companion object {
-        const val insertStatementWithId = "INSERT INTO travel (id, name) VALUES (?, ?) "
-        const val insertStatement = "INSERT INTO travel (name) VALUES (?) "
-        const val selectStatement = "SELECT * FROM travel "
-        const val deleteStatement = "DELETE FROM travel "
+        private const val insertStatementWithId = "INSERT INTO travel (id, name) VALUES (?, ?) "
+        private const val insertStatement = "INSERT INTO travel (name) VALUES (?) "
+        private const val selectStatement = "SELECT * FROM travel "
+        private const val deleteStatement = "DELETE FROM travel "
     }
 
     override fun getAllTravelsByUserId(id: Int): MutableList<Travel> {
@@ -56,7 +55,7 @@ class TravelRepository : ITravelRepository {
                 .conn
                 .prepareStatement(selectStatement + "WHERE id=?")
         statement.setInt(1, id)
-        val result: ResultSet = statement.executeQuery()
+        val result = statement.executeQuery()
         if (result.next()) {
             return Travel(result)
         }

@@ -7,6 +7,7 @@ import android.widget.EditText
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.DialogFragment
 import com.github.travelplannerapp.R
+import kotlinx.android.synthetic.main.dialog_add_travel.view.*
 
 class AddTravelDialog : DialogFragment() {
     lateinit var travelName: EditText
@@ -14,9 +15,9 @@ class AddTravelDialog : DialogFragment() {
     var onCancel: (() -> Unit)? = null
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-        val view = activity!!.layoutInflater.inflate(R.layout.activity_add_travel, null)
+        val view = activity!!.layoutInflater.inflate(R.layout.dialog_add_travel, null)
 
-        travelName = view.findViewById(R.id.editTextTravelName)
+        travelName = view.editTextTravelName
 
         val builder = AlertDialog.Builder(context!!)
                 .setView(view)
