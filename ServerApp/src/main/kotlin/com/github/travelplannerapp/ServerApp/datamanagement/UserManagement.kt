@@ -5,7 +5,6 @@ import com.github.travelplannerapp.ServerApp.db.repositories.UserRepository
 import com.github.travelplannerapp.ServerApp.jsondatamodels.JsonLoginAnswer
 import com.github.travelplannerapp.ServerApp.jsondatamodels.JsonLoginRequest
 import com.github.travelplannerapp.ServerApp.jsondatamodels.LOGIN_ANSWER
-import com.google.gson.Gson
 import io.jsonwebtoken.Jwts
 import io.jsonwebtoken.SignatureAlgorithm
 import org.springframework.beans.factory.annotation.Autowired

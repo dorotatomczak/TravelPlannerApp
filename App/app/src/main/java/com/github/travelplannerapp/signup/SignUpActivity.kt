@@ -51,7 +51,7 @@ class SignUpActivity : AppCompatActivity(), SignUpContract.View {
     }
 
     override fun signUp() {
-        showSnackbar(resources.getString(R.string.sing_up_successful),
+        showSnackbar(resources.getString(R.string.sign_up_successful),
                 View.OnClickListener {
                     showSignIn()
                 })

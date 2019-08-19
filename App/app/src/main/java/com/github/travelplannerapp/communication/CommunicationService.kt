@@ -35,4 +35,7 @@ interface ServerApi {
 
     @POST("/register")
     fun register(@Body jsonString: String): Observable<String>
+
+    @POST("/addtravel")
+    fun addTravel(@Body jsonString: String): Observable<String>
 }

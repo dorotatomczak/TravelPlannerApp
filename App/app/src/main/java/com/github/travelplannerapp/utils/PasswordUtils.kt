@@ -1,6 +1,5 @@
 package com.github.travelplannerapp.utils
 
-
 class PasswordUtils {
 
     fun hashPassword(password: String): String? {

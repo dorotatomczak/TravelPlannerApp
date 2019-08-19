@@ -7,5 +7,5 @@ interface IUserRepository: IRepository<User> {
 
     fun getUserByEmail(email: String): User?
 
-    fun updateUserAuthByEmail(email: String, authToken: String, expirationDate: Timestamp)
+    fun updateUserAuthByEmail(email: String, authToken: String, expirationDate: Timestamp): Boolean
 }

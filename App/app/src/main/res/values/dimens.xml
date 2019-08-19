@@ -17,4 +17,7 @@
     <dimen name="button_height">48dp</dimen>
     <dimen name="padding_small">8dp</dimen>
     <dimen name="radius_small">8dp</dimen>
+    <dimen name="margin_add_travel">20dp</dimen>
+    <dimen name="line_width">2dp</dimen>
+    <dimen name="margin_add_travel_line">5dp</dimen>
 </resources>
