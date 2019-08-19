@@ -17,7 +17,7 @@ class SignUpPresenter(view: SignUpContract.View) : BasePresenter<SignUpContract.
         val requestInterface = CommunicationService.serverApi
 
         if (password != confirmPassword) {
-            view.showSnackbar(R.string.sing_up_diff_passwords)
+            view.showSnackbar(R.string.sign_up_diff_passwords)
         }
 
         val hashedPassword = PasswordUtils().hashPassword(password)
@@ -37,8 +37,8 @@ class SignUpPresenter(view: SignUpContract.View) : BasePresenter<SignUpContract.
     override fun handleSignUpResponse(jsonString: String) {
         val answer = Gson().fromJson(jsonString, JsonLoginAnswer::class.java)
         when (answer.result) {
-            LOGIN_ANSWER.OK -> view.returnResultAndFinish(R.string.sing_up_successful)
-            LOGIN_ANSWER.ERROR -> view.showSnackbar(R.string.sing_up_email_error)
+            LOGIN_ANSWER.OK -> view.returnResultAndFinish(R.string.sign_up_successful)
+            LOGIN_ANSWER.ERROR -> view.showSnackbar(R.string.sign_up_email_error)
         }
     }
 }

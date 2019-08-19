@@ -32,7 +32,7 @@ class SignInPresenter(view: SignInContract.View) : BasePresenter<SignInContract.
         val answer = Gson().fromJson(jsonString, JsonLoginAnswer::class.java)
         when (answer.result) {
             LOGIN_ANSWER.OK -> view.signIn(answer.authorizationToken, email, answer.userId)
-            LOGIN_ANSWER.ERROR -> view.showSnackbar(R.string.sing_in_error)
+            LOGIN_ANSWER.ERROR -> view.showSnackbar(R.string.sign_in_error)
         }
     }
 }
