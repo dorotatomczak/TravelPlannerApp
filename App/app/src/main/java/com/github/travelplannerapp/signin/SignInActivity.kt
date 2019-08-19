@@ -15,8 +15,8 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_sign_in.*
-import android.content.Context
 import com.github.travelplannerapp.communication.ServerApi
+import com.github.travelplannerapp.utils.SharedPreferencesUtils
 import com.google.android.material.snackbar.Snackbar
 
 
@@ -24,6 +24,9 @@ class SignInActivity : AppCompatActivity(), SignInContract.View {
 
     @Inject
     lateinit var presenter: SignInContract.Presenter
+    @Inject
+    lateinit var sharedPrefs: SharedPreferencesUtils
+
     var myCompositeDisposable = CompositeDisposable()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -58,12 +61,8 @@ class SignInActivity : AppCompatActivity(), SignInContract.View {
     }
 
     override fun signIn(authToken: String, email: String) {
-        val sharedPref = getSharedPreferences(resources.getString(R.string.auth_settings),
-                Context.MODE_PRIVATE)
-        val editor = sharedPref.edit()
-        editor.putString(resources.getString(R.string.auth_token_shared_pref), authToken)
-        editor.putString(resources.getString(R.string.email_shared_pref), email)
-        editor.apply()
+        sharedPrefs.setAccessToken(authToken)
+        sharedPrefs.setEmail(email)
 
         val intent = Intent(this, TravelsActivity::class.java)
         startActivity(intent)

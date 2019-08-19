@@ -1,6 +1,5 @@
 package com.github.travelplannerapp.travels
 
-import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import com.google.android.material.navigation.NavigationView
@@ -30,6 +29,9 @@ class TravelsActivity : AppCompatActivity(), TravelsContract.View, NavigationVie
 
     @Inject
     lateinit var presenter: TravelsContract.Presenter
+    @Inject
+    lateinit var sharedPrefs: SharedPreferencesUtils
+
     private var myCompositeDisposable: CompositeDisposable? = null
     private lateinit var toggle: ActionBarDrawerToggle
 
@@ -82,9 +84,8 @@ class TravelsActivity : AppCompatActivity(), TravelsContract.View, NavigationVie
     override fun showAddTravel() {
         val dialog = AddTravelDialog()
         dialog.onOk = {
-            val sessionCredentials = SharedPreferencesUtils.getSessionCredentials(this)
             val travelName = dialog.travelName.text.toString()
-            presenter.addTravel(sessionCredentials.email, sessionCredentials.authToken, travelName)
+            presenter.addTravel(sharedPrefs.getEmail()!!, sharedPrefs.getAccessToken()!!, travelName)
         }
         dialog.show(supportFragmentManager, TAG)
     }
@@ -120,9 +121,8 @@ class TravelsActivity : AppCompatActivity(), TravelsContract.View, NavigationVie
     }
 
     override fun loadTravels(requestInterface: ServerApi, handleResponse: (myTravels: List<String>) -> Unit) {
-        val sessionCredentials = SharedPreferencesUtils.getSessionCredentials(this)
 
-        myCompositeDisposable?.add(requestInterface.getTravels(sessionCredentials.email, sessionCredentials.authToken)
+        myCompositeDisposable?.add(requestInterface.getTravels(sharedPrefs.getEmail()!!, sharedPrefs.getAccessToken()!!)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
                 .subscribe(handleResponse, { showSnackbar(resources.getString(R.string.server_connection_failure)) }))
