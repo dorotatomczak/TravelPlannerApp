@@ -1,6 +1,7 @@
 package com.github.travelplannerapp.travels
 
 import com.github.travelplannerapp.communication.ServerApi
+import com.github.travelplannerapp.jsondatamodels.ADD_TRAVEL_ANSWER
 
 interface TravelsContract {
     interface View {
@@ -15,6 +16,10 @@ interface TravelsContract {
         fun showSnackbar(message: String)
 
         fun loadTravels(requestInterface: ServerApi, handleResponse: (myTravels: List<String>) -> Unit)
+
+        fun addTravel(requestInterface: ServerApi, jsonAddTravelRequest: String, handleAddTravelResponse: (jsonString: String) -> Unit)
+
+        fun showAddTravelResult(result: ADD_TRAVEL_ANSWER)
     }
 
     interface TravelItemView {
@@ -25,6 +30,8 @@ interface TravelsContract {
 
         fun loadTravels()
 
+        fun addTravel(userId: Int, auth: String, travelName: String)
+
         fun getTravelsCount(): Int
 
         fun onBindTravelsAtPosition(position: Int, itemView: TravelItemView)
@@ -33,5 +40,6 @@ interface TravelsContract {
 
         fun handleResponse(myTravels: List<String>)
 
+        fun handleAddTravelResponse(jsonString: String)
     }
 }

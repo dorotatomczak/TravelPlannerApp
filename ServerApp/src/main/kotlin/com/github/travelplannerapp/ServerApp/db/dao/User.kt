@@ -13,10 +13,10 @@ class User(
 ) {
     constructor(result: ResultSet) :
             this(
-                result.getString(2),
-                result.getString(3),
-                result.getString(4),
-                result.getTimestamp(5),
-                result.getInt(1)
+                result.getString("email"),
+                result.getString("password"),
+                result.getString("authtoken"),
+                result.getTimestamp("expirationdate"),
+                result.getInt("id")
             )
 }

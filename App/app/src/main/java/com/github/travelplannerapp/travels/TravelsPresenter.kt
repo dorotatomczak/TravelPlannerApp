@@ -2,9 +2,11 @@ package com.github.travelplannerapp.travels
 
 import com.github.travelplannerapp.BasePresenter
 import com.github.travelplannerapp.communication.CommunicationService
+import com.github.travelplannerapp.jsondatamodels.JsonAddTravelAnswer
+import com.github.travelplannerapp.jsondatamodels.JsonAddTravelRequest
+import com.google.gson.Gson
 
 class TravelsPresenter(view: TravelsContract.View) : BasePresenter<TravelsContract.View>(view), TravelsContract.Presenter {
-
 
     private var travels = listOf<String>()
 
@@ -12,6 +14,13 @@ class TravelsPresenter(view: TravelsContract.View) : BasePresenter<TravelsContra
         val requestInterface = CommunicationService.serverApi
 
         view.loadTravels(requestInterface, this::handleResponse)
+    }
+
+    override fun addTravel(userId: Int, auth: String, travelName: String) {
+        val requestInterface = CommunicationService.serverApi
+        val requestBody = Gson().toJson(JsonAddTravelRequest(userId, auth, travelName))
+
+        view.addTravel(requestInterface, requestBody, this::handleAddTravelResponse)
     }
 
     override fun onBindTravelsAtPosition(position: Int, itemView: TravelsContract.TravelItemView) {
@@ -36,5 +45,10 @@ class TravelsPresenter(view: TravelsContract.View) : BasePresenter<TravelsContra
         } else {
             view.showTravels()
         }
+    }
+
+    override fun handleAddTravelResponse(jsonString: String) {
+        val response = Gson().fromJson(jsonString, JsonAddTravelAnswer::class.java)
+        view.showAddTravelResult(response.result)
     }
 }
