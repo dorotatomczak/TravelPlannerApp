@@ -103,6 +103,7 @@ class TravelsActivity : AppCompatActivity(), TravelsContract.View, NavigationVie
     override fun showTravels() {
         textViewNoTravels.visibility = View.GONE
         recyclerViewTravels.visibility = View.VISIBLE
+        recyclerViewTravels.adapter?.notifyDataSetChanged()
     }
 
     override fun showSnackbar(message: String) {
