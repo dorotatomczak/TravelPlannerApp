@@ -1,4 +1,4 @@
-package com.github.travelplannerapp.ServerApp.Data
+package com.github.travelplannerapp.ServerApp.searchservice.data
 
 class Position(private val latitude: Double, private val longitude: Double) {
     //TEMPORARY

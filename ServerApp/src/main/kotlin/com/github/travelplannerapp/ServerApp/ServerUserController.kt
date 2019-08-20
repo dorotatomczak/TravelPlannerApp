@@ -2,10 +2,10 @@ package com.github.travelplannerapp.ServerApp
 
 import com.github.travelplannerapp.ServerApp.datamanagement.UserManagement
 import com.github.travelplannerapp.ServerApp.exceptions.ResponseCode
-import com.github.travelplannerapp.ServerApp.jsondatamodels.Response
-import com.github.travelplannerapp.ServerApp.jsondatamodels.SignInRequest
-import com.github.travelplannerapp.ServerApp.jsondatamodels.SignInResponse
-import com.github.travelplannerapp.ServerApp.jsondatamodels.SignUpRequest
+import com.github.travelplannerapp.ServerApp.datamodels.Response
+import com.github.travelplannerapp.ServerApp.datamodels.SignInRequest
+import com.github.travelplannerapp.ServerApp.datamodels.SignInResponse
+import com.github.travelplannerapp.ServerApp.datamodels.SignUpRequest
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.web.bind.annotation.*
 

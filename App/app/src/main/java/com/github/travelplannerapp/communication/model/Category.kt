@@ -1,4 +1,4 @@
-package com.github.travelplannerapp.ServerApp.Data
+package com.github.travelplannerapp.communication.model
 
 enum class Categories(val categoryName: String) {
     EAT_DRINK("eat-drink"),

@@ -5,7 +5,7 @@ import com.github.travelplannerapp.ServerApp.datamanagement.UserManagement
 import com.github.travelplannerapp.ServerApp.db.dao.Scan
 import com.github.travelplannerapp.ServerApp.exceptions.ResponseCode
 import com.github.travelplannerapp.ServerApp.exceptions.UploadScanException
-import com.github.travelplannerapp.ServerApp.jsondatamodels.Response
+import com.github.travelplannerapp.ServerApp.datamodels.Response
 import com.github.travelplannerapp.ServerApp.services.FileStorageService
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.core.io.Resource
