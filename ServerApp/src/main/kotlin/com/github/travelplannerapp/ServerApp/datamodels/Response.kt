@@ -1,4 +1,4 @@
-package com.github.travelplannerapp.ServerApp.jsondatamodels
+package com.github.travelplannerapp.ServerApp.datamodels
 
 import com.github.travelplannerapp.ServerApp.exceptions.ResponseCode
 

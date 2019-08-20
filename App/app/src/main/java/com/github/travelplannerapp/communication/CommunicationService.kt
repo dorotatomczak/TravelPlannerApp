@@ -62,4 +62,7 @@ interface ServerApi {
 
     @GET("/scans")
     fun getScans(@Query("travelId") travelId: Int): Single<Response<List<Scan>>>
+
+    @GET("/findFacilities")
+    fun findFacilities(): Single<Response<List<Place>>>
 }

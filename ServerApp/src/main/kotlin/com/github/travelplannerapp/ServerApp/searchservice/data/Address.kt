@@ -1,4 +1,4 @@
-package com.github.travelplannerapp.ServerApp.Data
+package com.github.travelplannerapp.ServerApp.searchservice.data
 
 class Address(
         val text: String,

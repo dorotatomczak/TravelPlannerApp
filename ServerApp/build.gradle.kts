@@ -37,6 +37,7 @@ dependencies {
 
 	implementation ("org.tinylog:tinylog-api-kotlin:2.0.0")
 	implementation ("org.tinylog:tinylog-impl:2.0.0")
+	implementation("org.json:json:20190722")
 }
 
 tasks.withType<KotlinCompile> {

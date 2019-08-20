@@ -1,4 +1,4 @@
-package com.github.travelplannerapp.ServerApp.jsondatamodels
+package com.github.travelplannerapp.ServerApp.datamodels
 
 data class SignInResponse (
         val token: String,
