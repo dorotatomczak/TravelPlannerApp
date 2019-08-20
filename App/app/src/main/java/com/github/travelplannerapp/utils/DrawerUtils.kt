@@ -18,8 +18,8 @@ object DrawerUtils {
 
         val drawerItemSettings = PrimaryDrawerItem().withIdentifier(Menu.SETTINGS.ordinal.toLong())
                 .withName(Menu.SETTINGS.color).withIcon(Menu.SETTINGS.icon)
-        val drawerItemSignOut = PrimaryDrawerItem()
-                .withIdentifier(Menu.SIGN_OUT.ordinal.toLong()).withName(Menu.SIGN_OUT.color).withIcon(Menu.SIGN_OUT.icon)
+        val drawerItemSignOut = PrimaryDrawerItem().withIdentifier(Menu.SIGN_OUT.ordinal.toLong())
+                .withName(Menu.SIGN_OUT.color).withIcon(Menu.SIGN_OUT.icon)
 
         DrawerBuilder()
                 .withActivity(activity)
