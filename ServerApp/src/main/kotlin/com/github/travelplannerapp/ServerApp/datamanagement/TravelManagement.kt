@@ -14,7 +14,7 @@ class TravelManagement : ITravelManagement {
     lateinit var travelTransaction: TravelTransaction
 
     override fun addTravel(addTravelRequest: JsonAddTravelRequest): JsonAddTravelAnswer {
-        return if (travelTransaction.addTravel(addTravelRequest.travelName, addTravelRequest.email))
+        return if (travelTransaction.addTravel(addTravelRequest.travelName, addTravelRequest.userId))
             JsonAddTravelAnswer(ADD_TRAVEL_RESULT.OK)
         else JsonAddTravelAnswer(ADD_TRAVEL_RESULT.ERROR)
     }

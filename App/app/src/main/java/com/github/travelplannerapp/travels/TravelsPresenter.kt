@@ -11,16 +11,13 @@ class TravelsPresenter(view: TravelsContract.View) : BasePresenter<TravelsContra
     private var travels = listOf<String>()
 
     override fun loadTravels() {
-        val requestInterface = CommunicationService.serverApi
-
-        view.loadTravels(requestInterface, this::handleResponse)
+        view.loadTravels(CommunicationService.serverApi, this::handleResponse)
     }
 
-    override fun addTravel(email: String, auth: String, travelName: String) {
-        val requestInterface = CommunicationService.serverApi
-        val requestBody = Gson().toJson(JsonAddTravelRequest(email, auth, travelName))
+    override fun addTravel(userId: Int, auth: String, travelName: String) {
+        val requestBody = Gson().toJson(JsonAddTravelRequest(userId, auth, travelName))
 
-        view.addTravel(requestInterface, requestBody, this::handleAddTravelResponse)
+        view.addTravel(CommunicationService.serverApi, requestBody, this::handleAddTravelResponse)
     }
 
     override fun onBindTravelsAtPosition(position: Int, itemView: TravelsContract.TravelItemView) {

@@ -30,7 +30,7 @@ interface TravelsContract {
 
         fun loadTravels()
 
-        fun addTravel(email: String, auth: String, travelName: String)
+        fun addTravel(userId: Int, auth: String, travelName: String)
 
         fun getTravelsCount(): Int
 

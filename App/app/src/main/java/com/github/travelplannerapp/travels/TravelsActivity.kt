@@ -2,17 +2,15 @@ package com.github.travelplannerapp.travels
 
 import android.content.Intent
 import android.os.Bundle
-import com.google.android.material.navigation.NavigationView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import android.view.View
 import com.google.android.material.snackbar.Snackbar
-import androidx.appcompat.app.ActionBarDrawerToggle
-import android.view.MenuItem
 import androidx.recyclerview.widget.RecyclerView
 import com.github.travelplannerapp.communication.ServerApi
 import com.github.travelplannerapp.jsondatamodels.ADD_TRAVEL_ANSWER
 import com.github.travelplannerapp.traveldetails.TravelDetailsActivity
+import com.github.travelplannerapp.utils.DrawerUtils
 
 import javax.inject.Inject
 
@@ -21,16 +19,17 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_travels.*
+import kotlinx.android.synthetic.main.fab_add.*
+import kotlinx.android.synthetic.main.toolbar.*
 import com.github.travelplannerapp.R
 import com.github.travelplannerapp.addtravel.AddTravelDialog
 import com.github.travelplannerapp.utils.SharedPreferencesUtils
 
-class TravelsActivity : AppCompatActivity(), TravelsContract.View, NavigationView.OnNavigationItemSelectedListener {
+class TravelsActivity : AppCompatActivity(), TravelsContract.View {
 
     @Inject
     lateinit var presenter: TravelsContract.Presenter
     private var myCompositeDisposable: CompositeDisposable? = null
-    private lateinit var toggle: ActionBarDrawerToggle
 
     override fun onCreate(savedInstanceState: Bundle?) {
         AndroidInjection.inject(this)
@@ -38,16 +37,12 @@ class TravelsActivity : AppCompatActivity(), TravelsContract.View, NavigationVie
         setContentView(R.layout.activity_travels)
         myCompositeDisposable = CompositeDisposable()
 
-        setSupportActionBar(toolbarTravels)
+        // Set up toolbar
+        setSupportActionBar(toolbar)
         supportActionBar?.setHomeButtonEnabled(true)
+        DrawerUtils.getDrawer(this, toolbar)
 
-        toggle = ActionBarDrawerToggle(this, drawerLayoutTravels, toolbarTravels, R.string.drawer_open, R.string.drawer_close)
-        drawerLayoutTravels.addDrawerListener(toggle)
-        toggle.syncState()
-
-        navigationViewTravels.setNavigationItemSelectedListener(this)
-
-        fabTravels.setOnClickListener {
+        fabAdd.setOnClickListener {
             showAddTravel()
         }
 
@@ -65,21 +60,12 @@ class TravelsActivity : AppCompatActivity(), TravelsContract.View, NavigationVie
         myCompositeDisposable?.clear()
     }
 
-    override fun onNavigationItemSelected(item: MenuItem): Boolean {
-        //TODO [Dorota] Showing snackbar is only temporary
-        when (item.itemId) {
-            R.id.menuMainSettings -> showSnackbar(getString(R.string.menu_settings))
-            R.id.menuMainSignOut -> showSnackbar(getString(R.string.menu_sign_out))
-        }
-        return true
-    }
-
     override fun showAddTravel() {
         val addTravelDialog = AddTravelDialog()
         addTravelDialog.onOk = {
             val sessionCredentials = SharedPreferencesUtils.getSessionCredentials(this)
             val travelName = addTravelDialog.travelName.text.toString()
-            presenter.addTravel(sessionCredentials.email, sessionCredentials.authToken, travelName)
+            presenter.addTravel(sessionCredentials.userId, sessionCredentials.authToken, travelName)
         }
         addTravelDialog.show(supportFragmentManager, addTravelDialog.TAG)
     }
@@ -116,7 +102,7 @@ class TravelsActivity : AppCompatActivity(), TravelsContract.View, NavigationVie
     override fun loadTravels(requestInterface: ServerApi, handleResponse: (myTravels: List<String>) -> Unit) {
         val sessionCredentials = SharedPreferencesUtils.getSessionCredentials(this)
 
-        myCompositeDisposable?.add(requestInterface.getTravels(sessionCredentials.email, sessionCredentials.authToken)
+        myCompositeDisposable?.add(requestInterface.getTravels(sessionCredentials.userId, sessionCredentials.authToken)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
                 .subscribe(handleResponse, { showSnackbar(resources.getString(R.string.server_connection_failure)) }))

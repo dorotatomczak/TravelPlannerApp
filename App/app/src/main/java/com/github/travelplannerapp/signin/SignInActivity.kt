@@ -1,5 +1,6 @@
 package com.github.travelplannerapp.signin
 
+import android.app.Activity
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -44,6 +45,18 @@ class SignInActivity : AppCompatActivity(), SignInContract.View {
         myCompositeDisposable.clear()
     }
 
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        when (requestCode) {
+            SignUpActivity.REQUEST_SIGN_UP -> {
+                if (resultCode == Activity.RESULT_OK && data != null) {
+                    val messageCode = data.getIntExtra(SignUpActivity.REQUEST_SIGN_UP_RESULT,
+                            R.string.try_again)
+                    showSnackbar(messageCode)
+                }
+            }
+        }
+    }
+
     override fun authorize(requestInterface: ServerApi, jsonLoginRequest: String,
                            handleLoginResponse: (jsonString: String) -> Unit) {
         myCompositeDisposable.add(requestInterface.authenticate(jsonLoginRequest)
@@ -54,15 +67,16 @@ class SignInActivity : AppCompatActivity(), SignInContract.View {
 
     override fun showSignUp() {
         val intent = Intent(this, SignUpActivity::class.java)
-        startActivity(intent)
+        startActivityForResult(intent, SignUpActivity.REQUEST_SIGN_UP)
     }
 
-    override fun signIn(authToken: String, email: String) {
+    override fun signIn(authToken: String, email: String, userId: Int) {
         val sharedPref = getSharedPreferences(resources.getString(R.string.auth_settings),
                 Context.MODE_PRIVATE)
         val editor = sharedPref.edit()
         editor.putString(resources.getString(R.string.auth_token_shared_pref), authToken)
         editor.putString(resources.getString(R.string.email_shared_pref), email)
+        editor.putInt(resources.getString(R.string.user_id_shared_pref), userId)
         editor.apply()
 
         val intent = Intent(this, TravelsActivity::class.java)

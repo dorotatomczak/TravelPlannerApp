@@ -12,10 +12,12 @@ import com.github.travelplannerapp.accommodation.AccommodationActivity
 import com.github.travelplannerapp.dayplans.DayPlansActivity
 import com.github.travelplannerapp.tickets.TicketsActivity
 import com.github.travelplannerapp.transport.TransportActivity
+import com.github.travelplannerapp.utils.DrawerUtils
 import dagger.android.AndroidInjection
 import javax.inject.Inject
 
 import kotlinx.android.synthetic.main.activity_travel_details.*
+import kotlinx.android.synthetic.main.toolbar.*
 
 class TravelDetailsActivity : AppCompatActivity(), TravelDetailsContract.View {
 
@@ -31,7 +33,9 @@ class TravelDetailsActivity : AppCompatActivity(), TravelDetailsContract.View {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_travel_details)
 
-        setSupportActionBar(toolbarTravelDetails)
+        setSupportActionBar(toolbar)
+        supportActionBar?.setHomeButtonEnabled(true)
+        DrawerUtils.getDrawer(this, toolbar)
 
         recyclerViewTravelDetails.setHasFixedSize(true)
         recyclerViewTravelDetails.layoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
@@ -44,7 +48,7 @@ class TravelDetailsActivity : AppCompatActivity(), TravelDetailsContract.View {
     }
 
     override fun setTitle(title: String) {
-        toolbarTravelDetails.title = title
+        toolbar.title = title
     }
 
     override fun showDayPlans() {
