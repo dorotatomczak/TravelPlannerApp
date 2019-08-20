@@ -10,6 +10,11 @@ import com.github.travelplannerapp.R
 import kotlinx.android.synthetic.main.dialog_add_travel.view.*
 
 class AddTravelDialog : DialogFragment() {
+
+    companion object {
+        const val TAG = "ADD TRAVEL DIALOG"
+    }
+
     lateinit var travelName: EditText
     var onOk: (() -> Unit)? = null
     var onCancel: (() -> Unit)? = null
@@ -17,7 +22,7 @@ class AddTravelDialog : DialogFragment() {
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val view = activity!!.layoutInflater.inflate(R.layout.dialog_add_travel, null)
 
-        travelName = view.editTextTravelName
+        travelName = view.editTextTravelNameAddTravel
 
         val builder = AlertDialog.Builder(context!!)
                 .setView(view)

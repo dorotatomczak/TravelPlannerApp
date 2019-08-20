@@ -35,10 +35,6 @@ class TravelsActivity : AppCompatActivity(), TravelsContract.View, NavigationVie
     private var myCompositeDisposable: CompositeDisposable? = null
     private lateinit var toggle: ActionBarDrawerToggle
 
-    companion object {
-        private const val TAG = "Add travel"
-    }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         AndroidInjection.inject(this)
         super.onCreate(savedInstanceState)
@@ -82,12 +78,12 @@ class TravelsActivity : AppCompatActivity(), TravelsContract.View, NavigationVie
     }
 
     override fun showAddTravel() {
-        val dialog = AddTravelDialog()
-        dialog.onOk = {
-            val travelName = dialog.travelName.text.toString()
+        val addTravelDialog = AddTravelDialog()
+        addTravelDialog.onOk = {
+            val travelName = addTravelDialog.travelName.text.toString()
             presenter.addTravel(sharedPrefs.getEmail()!!, sharedPrefs.getAccessToken()!!, travelName)
         }
-        dialog.show(supportFragmentManager, TAG)
+        addTravelDialog.show(supportFragmentManager, AddTravelDialog.TAG)
     }
 
     override fun showTravelDetails(travel: String) {
@@ -114,7 +110,6 @@ class TravelsActivity : AppCompatActivity(), TravelsContract.View, NavigationVie
 
     override fun showAddTravelResult(result: ADD_TRAVEL_ANSWER) {
         when (result) {
-            // TODO [Magda] refresh travels list
             ADD_TRAVEL_ANSWER.OK -> presenter.loadTravels()
             ADD_TRAVEL_ANSWER.ERROR -> showSnackbar(resources.getString(R.string.add_travel_error))
         }

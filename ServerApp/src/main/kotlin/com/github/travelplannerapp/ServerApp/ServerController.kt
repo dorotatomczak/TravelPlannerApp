@@ -6,9 +6,7 @@ import com.github.travelplannerapp.ServerApp.datamanagement.UserManagement
 import com.github.travelplannerapp.ServerApp.db.repositories.TravelRepository
 import com.github.travelplannerapp.ServerApp.db.repositories.UserRepository
 import com.github.travelplannerapp.ServerApp.db.repositories.UserTravelRepository
-import com.github.travelplannerapp.ServerApp.jsondatamodels.JsonAddTravelRequest
-import com.github.travelplannerapp.ServerApp.jsondatamodels.JsonLoginRequest
-import com.github.travelplannerapp.ServerApp.jsondatamodels.LOGIN_ANSWER
+import com.github.travelplannerapp.ServerApp.jsondatamodels.*
 import com.google.gson.Gson
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.web.bind.annotation.*
@@ -43,18 +41,6 @@ class ServerController {
         return listOf("Gdańsk", "Elbląg", "Toruń", "Olsztyn", "Szczecin")
     }
 
-    @GetMapping("/db")
-    fun getTravel(): String  {
-        val email = "jan.nowak@gmail.com"
-        val user = userRepository.getUserByEmail(email)
-        val travel = travelRepository.getAllTravelsByUserEmail(email)[0]
-        val user_travel = userTravelRepository.get(3)
-        return (user!!.email + " " + user.id + "\n" +
-                travel.name + " " + travel.id + "\n" +
-                " user id: " + user_travel!!.userId +
-                " travelid: " + user_travel.travelId)
-    }
-
     @PostMapping("/authenticate")
     fun authenticate(@RequestBody request: String): String {
         val loginRequest = Gson().fromJson(request, JsonLoginRequest::class.java)
@@ -81,8 +67,25 @@ class ServerController {
     @PostMapping("/addtravel")
     fun addTravel(@RequestBody request: String): String {
         val addTravelRequest = Gson().fromJson(request, JsonAddTravelRequest::class.java)
-        val jsonAddTravelAnswer = travelManagement.addTravel(addTravelRequest)
+        if (userManagement.verifyUser(addTravelRequest.email, addTravelRequest.auth)) {
+            val jsonAddTravelAnswer = travelManagement.addTravel(addTravelRequest)
 
-        return Gson().toJson(jsonAddTravelAnswer)
+            return Gson().toJson(jsonAddTravelAnswer)
+        }
+        return  Gson().toJson(JsonAddTravelAnswer(ADD_TRAVEL_RESULT.ERROR))
+    }
+
+    // For tests
+    // [Magda] quick database access functions testing
+    @GetMapping("/db")
+    fun getTravel(): String  {
+        val email = "jan.nowak@gmail.com"
+        val user = userRepository.getUserByEmail(email)
+        val travel = travelRepository.getAllTravelsByUserEmail(email)[0]
+        val user_travel = userTravelRepository.get(3)
+        return (user!!.email + " " + user.id + "\n" +
+                travel.name + " " + travel.id + "\n" +
+                " user id: " + user_travel!!.userId +
+                " travelid: " + user_travel.travelId)
     }
 }
