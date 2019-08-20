@@ -18,11 +18,9 @@ class TravelTransaction {
     @Autowired
     lateinit var userTravelRepository: UserTravelRepository
 
-    fun addTravel(travelName: String, email: String): Boolean {
+    fun addTravel(travelName: String, userId: Int): Boolean {
         DbConnection.conn.autoCommit = false
-
-        //TODO [Magda] app should store user id no need to look for it, it will be passed instead of email
-        val userId = findUserId(email)
+        
         val travelId = getNextTravelId()
         val queryResult = travelRepository.add(Travel(travelName, travelId))
         if (queryResult) {
@@ -41,9 +39,5 @@ class TravelTransaction {
 
     private fun getNextTravelId(): Int {
         return travelRepository.getNextId()
-    }
-
-    private fun findUserId(email: String): Int {
-        return userRepository.getUserByEmail(email)!!.id
     }
 }

@@ -34,9 +34,9 @@ class ServerController {
     }
 
     @GetMapping("/travels")
-    fun travels(@RequestParam(value = "email") email: String, @RequestParam(value = "auth") auth: String): List<String> {
-        if (userManagement.verifyUser(email, auth)) {
-            return travelRepository.getAllTravelsByUserEmail(email).map { travel -> travel.name }
+    fun travels(@RequestParam(value = "userId") userId: Int, @RequestParam(value = "auth") auth: String): List<String> {
+        if (userManagement.verifyUser(userId, auth)) {
+            return travelRepository.getAllTravelsByUserId(userId).map { travel -> travel.name }
         }
         return listOf("Gdańsk", "Elbląg", "Toruń", "Olsztyn", "Szczecin")
     }
@@ -67,7 +67,7 @@ class ServerController {
     @PostMapping("/addtravel")
     fun addTravel(@RequestBody request: String): String {
         val addTravelRequest = Gson().fromJson(request, JsonAddTravelRequest::class.java)
-        if (userManagement.verifyUser(addTravelRequest.email, addTravelRequest.auth)) {
+        if (userManagement.verifyUser(addTravelRequest.userId, addTravelRequest.auth)) {
             val jsonAddTravelAnswer = travelManagement.addTravel(addTravelRequest)
 
             return Gson().toJson(jsonAddTravelAnswer)

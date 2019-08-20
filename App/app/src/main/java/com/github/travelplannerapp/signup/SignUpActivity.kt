@@ -1,8 +1,8 @@
 package com.github.travelplannerapp.signup
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.View
 import com.github.travelplannerapp.R
 import com.github.travelplannerapp.communication.ServerApi
 import com.google.android.material.snackbar.Snackbar
@@ -18,6 +18,11 @@ class SignUpActivity : AppCompatActivity(), SignUpContract.View {
     @Inject
     lateinit var presenter: SignUpContract.Presenter
     var myCompositeDisposable = CompositeDisposable()
+
+    companion object {
+        const val REQUEST_SIGN_UP_RESULT = "REQUEST_SIGN_UP_RESULT"
+        const val REQUEST_SIGN_UP = 1
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         AndroidInjection.inject(this)
@@ -42,7 +47,7 @@ class SignUpActivity : AppCompatActivity(), SignUpContract.View {
         myCompositeDisposable.add(requestInterface.register(jsonLoginRequest)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
-                .subscribe(handleSignUpResponse, { showSnackbar(resources.getString(R.string.server_connection_failure), null) }))
+                .subscribe(handleSignUpResponse, { showSnackbar(R.string.server_connection_failure) }))
     }
 
     override fun showSignIn() {
@@ -50,19 +55,16 @@ class SignUpActivity : AppCompatActivity(), SignUpContract.View {
         finish()
     }
 
-    override fun signUp() {
-        showSnackbar(resources.getString(R.string.sign_up_successful),
-                View.OnClickListener {
-                    showSignIn()
-                })
+    override fun showSnackbar(messageCode: Int) {
+        Snackbar.make(linearLayoutSignUp, messageCode, Snackbar.LENGTH_LONG)
+                .setAction("OK", null).show()
     }
 
-    override fun showSnackbar(message: String, listener: View.OnClickListener?) {
-        Snackbar.make(linearLayoutSignUp, message, Snackbar.LENGTH_LONG)
-                .setAction("OK", listener).show()
-    }
-
-    override fun showSnackbar(id: Int, listener: View.OnClickListener?) {
-        showSnackbar(resources.getString(id), listener)
+    override fun returnResultAndFinish(messageCode: Int) {
+        val resultIntent = Intent().apply {
+            putExtra(REQUEST_SIGN_UP_RESULT, messageCode)
+        }
+        setResult(RESULT_OK, resultIntent)
+        finish()
     }
 }

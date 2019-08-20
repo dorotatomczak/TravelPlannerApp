@@ -8,18 +8,18 @@ import android.net.Uri
 import android.os.Bundle
 import android.os.Environment
 import android.provider.MediaStore
-import android.view.MenuItem
-import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
 import com.github.travelplannerapp.R
 import com.github.travelplannerapp.scanner.ScannerActivity
-import com.google.android.material.navigation.NavigationView
+import com.github.travelplannerapp.util.DrawerUtil
 import com.google.android.material.snackbar.Snackbar
 import dagger.android.AndroidInjection
 import kotlinx.android.synthetic.main.activity_tickets.*
+import kotlinx.android.synthetic.main.fab_add.*
+import kotlinx.android.synthetic.main.toolbar.*
 import java.io.File
 import java.io.IOException
 import java.text.SimpleDateFormat
@@ -27,7 +27,7 @@ import java.util.*
 
 import javax.inject.Inject
 
-class TicketsActivity : AppCompatActivity(), TicketsContract.View, NavigationView.OnNavigationItemSelectedListener {
+class TicketsActivity : AppCompatActivity(), TicketsContract.View {
 
     companion object {
         const val REQUEST_PERMISSIONS = 0
@@ -39,35 +39,25 @@ class TicketsActivity : AppCompatActivity(), TicketsContract.View, NavigationVie
 
     @Inject
     lateinit var presenter: TicketsContract.Presenter
-
-    private lateinit var toggle: ActionBarDrawerToggle
-
     private var photoPath: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         AndroidInjection.inject(this)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_tickets)
-        setSupportActionBar(toolbarTickets)
+
+        // Set up toolbar
+        setSupportActionBar(toolbar)
         supportActionBar?.setHomeButtonEnabled(true)
+        DrawerUtil.getDrawer(this, toolbar)
 
-        toggle = ActionBarDrawerToggle(this, drawerLayoutTickets, toolbarTickets, R.string.drawer_open, R.string.drawer_close)
-        drawerLayoutTickets.addDrawerListener(toggle)
-        toggle.syncState()
-
-        navigationViewTickets.setNavigationItemSelectedListener(this)
-
-        fabTickets.setOnClickListener {
+        fabAdd.setOnClickListener {
             presenter.onAddTravelClick()
         }
     }
 
-    override fun onNavigationItemSelected(item: MenuItem): Boolean {
-        //TODO [Dorota] Same as in travels, move to common file
-        return true
-    }
-
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
         when (requestCode) {
             REQUEST_TAKE_PHOTO -> {
                 if (resultCode == Activity.RESULT_OK) {

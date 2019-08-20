@@ -22,8 +22,8 @@ class UserManagement : IUserManagement {
     @Autowired
     lateinit var userRepository: UserRepository
 
-    override fun verifyUser(email: String, auth: String): Boolean {
-        val user = userRepository.getUserByEmail(email)
+    override fun verifyUser(userId: Int, auth: String): Boolean {
+        val user = userRepository.get(userId)
         return (user?.authToken!! == auth
                 && user.expirationDate!!.after(java.sql.Date.valueOf(LocalDate.now())))
     }
@@ -31,9 +31,9 @@ class UserManagement : IUserManagement {
     override fun authenticateUser(loginRequest: JsonLoginRequest): JsonLoginAnswer {
         val user = userRepository.getUserByEmail(loginRequest.email)
         if (user == null || user.password != loginRequest.password) {
-            return JsonLoginAnswer("", LOGIN_ANSWER.ERROR)
+            return JsonLoginAnswer("", -1, LOGIN_ANSWER.ERROR)
         }
-        return JsonLoginAnswer("", LOGIN_ANSWER.OK)
+        return JsonLoginAnswer("", user.id, LOGIN_ANSWER.OK)
     }
 
     override fun updateAuthorizationToken(loginRequest: JsonLoginRequest): String {
@@ -67,13 +67,13 @@ class UserManagement : IUserManagement {
     override fun addUser(loginRequest: JsonLoginRequest): JsonLoginAnswer {
         val user = userRepository.getUserByEmail(loginRequest.email)
         if (user != null) {
-            return JsonLoginAnswer("", LOGIN_ANSWER.ERROR)
+            return JsonLoginAnswer("", -1, LOGIN_ANSWER.ERROR)
         }
 
         val newUser = User(loginRequest.email, loginRequest.password)
         userRepository.add(newUser)
 
-        return JsonLoginAnswer("", LOGIN_ANSWER.OK)
+        return JsonLoginAnswer("", -1, LOGIN_ANSWER.OK)
     }
 
     // private function

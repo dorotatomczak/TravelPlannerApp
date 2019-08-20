@@ -1,4 +1,4 @@
-package com.github.travelplannerapp.utils
+package com.github.travelplannerapp.util
 
 class PasswordUtils {
 

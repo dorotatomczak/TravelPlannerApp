@@ -28,7 +28,7 @@ object CommunicationService {
 interface ServerApi {
 
     @GET("/travels")
-    fun getTravels(@Query("email") name: String, @Query("auth") auth: String): Observable<List<String>>
+    fun getTravels(@Query("userId") userId: Int, @Query("auth") auth: String): Observable<List<String>>
 
     @POST("/authenticate")
     fun authenticate(@Body jsonString: String): Observable<String>

@@ -3,7 +3,8 @@ package com.github.travelplannerapp.di
 import android.content.Context
 
 import com.github.travelplannerapp.App
-import com.github.travelplannerapp.utils.SharedPreferencesUtils
+import com.github.travelplannerapp.util.DrawerUtil
+import com.github.travelplannerapp.util.SharedPreferencesUtil
 
 import dagger.Module
 import dagger.Provides
@@ -17,15 +18,6 @@ class AppModule {
 
     @Provides
     @Singleton
-    internal fun provideContext(application: App): Context {
-        return application.applicationContext
-    }
+    internal fun provideContext(application: App): Context = application.applicationContext
 
-    @Module
-    companion object {
-        @JvmStatic
-        @Provides
-        fun provideSharedPreferencesUtils(context: Context): SharedPreferencesUtils =
-                SharedPreferencesUtils(context)
-    }
 }

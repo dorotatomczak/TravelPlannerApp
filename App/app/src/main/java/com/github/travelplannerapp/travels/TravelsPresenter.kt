@@ -1,6 +1,7 @@
 package com.github.travelplannerapp.travels
 
 import com.github.travelplannerapp.BasePresenter
+import com.github.travelplannerapp.R
 import com.github.travelplannerapp.communication.CommunicationService
 import com.github.travelplannerapp.jsondatamodels.JsonAddTravelAnswer
 import com.github.travelplannerapp.jsondatamodels.JsonAddTravelRequest
@@ -11,16 +12,12 @@ class TravelsPresenter(view: TravelsContract.View) : BasePresenter<TravelsContra
     private var travels = listOf<String>()
 
     override fun loadTravels() {
-        val requestInterface = CommunicationService.serverApi
-
-        view.loadTravels(requestInterface, this::handleResponse)
+        view.loadTravels(CommunicationService.serverApi, this::handleResponse)
     }
 
-    override fun addTravel(email: String, auth: String, travelName: String) {
-        val requestInterface = CommunicationService.serverApi
-        val requestBody = Gson().toJson(JsonAddTravelRequest(email, auth, travelName))
-
-        view.addTravel(requestInterface, requestBody, this::handleAddTravelResponse)
+    override fun addTravel(userId: Int, token: String, travelName: String) {
+        val requestBody = Gson().toJson(JsonAddTravelRequest(userId, token, travelName))
+        view.addTravel(CommunicationService.serverApi, requestBody, this::handleAddTravelResponse)
     }
 
     override fun onBindTravelsAtPosition(position: Int, itemView: TravelsContract.TravelItemView) {
