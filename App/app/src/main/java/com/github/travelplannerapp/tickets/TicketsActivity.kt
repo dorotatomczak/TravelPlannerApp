@@ -14,7 +14,7 @@ import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
 import com.github.travelplannerapp.R
 import com.github.travelplannerapp.scanner.ScannerActivity
-import com.github.travelplannerapp.util.DrawerUtil
+import com.github.travelplannerapp.utils.DrawerUtils
 import com.google.android.material.snackbar.Snackbar
 import dagger.android.AndroidInjection
 import kotlinx.android.synthetic.main.activity_tickets.*
@@ -49,7 +49,7 @@ class TicketsActivity : AppCompatActivity(), TicketsContract.View {
         // Set up toolbar
         setSupportActionBar(toolbar)
         supportActionBar?.setHomeButtonEnabled(true)
-        DrawerUtil.getDrawer(this, toolbar)
+        DrawerUtils.getDrawer(this, toolbar)
 
         fabAdd.setOnClickListener {
             presenter.onAddTravelClick()

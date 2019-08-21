@@ -1,6 +1,10 @@
 package com.github.travelplannerapp.communication
 
-import com.github.travelplannerapp.jsondatamodels.Travel
+import com.github.travelplannerapp.communication.model.AddTravelRequest
+import com.github.travelplannerapp.communication.model.SignInRequest
+import com.github.travelplannerapp.communication.model.SignInResponse
+import com.github.travelplannerapp.communication.model.SignUpRequest
+import com.github.travelplannerapp.communication.model.Travel
 import io.reactivex.Observable
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
@@ -26,10 +30,10 @@ object CommunicationService {
 interface ServerApi {
 
     @POST("/authenticate")
-    fun authenticate(@Body jsonString: String): Observable<String>
+    fun authenticate(@Body body: SignInRequest): Observable<SignInResponse>
 
     @POST("/register")
-    fun register(@Body jsonString: String): Observable<String>
+    fun register(@Body body: SignUpRequest): Observable<Void>
 
     @GET("/travels")
     fun getTravels(@Header("authorization") token: String, @Query("userId") userId: Int): Observable<List<Travel>>

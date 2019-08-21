@@ -1,11 +1,11 @@
-package com.github.travelplannerapp.util
+package com.github.travelplannerapp.utils
 
 import android.content.Context
 import android.content.SharedPreferences
 
-object SharedPreferencesUtil {
+object SharedPreferencesUtils {
 
-    private const val PREF_FILE_NAME = "PREF_FILE_NAME"
+    private const val PREF_FILE_NAME = "PREF_AUTH_SETTINGS"
     private const val PREF_KEY_ACCESS_TOKEN = "PREF_KEY_ACCESS_TOKEN"
     private const val PREF_KEY_USER_ID = "PREF_KEY_USER_ID"
     private const val PREF_KEY_EMAIL = "PREF_KEY_EMAIL"

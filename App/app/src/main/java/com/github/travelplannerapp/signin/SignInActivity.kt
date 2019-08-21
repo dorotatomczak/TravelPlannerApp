@@ -12,12 +12,9 @@ import com.github.travelplannerapp.signup.SignUpActivity
 import javax.inject.Inject
 
 import dagger.android.AndroidInjection
-import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
-import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_sign_in.*
-import com.github.travelplannerapp.communication.ServerApi
-import com.github.travelplannerapp.util.SharedPreferencesUtil
+import com.github.travelplannerapp.utils.SharedPreferencesUtils
 import com.google.android.material.snackbar.Snackbar
 
 
@@ -59,21 +56,13 @@ class SignInActivity : AppCompatActivity(), SignInContract.View {
         }
     }
 
-    override fun authorize(requestInterface: ServerApi, jsonLoginRequest: String,
-                           handleLoginResponse: (jsonString: String) -> Unit) {
-        myCompositeDisposable.add(requestInterface.authenticate(jsonLoginRequest)
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribeOn(Schedulers.io())
-                .subscribe(handleLoginResponse, { showSnackbar(resources.getString(R.string.server_connection_failure)) }))
-    }
-
     override fun showSignUp() {
         val intent = Intent(this, SignUpActivity::class.java)
         startActivityForResult(intent, SignUpActivity.REQUEST_SIGN_UP)
     }
 
-    override fun signIn(authSettings: SharedPreferencesUtil.AuthSettings) {
-        SharedPreferencesUtil.setAuthSettings(authSettings, this)
+    override fun signIn(authSettings: SharedPreferencesUtils.AuthSettings) {
+        SharedPreferencesUtils.setAuthSettings(authSettings, this)
 
         val intent = Intent(this, TravelsActivity::class.java)
         startActivity(intent)

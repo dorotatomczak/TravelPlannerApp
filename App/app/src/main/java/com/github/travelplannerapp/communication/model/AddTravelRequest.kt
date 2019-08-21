@@ -1,4 +1,4 @@
-package com.github.travelplannerapp.communication
+package com.github.travelplannerapp.communication.model
 
 data class AddTravelRequest (
         val userId: Int,

@@ -1,4 +1,4 @@
-package com.github.travelplannerapp.jsondatamodels
+package com.github.travelplannerapp.communication.model
 
 data class Travel (
         val id: Int,

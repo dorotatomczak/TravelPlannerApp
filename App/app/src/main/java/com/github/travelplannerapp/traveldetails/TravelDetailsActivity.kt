@@ -9,7 +9,7 @@ import com.github.travelplannerapp.accommodation.AccommodationActivity
 import com.github.travelplannerapp.dayplans.DayPlansActivity
 import com.github.travelplannerapp.tickets.TicketsActivity
 import com.github.travelplannerapp.transport.TransportActivity
-import com.github.travelplannerapp.util.DrawerUtil
+import com.github.travelplannerapp.utils.DrawerUtils
 import dagger.android.AndroidInjection
 import javax.inject.Inject
 
@@ -32,7 +32,7 @@ class TravelDetailsActivity : AppCompatActivity(), TravelDetailsContract.View {
 
         setSupportActionBar(toolbar)
         supportActionBar?.setHomeButtonEnabled(true)
-        DrawerUtil.getDrawer(this, toolbar)
+        DrawerUtils.getDrawer(this, toolbar)
 
         recyclerViewTravelDetails.setHasFixedSize(true)
         recyclerViewTravelDetails.layoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)

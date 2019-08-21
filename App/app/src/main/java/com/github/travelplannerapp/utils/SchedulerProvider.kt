@@ -1,4 +1,4 @@
-package com.github.travelplannerapp.util
+package com.github.travelplannerapp.utils
 
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.Scheduler

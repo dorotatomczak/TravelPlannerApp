@@ -1,4 +1,4 @@
-package com.github.travelplannerapp.util
+package com.github.travelplannerapp.utils
 
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem
 import com.mikepenz.materialdrawer.Drawer
@@ -10,9 +10,8 @@ import androidx.appcompat.widget.Toolbar
 import com.github.travelplannerapp.R
 import android.content.Intent
 import com.github.travelplannerapp.signin.SignInActivity
-import javax.inject.Inject
 
-object DrawerUtil {
+object DrawerUtils {
 
     fun getDrawer(activity: Activity, toolbar: Toolbar) {
 
@@ -49,7 +48,7 @@ object DrawerUtil {
         },
         SIGN_OUT(R.string.menu_sign_out, R.drawable.ic_sign_out) {
             override fun onClick(view: View) {
-                SharedPreferencesUtil.clear(view.context)
+                SharedPreferencesUtils.clear(view.context)
 
                 val intent = Intent(view.context, SignInActivity::class.java)
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)

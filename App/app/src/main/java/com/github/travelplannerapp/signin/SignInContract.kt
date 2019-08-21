@@ -1,14 +1,12 @@
 package com.github.travelplannerapp.signin
 
-import com.github.travelplannerapp.communication.ServerApi
-import com.github.travelplannerapp.util.SharedPreferencesUtil
+import com.github.travelplannerapp.utils.SharedPreferencesUtils
 
 
 interface SignInContract {
     interface View {
-        fun authorize(requestInterface: ServerApi, jsonLoginRequest: String, handleResponse: (jsonString: String) -> Unit)
         fun showSignUp()
-        fun signIn(authSettings: SharedPreferencesUtil.AuthSettings)
+        fun signIn(authSettings: SharedPreferencesUtils.AuthSettings)
         fun showSnackbar(message: String)
         fun showSnackbar(id: Int)
     }
@@ -16,6 +14,6 @@ interface SignInContract {
     interface Presenter {
         fun signIn(email: String, password: String)
         fun signUp()
-        fun handleLoginResponse(jsonString: String)
+        fun unsubscribe()
     }
 }

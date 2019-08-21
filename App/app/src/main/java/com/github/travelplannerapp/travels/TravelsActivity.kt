@@ -8,7 +8,7 @@ import android.view.View
 import com.google.android.material.snackbar.Snackbar
 import androidx.recyclerview.widget.RecyclerView
 import com.github.travelplannerapp.traveldetails.TravelDetailsActivity
-import com.github.travelplannerapp.util.DrawerUtil
+import com.github.travelplannerapp.utils.DrawerUtils
 
 import javax.inject.Inject
 
@@ -18,7 +18,7 @@ import kotlinx.android.synthetic.main.fab_add.*
 import kotlinx.android.synthetic.main.toolbar.*
 import com.github.travelplannerapp.R
 import com.github.travelplannerapp.addtravel.AddTravelDialog
-import com.github.travelplannerapp.util.SharedPreferencesUtil
+import com.github.travelplannerapp.utils.SharedPreferencesUtils
 
 class TravelsActivity : AppCompatActivity(), TravelsContract.View {
 
@@ -33,7 +33,7 @@ class TravelsActivity : AppCompatActivity(), TravelsContract.View {
         // Set up toolbar
         setSupportActionBar(toolbar)
         supportActionBar?.setHomeButtonEnabled(true)
-        DrawerUtil.getDrawer(this, toolbar)
+        DrawerUtils.getDrawer(this, toolbar)
 
         fabAdd.setOnClickListener {
             showAddTravel()
@@ -46,8 +46,8 @@ class TravelsActivity : AppCompatActivity(), TravelsContract.View {
     override fun onResume() {
         super.onResume()
         presenter.loadTravels(
-                SharedPreferencesUtil.getAccessToken(this)!!,
-                SharedPreferencesUtil.getUserId(this)
+                SharedPreferencesUtils.getAccessToken(this)!!,
+                SharedPreferencesUtils.getUserId(this)
         )
     }
 
@@ -61,8 +61,8 @@ class TravelsActivity : AppCompatActivity(), TravelsContract.View {
         addTravelDialog.onOk = {
             val travelName = addTravelDialog.travelName.text.toString()
             presenter.addTravel(
-                    SharedPreferencesUtil.getUserId(this),
-                    SharedPreferencesUtil.getAccessToken(this)!!,
+                    SharedPreferencesUtils.getUserId(this),
+                    SharedPreferencesUtils.getAccessToken(this)!!,
                     travelName
             )
         }

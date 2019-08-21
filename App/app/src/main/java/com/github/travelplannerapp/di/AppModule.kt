@@ -3,8 +3,6 @@ package com.github.travelplannerapp.di
 import android.content.Context
 
 import com.github.travelplannerapp.App
-import com.github.travelplannerapp.util.DrawerUtil
-import com.github.travelplannerapp.util.SharedPreferencesUtil
 
 import dagger.Module
 import dagger.Provides

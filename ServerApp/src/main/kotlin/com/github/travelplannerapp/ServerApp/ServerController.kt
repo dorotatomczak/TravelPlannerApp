@@ -36,26 +36,16 @@ class ServerController {
     }
 
     @PostMapping("/authenticate")
-    fun authenticate(@RequestBody request: String): String {
-        val loginRequest = Gson().fromJson(request, JsonLoginRequest::class.java)
+    fun authenticate(@RequestBody request: SignInRequest): SignInResponse {
+        val userId = userManagement.authenticateUser(request)
+        val authToken = userManagement.updateAuthorizationToken(request)
 
-        val jsonLoginAnswer = userManagement.authenticateUser(loginRequest)
-        if (jsonLoginAnswer.result != LOGIN_ANSWER.OK) {
-            return Gson().toJson(jsonLoginAnswer)
-        }
-
-        val authToken = userManagement.updateAuthorizationToken(loginRequest)
-        jsonLoginAnswer.authorizationToken = authToken
-
-        return Gson().toJson(jsonLoginAnswer)
+        return SignInResponse(authToken, userId)
     }
 
     @PostMapping("/register")
-    fun register(@RequestBody request: String): String {
-        val loginRequest = Gson().fromJson(request, JsonLoginRequest::class.java)
-        val jsonLoginAnswer = userManagement.addUser(loginRequest)
-
-        return Gson().toJson(jsonLoginAnswer)
+    fun register(@RequestBody request: SignUpRequest) {
+        userManagement.addUser(request)
     }
 
     @GetMapping("/travels")
@@ -63,7 +53,7 @@ class ServerController {
                 @RequestParam("userId") userId: Int): List<Travel> {
         if (userManagement.verifyUser(userId, token)) {
             return travelRepository.getAllTravelsByUserId(userId)
-        } else throw Exception(" Could not verify user")
+        } else throw Exception("Could not verify user")
     }
 
     @PostMapping("/addtravel")
@@ -71,7 +61,7 @@ class ServerController {
                   @RequestBody request: AddTravelRequest): Travel {
         if (userManagement.verifyUser(request.userId, token)) {
             return travelManagement.addTravel(request)
-        } else throw Exception(" Could not verify user")
+        } else throw Exception("Could not verify user")
     }
 
     // For tests
