@@ -2,27 +2,42 @@ package com.github.travelplannerapp.travels
 
 import com.github.travelplannerapp.BasePresenter
 import com.github.travelplannerapp.R
+import com.github.travelplannerapp.communication.AddTravelRequest
 import com.github.travelplannerapp.communication.CommunicationService
-import com.github.travelplannerapp.jsondatamodels.JsonAddTravelAnswer
-import com.github.travelplannerapp.jsondatamodels.JsonAddTravelRequest
-import com.google.gson.Gson
+import com.github.travelplannerapp.data.Travel
+import com.github.travelplannerapp.util.SchedulerProvider
+import io.reactivex.disposables.CompositeDisposable
 
 class TravelsPresenter(view: TravelsContract.View) : BasePresenter<TravelsContract.View>(view), TravelsContract.Presenter {
 
-    private var travels = listOf<String>()
+    private val compositeDisposable = CompositeDisposable()
+    private var travels = ArrayList<Travel>()
 
-    override fun loadTravels() {
-        view.loadTravels(CommunicationService.serverApi, this::handleResponse)
+    override fun loadTravels(token: String, userId: Int) {
+        compositeDisposable.add(CommunicationService.serverApi.getTravels(token, userId)
+                .observeOn(SchedulerProvider.ui())
+                .subscribeOn(SchedulerProvider.io())
+                .subscribe(
+                        { travels -> handleGetTravelsResponse(travels) },
+                        //TODO [Dorota] Display errors from server or server connection failure
+                        { view.showSnackbar(R.string.server_connection_failure) }
+                ))
     }
 
     override fun addTravel(userId: Int, token: String, travelName: String) {
-        val requestBody = Gson().toJson(JsonAddTravelRequest(userId, token, travelName))
-        view.addTravel(CommunicationService.serverApi, requestBody, this::handleAddTravelResponse)
+        compositeDisposable.add(CommunicationService.serverApi.addTravel(token, AddTravelRequest(userId, travelName))
+                .observeOn(SchedulerProvider.ui())
+                .subscribeOn(SchedulerProvider.io())
+                .subscribe(
+                        { travel -> handleAddTravelResponse(travel) },
+                        //TODO [Dorota] Display errors from server or server connection failure
+                        { view.showSnackbar(R.string.server_connection_failure) }
+                ))
     }
 
     override fun onBindTravelsAtPosition(position: Int, itemView: TravelsContract.TravelItemView) {
         val travel = travels[position]
-        itemView.setName(travel)
+        itemView.setName(travel.name)
     }
 
     override fun getTravelsCount(): Int {
@@ -31,21 +46,23 @@ class TravelsPresenter(view: TravelsContract.View) : BasePresenter<TravelsContra
 
     override fun openTravelDetails(position: Int) {
         val travel = travels[position]
-        view.showTravelDetails(travel)
+        view.showTravelDetails(travel.id)
     }
 
-    override fun handleResponse(myTravels: List<String>) {
+    override fun unsubscribe() {
+        compositeDisposable.clear()
+    }
+
+    private fun handleGetTravelsResponse(myTravels: List<Travel>) {
         travels = ArrayList(myTravels)
+        view.onDataSetChanged()
 
-        if (travels.isEmpty()) {
-            view.showNoTravels()
-        } else {
-            view.showTravels()
-        }
+        if (travels.isEmpty()) view.showNoTravels() else view.showTravels()
     }
 
-    override fun handleAddTravelResponse(jsonString: String) {
-        val response = Gson().fromJson(jsonString, JsonAddTravelAnswer::class.java)
-        view.showAddTravelResult(response.result)
+    private fun handleAddTravelResponse(travel: Travel) {
+        travels.add(travel)
+        view.onDataSetChanged()
     }
+
 }

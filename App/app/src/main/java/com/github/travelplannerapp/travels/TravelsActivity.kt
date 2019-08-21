@@ -7,17 +7,12 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import android.view.View
 import com.google.android.material.snackbar.Snackbar
 import androidx.recyclerview.widget.RecyclerView
-import com.github.travelplannerapp.communication.ServerApi
-import com.github.travelplannerapp.jsondatamodels.ADD_TRAVEL_ANSWER
 import com.github.travelplannerapp.traveldetails.TravelDetailsActivity
 import com.github.travelplannerapp.util.DrawerUtil
 
 import javax.inject.Inject
 
 import dagger.android.AndroidInjection
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.disposables.CompositeDisposable
-import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_travels.*
 import kotlinx.android.synthetic.main.fab_add.*
 import kotlinx.android.synthetic.main.toolbar.*
@@ -30,13 +25,10 @@ class TravelsActivity : AppCompatActivity(), TravelsContract.View {
     @Inject
     lateinit var presenter: TravelsContract.Presenter
 
-    private var myCompositeDisposable: CompositeDisposable? = null
-
     override fun onCreate(savedInstanceState: Bundle?) {
         AndroidInjection.inject(this)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_travels)
-        myCompositeDisposable = CompositeDisposable()
 
         // Set up toolbar
         setSupportActionBar(toolbar)
@@ -53,12 +45,15 @@ class TravelsActivity : AppCompatActivity(), TravelsContract.View {
 
     override fun onResume() {
         super.onResume()
-        presenter.loadTravels()
+        presenter.loadTravels(
+                SharedPreferencesUtil.getAccessToken(this)!!,
+                SharedPreferencesUtil.getUserId(this)
+        )
     }
 
     override fun onDestroy() {
         super.onDestroy()
-        myCompositeDisposable?.clear()
+        presenter.unsubscribe()
     }
 
     override fun showAddTravel() {
@@ -74,9 +69,9 @@ class TravelsActivity : AppCompatActivity(), TravelsContract.View {
         addTravelDialog.show(supportFragmentManager, AddTravelDialog.TAG)
     }
 
-    override fun showTravelDetails(travel: String) {
+    override fun showTravelDetails(travelId: Int) {
         val intent = Intent(this, TravelDetailsActivity::class.java)
-        intent.putExtra(TravelDetailsActivity.EXTRA_TRAVEL_ID, travel)
+        intent.putExtra(TravelDetailsActivity.EXTRA_TRAVEL_ID, travelId)
         startActivity(intent)
     }
 
@@ -88,34 +83,18 @@ class TravelsActivity : AppCompatActivity(), TravelsContract.View {
     override fun showTravels() {
         textViewNoTravels.visibility = View.GONE
         recyclerViewTravels.visibility = View.VISIBLE
-        recyclerViewTravels.adapter?.notifyDataSetChanged()
     }
 
     override fun showSnackbar(messageCode: Int) {
-        Snackbar.make(coordinatorLayoutTravels, getString(messageCode), Snackbar.LENGTH_SHORT)
-                .setAction("Action", null).show()
+        Snackbar.make(coordinatorLayoutTravels, getString(messageCode), Snackbar.LENGTH_LONG).show()
     }
 
-    override fun showAddTravelResult(result: ADD_TRAVEL_ANSWER) {
-        when (result) {
-            ADD_TRAVEL_ANSWER.OK -> presenter.loadTravels()
-            ADD_TRAVEL_ANSWER.ERROR -> showSnackbar(R.string.add_travel_error)
-        }
+    override fun showSnackbar(message: String) {
+        Snackbar.make(coordinatorLayoutTravels, message, Snackbar.LENGTH_LONG).show()
     }
 
-    override fun loadTravels(requestInterface: ServerApi, handleResponse: (myTravels: List<String>) -> Unit) {
-
-        myCompositeDisposable?.add(requestInterface.getTravels(SharedPreferencesUtil.getUserId(this), SharedPreferencesUtil.getAccessToken(this)!!)
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribeOn(Schedulers.io())
-                .subscribe(handleResponse, { showSnackbar(R.string.server_connection_failure) }))
+    override fun onDataSetChanged() {
+        recyclerViewTravels.adapter?.notifyDataSetChanged()
     }
 
-    override fun addTravel(requestInterface: ServerApi, jsonAddTravelRequest: String,
-                           handleAddTravelResponse: (jsonString: String) -> Unit) {
-        myCompositeDisposable?.add(requestInterface.addTravel(jsonAddTravelRequest)
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribeOn(Schedulers.io())
-                .subscribe(handleAddTravelResponse, { showSnackbar(R.string.server_connection_failure) }))
-    }
 }

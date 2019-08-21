@@ -1,19 +1,15 @@
 package com.github.travelplannerapp.travels
 
-import com.github.travelplannerapp.communication.ServerApi
-import com.github.travelplannerapp.jsondatamodels.ADD_TRAVEL_ANSWER
 
 interface TravelsContract {
     interface View {
         fun showAddTravel()
-        //TODO [Dorota] Change to int (travel id) after database is implemented
-        fun showTravelDetails(travel: String)
+        fun showTravelDetails(travelId: Int)
         fun showTravels()
         fun showNoTravels()
         fun showSnackbar(messageCode: Int)
-        fun loadTravels(requestInterface: ServerApi, handleResponse: (myTravels: List<String>) -> Unit)
-        fun addTravel(requestInterface: ServerApi, jsonAddTravelRequest: String, handleAddTravelResponse: (jsonString: String) -> Unit)
-        fun showAddTravelResult(result: ADD_TRAVEL_ANSWER)
+        fun showSnackbar(message: String)
+        fun onDataSetChanged()
     }
 
     interface TravelItemView {
@@ -21,12 +17,11 @@ interface TravelsContract {
     }
 
     interface Presenter {
-        fun loadTravels()
+        fun loadTravels(token: String, userId: Int)
         fun addTravel(userId: Int, token: String, travelName: String)
         fun getTravelsCount(): Int
         fun onBindTravelsAtPosition(position: Int, itemView: TravelItemView)
         fun openTravelDetails(position: Int)
-        fun handleResponse(myTravels: List<String>)
-        fun handleAddTravelResponse(jsonString: String)
+        fun unsubscribe()
     }
 }

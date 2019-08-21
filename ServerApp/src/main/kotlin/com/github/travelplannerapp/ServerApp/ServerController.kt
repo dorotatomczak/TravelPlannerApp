@@ -3,6 +3,7 @@ package com.github.travelplannerapp.ServerApp
 import com.github.travelplannerapp.ServerApp.HereCharger.HereLoader
 import com.github.travelplannerapp.ServerApp.datamanagement.TravelManagement
 import com.github.travelplannerapp.ServerApp.datamanagement.UserManagement
+import com.github.travelplannerapp.ServerApp.db.dao.Travel
 import com.github.travelplannerapp.ServerApp.db.repositories.TravelRepository
 import com.github.travelplannerapp.ServerApp.db.repositories.UserRepository
 import com.github.travelplannerapp.ServerApp.db.repositories.UserTravelRepository
@@ -10,6 +11,7 @@ import com.github.travelplannerapp.ServerApp.jsondatamodels.*
 import com.google.gson.Gson
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.web.bind.annotation.*
+import java.lang.Exception
 
 @RestController
 class ServerController {
@@ -27,18 +29,10 @@ class ServerController {
 
     @GetMapping("/here")
     fun getExampleDataFromHere() {
-        val connector = HereLoader()
-        connector.findPlaceByText("chrysler", "40.74917", "-73.98529")
-        connector.findBestWay("40.74917", "-73.98529", "45.74917",
+        val hereLoader = HereLoader()
+        hereLoader.findPlaceByText("chrysler", "40.74917", "-73.98529")
+        hereLoader.findBestWay("40.74917", "-73.98529", "45.74917",
                 "-72.98529", "fastest", "car", "disabled")
-    }
-
-    @GetMapping("/travels")
-    fun travels(@RequestParam(value = "userId") userId: Int, @RequestParam(value = "auth") auth: String): List<String> {
-        if (userManagement.verifyUser(userId, auth)) {
-            return travelRepository.getAllTravelsByUserId(userId).map { travel -> travel.name }
-        }
-        return listOf("Gdańsk", "Elbląg", "Toruń", "Olsztyn", "Szczecin")
     }
 
     @PostMapping("/authenticate")
@@ -64,15 +58,20 @@ class ServerController {
         return Gson().toJson(jsonLoginAnswer)
     }
 
-    @PostMapping("/addtravel")
-    fun addTravel(@RequestBody request: String): String {
-        val addTravelRequest = Gson().fromJson(request, JsonAddTravelRequest::class.java)
-        if (userManagement.verifyUser(addTravelRequest.userId, addTravelRequest.auth)) {
-            val jsonAddTravelAnswer = travelManagement.addTravel(addTravelRequest)
+    @GetMapping("/travels")
+    fun travels(@RequestHeader("authorization") token: String,
+                @RequestParam("userId") userId: Int): List<Travel> {
+        if (userManagement.verifyUser(userId, token)) {
+            return travelRepository.getAllTravelsByUserId(userId)
+        } else throw Exception(" Could not verify user")
+    }
 
-            return Gson().toJson(jsonAddTravelAnswer)
-        }
-        return  Gson().toJson(JsonAddTravelAnswer(ADD_TRAVEL_RESULT.ERROR))
+    @PostMapping("/addtravel")
+    fun addTravel(@RequestHeader("authorization") token: String,
+                  @RequestBody request: AddTravelRequest): Travel {
+        if (userManagement.verifyUser(request.userId, token)) {
+            return travelManagement.addTravel(request)
+        } else throw Exception(" Could not verify user")
     }
 
     // For tests

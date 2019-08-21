@@ -7,7 +7,7 @@ import dagger.Provides
 class TravelDetailsModule {
     @Provides
     internal fun provideTravelsPresenter(travelDetailsActivity: TravelDetailsActivity, travelDetailsView: TravelDetailsContract.View): TravelDetailsContract.Presenter {
-        val travelId = travelDetailsActivity.intent.getStringExtra(TravelDetailsActivity.EXTRA_TRAVEL_ID)
+        val travelId = travelDetailsActivity.intent.getIntExtra(TravelDetailsActivity.EXTRA_TRAVEL_ID, -1)
         return TravelDetailsPresenter(travelId, travelDetailsView)
     }
 }

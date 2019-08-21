@@ -125,8 +125,7 @@ class TicketsActivity : AppCompatActivity(), TicketsContract.View {
     }
 
     private fun showSnackbar(messageCode: Int) {
-        Snackbar.make(coordinatorLayoutTickets, getString(messageCode), Snackbar.LENGTH_SHORT)
-                .setAction("Action", null).show()
+        Snackbar.make(coordinatorLayoutTickets, getString(messageCode), Snackbar.LENGTH_SHORT).show()
     }
 
     @Throws(IOException::class)

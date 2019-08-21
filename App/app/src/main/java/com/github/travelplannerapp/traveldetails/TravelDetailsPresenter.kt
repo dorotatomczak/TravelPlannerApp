@@ -2,10 +2,11 @@ package com.github.travelplannerapp.traveldetails
 
 import com.github.travelplannerapp.BasePresenter
 
-class TravelDetailsPresenter (private var travelId: String, view: TravelDetailsContract.View): BasePresenter<TravelDetailsContract.View>(view), TravelDetailsContract.Presenter {
+class TravelDetailsPresenter (private var travelId: Int, view: TravelDetailsContract.View): BasePresenter<TravelDetailsContract.View>(view), TravelDetailsContract.Presenter {
 
     override fun loadTravel() {
-        view.setTitle(travelId)
+        //TODO [Dorota] load travel and set travel name
+        view.setTitle(travelId.toString())
     }
 
     override fun openCategory(category: Category.CategoryType) {

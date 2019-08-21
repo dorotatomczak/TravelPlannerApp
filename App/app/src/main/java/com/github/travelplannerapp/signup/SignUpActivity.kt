@@ -56,8 +56,7 @@ class SignUpActivity : AppCompatActivity(), SignUpContract.View {
     }
 
     override fun showSnackbar(messageCode: Int) {
-        Snackbar.make(linearLayoutSignUp, messageCode, Snackbar.LENGTH_LONG)
-                .setAction("OK", null).show()
+        Snackbar.make(linearLayoutSignUp, messageCode, Snackbar.LENGTH_LONG).show()
     }
 
     override fun returnResultAndFinish(messageCode: Int) {

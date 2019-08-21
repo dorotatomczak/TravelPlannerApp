@@ -80,8 +80,7 @@ class SignInActivity : AppCompatActivity(), SignInContract.View {
     }
 
     override fun showSnackbar(message: String) {
-        Snackbar.make(linearLayoutSignIn, message, Snackbar.LENGTH_LONG)
-                .setAction("OK", null).show()
+        Snackbar.make(linearLayoutSignIn, message, Snackbar.LENGTH_LONG).show()
     }
 
     override fun showSnackbar(id: Int) {
