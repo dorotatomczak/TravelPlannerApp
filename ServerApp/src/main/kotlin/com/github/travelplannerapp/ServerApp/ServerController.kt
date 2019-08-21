@@ -35,6 +35,12 @@ class ServerController {
                 "-72.98529", "fastest", "car", "disabled")
     }
 
+    @PostMapping("/authorize")
+    fun authorize(@RequestHeader("authorization") token: String,
+                  @RequestBody userId: Int){
+        userManagement.verifyUser(userId, token)
+    }
+
     @PostMapping("/authenticate")
     fun authenticate(@RequestBody request: SignInRequest): SignInResponse {
         val userId = userManagement.authenticateUser(request)
@@ -51,17 +57,15 @@ class ServerController {
     @GetMapping("/travels")
     fun travels(@RequestHeader("authorization") token: String,
                 @RequestParam("userId") userId: Int): List<Travel> {
-        if (userManagement.verifyUser(userId, token)) {
-            return travelRepository.getAllTravelsByUserId(userId)
-        } else throw Exception("Could not verify user")
+        userManagement.verifyUser(userId, token)
+        return travelRepository.getAllTravelsByUserId(userId)
     }
 
     @PostMapping("/addtravel")
     fun addTravel(@RequestHeader("authorization") token: String,
                   @RequestBody request: AddTravelRequest): Travel {
-        if (userManagement.verifyUser(request.userId, token)) {
-            return travelManagement.addTravel(request)
-        } else throw Exception("Could not verify user")
+        userManagement.verifyUser(request.userId, token)
+        return travelManagement.addTravel(request)
     }
 
     // For tests

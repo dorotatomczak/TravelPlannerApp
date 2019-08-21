@@ -19,10 +19,12 @@ class UserManagement : IUserManagement {
     @Autowired
     lateinit var userRepository: UserRepository
 
-    override fun verifyUser(userId: Int, auth: String): Boolean {
+    override fun verifyUser(userId: Int, auth: String) {
         val user = userRepository.get(userId)
-        return (user?.authToken!! == auth
-                && user.expirationDate!!.after(java.sql.Date.valueOf(LocalDate.now())))
+        if (user?.authToken!! != auth
+                && user.expirationDate!!.before(java.sql.Date.valueOf(LocalDate.now()))){
+            throw Exception("Token expired")
+        }
     }
 
     override fun authenticateUser(request: SignInRequest): Int {

@@ -9,5 +9,6 @@ interface LauncherContract {
     }
     interface Presenter {
         fun redirect(authSettings: SharedPreferencesUtils.AuthSettings)
+        fun unsubscribe()
     }
 }

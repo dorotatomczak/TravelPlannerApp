@@ -29,6 +29,9 @@ object CommunicationService {
 
 interface ServerApi {
 
+    @POST("authorize")
+    fun authorize(@Header("authorization") token: String, @Body userId: Int): Observable<Void>
+
     @POST("/authenticate")
     fun authenticate(@Body body: SignInRequest): Observable<SignInResponse>
 
