@@ -1,6 +1,6 @@
 package com.github.travelplannerapp.communication
 
-import com.github.travelplannerapp.data.Travel
+import com.github.travelplannerapp.jsondatamodels.Travel
 import io.reactivex.Observable
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory

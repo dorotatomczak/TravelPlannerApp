@@ -4,7 +4,7 @@ import com.github.travelplannerapp.BasePresenter
 import com.github.travelplannerapp.R
 import com.github.travelplannerapp.communication.AddTravelRequest
 import com.github.travelplannerapp.communication.CommunicationService
-import com.github.travelplannerapp.data.Travel
+import com.github.travelplannerapp.jsondatamodels.Travel
 import com.github.travelplannerapp.util.SchedulerProvider
 import io.reactivex.disposables.CompositeDisposable
 

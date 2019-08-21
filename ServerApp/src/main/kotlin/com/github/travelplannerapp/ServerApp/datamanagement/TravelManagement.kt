@@ -1,12 +1,8 @@
 package com.github.travelplannerapp.ServerApp.datamanagement
 
 import com.github.travelplannerapp.ServerApp.db.dao.Travel
-import com.github.travelplannerapp.ServerApp.db.repositories.TravelRepository
 import com.github.travelplannerapp.ServerApp.db.transactions.TravelTransaction
-import com.github.travelplannerapp.ServerApp.jsondatamodels.ADD_TRAVEL_RESULT
 import com.github.travelplannerapp.ServerApp.jsondatamodels.AddTravelRequest
-import com.github.travelplannerapp.ServerApp.jsondatamodels.JsonAddTravelAnswer
-import com.github.travelplannerapp.ServerApp.jsondatamodels.JsonAddTravelRequest
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component
 
