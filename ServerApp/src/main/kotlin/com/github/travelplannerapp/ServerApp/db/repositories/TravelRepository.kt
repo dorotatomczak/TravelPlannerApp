@@ -7,9 +7,10 @@ import org.springframework.stereotype.Component
 @Component
 class TravelRepository : ITravelRepository {
     companion object {
-        private const val insertStatement = "INSERT INTO travel (id, name) VALUES (?, ?) "
+        private const val insertStatement = "INSERT INTO travel "
         private const val selectStatement = "SELECT * FROM travel "
         private const val deleteStatement = "DELETE FROM travel "
+        private const val updateStatement = "UPDATE travel "
     }
 
     override fun getAllTravelsByUserId(id: Int): MutableList<Travel> {
@@ -76,8 +77,8 @@ class TravelRepository : ITravelRepository {
     override fun add(obj: Travel): Boolean {
         val statement = DbConnection
                 .conn
-                .prepareStatement(insertStatement)
-        statement.setInt(1, obj.id)
+                .prepareStatement(insertStatement + "(id, name) VALUES (?, ?)")
+        statement.setInt(1, obj.id!!)
         statement.setString(2, obj.name)
         return statement.executeUpdate() > 0
     }
@@ -94,6 +95,16 @@ class TravelRepository : ITravelRepository {
         val statement = DbConnection
                 .conn
                 .prepareStatement(deleteStatement)
+        return statement.executeUpdate() > 0
+    }
+
+    //TODO[MAGDA] override
+    fun update(obj: Travel): Boolean {
+        val statement = DbConnection
+                .conn
+                .prepareStatement(updateStatement + "SET name = ? WHERE id = ?")
+        statement.setString(1, obj.name)
+        statement.setInt(2, obj.id!!)
         return statement.executeUpdate() > 0
     }
 

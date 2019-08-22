@@ -3,6 +3,7 @@ package com.github.travelplannerapp.ServerApp
 import com.github.travelplannerapp.ServerApp.HereCharger.HereLoader
 import com.github.travelplannerapp.ServerApp.datamanagement.TravelManagement
 import com.github.travelplannerapp.ServerApp.datamanagement.UserManagement
+import com.github.travelplannerapp.ServerApp.db.dao.Travel
 import com.github.travelplannerapp.ServerApp.db.repositories.TravelRepository
 import com.github.travelplannerapp.ServerApp.db.repositories.UserRepository
 import com.github.travelplannerapp.ServerApp.db.repositories.UserTravelRepository
@@ -36,7 +37,7 @@ class ServerController {
     @GetMapping("/travels")
     fun travels(@RequestParam(value = "userId") userId: Int, @RequestParam(value = "auth") auth: String): List<String> {
         if (userManagement.verifyUser(userId, auth)) {
-            return travelRepository.getAllTravelsByUserId(userId).map { travel -> travel.name }
+            return travelRepository.getAllTravelsByUserId(userId).map { travel -> travel.name!! }
         }
         return listOf("Gdańsk", "Elbląg", "Toruń", "Olsztyn", "Szczecin")
     }
@@ -78,14 +79,8 @@ class ServerController {
     // For tests
     // [Magda] quick database access functions testing
     @GetMapping("/db")
-    fun getTravel(): String  {
-        val email = "jan.nowak@gmail.com"
-        val user = userRepository.getUserByEmail(email)
-        val travel = travelRepository.getAllTravelsByUserEmail(email)[0]
-        val user_travel = userTravelRepository.get(3)
-        return (user!!.email + " " + user.id + "\n" +
-                travel.name + " " + travel.id + "\n" +
-                " user id: " + user_travel!!.userId +
-                " travelid: " + user_travel.travelId)
+    fun getTravel(): Travel? {
+        travelManagement.updateTravel(3, mutableMapOf("name" to "magic"))
+        return travelRepository.get(3)
     }
 }

@@ -2,11 +2,24 @@ package com.github.travelplannerapp.ServerApp.db.dao
 
 import java.sql.ResultSet
 
-class Travel(var id: Int,
-             var name: String) {
+class Travel(map: MutableMap<String, Any?>) {
+    private val defaultMap = map.withDefault { null }
+
+    var id: Int? by defaultMap
+    var name: String? by defaultMap
+
+    constructor(id: Int?, name: String?) :
+            this(
+                    mutableMapOf(
+                            "id" to id,
+                            "name" to name)
+            )
+
     constructor(result: ResultSet) :
             this(
-                    result.getInt("id"),
-                    result.getString("name")
+                    mutableMapOf(
+                            "id" to result.getInt("id"),
+                            "name" to result.getString("name")
+                    )
             )
 }
