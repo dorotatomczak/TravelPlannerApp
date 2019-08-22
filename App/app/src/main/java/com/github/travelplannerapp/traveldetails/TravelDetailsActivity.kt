@@ -23,6 +23,7 @@ class TravelDetailsActivity : AppCompatActivity(), TravelDetailsContract.View {
 
     companion object {
         const val EXTRA_TRAVEL_ID = "EXTRA_TRAVEL_ID"
+        const val EXTRA_TRAVEL_NAME = "EXTRA_TRAVEL_NAME"
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

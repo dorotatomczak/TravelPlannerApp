@@ -4,7 +4,7 @@ package com.github.travelplannerapp.travels
 interface TravelsContract {
     interface View {
         fun showAddTravel()
-        fun showTravelDetails(travelId: Int)
+        fun showTravelDetails(travelId: Int, travelName: String)
         fun showTravels()
         fun showNoTravels()
         fun showSnackbar(messageCode: Int)
