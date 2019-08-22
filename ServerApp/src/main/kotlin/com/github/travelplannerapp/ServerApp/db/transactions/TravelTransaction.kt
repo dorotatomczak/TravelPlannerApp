@@ -4,7 +4,6 @@ import com.github.travelplannerapp.ServerApp.db.DbConnection
 import com.github.travelplannerapp.ServerApp.db.dao.Travel
 import com.github.travelplannerapp.ServerApp.db.dao.UserTravel
 import com.github.travelplannerapp.ServerApp.db.repositories.TravelRepository
-import com.github.travelplannerapp.ServerApp.db.repositories.UserRepository
 import com.github.travelplannerapp.ServerApp.db.repositories.UserTravelRepository
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component
@@ -14,17 +13,16 @@ class TravelTransaction {
     @Autowired
     lateinit var travelRepository: TravelRepository
     @Autowired
-    lateinit var userRepository: UserRepository
-    @Autowired
     lateinit var userTravelRepository: UserTravelRepository
 
     fun addTravel(travelName: String, userId: Int): Boolean {
         DbConnection.conn.autoCommit = false
-        
-        val travelId = getNextTravelId()
-        val queryResult = travelRepository.add(Travel(travelName, travelId))
+
+        val travelId = travelRepository.getNextId()
+        val queryResult = travelRepository.add(Travel( travelId, travelName))
         if (queryResult) {
-            userTravelRepository.add(UserTravel(userId,travelId))
+            val userTravelId = userTravelRepository.getNextId()
+            userTravelRepository.add(UserTravel(userTravelId, userId, travelId))
             DbConnection.conn.autoCommit = false
         } else {
             DbConnection.conn.rollback()
@@ -35,9 +33,5 @@ class TravelTransaction {
 
         DbConnection.conn.autoCommit = true
         return true
-    }
-
-    private fun getNextTravelId(): Int {
-        return travelRepository.getNextId()
     }
 }

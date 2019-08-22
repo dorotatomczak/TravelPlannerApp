@@ -5,8 +5,9 @@ interface IRepository<T> {
     fun getAll(): MutableList<T>
 
     fun add(obj: T): Boolean
-    fun add(objs: MutableList<T>)
 
     fun delete(id: Int): Boolean
     fun deleteAll(): Boolean
+
+    fun getNextId(): Int
 }

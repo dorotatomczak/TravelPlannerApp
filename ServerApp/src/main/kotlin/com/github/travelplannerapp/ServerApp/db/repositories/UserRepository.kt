@@ -9,8 +9,8 @@ import java.sql.Timestamp
 @Component
 class UserRepository : IUserRepository {
     companion object {
-        private const val insertStatement = "INSERT INTO app_user (email,password,authToken,expirationDate) " +
-                "VALUES (?,?,?,?) "
+        private const val insertStatement = "INSERT INTO app_user (id, email,password,authToken,expirationDate) " +
+                "VALUES (?,?,?,?,?) "
         private const val selectStatement = "SELECT * FROM app_user "
         private const val deleteStatement = "DELETE FROM app_user "
         private const val updateStatement = "UPDATE app_user "
@@ -56,26 +56,12 @@ class UserRepository : IUserRepository {
         val statement = DbConnection
                 .conn
                 .prepareStatement(insertStatement)
-        statement.setString(1, obj.email)
-        statement.setString(2, obj.password)
-        statement.setString(3, obj.authToken)
-        statement.setTimestamp(4, obj.expirationDate)
+        statement.setInt(1,obj.id)
+        statement.setString(2, obj.email)
+        statement.setString(3, obj.password)
+        statement.setString(4, obj.authToken)
+        statement.setTimestamp(5, obj.expirationDate)
         return statement.executeUpdate() > 0
-    }
-
-    override fun add(objs: MutableList<User>) {
-        val statement = DbConnection
-                .conn
-                .prepareStatement(insertStatement)
-        objs.iterator().forEach { obj ->
-            run {
-                statement.setString(1, obj.email)
-                statement.setString(2, obj.password)
-                statement.setString(3, obj.authToken)
-                statement.setTimestamp(4, obj.expirationDate)
-                statement.executeUpdate()
-            }
-        }
     }
 
     override fun updateUserAuthByEmail(email: String, authToken: String, expirationDate: Timestamp): Boolean {
@@ -106,5 +92,15 @@ class UserRepository : IUserRepository {
                 .conn
                 .prepareStatement(deleteStatement)
         return statement.executeUpdate() > 0
+    }
+
+    override fun getNextId(): Int {
+        val statement = DbConnection.conn
+                .prepareStatement(
+                        "SELECT nextval(pg_get_serial_sequence('app_user', 'id')) AS new_id;"
+                )
+        val result = statement.executeQuery()
+        result.next()
+        return result.getInt("new_id")
     }
 }

@@ -7,8 +7,7 @@ import org.springframework.stereotype.Component
 @Component
 class TravelRepository : ITravelRepository {
     companion object {
-        private const val insertStatementWithId = "INSERT INTO travel (id, name) VALUES (?, ?) "
-        private const val insertStatement = "INSERT INTO travel (name) VALUES (?) "
+        private const val insertStatement = "INSERT INTO travel (id, name) VALUES (?, ?) "
         private const val selectStatement = "SELECT * FROM travel "
         private const val deleteStatement = "DELETE FROM travel "
     }
@@ -77,23 +76,10 @@ class TravelRepository : ITravelRepository {
     override fun add(obj: Travel): Boolean {
         val statement = DbConnection
                 .conn
-                .prepareStatement(insertStatementWithId)
+                .prepareStatement(insertStatement)
         statement.setInt(1, obj.id)
         statement.setString(2, obj.name)
         return statement.executeUpdate() > 0
-    }
-
-    override fun add(objs: MutableList<Travel>) {
-        val statement = DbConnection
-                .conn
-                .prepareStatement(insertStatement)
-        objs.iterator()
-                .forEach { obj ->
-                    run {
-                        statement.setString(1, obj.name)
-                        statement.executeUpdate()
-                    }
-                }
     }
 
     override fun delete(id: Int): Boolean {
@@ -114,13 +100,10 @@ class TravelRepository : ITravelRepository {
     override fun getNextId(): Int {
         val statement = DbConnection.conn
                 .prepareStatement(
-                        "SELECT nextval(pg_get_serial_sequence('app_user', 'id')) AS new_id;"
+                        "SELECT nextval(pg_get_serial_sequence('travel', 'id')) AS new_id;"
                 )
         val result = statement.executeQuery()
-        var id = -1
-        while (result.next()) {
-            id = result.getInt(1)
-        }
-        return id
+        result.next()
+        return result.getInt("new_id")
     }
 }
