@@ -9,7 +9,7 @@ class User(
         var email: String,
         var password: String,
         var authToken: String? = null,
-        val expirationDate: Timestamp? = null
+        var expirationDate: Timestamp? = null
         ) {
     constructor(result: ResultSet) :
             this(

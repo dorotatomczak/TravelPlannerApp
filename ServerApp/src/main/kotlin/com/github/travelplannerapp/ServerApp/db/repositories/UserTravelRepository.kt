@@ -68,10 +68,7 @@ class UserTravelRepository : IUserTravelRepository {
                         "SELECT nextval(pg_get_serial_sequence('app_user_travel', 'id')) AS new_id;"
                 )
         val result = statement.executeQuery()
-        var id = -1
-        while (result.next()) {
-            id = result.getInt("new_id")
-        }
-        return id
+        result.next()
+        return result.getInt("new_id")
     }
 }
