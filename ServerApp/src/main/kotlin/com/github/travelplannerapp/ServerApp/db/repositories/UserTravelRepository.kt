@@ -45,4 +45,26 @@ class UserTravelRepository : Repository<UserTravel>(), IUserTravelRepository {
         statement.setInt(3, obj.id!!)
         return statement
     }
+
+    override fun deleteUserTravelBinding(userId: Int, travelId: Int): Boolean {
+        val statement = DbConnection
+                .conn
+                .prepareStatement(deleteStatement + "WHERE user_id=?, travel_id=?")
+        statement.setInt(1, userId)
+        statement.setInt(2, travelId)
+        return statement.executeUpdate() > 0
+    }
+
+    override fun countByTravelId(travelId: Int): Int {
+        val statement = DbConnection
+                .conn
+                .prepareStatement("SELECT COUNT(*) AS travel_bindings " +
+                        "FROM app_user_travel WHERE travel_id=?")
+        statement.setInt(1, travelId)
+        val result: ResultSet = statement.executeQuery()
+        if (result.next()) {
+            return result.getInt("travel_bindings")
+        }
+        return 0
+    }
 }

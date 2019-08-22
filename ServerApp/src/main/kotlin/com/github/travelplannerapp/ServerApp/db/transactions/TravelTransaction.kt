@@ -34,4 +34,27 @@ class TravelTransaction {
         DbConnection.conn.autoCommit = true
         return null
     }
+
+    fun deleteTravel(user_id: Int, travel_id: Int): Boolean {
+        DbConnection.conn.autoCommit = false
+
+        var queryResult = userTravelRepository.deleteUserTravelBinding(user_id, travel_id)
+        if (queryResult) {
+            if(userTravelRepository.countByTravelId(travel_id) > 0){
+                DbConnection.conn.commit()
+                DbConnection.conn.autoCommit = true
+                return true
+            } else {
+                queryResult = travelRepository.delete(travel_id)
+                if(queryResult) {
+                    DbConnection.conn.commit()
+                    DbConnection.conn.autoCommit = true
+                    return true
+                }
+            }
+        }
+        DbConnection.conn.rollback()
+        DbConnection.conn.autoCommit = true
+        return false
+    }
 }
