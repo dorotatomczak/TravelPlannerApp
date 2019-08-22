@@ -2,15 +2,14 @@ package com.github.travelplannerapp.ServerApp.db.dao
 
 import java.sql.ResultSet
 
-class UserTravel (
-        val userId: Int,
-        val travelId: Int,
-        val id: Int = -1
-){
+class UserTravel(
+        var id: Int,
+        var userId: Int,
+        var travelId: Int) {
     constructor(result: ResultSet) :
             this(
+                    result.getInt("id"),
                     result.getInt("app_user_id"),
-                    result.getInt("travel_id"),
-                    result.getInt("id")
+                    result.getInt("travel_id")
             )
 }

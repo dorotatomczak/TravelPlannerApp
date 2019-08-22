@@ -13,6 +13,8 @@ import retrofit2.http.*
 object CommunicationService {
     //10.0.2.2 is "localhost" but on computer
     //localhost via emulator is emulator itself
+    //remote server: https://journello.herokuapp.com/
+
     private const val serverUrl: String = "http://10.0.2.2:8080/"
 
     val serverApi = Retrofit.Builder()
@@ -26,7 +28,7 @@ object CommunicationService {
 
 interface ServerApi {
 
-    @POST("authorize")
+    @POST("/authorize")
     fun authorize(@Header("authorization") token: String, @Body userId: Int): Single<Response<Void>>
 
     @POST("/authenticate")

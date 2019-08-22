@@ -20,7 +20,7 @@ class TravelsPresenter(view: TravelsContract.View) : BasePresenter<TravelsContra
                 .subscribeOn(SchedulerProvider.io())
                 .map { if (it.statusCode == 200) it.data!! else throw ApiException(it.statusCode) }
                 .subscribe(
-                        { travels -> handleGetTravelsResponse(travels) },
+                        { travels -> handleLoadTravelsResponse(travels) },
                         { error -> handleErrorResponse(error) }
                 ))
     }
@@ -54,7 +54,7 @@ class TravelsPresenter(view: TravelsContract.View) : BasePresenter<TravelsContra
         compositeDisposable.clear()
     }
 
-    private fun handleGetTravelsResponse(myTravels: List<Travel>) {
+    private fun handleLoadTravelsResponse(myTravels: List<Travel>) {
         travels = ArrayList(myTravels)
         view.onDataSetChanged()
 

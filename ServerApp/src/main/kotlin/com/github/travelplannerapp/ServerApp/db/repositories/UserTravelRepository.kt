@@ -8,7 +8,7 @@ import java.sql.ResultSet
 @Component
 class UserTravelRepository : IUserTravelRepository {
     companion object {
-        private const val insertStatement = "INSERT INTO app_user_travel (app_user_id, travel_id) VALUES (?, ?) "
+        private const val insertStatement = "INSERT INTO app_user_travel (id, app_user_id, travel_id) VALUES (?, ?, ?) "
         private const val selectStatement = "SELECT * FROM app_user_travel "
         private const val deleteStatement = "DELETE FROM app_user_travel "
     }
@@ -41,22 +41,10 @@ class UserTravelRepository : IUserTravelRepository {
         val statement = DbConnection
                 .conn
                 .prepareStatement(insertStatement)
-        statement.setInt(1, obj.userId)
-        statement.setInt(2, obj.travelId)
+        statement.setInt(1, obj.id)
+        statement.setInt(2, obj.userId)
+        statement.setInt(3, obj.travelId)
         return statement.executeUpdate() > 0
-    }
-
-    override fun add(objs: MutableList<UserTravel>) {
-        val statement = DbConnection
-                .conn
-                .prepareStatement(insertStatement)
-        objs.iterator().forEach { obj ->
-            run {
-                statement.setInt(1, obj.userId)
-                statement.setInt(2, obj.travelId)
-                statement.executeUpdate()
-            }
-        }
     }
 
     override fun delete(id: Int): Boolean {
@@ -72,5 +60,15 @@ class UserTravelRepository : IUserTravelRepository {
                 .conn
                 .prepareStatement(deleteStatement)
         return statement.executeUpdate() > 0
+    }
+
+    override fun getNextId(): Int {
+        val statement = DbConnection.conn
+                .prepareStatement(
+                        "SELECT nextval(pg_get_serial_sequence('app_user_travel', 'id')) AS new_id;"
+                )
+        val result = statement.executeQuery()
+        result.next()
+        return result.getInt("new_id")
     }
 }

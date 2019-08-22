@@ -17,12 +17,13 @@ class TravelTransaction {
 
     fun addTravel(travelName: String, userId: Int): Travel? {
         DbConnection.conn.autoCommit = false
-        
-        val travelId = getNextTravelId()
-        val travel = Travel(travelName, travelId)
+
+        val travelId = travelRepository.getNextId()
+        val travel = Travel( travelId, travelName)
         val queryResult = travelRepository.add(travel)
         if (queryResult) {
-            userTravelRepository.add(UserTravel(userId,travelId))
+            val userTravelId = userTravelRepository.getNextId()
+            userTravelRepository.add(UserTravel(userTravelId, userId, travelId))
             DbConnection.conn.autoCommit = false
         } else {
             DbConnection.conn.rollback()
@@ -33,9 +34,5 @@ class TravelTransaction {
 
         DbConnection.conn.autoCommit = true
         return travel
-    }
-
-    private fun getNextTravelId(): Int {
-        return travelRepository.getNextId()
     }
 }

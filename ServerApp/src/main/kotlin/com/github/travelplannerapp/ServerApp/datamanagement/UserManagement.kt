@@ -70,12 +70,12 @@ class UserManagement : IUserManagement {
         val user = userRepository.getUserByEmail(request.email)
         if (user != null) throw EmailAlreadyExistsException("User with given email already exists")
 
-        val newUser = User(request.email, request.password)
+        val userId = userRepository.getNextId()
+        val newUser = User(userId, request.email, request.password)
         userRepository.add(newUser)
     }
 
-    // private function
-    fun generateRandomString(): String {
+    private fun generateRandomString(): String {
         val charPool: List<Char> = ('a'..'z') + ('A'..'Z') + ('0'..'9')
 
         return ThreadLocalRandom.current()
