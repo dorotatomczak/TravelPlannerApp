@@ -12,7 +12,6 @@ import com.github.travelplannerapp.signup.SignUpActivity
 import javax.inject.Inject
 
 import dagger.android.AndroidInjection
-import io.reactivex.disposables.CompositeDisposable
 import kotlinx.android.synthetic.main.activity_sign_in.*
 import com.github.travelplannerapp.utils.SharedPreferencesUtils
 import com.google.android.material.snackbar.Snackbar
@@ -22,8 +21,6 @@ class SignInActivity : AppCompatActivity(), SignInContract.View {
 
     @Inject
     lateinit var presenter: SignInContract.Presenter
-
-    var myCompositeDisposable = CompositeDisposable()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         AndroidInjection.inject(this)
@@ -36,11 +33,6 @@ class SignInActivity : AppCompatActivity(), SignInContract.View {
         }
 
         buttonSignUp.setOnClickListener { presenter.signUp() }
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        myCompositeDisposable.clear()
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -66,6 +58,7 @@ class SignInActivity : AppCompatActivity(), SignInContract.View {
 
         val intent = Intent(this, TravelsActivity::class.java)
         startActivity(intent)
+        finish()
     }
 
     override fun showSnackbar(message: String) {
