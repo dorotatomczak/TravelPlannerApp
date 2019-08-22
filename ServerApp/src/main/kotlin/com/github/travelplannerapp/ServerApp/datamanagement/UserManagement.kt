@@ -14,7 +14,6 @@ import java.time.Instant
 import java.time.LocalDate
 import java.util.*
 import java.util.concurrent.ThreadLocalRandom
-import kotlin.math.absoluteValue
 import kotlin.streams.asSequence
 
 @Component
@@ -70,14 +69,14 @@ class UserManagement : IUserManagement {
             return JsonLoginAnswer("", -1, LOGIN_ANSWER.ERROR)
         }
 
-        val newUser = User(loginRequest.email, loginRequest.password)
+        val userId = userRepository.getNextId()
+        val newUser = User(userId, loginRequest.email, loginRequest.password)
         userRepository.add(newUser)
 
         return JsonLoginAnswer("", -1, LOGIN_ANSWER.OK)
     }
 
-    // private function
-    fun generateRandomString(): String {
+    private fun generateRandomString(): String {
         val charPool: List<Char> = ('a'..'z') + ('A'..'Z') + ('0'..'9')
 
         return ThreadLocalRandom.current()

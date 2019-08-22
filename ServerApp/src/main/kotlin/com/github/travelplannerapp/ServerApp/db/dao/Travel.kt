@@ -2,11 +2,11 @@ package com.github.travelplannerapp.ServerApp.db.dao
 
 import java.sql.ResultSet
 
-class Travel (var name: String,
-              var id: Int = -1) {
+class Travel(var id: Int,
+             var name: String) {
     constructor(result: ResultSet) :
             this(
-                result.getString("name"),
-                result.getInt("id")
+                    result.getInt("id"),
+                    result.getString("name")
             )
 }
