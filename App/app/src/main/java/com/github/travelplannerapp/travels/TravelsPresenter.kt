@@ -2,6 +2,7 @@ package com.github.travelplannerapp.travels
 
 import com.github.travelplannerapp.BasePresenter
 import com.github.travelplannerapp.R
+import com.github.travelplannerapp.communication.ApiException
 import com.github.travelplannerapp.communication.model.AddTravelRequest
 import com.github.travelplannerapp.communication.CommunicationService
 import com.github.travelplannerapp.communication.model.Travel
@@ -17,10 +18,10 @@ class TravelsPresenter(view: TravelsContract.View) : BasePresenter<TravelsContra
         compositeDisposable.add(CommunicationService.serverApi.getTravels(token, userId)
                 .observeOn(SchedulerProvider.ui())
                 .subscribeOn(SchedulerProvider.io())
+                .map { if (it.statusCode == 200) it.data!! else throw ApiException(it.statusCode) }
                 .subscribe(
                         { travels -> handleGetTravelsResponse(travels) },
-                        //TODO [Dorota] Display errors from server or server connection failure
-                        { view.showSnackbar(R.string.server_connection_failure) }
+                        { error -> handleErrorResponse(error) }
                 ))
     }
 
@@ -28,10 +29,10 @@ class TravelsPresenter(view: TravelsContract.View) : BasePresenter<TravelsContra
         compositeDisposable.add(CommunicationService.serverApi.addTravel(token, AddTravelRequest(userId, travelName))
                 .observeOn(SchedulerProvider.ui())
                 .subscribeOn(SchedulerProvider.io())
+                .map { if (it.statusCode == 200) it.data!! else throw ApiException(it.statusCode) }
                 .subscribe(
                         { travel -> handleAddTravelResponse(travel) },
-                        //TODO [Dorota] Display errors from server or server connection failure
-                        { view.showSnackbar(R.string.server_connection_failure) }
+                        { error -> handleErrorResponse(error) }
                 ))
     }
 
@@ -63,6 +64,11 @@ class TravelsPresenter(view: TravelsContract.View) : BasePresenter<TravelsContra
     private fun handleAddTravelResponse(travel: Travel) {
         travels.add(travel)
         view.onDataSetChanged()
+    }
+
+    private fun handleErrorResponse(error: Throwable) {
+        if (error is ApiException) view.showSnackbar(error.getErrorMessageCode())
+        else view.showSnackbar(R.string.server_connection_error)
     }
 
 }

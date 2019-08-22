@@ -5,7 +5,7 @@ import android.content.SharedPreferences
 
 object SharedPreferencesUtils {
 
-    private const val PREF_FILE_NAME = "PREF_AUTH_SETTINGS"
+    private const val PREF_FILE_NAME = "PREF_AUTHENTICATION"
     private const val PREF_KEY_ACCESS_TOKEN = "PREF_KEY_ACCESS_TOKEN"
     private const val PREF_KEY_USER_ID = "PREF_KEY_USER_ID"
     private const val PREF_KEY_EMAIL = "PREF_KEY_EMAIL"
@@ -30,21 +30,21 @@ object SharedPreferencesUtils {
         return getSharedPreferences(context).getString(PREF_KEY_EMAIL, null)
     }
 
-    fun setAuthSettings(authSettings: AuthSettings, context: Context) {
+    fun setCredentials(credentials: Credentials, context: Context) {
         getSharedPreferences(context).edit()
-                .putString(PREF_KEY_ACCESS_TOKEN, authSettings.token)
-                .putInt(PREF_KEY_USER_ID, authSettings.userId)
-                .putString(PREF_KEY_EMAIL, authSettings.email)
+                .putString(PREF_KEY_ACCESS_TOKEN, credentials.token)
+                .putInt(PREF_KEY_USER_ID, credentials.userId)
+                .putString(PREF_KEY_EMAIL, credentials.email)
                 .apply()
     }
 
-    fun getAuthSettings(context: Context): AuthSettings {
-        return AuthSettings(
+    fun getCredentials(context: Context): Credentials {
+        return Credentials(
                 getAccessToken(context),
                 getUserId(context),
                 getEmail(context)
         )
     }
 
-    data class AuthSettings(val token: String?, val userId: Int, val email: String?)
+    data class Credentials(val token: String?, val userId: Int, val email: String?)
 }

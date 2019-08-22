@@ -8,7 +8,7 @@ interface LauncherContract {
         fun showTravels()
     }
     interface Presenter {
-        fun redirect(authSettings: SharedPreferencesUtils.AuthSettings)
+        fun redirect(credentials: SharedPreferencesUtils.Credentials)
         fun unsubscribe()
     }
 }

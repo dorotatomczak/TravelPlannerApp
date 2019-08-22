@@ -7,8 +7,8 @@ import com.github.travelplannerapp.ServerApp.db.dao.Travel
 import com.github.travelplannerapp.ServerApp.db.repositories.TravelRepository
 import com.github.travelplannerapp.ServerApp.db.repositories.UserRepository
 import com.github.travelplannerapp.ServerApp.db.repositories.UserTravelRepository
+import com.github.travelplannerapp.ServerApp.exceptions.*
 import com.github.travelplannerapp.ServerApp.jsondatamodels.*
-import com.google.gson.Gson
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.web.bind.annotation.*
 import java.lang.Exception
@@ -37,41 +37,44 @@ class ServerController {
 
     @PostMapping("/authorize")
     fun authorize(@RequestHeader("authorization") token: String,
-                  @RequestBody userId: Int){
+                  @RequestBody userId: Int): Response<Void> {
         userManagement.verifyUser(userId, token)
+        return Response(200, null)
     }
 
     @PostMapping("/authenticate")
-    fun authenticate(@RequestBody request: SignInRequest): SignInResponse {
+    fun authenticate(@RequestBody request: SignInRequest): Response<SignInResponse> {
         val userId = userManagement.authenticateUser(request)
         val authToken = userManagement.updateAuthorizationToken(request)
-
-        return SignInResponse(authToken, userId)
+        return Response(200, SignInResponse(authToken, userId))
     }
 
     @PostMapping("/register")
-    fun register(@RequestBody request: SignUpRequest) {
+    fun register(@RequestBody request: SignUpRequest): Response<Void> {
         userManagement.addUser(request)
+        return Response(200, null)
     }
 
     @GetMapping("/travels")
     fun travels(@RequestHeader("authorization") token: String,
-                @RequestParam("userId") userId: Int): List<Travel> {
+                @RequestParam("userId") userId: Int): Response<List<Travel>> {
         userManagement.verifyUser(userId, token)
-        return travelRepository.getAllTravelsByUserId(userId)
+        val travels = travelRepository.getAllTravelsByUserId(userId)
+        return Response(200, travels)
     }
 
     @PostMapping("/addtravel")
     fun addTravel(@RequestHeader("authorization") token: String,
-                  @RequestBody request: AddTravelRequest): Travel {
+                  @RequestBody request: AddTravelRequest): Response<Travel> {
         userManagement.verifyUser(request.userId, token)
-        return travelManagement.addTravel(request)
+        val newTravel = travelManagement.addTravel(request)
+        return Response(200, newTravel)
     }
 
     // For tests
     // [Magda] quick database access functions testing
     @GetMapping("/db")
-    fun getTravel(): String  {
+    fun getTravel(): String {
         val email = "jan.nowak@gmail.com"
         val user = userRepository.getUserByEmail(email)
         val travel = travelRepository.getAllTravelsByUserEmail(email)[0]
@@ -80,5 +83,17 @@ class ServerController {
                 travel.name + " " + travel.id + "\n" +
                 " user id: " + user_travel!!.userId +
                 " travelid: " + user_travel.travelId)
+    }
+
+
+    @ExceptionHandler(AuthorizationException::class, WrongCredentialsException::class, EmailAlreadyExistsException::class,
+            AddTravelException::class)
+    fun handleApiExceptions(exception: ApiException): Response<Any> {
+        return Response(exception.code, null)
+    }
+
+    @ExceptionHandler(Exception::class)
+    fun handlePredefinedExceptions(exception: Exception): Response<Any> {
+        return Response(999, null)
     }
 }

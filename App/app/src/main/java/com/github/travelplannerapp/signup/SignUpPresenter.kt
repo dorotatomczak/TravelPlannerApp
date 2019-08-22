@@ -2,6 +2,7 @@ package com.github.travelplannerapp.signup
 
 import com.github.travelplannerapp.BasePresenter
 import com.github.travelplannerapp.R
+import com.github.travelplannerapp.communication.ApiException
 import com.github.travelplannerapp.communication.CommunicationService
 import com.github.travelplannerapp.communication.model.SignUpRequest
 import com.github.travelplannerapp.utils.PasswordUtils
@@ -13,7 +14,10 @@ class SignUpPresenter(view: SignUpContract.View) : BasePresenter<SignUpContract.
     private val compositeDisposable = CompositeDisposable()
 
     override fun signUp(email: String, password: String, confirmPassword: String) {
-        if (password != confirmPassword) view.showSnackbar(R.string.sign_up_diff_passwords)
+        if (password != confirmPassword){
+            view.showSnackbar(R.string.sign_up_diff_passwords)
+            return
+        }
 
         val hashedPassword = PasswordUtils().hashPassword(password)
         if (hashedPassword == null) {
@@ -22,10 +26,10 @@ class SignUpPresenter(view: SignUpContract.View) : BasePresenter<SignUpContract.
             compositeDisposable.add(CommunicationService.serverApi.register(SignUpRequest(email, hashedPassword))
                     .observeOn(SchedulerProvider.ui())
                     .subscribeOn(SchedulerProvider.io())
+                    .map { if (it.statusCode == 200) it.data else throw ApiException(it.statusCode) }
                     .subscribe(
                             { handleSignUpResponse() },
-                            //TODO [Dorota] Display errors from server or server connection failure
-                            { view.showSnackbar(R.string.server_connection_failure) }
+                            { error -> handleErrorResponse(error) }
                     ))
         }
     }
@@ -40,5 +44,10 @@ class SignUpPresenter(view: SignUpContract.View) : BasePresenter<SignUpContract.
 
     private fun handleSignUpResponse() {
         view.returnResultAndFinish(R.string.sign_up_successful)
+    }
+
+    private fun handleErrorResponse(error: Throwable) {
+        if (error is ApiException) view.showSnackbar(error.getErrorMessageCode())
+        else view.showSnackbar(R.string.server_connection_error)
     }
 }

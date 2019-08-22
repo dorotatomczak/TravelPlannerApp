@@ -21,7 +21,7 @@
     <string name="scan">Scan</string>
     <string name="scanner_general_failure">Something bad happened to scanner</string>
     <string name="scanner_success">Scanner success</string>
-    <string name="server_connection_failure">Server connection failed</string>
+    <string name="server_connection_error">Server connection error</string>
     <string name="save">save</string>
     <string name="cancel">cancel</string>
     <string name="try_again">Something went wrong. Please try again</string>
@@ -33,4 +33,5 @@
     <string name="new_travel">New travel</string>
     <string name="add_travel_error">Error when adding travel</string>
     <string name="add_travel_ok">Travel added successfully</string>
+    <string name="authorization_error">You are not authorized to perform this action</string>
 </resources>

@@ -2,6 +2,7 @@ package com.github.travelplannerapp.signin
 
 import com.github.travelplannerapp.BasePresenter
 import com.github.travelplannerapp.R
+import com.github.travelplannerapp.communication.ApiException
 import com.github.travelplannerapp.communication.CommunicationService
 import com.github.travelplannerapp.communication.model.SignInRequest
 import com.github.travelplannerapp.communication.model.SignInResponse
@@ -29,16 +30,21 @@ class SignInPresenter(view: SignInContract.View) : BasePresenter<SignInContract.
             compositeDisposable.add(CommunicationService.serverApi.authenticate(SignInRequest(email, hashedPassword))
                     .observeOn(SchedulerProvider.ui())
                     .subscribeOn(SchedulerProvider.io())
+                    .map { if (it.statusCode == 200) it.data!! else throw ApiException(it.statusCode) }
                     .subscribe(
                             { response -> handleSignInResponse(response) },
-                            //TODO [Dorota] Display errors from server or server connection failure
-                            { view.showSnackbar(R.string.server_connection_failure) }
+                            { error -> handleErrorResponse(error) }
                     ))
         }
     }
 
     private fun handleSignInResponse(response: SignInResponse) {
-        view.signIn(SharedPreferencesUtils.AuthSettings(response.token, response.userId, email))
+        view.signIn(SharedPreferencesUtils.Credentials(response.token, response.userId, email))
+    }
+
+    private fun handleErrorResponse(error: Throwable) {
+        if (error is ApiException) view.showSnackbar(error.getErrorMessageCode())
+        else view.showSnackbar(R.string.server_connection_error)
     }
 
     override fun unsubscribe() {

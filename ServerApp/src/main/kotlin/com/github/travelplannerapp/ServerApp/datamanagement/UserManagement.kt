@@ -2,6 +2,9 @@ package com.github.travelplannerapp.ServerApp.datamanagement
 
 import com.github.travelplannerapp.ServerApp.db.dao.User
 import com.github.travelplannerapp.ServerApp.db.repositories.UserRepository
+import com.github.travelplannerapp.ServerApp.exceptions.AuthorizationException
+import com.github.travelplannerapp.ServerApp.exceptions.EmailAlreadyExistsException
+import com.github.travelplannerapp.ServerApp.exceptions.WrongCredentialsException
 import com.github.travelplannerapp.ServerApp.jsondatamodels.*
 import io.jsonwebtoken.Jwts
 import io.jsonwebtoken.SignatureAlgorithm
@@ -23,14 +26,14 @@ class UserManagement : IUserManagement {
         val user = userRepository.get(userId)
         if (user?.authToken!! != auth
                 && user.expirationDate!!.before(java.sql.Date.valueOf(LocalDate.now()))){
-            throw Exception("Token expired")
+            throw AuthorizationException("Token expired")
         }
     }
 
     override fun authenticateUser(request: SignInRequest): Int {
         val user = userRepository.getUserByEmail(request.email)
         if (user == null || user.password != request.password) {
-            throw Exception("Wrong email or password")
+            throw WrongCredentialsException("Wrong email or password")
         }
         return user.id
     }
@@ -65,7 +68,7 @@ class UserManagement : IUserManagement {
 
     override fun addUser(request: SignUpRequest) {
         val user = userRepository.getUserByEmail(request.email)
-        if (user != null) throw Exception("User with given email already exists")
+        if (user != null) throw EmailAlreadyExistsException("User with given email already exists")
 
         val newUser = User(request.email, request.password)
         userRepository.add(newUser)

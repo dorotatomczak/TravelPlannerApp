@@ -6,7 +6,7 @@ import com.github.travelplannerapp.utils.SharedPreferencesUtils
 interface SignInContract {
     interface View {
         fun showSignUp()
-        fun signIn(authSettings: SharedPreferencesUtils.AuthSettings)
+        fun signIn(credentials: SharedPreferencesUtils.Credentials)
         fun showSnackbar(message: String)
         fun showSnackbar(id: Int)
     }

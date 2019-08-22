@@ -18,7 +18,7 @@ class LauncherActivity : AppCompatActivity(), LauncherContract.View {
         AndroidInjection.inject(this)
         super.onCreate(savedInstanceState)
 
-        presenter.redirect(SharedPreferencesUtils.getAuthSettings(this))
+        presenter.redirect(SharedPreferencesUtils.getCredentials(this))
     }
 
     override fun showSignIn() {

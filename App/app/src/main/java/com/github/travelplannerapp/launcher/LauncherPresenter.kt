@@ -1,6 +1,7 @@
 package com.github.travelplannerapp.launcher
 
 import com.github.travelplannerapp.BasePresenter
+import com.github.travelplannerapp.communication.ApiException
 import com.github.travelplannerapp.communication.CommunicationService
 import com.github.travelplannerapp.utils.SchedulerProvider
 import com.github.travelplannerapp.utils.SharedPreferencesUtils
@@ -10,9 +11,9 @@ class LauncherPresenter (view: LauncherContract.View) : BasePresenter<LauncherCo
 
     private var compositeDisposable = CompositeDisposable()
 
-    override fun redirect(authSettings: SharedPreferencesUtils.AuthSettings) {
-        if (isLoggedIn(authSettings)) {
-            verifyAccessToken(authSettings.token!!, authSettings.userId)
+    override fun redirect(credentials: SharedPreferencesUtils.Credentials) {
+        if (isLoggedIn(credentials)) {
+            verifyAccessToken(credentials.token!!, credentials.userId)
         } else view.showSignIn()
     }
 
@@ -20,17 +21,17 @@ class LauncherPresenter (view: LauncherContract.View) : BasePresenter<LauncherCo
         compositeDisposable.clear()
     }
     
-    private fun isLoggedIn(authSettings: SharedPreferencesUtils.AuthSettings): Boolean {
-        return !(authSettings.userId == -1 && authSettings.email.isNullOrEmpty() && authSettings.token.isNullOrEmpty())
+    private fun isLoggedIn(credentials: SharedPreferencesUtils.Credentials): Boolean {
+        return !(credentials.userId == -1 && credentials.email.isNullOrEmpty() && credentials.token.isNullOrEmpty())
     }
 
     private fun verifyAccessToken(token: String, userId: Int) {
         compositeDisposable.add(CommunicationService.serverApi.authorize(token, userId)
                 .observeOn(SchedulerProvider.ui())
                 .subscribeOn(SchedulerProvider.io())
+                .map { if (it.statusCode == 200) it.data else throw ApiException(it.statusCode) }
                 .subscribe(
                         { view.showTravels() },
-                        //TODO [Dorota] Display errors from server or server connection failure
                         { view.showSignIn() }
                 ))
     }

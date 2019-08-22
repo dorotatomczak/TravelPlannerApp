@@ -2,6 +2,7 @@ package com.github.travelplannerapp.ServerApp.datamanagement
 
 import com.github.travelplannerapp.ServerApp.db.dao.Travel
 import com.github.travelplannerapp.ServerApp.db.transactions.TravelTransaction
+import com.github.travelplannerapp.ServerApp.exceptions.AddTravelException
 import com.github.travelplannerapp.ServerApp.jsondatamodels.AddTravelRequest
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component
@@ -17,8 +18,7 @@ class TravelManagement : ITravelManagement {
         if (addedTravel != null) {
             return addedTravel
         } else {
-            throw Exception("Error when adding travel")
+            throw AddTravelException("Error when adding travel")
         }
-
     }
 }

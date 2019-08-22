@@ -61,8 +61,8 @@ class SignInActivity : AppCompatActivity(), SignInContract.View {
         startActivityForResult(intent, SignUpActivity.REQUEST_SIGN_UP)
     }
 
-    override fun signIn(authSettings: SharedPreferencesUtils.AuthSettings) {
-        SharedPreferencesUtils.setAuthSettings(authSettings, this)
+    override fun signIn(credentials: SharedPreferencesUtils.Credentials) {
+        SharedPreferencesUtils.setCredentials(credentials, this)
 
         val intent = Intent(this, TravelsActivity::class.java)
         startActivity(intent)
