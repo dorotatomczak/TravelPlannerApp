@@ -17,8 +17,7 @@ class ServerUserController {
 
 
     @PostMapping("/authorize")
-    fun authorize(@RequestHeader("authorization") token: String,
-                  @RequestBody userId: Int): Response<Void> {
+    fun authorize(@RequestHeader("authorization") token: String, userId: Int): Response<Void> {
         userManagement.verifyUser(userId, token)
         return Response(200, null)
     }
