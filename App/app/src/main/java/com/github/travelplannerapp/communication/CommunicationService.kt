@@ -26,6 +26,10 @@ object CommunicationService {
             .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
             .build()
             .create(ServerApi::class.java)
+
+    fun getScanUrl(name: String): String {
+        return "$serverUrl/scans/$name"
+    }
 }
 
 interface ServerApi {
@@ -49,5 +53,9 @@ interface ServerApi {
     @Multipart
     @POST("/uploadScan")
     fun uploadScan(@Header("Authorization") auth: String, @Part("userId") userId: RequestBody,
-                   @Part("travelId") travelId: RequestBody, @Part file: MultipartBody.Part): Single<Response<Void>>
+                   @Part("travelId") travelId: RequestBody, @Part file: MultipartBody.Part): Single<Response<String>>
+
+    @GET("/scans")
+    fun getScans(@Header("authorization") token: String, @Query("userId") userId: Int,
+                 @Query("travelId") travelId: Int): Single<Response<List<String>>>
 }

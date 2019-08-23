@@ -35,4 +35,5 @@
     <string name="add_travel_error">Error when adding travel</string>
     <string name="add_travel_ok">Travel added successfully</string>
     <string name="authorization_error">You are not authorized to perform this action</string>
+    <string name="no_tickets">You have no tickets</string>
 </resources>

@@ -33,4 +33,5 @@
     <string name="add_travel_error">Wystąpił problem podczas dodawania podróży</string>
     <string name="add_travel_ok">Podróż pomyślnie dodana</string>
     <string name="authorization_error">Nie masz uprawnień na wykonanie tej akcji</string>
+    <string name="no_tickets">Nie masz żadnego biletu</string>
 </resources>

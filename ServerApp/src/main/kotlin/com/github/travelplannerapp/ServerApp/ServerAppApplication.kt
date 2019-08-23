@@ -1,6 +1,6 @@
 package com.github.travelplannerapp.serverapp
 
-import com.github.travelplannerapp.ServerApp.property.FileStorageProperties
+import com.github.travelplannerapp.ServerApp.properties.FileStorageProperties
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration
 import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration
 import org.springframework.boot.context.properties.EnableConfigurationProperties

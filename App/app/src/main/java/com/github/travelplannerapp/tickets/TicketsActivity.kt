@@ -8,14 +8,18 @@ import android.net.Uri
 import android.os.Bundle
 import android.os.Environment
 import android.provider.MediaStore
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.github.travelplannerapp.BuildConfig
 import com.github.travelplannerapp.R
 import com.github.travelplannerapp.scanner.ScannerActivity
 import com.github.travelplannerapp.utils.DrawerUtils
+import com.github.travelplannerapp.utils.SharedPreferencesUtils
 import com.google.android.material.snackbar.Snackbar
 import dagger.android.AndroidInjection
 import kotlinx.android.synthetic.main.activity_tickets.*
@@ -54,8 +58,21 @@ class TicketsActivity : AppCompatActivity(), TicketsContract.View {
         DrawerUtils.getDrawer(this, toolbar)
 
         fabAdd.setOnClickListener {
-            presenter.onAddTravelClick()
+            presenter.onAddScanClick()
         }
+
+        recyclerViewTickets.layoutManager = LinearLayoutManager(this, RecyclerView.VERTICAL, false)
+        recyclerViewTickets.adapter = TicketsAdapter(presenter)
+
+        presenter.loadScans(
+                SharedPreferencesUtils.getAccessToken(this)!!,
+                SharedPreferencesUtils.getUserId(this)
+        )
+    }
+
+    override fun onPause() {
+        super.onPause()
+        presenter.unsubscribe()
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -68,9 +85,11 @@ class TicketsActivity : AppCompatActivity(), TicketsContract.View {
             }
             ScannerActivity.REQUEST_SCANNER -> {
                 if (resultCode == Activity.RESULT_OK && data != null) {
-                    val messageCode = data.getIntExtra(ScannerActivity.REQUEST_SCANNER_RESULT,
+                    val messageCode = data.getIntExtra(ScannerActivity.REQUEST_SCANNER_RESULT_MESSAGE,
                             R.string.scanner_general_failure)
                     showSnackbar(messageCode)
+                    val scanName = data.getStringExtra(ScannerActivity.REQUEST_SCANNER_RESULT_NAME)
+                    presenter.onAddedScan(scanName)
                 }
             }
         }
@@ -133,8 +152,22 @@ class TicketsActivity : AppCompatActivity(), TicketsContract.View {
         startActivityForResult(intent, ScannerActivity.REQUEST_SCANNER)
     }
 
-    private fun showSnackbar(messageCode: Int) {
+    override fun showSnackbar(messageCode: Int) {
         Snackbar.make(coordinatorLayoutTickets, getString(messageCode), Snackbar.LENGTH_SHORT).show()
+    }
+
+    override fun showTickets() {
+        textViewNoTickets.visibility = View.GONE
+        recyclerViewTickets.visibility = View.VISIBLE
+    }
+
+    override fun showNoTickets() {
+        textViewNoTickets.visibility = View.VISIBLE
+        recyclerViewTickets.visibility = View.GONE
+    }
+
+    override fun onDataSetChanged() {
+        recyclerViewTickets.adapter?.notifyDataSetChanged()
     }
 
     @Throws(IOException::class)

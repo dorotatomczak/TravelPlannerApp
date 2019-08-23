@@ -34,13 +34,13 @@ class ScannerPresenter(view: ScannerContract.View, private val travelId: Int) : 
                 .subscribeOn(SchedulerProvider.io())
                 .map { if (it.statusCode == 200) it.data else throw ApiException(it.statusCode) }
                 .subscribe(
-                        { handleUploadResponse() },
+                        { scanName -> handleUploadResponse(scanName) },
                         { error -> handleErrorResponse(error) }
                 ))
     }
 
-    private fun handleUploadResponse() {
-        view.returnResultAndFinish(R.string.scanner_success)
+    private fun handleUploadResponse(scanName: String?) {
+        scanName?.let {view.returnResultAndFinish(R.string.scanner_success, scanName)}
     }
 
     private fun handleErrorResponse(error: Throwable) {

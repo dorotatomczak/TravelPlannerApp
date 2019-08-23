@@ -9,6 +9,7 @@ interface ScannerContract {
     interface View {
         fun showScanResultDialog(scan: Bitmap)
         fun returnResultAndFinish(messageCode: Int)
+        fun returnResultAndFinish(messageCode: Int, scanName: String?)
     }
 
     interface Presenter {

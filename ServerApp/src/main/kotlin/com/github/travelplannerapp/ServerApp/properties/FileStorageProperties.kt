@@ -1,4 +1,4 @@
-package com.github.travelplannerapp.ServerApp.property
+package com.github.travelplannerapp.ServerApp.properties
 
 import org.springframework.boot.context.properties.ConfigurationProperties
 

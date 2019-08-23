@@ -21,4 +21,5 @@
     <dimen name="margin_add_travel">20dp</dimen>
     <dimen name="line_width">2dp</dimen>
     <dimen name="margin_add_travel_line">5dp</dimen>
+    <dimen name="card_view_ticket_height">160dp</dimen>
 </resources>

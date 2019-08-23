@@ -22,7 +22,8 @@ class ScannerActivity : AppCompatActivity(), ScannerContract.View {
 
     companion object {
         const val REQUEST_SCANNER = 3
-        const val REQUEST_SCANNER_RESULT = "REQUEST_SCANNER_RESULT"
+        const val REQUEST_SCANNER_RESULT_MESSAGE = "REQUEST_SCANNER_RESULT_MESSAGE"
+        const val REQUEST_SCANNER_RESULT_NAME = "REQUEST_SCANNER_RESULT_NAME"
         const val EXTRA_PHOTO_PATH = "EXTRA_PHOTO_PATH"
         const val EXTRA_TRAVEL_ID = "EXTRA_TRAVEL_ID"
     }
@@ -46,13 +47,18 @@ class ScannerActivity : AppCompatActivity(), ScannerContract.View {
             val (bitmap, scaleRatio) = BitmapHelper.decodeBitmapFromFile(photoPath!!,
                     resources.displayMetrics.widthPixels, resources.displayMetrics.heightPixels)
             imageViewSelection.setImageBitmap(bitmap, scaleRatio)
-//            imageViewSelection.setPoints(Scanner.findCorners(photoPath))
+            //TODO [Dorota] imageViewSelection.setPoints(Scanner.findCorners(photoPath))
         } else returnResultAndFinish(R.string.scanner_initialization_failure)
     }
 
     override fun returnResultAndFinish(messageCode: Int) {
+        returnResultAndFinish(messageCode, null)
+    }
+
+    override fun returnResultAndFinish(messageCode: Int, scanName: String?) {
         val resultIntent = Intent().apply {
-            putExtra(REQUEST_SCANNER_RESULT, messageCode)
+            putExtra(REQUEST_SCANNER_RESULT_MESSAGE, messageCode)
+            scanName?.let { putExtra(REQUEST_SCANNER_RESULT_NAME, it) }
         }
         setResult(RESULT_OK, resultIntent)
         finish()
