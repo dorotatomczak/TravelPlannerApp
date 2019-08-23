@@ -1,11 +1,13 @@
 package com.github.travelplannerapp.ServerApp.datamanagement
 
 import com.github.travelplannerapp.ServerApp.db.dao.User
+import com.github.travelplannerapp.ServerApp.db.merge
 import com.github.travelplannerapp.ServerApp.db.repositories.UserRepository
 import com.github.travelplannerapp.ServerApp.exceptions.AuthorizationException
 import com.github.travelplannerapp.ServerApp.exceptions.EmailAlreadyExistsException
 import com.github.travelplannerapp.ServerApp.exceptions.WrongCredentialsException
-import com.github.travelplannerapp.ServerApp.jsondatamodels.*
+import com.github.travelplannerapp.ServerApp.jsondatamodels.SignInRequest
+import com.github.travelplannerapp.ServerApp.jsondatamodels.SignUpRequest
 import io.jsonwebtoken.Jwts
 import io.jsonwebtoken.SignatureAlgorithm
 import org.springframework.beans.factory.annotation.Autowired
@@ -35,7 +37,7 @@ class UserManagement : IUserManagement {
         if (user == null || user.password != request.password) {
             throw WrongCredentialsException("Wrong email or password")
         }
-        return user.id
+        return user.id!!
     }
 
     override fun updateAuthorizationToken(request: SignInRequest): String {
@@ -61,7 +63,10 @@ class UserManagement : IUserManagement {
         // commonPart.otherCommonPart.differentPart
         // database can store 40 signs of the different part
         accessToken = accessToken.split('.').last().substring(0, 40)
-        userRepository.updateUserAuthByEmail(request.email, accessToken, Timestamp.from(expiryDate))
+        //TODO Magda send changes from app in this form
+        val changes = mutableMapOf<String, Any?>("authToken" to accessToken, "expirationDate" to Timestamp.from(expiryDate))
+        val user = userRepository.getUserByEmail(request.email)
+        this.updateUser(user?.id!!, changes)
 
         return accessToken
     }
@@ -73,6 +78,14 @@ class UserManagement : IUserManagement {
         val userId = userRepository.getNextId()
         val newUser = User(userId, request.email, request.password)
         userRepository.add(newUser)
+    }
+
+    override fun updateUser(id: Int, changes: MutableMap<String, Any?>): User? {
+        val user = userRepository.get(id)
+        val userChanges = User(changes)
+        val updatedUser = userChanges merge user!!
+
+        return if (userRepository.update(updatedUser)) updatedUser else null
     }
 
     private fun generateRandomString(): String {

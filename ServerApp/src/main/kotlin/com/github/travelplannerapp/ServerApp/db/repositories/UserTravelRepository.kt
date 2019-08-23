@@ -41,9 +41,9 @@ class UserTravelRepository : IUserTravelRepository {
         val statement = DbConnection
                 .conn
                 .prepareStatement(insertStatement)
-        statement.setInt(1, obj.id)
-        statement.setInt(2, obj.userId)
-        statement.setInt(3, obj.travelId)
+        statement.setInt(1, obj.id!!)
+        statement.setInt(2, obj.userId!!)
+        statement.setInt(3, obj.travelId!!)
         return statement.executeUpdate() > 0
     }
 

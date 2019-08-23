@@ -4,7 +4,6 @@ import com.github.travelplannerapp.ServerApp.db.DbConnection
 import com.github.travelplannerapp.ServerApp.db.dao.User
 import org.springframework.stereotype.Component
 import java.sql.ResultSet
-import java.sql.Timestamp
 
 @Component
 class UserRepository : IUserRepository {
@@ -56,7 +55,7 @@ class UserRepository : IUserRepository {
         val statement = DbConnection
                 .conn
                 .prepareStatement(insertStatement)
-        statement.setInt(1,obj.id)
+        statement.setInt(1,obj.id!!)
         statement.setString(2, obj.email)
         statement.setString(3, obj.password)
         statement.setString(4, obj.authToken)
@@ -64,18 +63,20 @@ class UserRepository : IUserRepository {
         return statement.executeUpdate() > 0
     }
 
-    override fun updateUserAuthByEmail(email: String, authToken: String, expirationDate: Timestamp): Boolean {
+    //TODO [Magda] ovveride
+    fun update(obj: User): Boolean {
         val statement = DbConnection
                 .conn
-                .prepareStatement(
-                        updateStatement +
-                                "SET expirationdate = ?, " +
-                                "authtoken = ? " +
-                                "WHERE email = ? "
-                )
-        statement.setTimestamp(1, expirationDate)
-        statement.setString(2, authToken)
-        statement.setString(3, email)
+                .prepareStatement(updateStatement + "SET email = ?, " +
+                        "password = ?, " +
+                        "authtoken = ?, " +
+                        "expirationdate = ? " +
+                        " WHERE id = ?")
+        statement.setString(1, obj.email)
+        statement.setString(2, obj.password)
+        statement.setString(3, obj.authToken)
+        statement.setTimestamp(4, obj.expirationDate)
+        statement.setInt(5,obj.id!!)
         return statement.executeUpdate() > 0
     }
 
