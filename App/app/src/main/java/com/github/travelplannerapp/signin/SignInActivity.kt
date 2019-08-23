@@ -12,12 +12,8 @@ import com.github.travelplannerapp.signup.SignUpActivity
 import javax.inject.Inject
 
 import dagger.android.AndroidInjection
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.disposables.CompositeDisposable
-import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_sign_in.*
-import android.content.Context
-import com.github.travelplannerapp.communication.ServerApi
+import com.github.travelplannerapp.utils.SharedPreferencesUtils
 import com.google.android.material.snackbar.Snackbar
 
 
@@ -25,7 +21,6 @@ class SignInActivity : AppCompatActivity(), SignInContract.View {
 
     @Inject
     lateinit var presenter: SignInContract.Presenter
-    var myCompositeDisposable = CompositeDisposable()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         AndroidInjection.inject(this)
@@ -40,12 +35,8 @@ class SignInActivity : AppCompatActivity(), SignInContract.View {
         buttonSignUp.setOnClickListener { presenter.signUp() }
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-        myCompositeDisposable.clear()
-    }
-
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
         when (requestCode) {
             SignUpActivity.REQUEST_SIGN_UP -> {
                 if (resultCode == Activity.RESULT_OK && data != null) {
@@ -57,35 +48,21 @@ class SignInActivity : AppCompatActivity(), SignInContract.View {
         }
     }
 
-    override fun authorize(requestInterface: ServerApi, jsonLoginRequest: String,
-                           handleLoginResponse: (jsonString: String) -> Unit) {
-        myCompositeDisposable.add(requestInterface.authenticate(jsonLoginRequest)
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribeOn(Schedulers.io())
-                .subscribe(handleLoginResponse, { showSnackbar(resources.getString(R.string.server_connection_failure)) }))
-    }
-
     override fun showSignUp() {
         val intent = Intent(this, SignUpActivity::class.java)
         startActivityForResult(intent, SignUpActivity.REQUEST_SIGN_UP)
     }
 
-    override fun signIn(authToken: String, email: String, userId: Int) {
-        val sharedPref = getSharedPreferences(resources.getString(R.string.auth_settings),
-                Context.MODE_PRIVATE)
-        val editor = sharedPref.edit()
-        editor.putString(resources.getString(R.string.auth_token_shared_pref), authToken)
-        editor.putString(resources.getString(R.string.email_shared_pref), email)
-        editor.putInt(resources.getString(R.string.user_id_shared_pref), userId)
-        editor.apply()
+    override fun signIn(credentials: SharedPreferencesUtils.Credentials) {
+        SharedPreferencesUtils.setCredentials(credentials, this)
 
         val intent = Intent(this, TravelsActivity::class.java)
         startActivity(intent)
+        finish()
     }
 
     override fun showSnackbar(message: String) {
-        Snackbar.make(linearLayoutSignIn, message, Snackbar.LENGTH_LONG)
-                .setAction("OK", null).show()
+        Snackbar.make(linearLayoutSignIn, message, Snackbar.LENGTH_LONG).show()
     }
 
     override fun showSnackbar(id: Int) {

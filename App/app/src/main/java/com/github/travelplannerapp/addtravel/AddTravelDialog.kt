@@ -10,7 +10,10 @@ import com.github.travelplannerapp.R
 import kotlinx.android.synthetic.main.dialog_add_travel.view.*
 
 class AddTravelDialog : DialogFragment() {
-    val TAG = "Add travel"
+
+    companion object {
+        const val TAG = "ADD TRAVEL DIALOG"
+    }
 
     lateinit var travelName: EditText
     var onOk: (() -> Unit)? = null

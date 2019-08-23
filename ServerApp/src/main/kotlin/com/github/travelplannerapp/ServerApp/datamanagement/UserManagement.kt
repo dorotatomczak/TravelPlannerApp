@@ -2,9 +2,10 @@ package com.github.travelplannerapp.ServerApp.datamanagement
 
 import com.github.travelplannerapp.ServerApp.db.dao.User
 import com.github.travelplannerapp.ServerApp.db.repositories.UserRepository
-import com.github.travelplannerapp.ServerApp.jsondatamodels.JsonLoginAnswer
-import com.github.travelplannerapp.ServerApp.jsondatamodels.JsonLoginRequest
-import com.github.travelplannerapp.ServerApp.jsondatamodels.LOGIN_ANSWER
+import com.github.travelplannerapp.ServerApp.exceptions.AuthorizationException
+import com.github.travelplannerapp.ServerApp.exceptions.EmailAlreadyExistsException
+import com.github.travelplannerapp.ServerApp.exceptions.WrongCredentialsException
+import com.github.travelplannerapp.ServerApp.jsondatamodels.*
 import io.jsonwebtoken.Jwts
 import io.jsonwebtoken.SignatureAlgorithm
 import org.springframework.beans.factory.annotation.Autowired
@@ -21,27 +22,29 @@ class UserManagement : IUserManagement {
     @Autowired
     lateinit var userRepository: UserRepository
 
-    override fun verifyUser(userId: Int, auth: String): Boolean {
+    override fun verifyUser(userId: Int, auth: String) {
         val user = userRepository.get(userId)
-        return (user?.authToken!! == auth
-                && user.expirationDate!!.after(java.sql.Date.valueOf(LocalDate.now())))
-    }
-
-    override fun authenticateUser(loginRequest: JsonLoginRequest): JsonLoginAnswer {
-        val user = userRepository.getUserByEmail(loginRequest.email)
-        if (user == null || user.password != loginRequest.password) {
-            return JsonLoginAnswer("", -1, LOGIN_ANSWER.ERROR)
+        if (user?.authToken!! != auth
+                && user.expirationDate!!.before(java.sql.Date.valueOf(LocalDate.now()))){
+            throw AuthorizationException("Token expired")
         }
-        return JsonLoginAnswer("", user.id, LOGIN_ANSWER.OK)
     }
 
-    override fun updateAuthorizationToken(loginRequest: JsonLoginRequest): String {
+    override fun authenticateUser(request: SignInRequest): Int {
+        val user = userRepository.getUserByEmail(request.email)
+        if (user == null || user.password != request.password) {
+            throw WrongCredentialsException("Wrong email or password")
+        }
+        return user.id
+    }
+
+    override fun updateAuthorizationToken(request: SignInRequest): String {
         val claims: HashMap<String, Any?> = HashMap()
 
         claims["iss"] = "TravelApp Server"
         claims["sub"] = "AccessToken"
-        claims["email"] = loginRequest.email
-        claims["password"] = loginRequest.password
+        claims["email"] = request.email
+        claims["password"] = request.password
         claims["generatedTimestamp"] = LocalDate.now()
 
         val expiryDate = Instant.now().plusSeconds(3600 * 24)
@@ -58,22 +61,18 @@ class UserManagement : IUserManagement {
         // commonPart.otherCommonPart.differentPart
         // database can store 40 signs of the different part
         accessToken = accessToken.split('.').last().substring(0, 40)
-        userRepository.updateUserAuthByEmail(loginRequest.email, accessToken, Timestamp.from(expiryDate))
+        userRepository.updateUserAuthByEmail(request.email, accessToken, Timestamp.from(expiryDate))
 
         return accessToken
     }
 
-    override fun addUser(loginRequest: JsonLoginRequest): JsonLoginAnswer {
-        val user = userRepository.getUserByEmail(loginRequest.email)
-        if (user != null) {
-            return JsonLoginAnswer("", -1, LOGIN_ANSWER.ERROR)
-        }
+    override fun addUser(request: SignUpRequest) {
+        val user = userRepository.getUserByEmail(request.email)
+        if (user != null) throw EmailAlreadyExistsException("User with given email already exists")
 
         val userId = userRepository.getNextId()
-        val newUser = User(userId, loginRequest.email, loginRequest.password)
+        val newUser = User(userId, request.email, request.password)
         userRepository.add(newUser)
-
-        return JsonLoginAnswer("", -1, LOGIN_ANSWER.OK)
     }
 
     private fun generateRandomString(): String {

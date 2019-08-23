@@ -1,9 +1,11 @@
 package com.github.travelplannerapp.ServerApp
 
 import com.github.travelplannerapp.ServerApp.datamanagement.UserManagement
-import com.github.travelplannerapp.ServerApp.db.repositories.UserTravelRepository
+import com.github.travelplannerapp.ServerApp.exceptions.ApiException
+import com.github.travelplannerapp.ServerApp.exceptions.AuthorizationException
+import com.github.travelplannerapp.ServerApp.exceptions.EmailAlreadyExistsException
+import com.github.travelplannerapp.ServerApp.exceptions.WrongCredentialsException
 import com.github.travelplannerapp.ServerApp.jsondatamodels.*
-import com.google.gson.Gson
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.web.bind.annotation.*
 
@@ -11,31 +13,36 @@ import org.springframework.web.bind.annotation.*
 class ServerUserController {
 
     @Autowired
-    lateinit var userTravelRepository: UserTravelRepository
-    @Autowired
     lateinit var userManagement: UserManagement
 
 
+    @PostMapping("/authorize")
+    fun authorize(@RequestHeader("authorization") token: String,
+                  @RequestBody userId: Int): Response<Void> {
+        userManagement.verifyUser(userId, token)
+        return Response(200, null)
+    }
+
     @PostMapping("/authenticate")
-    fun authenticate(@RequestBody request: String): String {
-        val loginRequest = Gson().fromJson(request, JsonLoginRequest::class.java)
-
-        val jsonLoginAnswer = userManagement.authenticateUser(loginRequest)
-        if (jsonLoginAnswer.result != LOGIN_ANSWER.OK) {
-            return Gson().toJson(jsonLoginAnswer)
-        }
-
-        val authToken = userManagement.updateAuthorizationToken(loginRequest)
-        jsonLoginAnswer.authorizationToken = authToken
-
-        return Gson().toJson(jsonLoginAnswer)
+    fun authenticate(@RequestBody request: SignInRequest): Response<SignInResponse> {
+        val userId = userManagement.authenticateUser(request)
+        val authToken = userManagement.updateAuthorizationToken(request)
+        return Response(200, SignInResponse(authToken, userId))
     }
 
     @PostMapping("/register")
-    fun register(@RequestBody request: String): String {
-        val loginRequest = Gson().fromJson(request, JsonLoginRequest::class.java)
-        val jsonLoginAnswer = userManagement.addUser(loginRequest)
+    fun register(@RequestBody request: SignUpRequest): Response<Void> {
+        userManagement.addUser(request)
+        return Response(200, null)
+    }
 
-        return Gson().toJson(jsonLoginAnswer)
+    @ExceptionHandler(AuthorizationException::class, WrongCredentialsException::class, EmailAlreadyExistsException::class)
+    fun handleApiExceptions(exception: ApiException): Response<Any> {
+        return Response(exception.code, null)
+    }
+
+    @ExceptionHandler(Exception::class)
+    fun handlePredefinedExceptions(exception: Exception): Response<Any> {
+        return Response(999, null)
     }
 }

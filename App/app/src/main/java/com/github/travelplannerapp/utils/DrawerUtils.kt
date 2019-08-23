@@ -5,7 +5,6 @@ import com.mikepenz.materialdrawer.Drawer
 import com.mikepenz.materialdrawer.DrawerBuilder
 import com.mikepenz.materialdrawer.model.PrimaryDrawerItem
 import android.app.Activity
-import android.content.Context
 import android.view.View
 import androidx.appcompat.widget.Toolbar
 import com.github.travelplannerapp.R
@@ -49,9 +48,7 @@ object DrawerUtils {
         },
         SIGN_OUT(R.string.menu_sign_out, R.drawable.ic_sign_out) {
             override fun onClick(view: View) {
-                val sharedPref = view.context.getSharedPreferences(view.context.resources.getString(R.string.auth_settings),
-                        Context.MODE_PRIVATE)
-                sharedPref.edit().clear().apply()
+                SharedPreferencesUtils.clear(view.context)
 
                 val intent = Intent(view.context, SignInActivity::class.java)
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)

@@ -1,6 +1,6 @@
 package com.github.travelplannerapp.launcher
 
-import com.github.travelplannerapp.utils.SessionCredentials
+import com.github.travelplannerapp.utils.SharedPreferencesUtils
 
 interface LauncherContract {
     interface View {
@@ -8,6 +8,7 @@ interface LauncherContract {
         fun showTravels()
     }
     interface Presenter {
-        fun redirect(credentials: SessionCredentials)
+        fun redirect(credentials: SharedPreferencesUtils.Credentials)
+        fun unsubscribe()
     }
 }

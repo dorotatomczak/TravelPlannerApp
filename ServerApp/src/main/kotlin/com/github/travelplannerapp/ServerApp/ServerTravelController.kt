@@ -2,10 +2,11 @@ package com.github.travelplannerapp.ServerApp
 
 import com.github.travelplannerapp.ServerApp.datamanagement.TravelManagement
 import com.github.travelplannerapp.ServerApp.datamanagement.UserManagement
+import com.github.travelplannerapp.ServerApp.db.dao.Travel
 import com.github.travelplannerapp.ServerApp.db.repositories.TravelRepository
-import com.github.travelplannerapp.ServerApp.db.repositories.UserTravelRepository
+import com.github.travelplannerapp.ServerApp.exceptions.AddTravelException
+import com.github.travelplannerapp.ServerApp.exceptions.ApiException
 import com.github.travelplannerapp.ServerApp.jsondatamodels.*
-import com.google.gson.Gson
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.web.bind.annotation.*
 
@@ -15,28 +16,33 @@ class ServerTravelController {
     @Autowired
     lateinit var travelRepository: TravelRepository
     @Autowired
-    lateinit var userTravelRepository: UserTravelRepository
-    @Autowired
     lateinit var userManagement: UserManagement
     @Autowired
     lateinit var travelManagement: TravelManagement
 
     @GetMapping("/travels")
-    fun travels(@RequestParam(value = "userId") userId: Int, @RequestParam(value = "auth") auth: String): List<String> {
-        if (userManagement.verifyUser(userId, auth)) {
-            return travelRepository.getAllTravelsByUserId(userId).map { travel -> travel.name }
-        }
-        return listOf("Gdańsk", "Elbląg", "Toruń", "Olsztyn", "Szczecin")
+    fun travels(@RequestHeader("authorization") token: String,
+                @RequestParam("userId") userId: Int): Response<List<Travel>> {
+        userManagement.verifyUser(userId, token)
+        val travels = travelRepository.getAllTravelsByUserId(userId)
+        return Response(200, travels)
     }
 
     @PostMapping("/addtravel")
-    fun addTravel(@RequestBody request: String): String {
-        val addTravelRequest = Gson().fromJson(request, JsonAddTravelRequest::class.java)
-        if (userManagement.verifyUser(addTravelRequest.userId, addTravelRequest.auth)) {
-            val jsonAddTravelAnswer = travelManagement.addTravel(addTravelRequest)
+    fun addTravel(@RequestHeader("authorization") token: String,
+                  @RequestBody request: AddTravelRequest): Response<Travel> {
+        userManagement.verifyUser(request.userId, token)
+        val newTravel = travelManagement.addTravel(request)
+        return Response(200, newTravel)
+    }
 
-            return Gson().toJson(jsonAddTravelAnswer)
-        }
-        return  Gson().toJson(JsonAddTravelAnswer(ADD_TRAVEL_RESULT.ERROR))
+    @ExceptionHandler(AddTravelException::class)
+    fun handleApiExceptions(exception: ApiException): Response<Any> {
+        return Response(exception.code, null)
+    }
+
+    @ExceptionHandler(Exception::class)
+    fun handlePredefinedExceptions(exception: Exception): Response<Any> {
+        return Response(999, null)
     }
 }

@@ -7,17 +7,12 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import android.view.View
 import com.google.android.material.snackbar.Snackbar
 import androidx.recyclerview.widget.RecyclerView
-import com.github.travelplannerapp.communication.ServerApi
-import com.github.travelplannerapp.jsondatamodels.ADD_TRAVEL_ANSWER
 import com.github.travelplannerapp.traveldetails.TravelDetailsActivity
 import com.github.travelplannerapp.utils.DrawerUtils
 
 import javax.inject.Inject
 
 import dagger.android.AndroidInjection
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.disposables.CompositeDisposable
-import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_travels.*
 import kotlinx.android.synthetic.main.fab_add.*
 import kotlinx.android.synthetic.main.toolbar.*
@@ -29,13 +24,11 @@ class TravelsActivity : AppCompatActivity(), TravelsContract.View {
 
     @Inject
     lateinit var presenter: TravelsContract.Presenter
-    private var myCompositeDisposable: CompositeDisposable? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         AndroidInjection.inject(this)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_travels)
-        myCompositeDisposable = CompositeDisposable()
 
         // Set up toolbar
         setSupportActionBar(toolbar)
@@ -52,27 +45,34 @@ class TravelsActivity : AppCompatActivity(), TravelsContract.View {
 
     override fun onResume() {
         super.onResume()
-        presenter.loadTravels()
+        presenter.loadTravels(
+                SharedPreferencesUtils.getAccessToken(this)!!,
+                SharedPreferencesUtils.getUserId(this)
+        )
     }
 
     override fun onDestroy() {
         super.onDestroy()
-        myCompositeDisposable?.clear()
+        presenter.unsubscribe()
     }
 
     override fun showAddTravel() {
         val addTravelDialog = AddTravelDialog()
         addTravelDialog.onOk = {
-            val sessionCredentials = SharedPreferencesUtils.getSessionCredentials(this)
             val travelName = addTravelDialog.travelName.text.toString()
-            presenter.addTravel(sessionCredentials.userId, sessionCredentials.authToken, travelName)
+            presenter.addTravel(
+                    SharedPreferencesUtils.getUserId(this),
+                    SharedPreferencesUtils.getAccessToken(this)!!,
+                    travelName
+            )
         }
-        addTravelDialog.show(supportFragmentManager, addTravelDialog.TAG)
+        addTravelDialog.show(supportFragmentManager, AddTravelDialog.TAG)
     }
 
-    override fun showTravelDetails(travel: String) {
+    override fun showTravelDetails(travelId: Int, travelName: String) {
         val intent = Intent(this, TravelDetailsActivity::class.java)
-        intent.putExtra(TravelDetailsActivity.EXTRA_TRAVEL_ID, travel)
+        intent.putExtra(TravelDetailsActivity.EXTRA_TRAVEL_ID, travelId)
+        intent.putExtra(TravelDetailsActivity.EXTRA_TRAVEL_NAME, travelName)
         startActivity(intent)
     }
 
@@ -84,35 +84,18 @@ class TravelsActivity : AppCompatActivity(), TravelsContract.View {
     override fun showTravels() {
         textViewNoTravels.visibility = View.GONE
         recyclerViewTravels.visibility = View.VISIBLE
-        recyclerViewTravels.adapter?.notifyDataSetChanged()
+    }
+
+    override fun showSnackbar(messageCode: Int) {
+        Snackbar.make(coordinatorLayoutTravels, getString(messageCode), Snackbar.LENGTH_LONG).show()
     }
 
     override fun showSnackbar(message: String) {
-        Snackbar.make(coordinatorLayoutTravels, message, Snackbar.LENGTH_LONG)
-                .setAction("Action", null).show()
+        Snackbar.make(coordinatorLayoutTravels, message, Snackbar.LENGTH_LONG).show()
     }
 
-    override fun showAddTravelResult(result: ADD_TRAVEL_ANSWER) {
-        when (result) {
-            ADD_TRAVEL_ANSWER.OK -> presenter.loadTravels()
-            ADD_TRAVEL_ANSWER.ERROR -> showSnackbar(resources.getString(R.string.add_travel_error))
-        }
+    override fun onDataSetChanged() {
+        recyclerViewTravels.adapter?.notifyDataSetChanged()
     }
 
-    override fun loadTravels(requestInterface: ServerApi, handleResponse: (myTravels: List<String>) -> Unit) {
-        val sessionCredentials = SharedPreferencesUtils.getSessionCredentials(this)
-
-        myCompositeDisposable?.add(requestInterface.getTravels(sessionCredentials.userId, sessionCredentials.authToken)
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribeOn(Schedulers.io())
-                .subscribe(handleResponse, { showSnackbar(resources.getString(R.string.server_connection_failure)) }))
-    }
-
-    override fun addTravel(requestInterface: ServerApi, jsonAddTravelRequest: String,
-                           handleAddTravelResponse: (jsonString: String) -> Unit) {
-        myCompositeDisposable?.add(requestInterface.addTravel(jsonAddTravelRequest)
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribeOn(Schedulers.io())
-                .subscribe(handleAddTravelResponse, { showSnackbar(resources.getString(R.string.server_connection_failure)) }))
-    }
 }

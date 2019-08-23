@@ -8,7 +8,6 @@ import android.net.Uri
 import android.os.Bundle
 import android.os.Environment
 import android.provider.MediaStore
-import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
@@ -58,6 +57,7 @@ class TicketsActivity : AppCompatActivity(), TicketsContract.View {
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
         when (requestCode) {
             REQUEST_TAKE_PHOTO -> {
                 if (resultCode == Activity.RESULT_OK) {
@@ -125,8 +125,7 @@ class TicketsActivity : AppCompatActivity(), TicketsContract.View {
     }
 
     private fun showSnackbar(messageCode: Int) {
-        Snackbar.make(coordinatorLayoutTickets, getString(messageCode), Snackbar.LENGTH_SHORT)
-                .setAction("Action", null).show()
+        Snackbar.make(coordinatorLayoutTickets, getString(messageCode), Snackbar.LENGTH_SHORT).show()
     }
 
     @Throws(IOException::class)

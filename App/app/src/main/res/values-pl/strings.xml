@@ -16,7 +16,7 @@
     <string name="menu_sign_out">Wyloguj się</string>
     <string name="scanner_general_failure">Coś złego stało się ze skanerem</string>
     <string name="scanner_success">Sukces skanera</string>
-    <string name="server_connection_failure">Błąd połączenia z serwerem</string>
+    <string name="server_connection_error">Błąd połączenia z serwerem</string>
     <string name="scan">Skanuj</string>
     <string name="scanner_initialization_failure">Inicjalizacja skanera nie powiodła się</string>
     <string name="scanner_permissions_failure">Musisz przyznać uprawnienia do kamery i pamięci masowej</string>
@@ -31,4 +31,5 @@
     <string name="new_travel">Nowa podróż</string>
     <string name="add_travel_error">Wystąpił problem podczas dodawania podróży</string>
     <string name="add_travel_ok">Podróż pomyślnie dodana</string>
+    <string name="authorization_error">Nie masz uprawnień na wykonanie tej akcji</string>
 </resources>

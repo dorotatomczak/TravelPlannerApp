@@ -1,12 +1,9 @@
 package com.github.travelplannerapp.traveldetails
 
-import android.app.Activity
 import android.content.Intent
-import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
-import android.widget.Toast
 import com.github.travelplannerapp.R
 import com.github.travelplannerapp.accommodation.AccommodationActivity
 import com.github.travelplannerapp.dayplans.DayPlansActivity
@@ -26,6 +23,7 @@ class TravelDetailsActivity : AppCompatActivity(), TravelDetailsContract.View {
 
     companion object {
         const val EXTRA_TRAVEL_ID = "EXTRA_TRAVEL_ID"
+        const val EXTRA_TRAVEL_NAME = "EXTRA_TRAVEL_NAME"
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

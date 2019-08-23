@@ -1,14 +1,13 @@
 package com.github.travelplannerapp.communication
 
+import com.github.travelplannerapp.communication.model.*
 import io.reactivex.Observable
+import io.reactivex.Single
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.converter.scalars.ScalarsConverterFactory
-import retrofit2.http.Body
-import retrofit2.http.GET
-import retrofit2.http.POST
-import retrofit2.http.Query
+import retrofit2.http.*
 
 
 object CommunicationService {
@@ -29,15 +28,19 @@ object CommunicationService {
 
 interface ServerApi {
 
-    @GET("/travels")
-    fun getTravels(@Query("userId") userId: Int, @Query("auth") auth: String): Observable<List<String>>
+    @POST("/authorize")
+    fun authorize(@Header("authorization") token: String, @Body userId: Int): Single<Response<Void>>
 
     @POST("/authenticate")
-    fun authenticate(@Body jsonString: String): Observable<String>
+    fun authenticate(@Body body: SignInRequest): Single<Response<SignInResponse>>
 
     @POST("/register")
-    fun register(@Body jsonString: String): Observable<String>
+    fun register(@Body body: SignUpRequest): Single<Response<Void>>
+
+    @GET("/travels")
+    fun getTravels(@Header("authorization") token: String, @Query("userId") userId: Int): Observable<Response<List<Travel>>>
 
     @POST("/addtravel")
-    fun addTravel(@Body jsonString: String): Observable<String>
+    fun addTravel(@Header("authorization") token: String, @Body body: AddTravelRequest): Single<Response<Travel>>
+
 }
