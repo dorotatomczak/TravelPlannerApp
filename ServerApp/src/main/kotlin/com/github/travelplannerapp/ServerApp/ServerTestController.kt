@@ -1,7 +1,6 @@
 package com.github.travelplannerapp.ServerApp
 
 import com.github.travelplannerapp.ServerApp.HereCharger.HereLoader
-import com.github.travelplannerapp.ServerApp.datamanagement.TravelManagement
 import com.github.travelplannerapp.ServerApp.db.dao.Travel
 import com.github.travelplannerapp.ServerApp.db.repositories.TravelRepository
 import org.springframework.beans.factory.annotation.Autowired
@@ -13,8 +12,6 @@ class ServerTestController {
 
     @Autowired
     lateinit var travelRepository: TravelRepository
-    @Autowired
-    lateinit var travelManagement: TravelManagement
 
     @GetMapping("/here")
     fun getExampleDataFromHere() {
@@ -27,7 +24,6 @@ class ServerTestController {
     // [Magda] quick database access functions testing
     @GetMapping("/db")
     fun getTravel(): Travel? {
-        travelManagement.updateTravel(3, mutableMapOf("name" to "magic"))
         return travelRepository.get(3)
     }
 

@@ -80,12 +80,11 @@ class UserManagement : IUserManagement {
         userRepository.add(newUser)
     }
 
-    override fun updateUser(id: Int, changes: MutableMap<String, Any?>): User? {
+    override fun updateUser(id: Int, changes: MutableMap<String, Any?>) {
         val user = userRepository.get(id)
         val userChanges = User(changes)
         val updatedUser = userChanges merge user!!
-
-        return if (userRepository.update(updatedUser)) updatedUser else null
+        userRepository.update(updatedUser)
     }
 
     private fun generateRandomString(): String {

@@ -3,10 +3,11 @@ package com.github.travelplannerapp.ServerApp.db.repositories
 import com.github.travelplannerapp.ServerApp.db.DbConnection
 import com.github.travelplannerapp.ServerApp.db.dao.User
 import org.springframework.stereotype.Component
+import java.sql.PreparedStatement
 import java.sql.ResultSet
 
 @Component
-class UserRepository : IUserRepository {
+class UserRepository : Repository<User>(), IUserRepository {
     companion object {
         const val tableName = "app_user"
         const val columnId = "id"
@@ -36,19 +37,7 @@ class UserRepository : IUserRepository {
         return null
     }
 
-    override fun get(id: Int): User? {
-        val statement = DbConnection
-                .conn
-                .prepareStatement(selectStatement + "WHERE $columnId=?")
-        statement.setInt(1, id)
-        val result: ResultSet = statement.executeQuery()
-        if (result.next()) {
-            return User(result)
-        }
-        return null
-    }
-
-    override fun getAll(): MutableList<User> {
+    fun getAll(): MutableList<User> {
         var users = mutableListOf<User>()
         val statement = DbConnection
                 .conn
@@ -60,7 +49,19 @@ class UserRepository : IUserRepository {
         return users
     }
 
-    override fun add(obj: User): Boolean {
+    override fun T(result: ResultSet): User? {
+        return User(result)
+    }
+
+    override fun prepareSelectByIdStatement(id: Int): PreparedStatement {
+        val statement = DbConnection
+                .conn
+                .prepareStatement(selectStatement + "WHERE $columnId=?")
+        statement.setInt(1, id)
+        return statement
+    }
+
+    override fun prepareInsertStatement(obj: User): PreparedStatement {
         val statement = DbConnection
                 .conn
                 .prepareStatement(insertStatement)
@@ -69,10 +70,10 @@ class UserRepository : IUserRepository {
         statement.setString(3, obj.password)
         statement.setString(4, obj.token)
         statement.setTimestamp(5, obj.expirationDate)
-        return statement.executeUpdate() > 0
+        return statement
     }
 
-    override fun update(obj: User): Boolean {
+    override fun prepareUpdateStatement(obj: User): PreparedStatement {
         val statement = DbConnection
                 .conn
                 .prepareStatement(updateStatement)
@@ -81,31 +82,27 @@ class UserRepository : IUserRepository {
         statement.setString(3, obj.token)
         statement.setTimestamp(4, obj.expirationDate)
         statement.setInt(5,obj.id!!)
-        return statement.executeUpdate() > 0
+        return statement
     }
 
-    override fun delete(id: Int): Boolean {
+    override fun prepareDeleteByIdStatement(id: Int): PreparedStatement {
         val statement = DbConnection
                 .conn
                 .prepareStatement(deleteStatement + "WHERE $columnId=?")
         statement.setInt(1, id)
-        return statement.executeUpdate() > 0
+        return statement
     }
 
-    override fun deleteAll(): Boolean {
-        val statement = DbConnection
+    override fun prepareDeleteAllStatement(): PreparedStatement {
+        return DbConnection
                 .conn
                 .prepareStatement(deleteStatement)
-        return statement.executeUpdate() > 0
     }
 
-    override fun getNextId(): Int {
-        val statement = DbConnection.conn
+    override fun prepareNextIdStatement(): PreparedStatement {
+        return  DbConnection.conn
                 .prepareStatement(
                         "SELECT nextval(pg_get_serial_sequence('$tableName', '$columnId')) AS new_id;"
                 )
-        val result = statement.executeQuery()
-        result.next()
-        return result.getInt("new_id")
     }
 }
