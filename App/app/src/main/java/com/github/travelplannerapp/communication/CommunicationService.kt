@@ -28,8 +28,9 @@ object CommunicationService {
 
 interface ServerApi {
 
+    @FormUrlEncoded
     @POST("/authorize")
-    fun authorize(@Header("authorization") token: String, @Body userId: Int): Single<Response<Void>>
+    fun authorize(@Header("authorization") token: String, @Field("userId") userId: Int): Single<Response<Void>>
 
     @POST("/authenticate")
     fun authenticate(@Body body: SignInRequest): Single<Response<SignInResponse>>
