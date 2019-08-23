@@ -9,11 +9,11 @@ import java.sql.Timestamp
 @Component
 class UserRepository : IUserRepository {
     companion object {
-        const val insertStatement = "INSERT INTO app_user (email,password,authToken,expirationDate) " +
-                "VALUES (?,?,?,?) "
-        const val selectStatement = "SELECT * FROM app_user "
-        const val deleteStatement = "DELETE FROM app_user "
-        const val updateStatement = "UPDATE app_user "
+        private const val insertStatement = "INSERT INTO app_user (id, email,password,authToken,expirationDate) " +
+                "VALUES (?,?,?,?,?) "
+        private const val selectStatement = "SELECT * FROM app_user "
+        private const val deleteStatement = "DELETE FROM app_user "
+        private const val updateStatement = "UPDATE app_user "
     }
 
     override fun getUserByEmail(email: String): User? {
@@ -52,33 +52,19 @@ class UserRepository : IUserRepository {
         return users
     }
 
-    override fun add(obj: User) {
+    override fun add(obj: User): Boolean {
         val statement = DbConnection
                 .conn
                 .prepareStatement(insertStatement)
-        statement.setString(1, obj.email)
-        statement.setString(2, obj.password)
-        statement.setString(3, obj.authToken)
-        statement.setTimestamp(4, obj.expirationDate)
-        statement.executeUpdate()
+        statement.setInt(1,obj.id)
+        statement.setString(2, obj.email)
+        statement.setString(3, obj.password)
+        statement.setString(4, obj.authToken)
+        statement.setTimestamp(5, obj.expirationDate)
+        return statement.executeUpdate() > 0
     }
 
-    override fun add(objs: MutableList<User>) {
-        val statement = DbConnection
-                .conn
-                .prepareStatement(insertStatement)
-        objs.iterator().forEach { obj ->
-            run {
-                statement.setString(1, obj.email)
-                statement.setString(2, obj.password)
-                statement.setString(3, obj.authToken)
-                statement.setTimestamp(4, obj.expirationDate)
-                statement.executeUpdate()
-            }
-        }
-    }
-
-    override fun updateUserAuthByEmail(email: String, authToken: String, expirationDate: Timestamp) {
+    override fun updateUserAuthByEmail(email: String, authToken: String, expirationDate: Timestamp): Boolean {
         val statement = DbConnection
                 .conn
                 .prepareStatement(
@@ -90,21 +76,31 @@ class UserRepository : IUserRepository {
         statement.setTimestamp(1, expirationDate)
         statement.setString(2, authToken)
         statement.setString(3, email)
-        statement.executeUpdate()
+        return statement.executeUpdate() > 0
     }
 
-    override fun delete(id: Int) {
+    override fun delete(id: Int): Boolean {
         val statement = DbConnection
                 .conn
                 .prepareStatement(deleteStatement + "WHERE id=?")
         statement.setInt(1, id)
-        statement.executeUpdate()
+        return statement.executeUpdate() > 0
     }
 
-    override fun deleteAll() {
+    override fun deleteAll(): Boolean {
         val statement = DbConnection
                 .conn
                 .prepareStatement(deleteStatement)
-        statement.executeUpdate()
+        return statement.executeUpdate() > 0
+    }
+
+    override fun getNextId(): Int {
+        val statement = DbConnection.conn
+                .prepareStatement(
+                        "SELECT nextval(pg_get_serial_sequence('app_user', 'id')) AS new_id;"
+                )
+        val result = statement.executeQuery()
+        result.next()
+        return result.getInt("new_id")
     }
 }

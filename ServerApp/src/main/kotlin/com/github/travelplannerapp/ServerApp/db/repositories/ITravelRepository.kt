@@ -6,5 +6,5 @@ interface ITravelRepository : IRepository<Travel> {
 
     fun getAllTravelsByUserId(id: Int): MutableList<Travel>
 
-    fun getAllTravelsByUserEmail(email: String, authToken: String): MutableList<Travel>
+    fun getAllTravelsByUserEmail(email: String): MutableList<Travel>
 }

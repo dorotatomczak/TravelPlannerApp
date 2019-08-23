@@ -6,6 +6,7 @@ import com.github.travelplannerapp.App
 
 import dagger.Module
 import dagger.Provides
+import javax.inject.Singleton
 
 /**
  * This is where you will inject application-wide dependencies.
@@ -14,7 +15,7 @@ import dagger.Provides
 class AppModule {
 
     @Provides
-    internal fun provideContext(application: App): Context {
-        return application.applicationContext
-    }
+    @Singleton
+    internal fun provideContext(application: App): Context = application.applicationContext
+
 }

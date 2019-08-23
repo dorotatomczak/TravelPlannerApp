@@ -1,14 +1,10 @@
 package com.github.travelplannerapp.ServerApp.service
 
-import com.github.travelplannerapp.ServerApp.jsondatamodels.JsonScanUploadResponse
-import com.github.travelplannerapp.ServerApp.jsondatamodels.ScanUploadResponse
-import java.net.MalformedURLException
-import org.springframework.core.io.UrlResource
+import com.github.travelplannerapp.ServerApp.exceptions.FileStorageException
 import java.nio.file.StandardCopyOption
 import org.springframework.web.multipart.MultipartFile
 import com.github.travelplannerapp.ServerApp.property.FileStorageProperties
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.core.io.Resource
 import org.springframework.stereotype.Service
 import org.springframework.util.StringUtils
 import java.nio.file.Files
@@ -26,24 +22,20 @@ constructor(fileStorageProperties: FileStorageProperties) {
         try {
             Files.createDirectories(this.fileStorageLocation)
         } catch (ex: Exception) {
-            throw Exception("Could not create the directory where the uploaded files will be stored.", ex)
+            throw FileStorageException("Could not create the directory where the uploaded files will be stored.")
         }
     }
 
-    fun storeFile(file: MultipartFile, email: String): JsonScanUploadResponse {
+    fun storeFile(file: MultipartFile) {
         // Normalize file name
         val fileName: String = StringUtils.cleanPath(file.originalFilename!!)
-        val dir = email.replace(".", "_")
 
-        return try {
+        try {
             // Copy file to the target location (Replacing existing file with the same name)
-            val targetLocation = Paths.get(this.fileStorageLocation.toString(), dir)
-            Files.createDirectories(targetLocation)
-            val path = targetLocation.resolve(fileName)
-            Files.copy(file.inputStream, path, StandardCopyOption.REPLACE_EXISTING)
-            JsonScanUploadResponse(ScanUploadResponse.OK)
+            val targetLocation = this.fileStorageLocation.resolve(fileName)
+            Files.copy(file.inputStream, targetLocation, StandardCopyOption.REPLACE_EXISTING)
         } catch (ex: Exception) {
-            JsonScanUploadResponse(ScanUploadResponse.ERROR)
+            throw FileStorageException("Could not store file $fileName")
         }
     }
 }

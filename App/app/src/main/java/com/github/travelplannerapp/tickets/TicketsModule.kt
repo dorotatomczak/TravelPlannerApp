@@ -10,7 +10,8 @@ import dagger.Provides
 class TicketsModule {
 
     @Provides
-    internal fun provideTicketsPresenter(ticketsView: TicketsContract.View): TicketsContract.Presenter {
-        return TicketsPresenter(ticketsView)
+    internal fun provideTicketsPresenter(ticketsActivity: TicketsActivity, ticketsView: TicketsContract.View): TicketsContract.Presenter {
+        val travelId = ticketsActivity.intent.getIntExtra(TicketsActivity.EXTRA_TRAVEL_ID, -1)
+        return TicketsPresenter(ticketsView, travelId)
     }
 }

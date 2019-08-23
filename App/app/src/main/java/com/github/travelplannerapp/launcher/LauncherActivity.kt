@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.github.travelplannerapp.signin.SignInActivity
 import com.github.travelplannerapp.travels.TravelsActivity
+import com.github.travelplannerapp.utils.SharedPreferencesUtils
 import dagger.android.AndroidInjection
 import javax.inject.Inject
 
@@ -17,7 +18,7 @@ class LauncherActivity : AppCompatActivity(), LauncherContract.View {
         AndroidInjection.inject(this)
         super.onCreate(savedInstanceState)
 
-        presenter.redirect()
+        presenter.redirect(SharedPreferencesUtils.getCredentials(this))
     }
 
     override fun showSignIn() {

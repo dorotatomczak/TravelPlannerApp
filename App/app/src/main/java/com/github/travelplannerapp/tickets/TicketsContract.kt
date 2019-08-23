@@ -5,9 +5,11 @@ interface TicketsContract {
         fun verifyPermissions(): Boolean
         fun requestPermissions()
         fun openCamera()
+        fun showScanner(travelId: Int)
     }
 
     interface Presenter {
         fun onAddTravelClick()
+        fun onPhotoTaken()
     }
 }

@@ -1,73 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.drawerlayout.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/coordinatorLayoutTravels"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".travels.TravelsActivity"
-    tools:openDrawer="start"
     android:fitsSystemWindows="true"
-    android:id="@+id/drawerLayoutTravels">
+    android:orientation="horizontal"
+    tools:context=".travels.TravelsActivity">
 
-    <androidx.coordinatorlayout.widget.CoordinatorLayout
+    <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:fitsSystemWindows="true"
-        android:id="@+id/coordinatorLayoutTravels">
+        android:layout_height="wrap_content"
+        android:theme="@style/AppTheme.AppBarOverlay">
 
-        <com.google.android.material.appbar.AppBarLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:theme="@style/AppTheme.AppBarOverlay">
+        <include layout="@layout/toolbar" />
 
-            <androidx.appcompat.widget.Toolbar
-                android:id="@+id/toolbarTravels"
-                android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize"
-                android:background="?attr/colorPrimary"
-                app:popupTheme="@style/AppTheme.PopupOverlay" />
-
-        </com.google.android.material.appbar.AppBarLayout>
+    </com.google.android.material.appbar.AppBarLayout>
 
     <TextView
         android:id="@+id/textViewNoTravels"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/no_travels"
-        android:textSize="@dimen/text_size_info"
         android:layout_marginTop="@dimen/margin_vertical"
         android:gravity="center_horizontal"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"
-        android:visibility="visible"/>
+        android:text="@string/no_travels"
+        android:textSize="@dimen/text_size_info"
+        android:visibility="visible"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerViewTravels"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior"
-            tools:listitem="@layout/item_travel"
-            android:layout_marginTop="@dimen/margin_vertical"
-            android:layout_marginLeft="@dimen/margin_horizontal"
-            android:layout_marginRight="@dimen/margin_horizontal"
-            android:visibility="gone"/>
-
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/fabTravels"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom|end"
-            android:layout_margin="@dimen/fab_margin"
-            app:srcCompat="@drawable/ic_add" />
-
-    </androidx.coordinatorlayout.widget.CoordinatorLayout>
-
-    <com.google.android.material.navigation.NavigationView
-        android:id="@+id/navigationViewTravels"
-        android:layout_width="wrap_content"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerViewTravels"
+        android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_gravity="start"
-        app:menu="@menu/menu_main">
+        android:layout_marginLeft="@dimen/margin_horizontal"
+        android:layout_marginTop="@dimen/margin_vertical_small"
+        android:layout_marginRight="@dimen/margin_horizontal"
+        android:visibility="gone"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        tools:listitem="@layout/item_travel" />
 
-    </com.google.android.material.navigation.NavigationView>
+    <include layout="@layout/fab_add" />
 
-</androidx.drawerlayout.widget.DrawerLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

@@ -31,6 +31,9 @@ android {
         targetCompatibility JavaVersion.VERSION_1_8
 
     }
+    packagingOptions {
+        exclude 'META-INF/library-core_release.kotlin_module'
+    }
 }
 
 dependencies {
@@ -41,6 +44,7 @@ dependencies {
     implementation "com.google.android.material:material:$rootProject.materialVersion"
     implementation "androidx.recyclerview:recyclerview:$rootProject.recyclerviewVersion"
     implementation "androidx.cardview:cardview:$rootProject.cardviewVersion"
+    implementation "com.mikepenz:materialdrawer:$rootProject.materialdrawerVersion"
 
     // Dagger dependencies
     implementation "com.google.dagger:dagger:$rootProject.daggerVersion"

@@ -1,21 +1,20 @@
 package com.github.travelplannerapp.traveldetails
 
-import android.app.Activity
 import android.content.Intent
-import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
-import android.widget.Toast
 import com.github.travelplannerapp.R
 import com.github.travelplannerapp.accommodation.AccommodationActivity
 import com.github.travelplannerapp.dayplans.DayPlansActivity
 import com.github.travelplannerapp.tickets.TicketsActivity
 import com.github.travelplannerapp.transport.TransportActivity
+import com.github.travelplannerapp.utils.DrawerUtils
 import dagger.android.AndroidInjection
 import javax.inject.Inject
 
 import kotlinx.android.synthetic.main.activity_travel_details.*
+import kotlinx.android.synthetic.main.toolbar.*
 
 class TravelDetailsActivity : AppCompatActivity(), TravelDetailsContract.View {
 
@@ -24,6 +23,7 @@ class TravelDetailsActivity : AppCompatActivity(), TravelDetailsContract.View {
 
     companion object {
         const val EXTRA_TRAVEL_ID = "EXTRA_TRAVEL_ID"
+        const val EXTRA_TRAVEL_NAME = "EXTRA_TRAVEL_NAME"
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -31,7 +31,9 @@ class TravelDetailsActivity : AppCompatActivity(), TravelDetailsContract.View {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_travel_details)
 
-        setSupportActionBar(toolbarTravelDetails)
+        setSupportActionBar(toolbar)
+        supportActionBar?.setHomeButtonEnabled(true)
+        DrawerUtils.getDrawer(this, toolbar)
 
         recyclerViewTravelDetails.setHasFixedSize(true)
         recyclerViewTravelDetails.layoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
@@ -44,7 +46,7 @@ class TravelDetailsActivity : AppCompatActivity(), TravelDetailsContract.View {
     }
 
     override fun setTitle(title: String) {
-        toolbarTravelDetails.title = title
+        toolbar.title = title
     }
 
     override fun showDayPlans() {
@@ -62,8 +64,9 @@ class TravelDetailsActivity : AppCompatActivity(), TravelDetailsContract.View {
         startActivity(intent)
     }
 
-    override fun showTickets() {
+    override fun showTickets(travelId: Int) {
         val intent = Intent(this, TicketsActivity::class.java)
+        intent.putExtra(TicketsActivity.EXTRA_TRAVEL_ID, travelId)
         startActivity(intent)
     }
 }

@@ -3,9 +3,6 @@ package com.github.travelplannerapp.di
 import com.github.travelplannerapp.accommodation.AccommodationActivity
 import com.github.travelplannerapp.accommodation.AccommodationModule
 import com.github.travelplannerapp.accommodation.AccommodationViewModel
-import com.github.travelplannerapp.addtravel.AddTravelActivity
-import com.github.travelplannerapp.addtravel.AddTravelModule
-import com.github.travelplannerapp.addtravel.AddTravelViewModel
 import com.github.travelplannerapp.dayplans.DayPlansActivity
 import com.github.travelplannerapp.dayplans.DayPlansModule
 import com.github.travelplannerapp.dayplans.DayPlansViewModel
@@ -54,9 +51,6 @@ abstract class BuildersModule {
 
     @ContributesAndroidInjector(modules = [TravelsViewModel::class, TravelsModule::class])
     internal abstract fun bindTravelsActivity(): TravelsActivity
-
-    @ContributesAndroidInjector(modules = [AddTravelViewModel::class, AddTravelModule::class])
-    internal abstract fun bindAddTravelActivity(): AddTravelActivity
 
     @ContributesAndroidInjector(modules = [TravelDetailsViewModel::class, TravelDetailsModule::class])
     internal abstract fun bindTravelDetailsActivity(): TravelDetailsActivity

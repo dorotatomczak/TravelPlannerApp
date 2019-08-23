@@ -1,20 +1,15 @@
 package com.github.travelplannerapp.travels
 
-import com.github.travelplannerapp.communication.ServerApi
 
 interface TravelsContract {
     interface View {
         fun showAddTravel()
-        //TODO [Dorota] Change to int (travel id) after database is implemented
-        fun showTravelDetails(travel: String)
-
+        fun showTravelDetails(travelId: Int, travelName: String)
         fun showTravels()
-
         fun showNoTravels()
-
+        fun showSnackbar(messageCode: Int)
         fun showSnackbar(message: String)
-
-        fun loadTravels(requestInterface: ServerApi, handleResponse: (myTravels: List<String>) -> Unit)
+        fun onDataSetChanged()
     }
 
     interface TravelItemView {
@@ -22,16 +17,11 @@ interface TravelsContract {
     }
 
     interface Presenter {
-
-        fun loadTravels()
-
+        fun loadTravels(token: String, userId: Int)
+        fun addTravel(userId: Int, token: String, travelName: String)
         fun getTravelsCount(): Int
-
         fun onBindTravelsAtPosition(position: Int, itemView: TravelItemView)
-
         fun openTravelDetails(position: Int)
-
-        fun handleResponse(myTravels: List<String>)
-
+        fun unsubscribe()
     }
 }

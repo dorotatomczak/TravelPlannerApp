@@ -2,31 +2,35 @@ package com.github.travelplannerapp.signup
 
 import com.github.travelplannerapp.BasePresenter
 import com.github.travelplannerapp.R
+import com.github.travelplannerapp.communication.ApiException
 import com.github.travelplannerapp.communication.CommunicationService
-import com.github.travelplannerapp.jsondatamodels.JsonLoginResponse
-import com.github.travelplannerapp.jsondatamodels.JsonLoginRequest
-import com.github.travelplannerapp.jsondatamodels.LoginResponse
+import com.github.travelplannerapp.communication.model.SignUpRequest
 import com.github.travelplannerapp.utils.PasswordUtils
-import com.google.gson.Gson
+import com.github.travelplannerapp.utils.SchedulerProvider
+import io.reactivex.disposables.CompositeDisposable
 
 class SignUpPresenter(view: SignUpContract.View) : BasePresenter<SignUpContract.View>(view), SignUpContract.Presenter {
 
-    lateinit var email: String
+    private val compositeDisposable = CompositeDisposable()
 
     override fun signUp(email: String, password: String, confirmPassword: String) {
-        val requestInterface = CommunicationService.serverApi
-
-        if (password != confirmPassword) {
-            view.showSnackbar(R.string.sing_up_diff_passwords, null)
+        if (password != confirmPassword){
+            view.showSnackbar(R.string.sign_up_diff_passwords)
+            return
         }
 
         val hashedPassword = PasswordUtils().hashPassword(password)
         if (hashedPassword == null) {
-            view.showSnackbar(R.string.try_again, null)
+            view.showSnackbar(R.string.try_again)
         } else {
-            this.email = email
-            val requestBody = Gson().toJson(JsonLoginRequest(email, hashedPassword))
-            view.sendSignUpRequest(requestInterface, requestBody, this::handleSignUpResponse)
+            compositeDisposable.add(CommunicationService.serverApi.register(SignUpRequest(email, hashedPassword))
+                    .observeOn(SchedulerProvider.ui())
+                    .subscribeOn(SchedulerProvider.io())
+                    .map { if (it.statusCode == 200) it.data else throw ApiException(it.statusCode) }
+                    .subscribe(
+                            { handleSignUpResponse() },
+                            { error -> handleErrorResponse(error) }
+                    ))
         }
     }
 
@@ -34,11 +38,16 @@ class SignUpPresenter(view: SignUpContract.View) : BasePresenter<SignUpContract.
         view.showSignIn()
     }
 
-    override fun handleSignUpResponse(jsonString: String) {
-        val response = Gson().fromJson(jsonString, JsonLoginResponse::class.java)
-        when (response.result) {
-            LoginResponse.OK -> view.signUp()
-            LoginResponse.ERROR -> view.showSnackbar(R.string.sing_up_email_error, null)
-        }
+    override fun unsubscribe() {
+        compositeDisposable.clear()
+    }
+
+    private fun handleSignUpResponse() {
+        view.returnResultAndFinish(R.string.sign_up_successful)
+    }
+
+    private fun handleErrorResponse(error: Throwable) {
+        if (error is ApiException) view.showSnackbar(error.getErrorMessageCode())
+        else view.showSnackbar(R.string.server_connection_error)
     }
 }
