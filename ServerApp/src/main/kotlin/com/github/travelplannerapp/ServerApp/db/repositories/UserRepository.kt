@@ -8,17 +8,26 @@ import java.sql.ResultSet
 @Component
 class UserRepository : IUserRepository {
     companion object {
-        private const val insertStatement = "INSERT INTO app_user (id, email,password,authToken,expirationDate) " +
+        const val tableName = "app_user"
+        const val columnId = "id"
+        const val columnEmail = "email"
+        const val columnPassword = "password"
+        const val columnAuthToken = "authtoken"
+        const val columnExpirationDate = "expirationdate"
+        private const val insertStatement = "INSERT INTO $tableName " +
+                "($columnId,$columnEmail,$columnPassword,$columnAuthToken,$columnExpirationDate) " +
                 "VALUES (?,?,?,?,?) "
-        private const val selectStatement = "SELECT * FROM app_user "
-        private const val deleteStatement = "DELETE FROM app_user "
-        private const val updateStatement = "UPDATE app_user "
+        private const val selectStatement = "SELECT * FROM $tableName "
+        private const val deleteStatement = "DELETE FROM $tableName "
+        private const val updateStatement = "UPDATE $tableName " +
+                "SET $columnEmail=?, $columnPassword=?, $columnAuthToken=?, $columnExpirationDate=?" +
+                " WHERE $columnId=?"
     }
 
     override fun getUserByEmail(email: String): User? {
         val statement = DbConnection
                 .conn
-                .prepareStatement(selectStatement + "WHERE email=?")
+                .prepareStatement(selectStatement + "WHERE $columnEmail=?")
         statement.setString(1, email)
         val result: ResultSet = statement.executeQuery()
         if (result.next()) {
@@ -30,7 +39,7 @@ class UserRepository : IUserRepository {
     override fun get(id: Int): User? {
         val statement = DbConnection
                 .conn
-                .prepareStatement(selectStatement + "WHERE id=?")
+                .prepareStatement(selectStatement + "WHERE $columnId=?")
         statement.setInt(1, id)
         val result: ResultSet = statement.executeQuery()
         if (result.next()) {
@@ -58,23 +67,18 @@ class UserRepository : IUserRepository {
         statement.setInt(1,obj.id!!)
         statement.setString(2, obj.email)
         statement.setString(3, obj.password)
-        statement.setString(4, obj.authToken)
+        statement.setString(4, obj.token)
         statement.setTimestamp(5, obj.expirationDate)
         return statement.executeUpdate() > 0
     }
 
-    //TODO [Magda] ovveride
-    fun update(obj: User): Boolean {
+    override fun update(obj: User): Boolean {
         val statement = DbConnection
                 .conn
-                .prepareStatement(updateStatement + "SET email = ?, " +
-                        "password = ?, " +
-                        "authtoken = ?, " +
-                        "expirationdate = ? " +
-                        " WHERE id = ?")
+                .prepareStatement(updateStatement)
         statement.setString(1, obj.email)
         statement.setString(2, obj.password)
-        statement.setString(3, obj.authToken)
+        statement.setString(3, obj.token)
         statement.setTimestamp(4, obj.expirationDate)
         statement.setInt(5,obj.id!!)
         return statement.executeUpdate() > 0
@@ -83,7 +87,7 @@ class UserRepository : IUserRepository {
     override fun delete(id: Int): Boolean {
         val statement = DbConnection
                 .conn
-                .prepareStatement(deleteStatement + "WHERE id=?")
+                .prepareStatement(deleteStatement + "WHERE $columnId=?")
         statement.setInt(1, id)
         return statement.executeUpdate() > 0
     }
@@ -98,7 +102,7 @@ class UserRepository : IUserRepository {
     override fun getNextId(): Int {
         val statement = DbConnection.conn
                 .prepareStatement(
-                        "SELECT nextval(pg_get_serial_sequence('app_user', 'id')) AS new_id;"
+                        "SELECT nextval(pg_get_serial_sequence('$tableName', '$columnId')) AS new_id;"
                 )
         val result = statement.executeQuery()
         result.next()

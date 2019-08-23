@@ -26,7 +26,7 @@ class UserManagement : IUserManagement {
 
     override fun verifyUser(userId: Int, auth: String) {
         val user = userRepository.get(userId)
-        if (user?.authToken!! != auth
+        if (user?.token!! != auth
                 && user.expirationDate!!.before(java.sql.Date.valueOf(LocalDate.now()))){
             throw AuthorizationException("Token expired")
         }
@@ -53,7 +53,7 @@ class UserManagement : IUserManagement {
 
         val randomString = generateRandomString() // TODO [Ania] change to defined somewhere key if needed
 
-        var accessToken = Jwts.builder()
+        var token = Jwts.builder()
                 .setClaims(claims)
                 .setExpiration(Date.from(expiryDate))
                 .signWith(SignatureAlgorithm.HS256, randomString)
@@ -62,13 +62,13 @@ class UserManagement : IUserManagement {
         // authorization token looks like:
         // commonPart.otherCommonPart.differentPart
         // database can store 40 signs of the different part
-        accessToken = accessToken.split('.').last().substring(0, 40)
+        token = token.split('.').last().substring(0, 40)
         //TODO Magda send changes from app in this form
-        val changes = mutableMapOf<String, Any?>("authToken" to accessToken, "expirationDate" to Timestamp.from(expiryDate))
+        val changes = mutableMapOf<String, Any?>("token" to token, "expirationDate" to Timestamp.from(expiryDate))
         val user = userRepository.getUserByEmail(request.email)
         this.updateUser(user?.id!!, changes)
 
-        return accessToken
+        return token
     }
 
     override fun addUser(request: SignUpRequest) {

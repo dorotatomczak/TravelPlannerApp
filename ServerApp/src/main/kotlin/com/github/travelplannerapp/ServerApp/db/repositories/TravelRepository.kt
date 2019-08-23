@@ -7,10 +7,13 @@ import org.springframework.stereotype.Component
 @Component
 class TravelRepository : ITravelRepository {
     companion object {
-        private const val insertStatement = "INSERT INTO travel "
-        private const val selectStatement = "SELECT * FROM travel "
-        private const val deleteStatement = "DELETE FROM travel "
-        private const val updateStatement = "UPDATE travel "
+        const val tableName = "travel"
+        const val columnId = "id"
+        const val columnName = "name"
+        private const val insertStatement = "INSERT INTO $tableName (id, name) VALUES (?, ?)"
+        private const val selectStatement = "SELECT * FROM $tableName "
+        private const val deleteStatement = "DELETE FROM $tableName "
+        private const val updateStatement = "UPDATE $tableName SET name=? WHERE id=?"
     }
 
     override fun getAllTravelsByUserId(id: Int): MutableList<Travel> {
@@ -18,10 +21,10 @@ class TravelRepository : ITravelRepository {
         val statement = DbConnection
                 .conn
                 .prepareStatement(
-                        "SELECT travel.id, travel.name " +
-                                "FROM travel INNER JOIN app_user_travel " +
-                                "on travel.id = app_user_travel.travel_id " +
-                                "where app_user_travel.app_user_id = ?"
+                        "SELECT $tableName.$columnId, $tableName.$columnName " +
+                                "FROM $tableName INNER JOIN  ${UserTravelRepository.tableName} " +
+                                "on $tableName.$columnId =  ${UserTravelRepository.tableName}.${UserTravelRepository.columnTravelId} " +
+                                "where  ${UserTravelRepository.tableName}.${UserTravelRepository.columnUserId} = ?"
                 )
         statement.setInt(1, id)
         val result = statement.executeQuery()
@@ -35,12 +38,12 @@ class TravelRepository : ITravelRepository {
         var travels = mutableListOf<Travel>()
         val statement = DbConnection.conn
                 .prepareStatement(
-                        "SELECT travel.id, travel.name " +
-                                "FROM travel INNER JOIN app_user_travel " +
-                                "ON travel.id = app_user_travel.travel_id " +
-                                "INNER JOIN app_user " +
-                                "ON app_user_travel.app_user_id = app_user.id " +
-                                "WHERE app_user.email = ?"
+                        "SELECT $tableName.$columnId, $tableName.$columnName " +
+                                "FROM $tableName INNER JOIN ${UserTravelRepository.tableName} " +
+                                "ON $tableName.$columnId = ${UserTravelRepository.tableName}.${UserTravelRepository.columnTravelId} " +
+                                "INNER JOIN ${UserRepository.tableName} " +
+                                "ON ${UserTravelRepository.tableName}.${UserTravelRepository.columnUserId} = ${UserRepository.tableName}.${UserTravelRepository.columnId} " +
+                                "WHERE ${UserRepository.tableName}.email = ?"
                 )
         statement.setString(1, email)
         val result = statement.executeQuery()
@@ -53,7 +56,7 @@ class TravelRepository : ITravelRepository {
     override fun get(id: Int): Travel? {
         val statement = DbConnection
                 .conn
-                .prepareStatement(selectStatement + "WHERE id=?")
+                .prepareStatement(selectStatement + "WHERE $columnId=?")
         statement.setInt(1, id)
         val result = statement.executeQuery()
         if (result.next()) {
@@ -77,7 +80,7 @@ class TravelRepository : ITravelRepository {
     override fun add(obj: Travel): Boolean {
         val statement = DbConnection
                 .conn
-                .prepareStatement(insertStatement + "(id, name) VALUES (?, ?)")
+                .prepareStatement(insertStatement)
         statement.setInt(1, obj.id!!)
         statement.setString(2, obj.name)
         return statement.executeUpdate() > 0
@@ -86,7 +89,7 @@ class TravelRepository : ITravelRepository {
     override fun delete(id: Int): Boolean {
         val statement = DbConnection
                 .conn
-                .prepareStatement(deleteStatement + "WHERE id=?")
+                .prepareStatement(deleteStatement + "WHERE $columnId=?")
         statement.setInt(1, id)
         return statement.executeUpdate() > 0
     }
@@ -98,11 +101,10 @@ class TravelRepository : ITravelRepository {
         return statement.executeUpdate() > 0
     }
 
-    //TODO[MAGDA] override
-    fun update(obj: Travel): Boolean {
+    override fun update(obj: Travel): Boolean {
         val statement = DbConnection
                 .conn
-                .prepareStatement(updateStatement + "SET name = ? WHERE id = ?")
+                .prepareStatement(updateStatement)
         statement.setString(1, obj.name)
         statement.setInt(2, obj.id!!)
         return statement.executeUpdate() > 0
@@ -111,7 +113,7 @@ class TravelRepository : ITravelRepository {
     override fun getNextId(): Int {
         val statement = DbConnection.conn
                 .prepareStatement(
-                        "SELECT nextval(pg_get_serial_sequence('travel', 'id')) AS new_id;"
+                        "SELECT nextval(pg_get_serial_sequence('$tableName', '$columnId')) AS new_id;"
                 )
         val result = statement.executeQuery()
         result.next()

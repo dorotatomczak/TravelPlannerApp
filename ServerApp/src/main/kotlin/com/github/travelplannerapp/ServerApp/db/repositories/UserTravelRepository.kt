@@ -8,15 +8,21 @@ import java.sql.ResultSet
 @Component
 class UserTravelRepository : IUserTravelRepository {
     companion object {
-        private const val insertStatement = "INSERT INTO app_user_travel (id, app_user_id, travel_id) VALUES (?, ?, ?) "
-        private const val selectStatement = "SELECT * FROM app_user_travel "
-        private const val deleteStatement = "DELETE FROM app_user_travel "
+        const val tableName = "app_user_travel"
+        const val columnId = "id"
+        const val columnUserId = "app_user_id"
+        const val columnTravelId = "travel_id"
+        private const val insertStatement = "INSERT INTO $tableName ($columnId, $columnUserId, $columnTravelId) " +
+                "VALUES (?, ?, ?) "
+        private const val selectStatement = "SELECT * FROM $tableName "
+        private const val deleteStatement = "DELETE FROM $tableName "
+        private const val updateStatement = "UPDATE $tableName SET $columnUserId=?, $columnTravelId=?  WHERE $columnId=?"
     }
 
     override fun get(id: Int): UserTravel? {
         val statement = DbConnection
                 .conn
-                .prepareStatement(selectStatement + "WHERE id=?")
+                .prepareStatement(selectStatement + "WHERE $columnId=?")
         statement.setInt(1, id)
         val result: ResultSet = statement.executeQuery()
         if (result.next()) {
@@ -47,10 +53,20 @@ class UserTravelRepository : IUserTravelRepository {
         return statement.executeUpdate() > 0
     }
 
+    override fun update(obj: UserTravel): Boolean{
+        val statement = DbConnection
+                .conn
+                .prepareStatement(updateStatement)
+        statement.setInt(1, obj.userId!!)
+        statement.setInt(2, obj.travelId!!)
+        statement.setInt(3, obj.id!!)
+        return statement.executeUpdate() > 0
+    }
+
     override fun delete(id: Int): Boolean {
         val statement = DbConnection
                 .conn
-                .prepareStatement(deleteStatement + "WHERE id=?")
+                .prepareStatement(deleteStatement + "WHERE $columnId=?")
         statement.setInt(1, id)
         return statement.executeUpdate() > 0
     }
@@ -65,7 +81,7 @@ class UserTravelRepository : IUserTravelRepository {
     override fun getNextId(): Int {
         val statement = DbConnection.conn
                 .prepareStatement(
-                        "SELECT nextval(pg_get_serial_sequence('app_user_travel', 'id')) AS new_id;"
+                        "SELECT nextval(pg_get_serial_sequence('$tableName', '$columnId')) AS new_id;"
                 )
         val result = statement.executeQuery()
         result.next()

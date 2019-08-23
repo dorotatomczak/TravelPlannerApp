@@ -6,6 +6,8 @@ interface IRepository<T> {
 
     fun add(obj: T): Boolean
 
+    fun update(obj: T): Boolean
+
     fun delete(id: Int): Boolean
     fun deleteAll(): Boolean
 
