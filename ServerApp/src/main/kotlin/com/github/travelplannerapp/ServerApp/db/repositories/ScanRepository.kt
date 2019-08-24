@@ -19,9 +19,7 @@ class ScanRepository : IScanRepository {
                 .conn
                 .prepareStatement(
                         "SELECT scan.id, scan.user_id, scan.travel_id, scan.name " +
-                                "FROM scan INNER JOIN app_user ON app_user.id = scan.user_id " +
-                                "INNER JOIN travel ON travel.id = scan.travel_id " +
-                                "where scan.user_id = ? AND scan.travel_id = ?"
+                                "FROM scan where scan.user_id = ? AND scan.travel_id = ?"
                 )
         statement.setInt(1, userId)
         statement.setInt(2, travelId)

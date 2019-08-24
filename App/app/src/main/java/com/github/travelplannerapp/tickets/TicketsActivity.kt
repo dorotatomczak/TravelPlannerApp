@@ -86,7 +86,7 @@ class TicketsActivity : AppCompatActivity(), TicketsContract.View {
             ScannerActivity.REQUEST_SCANNER -> {
                 if (resultCode == Activity.RESULT_OK && data != null) {
                     val messageCode = data.getIntExtra(ScannerActivity.REQUEST_SCANNER_RESULT_MESSAGE,
-                            R.string.scanner_general_failure)
+                            R.string.scanner_general_error)
                     showSnackbar(messageCode)
                     val scanName = data.getStringExtra(ScannerActivity.REQUEST_SCANNER_RESULT_NAME)
                     presenter.onAddedScan(scanName)
@@ -115,7 +115,7 @@ class TicketsActivity : AppCompatActivity(), TicketsContract.View {
         when (requestCode) {
             REQUEST_PERMISSIONS -> {
                 if ((grantResults.isEmpty() || grantResults[0] != PackageManager.PERMISSION_GRANTED)) {
-                    showSnackbar(R.string.scanner_permissions_failure)
+                    showSnackbar(R.string.scanner_permissions_error)
                 } else {
                     openCamera()
                 }
@@ -129,7 +129,7 @@ class TicketsActivity : AppCompatActivity(), TicketsContract.View {
                 val photoFile = try {
                     createImageFile()
                 } catch (ex: IOException) {
-                    showSnackbar(R.string.scanner_initialization_failure)
+                    showSnackbar(R.string.scanner_initialization_error)
                     null
                 }
                 photoFile?.also {

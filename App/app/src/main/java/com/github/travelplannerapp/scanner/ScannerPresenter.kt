@@ -19,11 +19,11 @@ class ScannerPresenter(view: ScannerContract.View, private val travelId: Int) : 
     override fun takeScan(photoPath: String, corners: List<PointF>, scaleRatio: Int) {
         val scan = Scanner.cropAndScan(photoPath, corners, scaleRatio)
         if (scan != null) view.showScanResultDialog(scan)
-        else view.returnResultAndFinish(R.string.scanner_general_failure)
+        else view.returnResultAndFinish(R.string.scanner_general_error)
     }
 
     override fun uploadScan(scan: File?, token: String, userId: Int) {
-        if (scan == null) view.returnResultAndFinish(R.string.scan_upload_failure)
+        if (scan == null) view.returnResultAndFinish(R.string.scan_upload_error)
         val fileReqBody = RequestBody.create(MediaType.parse("multipart/form-data"), scan!!)
         val filePart = MultipartBody.Part.createFormData("file", scan.name, fileReqBody)
         val userIdReqBody =  RequestBody.create(MediaType.parse("text/plain"), userId.toString())

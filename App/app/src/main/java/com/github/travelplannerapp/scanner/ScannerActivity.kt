@@ -48,7 +48,7 @@ class ScannerActivity : AppCompatActivity(), ScannerContract.View {
                     resources.displayMetrics.widthPixels, resources.displayMetrics.heightPixels)
             imageViewSelection.setImageBitmap(bitmap, scaleRatio)
             //TODO [Dorota] imageViewSelection.setPoints(Scanner.findCorners(photoPath))
-        } else returnResultAndFinish(R.string.scanner_initialization_failure)
+        } else returnResultAndFinish(R.string.scanner_initialization_error)
     }
 
     override fun returnResultAndFinish(messageCode: Int) {
@@ -66,7 +66,7 @@ class ScannerActivity : AppCompatActivity(), ScannerContract.View {
 
     private fun initOpenCv() {
         if (!OpenCVLoader.initDebug()) {
-            returnResultAndFinish(R.string.scanner_initialization_failure)
+            returnResultAndFinish(R.string.scanner_initialization_error)
         }
     }
 

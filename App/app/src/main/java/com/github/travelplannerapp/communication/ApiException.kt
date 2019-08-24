@@ -10,7 +10,7 @@ class ApiException(private val statusCode: Int): Throwable() {
             12 -> R.string.sign_up_email_error
             13 -> R.string.sign_in_error
             21 -> R.string.add_travel_error
-            31 -> R.string.scan_upload_failure
+            31 -> R.string.scan_upload_error
             else -> R.string.try_again
         }
     }
