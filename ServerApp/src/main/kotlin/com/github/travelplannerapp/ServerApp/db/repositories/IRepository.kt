@@ -4,10 +4,8 @@ import java.sql.PreparedStatement
 import java.sql.ResultSet
 
 interface IRepository<T> {
-    fun T(result: ResultSet): T?
-
     fun get(id: Int): T?
-    //fun getAll(): MutableList<T>
+    fun getAll(): MutableList<T>
 
     fun add(obj: T): Boolean
 
@@ -18,11 +16,13 @@ interface IRepository<T> {
 
     fun getNextId(): Int
 
+    fun T(result: ResultSet): T?
+
     fun prepareSelectByIdStatement(id: Int): PreparedStatement
+    fun prepareSelectAllStatement(): PreparedStatement
     fun prepareInsertStatement(obj: T): PreparedStatement
     fun prepareUpdateStatement(obj: T): PreparedStatement
     fun prepareDeleteByIdStatement(id: Int): PreparedStatement
     fun prepareDeleteAllStatement(): PreparedStatement
     fun prepareNextIdStatement(): PreparedStatement
-
 }

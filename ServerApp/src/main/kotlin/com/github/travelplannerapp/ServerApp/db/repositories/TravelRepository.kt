@@ -12,14 +12,16 @@ class TravelRepository : Repository<Travel>(), ITravelRepository {
         const val tableName = "travel"
         const val columnId = "id"
         const val columnName = "name"
+
         private const val insertStatement = "INSERT INTO $tableName (id, name) VALUES (?, ?)"
         private const val selectStatement = "SELECT * FROM $tableName "
         private const val deleteStatement = "DELETE FROM $tableName "
         private const val updateStatement = "UPDATE $tableName SET name=? WHERE id=?"
+        private const val nextIdStatement = "SELECT nextval(pg_get_serial_sequence('$tableName', '$columnId')) AS new_id"
     }
 
     override fun getAllTravelsByUserId(id: Int): MutableList<Travel> {
-        var travels = mutableListOf<Travel>()
+        val travels = mutableListOf<Travel>()
         val statement = DbConnection
                 .conn
                 .prepareStatement(
@@ -37,7 +39,7 @@ class TravelRepository : Repository<Travel>(), ITravelRepository {
     }
 
     override fun getAllTravelsByUserEmail(email: String): MutableList<Travel> {
-        var travels = mutableListOf<Travel>()
+        val travels = mutableListOf<Travel>()
         val statement = DbConnection.conn
                 .prepareStatement(
                         "SELECT $tableName.$columnId, $tableName.$columnName " +
@@ -55,18 +57,6 @@ class TravelRepository : Repository<Travel>(), ITravelRepository {
         return travels
     }
 
-    fun getAll(): MutableList<Travel> {
-        var travels = mutableListOf<Travel>()
-        val statement = DbConnection
-                .conn
-                .prepareStatement(selectStatement)
-        val result = statement.executeQuery()
-        while (result.next()) {
-            travels.add(Travel(result))
-        }
-        return travels
-    }
-
     override fun T(result: ResultSet): Travel? {
         return Travel(result)
     }
@@ -77,6 +67,12 @@ class TravelRepository : Repository<Travel>(), ITravelRepository {
                 .prepareStatement(selectStatement + "WHERE $columnId=?")
         statement.setInt(1, id)
         return statement
+    }
+
+    override fun prepareSelectAllStatement(): PreparedStatement {
+        return DbConnection
+                .conn
+                .prepareStatement(selectStatement)
     }
 
     override fun prepareInsertStatement(obj: Travel): PreparedStatement {
@@ -113,8 +109,6 @@ class TravelRepository : Repository<Travel>(), ITravelRepository {
 
     override fun prepareNextIdStatement(): PreparedStatement {
         return DbConnection.conn
-                .prepareStatement(
-                        "SELECT nextval(pg_get_serial_sequence('$tableName', '$columnId')) AS new_id;"
-                )
+                .prepareStatement(nextIdStatement)
     }
 }

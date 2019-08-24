@@ -15,6 +15,7 @@ class UserRepository : Repository<User>(), IUserRepository {
         const val columnPassword = "password"
         const val columnAuthToken = "authtoken"
         const val columnExpirationDate = "expirationdate"
+
         private const val insertStatement = "INSERT INTO $tableName " +
                 "($columnId,$columnEmail,$columnPassword,$columnAuthToken,$columnExpirationDate) " +
                 "VALUES (?,?,?,?,?) "
@@ -23,6 +24,7 @@ class UserRepository : Repository<User>(), IUserRepository {
         private const val updateStatement = "UPDATE $tableName " +
                 "SET $columnEmail=?, $columnPassword=?, $columnAuthToken=?, $columnExpirationDate=?" +
                 " WHERE $columnId=?"
+        private const val nextIdStatement = "SELECT nextval(pg_get_serial_sequence('$tableName', '$columnId')) AS new_id"
     }
 
     override fun getUserByEmail(email: String): User? {
@@ -37,18 +39,6 @@ class UserRepository : Repository<User>(), IUserRepository {
         return null
     }
 
-    fun getAll(): MutableList<User> {
-        var users = mutableListOf<User>()
-        val statement = DbConnection
-                .conn
-                .prepareStatement(selectStatement)
-        val result = statement.executeQuery()
-        while (result.next()) {
-            users.add(User(result))
-        }
-        return users
-    }
-
     override fun T(result: ResultSet): User? {
         return User(result)
     }
@@ -59,6 +49,12 @@ class UserRepository : Repository<User>(), IUserRepository {
                 .prepareStatement(selectStatement + "WHERE $columnId=?")
         statement.setInt(1, id)
         return statement
+    }
+
+    override fun prepareSelectAllStatement(): PreparedStatement {
+        return DbConnection
+                .conn
+                .prepareStatement(selectStatement)
     }
 
     override fun prepareInsertStatement(obj: User): PreparedStatement {
@@ -101,8 +97,6 @@ class UserRepository : Repository<User>(), IUserRepository {
 
     override fun prepareNextIdStatement(): PreparedStatement {
         return  DbConnection.conn
-                .prepareStatement(
-                        "SELECT nextval(pg_get_serial_sequence('$tableName', '$columnId')) AS new_id;"
-                )
+                .prepareStatement(nextIdStatement)
     }
 }

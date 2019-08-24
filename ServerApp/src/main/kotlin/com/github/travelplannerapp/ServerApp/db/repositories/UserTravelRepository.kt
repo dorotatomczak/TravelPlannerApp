@@ -13,23 +13,13 @@ class UserTravelRepository : Repository<UserTravel>(), IUserTravelRepository {
         const val columnId = "id"
         const val columnUserId = "app_user_id"
         const val columnTravelId = "travel_id"
+
         private const val insertStatement = "INSERT INTO $tableName ($columnId, $columnUserId, $columnTravelId) " +
                 "VALUES (?, ?, ?) "
         private const val selectStatement = "SELECT * FROM $tableName "
         private const val deleteStatement = "DELETE FROM $tableName "
         private const val updateStatement = "UPDATE $tableName SET $columnUserId=?, $columnTravelId=?  WHERE $columnId=?"
-    }
-
-    fun getAll(): MutableList<UserTravel> {
-        var userTravels = mutableListOf<UserTravel>()
-        val statement = DbConnection
-                .conn
-                .prepareStatement(selectStatement)
-        val result = statement.executeQuery()
-        while (result.next()) {
-            userTravels.add(UserTravel(result))
-        }
-        return userTravels
+        private const val nextIdStatement = "SELECT nextval(pg_get_serial_sequence('$tableName', '$columnId')) AS new_id"
     }
 
     override fun T(result: ResultSet): UserTravel? {
@@ -42,6 +32,12 @@ class UserTravelRepository : Repository<UserTravel>(), IUserTravelRepository {
                 .prepareStatement(selectStatement + "WHERE $columnId=?")
         statement.setInt(1, id)
         return statement
+    }
+
+    override fun prepareSelectAllStatement(): PreparedStatement {
+        return DbConnection
+                .conn
+                .prepareStatement(selectStatement)
     }
 
     override fun prepareInsertStatement(obj: UserTravel): PreparedStatement {
@@ -80,8 +76,6 @@ class UserTravelRepository : Repository<UserTravel>(), IUserTravelRepository {
 
     override fun prepareNextIdStatement(): PreparedStatement {
         return DbConnection.conn
-                .prepareStatement(
-                        "SELECT nextval(pg_get_serial_sequence('$tableName', '$columnId')) AS new_id;"
-                )
+                .prepareStatement(nextIdStatement)
     }
 }

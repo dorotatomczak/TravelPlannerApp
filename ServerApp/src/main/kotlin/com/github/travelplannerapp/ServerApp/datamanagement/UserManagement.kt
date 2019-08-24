@@ -50,6 +50,7 @@ class UserManagement : IUserManagement {
         claims["generatedTimestamp"] = LocalDate.now()
 
         val expiryDate = Instant.now().plusSeconds(3600 * 24)
+        val expirationDate = Timestamp.from(expiryDate)
 
         val randomString = generateRandomString() // TODO [Ania] change to defined somewhere key if needed
 
@@ -63,8 +64,9 @@ class UserManagement : IUserManagement {
         // commonPart.otherCommonPart.differentPart
         // database can store 40 signs of the different part
         token = token.split('.').last().substring(0, 40)
-        //TODO Magda send changes from app in this form
-        val changes = mutableMapOf<String, Any?>("token" to token, "expirationDate" to Timestamp.from(expiryDate))
+
+        // TODO [Magda] delegate variables names?
+        val changes = mutableMapOf<String, Any?>("token" to token, "expirationDate" to expirationDate)
         val user = userRepository.getUserByEmail(request.email)
         this.updateUser(user?.id!!, changes)
 

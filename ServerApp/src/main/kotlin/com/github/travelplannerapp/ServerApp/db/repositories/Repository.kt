@@ -10,6 +10,16 @@ abstract class Repository<T> : IRepository<T> {
         return null
     }
 
+    override fun getAll(): MutableList<T> {
+        val objs = mutableListOf<T>()
+        val statement = prepareSelectAllStatement()
+        val result = statement.executeQuery()
+        while (result.next()) {
+            objs.add(T(result)!!)
+        }
+        return objs
+    }
+
     override fun add(obj: T): Boolean {
         val statement = prepareInsertStatement(obj)
         return statement.executeUpdate() > 0
