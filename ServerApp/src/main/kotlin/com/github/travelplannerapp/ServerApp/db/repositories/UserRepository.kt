@@ -15,17 +15,17 @@ class UserRepository : Repository<User>(), IUserRepository {
         const val columnPassword = "password"
         const val columnAuthToken = "authtoken"
         const val columnExpirationDate = "expirationdate"
-
-        private const val insertStatement = "INSERT INTO $tableName " +
-                "($columnId,$columnEmail,$columnPassword,$columnAuthToken,$columnExpirationDate) " +
-                "VALUES (?,?,?,?,?) "
-        private const val selectStatement = "SELECT * FROM $tableName "
-        private const val deleteStatement = "DELETE FROM $tableName "
-        private const val updateStatement = "UPDATE $tableName " +
-                "SET $columnEmail=?, $columnPassword=?, $columnAuthToken=?, $columnExpirationDate=?" +
-                " WHERE $columnId=?"
-        private const val nextIdStatement = "SELECT nextval(pg_get_serial_sequence('$tableName', '$columnId')) AS new_id"
     }
+
+    override val selectStatement = "SELECT * FROM $tableName "
+    override val insertStatement = "INSERT INTO $tableName " +
+            "($columnId,$columnEmail,$columnPassword,$columnAuthToken,$columnExpirationDate) " +
+            "VALUES (?,?,?,?,?) "
+    override val deleteStatement = "DELETE FROM $tableName "
+    override val updateStatement = "UPDATE $tableName " +
+            "SET $columnEmail=?, $columnPassword=?, $columnAuthToken=?, $columnExpirationDate=?" +
+            " WHERE $columnId=?"
+    override val nextIdStatement = "SELECT nextval(pg_get_serial_sequence('$tableName', '$columnId')) AS new_id"
 
     override fun getUserByEmail(email: String): User? {
         val statement = DbConnection
@@ -41,20 +41,6 @@ class UserRepository : Repository<User>(), IUserRepository {
 
     override fun T(result: ResultSet): User? {
         return User(result)
-    }
-
-    override fun prepareSelectByIdStatement(id: Int): PreparedStatement {
-        val statement = DbConnection
-                .conn
-                .prepareStatement(selectStatement + "WHERE $columnId=?")
-        statement.setInt(1, id)
-        return statement
-    }
-
-    override fun prepareSelectAllStatement(): PreparedStatement {
-        return DbConnection
-                .conn
-                .prepareStatement(selectStatement)
     }
 
     override fun prepareInsertStatement(obj: User): PreparedStatement {
@@ -79,24 +65,5 @@ class UserRepository : Repository<User>(), IUserRepository {
         statement.setTimestamp(4, obj.expirationDate)
         statement.setInt(5,obj.id!!)
         return statement
-    }
-
-    override fun prepareDeleteByIdStatement(id: Int): PreparedStatement {
-        val statement = DbConnection
-                .conn
-                .prepareStatement(deleteStatement + "WHERE $columnId=?")
-        statement.setInt(1, id)
-        return statement
-    }
-
-    override fun prepareDeleteAllStatement(): PreparedStatement {
-        return DbConnection
-                .conn
-                .prepareStatement(deleteStatement)
-    }
-
-    override fun prepareNextIdStatement(): PreparedStatement {
-        return  DbConnection.conn
-                .prepareStatement(nextIdStatement)
     }
 }

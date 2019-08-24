@@ -18,11 +18,6 @@ interface IRepository<T> {
 
     fun T(result: ResultSet): T?
 
-    fun prepareSelectByIdStatement(id: Int): PreparedStatement
-    fun prepareSelectAllStatement(): PreparedStatement
     fun prepareInsertStatement(obj: T): PreparedStatement
     fun prepareUpdateStatement(obj: T): PreparedStatement
-    fun prepareDeleteByIdStatement(id: Int): PreparedStatement
-    fun prepareDeleteAllStatement(): PreparedStatement
-    fun prepareNextIdStatement(): PreparedStatement
 }

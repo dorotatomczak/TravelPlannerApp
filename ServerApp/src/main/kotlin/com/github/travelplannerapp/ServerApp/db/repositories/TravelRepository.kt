@@ -12,13 +12,13 @@ class TravelRepository : Repository<Travel>(), ITravelRepository {
         const val tableName = "travel"
         const val columnId = "id"
         const val columnName = "name"
-
-        private const val insertStatement = "INSERT INTO $tableName (id, name) VALUES (?, ?)"
-        private const val selectStatement = "SELECT * FROM $tableName "
-        private const val deleteStatement = "DELETE FROM $tableName "
-        private const val updateStatement = "UPDATE $tableName SET name=? WHERE id=?"
-        private const val nextIdStatement = "SELECT nextval(pg_get_serial_sequence('$tableName', '$columnId')) AS new_id"
     }
+
+    override val selectStatement = "SELECT * FROM $tableName "
+    override val insertStatement = "INSERT INTO $tableName (id, name) VALUES (?, ?)"
+    override val deleteStatement = "DELETE FROM $tableName "
+    override val updateStatement = "UPDATE $tableName SET name=? WHERE id=?"
+    override val nextIdStatement = "SELECT nextval(pg_get_serial_sequence('$tableName', '$columnId')) AS new_id"
 
     override fun getAllTravelsByUserId(id: Int): MutableList<Travel> {
         val travels = mutableListOf<Travel>()
@@ -61,20 +61,6 @@ class TravelRepository : Repository<Travel>(), ITravelRepository {
         return Travel(result)
     }
 
-    override fun prepareSelectByIdStatement(id: Int): PreparedStatement {
-        val statement = DbConnection
-                .conn
-                .prepareStatement(selectStatement + "WHERE $columnId=?")
-        statement.setInt(1, id)
-        return statement
-    }
-
-    override fun prepareSelectAllStatement(): PreparedStatement {
-        return DbConnection
-                .conn
-                .prepareStatement(selectStatement)
-    }
-
     override fun prepareInsertStatement(obj: Travel): PreparedStatement {
         val statement = DbConnection
                 .conn
@@ -91,24 +77,5 @@ class TravelRepository : Repository<Travel>(), ITravelRepository {
         statement.setString(1, obj.name)
         statement.setInt(2, obj.id!!)
         return statement
-    }
-
-    override fun prepareDeleteByIdStatement(id: Int): PreparedStatement {
-        val statement = DbConnection
-                .conn
-                .prepareStatement(deleteStatement + "WHERE $columnId=?")
-        statement.setInt(1, id)
-        return statement
-    }
-
-    override fun prepareDeleteAllStatement(): PreparedStatement {
-        return DbConnection
-                .conn
-                .prepareStatement(deleteStatement)
-    }
-
-    override fun prepareNextIdStatement(): PreparedStatement {
-        return DbConnection.conn
-                .prepareStatement(nextIdStatement)
     }
 }
