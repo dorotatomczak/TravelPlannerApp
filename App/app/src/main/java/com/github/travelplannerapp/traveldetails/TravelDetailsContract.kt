@@ -7,7 +7,7 @@ interface TravelDetailsContract {
         fun showDayPlans()
         fun showTransport()
         fun showAccommodation()
-        fun showTickets()
+        fun showTickets(travelId: Int)
     }
 
     interface TileItemView {

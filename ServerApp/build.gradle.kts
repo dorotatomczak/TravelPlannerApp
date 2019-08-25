@@ -32,6 +32,8 @@ dependencies {
 	implementation("javax.xml.bind:jaxb-api:2.2.12")
 
 	implementation("com.squareup.retrofit2:converter-gson:2.6.0")
+
+	annotationProcessor("org.springframework.boot:spring-boot-configuration-processor")
 }
 
 tasks.withType<KotlinCompile> {

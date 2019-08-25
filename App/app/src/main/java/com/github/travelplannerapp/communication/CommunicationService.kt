@@ -8,6 +8,8 @@ import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.converter.scalars.ScalarsConverterFactory
 import retrofit2.http.*
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
 
 
 object CommunicationService {
@@ -24,6 +26,10 @@ object CommunicationService {
             .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
             .build()
             .create(ServerApi::class.java)
+
+    fun getScanUrl(name: String): String {
+        return "$serverUrl/scans/$name"
+    }
 }
 
 interface ServerApi {
@@ -44,4 +50,12 @@ interface ServerApi {
     @POST("/addtravel")
     fun addTravel(@Header("authorization") token: String, @Body body: AddTravelRequest): Single<Response<Travel>>
 
+    @Multipart
+    @POST("/uploadScan")
+    fun uploadScan(@Header("Authorization") auth: String, @Part("userId") userId: RequestBody,
+                   @Part("travelId") travelId: RequestBody, @Part file: MultipartBody.Part): Single<Response<String>>
+
+    @GET("/scans")
+    fun getScans(@Header("authorization") token: String, @Query("userId") userId: Int,
+                 @Query("travelId") travelId: Int): Single<Response<List<String>>>
 }

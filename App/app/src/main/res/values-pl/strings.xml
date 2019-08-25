@@ -14,12 +14,13 @@
     <string name="create_an_account">Utwórz konto</string>
     <string name="confirm_password">powtórz hasło</string>
     <string name="menu_sign_out">Wyloguj się</string>
-    <string name="scanner_general_failure">Coś złego stało się ze skanerem</string>
-    <string name="scanner_success">Sukces skanera</string>
+    <string name="scanner_general_error">Coś poszło nie tak ze skanerem</string>
+    <string name="scanner_success">Dodałeś nowy skan</string>
     <string name="server_connection_error">Błąd połączenia z serwerem</string>
     <string name="scan">Skanuj</string>
-    <string name="scanner_initialization_failure">Inicjalizacja skanera nie powiodła się</string>
-    <string name="scanner_permissions_failure">Musisz przyznać uprawnienia do kamery i pamięci masowej</string>
+    <string name="scanner_initialization_error">Inicjalizacja skanera nie powiodła się</string>
+    <string name="scanner_permissions_error">Musisz przyznać uprawnienia do kamery i pamięci masowej</string>
+    <string name="scan_upload_error">Coś poszło nie tak podczas przesyłania skanu</string>
     <string name="save">zapisz</string>
     <string name="cancel">anuluj</string>
     <string name="try_again" >Spróbuj ponownie</string>
@@ -32,4 +33,5 @@
     <string name="add_travel_error">Wystąpił problem podczas dodawania podróży</string>
     <string name="add_travel_ok">Podróż pomyślnie dodana</string>
     <string name="authorization_error">Nie masz uprawnień na wykonanie tej akcji</string>
+    <string name="no_tickets">Nie masz żadnego biletu</string>
 </resources>

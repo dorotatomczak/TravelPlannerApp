@@ -20,7 +20,7 @@ class LauncherPresenter (view: LauncherContract.View) : BasePresenter<LauncherCo
     override fun unsubscribe() {
         compositeDisposable.clear()
     }
-    
+
     private fun isLoggedIn(credentials: SharedPreferencesUtils.Credentials): Boolean {
         return !(credentials.userId == -1 && credentials.email.isNullOrEmpty() && credentials.token.isNullOrEmpty())
     }

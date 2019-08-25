@@ -64,8 +64,9 @@ class TravelDetailsActivity : AppCompatActivity(), TravelDetailsContract.View {
         startActivity(intent)
     }
 
-    override fun showTickets() {
+    override fun showTickets(travelId: Int) {
         val intent = Intent(this, TicketsActivity::class.java)
+        intent.putExtra(TicketsActivity.EXTRA_TRAVEL_ID, travelId)
         startActivity(intent)
     }
 }

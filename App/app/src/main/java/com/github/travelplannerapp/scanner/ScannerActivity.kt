@@ -7,10 +7,10 @@ import android.widget.ImageView
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.github.travelplannerapp.R
+import com.github.travelplannerapp.utils.SharedPreferencesUtils
 import dagger.android.AndroidInjection
 import kotlinx.android.synthetic.main.activity_scanner.*
 import org.opencv.android.OpenCVLoader
-import org.opencv.core.Mat
 import javax.inject.Inject
 
 class ScannerActivity : AppCompatActivity(), ScannerContract.View {
@@ -22,8 +22,10 @@ class ScannerActivity : AppCompatActivity(), ScannerContract.View {
 
     companion object {
         const val REQUEST_SCANNER = 3
-        const val REQUEST_SCANNER_RESULT = "REQUEST_SCANNER_RESULT"
-        const val PHOTO_PATH_EXTRA = "PHOTO_PATH_EXTRA"
+        const val REQUEST_SCANNER_RESULT_MESSAGE = "REQUEST_SCANNER_RESULT_MESSAGE"
+        const val REQUEST_SCANNER_RESULT_NAME = "REQUEST_SCANNER_RESULT_NAME"
+        const val EXTRA_PHOTO_PATH = "EXTRA_PHOTO_PATH"
+        const val EXTRA_TRAVEL_ID = "EXTRA_TRAVEL_ID"
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -40,18 +42,23 @@ class ScannerActivity : AppCompatActivity(), ScannerContract.View {
             }
         }
 
-        photoPath = intent.getStringExtra(PHOTO_PATH_EXTRA)
+        photoPath = intent.getStringExtra(EXTRA_PHOTO_PATH)
         if (photoPath != null) {
             val (bitmap, scaleRatio) = BitmapHelper.decodeBitmapFromFile(photoPath!!,
                     resources.displayMetrics.widthPixels, resources.displayMetrics.heightPixels)
             imageViewSelection.setImageBitmap(bitmap, scaleRatio)
-//            imageViewSelection.setPoints(Scanner.findCorners(photoPath))
-        } else returnResultAndFinish(R.string.scanner_initialization_failure)
+            //TODO [Dorota] imageViewSelection.setPoints(Scanner.findCorners(photoPath))
+        } else returnResultAndFinish(R.string.scanner_initialization_error)
     }
 
     override fun returnResultAndFinish(messageCode: Int) {
+        returnResultAndFinish(messageCode, null)
+    }
+
+    override fun returnResultAndFinish(messageCode: Int, scanName: String?) {
         val resultIntent = Intent().apply {
-            putExtra(REQUEST_SCANNER_RESULT, messageCode)
+            putExtra(REQUEST_SCANNER_RESULT_MESSAGE, messageCode)
+            scanName?.let { putExtra(REQUEST_SCANNER_RESULT_NAME, it) }
         }
         setResult(RESULT_OK, resultIntent)
         finish()
@@ -59,19 +66,23 @@ class ScannerActivity : AppCompatActivity(), ScannerContract.View {
 
     private fun initOpenCv() {
         if (!OpenCVLoader.initDebug()) {
-            returnResultAndFinish(R.string.scanner_initialization_failure)
+            returnResultAndFinish(R.string.scanner_initialization_error)
         }
     }
 
     override fun showScanResultDialog(scan: Bitmap) {
         val dialog = AlertDialog.Builder(this)
-        val imageView =  ImageView(this)
+        val imageView = ImageView(this)
         imageView.setImageBitmap(scan)
         dialog.setView(imageView)
 
         dialog.setPositiveButton(R.string.save) { _, _ ->
-            //TODO [Dorota] Save scan and send to server
-            returnResultAndFinish(R.string.scanner_success)
+            val scanFile = BitmapHelper.bitmapToFile(scan, cacheDir)
+            presenter.uploadScan(
+                    scanFile,
+                    SharedPreferencesUtils.getAccessToken(this)!!,
+                    SharedPreferencesUtils.getUserId(this)
+            )
         }
 
         dialog.setNegativeButton(R.string.cancel) { _, _ ->
@@ -80,4 +91,5 @@ class ScannerActivity : AppCompatActivity(), ScannerContract.View {
 
         dialog.show()
     }
+
 }
