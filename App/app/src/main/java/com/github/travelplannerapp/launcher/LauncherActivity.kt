@@ -3,6 +3,7 @@ package com.github.travelplannerapp.launcher
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.github.travelplannerapp.initializers.AppInitializer
 import com.github.travelplannerapp.signin.SignInActivity
 import com.github.travelplannerapp.travels.TravelsActivity
 import com.github.travelplannerapp.utils.SharedPreferencesUtils
@@ -13,12 +14,15 @@ class LauncherActivity : AppCompatActivity(), LauncherContract.View {
 
     @Inject
     lateinit var presenter: LauncherContract.Presenter
+    @Inject
+    lateinit var appInitializer: AppInitializer
 
     override fun onCreate(savedInstanceState: Bundle?) {
         AndroidInjection.inject(this)
         super.onCreate(savedInstanceState)
 
-        presenter.redirect(SharedPreferencesUtils.getCredentials(this))
+        appInitializer.initialize()
+        presenter.redirect(SharedPreferencesUtils.getCredentials())
     }
 
     override fun showSignIn() {

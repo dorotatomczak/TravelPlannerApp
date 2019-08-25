@@ -14,8 +14,8 @@ class TravelsPresenter(view: TravelsContract.View) : BasePresenter<TravelsContra
     private val compositeDisposable = CompositeDisposable()
     private var travels = ArrayList<Travel>()
 
-    override fun loadTravels(token: String, userId: Int) {
-        compositeDisposable.add(CommunicationService.serverApi.getTravels(token, userId)
+    override fun loadTravels() {
+        compositeDisposable.add(CommunicationService.serverApi.getTravels()
                 .observeOn(SchedulerProvider.ui())
                 .subscribeOn(SchedulerProvider.io())
                 .map { if (it.statusCode == 200) it.data!! else throw ApiException(it.statusCode) }
@@ -26,7 +26,7 @@ class TravelsPresenter(view: TravelsContract.View) : BasePresenter<TravelsContra
     }
 
     override fun addTravel(userId: Int, token: String, travelName: String) {
-        compositeDisposable.add(CommunicationService.serverApi.addTravel(token, AddTravelRequest(userId, travelName))
+        compositeDisposable.add(CommunicationService.serverApi.addTravel(AddTravelRequest(userId, travelName))
                 .observeOn(SchedulerProvider.ui())
                 .subscribeOn(SchedulerProvider.io())
                 .map { if (it.statusCode == 200) it.data!! else throw ApiException(it.statusCode) }

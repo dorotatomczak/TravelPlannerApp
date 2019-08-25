@@ -1,7 +1,6 @@
 package com.github.travelplannerapp.di
 
 import android.content.Context
-
 import com.github.travelplannerapp.App
 
 import dagger.Module

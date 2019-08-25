@@ -64,10 +64,7 @@ class TicketsActivity : AppCompatActivity(), TicketsContract.View {
         recyclerViewTickets.layoutManager = LinearLayoutManager(this, RecyclerView.VERTICAL, false)
         recyclerViewTickets.adapter = TicketsAdapter(presenter)
 
-        presenter.loadScans(
-                SharedPreferencesUtils.getAccessToken(this)!!,
-                SharedPreferencesUtils.getUserId(this)
-        )
+        presenter.loadScans()
     }
 
     override fun onPause() {

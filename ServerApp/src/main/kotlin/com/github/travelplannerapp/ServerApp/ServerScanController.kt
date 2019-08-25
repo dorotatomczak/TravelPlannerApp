@@ -27,10 +27,10 @@ class ServerScanController {
     @PostMapping("/uploadScan")
     fun uploadFile(
             @RequestHeader("authorization") token: String,
-            @RequestParam("userId") userId: Int,
             @RequestParam("travelId") travelId: Int,
             @RequestParam("file") file: MultipartFile): Response<String> {
-        userManagement.verifyUser(userId, token)
+        userManagement.verifyUser(token)
+        val userId = userManagement.getUserId(token)
         try {
             val fileName = fileStorageService.storeFile(file)
             scanManagement.addScan(userId, travelId, fileName)
@@ -43,9 +43,9 @@ class ServerScanController {
 
     @GetMapping("/scans")
     fun scans(@RequestHeader("authorization") token: String,
-              @RequestParam userId: Int,
               @RequestParam travelId: Int): Response<List<String>> {
-        userManagement.verifyUser(userId, token)
+        userManagement.verifyUser(token)
+        val userId = userManagement.getUserId(token)
         val scanNames = scanManagement.getScanNames(userId, travelId)
         return Response(200, scanNames)
     }
