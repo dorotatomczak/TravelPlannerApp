@@ -36,13 +36,13 @@ interface ServerApi {
 
     @FormUrlEncoded
     @POST("/authorize")
-    fun authorize(@Header("authorization") token: String, @Field("userId") userId: Int): Single<Response<Void>>
+    fun authorize(@Header("authorization") token: String, @Field("userId") userId: Int): Single<Response<Unit>>
 
     @POST("/authenticate")
     fun authenticate(@Body body: SignInRequest): Single<Response<SignInResponse>>
 
     @POST("/register")
-    fun register(@Body body: SignUpRequest): Single<Response<Void>>
+    fun register(@Body body: SignUpRequest): Single<Response<Unit>>
 
     @GET("/travels")
     fun getTravels(@Header("authorization") token: String, @Query("userId") userId: Int): Observable<Response<List<Travel>>>
