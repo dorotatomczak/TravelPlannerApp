@@ -57,6 +57,7 @@ class TravelsPresenter(view: TravelsContract.View) : BasePresenter<TravelsContra
     private fun handleLoadTravelsResponse(myTravels: List<Travel>) {
         travels = ArrayList(myTravels)
         view.onDataSetChanged()
+        view.hideLoadingIndicator()
 
         if (travels.isEmpty()) view.showNoTravels() else view.showTravels()
     }

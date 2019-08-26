@@ -57,6 +57,7 @@ class TicketsPresenter(view: TicketsContract.View, private val travelId: Int) : 
     private fun handleLoadScansResponse(scans: List<String>) {
         tickets = ArrayList(scans)
         view.onDataSetChanged()
+        view.hideLoadingIndicator()
 
         if (this.tickets.isEmpty()) view.showNoTickets() else view.showTickets()
     }

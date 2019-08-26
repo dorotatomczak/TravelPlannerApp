@@ -39,16 +39,15 @@ class TravelsActivity : AppCompatActivity(), TravelsContract.View {
             showAddTravel()
         }
 
+        swipeRefreshLayoutTravels.setOnRefreshListener { refreshTravels() }
+
         recyclerViewTravels.layoutManager = LinearLayoutManager(this, RecyclerView.VERTICAL, false)
         recyclerViewTravels.adapter = TravelsAdapter(presenter)
     }
 
     override fun onResume() {
         super.onResume()
-        presenter.loadTravels(
-                SharedPreferencesUtils.getAccessToken(this)!!,
-                SharedPreferencesUtils.getUserId(this)
-        )
+        refreshTravels()
     }
 
     override fun onDestroy() {
@@ -98,4 +97,15 @@ class TravelsActivity : AppCompatActivity(), TravelsContract.View {
         recyclerViewTravels.adapter?.notifyDataSetChanged()
     }
 
+    override fun hideLoadingIndicator() {
+        swipeRefreshLayoutTravels.isRefreshing = false
+    }
+
+    private fun refreshTravels() {
+        swipeRefreshLayoutTravels.isRefreshing = true
+        presenter.loadTravels(
+                SharedPreferencesUtils.getAccessToken(this)!!,
+                SharedPreferencesUtils.getUserId(this)
+        )
+    }
 }
