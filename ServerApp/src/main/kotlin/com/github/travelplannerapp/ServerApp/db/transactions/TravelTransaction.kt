@@ -20,19 +20,18 @@ class TravelTransaction {
 
         val travelId = travelRepository.getNextId()
         val travel = Travel( travelId, travelName)
-        val queryResult = travelRepository.add(travel)
+        var queryResult = travelRepository.add(travel)
         if (queryResult) {
             val userTravelId = userTravelRepository.getNextId()
-            userTravelRepository.add(UserTravel(userTravelId, userId, travelId))
-            DbConnection.conn.autoCommit = false
-        } else {
-            DbConnection.conn.rollback()
-            DbConnection.conn.autoCommit = true
-            return null
+            queryResult = userTravelRepository.add(UserTravel(userTravelId, userId, travelId))
+            if (queryResult) {
+                DbConnection.conn.commit()
+                DbConnection.conn.autoCommit = true
+                return travel
+            }
         }
-        DbConnection.conn.commit()
-
+        DbConnection.conn.rollback()
         DbConnection.conn.autoCommit = true
-        return travel
+        return null
     }
 }

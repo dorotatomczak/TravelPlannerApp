@@ -3,24 +3,32 @@ package com.github.travelplannerapp.ServerApp.db.repositories
 import com.github.travelplannerapp.ServerApp.db.DbConnection
 import com.github.travelplannerapp.ServerApp.db.dao.Travel
 import org.springframework.stereotype.Component
+import java.sql.PreparedStatement
+import java.sql.ResultSet
 
 @Component
-class TravelRepository : ITravelRepository {
+class TravelRepository : Repository<Travel>(), ITravelRepository {
     companion object {
-        private const val insertStatement = "INSERT INTO travel (id, name) VALUES (?, ?) "
-        private const val selectStatement = "SELECT * FROM travel "
-        private const val deleteStatement = "DELETE FROM travel "
+        const val tableName = "travel"
+        const val columnId = "id"
+        const val columnName = "name"
     }
 
+    override val selectStatement = "SELECT * FROM $tableName "
+    override val insertStatement = "INSERT INTO $tableName (id, name) VALUES (?, ?)"
+    override val deleteStatement = "DELETE FROM $tableName "
+    override val updateStatement = "UPDATE $tableName SET name=? WHERE id=?"
+    override val nextIdStatement = "SELECT nextval(pg_get_serial_sequence('$tableName', '$columnId')) AS new_id"
+
     override fun getAllTravelsByUserId(id: Int): MutableList<Travel> {
-        var travels = mutableListOf<Travel>()
+        val travels = mutableListOf<Travel>()
         val statement = DbConnection
                 .conn
                 .prepareStatement(
-                        "SELECT travel.id, travel.name " +
-                                "FROM travel INNER JOIN app_user_travel " +
-                                "on travel.id = app_user_travel.travel_id " +
-                                "where app_user_travel.app_user_id = ?"
+                        "SELECT $tableName.$columnId, $tableName.$columnName " +
+                                "FROM $tableName INNER JOIN ${UserTravelRepository.tableName} " +
+                                "on $tableName.$columnId = ${UserTravelRepository.tableName}.${UserTravelRepository.columnTravelId} " +
+                                "where ${UserTravelRepository.tableName}.${UserTravelRepository.columnUserId} = ?"
                 )
         statement.setInt(1, id)
         val result = statement.executeQuery()
@@ -31,15 +39,15 @@ class TravelRepository : ITravelRepository {
     }
 
     override fun getAllTravelsByUserEmail(email: String): MutableList<Travel> {
-        var travels = mutableListOf<Travel>()
+        val travels = mutableListOf<Travel>()
         val statement = DbConnection.conn
                 .prepareStatement(
-                        "SELECT travel.id, travel.name " +
-                                "FROM travel INNER JOIN app_user_travel " +
-                                "ON travel.id = app_user_travel.travel_id " +
-                                "INNER JOIN app_user " +
-                                "ON app_user_travel.app_user_id = app_user.id " +
-                                "WHERE app_user.email = ?"
+                        "SELECT $tableName.$columnId, $tableName.$columnName " +
+                                "FROM $tableName INNER JOIN ${UserTravelRepository.tableName} " +
+                                "ON $tableName.$columnId = ${UserTravelRepository.tableName}.${UserTravelRepository.columnTravelId} " +
+                                "INNER JOIN ${UserRepository.tableName} " +
+                                "ON ${UserTravelRepository.tableName}.${UserTravelRepository.columnUserId} = ${UserRepository.tableName}.${UserTravelRepository.columnId} " +
+                                "WHERE ${UserRepository.tableName}.email = ?"
                 )
         statement.setString(1, email)
         val result = statement.executeQuery()
@@ -49,61 +57,25 @@ class TravelRepository : ITravelRepository {
         return travels
     }
 
-    override fun get(id: Int): Travel? {
-        val statement = DbConnection
-                .conn
-                .prepareStatement(selectStatement + "WHERE id=?")
-        statement.setInt(1, id)
-        val result = statement.executeQuery()
-        if (result.next()) {
-            return Travel(result)
-        }
-        return null
+    override fun T(result: ResultSet): Travel? {
+        return Travel(result)
     }
 
-    override fun getAll(): MutableList<Travel> {
-        var travels = mutableListOf<Travel>()
-        val statement = DbConnection
-                .conn
-                .prepareStatement(selectStatement)
-        val result = statement.executeQuery()
-        while (result.next()) {
-            travels.add(Travel(result))
-        }
-        return travels
-    }
-
-    override fun add(obj: Travel): Boolean {
+    override fun prepareInsertStatement(obj: Travel): PreparedStatement {
         val statement = DbConnection
                 .conn
                 .prepareStatement(insertStatement)
-        statement.setInt(1, obj.id)
+        statement.setInt(1, obj.id!!)
         statement.setString(2, obj.name)
-        return statement.executeUpdate() > 0
+        return statement
     }
 
-    override fun delete(id: Int): Boolean {
+    override fun prepareUpdateStatement(obj: Travel): PreparedStatement {
         val statement = DbConnection
                 .conn
-                .prepareStatement(deleteStatement + "WHERE id=?")
-        statement.setInt(1, id)
-        return statement.executeUpdate() > 0
-    }
-
-    override fun deleteAll(): Boolean {
-        val statement = DbConnection
-                .conn
-                .prepareStatement(deleteStatement)
-        return statement.executeUpdate() > 0
-    }
-
-    override fun getNextId(): Int {
-        val statement = DbConnection.conn
-                .prepareStatement(
-                        "SELECT nextval(pg_get_serial_sequence('travel', 'id')) AS new_id;"
-                )
-        val result = statement.executeQuery()
-        result.next()
-        return result.getInt("new_id")
+                .prepareStatement(updateStatement)
+        statement.setString(1, obj.name)
+        statement.setInt(2, obj.id!!)
+        return statement
     }
 }

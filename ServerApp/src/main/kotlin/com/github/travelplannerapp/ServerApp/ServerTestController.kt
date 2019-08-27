@@ -1,27 +1,17 @@
 package com.github.travelplannerapp.ServerApp
 
 import com.github.travelplannerapp.ServerApp.HereCharger.HereLoader
-import com.github.travelplannerapp.ServerApp.datamanagement.TravelManagement
-import com.github.travelplannerapp.ServerApp.datamanagement.UserManagement
+import com.github.travelplannerapp.ServerApp.db.dao.Travel
 import com.github.travelplannerapp.ServerApp.db.repositories.TravelRepository
-import com.github.travelplannerapp.ServerApp.db.repositories.UserRepository
-import com.github.travelplannerapp.ServerApp.db.repositories.UserTravelRepository
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.web.bind.annotation.*
+import org.springframework.web.bind.annotation.GetMapping
+import org.springframework.web.bind.annotation.RestController
 
 @RestController
 class ServerTestController {
 
     @Autowired
-    lateinit var userRepository: UserRepository
-    @Autowired
     lateinit var travelRepository: TravelRepository
-    @Autowired
-    lateinit var userTravelRepository: UserTravelRepository
-    @Autowired
-    lateinit var userManagement: UserManagement
-    @Autowired
-    lateinit var travelManagement: TravelManagement
 
     @GetMapping("/here")
     fun getExampleDataFromHere() {
@@ -33,15 +23,8 @@ class ServerTestController {
 
     // [Magda] quick database access functions testing
     @GetMapping("/db")
-    fun getTravel(): String  {
-        val email = "jan.nowak@gmail.com"
-        val user = userRepository.getUserByEmail(email)
-        val travel = travelRepository.getAllTravelsByUserEmail(email)[0]
-        val user_travel = userTravelRepository.get(3)
-        return (user!!.email + " " + user.id + "\n" +
-                travel.name + " " + travel.id + "\n" +
-                " user id: " + user_travel!!.userId +
-                " travelid: " + user_travel.travelId)
+    fun getTravel(): Travel? {
+        return travelRepository.get(3)
     }
 
     @GetMapping("/testController")

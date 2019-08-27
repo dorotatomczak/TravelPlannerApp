@@ -63,6 +63,7 @@ class TravelsPresenter(view: TravelsContract.View) : BasePresenter<TravelsContra
 
     private fun handleAddTravelResponse(travel: Travel) {
         travels.add(travel)
+        view.showTravels()
         view.onDataSetChanged()
     }
 

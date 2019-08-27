@@ -1,11 +1,13 @@
 package com.github.travelplannerapp.ServerApp.datamanagement
 
 import com.github.travelplannerapp.ServerApp.db.dao.User
+import com.github.travelplannerapp.ServerApp.db.merge
 import com.github.travelplannerapp.ServerApp.db.repositories.UserRepository
 import com.github.travelplannerapp.ServerApp.exceptions.AuthorizationException
 import com.github.travelplannerapp.ServerApp.exceptions.EmailAlreadyExistsException
 import com.github.travelplannerapp.ServerApp.exceptions.WrongCredentialsException
-import com.github.travelplannerapp.ServerApp.jsondatamodels.*
+import com.github.travelplannerapp.ServerApp.jsondatamodels.SignInRequest
+import com.github.travelplannerapp.ServerApp.jsondatamodels.SignUpRequest
 import io.jsonwebtoken.Jwts
 import io.jsonwebtoken.SignatureAlgorithm
 import org.springframework.beans.factory.annotation.Autowired
@@ -42,7 +44,7 @@ class UserManagement : IUserManagement {
         if (user == null || user.password != request.password) {
             throw WrongCredentialsException("Wrong email or password")
         }
-        return user.id
+        return user.id!!
     }
 
     override fun updateAuthorizationToken(id: Int, request: SignInRequest): String {
@@ -55,6 +57,7 @@ class UserManagement : IUserManagement {
         claims["generatedTimestamp"] = LocalDate.now()
 
         val expiryDate = Instant.now().plusSeconds(3600 * 24)
+        val expirationDate = Timestamp.from(expiryDate)
 
         return Jwts.builder()
                 .setClaims(claims)
@@ -70,5 +73,12 @@ class UserManagement : IUserManagement {
         val userId = userRepository.getNextId()
         val newUser = User(userId, request.email, request.password)
         userRepository.add(newUser)
+    }
+
+    override fun updateUser(id: Int, changes: MutableMap<String, Any?>) {
+        val user = userRepository.get(id)
+        val userChanges = User(changes)
+        val updatedUser = userChanges merge user!!
+        userRepository.update(updatedUser)
     }
 }

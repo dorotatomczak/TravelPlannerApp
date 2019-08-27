@@ -5,7 +5,10 @@ import com.github.travelplannerapp.ServerApp.exceptions.ApiException
 import com.github.travelplannerapp.ServerApp.exceptions.AuthorizationException
 import com.github.travelplannerapp.ServerApp.exceptions.EmailAlreadyExistsException
 import com.github.travelplannerapp.ServerApp.exceptions.WrongCredentialsException
-import com.github.travelplannerapp.ServerApp.jsondatamodels.*
+import com.github.travelplannerapp.ServerApp.jsondatamodels.Response
+import com.github.travelplannerapp.ServerApp.jsondatamodels.SignInRequest
+import com.github.travelplannerapp.ServerApp.jsondatamodels.SignInResponse
+import com.github.travelplannerapp.ServerApp.jsondatamodels.SignUpRequest
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.web.bind.annotation.*
 
@@ -25,8 +28,8 @@ class ServerUserController {
     @PostMapping("/authenticate")
     fun authenticate(@RequestBody request: SignInRequest): Response<SignInResponse> {
         val userId = userManagement.authenticateUser(request)
-        val authToken = userManagement.updateAuthorizationToken(userId, request)
-        return Response(200, SignInResponse(authToken, userId))
+        val token = userManagement.updateAuthorizationToken(request)
+        return Response(200, SignInResponse(token, userId))
     }
 
     @PostMapping("/register")
