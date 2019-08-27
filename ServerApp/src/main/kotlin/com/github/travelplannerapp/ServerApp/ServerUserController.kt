@@ -28,7 +28,7 @@ class ServerUserController {
     @PostMapping("/authenticate")
     fun authenticate(@RequestBody request: SignInRequest): Response<SignInResponse> {
         val userId = userManagement.authenticateUser(request)
-        val token = userManagement.updateAuthorizationToken(request)
+        val token = userManagement.updateAuthorizationToken(userId, request)
         return Response(200, SignInResponse(token, userId))
     }
 

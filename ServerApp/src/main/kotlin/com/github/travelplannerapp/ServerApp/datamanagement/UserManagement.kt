@@ -57,7 +57,6 @@ class UserManagement : IUserManagement {
         claims["generatedTimestamp"] = LocalDate.now()
 
         val expiryDate = Instant.now().plusSeconds(3600 * 24)
-        val expirationDate = Timestamp.from(expiryDate)
 
         return Jwts.builder()
                 .setClaims(claims)
