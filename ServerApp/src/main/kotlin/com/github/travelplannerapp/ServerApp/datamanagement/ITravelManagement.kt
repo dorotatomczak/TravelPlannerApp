@@ -5,4 +5,6 @@ import com.github.travelplannerapp.ServerApp.jsondatamodels.AddTravelRequest
 
 interface ITravelManagement {
     fun addTravel(request: AddTravelRequest): Travel
+
+    fun updateTravel(id: Int, changes: MutableMap<String, Any?>): Travel?
 }
