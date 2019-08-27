@@ -45,10 +45,7 @@ class TravelsActivity : AppCompatActivity(), TravelsContract.View {
 
     override fun onResume() {
         super.onResume()
-        presenter.loadTravels(
-                SharedPreferencesUtils.getAccessToken(this)!!,
-                SharedPreferencesUtils.getUserId(this)
-        )
+        presenter.loadTravels()
     }
 
     override fun onDestroy() {
@@ -61,8 +58,8 @@ class TravelsActivity : AppCompatActivity(), TravelsContract.View {
         addTravelDialog.onOk = {
             val travelName = addTravelDialog.travelName.text.toString()
             presenter.addTravel(
-                    SharedPreferencesUtils.getUserId(this),
-                    SharedPreferencesUtils.getAccessToken(this)!!,
+                    SharedPreferencesUtils.getUserId(),
+                    SharedPreferencesUtils.getAccessToken()!!,
                     travelName
             )
         }

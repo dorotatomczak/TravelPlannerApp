@@ -24,8 +24,8 @@ class TicketsPresenter(view: TicketsContract.View, private val travelId: Int) : 
         view.showScanner(travelId)
     }
 
-    override fun loadScans(token: String, userId: Int) {
-        compositeDisposable.add(CommunicationService.serverApi.getScans(token, userId, travelId)
+    override fun loadScans() {
+        compositeDisposable.add(CommunicationService.serverApi.getScans(travelId)
                 .observeOn(SchedulerProvider.ui())
                 .subscribeOn(SchedulerProvider.io())
                 .map { if (it.statusCode == 200) it.data!! else throw ApiException(it.statusCode) }

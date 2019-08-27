@@ -10,7 +10,7 @@ buildscript {
         }
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.4.2'
+        classpath 'com.android.tools.build:gradle:3.5.0'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion"
 
         // NOTE: Do not place your application dependencies here; they belong
@@ -57,4 +57,5 @@ ext {
     annotationVersion = '1.0.0'
     materialdrawerVersion = '7.0.0-rc05'
     glideVersion = '4.9.0'
+    okhttp3Version = '4.0.1'
 }
