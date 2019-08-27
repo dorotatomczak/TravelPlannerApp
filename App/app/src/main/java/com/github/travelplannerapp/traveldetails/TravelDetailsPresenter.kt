@@ -14,7 +14,7 @@ class TravelDetailsPresenter(private val travelId: Int, private val travelName: 
             Category.CategoryType.DAY_PLANS -> view.showDayPlans()
             Category.CategoryType.TRANSPORT -> view.showTransport()
             Category.CategoryType.ACCOMMODATION -> view.showAccommodation()
-            Category.CategoryType.TICKETS -> view.showTickets()
+            Category.CategoryType.TICKETS -> view.showTickets(travelId)
         }
     }
 }

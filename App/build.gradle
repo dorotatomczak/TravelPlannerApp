@@ -56,4 +56,5 @@ ext {
     exifinterfaceVersion = '1.0.0'
     annotationVersion = '1.0.0'
     materialdrawerVersion = '7.0.0-rc05'
+    glideVersion = '4.9.0'
 }

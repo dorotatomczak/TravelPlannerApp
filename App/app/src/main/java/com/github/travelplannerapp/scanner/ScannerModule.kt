@@ -10,7 +10,8 @@ import dagger.Provides
 class ScannerModule {
 
     @Provides
-    internal fun provideScannerPresenter(scannerView: ScannerContract.View): ScannerContract.Presenter {
-        return ScannerPresenter(scannerView)
+    internal fun provideScannerPresenter(scannerActivity: ScannerActivity, scannerView: ScannerContract.View): ScannerContract.Presenter {
+        val travelId = scannerActivity.intent.getIntExtra(ScannerActivity.EXTRA_TRAVEL_ID, -1)
+        return ScannerPresenter(scannerView, travelId)
     }
 }

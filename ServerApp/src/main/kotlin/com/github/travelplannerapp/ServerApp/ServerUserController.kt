@@ -20,9 +20,9 @@ class ServerUserController {
 
 
     @PostMapping("/authorize")
-    fun authorize(@RequestHeader("authorization") token: String, userId: Int): Response<Void> {
+    fun authorize(@RequestHeader("authorization") token: String, userId: Int): Response<Unit> {
         userManagement.verifyUser(userId, token)
-        return Response(200, null)
+        return Response(200, Unit)
     }
 
     @PostMapping("/authenticate")
@@ -33,18 +33,18 @@ class ServerUserController {
     }
 
     @PostMapping("/register")
-    fun register(@RequestBody request: SignUpRequest): Response<Void> {
+    fun register(@RequestBody request: SignUpRequest): Response<Unit> {
         userManagement.addUser(request)
-        return Response(200, null)
+        return Response(200, Unit)
     }
 
     @ExceptionHandler(AuthorizationException::class, WrongCredentialsException::class, EmailAlreadyExistsException::class)
-    fun handleApiExceptions(exception: ApiException): Response<Any> {
-        return Response(exception.code, null)
+    fun handleApiExceptions(exception: ApiException): Response<Unit> {
+        return Response(exception.code, Unit)
     }
 
     @ExceptionHandler(Exception::class)
-    fun handlePredefinedExceptions(exception: Exception): Response<Any> {
-        return Response(999, null)
+    fun handlePredefinedExceptions(exception: Exception): Response<Unit> {
+        return Response(999, Unit)
     }
 }
