@@ -22,6 +22,6 @@ class ScanManagement : IScanManagement {
 
     fun getScanNames(userId: Int, travelId: Int): List<String> {
         val scans = scanRepository.getAll(userId, travelId)
-        return scans.map { it.name }
+        return scans.map { it.name!! }
     }
 }
