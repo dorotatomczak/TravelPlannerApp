@@ -61,10 +61,12 @@ class TicketsActivity : AppCompatActivity(), TicketsContract.View {
             presenter.onAddScanClick()
         }
 
+        swipeRefreshLayoutTickets.setOnRefreshListener { refreshTickets() }
+
         recyclerViewTickets.layoutManager = LinearLayoutManager(this, RecyclerView.VERTICAL, false)
         recyclerViewTickets.adapter = TicketsAdapter(presenter)
 
-        presenter.loadScans()
+        refreshTickets()
     }
 
     override fun onPause() {
@@ -165,6 +167,15 @@ class TicketsActivity : AppCompatActivity(), TicketsContract.View {
 
     override fun onDataSetChanged() {
         recyclerViewTickets.adapter?.notifyDataSetChanged()
+    }
+
+    override fun hideLoadingIndicator() {
+        swipeRefreshLayoutTickets.isRefreshing = false
+    }
+
+    private fun refreshTickets() {
+        swipeRefreshLayoutTickets.isRefreshing = true
+        presenter.loadScans()
     }
 
     @Throws(IOException::class)

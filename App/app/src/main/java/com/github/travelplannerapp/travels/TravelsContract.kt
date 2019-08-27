@@ -10,6 +10,7 @@ interface TravelsContract {
         fun showSnackbar(messageCode: Int)
         fun showSnackbar(message: String)
         fun onDataSetChanged()
+        fun hideLoadingIndicator()
     }
 
     interface TravelItemView {

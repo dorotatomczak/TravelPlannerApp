@@ -57,11 +57,13 @@ class TicketsPresenter(view: TicketsContract.View, private val travelId: Int) : 
     private fun handleLoadScansResponse(scans: List<String>) {
         tickets = ArrayList(scans)
         view.onDataSetChanged()
+        view.hideLoadingIndicator()
 
         if (this.tickets.isEmpty()) view.showNoTickets() else view.showTickets()
     }
 
     private fun handleErrorResponse() {
+        view.hideLoadingIndicator()
         view.showSnackbar(R.string.server_connection_error)
     }
 

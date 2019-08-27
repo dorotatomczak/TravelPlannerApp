@@ -6,7 +6,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    android:orientation="horizontal"
     tools:context=".travels.TravelsActivity">
 
     <com.google.android.material.appbar.AppBarLayout
@@ -18,27 +17,45 @@
 
     </com.google.android.material.appbar.AppBarLayout>
 
-    <TextView
-        android:id="@+id/textViewNoTravels"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/margin_vertical"
-        android:gravity="center_horizontal"
-        android:text="@string/no_travels"
-        android:textSize="@dimen/text_size_info"
-        android:visibility="visible"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerViewTravels"
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/swipeRefreshLayoutTravels"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginLeft="@dimen/margin_horizontal"
-        android:layout_marginTop="@dimen/margin_vertical_small"
+        android:layout_marginTop="@dimen/margin_vertical"
         android:layout_marginRight="@dimen/margin_horizontal"
-        android:visibility="gone"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"
-        tools:listitem="@layout/item_travel" />
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/textViewNoTravels"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_horizontal"
+                    android:text="@string/no_travels"
+                    android:textSize="@dimen/text_size_info"
+                    android:visibility="visible" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recyclerViewTravels"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:visibility="gone"
+                    tools:listitem="@layout/item_travel" />
+
+            </LinearLayout>
+
+        </androidx.core.widget.NestedScrollView>
+
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
     <include layout="@layout/fab_add" />
 

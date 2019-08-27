@@ -57,6 +57,7 @@ class TravelsPresenter(view: TravelsContract.View) : BasePresenter<TravelsContra
     private fun handleLoadTravelsResponse(myTravels: List<Travel>) {
         travels = ArrayList(myTravels)
         view.onDataSetChanged()
+        view.hideLoadingIndicator()
 
         if (travels.isEmpty()) view.showNoTravels() else view.showTravels()
     }
@@ -68,6 +69,7 @@ class TravelsPresenter(view: TravelsContract.View) : BasePresenter<TravelsContra
     }
 
     private fun handleErrorResponse(error: Throwable) {
+        view.hideLoadingIndicator()
         if (error is ApiException) view.showSnackbar(error.getErrorMessageCode())
         else view.showSnackbar(R.string.server_connection_error)
     }

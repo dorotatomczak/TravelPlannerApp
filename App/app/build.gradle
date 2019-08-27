@@ -44,6 +44,7 @@ dependencies {
     implementation "androidx.recyclerview:recyclerview:$rootProject.recyclerviewVersion"
     implementation "androidx.cardview:cardview:$rootProject.cardviewVersion"
     implementation "com.mikepenz:materialdrawer:$rootProject.materialdrawerVersion"
+    implementation "androidx.swiperefreshlayout:swiperefreshlayout:$rootProject.swiperefreshlayoutVersion"
 
     // Dagger dependencies
     implementation "com.google.dagger:dagger:$rootProject.daggerVersion"
@@ -64,7 +65,6 @@ dependencies {
     androidTestImplementation "androidx.annotation:annotation:$rootProject.annotationVersion"
 
     // JSON and http requests dependencies
-    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$rootProject.courtinessVersion"
     implementation "com.squareup.retrofit2:retrofit:$rootProject.retrofitVersion"
     implementation "com.squareup.retrofit2:converter-gson:$rootProject.gsonVersion"
     implementation "io.reactivex.rxjava2:rxandroid:$rootProject.rxAndroidVersion"

@@ -10,6 +10,7 @@ interface TicketsContract {
         fun showTickets()
         fun showNoTickets()
         fun onDataSetChanged()
+        fun hideLoadingIndicator()
     }
 
     interface TicketItemView {
