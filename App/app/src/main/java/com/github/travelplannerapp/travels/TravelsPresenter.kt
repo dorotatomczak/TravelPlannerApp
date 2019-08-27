@@ -15,8 +15,8 @@ class TravelsPresenter(view: TravelsContract.View) : BasePresenter<TravelsContra
     private val compositeDisposable = CompositeDisposable()
     private var travels = ArrayList<Travel>()
 
-    override fun loadTravels(token: String, userId: Int) {
-        compositeDisposable.add(CommunicationService.serverApi.getTravels(token, userId)
+    override fun loadTravels() {
+        compositeDisposable.add(CommunicationService.serverApi.getTravels()
                 .observeOn(SchedulerProvider.ui())
                 .subscribeOn(SchedulerProvider.io())
                 .map { if (it.responseCode == ResponseCode.OK) it.data!! else throw ApiException(it.responseCode) }
@@ -27,7 +27,7 @@ class TravelsPresenter(view: TravelsContract.View) : BasePresenter<TravelsContra
     }
 
     override fun addTravel(userId: Int, token: String, travelName: String) {
-        compositeDisposable.add(CommunicationService.serverApi.addTravel(token, AddTravelRequest(userId, travelName))
+        compositeDisposable.add(CommunicationService.serverApi.addTravel(AddTravelRequest(userId, travelName))
                 .observeOn(SchedulerProvider.ui())
                 .subscribeOn(SchedulerProvider.io())
                 .map { if (it.responseCode == ResponseCode.OK) it.data!! else throw ApiException(it.responseCode) }
@@ -58,6 +58,7 @@ class TravelsPresenter(view: TravelsContract.View) : BasePresenter<TravelsContra
     private fun handleLoadTravelsResponse(myTravels: List<Travel>) {
         travels = ArrayList(myTravels)
         view.onDataSetChanged()
+        view.hideLoadingIndicator()
 
         if (travels.isEmpty()) view.showNoTravels() else view.showTravels()
     }
@@ -69,6 +70,7 @@ class TravelsPresenter(view: TravelsContract.View) : BasePresenter<TravelsContra
     }
 
     private fun handleErrorResponse(error: Throwable) {
+        view.hideLoadingIndicator()
         if (error is ApiException) view.showSnackbar(error.getErrorMessageCode())
         else view.showSnackbar(R.string.server_connection_error)
     }

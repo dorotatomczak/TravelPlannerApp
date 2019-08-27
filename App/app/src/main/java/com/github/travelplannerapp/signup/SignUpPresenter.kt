@@ -15,7 +15,7 @@ class SignUpPresenter(view: SignUpContract.View) : BasePresenter<SignUpContract.
     private val compositeDisposable = CompositeDisposable()
 
     override fun signUp(email: String, password: String, confirmPassword: String) {
-        if (password != confirmPassword){
+        if (password != confirmPassword) {
             view.showSnackbar(R.string.sign_up_diff_passwords)
             return
         }

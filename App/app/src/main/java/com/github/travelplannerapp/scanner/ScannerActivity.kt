@@ -80,8 +80,8 @@ class ScannerActivity : AppCompatActivity(), ScannerContract.View {
             val scanFile = BitmapHelper.bitmapToFile(scan, cacheDir)
             presenter.uploadScan(
                     scanFile,
-                    SharedPreferencesUtils.getAccessToken(this)!!,
-                    SharedPreferencesUtils.getUserId(this)
+                    SharedPreferencesUtils.getAccessToken()!!,
+                    SharedPreferencesUtils.getUserId()
             )
         }
 

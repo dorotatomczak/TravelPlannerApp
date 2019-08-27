@@ -14,7 +14,7 @@ class LauncherPresenter (view: LauncherContract.View) : BasePresenter<LauncherCo
 
     override fun redirect(credentials: SharedPreferencesUtils.Credentials) {
         if (isLoggedIn(credentials)) {
-            verifyAccessToken(credentials.token!!, credentials.userId)
+            verifyAccessToken()
         } else view.showSignIn()
     }
 
@@ -26,8 +26,8 @@ class LauncherPresenter (view: LauncherContract.View) : BasePresenter<LauncherCo
         return !(credentials.userId == -1 && credentials.email.isNullOrEmpty() && credentials.token.isNullOrEmpty())
     }
 
-    private fun verifyAccessToken(token: String, userId: Int) {
-        compositeDisposable.add(CommunicationService.serverApi.authorize(token, userId)
+    private fun verifyAccessToken() {
+        compositeDisposable.add(CommunicationService.serverApi.authorize()
                 .observeOn(SchedulerProvider.ui())
                 .subscribeOn(SchedulerProvider.io())
                 .map { if (it.responseCode == ResponseCode.OK) it.data else throw ApiException(it.responseCode) }

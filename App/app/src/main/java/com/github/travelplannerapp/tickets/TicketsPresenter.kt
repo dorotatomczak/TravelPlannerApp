@@ -25,8 +25,8 @@ class TicketsPresenter(view: TicketsContract.View, private val travelId: Int) : 
         view.showScanner(travelId)
     }
 
-    override fun loadScans(token: String, userId: Int) {
-        compositeDisposable.add(CommunicationService.serverApi.getScans(token, userId, travelId)
+    override fun loadScans() {
+        compositeDisposable.add(CommunicationService.serverApi.getScans(travelId)
                 .observeOn(SchedulerProvider.ui())
                 .subscribeOn(SchedulerProvider.io())
                 .map { if (it.responseCode == ResponseCode.OK) it.data!! else throw ApiException(it.responseCode) }
@@ -58,11 +58,13 @@ class TicketsPresenter(view: TicketsContract.View, private val travelId: Int) : 
     private fun handleLoadScansResponse(scans: List<String>) {
         tickets = ArrayList(scans)
         view.onDataSetChanged()
+        view.hideLoadingIndicator()
 
         if (this.tickets.isEmpty()) view.showNoTickets() else view.showTickets()
     }
 
     private fun handleErrorResponse() {
+        view.hideLoadingIndicator()
         view.showSnackbar(R.string.server_connection_error)
     }
 

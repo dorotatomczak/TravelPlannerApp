@@ -22,9 +22,10 @@ class ServerTravelController {
     lateinit var travelManagement: TravelManagement
 
     @GetMapping("/travels")
-    fun travels(@RequestHeader("authorization") token: String,
-                @RequestParam("userId") userId: Int): Response<List<Travel>> {
-        userManagement.verifyUser(userId, token)
+    fun travels(@RequestHeader("authorization") token: String): Response<List<Travel>> {
+        userManagement.verifyUser(token)
+
+        val userId = userManagement.getUserId(token)
         val travels = travelRepository.getAllTravelsByUserId(userId)
         return Response(ResponseCode.OK, travels)
     }
@@ -32,7 +33,7 @@ class ServerTravelController {
     @PostMapping("/addtravel")
     fun addTravel(@RequestHeader("authorization") token: String,
                   @RequestBody request: AddTravelRequest): Response<Travel> {
-        userManagement.verifyUser(request.userId, token)
+        userManagement.verifyUser(token)
         val newTravel = travelManagement.addTravel(request)
         return Response(ResponseCode.OK, newTravel)
     }

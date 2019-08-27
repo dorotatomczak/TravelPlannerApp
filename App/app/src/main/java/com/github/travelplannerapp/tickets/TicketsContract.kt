@@ -10,6 +10,7 @@ interface TicketsContract {
         fun showTickets()
         fun showNoTickets()
         fun onDataSetChanged()
+        fun hideLoadingIndicator()
     }
 
     interface TicketItemView {
@@ -19,7 +20,7 @@ interface TicketsContract {
     interface Presenter {
         fun onAddScanClick()
         fun onPhotoTaken()
-        fun loadScans(token: String, userId: Int)
+        fun loadScans()
         fun unsubscribe()
         fun getTicketsCount(): Int
         fun onBindTravelsAtPosition(position:Int, itemView: TicketItemView)

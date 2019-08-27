@@ -29,7 +29,6 @@ android {
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
-
     }
     packagingOptions {
         exclude 'META-INF/library-core_release.kotlin_module'
@@ -45,6 +44,7 @@ dependencies {
     implementation "androidx.recyclerview:recyclerview:$rootProject.recyclerviewVersion"
     implementation "androidx.cardview:cardview:$rootProject.cardviewVersion"
     implementation "com.mikepenz:materialdrawer:$rootProject.materialdrawerVersion"
+    implementation "androidx.swiperefreshlayout:swiperefreshlayout:$rootProject.swiperefreshlayoutVersion"
 
     // Dagger dependencies
     implementation "com.google.dagger:dagger:$rootProject.daggerVersion"
@@ -65,7 +65,6 @@ dependencies {
     androidTestImplementation "androidx.annotation:annotation:$rootProject.annotationVersion"
 
     // JSON and http requests dependencies
-    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$rootProject.courtinessVersion"
     implementation "com.squareup.retrofit2:retrofit:$rootProject.retrofitVersion"
     implementation "com.squareup.retrofit2:converter-gson:$rootProject.gsonVersion"
     implementation "io.reactivex.rxjava2:rxandroid:$rootProject.rxAndroidVersion"
@@ -77,6 +76,7 @@ dependencies {
 
     // Authentication and security
     implementation "com.squareup.retrofit2:converter-scalars:$rootProject.converter_scalarsVersion"
+    implementation "com.squareup.okhttp3:okhttp:$rootProject.okhttp3Version"
 }
 repositories {
     mavenCentral()

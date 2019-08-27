@@ -8,10 +8,11 @@ import com.github.travelplannerapp.communication.CommunicationService
 import com.github.travelplannerapp.communication.model.ResponseCode
 import com.github.travelplannerapp.utils.SchedulerProvider
 import io.reactivex.disposables.CompositeDisposable
-import okhttp3.MediaType
 import java.io.File
-import okhttp3.RequestBody
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
+import okhttp3.RequestBody.Companion.toRequestBody
+import okhttp3.RequestBody.Companion.asRequestBody
 
 class ScannerPresenter(view: ScannerContract.View, private val travelId: Int) : BasePresenter<ScannerContract.View>(view), ScannerContract.Presenter {
 
@@ -25,12 +26,11 @@ class ScannerPresenter(view: ScannerContract.View, private val travelId: Int) : 
 
     override fun uploadScan(scan: File?, token: String, userId: Int) {
         if (scan == null) view.returnResultAndFinish(R.string.scan_upload_error)
-        val fileReqBody = RequestBody.create(MediaType.parse("multipart/form-data"), scan!!)
+        val fileReqBody = scan!!.asRequestBody("multipart/form-data".toMediaTypeOrNull())
         val filePart = MultipartBody.Part.createFormData("file", scan.name, fileReqBody)
-        val userIdReqBody =  RequestBody.create(MediaType.parse("text/plain"), userId.toString())
-        val travelIdReqBody = RequestBody.create(MediaType.parse("text/plain"), travelId.toString())
+        val travelIdReqBody = travelId.toString().toRequestBody("text/plain".toMediaTypeOrNull())
 
-        compositeDisposable.add(CommunicationService.serverApi.uploadScan(token, userIdReqBody, travelIdReqBody, filePart)
+        compositeDisposable.add(CommunicationService.serverApi.uploadScan(travelIdReqBody, filePart)
                 .observeOn(SchedulerProvider.ui())
                 .subscribeOn(SchedulerProvider.io())
                 .map { if (it.responseCode == ResponseCode.OK) it.data else throw ApiException(it.responseCode) }
