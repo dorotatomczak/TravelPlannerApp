@@ -26,8 +26,8 @@ class Scan(map: MutableMap<String, Any?>) {
             this(
                     mutableMapOf(
                             "id" to result.getInt("id"),
-                            "userId" to result.getInt("userId"),
-                            "travelId" to result.getInt("travelId"),
+                            "userId" to result.getInt("user_Id"),
+                            "travelId" to result.getInt("travel_Id"),
                             "name" to result.getString("name")
                     )
             )

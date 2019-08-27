@@ -4,13 +4,10 @@ import com.github.travelplannerapp.ServerApp.datamanagement.TravelManagement
 import com.github.travelplannerapp.ServerApp.datamanagement.UserManagement
 import com.github.travelplannerapp.ServerApp.db.dao.Travel
 import com.github.travelplannerapp.ServerApp.db.repositories.TravelRepository
-import com.github.travelplannerapp.ServerApp.exceptions.AddTravelException
-import com.github.travelplannerapp.ServerApp.exceptions.ApiException
 import com.github.travelplannerapp.ServerApp.jsondatamodels.*
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.web.bind.annotation.*
 import org.springframework.web.bind.annotation.GetMapping
-
 
 
 @RestController
@@ -39,13 +36,4 @@ class ServerTravelController {
         return Response(200, newTravel)
     }
 
-    @ExceptionHandler(AddTravelException::class)
-    fun handleApiExceptions(exception: ApiException): Response<Any> {
-        return Response(exception.code, null)
-    }
-
-    @ExceptionHandler(Exception::class)
-    fun handlePredefinedExceptions(exception: Exception): Response<Any> {
-        return Response(999, null)
-    }
 }

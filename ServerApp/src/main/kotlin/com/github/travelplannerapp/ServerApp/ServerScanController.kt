@@ -69,8 +69,4 @@ class ServerScanController {
                 .body(resource)
     }
 
-    @ExceptionHandler(Exception::class)
-    fun handlePredefinedExceptions(exception: Exception): Response<Any> {
-        return Response(999, null)
-    }
 }
