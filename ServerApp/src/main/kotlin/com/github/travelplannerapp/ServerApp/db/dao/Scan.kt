@@ -2,16 +2,33 @@ package com.github.travelplannerapp.ServerApp.db.dao
 
 import java.sql.ResultSet
 
-class Scan(var id: Int,
-           var userId: Int,
-           var travelId: Int,
-           var name: String) {
+class Scan(map: MutableMap<String, Any?>) {
+    private val defaultMap = map.withDefault { null }
+
+    var id: Int? by defaultMap
+    var userId: Int? by defaultMap
+    var travelId: Int? by defaultMap
+    var name: String? by defaultMap
+
+    constructor(id: Int?,
+                userId: Int?,
+                travelId: Int?,
+                name: String?) :
+            this(
+                    mutableMapOf(
+                            "id" to id,
+                            "userId" to userId,
+                            "travelId" to travelId,
+                            "name" to name)
+            )
 
     constructor(result: ResultSet) :
             this(
-                    result.getInt("id"),
-                    result.getInt("user_id"),
-                    result.getInt("travel_id"),
-                    result.getString("name")
+                    mutableMapOf(
+                            "id" to result.getInt("id"),
+                            "userId" to result.getInt("userId"),
+                            "travelId" to result.getInt("travelId"),
+                            "name" to result.getString("name")
+                    )
             )
 }
