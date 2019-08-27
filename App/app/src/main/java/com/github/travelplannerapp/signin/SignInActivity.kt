@@ -54,7 +54,7 @@ class SignInActivity : AppCompatActivity(), SignInContract.View {
     }
 
     override fun signIn(credentials: SharedPreferencesUtils.Credentials) {
-        SharedPreferencesUtils.setCredentials(credentials, this)
+        SharedPreferencesUtils.setCredentials(credentials)
 
         val intent = Intent(this, TravelsActivity::class.java)
         startActivity(intent)

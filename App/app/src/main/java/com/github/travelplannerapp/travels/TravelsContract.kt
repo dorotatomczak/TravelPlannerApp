@@ -18,7 +18,7 @@ interface TravelsContract {
     }
 
     interface Presenter {
-        fun loadTravels(token: String, userId: Int)
+        fun loadTravels()
         fun addTravel(userId: Int, token: String, travelName: String)
         fun getTravelsCount(): Int
         fun onBindTravelsAtPosition(position: Int, itemView: TravelItemView)

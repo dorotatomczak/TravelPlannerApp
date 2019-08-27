@@ -3,6 +3,7 @@ package com.github.travelplannerapp.communication
 import com.github.travelplannerapp.communication.model.*
 import io.reactivex.Observable
 import io.reactivex.Single
+import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
@@ -18,14 +19,14 @@ object CommunicationService {
     //remote server: https://journello.herokuapp.com/
 
     private const val serverUrl: String = "http://10.0.2.2:8080/"
-
-    val serverApi = Retrofit.Builder()
-            .baseUrl(serverUrl)
-            .addConverterFactory(ScalarsConverterFactory.create())
-            .addConverterFactory(GsonConverterFactory.create())
-            .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-            .build()
-            .create(ServerApi::class.java)
+    val serverApi: ServerApi = Retrofit.Builder()
+                .baseUrl(serverUrl)
+                .addConverterFactory(ScalarsConverterFactory.create())
+                .addConverterFactory(GsonConverterFactory.create())
+                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+                .client(OkHttpClient.Builder().addInterceptor(AuthTokenInterceptor()).build())
+                .build()
+                .create(ServerApi::class.java)
 
     fun getScanUrl(name: String): String {
         return "$serverUrl/scans/$name"
@@ -34,9 +35,8 @@ object CommunicationService {
 
 interface ServerApi {
 
-    @FormUrlEncoded
     @POST("/authorize")
-    fun authorize(@Header("authorization") token: String, @Field("userId") userId: Int): Single<Response<Unit>>
+    fun authorize(): Single<Response<Unit>>
 
     @POST("/authenticate")
     fun authenticate(@Body body: SignInRequest): Single<Response<SignInResponse>>
@@ -45,17 +45,15 @@ interface ServerApi {
     fun register(@Body body: SignUpRequest): Single<Response<Unit>>
 
     @GET("/travels")
-    fun getTravels(@Header("authorization") token: String, @Query("userId") userId: Int): Observable<Response<List<Travel>>>
+    fun getTravels(): Observable<Response<List<Travel>>>
 
     @POST("/addtravel")
-    fun addTravel(@Header("authorization") token: String, @Body body: AddTravelRequest): Single<Response<Travel>>
+    fun addTravel(@Body body: AddTravelRequest): Single<Response<Travel>>
 
     @Multipart
     @POST("/uploadScan")
-    fun uploadScan(@Header("Authorization") auth: String, @Part("userId") userId: RequestBody,
-                   @Part("travelId") travelId: RequestBody, @Part file: MultipartBody.Part): Single<Response<String>>
+    fun uploadScan(@Part("travelId") travelId: RequestBody, @Part file: MultipartBody.Part): Single<Response<String>>
 
     @GET("/scans")
-    fun getScans(@Header("authorization") token: String, @Query("userId") userId: Int,
-                 @Query("travelId") travelId: Int): Single<Response<List<String>>>
+    fun getScans(@Query("travelId") travelId: Int): Single<Response<List<String>>>
 }

@@ -175,10 +175,7 @@ class TicketsActivity : AppCompatActivity(), TicketsContract.View {
 
     private fun refreshTickets() {
         swipeRefreshLayoutTickets.isRefreshing = true
-        presenter.loadScans(
-                SharedPreferencesUtils.getAccessToken(this)!!,
-                SharedPreferencesUtils.getUserId(this)
-        )
+        presenter.loadScans()
     }
 
     @Throws(IOException::class)

@@ -48,7 +48,7 @@ object DrawerUtils {
         },
         SIGN_OUT(R.string.menu_sign_out, R.drawable.ic_sign_out) {
             override fun onClick(view: View) {
-                SharedPreferencesUtils.clear(view.context)
+                SharedPreferencesUtils.clear()
 
                 val intent = Intent(view.context, SignInActivity::class.java)
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)

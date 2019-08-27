@@ -59,9 +59,10 @@ class TravelsActivity : AppCompatActivity(), TravelsContract.View {
         val addTravelDialog = AddTravelDialog()
         addTravelDialog.onOk = {
             val travelName = addTravelDialog.travelName.text.toString()
+            //TODO [Dorota] Change
             presenter.addTravel(
-                    SharedPreferencesUtils.getUserId(this),
-                    SharedPreferencesUtils.getAccessToken(this)!!,
+                    SharedPreferencesUtils.getUserId(),
+                    SharedPreferencesUtils.getAccessToken()!!,
                     travelName
             )
         }
@@ -103,9 +104,6 @@ class TravelsActivity : AppCompatActivity(), TravelsContract.View {
 
     private fun refreshTravels() {
         swipeRefreshLayoutTravels.isRefreshing = true
-        presenter.loadTravels(
-                SharedPreferencesUtils.getAccessToken(this)!!,
-                SharedPreferencesUtils.getUserId(this)
-        )
+        presenter.loadTravels()
     }
 }

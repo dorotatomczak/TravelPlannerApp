@@ -20,7 +20,7 @@ interface TicketsContract {
     interface Presenter {
         fun onAddScanClick()
         fun onPhotoTaken()
-        fun loadScans(token: String, userId: Int)
+        fun loadScans()
         fun unsubscribe()
         fun getTicketsCount(): Int
         fun onBindTravelsAtPosition(position:Int, itemView: TicketItemView)
