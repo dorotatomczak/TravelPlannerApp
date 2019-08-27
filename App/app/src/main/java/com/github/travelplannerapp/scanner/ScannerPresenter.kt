@@ -5,6 +5,7 @@ import com.github.travelplannerapp.BasePresenter
 import com.github.travelplannerapp.R
 import com.github.travelplannerapp.communication.ApiException
 import com.github.travelplannerapp.communication.CommunicationService
+import com.github.travelplannerapp.communication.model.ResponseCode
 import com.github.travelplannerapp.utils.SchedulerProvider
 import io.reactivex.disposables.CompositeDisposable
 import okhttp3.MediaType
@@ -32,7 +33,7 @@ class ScannerPresenter(view: ScannerContract.View, private val travelId: Int) : 
         compositeDisposable.add(CommunicationService.serverApi.uploadScan(token, userIdReqBody, travelIdReqBody, filePart)
                 .observeOn(SchedulerProvider.ui())
                 .subscribeOn(SchedulerProvider.io())
-                .map { if (it.statusCode == 200) it.data else throw ApiException(it.statusCode) }
+                .map { if (it.responseCode == ResponseCode.OK) it.data else throw ApiException(it.responseCode) }
                 .subscribe(
                         { scanName -> handleUploadResponse(scanName) },
                         { error -> handleErrorResponse(error) }

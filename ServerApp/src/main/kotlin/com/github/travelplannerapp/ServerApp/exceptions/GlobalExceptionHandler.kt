@@ -21,6 +21,6 @@ class GlobalExceptionHandler {
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     fun handlePredefinedExceptions(exception: Exception): Response<Any> {
         Logger.error(exception)
-        return Response(999, null)
+        return Response(ResponseCode.OTHER_ERROR, null)
     }
 }

@@ -5,6 +5,7 @@ import com.github.travelplannerapp.R
 import com.github.travelplannerapp.communication.ApiException
 import com.github.travelplannerapp.communication.model.AddTravelRequest
 import com.github.travelplannerapp.communication.CommunicationService
+import com.github.travelplannerapp.communication.model.ResponseCode
 import com.github.travelplannerapp.communication.model.Travel
 import com.github.travelplannerapp.utils.SchedulerProvider
 import io.reactivex.disposables.CompositeDisposable
@@ -18,7 +19,7 @@ class TravelsPresenter(view: TravelsContract.View) : BasePresenter<TravelsContra
         compositeDisposable.add(CommunicationService.serverApi.getTravels(token, userId)
                 .observeOn(SchedulerProvider.ui())
                 .subscribeOn(SchedulerProvider.io())
-                .map { if (it.statusCode == 200) it.data!! else throw ApiException(it.statusCode) }
+                .map { if (it.responseCode == ResponseCode.OK) it.data!! else throw ApiException(it.responseCode) }
                 .subscribe(
                         { travels -> handleLoadTravelsResponse(travels) },
                         { error -> handleErrorResponse(error) }
@@ -29,7 +30,7 @@ class TravelsPresenter(view: TravelsContract.View) : BasePresenter<TravelsContra
         compositeDisposable.add(CommunicationService.serverApi.addTravel(token, AddTravelRequest(userId, travelName))
                 .observeOn(SchedulerProvider.ui())
                 .subscribeOn(SchedulerProvider.io())
-                .map { if (it.statusCode == 200) it.data!! else throw ApiException(it.statusCode) }
+                .map { if (it.responseCode == ResponseCode.OK) it.data!! else throw ApiException(it.responseCode) }
                 .subscribe(
                         { travel -> handleAddTravelResponse(travel) },
                         { error -> handleErrorResponse(error) }

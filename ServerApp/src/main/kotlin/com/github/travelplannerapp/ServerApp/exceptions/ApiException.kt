@@ -1,6 +1,6 @@
 package com.github.travelplannerapp.ServerApp.exceptions
 
 interface ApiException {
-    val code: Int
+    val code: ResponseCode
     val message: String
 }
