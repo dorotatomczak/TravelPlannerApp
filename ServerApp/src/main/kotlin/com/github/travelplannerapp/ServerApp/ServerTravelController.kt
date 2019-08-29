@@ -33,9 +33,10 @@ class ServerTravelController {
 
     @PostMapping("/addtravel")
     fun addTravel(@RequestHeader("authorization") token: String,
-                  @RequestBody request: AddTravelRequest): Response<Travel> {
+                  @RequestBody travelName: String): Response<Travel> {
         userManagement.verifyUser(token)
-        val newTravel = travelManagement.addTravel(request)
+        val userId = userManagement.getUserId(token)
+        val newTravel = travelManagement.addTravel(userId, travelName)
         return Response(200, newTravel)
     }
 

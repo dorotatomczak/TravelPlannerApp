@@ -5,7 +5,6 @@ import com.github.travelplannerapp.ServerApp.db.merge
 import com.github.travelplannerapp.ServerApp.db.repositories.TravelRepository
 import com.github.travelplannerapp.ServerApp.db.transactions.TravelTransaction
 import com.github.travelplannerapp.ServerApp.exceptions.AddTravelException
-import com.github.travelplannerapp.ServerApp.jsondatamodels.AddTravelRequest
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component
 
@@ -17,8 +16,8 @@ class TravelManagement : ITravelManagement {
     @Autowired
     lateinit var travelRepository: TravelRepository
 
-    override fun addTravel(request: AddTravelRequest): Travel {
-        val addedTravel = travelTransaction.addTravel(request.travelName, request.userId)
+    override fun addTravel(id: Int, travelName: String): Travel {
+        val addedTravel = travelTransaction.addTravel(travelName, id)
         if (addedTravel != null) {
             return addedTravel
         } else {
