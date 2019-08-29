@@ -59,12 +59,7 @@ class TravelsActivity : AppCompatActivity(), TravelsContract.View {
         val addTravelDialog = AddTravelDialog()
         addTravelDialog.onOk = {
             val travelName = addTravelDialog.travelName.text.toString()
-            //TODO [Dorota] Change
-            presenter.addTravel(
-                    SharedPreferencesUtils.getUserId(),
-                    SharedPreferencesUtils.getAccessToken()!!,
-                    travelName
-            )
+            presenter.addTravel(travelName)
         }
         addTravelDialog.show(supportFragmentManager, AddTravelDialog.TAG)
     }

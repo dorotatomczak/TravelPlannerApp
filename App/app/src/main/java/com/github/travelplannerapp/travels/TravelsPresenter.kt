@@ -3,7 +3,6 @@ package com.github.travelplannerapp.travels
 import com.github.travelplannerapp.BasePresenter
 import com.github.travelplannerapp.R
 import com.github.travelplannerapp.communication.ApiException
-import com.github.travelplannerapp.communication.model.AddTravelRequest
 import com.github.travelplannerapp.communication.CommunicationService
 import com.github.travelplannerapp.communication.model.ResponseCode
 import com.github.travelplannerapp.communication.model.Travel
@@ -26,8 +25,8 @@ class TravelsPresenter(view: TravelsContract.View) : BasePresenter<TravelsContra
                 ))
     }
 
-    override fun addTravel(userId: Int, token: String, travelName: String) {
-        compositeDisposable.add(CommunicationService.serverApi.addTravel(AddTravelRequest(userId, travelName))
+    override fun addTravel(travelName: String) {
+        compositeDisposable.add(CommunicationService.serverApi.addTravel(travelName)
                 .observeOn(SchedulerProvider.ui())
                 .subscribeOn(SchedulerProvider.io())
                 .map { if (it.responseCode == ResponseCode.OK) it.data!! else throw ApiException(it.responseCode) }

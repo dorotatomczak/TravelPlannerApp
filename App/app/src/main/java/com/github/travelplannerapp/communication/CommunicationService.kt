@@ -48,7 +48,7 @@ interface ServerApi {
     fun getTravels(): Observable<Response<List<Travel>>>
 
     @POST("/addtravel")
-    fun addTravel(@Body body: AddTravelRequest): Single<Response<Travel>>
+    fun addTravel(@Body travelName: String): Single<Response<Travel>>
 
     @Multipart
     @POST("/uploadScan")
