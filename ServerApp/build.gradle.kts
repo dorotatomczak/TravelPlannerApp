@@ -34,6 +34,9 @@ dependencies {
 	implementation("com.squareup.retrofit2:converter-gson:2.6.0")
 
 	annotationProcessor("org.springframework.boot:spring-boot-configuration-processor")
+
+	implementation ("org.tinylog:tinylog-api-kotlin:2.0.0")
+	implementation ("org.tinylog:tinylog-impl:2.0.0")
 }
 
 tasks.withType<KotlinCompile> {

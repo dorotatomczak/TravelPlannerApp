@@ -4,8 +4,7 @@ import com.github.travelplannerapp.ServerApp.datamanagement.TravelManagement
 import com.github.travelplannerapp.ServerApp.datamanagement.UserManagement
 import com.github.travelplannerapp.ServerApp.db.dao.Travel
 import com.github.travelplannerapp.ServerApp.db.repositories.TravelRepository
-import com.github.travelplannerapp.ServerApp.exceptions.AddTravelException
-import com.github.travelplannerapp.ServerApp.exceptions.ApiException
+import com.github.travelplannerapp.ServerApp.exceptions.ResponseCode
 import com.github.travelplannerapp.ServerApp.jsondatamodels.*
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.web.bind.annotation.*
@@ -28,7 +27,7 @@ class ServerTravelController {
 
         val userId = userManagement.getUserId(token)
         val travels = travelRepository.getAllTravelsByUserId(userId)
-        return Response(200, travels)
+        return Response(ResponseCode.OK, travels)
     }
 
     @PostMapping("/addtravel")
@@ -37,16 +36,7 @@ class ServerTravelController {
         userManagement.verifyUser(token)
         val userId = userManagement.getUserId(token)
         val newTravel = travelManagement.addTravel(userId, travelName)
-        return Response(200, newTravel)
+        return Response(ResponseCode.OK, newTravel)
     }
 
-    @ExceptionHandler(AddTravelException::class)
-    fun handleApiExceptions(exception: ApiException): Response<Any> {
-        return Response(exception.code, null)
-    }
-
-    @ExceptionHandler(Exception::class)
-    fun handlePredefinedExceptions(exception: Exception): Response<Any> {
-        return Response(999, null)
-    }
 }

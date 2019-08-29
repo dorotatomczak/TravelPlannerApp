@@ -1,6 +1,8 @@
 package com.github.travelplannerapp.ServerApp.jsondatamodels
 
+import com.github.travelplannerapp.ServerApp.exceptions.ResponseCode
+
 data class Response<T>(
-        var statusCode: Int = 0,
+        var responseCode: ResponseCode,
         var data: T? = null
 )

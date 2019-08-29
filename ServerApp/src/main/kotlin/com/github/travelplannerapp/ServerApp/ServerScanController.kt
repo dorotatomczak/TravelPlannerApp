@@ -2,6 +2,7 @@ package com.github.travelplannerapp.ServerApp
 
 import com.github.travelplannerapp.ServerApp.datamanagement.ScanManagement
 import com.github.travelplannerapp.ServerApp.datamanagement.UserManagement
+import com.github.travelplannerapp.ServerApp.exceptions.ResponseCode
 import com.github.travelplannerapp.ServerApp.exceptions.UploadScanException
 import com.github.travelplannerapp.ServerApp.jsondatamodels.Response
 import com.github.travelplannerapp.ServerApp.services.FileStorageService
@@ -34,7 +35,7 @@ class ServerScanController {
         try {
             val fileName = fileStorageService.storeFile(file)
             scanManagement.addScan(userId, travelId, fileName)
-            return Response(200, fileName)
+            return Response(ResponseCode.OK, fileName)
         } catch (ex: Exception) {
             //TODO [Dorota] Remove file from disk if added
             throw UploadScanException(ex.localizedMessage)
@@ -47,7 +48,7 @@ class ServerScanController {
         userManagement.verifyUser(token)
         val userId = userManagement.getUserId(token)
         val scanNames = scanManagement.getScanNames(userId, travelId)
-        return Response(200, scanNames)
+        return Response(ResponseCode.OK, scanNames)
     }
 
     @GetMapping("/scans/{fileName:.+}")
@@ -69,8 +70,4 @@ class ServerScanController {
                 .body(resource)
     }
 
-    @ExceptionHandler(Exception::class)
-    fun handlePredefinedExceptions(exception: Exception): Response<Any> {
-        return Response(999, null)
-    }
 }
