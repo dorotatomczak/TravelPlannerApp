@@ -16,6 +16,9 @@ import com.github.travelplannerapp.launcher.LauncherViewModel
 import com.github.travelplannerapp.scanner.ScannerActivity
 import com.github.travelplannerapp.scanner.ScannerModule
 import com.github.travelplannerapp.scanner.ScannerViewModel
+import com.github.travelplannerapp.searchelement.SearchElementActivity
+import com.github.travelplannerapp.searchelement.SearchElementModule
+import com.github.travelplannerapp.searchelement.SearchElementViewModel
 import com.github.travelplannerapp.signin.SignInActivity
 import com.github.travelplannerapp.signin.SignInModule
 import com.github.travelplannerapp.signin.SignInViewModel
@@ -44,8 +47,20 @@ import dagger.android.ContributesAndroidInjector
 @Module
 abstract class BuildersModule {
 
+    @ContributesAndroidInjector(modules = [AccommodationViewModel::class, AccommodationModule::class])
+    internal abstract fun bindAccommodationActivity(): AccommodationActivity
+
+    @ContributesAndroidInjector(modules = [AddPlanViewModel::class, AddPlanModule::class])
+    internal abstract fun bindAddPlanActivity(): AddPlanActivity
+
+    @ContributesAndroidInjector(modules = [DayPlansViewModel::class, DayPlansModule::class])
+    internal abstract fun bindDayPlansActivity(): DayPlansActivity
+
     @ContributesAndroidInjector(modules = [LauncherViewModel::class, LauncherModule::class, InitializerModule::class])
     internal abstract fun bindLauncherActivity(): LauncherActivity
+
+    @ContributesAndroidInjector(modules = [SearchElementViewModel::class, SearchElementModule::class])
+    internal abstract fun bindSearchElementActivity(): SearchElementActivity
 
     @ContributesAndroidInjector(modules = [SignInViewModel::class, SignInModule::class])
     internal abstract fun bindSignInActivity(): SignInActivity
@@ -53,29 +68,21 @@ abstract class BuildersModule {
     @ContributesAndroidInjector(modules = [SignUpViewModel::class, SignUpModule::class])
     internal abstract fun bindSignUpActivity(): SignUpActivity
 
-    @ContributesAndroidInjector(modules = [TravelsViewModel::class, TravelsModule::class])
-    internal abstract fun bindTravelsActivity(): TravelsActivity
-
-    @ContributesAndroidInjector(modules = [TravelDetailsViewModel::class, TravelDetailsModule::class])
-    internal abstract fun bindTravelDetailsActivity(): TravelDetailsActivity
-
-    @ContributesAndroidInjector(modules = [DayPlansViewModel::class, DayPlansModule::class])
-    internal abstract fun bindDayPlansActivity(): DayPlansActivity
-
-    @ContributesAndroidInjector(modules = [AddPlanViewModel::class, AddPlanModule::class])
-    internal abstract fun bindAddPlanActivity(): AddPlanActivity
-
-    @ContributesAndroidInjector(modules = [AccommodationViewModel::class, AccommodationModule::class])
-    internal abstract fun bindAccommodationActivity(): AccommodationActivity
-
-    @ContributesAndroidInjector(modules = [TicketsViewModel::class, TicketsModule::class])
-    internal abstract fun bindTicketsActivity(): TicketsActivity
 
     @ContributesAndroidInjector(modules = [ScannerViewModel::class, ScannerModule::class])
     internal abstract fun bindScannerActivity(): ScannerActivity
 
+    @ContributesAndroidInjector(modules = [TicketsViewModel::class, TicketsModule::class])
+    internal abstract fun bindTicketsActivity(): TicketsActivity
+
     @ContributesAndroidInjector(modules = [TransportViewModel::class, TransportModule::class])
     internal abstract fun bindTransportActivity(): TransportActivity
+
+    @ContributesAndroidInjector(modules = [TravelDetailsViewModel::class, TravelDetailsModule::class])
+    internal abstract fun bindTravelDetailsActivity(): TravelDetailsActivity
+
+    @ContributesAndroidInjector(modules = [TravelsViewModel::class, TravelsModule::class])
+    internal abstract fun bindTravelsActivity(): TravelsActivity
 
     // Add bindings for other sub-components here
 }

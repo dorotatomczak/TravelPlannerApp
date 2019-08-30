@@ -1,4 +1,4 @@
-package com.github.travelplannerapp.addtravel
+package com.github.travelplannerapp.travels.addtravel
 
 import android.app.Dialog
 import android.os.Bundle
