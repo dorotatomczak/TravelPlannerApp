@@ -63,6 +63,7 @@
 
         <activity android:name=".traveldetails.TravelDetailsActivity" />
 
+        <activity android:name=".searchelement.SearchElementActivity" />
     </application>
 
 </manifest>

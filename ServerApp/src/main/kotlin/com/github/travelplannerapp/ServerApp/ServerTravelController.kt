@@ -53,13 +53,13 @@ class ServerTravelController {
         return Response(ResponseCode.OK, Unit)
 
     @GetMapping("/findObjects")
-    fun findObjects(@RequestHeader("authorization") token: String, @RequestParam("west") west: String, @RequestParam("south") south: String,
+    fun findObjects(@RequestHeader("authorization") token: String, @RequestParam("cat") category: String, @RequestParam("west") west: String, @RequestParam("south") south: String,
                     @RequestParam("east") east: String, @RequestParam("north") north: String): Response<SearchResponse> {
         return Response(
             ResponseCode.OK,
             // if you want to test via browser
             //searchService.getObjects("eat-drink", Pair("18.516918", "54.350646"), Pair("18.776903", "54.382190"))
-            searchService.getObjects("eat-drink", Pair(west, south), Pair(east, north))
+            searchService.getObjects(category, Pair(west, south), Pair(east, north))
         )
     }
 

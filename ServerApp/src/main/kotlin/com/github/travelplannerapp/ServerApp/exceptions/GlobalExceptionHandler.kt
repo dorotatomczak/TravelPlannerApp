@@ -1,6 +1,6 @@
 package com.github.travelplannerapp.ServerApp.exceptions
 
-import com.github.travelplannerapp.ServerApp.jsondatamodels.Response
+import com.github.travelplannerapp.ServerApp.datamodels.Response
 import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.RestControllerAdvice
 import org.springframework.web.bind.annotation.ExceptionHandler
