@@ -40,10 +40,9 @@ class AddPlanActivity : AppCompatActivity(), AddPlanContract.View {
         editTextPlanFromTime.setOnClickListener { openTimePicker(it as TextInputEditText) }
         editTextPlanToTime.setOnClickListener { openTimePicker(it as TextInputEditText) }
 
-        editTextPlanName.setOnClickListener {
+        editTextPlanName.setOnClickListener{
             //TODO [Dorota] Open Search activity
             //temp for testing (this should be invoked in presenter after the search returned result):
-            editTextPlanName.setText("Wieża Eiffla", TextView.BufferType.EDITABLE)
             showLocation("Champ de Mars, 5 Avenue Anatole France, 75007 Paris, Francja")
         }
 
