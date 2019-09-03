@@ -35,4 +35,18 @@
     <string name="authorization_error">Nie masz uprawnień na wykonanie tej akcji</string>
     <string name="no_tickets">Nie masz żadnego biletu</string>
     <string name="add_scan_error">Wystąpił problem podczas dodawania skanu</string>
+    <string name="no_day_plans">Nie masz żadnego planu dnia w tej podróży</string>
+    <string name="restaurant">Restauracja</string>
+    <string name="museum">Muzeum</string>
+    <string name="monument">Zabytek</string>
+    <string name="search">Szukaj</string>
+    <string name="category">Kategoria</string>
+    <string name="from_date">Od dnia</string>
+    <string name="from_time">Od godziny</string>
+    <string name="to_date">Do dnia</string>
+    <string name="to_time">Do godziny</string>
+    <string name="location">Lokalizacja</string>
+    <string name="name">Nazwa</string>
+    <string name="wrong_dates_error">Data i czas \"Od\" muszą być przed datą i czasem \"Do\"</string>
+    <string name="missing_required_fields_error">Wypełnij wszystkie pola</string>
 </resources>

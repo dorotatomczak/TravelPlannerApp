@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="plan_categories">
+        <item>@string/museum</item>
+        <item>@string/monument</item>
+        <item>@string/restaurant</item>
+    </string-array>
+</resources>
