@@ -19,7 +19,6 @@ import com.github.travelplannerapp.BuildConfig
 import com.github.travelplannerapp.R
 import com.github.travelplannerapp.scanner.ScannerActivity
 import com.github.travelplannerapp.utils.DrawerUtils
-import com.github.travelplannerapp.utils.SharedPreferencesUtils
 import com.google.android.material.snackbar.Snackbar
 import dagger.android.AndroidInjection
 import kotlinx.android.synthetic.main.activity_tickets.*
@@ -29,7 +28,6 @@ import java.io.File
 import java.io.IOException
 import java.text.SimpleDateFormat
 import java.util.*
-
 import javax.inject.Inject
 
 class TicketsActivity : AppCompatActivity(), TicketsContract.View {
@@ -95,13 +93,9 @@ class TicketsActivity : AppCompatActivity(), TicketsContract.View {
     }
 
     override fun verifyPermissions(): Boolean {
-        if (ContextCompat.checkSelfPermission(this.applicationContext,
-                        requiredPermissions[0]) != PackageManager.PERMISSION_GRANTED
-                || ContextCompat.checkSelfPermission(this.applicationContext,
-                        requiredPermissions[1]) != PackageManager.PERMISSION_GRANTED
-                || ContextCompat.checkSelfPermission(this.applicationContext,
-                        requiredPermissions[2]) != PackageManager.PERMISSION_GRANTED) {
-            return false
+        requiredPermissions.forEach { permission ->
+            if (ContextCompat.checkSelfPermission(this.applicationContext, permission)
+                    != PackageManager.PERMISSION_GRANTED) return false
         }
         return true
     }

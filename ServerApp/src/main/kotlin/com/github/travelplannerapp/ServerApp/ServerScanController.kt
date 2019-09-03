@@ -32,12 +32,13 @@ class ServerScanController {
             @RequestParam("file") file: MultipartFile): Response<String> {
         userManagement.verifyUser(token)
         val userId = userManagement.getUserId(token)
+        var fileName: String? = null
         try {
-            val fileName = fileStorageService.storeFile(file)
+            fileName = fileStorageService.storeFile(file)
             scanManagement.addScan(userId, travelId, fileName)
             return Response(ResponseCode.OK, fileName)
         } catch (ex: Exception) {
-            //TODO [Dorota] Remove file from disk if added
+            fileName?.let { fileStorageService.deleteFile(it) }
             throw UploadScanException(ex.localizedMessage)
         }
     }
@@ -66,7 +67,7 @@ class ServerScanController {
 
         return ResponseEntity.ok()
                 .contentType(MediaType.parseMediaType(contentType))
-                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + resource.getFilename() + "\"")
+                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + resource.filename + "\"")
                 .body(resource)
     }
 
