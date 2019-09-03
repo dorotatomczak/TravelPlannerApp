@@ -36,6 +36,7 @@
     <string name="no_tickets">You have no tickets</string>
     <string name="add_scan_error">Error when adding scan</string>
     <string name="delete_menu">Delete</string>
+
     <string name="no_day_plans">You have no day plans for this travel</string>
     <string name="restaurant">Restaurant</string>
     <string name="museum">Museum</string>
