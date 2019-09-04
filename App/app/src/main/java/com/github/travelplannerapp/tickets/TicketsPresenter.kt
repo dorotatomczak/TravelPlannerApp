@@ -55,6 +55,11 @@ class TicketsPresenter(view: TicketsContract.View, private val travelId: Int) : 
         view.onDataSetChanged()
     }
 
+    override fun onScanClicked(position: Int) {
+        val ticket = tickets[position]
+        view.showFullScan((CommunicationService.getScanUrl(ticket)))
+    }
+
     private fun handleLoadScansResponse(scans: List<String>) {
         tickets = ArrayList(scans)
         view.onDataSetChanged()

@@ -5,11 +5,15 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.bumptech.glide.request.RequestOptions
 import com.github.travelplannerapp.R
 import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.item_ticket.*
 
 class TicketsAdapter(val presenter: TicketsContract.Presenter) : RecyclerView.Adapter<TicketsAdapter.TicketsViewHolder>() {
+
+    val requestOptions = RequestOptions().diskCacheStrategy(DiskCacheStrategy.ALL)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TicketsViewHolder {
         return TicketsViewHolder(presenter, LayoutInflater.from(parent.context)
@@ -31,11 +35,12 @@ class TicketsAdapter(val presenter: TicketsContract.Presenter) : RecyclerView.Ad
         }
 
         override fun onClick(v: View?) {
-            //TODO [Dorota] Open full image
+            presenter.onScanClicked(adapterPosition)
         }
 
         override fun setImage(url: String) {
             Glide.with(this.itemView.context)
+                    .apply { requestOptions }
                     .load(url)
                     .into(imageViewItemTicket)
         }

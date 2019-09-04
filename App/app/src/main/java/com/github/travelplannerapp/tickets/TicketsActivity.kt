@@ -13,8 +13,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
+import androidx.fragment.app.DialogFragment
+import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.github.travelplannerapp.BuildConfig
 import com.github.travelplannerapp.R
 import com.github.travelplannerapp.scanner.ScannerActivity
@@ -61,7 +61,7 @@ class TicketsActivity : AppCompatActivity(), TicketsContract.View {
 
         swipeRefreshLayoutTickets.setOnRefreshListener { refreshTickets() }
 
-        recyclerViewTickets.layoutManager = LinearLayoutManager(this, RecyclerView.VERTICAL, false)
+        recyclerViewTickets.layoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
         recyclerViewTickets.adapter = TicketsAdapter(presenter)
 
         refreshTickets()
@@ -165,6 +165,12 @@ class TicketsActivity : AppCompatActivity(), TicketsContract.View {
 
     override fun hideLoadingIndicator() {
         swipeRefreshLayoutTickets.isRefreshing = false
+    }
+
+    override fun showFullScan(url: String) {
+        val dialog = FullScreenDialog(url)
+        dialog.setStyle(DialogFragment.STYLE_NORMAL, android.R.style.Theme_Light_NoTitleBar_Fullscreen)
+        dialog.show(supportFragmentManager, FullScreenDialog.TAG)
     }
 
     private fun refreshTickets() {

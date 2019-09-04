@@ -11,6 +11,7 @@ interface TicketsContract {
         fun showNoTickets()
         fun onDataSetChanged()
         fun hideLoadingIndicator()
+        fun showFullScan(url: String)
     }
 
     interface TicketItemView {
@@ -25,5 +26,6 @@ interface TicketsContract {
         fun getTicketsCount(): Int
         fun onBindTravelsAtPosition(position:Int, itemView: TicketItemView)
         fun onAddedScan(name: String)
+        fun onScanClicked(position: Int)
     }
 }
