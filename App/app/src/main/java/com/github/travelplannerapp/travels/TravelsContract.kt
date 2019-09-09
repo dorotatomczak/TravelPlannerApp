@@ -23,6 +23,8 @@ interface TravelsContract {
         fun getTravelsCount(): Int
         fun onBindTravelsAtPosition(position: Int, itemView: TravelItemView)
         fun openTravelDetails(position: Int)
+        fun removeSelection()
+        fun deleteRows()
         fun unsubscribe()
     }
 }

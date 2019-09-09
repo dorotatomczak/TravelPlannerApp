@@ -18,7 +18,6 @@ import kotlinx.android.synthetic.main.fab_add.*
 import kotlinx.android.synthetic.main.toolbar.*
 import com.github.travelplannerapp.R
 import com.github.travelplannerapp.addtravel.AddTravelDialog
-import com.github.travelplannerapp.utils.SharedPreferencesUtils
 
 class TravelsActivity : AppCompatActivity(), TravelsContract.View {
 

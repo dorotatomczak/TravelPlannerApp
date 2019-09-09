@@ -4,11 +4,14 @@ import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.view.ActionMode
 import com.github.travelplannerapp.R
 import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.item_travel.*
+import androidx.appcompat.app.AppCompatActivity
 
 class TravelsAdapter (val presenter: TravelsContract.Presenter): RecyclerView.Adapter<TravelsAdapter.TravelsViewHolder>(){
+    private var mActionMode: ActionMode? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TravelsViewHolder {
         return TravelsViewHolder(presenter, LayoutInflater.from(parent.context)
@@ -23,10 +26,11 @@ class TravelsAdapter (val presenter: TravelsContract.Presenter): RecyclerView.Ad
     }
 
     inner class TravelsViewHolder(val presenter: TravelsContract.Presenter, override val containerView: View) : RecyclerView.ViewHolder(containerView),
-            LayoutContainer, TravelsContract.TravelItemView, View.OnClickListener {
+            LayoutContainer, TravelsContract.TravelItemView, View.OnClickListener, View.OnLongClickListener {
 
         init {
             containerView.setOnClickListener(this)
+            containerView.setOnLongClickListener(this)
         }
 
         override fun onClick(v: View?) {
@@ -35,6 +39,15 @@ class TravelsAdapter (val presenter: TravelsContract.Presenter): RecyclerView.Ad
 
         override fun setName(name: String) {
             textViewItemTravelName.text = name
+        }
+
+        override fun onLongClick(v: View?): Boolean {
+            mActionMode = (containerView.context as AppCompatActivity).startSupportActionMode(TravelActionModeToolbar(presenter, this))
+            return true
+        }
+
+        fun setActionModeToNull() {
+            mActionMode = null
         }
     }
 }

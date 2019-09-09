@@ -50,6 +50,16 @@ class TravelsPresenter(view: TravelsContract.View) : BasePresenter<TravelsContra
         view.showTravelDetails(travel.id, travel.name)
     }
 
+    override fun removeSelection() {
+        // TODO [Magda] reset selected items
+        view.showSnackbar("remove selection function called")
+    }
+
+    override fun deleteRows() {
+        // TODO [MAGDA] SEND DELETE REQUEST
+        view.showSnackbar("Delete rows function called")
+    }
+
     override fun unsubscribe() {
         compositeDisposable.clear()
     }
@@ -73,5 +83,4 @@ class TravelsPresenter(view: TravelsContract.View) : BasePresenter<TravelsContra
         if (error is ApiException) view.showSnackbar(error.getErrorMessageCode())
         else view.showSnackbar(R.string.server_connection_error)
     }
-
 }
