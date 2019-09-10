@@ -13,6 +13,7 @@ class TravelsPresenter(view: TravelsContract.View) : BasePresenter<TravelsContra
 
     private val compositeDisposable = CompositeDisposable()
     private var travels = ArrayList<Travel>()
+    private var travelsToDeletePositions = ArrayList<Int>()
 
     override fun loadTravels() {
         compositeDisposable.add(CommunicationService.serverApi.getTravels()
@@ -36,9 +37,27 @@ class TravelsPresenter(view: TravelsContract.View) : BasePresenter<TravelsContra
                 ))
     }
 
+    override fun deleteTravels() {
+        val toDeleteTravelIds = ArrayList<Int>()
+        for(position in travelsToDeletePositions){
+            toDeleteTravelIds.add(travels[position].id)
+        }
+        view.showSnackbar(toDeleteTravelIds.toString())
+
+        compositeDisposable.add(CommunicationService.serverApi.deleteTravels(toDeleteTravelIds)
+                .observeOn(SchedulerProvider.ui())
+                .subscribeOn(SchedulerProvider.io())
+                .map { if (it.responseCode == ResponseCode.OK) it.data!! else throw ApiException(it.responseCode) }
+                .subscribe(
+                        { handleDeleteTravelResponse() },
+                        { error -> handleErrorResponse(error) }
+                ))
+    }
+
     override fun onBindTravelsAtPosition(position: Int, itemView: TravelsContract.TravelItemView) {
         val travel = travels[position]
         itemView.setName(travel.name)
+        itemView.setCheckbox()
     }
 
     override fun getTravelsCount(): Int {
@@ -50,18 +69,20 @@ class TravelsPresenter(view: TravelsContract.View) : BasePresenter<TravelsContra
         view.showTravelDetails(travel.id, travel.name)
     }
 
-    override fun removeSelection() {
-        // TODO [Magda] reset selected items
-        view.showSnackbar("remove selection function called")
+    override fun addPositionToDelete(position: Int) {
+        travelsToDeletePositions.add(position)
     }
 
-    override fun deleteRows() {
-        // TODO [MAGDA] SEND DELETE REQUEST
-        view.showSnackbar("Delete rows function called")
+    override fun removePositionToDelete(position: Int) {
+        travelsToDeletePositions.remove(position)
     }
 
     override fun unsubscribe() {
         compositeDisposable.clear()
+    }
+
+    override fun onActionModeOnOff() {
+        view.onDataSetChanged()
     }
 
     private fun handleLoadTravelsResponse(myTravels: List<Travel>) {
@@ -76,6 +97,10 @@ class TravelsPresenter(view: TravelsContract.View) : BasePresenter<TravelsContra
         travels.add(travel)
         view.showTravels()
         view.onDataSetChanged()
+    }
+
+    private fun handleDeleteTravelResponse() {
+        loadTravels()
     }
 
     private fun handleErrorResponse(error: Throwable) {

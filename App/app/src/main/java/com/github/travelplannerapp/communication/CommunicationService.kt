@@ -50,6 +50,9 @@ interface ServerApi {
     @POST("/addtravel")
     fun addTravel(@Body travelName: String): Single<Response<Travel>>
 
+    @POST("/deletetravels")
+    fun deleteTravels(@Body travelIds: ArrayList<Int>): Single<Response<Unit>>
+
     @Multipart
     @POST("/uploadScan")
     fun uploadScan(@Part("travelId") travelId: RequestBody, @Part file: MultipartBody.Part): Single<Response<String>>

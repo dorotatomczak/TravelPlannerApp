@@ -10,7 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.web.bind.annotation.*
 import org.springframework.web.bind.annotation.GetMapping
 
-
 @RestController
 class ServerTravelController {
 
@@ -39,4 +38,12 @@ class ServerTravelController {
         return Response(ResponseCode.OK, newTravel)
     }
 
+    @PostMapping("/deletetravels")
+    fun deleteTravel(@RequestHeader("authorization") token: String,
+                     @RequestBody travelIds: ArrayList<Int>): Response<Unit> {
+        userManagement.verifyUser(token)
+        val userId = userManagement.getUserId(token)
+        travelManagement.deleteTravels(userId, travelIds)
+        return Response(ResponseCode.OK, Unit)
+    }
 }

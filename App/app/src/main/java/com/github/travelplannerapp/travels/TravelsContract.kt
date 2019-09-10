@@ -15,16 +15,20 @@ interface TravelsContract {
 
     interface TravelItemView {
         fun setName(name: String)
+        fun setCheckbox()
+        fun setActionModeToNull()
     }
 
     interface Presenter {
         fun loadTravels()
         fun addTravel(travelName: String)
+        fun deleteTravels()
         fun getTravelsCount(): Int
         fun onBindTravelsAtPosition(position: Int, itemView: TravelItemView)
         fun openTravelDetails(position: Int)
-        fun removeSelection()
-        fun deleteRows()
+        fun addPositionToDelete(position: Int)
+        fun removePositionToDelete(position: Int)
         fun unsubscribe()
+        fun onActionModeOnOff()
     }
 }

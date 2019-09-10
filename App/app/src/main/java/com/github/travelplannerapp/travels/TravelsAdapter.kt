@@ -9,6 +9,7 @@ import com.github.travelplannerapp.R
 import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.item_travel.*
 import androidx.appcompat.app.AppCompatActivity
+import android.widget.CompoundButton
 
 class TravelsAdapter (val presenter: TravelsContract.Presenter): RecyclerView.Adapter<TravelsAdapter.TravelsViewHolder>(){
     private var mActionMode: ActionMode? = null
@@ -25,28 +26,48 @@ class TravelsAdapter (val presenter: TravelsContract.Presenter): RecyclerView.Ad
         presenter.onBindTravelsAtPosition(position, holder)
     }
 
-    inner class TravelsViewHolder(val presenter: TravelsContract.Presenter, override val containerView: View) : RecyclerView.ViewHolder(containerView),
-            LayoutContainer, TravelsContract.TravelItemView, View.OnClickListener, View.OnLongClickListener {
+    inner class TravelsViewHolder(val presenter: TravelsContract.Presenter, override val containerView: View)
+        : RecyclerView.ViewHolder(containerView), LayoutContainer, TravelsContract.TravelItemView, View.OnClickListener, View.OnLongClickListener {
 
         init {
             containerView.setOnClickListener(this)
             containerView.setOnLongClickListener(this)
+            checkboxItemTravel.setOnCheckedChangeListener(CompoundButton.OnCheckedChangeListener(
+                fun ( _ : CompoundButton, isChecked: Boolean) {
+                    if (isChecked) {
+                        presenter.addPositionToDelete(adapterPosition)
+                    } else {
+                        presenter.removePositionToDelete(adapterPosition)
+                    }
+                }
+            ))
         }
 
         override fun onClick(v: View?) {
-            presenter.openTravelDetails(adapterPosition)
+            if (mActionMode != null) checkboxItemTravel.isChecked = !checkboxItemTravel.isChecked
+            else presenter.openTravelDetails(adapterPosition)
+        }
+
+        override fun onLongClick(v: View?): Boolean {
+            mActionMode = (containerView.context as AppCompatActivity)
+                    .startSupportActionMode(TravelsActionModeToolbar(presenter, this))
+            // TODO [Magda] check travel when opening action mode current error: -1 is added
+            //checkboxItemTravel.isChecked = true
+            return true
         }
 
         override fun setName(name: String) {
             textViewItemTravelName.text = name
         }
 
-        override fun onLongClick(v: View?): Boolean {
-            mActionMode = (containerView.context as AppCompatActivity).startSupportActionMode(TravelActionModeToolbar(presenter, this))
-            return true
+        override fun setCheckbox() {
+            if(mActionMode != null) checkboxItemTravel.visibility = View.VISIBLE
+            else checkboxItemTravel.visibility = View.GONE
+
+            checkboxItemTravel.isChecked = false
         }
 
-        fun setActionModeToNull() {
+        override fun setActionModeToNull() {
             mActionMode = null
         }
     }
