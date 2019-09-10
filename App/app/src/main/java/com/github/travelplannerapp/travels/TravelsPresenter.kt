@@ -42,7 +42,6 @@ class TravelsPresenter(view: TravelsContract.View) : BasePresenter<TravelsContra
         for(position in travelsToDeletePositions){
             toDeleteTravelIds.add(travels[position].id)
         }
-        view.showSnackbar(toDeleteTravelIds.toString())
 
         compositeDisposable.add(CommunicationService.serverApi.deleteTravels(toDeleteTravelIds)
                 .observeOn(SchedulerProvider.ui())

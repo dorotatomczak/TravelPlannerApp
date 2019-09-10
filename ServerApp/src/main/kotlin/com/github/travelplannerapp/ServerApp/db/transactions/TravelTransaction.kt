@@ -35,26 +35,32 @@ class TravelTransaction {
         return null
     }
 
-    fun deleteTravel(user_id: Int, travel_id: Int): Boolean {
+    fun deleteTravel(userId: Int, travelIds: ArrayList<Int>): Boolean {
         DbConnection.conn.autoCommit = false
-
-        var queryResult = userTravelRepository.deleteUserTravelBinding(user_id, travel_id)
-        if (queryResult) {
-            if(userTravelRepository.countByTravelId(travel_id) > 0){
-                DbConnection.conn.commit()
-                DbConnection.conn.autoCommit = true
-                return true
-            } else {
-                queryResult = travelRepository.delete(travel_id)
-                if(queryResult) {
-                    DbConnection.conn.commit()
-                    DbConnection.conn.autoCommit = true
-                    return true
+        var status = true
+        for (travelId in travelIds) {
+            var queryResult = userTravelRepository.deleteUserTravelBinding(userId, travelId)
+            if (queryResult) {
+                if (userTravelRepository.countByTravelId(travelId) == 0) {
+                    queryResult = travelRepository.delete(travelId)
+                    if (!queryResult) {
+                        status = false
+                        break
+                    }
                 }
+            } else {
+                status = false
+                break
             }
         }
-        DbConnection.conn.rollback()
-        DbConnection.conn.autoCommit = true
-        return false
+        return if (status) {
+            DbConnection.conn.commit()
+            DbConnection.conn.autoCommit = true
+            true
+        } else {
+            DbConnection.conn.rollback()
+            DbConnection.conn.autoCommit = true
+            false
+        }
     }
 }

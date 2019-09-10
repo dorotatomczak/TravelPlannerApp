@@ -51,8 +51,8 @@ class TravelsAdapter (val presenter: TravelsContract.Presenter): RecyclerView.Ad
         override fun onLongClick(v: View?): Boolean {
             mActionMode = (containerView.context as AppCompatActivity)
                     .startSupportActionMode(TravelsActionModeToolbar(presenter, this))
-            // TODO [Magda] check travel when opening action mode current error: -1 is added
-            //checkboxItemTravel.isChecked = true
+            // TODO [Magda] check travel when opening action mode current error: true first then notifydatachange sets false
+            // checkboxItemTravel.isChecked = true
             return true
         }
 
