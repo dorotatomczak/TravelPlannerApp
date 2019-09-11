@@ -5,3 +5,6 @@ class AddScanException(override val message: String,
 
 class UploadScanException (override val message: String,
                            override val code: ResponseCode = ResponseCode.UPLOAD_SCAN_ERROR): Exception(message), ApiException
+
+class DeleteScansException (override val message: String,
+                           override val code: ResponseCode = ResponseCode.DELETE_SCANS_ERROR): Exception(message), ApiException

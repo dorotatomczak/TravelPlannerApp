@@ -17,6 +17,7 @@ import androidx.fragment.app.DialogFragment
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.github.travelplannerapp.BuildConfig
 import com.github.travelplannerapp.R
+import com.github.travelplannerapp.communication.model.Scan
 import com.github.travelplannerapp.scanner.ScannerActivity
 import com.github.travelplannerapp.utils.DrawerUtils
 import com.google.android.material.snackbar.Snackbar
@@ -59,12 +60,12 @@ class TicketsActivity : AppCompatActivity(), TicketsContract.View {
             presenter.onAddScanClick()
         }
 
-        swipeRefreshLayoutTickets.setOnRefreshListener { refreshTickets() }
+        swipeRefreshLayoutTickets.setOnRefreshListener { presenter.loadScans() }
 
         recyclerViewTickets.layoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
         recyclerViewTickets.adapter = TicketsAdapter(presenter)
 
-        refreshTickets()
+        presenter.loadScans()
     }
 
     override fun onPause() {
@@ -85,8 +86,8 @@ class TicketsActivity : AppCompatActivity(), TicketsContract.View {
                     val messageCode = data.getIntExtra(ScannerActivity.REQUEST_SCANNER_RESULT_MESSAGE,
                             R.string.scanner_general_error)
                     showSnackbar(messageCode)
-                    val scanName = data.getStringExtra(ScannerActivity.REQUEST_SCANNER_RESULT_NAME)
-                    presenter.onAddedScan(scanName)
+                    val scan = data.getSerializableExtra(ScannerActivity.REQUEST_SCANNER_RESULT_SCAN) as Scan
+                    presenter.onAddedScan(scan)
                 }
             }
         }
@@ -163,6 +164,10 @@ class TicketsActivity : AppCompatActivity(), TicketsContract.View {
         recyclerViewTickets.adapter?.notifyDataSetChanged()
     }
 
+    override fun showLoadingIndicator() {
+        swipeRefreshLayoutTickets.isRefreshing = true
+    }
+
     override fun hideLoadingIndicator() {
         swipeRefreshLayoutTickets.isRefreshing = false
     }
@@ -173,9 +178,13 @@ class TicketsActivity : AppCompatActivity(), TicketsContract.View {
         dialog.show(supportFragmentManager, FullScreenDialog.TAG)
     }
 
-    private fun refreshTickets() {
-        swipeRefreshLayoutTickets.isRefreshing = true
-        presenter.loadScans()
+    override fun showActionMode() {
+        fabAdd.visibility = View.GONE
+    }
+
+    override fun showNoActionMode() {
+        fabAdd.visibility = View.VISIBLE
+        (recyclerViewTickets.adapter as TicketsAdapter).leaveActionMode()
     }
 
     @Throws(IOException::class)

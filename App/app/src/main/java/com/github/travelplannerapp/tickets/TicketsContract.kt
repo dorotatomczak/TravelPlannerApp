@@ -1,5 +1,7 @@
 package com.github.travelplannerapp.tickets
 
+import com.github.travelplannerapp.communication.model.Scan
+
 interface TicketsContract {
     interface View {
         fun verifyPermissions(): Boolean
@@ -10,12 +12,16 @@ interface TicketsContract {
         fun showTickets()
         fun showNoTickets()
         fun onDataSetChanged()
+        fun showLoadingIndicator()
         fun hideLoadingIndicator()
         fun showFullScan(url: String)
+        fun showActionMode()
+        fun showNoActionMode()
     }
 
     interface TicketItemView {
         fun setImage(url: String)
+        fun setCheckbox()
     }
 
     interface Presenter {
@@ -24,8 +30,13 @@ interface TicketsContract {
         fun loadScans()
         fun unsubscribe()
         fun getTicketsCount(): Int
-        fun onBindTravelsAtPosition(position:Int, itemView: TicketItemView)
-        fun onAddedScan(name: String)
+        fun onBindTicketsAtPosition(position:Int, itemView: TicketItemView)
+        fun onAddedScan(scan: Scan)
         fun onScanClicked(position: Int)
+        fun deleteTickets()
+        fun enterActionMode()
+        fun leaveActionMode()
+        fun addTicketToDelete(position: Int)
+        fun removeTicketToDelete(position: Int)
     }
 }

@@ -50,4 +50,8 @@
     <string name="name">Nazwa</string>
     <string name="wrong_dates_error">Data i czas \"Od\" muszą być przed datą i czasem \"Do\"</string>
     <string name="missing_required_fields_error">Wypełnij wszystkie pola</string>
+    <string name="delete_travels_ok">Wybrane podróż/e zostały usunięte</string>
+    <string name="delete_tickets_ok">Wybrane skan/y zostały usunięte</string>
+    <string name="delete_scans_error">Wystąpił problem podczas usuwania skanu/ów</string>
+    <string name="delete_travels_error">Wystąpił problem podczas usuwania podróż/y</string>
 </resources>

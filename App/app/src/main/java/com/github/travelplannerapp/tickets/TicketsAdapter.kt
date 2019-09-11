@@ -3,6 +3,9 @@ package com.github.travelplannerapp.tickets
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.CompoundButton
+import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.view.ActionMode
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
@@ -13,6 +16,7 @@ import kotlinx.android.synthetic.main.item_ticket.*
 
 class TicketsAdapter(val presenter: TicketsContract.Presenter) : RecyclerView.Adapter<TicketsAdapter.TicketsViewHolder>() {
 
+    private var actionMode: ActionMode? = null
     val requestOptions = RequestOptions().diskCacheStrategy(DiskCacheStrategy.ALL)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TicketsViewHolder {
@@ -24,18 +28,39 @@ class TicketsAdapter(val presenter: TicketsContract.Presenter) : RecyclerView.Ad
     }
 
     override fun onBindViewHolder(holder: TicketsViewHolder, position: Int) {
-        presenter.onBindTravelsAtPosition(position, holder)
+        presenter.onBindTicketsAtPosition(position, holder)
+    }
+
+    fun leaveActionMode() {
+        actionMode = null
     }
 
     inner class TicketsViewHolder(val presenter: TicketsContract.Presenter, override val containerView: View) : RecyclerView.ViewHolder(containerView),
-            LayoutContainer, TicketsContract.TicketItemView, View.OnClickListener {
+            LayoutContainer, TicketsContract.TicketItemView, View.OnClickListener, View.OnLongClickListener {
 
         init {
             containerView.setOnClickListener(this)
+            containerView.setOnLongClickListener(this)
+
+            checkboxItemTicket.setOnCheckedChangeListener(CompoundButton.OnCheckedChangeListener(
+                    fun(_: CompoundButton, isChecked: Boolean) {
+                        if (isChecked) {
+                            presenter.addTicketToDelete(adapterPosition)
+                        } else {
+                            presenter.removeTicketToDelete(adapterPosition)
+                        }
+                    }
+            ))
         }
 
         override fun onClick(v: View?) {
-            presenter.onScanClicked(adapterPosition)
+            if (actionMode == null) presenter.onScanClicked(adapterPosition)
+        }
+
+        override fun onLongClick(v: View?): Boolean {
+            actionMode = (containerView.context as AppCompatActivity)
+                    .startSupportActionMode(TicketsActionModeToolbar(presenter))
+            return true
         }
 
         override fun setImage(url: String) {
@@ -43,6 +68,13 @@ class TicketsAdapter(val presenter: TicketsContract.Presenter) : RecyclerView.Ad
                     .apply { requestOptions }
                     .load(url)
                     .into(imageViewItemTicket)
+        }
+
+        override fun setCheckbox() {
+            if (actionMode != null) checkboxItemTicket.visibility = View.VISIBLE
+            else checkboxItemTicket.visibility = View.GONE
+
+            checkboxItemTicket.isChecked = false
         }
     }
 }

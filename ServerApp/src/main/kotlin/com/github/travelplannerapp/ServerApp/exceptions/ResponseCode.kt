@@ -11,5 +11,6 @@ enum class ResponseCode {
     DELETE_TRAVELS_ERROR,
     ADD_SCAN_ERROR,
     UPLOAD_SCAN_ERROR,
+    DELETE_SCANS_ERROR,
     OTHER_ERROR
 }

@@ -7,6 +7,7 @@ import android.widget.ImageView
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.github.travelplannerapp.R
+import com.github.travelplannerapp.communication.model.Scan
 import com.github.travelplannerapp.utils.SharedPreferencesUtils
 import dagger.android.AndroidInjection
 import kotlinx.android.synthetic.main.activity_scanner.*
@@ -23,7 +24,7 @@ class ScannerActivity : AppCompatActivity(), ScannerContract.View {
     companion object {
         const val REQUEST_SCANNER = 3
         const val REQUEST_SCANNER_RESULT_MESSAGE = "REQUEST_SCANNER_RESULT_MESSAGE"
-        const val REQUEST_SCANNER_RESULT_NAME = "REQUEST_SCANNER_RESULT_NAME"
+        const val REQUEST_SCANNER_RESULT_SCAN = "REQUEST_SCANNER_RESULT_SCAN"
         const val EXTRA_PHOTO_PATH = "EXTRA_PHOTO_PATH"
         const val EXTRA_TRAVEL_ID = "EXTRA_TRAVEL_ID"
     }
@@ -55,10 +56,10 @@ class ScannerActivity : AppCompatActivity(), ScannerContract.View {
         returnResultAndFinish(messageCode, null)
     }
 
-    override fun returnResultAndFinish(messageCode: Int, scanName: String?) {
+    override fun returnResultAndFinish(messageCode: Int, scan: Scan?) {
         val resultIntent = Intent().apply {
             putExtra(REQUEST_SCANNER_RESULT_MESSAGE, messageCode)
-            scanName?.let { putExtra(REQUEST_SCANNER_RESULT_NAME, it) }
+            scan?.let { putExtra(REQUEST_SCANNER_RESULT_SCAN, it) }
         }
         setResult(RESULT_OK, resultIntent)
         finish()

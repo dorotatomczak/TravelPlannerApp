@@ -13,9 +13,11 @@ class TravelsPresenter(view: TravelsContract.View) : BasePresenter<TravelsContra
 
     private val compositeDisposable = CompositeDisposable()
     private var travels = ArrayList<Travel>()
-    var travelsToDeleteIds = ArrayList<Int>()
+    private var travelsToDeleteIds = ArrayList<Int>()
 
     override fun loadTravels() {
+        view.showLoadingIndicator()
+
         compositeDisposable.add(CommunicationService.serverApi.getTravels()
                 .observeOn(SchedulerProvider.ui())
                 .subscribeOn(SchedulerProvider.io())
@@ -100,8 +102,9 @@ class TravelsPresenter(view: TravelsContract.View) : BasePresenter<TravelsContra
     }
 
     private fun handleDeleteTravelsResponse() {
-        travelsToDeleteIds = ArrayList<Int>()
+        travelsToDeleteIds = ArrayList()
         loadTravels()
+        view.showSnackbar(R.string.delete_travels_ok)
     }
 
     private fun handleErrorResponse(error: Throwable) {

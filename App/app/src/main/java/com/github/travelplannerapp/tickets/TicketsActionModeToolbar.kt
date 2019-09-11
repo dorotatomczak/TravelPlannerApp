@@ -1,32 +1,33 @@
-package com.github.travelplannerapp.travels
+package com.github.travelplannerapp.tickets
 
 import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.view.ActionMode
 import com.github.travelplannerapp.R
 
-class TravelsActionModeToolbar(private val travelsPresenter: TravelsContract.Presenter): ActionMode.Callback {
+class TicketsActionModeToolbar(private val ticketsPresenter: TicketsContract.Presenter): ActionMode.Callback {
+
     override fun onActionItemClicked(mode: ActionMode, item: MenuItem): Boolean {
         when (item.itemId) {
-            R.id.menuDeleteTravels ->{
-                travelsPresenter.deleteTravels()
+            R.id.menuDeleteTickets ->{
+                ticketsPresenter.deleteTickets()
             }
         }
         return false
     }
 
     override fun onCreateActionMode(mode: ActionMode, menu: Menu): Boolean {
-        mode.menuInflater.inflate(R.menu.menu_travels, menu)
+        mode.menuInflater.inflate(R.menu.menu_tickets, menu)
         return true
     }
 
     override fun onPrepareActionMode(mode: ActionMode, menu: Menu): Boolean {
-        travelsPresenter.enterActionMode()
-        menu.findItem(R.id.menuDeleteTravels).setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS)
+        ticketsPresenter.enterActionMode()
+        menu.findItem(R.id.menuDeleteTickets).setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS)
         return true
     }
 
     override fun onDestroyActionMode(mode: ActionMode?) {
-        travelsPresenter.leaveActionMode()
+        ticketsPresenter.leaveActionMode()
     }
 }
