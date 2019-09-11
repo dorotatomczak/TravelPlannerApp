@@ -1,5 +1,6 @@
 package com.github.travelplannerapp.dayplans.addplan
 
+import android.app.Activity
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
 import android.content.Intent
@@ -10,6 +11,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.github.travelplannerapp.R
 import com.github.travelplannerapp.communication.model.PlaceCategory
 import com.github.travelplannerapp.communication.model.Plan
+import com.github.travelplannerapp.dayplans.searchelement.SearchElementActivity
 import com.github.travelplannerapp.utils.DateTimeUtils
 import com.github.travelplannerapp.utils.DrawerUtils
 import com.google.android.material.snackbar.Snackbar
@@ -52,12 +54,8 @@ class AddPlanActivity : AppCompatActivity(), AddPlanContract.View {
         editTextPlanToTime.setOnClickListener { openTimePicker(it as TextInputEditText) }
 
         editTextPlanName.setOnClickListener {
-            //TODO [Dorota] Open Search activity
-            //temp for testing (this should be invoked in presenter after the search returned result):
-            coordinates.lattitude = 48.8583701
-            coordinates.longitude = 2.2944813
-            editTextPlanName.setText("Wieża Eiffla", TextView.BufferType.EDITABLE)
-            showLocation("Champ de Mars, 5 Avenue Anatole France, 75007 Paris, Francja")
+            val intent = Intent(this, SearchElementActivity::class.java)
+            startActivityForResult(intent, SearchElementActivity.REQUEST_SEARCH)
         }
 
         fabFinishAddPlan.setOnClickListener { onFabFinishAddPlanClicked() }
@@ -123,4 +121,23 @@ class AddPlanActivity : AppCompatActivity(), AddPlanContract.View {
         )
         presenter.addPlan(data)
     }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        when (requestCode) {
+            SearchElementActivity.REQUEST_SEARCH -> {
+                if (resultCode == Activity.RESULT_OK && data != null) {
+                    val messageCode = data.getIntExtra(SearchElementActivity.SEARCH_RESULT,
+                            R.string.try_again)
+                    val name = data.getStringExtra(SearchElementActivity.NAME)
+                    val location = data.getStringExtra(SearchElementActivity.LOCATION)
+
+                    editTextPlanName.setText(name, TextView.BufferType.EDITABLE)
+                    showLocation(location!!)
+                    showSnackbar(messageCode)
+                }
+            }
+        }
+    }
+
 }

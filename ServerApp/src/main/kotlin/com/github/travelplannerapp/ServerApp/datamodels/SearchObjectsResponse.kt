@@ -1,6 +1,6 @@
 package com.github.travelplannerapp.ServerApp.datamodels
 
-class SearchResponse(val results: Results)
+class SearchObjectsResponse(val results: Results)
 
 class Results(
     val previous: String,

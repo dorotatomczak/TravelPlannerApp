@@ -64,13 +64,13 @@
     <string name="hospital_health_care_facility">Opieka zdrowotna</string>
     <string name="leisure_outdoor">Aktywny wypoczynek</string>
     <string name="petrol_station">Stacja paliw</string>
-    <string name="restaurant">Restauracja</string>
     <string name="sights_museum">Zabytki i muzea</string>
     <string name="toilet_rest_area">Toaleta</string>
     <string name="eat_drink">Jedzenie i picie</string>
     <string name="coffee_tea">Kawiarnie</string>
+    <string name="restaurant">Restauracja</string>
     <string name="going_out">Rozrywka</string>
-    <string name="airport">Lotniska</string>
+    <string name="airport">Lotnisko</string>
     <string name="shopping">Zakupy</string>
     <string name="outdoor">Outdoor</string>
     <string name="natural_geographical">Natura</string>

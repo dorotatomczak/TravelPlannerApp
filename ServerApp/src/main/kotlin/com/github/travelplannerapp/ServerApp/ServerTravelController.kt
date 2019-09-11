@@ -5,12 +5,8 @@ import com.github.travelplannerapp.ServerApp.datamanagement.UserManagement
 import com.github.travelplannerapp.ServerApp.db.dao.Travel
 import com.github.travelplannerapp.ServerApp.db.repositories.TravelRepository
 import com.github.travelplannerapp.ServerApp.exceptions.ResponseCode
-<<<<<<< HEAD
-import com.github.travelplannerapp.ServerApp.jsondatamodels.Response
-=======
 import com.github.travelplannerapp.ServerApp.datamodels.*
-import com.github.travelplannerapp.ServerApp.searchservice.SearchService
->>>>>>> #40: add server-side finding objects by category
+import com.github.travelplannerapp.ServerApp.services.searchservice.SearchService
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.web.bind.annotation.*
 
@@ -51,25 +47,34 @@ class ServerTravelController {
         val userId = userManagement.getUserId(token)
         travelManagement.deleteTravels(userId, travelIds)
         return Response(ResponseCode.OK, Unit)
+    }
 
     @GetMapping("/findObjects")
-    fun findObjects(@RequestHeader("authorization") token: String, @RequestParam("cat") category: String, @RequestParam("west") west: String, @RequestParam("south") south: String,
-                    @RequestParam("east") east: String, @RequestParam("north") north: String): Response<SearchResponse> {
+    fun findObjects(/*@RequestHeader("authorization") token: String, @RequestParam("cat") category: String, @RequestParam("west") west: String, @RequestParam("south") south: String,
+                    @RequestParam("east") east: String, @RequestParam("north") north: String*/): Response<SearchObjectsResponse> {
         return Response(
             ResponseCode.OK,
             // if you want to test via browser
-            //searchService.getObjects("eat-drink", Pair("18.516918", "54.350646"), Pair("18.776903", "54.382190"))
-            searchService.getObjects(category, Pair(west, south), Pair(east, north))
+            searchService.getObjects("eat-drink", Pair("18.516918", "54.350646"), Pair("18.776903", "54.382190"))
+            //searchService.getObjects(category, Pair(west, south), Pair(east, north))
         )
     }
 
     // eg. for getting next page
     @GetMapping("/findObjectsGetPage")
     fun findObjectsGetPage(/*@RequestHeader("authorization") token: String,*/
-        @RequestParam("request") request: String): Response<SearchResponse> {
+        @RequestParam("request") request: String): Response<SearchObjectsResponse> {
         return Response(
             ResponseCode.OK,
             searchService.getPage(request)
         )
+    }
+
+    @GetMapping("/findCities")
+    fun findCities(@RequestHeader("authorization") token: String, @RequestParam("query") query: String): Response<Array<CityObject>> {
+        userManagement.verifyUser(token)
+        val cities = searchService.findCities(query)
+
+        return Response(ResponseCode.OK, cities)
     }
 }

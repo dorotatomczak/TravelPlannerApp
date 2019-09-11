@@ -1,4 +1,4 @@
-package com.github.travelplannerapp.ServerApp.searchservice.data
+package com.github.travelplannerapp.ServerApp.services.searchservice.data
 
 class Location(private val position: Position, private val address: Address) {
     //TEMPORARY
