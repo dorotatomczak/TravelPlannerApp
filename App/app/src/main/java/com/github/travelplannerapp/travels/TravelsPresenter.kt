@@ -75,14 +75,14 @@ class TravelsPresenter(view: TravelsContract.View) : BasePresenter<TravelsContra
         compositeDisposable.clear()
     }
 
-    override fun onActionModeEnter() {
+    override fun enterActionMode() {
         view.onDataSetChanged()
-        view.hideFabAdd()
+        view.showActionMode()
     }
 
-    override fun onActionModeLeave() {
+    override fun leaveActionMode() {
         view.onDataSetChanged()
-        view.showFabAdd()
+        view.showNoActionMode()
     }
 
     private fun handleLoadTravelsResponse(myTravels: List<Travel>) {

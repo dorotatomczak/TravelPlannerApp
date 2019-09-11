@@ -11,14 +11,13 @@ interface TravelsContract {
         fun showSnackbar(message: String)
         fun onDataSetChanged()
         fun hideLoadingIndicator()
-        fun hideFabAdd()
-        fun showFabAdd()
+        fun showActionMode()
+        fun showNoActionMode()
     }
 
     interface TravelItemView {
         fun setName(name: String)
         fun setCheckbox()
-        fun leaveActionMode()
     }
 
     interface Presenter {
@@ -31,7 +30,7 @@ interface TravelsContract {
         fun addPositionToDelete(position: Int)
         fun removePositionToDelete(position: Int)
         fun unsubscribe()
-        fun onActionModeEnter()
-        fun onActionModeLeave()
+        fun enterActionMode()
+        fun leaveActionMode()
     }
 }

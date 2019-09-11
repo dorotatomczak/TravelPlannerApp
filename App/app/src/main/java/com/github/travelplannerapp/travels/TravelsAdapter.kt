@@ -26,6 +26,10 @@ class TravelsAdapter (val presenter: TravelsContract.Presenter): RecyclerView.Ad
         presenter.onBindTravelsAtPosition(position, holder)
     }
 
+    fun leaveActionMode() {
+        actionMode = null
+    }
+
     inner class TravelsViewHolder(val presenter: TravelsContract.Presenter, override val containerView: View)
         : RecyclerView.ViewHolder(containerView), LayoutContainer, TravelsContract.TravelItemView, View.OnClickListener, View.OnLongClickListener {
 
@@ -50,7 +54,7 @@ class TravelsAdapter (val presenter: TravelsContract.Presenter): RecyclerView.Ad
 
         override fun onLongClick(v: View?): Boolean {
             actionMode = (containerView.context as AppCompatActivity)
-                    .startSupportActionMode(TravelsActionModeToolbar(presenter, this))
+                    .startSupportActionMode(TravelsActionModeToolbar(presenter))
             return true
         }
 
@@ -63,10 +67,6 @@ class TravelsAdapter (val presenter: TravelsContract.Presenter): RecyclerView.Ad
             else checkboxItemTravel.visibility = View.GONE
 
             checkboxItemTravel.isChecked = false
-        }
-
-        override fun leaveActionMode() {
-            actionMode = null
         }
     }
 }

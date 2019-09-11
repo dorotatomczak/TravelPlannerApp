@@ -5,7 +5,7 @@ import android.view.MenuItem
 import androidx.appcompat.view.ActionMode
 import com.github.travelplannerapp.R
 
-class TravelsActionModeToolbar(private val travelsPresenter: TravelsContract.Presenter, private val travelsViewHolder: TravelsAdapter.TravelsViewHolder): ActionMode.Callback {
+class TravelsActionModeToolbar(private val travelsPresenter: TravelsContract.Presenter): ActionMode.Callback {
     override fun onActionItemClicked(mode: ActionMode, item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.delete_menu_travels ->{
@@ -21,13 +21,12 @@ class TravelsActionModeToolbar(private val travelsPresenter: TravelsContract.Pre
     }
 
     override fun onPrepareActionMode(mode: ActionMode, menu: Menu): Boolean {
-        travelsPresenter.onActionModeEnter()
+        travelsPresenter.enterActionMode()
         menu.findItem(R.id.delete_menu_travels).setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS)
         return true
     }
 
     override fun onDestroyActionMode(mode: ActionMode?) {
-        travelsViewHolder.leaveActionMode()
-        travelsPresenter.onActionModeLeave()
+        travelsPresenter.leaveActionMode()
     }
 }

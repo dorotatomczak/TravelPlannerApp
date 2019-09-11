@@ -96,12 +96,13 @@ class TravelsActivity : AppCompatActivity(), TravelsContract.View {
         swipeRefreshLayoutTravels.isRefreshing = false
     }
 
-    override fun hideFabAdd() {
+    override fun showActionMode() {
         fabAdd.visibility = View.GONE
     }
 
-    override fun showFabAdd() {
+    override fun showNoActionMode() {
         fabAdd.visibility = View.VISIBLE
+        (recyclerViewTravels.adapter as TravelsAdapter).leaveActionMode()
     }
 
     private fun refreshTravels() {
