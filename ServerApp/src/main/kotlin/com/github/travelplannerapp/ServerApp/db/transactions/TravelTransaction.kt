@@ -53,6 +53,7 @@ class TravelTransaction {
                 break
             }
         }
+
         return if (status) {
             DbConnection.conn.commit()
             DbConnection.conn.autoCommit = true

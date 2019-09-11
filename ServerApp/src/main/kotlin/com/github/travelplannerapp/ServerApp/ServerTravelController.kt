@@ -5,10 +5,9 @@ import com.github.travelplannerapp.ServerApp.datamanagement.UserManagement
 import com.github.travelplannerapp.ServerApp.db.dao.Travel
 import com.github.travelplannerapp.ServerApp.db.repositories.TravelRepository
 import com.github.travelplannerapp.ServerApp.exceptions.ResponseCode
-import com.github.travelplannerapp.ServerApp.jsondatamodels.*
+import com.github.travelplannerapp.ServerApp.jsondatamodels.Response
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.web.bind.annotation.*
-import org.springframework.web.bind.annotation.GetMapping
 
 @RestController
 class ServerTravelController {
@@ -39,7 +38,7 @@ class ServerTravelController {
     }
 
     @PostMapping("/deletetravels")
-    fun deleteTravel(@RequestHeader("authorization") token: String,
+    fun deleteTravels(@RequestHeader("authorization") token: String,
                      @RequestBody travelIds: ArrayList<Int>): Response<Unit> {
         userManagement.verifyUser(token)
         val userId = userManagement.getUserId(token)
