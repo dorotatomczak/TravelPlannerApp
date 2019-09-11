@@ -39,6 +39,8 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$rootProject.kotlinVersion"
     implementation "androidx.appcompat:appcompat:$rootProject.appcompatVersion"
+
+    // UI
     implementation "androidx.constraintlayout:constraintlayout:$rootProject.constraintlayoutVersion"
     implementation "com.google.android.material:material:$rootProject.materialVersion"
     implementation "androidx.recyclerview:recyclerview:$rootProject.recyclerviewVersion"
