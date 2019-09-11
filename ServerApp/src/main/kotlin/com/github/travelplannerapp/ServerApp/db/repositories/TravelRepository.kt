@@ -47,7 +47,7 @@ class TravelRepository : Repository<Travel>(), ITravelRepository {
                                 "ON $tableName.$columnId = ${UserTravelRepository.tableName}.${UserTravelRepository.columnTravelId} " +
                                 "INNER JOIN ${UserRepository.tableName} " +
                                 "ON ${UserTravelRepository.tableName}.${UserTravelRepository.columnUserId} = ${UserRepository.tableName}.${UserTravelRepository.columnId} " +
-                                "WHERE ${UserRepository.tableName}.email = ?"
+                                "WHERE ${UserRepository.tableName}.${UserRepository.columnEmail} = ?"
                 )
         statement.setString(1, email)
         val result = statement.executeQuery()
