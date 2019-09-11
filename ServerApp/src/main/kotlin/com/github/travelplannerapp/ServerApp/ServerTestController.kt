@@ -3,7 +3,7 @@ package com.github.travelplannerapp.ServerApp
 import com.github.travelplannerapp.ServerApp.db.dao.Travel
 import com.github.travelplannerapp.ServerApp.db.repositories.TravelRepository
 import com.github.travelplannerapp.ServerApp.db.repositories.UserTravelRepository
-import com.github.travelplannerapp.ServerApp.searchservice.SearchService
+import com.github.travelplannerapp.ServerApp.services.searchservice.SearchService
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.RestController

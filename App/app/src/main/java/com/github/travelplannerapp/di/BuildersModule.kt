@@ -16,9 +16,9 @@ import com.github.travelplannerapp.launcher.LauncherViewModel
 import com.github.travelplannerapp.scanner.ScannerActivity
 import com.github.travelplannerapp.scanner.ScannerModule
 import com.github.travelplannerapp.scanner.ScannerViewModel
-import com.github.travelplannerapp.searchelement.SearchElementActivity
-import com.github.travelplannerapp.searchelement.SearchElementModule
-import com.github.travelplannerapp.searchelement.SearchElementViewModel
+import com.github.travelplannerapp.dayplans.searchelement.SearchElementActivity
+import com.github.travelplannerapp.dayplans.searchelement.SearchElementModule
+import com.github.travelplannerapp.dayplans.searchelement.SearchElementViewModel
 import com.github.travelplannerapp.signin.SignInActivity
 import com.github.travelplannerapp.signin.SignInModule
 import com.github.travelplannerapp.signin.SignInViewModel

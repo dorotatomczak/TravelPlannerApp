@@ -71,6 +71,7 @@ dependencies {
     implementation "com.squareup.retrofit2:converter-gson:$rootProject.gsonVersion"
     implementation "io.reactivex.rxjava2:rxandroid:$rootProject.rxAndroidVersion"
     implementation "com.squareup.retrofit2:adapter-rxjava2:$rootProject.rxJava2Version"
+    implementation(name:'HERE-sdk', ext:'aar')
 
     // Database dependencies
     implementation "androidx.room:room-runtime:$rootProject.roomVersion"
@@ -82,4 +83,7 @@ dependencies {
 }
 repositories {
     mavenCentral()
+    flatDir {
+        dirs 'libs'
+    }
 }

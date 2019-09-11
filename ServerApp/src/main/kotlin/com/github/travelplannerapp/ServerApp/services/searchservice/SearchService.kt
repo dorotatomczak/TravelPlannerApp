@@ -1,6 +1,8 @@
-package com.github.travelplannerapp.ServerApp.searchservice
+package com.github.travelplannerapp.ServerApp.services.searchservice
 
-import com.github.travelplannerapp.ServerApp.datamodels.SearchResponse
+import com.github.travelplannerapp.ServerApp.datamodels.CityObject
+import com.github.travelplannerapp.ServerApp.datamodels.SearchCitiesResponse
+import com.github.travelplannerapp.ServerApp.datamodels.SearchObjectsResponse
 import com.google.gson.GsonBuilder
 import com.google.gson.JsonParser
 import org.springframework.stereotype.Component
@@ -21,16 +23,24 @@ class SearchService : ISearchService {
         )
     }
 
-    override fun getObjects(category: String, westSouthPoint: Pair<String, String>, eastNorthPoint: Pair<String, String>) : SearchResponse {
-        return findObjects(  westSouthPoint.first, westSouthPoint.second,
-                             eastNorthPoint.first, eastNorthPoint.second, category)
+    override fun getObjects(
+        category: String,
+        westSouthPoint: Pair<String, String>,
+        eastNorthPoint: Pair<String, String>
+    ): SearchObjectsResponse {
+        return findObjects(
+            westSouthPoint.first, westSouthPoint.second,
+            eastNorthPoint.first, eastNorthPoint.second, category
+        )
     }
 
-    override fun getPage(request: String) : SearchResponse{
+    override fun getPage(request: String): SearchObjectsResponse {
         return executeRequest(request)
     }
 
-
+    override fun findCities(query: String): Array<CityObject> {
+        return getCities(query)
+    }
 
     companion object HereLoader {
         private val MY_APP_ID = "PFVgm9cqOc2OlIyiFZOO"
@@ -63,7 +73,7 @@ class SearchService : ISearchService {
             return executeRequest(request, bestWayResponseFilter)
         }
 
-        fun findObjects(west: String, south: String, east: String, north: String, category: String): SearchResponse {
+        fun findObjects(west: String, south: String, east: String, north: String, category: String): SearchObjectsResponse {
             val request = "https://places.cit.api.here.com/places/v1/discover/explore" +
                           "?app_id=$MY_APP_ID" +
                           "&app_code=$MY_APP_TOKEN" +
@@ -71,10 +81,27 @@ class SearchService : ISearchService {
                           "&cat=$category" +
                           "&pretty"
 
-           return executeRequest(request)
+            return executeRequest(request)
         }
 
-        fun executeRequest(request: String): SearchResponse {
+        fun getCities(query: String): Array<CityObject> {
+            val limit = 20
+            val request = "https://transit.api.here.com/v3/coverage/search.json" +
+                          "?app_id=$MY_APP_ID" +
+                          "&app_code=$MY_APP_TOKEN" +
+                          "&name=$query" +
+                          "&max=$limit" +
+                          "&pretty"
+            val response = executeRequest(request, "")
+            val responseText = response.substring(response.indexOf('{'))
+            val jsonElement = JsonParser().parse(responseText)
+            val gson = GsonBuilder().setPrettyPrinting().create()
+
+            // if result is null: app doesn't show anything
+            return gson.fromJson(jsonElement, SearchCitiesResponse::class.java).Res.Coverage.Cities.City
+        }
+
+        fun executeRequest(request: String): SearchObjectsResponse {
 
             var response = executeRequest(request, jsonFilter)
             val responseText = response.substring(response.indexOf('{'))
@@ -82,7 +109,7 @@ class SearchService : ISearchService {
             var jsonElement = JsonParser().parse(responseText)
             val gson = GsonBuilder().setPrettyPrinting().create()
 
-            return gson.fromJson(jsonElement, SearchResponse::class.java)
+            return gson.fromJson(jsonElement, SearchObjectsResponse::class.java)
         }
 
         private fun executeRequest(address: String, match: String): String {
@@ -92,7 +119,7 @@ class SearchService : ISearchService {
                 println("\nSent  request to URL : $url")
                 inputStream.bufferedReader().use {
                     it.lines().forEach { line ->
-                        if (line.contains(match, ignoreCase = true))
+                        if (match == "" || line.contains(match, ignoreCase = true))
                             response = line
                     }
                 }
