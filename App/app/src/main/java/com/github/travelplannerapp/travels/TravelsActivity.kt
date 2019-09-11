@@ -18,7 +18,6 @@ import kotlinx.android.synthetic.main.fab_add.*
 import kotlinx.android.synthetic.main.toolbar.*
 import com.github.travelplannerapp.R
 import com.github.travelplannerapp.addtravel.AddTravelDialog
-import com.github.travelplannerapp.utils.SharedPreferencesUtils
 
 class TravelsActivity : AppCompatActivity(), TravelsContract.View {
 
@@ -95,6 +94,15 @@ class TravelsActivity : AppCompatActivity(), TravelsContract.View {
 
     override fun hideLoadingIndicator() {
         swipeRefreshLayoutTravels.isRefreshing = false
+    }
+
+    override fun showActionMode() {
+        fabAdd.visibility = View.GONE
+    }
+
+    override fun showNoActionMode() {
+        fabAdd.visibility = View.VISIBLE
+        (recyclerViewTravels.adapter as TravelsAdapter).leaveActionMode()
     }
 
     private fun refreshTravels() {

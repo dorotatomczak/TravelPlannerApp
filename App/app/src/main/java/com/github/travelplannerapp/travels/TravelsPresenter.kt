@@ -13,6 +13,7 @@ class TravelsPresenter(view: TravelsContract.View) : BasePresenter<TravelsContra
 
     private val compositeDisposable = CompositeDisposable()
     private var travels = ArrayList<Travel>()
+    var travelsToDeleteIds = ArrayList<Int>()
 
     override fun loadTravels() {
         compositeDisposable.add(CommunicationService.serverApi.getTravels()
@@ -36,9 +37,21 @@ class TravelsPresenter(view: TravelsContract.View) : BasePresenter<TravelsContra
                 ))
     }
 
+    override fun deleteTravels() {
+        compositeDisposable.add(CommunicationService.serverApi.deleteTravels(travelsToDeleteIds)
+                .observeOn(SchedulerProvider.ui())
+                .subscribeOn(SchedulerProvider.io())
+                .map { if (it.responseCode == ResponseCode.OK) it.data!! else throw ApiException(it.responseCode) }
+                .subscribe(
+                        { handleDeleteTravelsResponse() },
+                        { error -> handleErrorResponse(error) }
+                ))
+    }
+
     override fun onBindTravelsAtPosition(position: Int, itemView: TravelsContract.TravelItemView) {
         val travel = travels[position]
         itemView.setName(travel.name)
+        itemView.setCheckbox()
     }
 
     override fun getTravelsCount(): Int {
@@ -50,8 +63,26 @@ class TravelsPresenter(view: TravelsContract.View) : BasePresenter<TravelsContra
         view.showTravelDetails(travel.id, travel.name)
     }
 
+    override fun addPositionToDelete(position: Int) {
+        travelsToDeleteIds.add(travels[position].id)
+    }
+
+    override fun removePositionToDelete(position: Int) {
+        travelsToDeleteIds.remove(travels[position].id)
+    }
+
     override fun unsubscribe() {
         compositeDisposable.clear()
+    }
+
+    override fun enterActionMode() {
+        view.onDataSetChanged()
+        view.showActionMode()
+    }
+
+    override fun leaveActionMode() {
+        view.onDataSetChanged()
+        view.showNoActionMode()
     }
 
     private fun handleLoadTravelsResponse(myTravels: List<Travel>) {
@@ -68,10 +99,14 @@ class TravelsPresenter(view: TravelsContract.View) : BasePresenter<TravelsContra
         view.onDataSetChanged()
     }
 
+    private fun handleDeleteTravelsResponse() {
+        travelsToDeleteIds = ArrayList<Int>()
+        loadTravels()
+    }
+
     private fun handleErrorResponse(error: Throwable) {
         view.hideLoadingIndicator()
         if (error is ApiException) view.showSnackbar(error.getErrorMessageCode())
         else view.showSnackbar(R.string.server_connection_error)
     }
-
 }

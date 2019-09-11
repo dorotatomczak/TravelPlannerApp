@@ -35,6 +35,7 @@
     <string name="authorization_error">Nie masz uprawnień na wykonanie tej akcji</string>
     <string name="no_tickets">Nie masz żadnego biletu</string>
     <string name="add_scan_error">Wystąpił problem podczas dodawania skanu</string>
+    <string name="delete_menu">Usuń</string>
     <string name="no_day_plans">Nie masz żadnego planu dnia w tej podróży</string>
     <string name="restaurant">Restauracja</string>
     <string name="museum">Muzeum</string>
