@@ -43,7 +43,7 @@ class ServerTravelController {
                      @RequestBody travelIds: ArrayList<Int>): Response<Unit> {
         userManagement.verifyUser(token)
         val userId = userManagement.getUserId(token)
-        travelManagement.deleteTravel(userId, travelIds)
+        travelManagement.deleteTravels(userId, travelIds)
         return Response(ResponseCode.OK, Unit)
     }
 }

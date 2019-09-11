@@ -37,10 +37,8 @@ class TravelManagement : ITravelManagement {
         return if (result) updatedTravel else throw UpdateTravelException("Error when updating travel")
     }
 
-    override fun deleteTravel(userId: Int, travelIds: ArrayList<Int>) {
-        for (travelId in travelIds) {
-            val result = travelTransaction.deleteTravel(userId, travelId)
-            if (!result) throw  DeleteTravelsException("Error when deleting travel")
-        }
+    override fun deleteTravels(userId: Int, travelIds: ArrayList<Int>) {
+        val result = travelTransaction.deleteTravels(userId, travelIds)
+        if (!result) throw  DeleteTravelsException("Error when deleting travel")
     }
 }

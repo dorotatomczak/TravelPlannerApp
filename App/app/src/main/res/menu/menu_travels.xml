@@ -1,10 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_height="wrap_content"
-    android:layout_width="wrap_content" >
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+
     <item
         android:id="@+id/delete_menu_travels"
         android:icon="@drawable/ic_delete"
-        android:title="@string/delete_menu_travels" />
+        android:title="@string/delete_menu" />
+
+
 </menu>

@@ -21,14 +21,13 @@ class TravelsActionModeToolbar(private val travelsPresenter: TravelsContract.Pre
     }
 
     override fun onPrepareActionMode(mode: ActionMode, menu: Menu): Boolean {
-        travelsPresenter.onActionModeOnOff()
+        travelsPresenter.onActionModeEnter()
         menu.findItem(R.id.delete_menu_travels).setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS)
         return true
     }
 
     override fun onDestroyActionMode(mode: ActionMode?) {
-        travelsViewHolder.setActionModeToNull()
-        travelsPresenter.onActionModeOnOff()
+        travelsViewHolder.leaveActionMode()
+        travelsPresenter.onActionModeLeave()
     }
-
 }

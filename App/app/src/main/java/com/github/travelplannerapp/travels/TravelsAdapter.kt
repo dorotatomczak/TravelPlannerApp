@@ -12,7 +12,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.widget.CompoundButton
 
 class TravelsAdapter (val presenter: TravelsContract.Presenter): RecyclerView.Adapter<TravelsAdapter.TravelsViewHolder>(){
-    private var mActionMode: ActionMode? = null
+    private var actionMode: ActionMode? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TravelsViewHolder {
         return TravelsViewHolder(presenter, LayoutInflater.from(parent.context)
@@ -44,15 +44,13 @@ class TravelsAdapter (val presenter: TravelsContract.Presenter): RecyclerView.Ad
         }
 
         override fun onClick(v: View?) {
-            if (mActionMode != null) checkboxItemTravel.isChecked = !checkboxItemTravel.isChecked
+            if (actionMode != null) checkboxItemTravel.isChecked = !checkboxItemTravel.isChecked
             else presenter.openTravelDetails(adapterPosition)
         }
 
         override fun onLongClick(v: View?): Boolean {
-            mActionMode = (containerView.context as AppCompatActivity)
+            actionMode = (containerView.context as AppCompatActivity)
                     .startSupportActionMode(TravelsActionModeToolbar(presenter, this))
-            // TODO [Magda] check travel when opening action mode current error: true first then notifydatachange sets false
-            // checkboxItemTravel.isChecked = true
             return true
         }
 
@@ -61,14 +59,14 @@ class TravelsAdapter (val presenter: TravelsContract.Presenter): RecyclerView.Ad
         }
 
         override fun setCheckbox() {
-            if(mActionMode != null) checkboxItemTravel.visibility = View.VISIBLE
+            if(actionMode != null) checkboxItemTravel.visibility = View.VISIBLE
             else checkboxItemTravel.visibility = View.GONE
 
             checkboxItemTravel.isChecked = false
         }
 
-        override fun setActionModeToNull() {
-            mActionMode = null
+        override fun leaveActionMode() {
+            actionMode = null
         }
     }
 }

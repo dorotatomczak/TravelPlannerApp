@@ -7,5 +7,5 @@ interface ITravelManagement {
 
     fun updateTravel(id: Int, changes: MutableMap<String, Any?>): Travel?
 
-    fun deleteTravel(userId: Int, travelIds: ArrayList<Int>)
+    fun deleteTravels(userId: Int, travelIds: ArrayList<Int>)
 }

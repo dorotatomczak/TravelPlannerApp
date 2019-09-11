@@ -13,7 +13,7 @@ class TravelsPresenter(view: TravelsContract.View) : BasePresenter<TravelsContra
 
     private val compositeDisposable = CompositeDisposable()
     private var travels = ArrayList<Travel>()
-    private var travelsToDeletePositions = ArrayList<Int>()
+    var travelsToDeleteIds = ArrayList<Int>()
 
     override fun loadTravels() {
         compositeDisposable.add(CommunicationService.serverApi.getTravels()
@@ -38,17 +38,12 @@ class TravelsPresenter(view: TravelsContract.View) : BasePresenter<TravelsContra
     }
 
     override fun deleteTravels() {
-        val toDeleteTravelIds = ArrayList<Int>()
-        for(position in travelsToDeletePositions){
-            toDeleteTravelIds.add(travels[position].id)
-        }
-
-        compositeDisposable.add(CommunicationService.serverApi.deleteTravels(toDeleteTravelIds)
+        compositeDisposable.add(CommunicationService.serverApi.deleteTravels(travelsToDeleteIds)
                 .observeOn(SchedulerProvider.ui())
                 .subscribeOn(SchedulerProvider.io())
                 .map { if (it.responseCode == ResponseCode.OK) it.data!! else throw ApiException(it.responseCode) }
                 .subscribe(
-                        { handleDeleteTravelResponse() },
+                        { handleDeleteTravelsResponse() },
                         { error -> handleErrorResponse(error) }
                 ))
     }
@@ -69,19 +64,25 @@ class TravelsPresenter(view: TravelsContract.View) : BasePresenter<TravelsContra
     }
 
     override fun addPositionToDelete(position: Int) {
-        travelsToDeletePositions.add(position)
+        travelsToDeleteIds.add(travels[position].id)
     }
 
     override fun removePositionToDelete(position: Int) {
-        travelsToDeletePositions.remove(position)
+        travelsToDeleteIds.remove(travels[position].id)
     }
 
     override fun unsubscribe() {
         compositeDisposable.clear()
     }
 
-    override fun onActionModeOnOff() {
+    override fun onActionModeEnter() {
         view.onDataSetChanged()
+        view.hideFabAdd()
+    }
+
+    override fun onActionModeLeave() {
+        view.onDataSetChanged()
+        view.showFabAdd()
     }
 
     private fun handleLoadTravelsResponse(myTravels: List<Travel>) {
@@ -98,7 +99,8 @@ class TravelsPresenter(view: TravelsContract.View) : BasePresenter<TravelsContra
         view.onDataSetChanged()
     }
 
-    private fun handleDeleteTravelResponse() {
+    private fun handleDeleteTravelsResponse() {
+        travelsToDeleteIds = ArrayList<Int>()
         loadTravels()
     }
 

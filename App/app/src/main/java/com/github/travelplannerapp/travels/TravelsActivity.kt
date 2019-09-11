@@ -96,6 +96,14 @@ class TravelsActivity : AppCompatActivity(), TravelsContract.View {
         swipeRefreshLayoutTravels.isRefreshing = false
     }
 
+    override fun hideFabAdd() {
+        fabAdd.visibility = View.GONE
+    }
+
+    override fun showFabAdd() {
+        fabAdd.visibility = View.VISIBLE
+    }
+
     private fun refreshTravels() {
         swipeRefreshLayoutTravels.isRefreshing = true
         presenter.loadTravels()

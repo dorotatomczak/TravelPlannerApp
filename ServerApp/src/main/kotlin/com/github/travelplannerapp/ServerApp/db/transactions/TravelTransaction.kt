@@ -35,7 +35,7 @@ class TravelTransaction {
         return null
     }
 
-    fun deleteTravel(userId: Int, travelIds: ArrayList<Int>): Boolean {
+    fun deleteTravels(userId: Int, travelIds: ArrayList<Int>): Boolean {
         DbConnection.conn.autoCommit = false
         var status = true
         for (travelId in travelIds) {
