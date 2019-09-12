@@ -3,6 +3,7 @@ package com.github.travelplannerapp.travels
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -102,5 +103,18 @@ class TravelsActivity : AppCompatActivity(), TravelsContract.View {
     override fun showNoActionMode() {
         fabAdd.visibility = View.VISIBLE
         (recyclerViewTravels.adapter as TravelsAdapter).leaveActionMode()
+    }
+
+    override fun showConfirmationDialog() {
+        val travelsText = getString(R.string.travels)
+        AlertDialog.Builder(this)
+                .setTitle(getString(R.string.delete_entry, travelsText))
+                .setMessage(getString(R.string.delete_confirmation, travelsText))
+                .setPositiveButton(android.R.string.yes) { _, _ ->
+                    presenter.deleteTravels()
+                }
+                .setNegativeButton(android.R.string.no) { _, _ ->
+                }
+                .show()
     }
 }

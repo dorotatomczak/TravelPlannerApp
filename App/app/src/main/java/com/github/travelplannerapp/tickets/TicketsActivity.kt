@@ -9,6 +9,7 @@ import android.os.Bundle
 import android.os.Environment
 import android.provider.MediaStore
 import android.view.View
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
@@ -185,6 +186,19 @@ class TicketsActivity : AppCompatActivity(), TicketsContract.View {
     override fun showNoActionMode() {
         fabAdd.visibility = View.VISIBLE
         (recyclerViewTickets.adapter as TicketsAdapter).leaveActionMode()
+    }
+
+    override fun showConfirmationDialog() {
+        val ticketsText = getString(R.string.tickets).decapitalize()
+        AlertDialog.Builder(this)
+                .setTitle(getString(R.string.delete_entry, ticketsText))
+                .setMessage(getString(R.string.delete_confirmation, ticketsText))
+                .setPositiveButton(android.R.string.yes) { _, _ ->
+                    presenter.deleteTickets()
+                }
+                .setNegativeButton(android.R.string.no) { _, _ ->
+                }
+                .show()
     }
 
     @Throws(IOException::class)

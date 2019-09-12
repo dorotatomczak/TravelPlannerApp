@@ -65,6 +65,12 @@ class TicketsPresenter(view: TicketsContract.View, private val travelId: Int) : 
         view.showFullScan((CommunicationService.getScanUrl(ticket.name)))
     }
 
+    override fun onDeleteClicked() {
+        if (ticketsToDelete.size > 0) {
+            view.showConfirmationDialog()
+        }
+    }
+
     override fun deleteTickets() {
         compositeDisposable.add(CommunicationService.serverApi.deleteScans(ticketsToDelete)
                 .observeOn(SchedulerProvider.ui())

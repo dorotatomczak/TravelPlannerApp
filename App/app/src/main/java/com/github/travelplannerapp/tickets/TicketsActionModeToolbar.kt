@@ -10,7 +10,7 @@ class TicketsActionModeToolbar(private val ticketsPresenter: TicketsContract.Pre
     override fun onActionItemClicked(mode: ActionMode, item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.menuDeleteTickets ->{
-                ticketsPresenter.deleteTickets()
+                ticketsPresenter.onDeleteClicked()
             }
         }
         return false

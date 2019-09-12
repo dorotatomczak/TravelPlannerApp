@@ -17,6 +17,7 @@ interface TicketsContract {
         fun showFullScan(url: String)
         fun showActionMode()
         fun showNoActionMode()
+        fun showConfirmationDialog()
     }
 
     interface TicketItemView {
@@ -34,6 +35,7 @@ interface TicketsContract {
         fun onAddedScan(scan: Scan)
         fun onScanClicked(position: Int)
         fun deleteTickets()
+        fun onDeleteClicked()
         fun enterActionMode()
         fun leaveActionMode()
         fun addTicketToDelete(position: Int)

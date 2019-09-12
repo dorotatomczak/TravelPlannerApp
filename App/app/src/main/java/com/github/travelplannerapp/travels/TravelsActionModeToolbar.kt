@@ -9,7 +9,7 @@ class TravelsActionModeToolbar(private val travelsPresenter: TravelsContract.Pre
     override fun onActionItemClicked(mode: ActionMode, item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.menuDeleteTravels ->{
-                travelsPresenter.deleteTravels()
+                travelsPresenter.onDeleteClicked()
             }
         }
         return false

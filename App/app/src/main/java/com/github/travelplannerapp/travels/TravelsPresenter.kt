@@ -39,6 +39,12 @@ class TravelsPresenter(view: TravelsContract.View) : BasePresenter<TravelsContra
                 ))
     }
 
+    override fun onDeleteClicked() {
+        if (travels.size > 0) {
+            view.showConfirmationDialog()
+        }
+    }
+
     override fun deleteTravels() {
         compositeDisposable.add(CommunicationService.serverApi.deleteTravels(travelsToDeleteIds)
                 .observeOn(SchedulerProvider.ui())

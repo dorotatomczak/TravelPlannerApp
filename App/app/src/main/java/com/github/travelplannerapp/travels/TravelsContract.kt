@@ -14,6 +14,7 @@ interface TravelsContract {
         fun hideLoadingIndicator()
         fun showActionMode()
         fun showNoActionMode()
+        fun showConfirmationDialog()
     }
 
     interface TravelItemView {
@@ -24,6 +25,7 @@ interface TravelsContract {
     interface Presenter {
         fun loadTravels()
         fun addTravel(travelName: String)
+        fun onDeleteClicked()
         fun deleteTravels()
         fun getTravelsCount(): Int
         fun onBindTravelsAtPosition(position: Int, itemView: TravelItemView)

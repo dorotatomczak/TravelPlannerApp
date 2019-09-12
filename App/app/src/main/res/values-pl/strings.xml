@@ -54,4 +54,7 @@
     <string name="delete_tickets_ok">Wybrane skan/y zostały usunięte</string>
     <string name="delete_scans_error">Wystąpił problem podczas usuwania skanu/ów</string>
     <string name="delete_travels_error">Wystąpił problem podczas usuwania podróż/y</string>
+    <string name="delete_entry">Usuń %1$s</string>
+    <string name="delete_confirmation">Czy na pewno chcesz usunąć wybrane %1$s?</string>
+    <string name="travels">podróże</string>
 </resources>
