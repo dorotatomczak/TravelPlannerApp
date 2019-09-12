@@ -54,7 +54,8 @@ class TicketsAdapter(val presenter: TicketsContract.Presenter) : RecyclerView.Ad
         }
 
         override fun onClick(v: View?) {
-            if (actionMode == null) presenter.onScanClicked(adapterPosition)
+            if (actionMode != null) checkboxItemTicket.isChecked = !checkboxItemTicket.isChecked
+            else presenter.onScanClicked(adapterPosition)
         }
 
         override fun onLongClick(v: View?): Boolean {

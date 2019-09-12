@@ -74,7 +74,7 @@ class ServerScanController {
 
     @PostMapping("/deleteScans")
     fun deleteTravels(@RequestHeader("authorization") token: String,
-                      @RequestBody scans: ArrayList<Scan>): Response<Unit> {
+                      @RequestBody scans: List<Scan>): Response<Unit> {
         userManagement.verifyUser(token)
 
         for (scan in scans) {
@@ -83,5 +83,4 @@ class ServerScanController {
         }
         return Response(ResponseCode.OK, Unit)
     }
-
 }
