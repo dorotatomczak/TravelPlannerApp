@@ -55,6 +55,7 @@ class AddPlanActivity : AppCompatActivity(), AddPlanContract.View {
 
         editTextPlanName.setOnClickListener {
             val intent = Intent(this, SearchElementActivity::class.java)
+            intent.putExtra("category", dropdownCategoriesAddPlan.selectedItem.toString())
             startActivityForResult(intent, SearchElementActivity.REQUEST_SEARCH)
         }
 
@@ -127,14 +128,11 @@ class AddPlanActivity : AppCompatActivity(), AddPlanContract.View {
         when (requestCode) {
             SearchElementActivity.REQUEST_SEARCH -> {
                 if (resultCode == Activity.RESULT_OK && data != null) {
-                    val messageCode = data.getIntExtra(SearchElementActivity.SEARCH_RESULT,
-                            R.string.try_again)
                     val name = data.getStringExtra(SearchElementActivity.NAME)
                     val location = data.getStringExtra(SearchElementActivity.LOCATION)
 
                     editTextPlanName.setText(name, TextView.BufferType.EDITABLE)
                     showLocation(location!!)
-                    showSnackbar(messageCode)
                 }
             }
         }
