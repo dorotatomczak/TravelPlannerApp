@@ -1,8 +1,10 @@
 package com.github.travelplannerapp.ServerApp.services.searchservice
 
 import com.github.travelplannerapp.ServerApp.datamodels.CityObject
+import com.github.travelplannerapp.ServerApp.datamodels.Place
 import com.github.travelplannerapp.ServerApp.datamodels.SearchCitiesResponse
 import com.github.travelplannerapp.ServerApp.datamodels.SearchObjectsResponse
+import com.github.travelplannerapp.ServerApp.exceptions.SearchNoItemsException
 import com.google.gson.GsonBuilder
 import com.google.gson.JsonParser
 import org.springframework.stereotype.Component
@@ -23,15 +25,14 @@ class SearchService : ISearchService {
         )
     }
 
-    override fun getObjects(
-        category: String,
-        westSouthPoint: Pair<String, String>,
-        eastNorthPoint: Pair<String, String>
-    ): SearchObjectsResponse {
-        return findObjects(
+    override fun getObjects(category: String, westSouthPoint: Pair<String, String>, eastNorthPoint: Pair<String, String>): Array<Place> {
+        val places =  findObjects(
             westSouthPoint.first, westSouthPoint.second,
             eastNorthPoint.first, eastNorthPoint.second, category
-        )
+        ).results.items
+
+        if(places.isEmpty()) throw SearchNoItemsException("No places found")
+        return places
     }
 
     override fun getPage(request: String): SearchObjectsResponse {
@@ -39,7 +40,10 @@ class SearchService : ISearchService {
     }
 
     override fun findCities(query: String): Array<CityObject> {
-        return getCities(query)
+        val cities = getCities(query)
+        if (cities.isEmpty()) throw SearchNoItemsException("No cities found")
+
+        return cities
     }
 
     companion object HereLoader {
@@ -73,7 +77,13 @@ class SearchService : ISearchService {
             return executeRequest(request, bestWayResponseFilter)
         }
 
-        fun findObjects(west: String, south: String, east: String, north: String, category: String): SearchObjectsResponse {
+        fun findObjects(
+            west: String,
+            north: String,
+            east: String,
+            south: String,
+            category: String
+        ): SearchObjectsResponse {
             val request = "https://places.cit.api.here.com/places/v1/discover/explore" +
                           "?app_id=$MY_APP_ID" +
                           "&app_code=$MY_APP_TOKEN" +

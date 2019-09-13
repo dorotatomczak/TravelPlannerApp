@@ -6,11 +6,7 @@ import android.content.ContentValues
 import android.database.Cursor
 import android.database.MatrixCursor
 import android.net.Uri
-import android.util.Log
-import com.github.travelplannerapp.communication.ApiException
 import com.github.travelplannerapp.communication.CommunicationService
-import com.github.travelplannerapp.communication.model.ResponseCode
-import com.github.travelplannerapp.utils.SchedulerProvider
 
 class CitySuggestionProvider : ContentProvider() {
     override fun query(p0: Uri, p1: Array<out String>?, p2: String?, p3: Array<out String>?, p4: String?): Cursor? {
@@ -19,12 +15,13 @@ class CitySuggestionProvider : ContentProvider() {
     }
 
     private fun createCursor(searchString: String): MatrixCursor {
-        val cursor = MatrixCursor(arrayOf("_id", SearchManager.SUGGEST_COLUMN_TEXT_1, SearchManager.SUGGEST_COLUMN_TEXT_2))
+        val cursor = MatrixCursor(arrayOf("_id", SearchManager.SUGGEST_COLUMN_TEXT_1, SearchManager.SUGGEST_COLUMN_TEXT_2,
+                "x", "y"))
         val cities = CommunicationService.serverApi.findCities(searchString)
 
         for ((index, city) in cities.blockingGet().data.orEmpty().withIndex()) {
 
-            cursor.addRow(arrayOf(index, city.name, city.country))
+            cursor.addRow(arrayOf(index, city.name, city.country, city.x, city.y))
         }
 
         return cursor

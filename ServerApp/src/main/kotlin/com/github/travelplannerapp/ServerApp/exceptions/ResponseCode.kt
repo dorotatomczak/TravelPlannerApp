@@ -12,5 +12,6 @@ enum class ResponseCode {
     ADD_SCAN_ERROR,
     UPLOAD_SCAN_ERROR,
     DELETE_SCANS_ERROR,
+    NO_ITEMS_ERROR,
     OTHER_ERROR
 }

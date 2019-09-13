@@ -59,6 +59,8 @@
     <string name="add_plan_ok">Dodałeś nowy plan</string>
     <string name="choose_category">Wybierz kategorię</string>
     <string name="city">Miasto</string>
+    <string name="load_map_error">Nie udało się załadować mapy</string>
+    <string name="no_items">Nic nie znaleziono</string>
 
     <string name="atm_bank_exchange">Bankomat</string>
     <string name="hospital_health_care_facility">Opieka zdrowotna</string>
