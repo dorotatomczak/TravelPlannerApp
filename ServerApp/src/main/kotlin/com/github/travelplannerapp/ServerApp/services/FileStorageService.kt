@@ -57,6 +57,10 @@ constructor(fileStorageProperties: FileStorageProperties) {
         } catch (ex: MalformedURLException) {
             throw FileNotFoundException("File not found $fileName")
         }
+    }
 
+    fun deleteFile(fileName: String) {
+        val targetLocation = this.fileStorageLocation.resolve(fileName)
+        Files.delete(targetLocation)
     }
 }

@@ -39,7 +39,7 @@ class ServerTravelController {
 
     @PostMapping("/deletetravels")
     fun deleteTravels(@RequestHeader("authorization") token: String,
-                     @RequestBody travelIds: ArrayList<Int>): Response<Unit> {
+                     @RequestBody travelIds: List<Int>): Response<Unit> {
         userManagement.verifyUser(token)
         val userId = userManagement.getUserId(token)
         travelManagement.deleteTravels(userId, travelIds)

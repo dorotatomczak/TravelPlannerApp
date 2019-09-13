@@ -6,13 +6,14 @@ import com.github.travelplannerapp.R
 import com.github.travelplannerapp.communication.ApiException
 import com.github.travelplannerapp.communication.CommunicationService
 import com.github.travelplannerapp.communication.model.ResponseCode
+import com.github.travelplannerapp.communication.model.Scan
 import com.github.travelplannerapp.utils.SchedulerProvider
 import io.reactivex.disposables.CompositeDisposable
-import java.io.File
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
-import okhttp3.RequestBody.Companion.toRequestBody
 import okhttp3.RequestBody.Companion.asRequestBody
+import okhttp3.RequestBody.Companion.toRequestBody
+import java.io.File
 
 class ScannerPresenter(view: ScannerContract.View, private val travelId: Int) : BasePresenter<ScannerContract.View>(view), ScannerContract.Presenter {
 
@@ -35,13 +36,13 @@ class ScannerPresenter(view: ScannerContract.View, private val travelId: Int) : 
                 .subscribeOn(SchedulerProvider.io())
                 .map { if (it.responseCode == ResponseCode.OK) it.data else throw ApiException(it.responseCode) }
                 .subscribe(
-                        { scanName -> handleUploadResponse(scanName) },
+                        { addedScan -> handleUploadResponse(addedScan) },
                         { error -> handleErrorResponse(error) }
                 ))
     }
 
-    private fun handleUploadResponse(scanName: String?) {
-        scanName?.let {view.returnResultAndFinish(R.string.scanner_success, scanName)}
+    private fun handleUploadResponse(scan: Scan?) {
+        scan?.let {view.returnResultAndFinish(R.string.scanner_success, scan)}
     }
 
     private fun handleErrorResponse(error: Throwable) {

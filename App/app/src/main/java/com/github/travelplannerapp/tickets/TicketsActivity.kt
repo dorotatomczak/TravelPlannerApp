@@ -9,17 +9,18 @@ import android.os.Bundle
 import android.os.Environment
 import android.provider.MediaStore
 import android.view.View
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
+import androidx.fragment.app.DialogFragment
+import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.github.travelplannerapp.BuildConfig
 import com.github.travelplannerapp.R
+import com.github.travelplannerapp.communication.model.Scan
 import com.github.travelplannerapp.scanner.ScannerActivity
 import com.github.travelplannerapp.utils.DrawerUtils
-import com.github.travelplannerapp.utils.SharedPreferencesUtils
 import com.google.android.material.snackbar.Snackbar
 import dagger.android.AndroidInjection
 import kotlinx.android.synthetic.main.activity_tickets.*
@@ -29,7 +30,6 @@ import java.io.File
 import java.io.IOException
 import java.text.SimpleDateFormat
 import java.util.*
-
 import javax.inject.Inject
 
 class TicketsActivity : AppCompatActivity(), TicketsContract.View {
@@ -61,12 +61,12 @@ class TicketsActivity : AppCompatActivity(), TicketsContract.View {
             presenter.onAddScanClick()
         }
 
-        swipeRefreshLayoutTickets.setOnRefreshListener { refreshTickets() }
+        swipeRefreshLayoutTickets.setOnRefreshListener { presenter.loadScans() }
 
-        recyclerViewTickets.layoutManager = LinearLayoutManager(this, RecyclerView.VERTICAL, false)
+        recyclerViewTickets.layoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
         recyclerViewTickets.adapter = TicketsAdapter(presenter)
 
-        refreshTickets()
+        presenter.loadScans()
     }
 
     override fun onPause() {
@@ -87,21 +87,17 @@ class TicketsActivity : AppCompatActivity(), TicketsContract.View {
                     val messageCode = data.getIntExtra(ScannerActivity.REQUEST_SCANNER_RESULT_MESSAGE,
                             R.string.scanner_general_error)
                     showSnackbar(messageCode)
-                    val scanName = data.getStringExtra(ScannerActivity.REQUEST_SCANNER_RESULT_NAME)
-                    presenter.onAddedScan(scanName)
+                    val scan = data.getSerializableExtra(ScannerActivity.REQUEST_SCANNER_RESULT_SCAN) as Scan
+                    presenter.onAddedScan(scan)
                 }
             }
         }
     }
 
     override fun verifyPermissions(): Boolean {
-        if (ContextCompat.checkSelfPermission(this.applicationContext,
-                        requiredPermissions[0]) != PackageManager.PERMISSION_GRANTED
-                || ContextCompat.checkSelfPermission(this.applicationContext,
-                        requiredPermissions[1]) != PackageManager.PERMISSION_GRANTED
-                || ContextCompat.checkSelfPermission(this.applicationContext,
-                        requiredPermissions[2]) != PackageManager.PERMISSION_GRANTED) {
-            return false
+        requiredPermissions.forEach { permission ->
+            if (ContextCompat.checkSelfPermission(this.applicationContext, permission)
+                    != PackageManager.PERMISSION_GRANTED) return false
         }
         return true
     }
@@ -169,13 +165,36 @@ class TicketsActivity : AppCompatActivity(), TicketsContract.View {
         recyclerViewTickets.adapter?.notifyDataSetChanged()
     }
 
-    override fun hideLoadingIndicator() {
-        swipeRefreshLayoutTickets.isRefreshing = false
+    override fun setLoadingIndicatorVisibility(isVisible: Boolean) {
+        swipeRefreshLayoutTickets.isRefreshing = isVisible
     }
 
-    private fun refreshTickets() {
-        swipeRefreshLayoutTickets.isRefreshing = true
-        presenter.loadScans()
+    override fun showFullScan(url: String) {
+        val dialog = FullScreenDialog(url)
+        dialog.setStyle(DialogFragment.STYLE_NORMAL, android.R.style.Theme_Light_NoTitleBar_Fullscreen)
+        dialog.show(supportFragmentManager, FullScreenDialog.TAG)
+    }
+
+    override fun showActionMode() {
+        fabAdd.visibility = View.GONE
+    }
+
+    override fun showNoActionMode() {
+        fabAdd.visibility = View.VISIBLE
+        (recyclerViewTickets.adapter as TicketsAdapter).leaveActionMode()
+    }
+
+    override fun showConfirmationDialog() {
+        val ticketsText = getString(R.string.tickets).decapitalize()
+        AlertDialog.Builder(this)
+                .setTitle(getString(R.string.delete_entry, ticketsText))
+                .setMessage(getString(R.string.delete_confirmation, ticketsText))
+                .setPositiveButton(android.R.string.yes) { _, _ ->
+                    presenter.deleteTickets()
+                }
+                .setNegativeButton(android.R.string.no) { _, _ ->
+                }
+                .show()
     }
 
     @Throws(IOException::class)

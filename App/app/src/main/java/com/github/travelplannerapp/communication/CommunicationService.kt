@@ -3,14 +3,14 @@ package com.github.travelplannerapp.communication
 import com.github.travelplannerapp.communication.model.*
 import io.reactivex.Observable
 import io.reactivex.Single
+import okhttp3.MultipartBody
 import okhttp3.OkHttpClient
+import okhttp3.RequestBody
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.converter.scalars.ScalarsConverterFactory
 import retrofit2.http.*
-import okhttp3.MultipartBody
-import okhttp3.RequestBody
 
 
 object CommunicationService {
@@ -51,12 +51,15 @@ interface ServerApi {
     fun addTravel(@Body travelName: String): Single<Response<Travel>>
 
     @POST("/deletetravels")
-    fun deleteTravels(@Body travelIds: ArrayList<Int>): Single<Response<Unit>>
+    fun deleteTravels(@Body travelIds: List<Int>): Single<Response<Unit>>
 
     @Multipart
     @POST("/uploadScan")
-    fun uploadScan(@Part("travelId") travelId: RequestBody, @Part file: MultipartBody.Part): Single<Response<String>>
+    fun uploadScan(@Part("travelId") travelId: RequestBody, @Part file: MultipartBody.Part): Single<Response<Scan>>
+
+    @POST("/deleteScans")
+    fun deleteScans(@Body scans: List<Scan>): Single<Response<Unit>>
 
     @GET("/scans")
-    fun getScans(@Query("travelId") travelId: Int): Single<Response<List<String>>>
+    fun getScans(@Query("travelId") travelId: Int): Single<Response<List<Scan>>>
 }

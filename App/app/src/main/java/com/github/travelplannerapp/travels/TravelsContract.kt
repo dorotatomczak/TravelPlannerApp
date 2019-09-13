@@ -10,9 +10,10 @@ interface TravelsContract {
         fun showSnackbar(messageCode: Int)
         fun showSnackbar(message: String)
         fun onDataSetChanged()
-        fun hideLoadingIndicator()
+        fun setLoadingIndicatorVisibility(isVisible: Boolean)
         fun showActionMode()
         fun showNoActionMode()
+        fun showConfirmationDialog()
     }
 
     interface TravelItemView {
@@ -23,6 +24,7 @@ interface TravelsContract {
     interface Presenter {
         fun loadTravels()
         fun addTravel(travelName: String)
+        fun onDeleteClicked()
         fun deleteTravels()
         fun getTravelsCount(): Int
         fun onBindTravelsAtPosition(position: Int, itemView: TravelItemView)

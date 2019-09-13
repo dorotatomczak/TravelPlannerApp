@@ -2,22 +2,21 @@ package com.github.travelplannerapp.travels
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
-import android.view.View
-import com.google.android.material.snackbar.Snackbar
 import androidx.recyclerview.widget.RecyclerView
+import com.github.travelplannerapp.R
+import com.github.travelplannerapp.addtravel.AddTravelDialog
 import com.github.travelplannerapp.traveldetails.TravelDetailsActivity
 import com.github.travelplannerapp.utils.DrawerUtils
-
-import javax.inject.Inject
-
+import com.google.android.material.snackbar.Snackbar
 import dagger.android.AndroidInjection
 import kotlinx.android.synthetic.main.activity_travels.*
 import kotlinx.android.synthetic.main.fab_add.*
 import kotlinx.android.synthetic.main.toolbar.*
-import com.github.travelplannerapp.R
-import com.github.travelplannerapp.addtravel.AddTravelDialog
+import javax.inject.Inject
 
 class TravelsActivity : AppCompatActivity(), TravelsContract.View {
 
@@ -38,15 +37,12 @@ class TravelsActivity : AppCompatActivity(), TravelsContract.View {
             showAddTravel()
         }
 
-        swipeRefreshLayoutTravels.setOnRefreshListener { refreshTravels() }
+        swipeRefreshLayoutTravels.setOnRefreshListener { presenter.loadTravels() }
 
         recyclerViewTravels.layoutManager = LinearLayoutManager(this, RecyclerView.VERTICAL, false)
         recyclerViewTravels.adapter = TravelsAdapter(presenter)
-    }
 
-    override fun onResume() {
-        super.onResume()
-        refreshTravels()
+        presenter.loadTravels()
     }
 
     override fun onDestroy() {
@@ -92,8 +88,8 @@ class TravelsActivity : AppCompatActivity(), TravelsContract.View {
         recyclerViewTravels.adapter?.notifyDataSetChanged()
     }
 
-    override fun hideLoadingIndicator() {
-        swipeRefreshLayoutTravels.isRefreshing = false
+    override fun setLoadingIndicatorVisibility(isVisible: Boolean) {
+        swipeRefreshLayoutTravels.isRefreshing = isVisible
     }
 
     override fun showActionMode() {
@@ -105,8 +101,16 @@ class TravelsActivity : AppCompatActivity(), TravelsContract.View {
         (recyclerViewTravels.adapter as TravelsAdapter).leaveActionMode()
     }
 
-    private fun refreshTravels() {
-        swipeRefreshLayoutTravels.isRefreshing = true
-        presenter.loadTravels()
+    override fun showConfirmationDialog() {
+        val travelsText = getString(R.string.travels)
+        AlertDialog.Builder(this)
+                .setTitle(getString(R.string.delete_entry, travelsText))
+                .setMessage(getString(R.string.delete_confirmation, travelsText))
+                .setPositiveButton(android.R.string.yes) { _, _ ->
+                    presenter.deleteTravels()
+                }
+                .setNegativeButton(android.R.string.no) { _, _ ->
+                }
+                .show()
     }
 }

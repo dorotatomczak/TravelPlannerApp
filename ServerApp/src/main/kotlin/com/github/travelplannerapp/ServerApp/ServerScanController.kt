@@ -2,6 +2,7 @@ package com.github.travelplannerapp.ServerApp
 
 import com.github.travelplannerapp.ServerApp.datamanagement.ScanManagement
 import com.github.travelplannerapp.ServerApp.datamanagement.UserManagement
+import com.github.travelplannerapp.ServerApp.db.dao.Scan
 import com.github.travelplannerapp.ServerApp.exceptions.ResponseCode
 import com.github.travelplannerapp.ServerApp.exceptions.UploadScanException
 import com.github.travelplannerapp.ServerApp.jsondatamodels.Response
@@ -29,26 +30,27 @@ class ServerScanController {
     fun uploadFile(
             @RequestHeader("authorization") token: String,
             @RequestParam("travelId") travelId: Int,
-            @RequestParam("file") file: MultipartFile): Response<String> {
+            @RequestParam("file") file: MultipartFile): Response<Scan> {
         userManagement.verifyUser(token)
         val userId = userManagement.getUserId(token)
+        var fileName: String? = null
         try {
-            val fileName = fileStorageService.storeFile(file)
-            scanManagement.addScan(userId, travelId, fileName)
-            return Response(ResponseCode.OK, fileName)
+            fileName = fileStorageService.storeFile(file)
+            val scan = scanManagement.addScan(userId, travelId, fileName)
+            return Response(ResponseCode.OK, scan)
         } catch (ex: Exception) {
-            //TODO [Dorota] Remove file from disk if added
+            fileName?.let { fileStorageService.deleteFile(it) }
             throw UploadScanException(ex.localizedMessage)
         }
     }
 
     @GetMapping("/scans")
     fun scans(@RequestHeader("authorization") token: String,
-              @RequestParam travelId: Int): Response<List<String>> {
+              @RequestParam travelId: Int): Response<List<Scan>> {
         userManagement.verifyUser(token)
         val userId = userManagement.getUserId(token)
-        val scanNames = scanManagement.getScanNames(userId, travelId)
-        return Response(ResponseCode.OK, scanNames)
+        val scans = scanManagement.getScans(userId, travelId)
+        return Response(ResponseCode.OK, scans)
     }
 
     @GetMapping("/scans/{fileName:.+}")
@@ -66,8 +68,19 @@ class ServerScanController {
 
         return ResponseEntity.ok()
                 .contentType(MediaType.parseMediaType(contentType))
-                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + resource.getFilename() + "\"")
+                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + resource.filename + "\"")
                 .body(resource)
     }
 
+    @PostMapping("/deleteScans")
+    fun deleteTravels(@RequestHeader("authorization") token: String,
+                      @RequestBody scans: List<Scan>): Response<Unit> {
+        userManagement.verifyUser(token)
+
+        for (scan in scans) {
+            scanManagement.deleteScan(scan)
+            scan.name?.let { fileStorageService.deleteFile(it) }
+        }
+        return Response(ResponseCode.OK, Unit)
+    }
 }

@@ -1,22 +1,23 @@
 package com.github.travelplannerapp.travels
 
-import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.CompoundButton
+import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.view.ActionMode
+import androidx.recyclerview.widget.RecyclerView
 import com.github.travelplannerapp.R
 import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.item_travel.*
-import androidx.appcompat.app.AppCompatActivity
-import android.widget.CompoundButton
 
-class TravelsAdapter (val presenter: TravelsContract.Presenter): RecyclerView.Adapter<TravelsAdapter.TravelsViewHolder>(){
+class TravelsAdapter(val presenter: TravelsContract.Presenter) : RecyclerView.Adapter<TravelsAdapter.TravelsViewHolder>() {
+
     private var actionMode: ActionMode? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TravelsViewHolder {
         return TravelsViewHolder(presenter, LayoutInflater.from(parent.context)
-                .inflate(R.layout.item_travel, parent, false));    }
+                .inflate(R.layout.item_travel, parent, false)); }
 
     override fun getItemCount(): Int {
         return presenter.getTravelsCount()
@@ -37,13 +38,13 @@ class TravelsAdapter (val presenter: TravelsContract.Presenter): RecyclerView.Ad
             containerView.setOnClickListener(this)
             containerView.setOnLongClickListener(this)
             checkboxItemTravel.setOnCheckedChangeListener(CompoundButton.OnCheckedChangeListener(
-                fun ( _ : CompoundButton, isChecked: Boolean) {
-                    if (isChecked) {
-                        presenter.addPositionToDelete(adapterPosition)
-                    } else {
-                        presenter.removePositionToDelete(adapterPosition)
+                    fun(_: CompoundButton, isChecked: Boolean) {
+                        if (isChecked) {
+                            presenter.addPositionToDelete(adapterPosition)
+                        } else {
+                            presenter.removePositionToDelete(adapterPosition)
+                        }
                     }
-                }
             ))
         }
 
@@ -63,7 +64,7 @@ class TravelsAdapter (val presenter: TravelsContract.Presenter): RecyclerView.Ad
         }
 
         override fun setCheckbox() {
-            if(actionMode != null) checkboxItemTravel.visibility = View.VISIBLE
+            if (actionMode != null) checkboxItemTravel.visibility = View.VISIBLE
             else checkboxItemTravel.visibility = View.GONE
 
             checkboxItemTravel.isChecked = false
