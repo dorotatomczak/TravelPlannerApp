@@ -28,7 +28,7 @@ class TicketsPresenter(view: TicketsContract.View, private val travelId: Int) : 
     }
 
     override fun loadScans() {
-        view.showLoadingIndicator()
+        view.setLoadingIndicatorVisibility(true)
 
         compositeDisposable.add(CommunicationService.serverApi.getScans(travelId)
                 .observeOn(SchedulerProvider.ui())
@@ -105,7 +105,7 @@ class TicketsPresenter(view: TicketsContract.View, private val travelId: Int) : 
     private fun handleLoadScansResponse(scans: List<Scan>) {
         tickets = ArrayList(scans)
         view.onDataSetChanged()
-        view.hideLoadingIndicator()
+        view.setLoadingIndicatorVisibility(false)
 
         if (this.tickets.isEmpty()) view.showNoTickets() else view.showTickets()
     }

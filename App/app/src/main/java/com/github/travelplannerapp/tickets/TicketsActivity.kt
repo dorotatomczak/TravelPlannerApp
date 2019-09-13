@@ -165,12 +165,8 @@ class TicketsActivity : AppCompatActivity(), TicketsContract.View {
         recyclerViewTickets.adapter?.notifyDataSetChanged()
     }
 
-    override fun showLoadingIndicator() {
-        swipeRefreshLayoutTickets.isRefreshing = true
-    }
-
-    override fun hideLoadingIndicator() {
-        swipeRefreshLayoutTickets.isRefreshing = false
+    override fun setLoadingIndicatorVisibility(isVisible: Boolean) {
+        swipeRefreshLayoutTickets.isRefreshing = isVisible
     }
 
     override fun showFullScan(url: String) {

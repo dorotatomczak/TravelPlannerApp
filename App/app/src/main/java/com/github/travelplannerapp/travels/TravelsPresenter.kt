@@ -16,7 +16,7 @@ class TravelsPresenter(view: TravelsContract.View) : BasePresenter<TravelsContra
     private var travelsToDeleteIds = ArrayList<Int>()
 
     override fun loadTravels() {
-        view.showLoadingIndicator()
+        view.setLoadingIndicatorVisibility(true)
 
         compositeDisposable.add(CommunicationService.serverApi.getTravels()
                 .observeOn(SchedulerProvider.ui())
@@ -96,8 +96,7 @@ class TravelsPresenter(view: TravelsContract.View) : BasePresenter<TravelsContra
     private fun handleLoadTravelsResponse(myTravels: List<Travel>) {
         travels = ArrayList(myTravels)
         view.onDataSetChanged()
-        view.hideLoadingIndicator()
-
+        view.setLoadingIndicatorVisibility(false)
         if (travels.isEmpty()) view.showNoTravels() else view.showTravels()
     }
 
@@ -114,7 +113,7 @@ class TravelsPresenter(view: TravelsContract.View) : BasePresenter<TravelsContra
     }
 
     private fun handleErrorResponse(error: Throwable) {
-        view.hideLoadingIndicator()
+        view.setLoadingIndicatorVisibility(false)
         if (error is ApiException) view.showSnackbar(error.getErrorMessageCode())
         else view.showSnackbar(R.string.server_connection_error)
     }

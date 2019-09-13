@@ -88,12 +88,8 @@ class TravelsActivity : AppCompatActivity(), TravelsContract.View {
         recyclerViewTravels.adapter?.notifyDataSetChanged()
     }
 
-    override fun showLoadingIndicator() {
-        swipeRefreshLayoutTravels.isRefreshing = true
-    }
-
-    override fun hideLoadingIndicator() {
-        swipeRefreshLayoutTravels.isRefreshing = false
+    override fun setLoadingIndicatorVisibility(isVisible: Boolean) {
+        swipeRefreshLayoutTravels.isRefreshing = isVisible
     }
 
     override fun showActionMode() {
