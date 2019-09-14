@@ -22,7 +22,7 @@ object DateTimeUtils {
         return formatter.format(calendar.time)
     }
 
-    private fun stringToDateTime(date: String, time: String) : Calendar {
+    fun stringToDateTime(date: String, time: String) : Calendar {
         val dateTimeText = "$date $time"
         val calendar = GregorianCalendar.getInstance()
         val formatter = SimpleDateFormat.getDateTimeInstance(SimpleDateFormat.DEFAULT, SimpleDateFormat.SHORT)
@@ -31,5 +31,4 @@ object DateTimeUtils {
 
         return calendar
     }
-
 }

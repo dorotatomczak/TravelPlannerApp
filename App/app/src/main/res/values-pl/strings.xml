@@ -38,9 +38,6 @@
     <string name="delete_menu">Usuń</string>
 
     <string name="no_day_plans">Nie masz żadnego planu dnia w tej podróży</string>
-    <string name="restaurant">Restauracja</string>
-    <string name="museum">Muzeum</string>
-    <string name="monument">Zabytek</string>
     <string name="search">Szukaj</string>
     <string name="category">Kategoria</string>
     <string name="from_date">Od dnia</string>
@@ -58,4 +55,19 @@
     <string name="delete_entry">Usuń %1$s</string>
     <string name="delete_confirmation">Czy na pewno chcesz usunąć wybrane %1$s?</string>
     <string name="travels">Podróże</string>
+    <string name="add_plan_ok">Dodałeś nowy plan</string>
+    <string name="airport">Lotnisko</string>
+    <string name="atm_bank_exchange">Bankomat</string>
+    <string name="coffee_tea">Kawiarnia</string>
+    <string name="eat_drink">Jedzenie i picie</string>
+    <string name="going_out">Rozrywka</string>
+    <string name="hospital_health_care_facility">Opieka zdrowotna</string>
+    <string name="leisure_outdoor">Aktywny wypoczynek</string>
+    <string name="natural_geographical">Natura</string>
+    <string name="petrol_station">Stacja paliw</string>
+    <string name="restaurant">Restauracja</string>
+    <string name="shopping">Zakupy</string>
+    <string name="sights_museum">Zabytki i muzea</string>
+    <string name="snacks_fast_food">Fast food</string>
+    <string name="toilet_rest_area">Toaleta</string>
 </resources>
