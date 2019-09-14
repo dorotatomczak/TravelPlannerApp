@@ -45,9 +45,9 @@ class TicketsAdapter(val presenter: TicketsContract.Presenter) : RecyclerView.Ad
             checkboxItemTicket.setOnCheckedChangeListener(CompoundButton.OnCheckedChangeListener(
                     fun(_: CompoundButton, isChecked: Boolean) {
                         if (isChecked) {
-                            presenter.addTicketToDelete(adapterPosition)
+                            presenter.setTicketCheck(adapterPosition, true)
                         } else {
-                            presenter.removeTicketToDelete(adapterPosition)
+                            presenter.setTicketCheck(adapterPosition, false)
                         }
                     }
             ))
@@ -59,7 +59,8 @@ class TicketsAdapter(val presenter: TicketsContract.Presenter) : RecyclerView.Ad
         }
 
         override fun onLongClick(v: View?): Boolean {
-            actionMode = (containerView.context as AppCompatActivity)
+            checkboxItemTicket.isChecked = true
+            if (actionMode == null) actionMode = (containerView.context as AppCompatActivity)
                     .startSupportActionMode(TicketsActionModeToolbar(presenter))
             return true
         }
@@ -71,11 +72,11 @@ class TicketsAdapter(val presenter: TicketsContract.Presenter) : RecyclerView.Ad
                     .into(imageViewItemTicket)
         }
 
-        override fun setCheckbox() {
+        override fun setCheckbox(checked: Boolean) {
             if (actionMode != null) checkboxItemTicket.visibility = View.VISIBLE
             else checkboxItemTicket.visibility = View.GONE
 
-            checkboxItemTicket.isChecked = false
+            checkboxItemTicket.isChecked = checked
         }
     }
 }

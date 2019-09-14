@@ -18,7 +18,7 @@ interface TravelsContract {
 
     interface TravelItemView {
         fun setName(name: String)
-        fun setCheckbox()
+        fun setCheckbox(checked: Boolean)
     }
 
     interface Presenter {
@@ -29,8 +29,7 @@ interface TravelsContract {
         fun getTravelsCount(): Int
         fun onBindTravelsAtPosition(position: Int, itemView: TravelItemView)
         fun openTravelDetails(position: Int)
-        fun addPositionToDelete(position: Int)
-        fun removePositionToDelete(position: Int)
+        fun setTravelCheck(position: Int, checked: Boolean)
         fun unsubscribe()
         fun enterActionMode()
         fun leaveActionMode()

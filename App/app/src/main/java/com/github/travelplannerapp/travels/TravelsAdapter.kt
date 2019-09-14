@@ -40,9 +40,9 @@ class TravelsAdapter(val presenter: TravelsContract.Presenter) : RecyclerView.Ad
             checkboxItemTravel.setOnCheckedChangeListener(CompoundButton.OnCheckedChangeListener(
                     fun(_: CompoundButton, isChecked: Boolean) {
                         if (isChecked) {
-                            presenter.addPositionToDelete(adapterPosition)
+                            presenter.setTravelCheck(adapterPosition, true)
                         } else {
-                            presenter.removePositionToDelete(adapterPosition)
+                            presenter.setTravelCheck(adapterPosition, false)
                         }
                     }
             ))
@@ -54,7 +54,8 @@ class TravelsAdapter(val presenter: TravelsContract.Presenter) : RecyclerView.Ad
         }
 
         override fun onLongClick(v: View?): Boolean {
-            actionMode = (containerView.context as AppCompatActivity)
+            checkboxItemTravel.isChecked = true
+            if (actionMode == null) actionMode = (containerView.context as AppCompatActivity)
                     .startSupportActionMode(TravelsActionModeToolbar(presenter))
             return true
         }
@@ -63,11 +64,11 @@ class TravelsAdapter(val presenter: TravelsContract.Presenter) : RecyclerView.Ad
             textViewItemTravelName.text = name
         }
 
-        override fun setCheckbox() {
+        override fun setCheckbox(checked: Boolean) {
             if (actionMode != null) checkboxItemTravel.visibility = View.VISIBLE
             else checkboxItemTravel.visibility = View.GONE
 
-            checkboxItemTravel.isChecked = false
+            checkboxItemTravel.isChecked = checked
         }
     }
 }

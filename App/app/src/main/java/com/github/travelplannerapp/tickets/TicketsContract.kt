@@ -21,7 +21,7 @@ interface TicketsContract {
 
     interface TicketItemView {
         fun setImage(url: String)
-        fun setCheckbox()
+        fun setCheckbox(checked: Boolean)
     }
 
     interface Presenter {
@@ -30,14 +30,13 @@ interface TicketsContract {
         fun loadScans()
         fun unsubscribe()
         fun getTicketsCount(): Int
-        fun onBindTicketsAtPosition(position:Int, itemView: TicketItemView)
+        fun onBindTicketsAtPosition(position: Int, itemView: TicketItemView)
         fun onAddedScan(scan: Scan)
         fun onScanClicked(position: Int)
         fun deleteTickets()
         fun onDeleteClicked()
         fun enterActionMode()
         fun leaveActionMode()
-        fun addTicketToDelete(position: Int)
-        fun removeTicketToDelete(position: Int)
+        fun setTicketCheck(position: Int, checked: Boolean)
     }
 }

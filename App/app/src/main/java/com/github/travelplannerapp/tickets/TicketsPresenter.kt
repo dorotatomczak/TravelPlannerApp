@@ -13,7 +13,7 @@ class TicketsPresenter(view: TicketsContract.View, private val travelId: Int) : 
 
     private val compositeDisposable = CompositeDisposable()
     private var tickets = ArrayList<Scan>()
-    private var ticketsToDelete = ArrayList<Scan>()
+    private var ticketsChecks = BooleanArray(tickets.size)
 
     override fun onAddScanClick() {
         if (view.verifyPermissions()) {
@@ -51,11 +51,12 @@ class TicketsPresenter(view: TicketsContract.View, private val travelId: Int) : 
     override fun onBindTicketsAtPosition(position: Int, itemView: TicketsContract.TicketItemView) {
         val ticket = tickets[position]
         itemView.setImage(CommunicationService.getScanUrl(ticket.name))
-        itemView.setCheckbox()
+        itemView.setCheckbox(ticketsChecks[position])
     }
 
     override fun onAddedScan(scan: Scan) {
         tickets.add(scan)
+        ticketsChecks = BooleanArray(tickets.size) { false }
         view.showTickets()
         view.onDataSetChanged()
     }
@@ -66,12 +67,13 @@ class TicketsPresenter(view: TicketsContract.View, private val travelId: Int) : 
     }
 
     override fun onDeleteClicked() {
-        if (ticketsToDelete.size > 0) {
+        if (getTicketsToDelete().size > 0) {
             view.showConfirmationDialog()
         }
     }
 
     override fun deleteTickets() {
+        val ticketsToDelete = getTicketsToDelete()
         compositeDisposable.add(CommunicationService.serverApi.deleteScans(ticketsToDelete)
                 .observeOn(SchedulerProvider.ui())
                 .subscribeOn(SchedulerProvider.io())
@@ -80,8 +82,6 @@ class TicketsPresenter(view: TicketsContract.View, private val travelId: Int) : 
                         { handleDeleteTicketsResponse() },
                         { error -> handleErrorResponse(error) }
                 ))
-
-        ticketsToDelete = ArrayList()
     }
 
     override fun enterActionMode() {
@@ -90,20 +90,24 @@ class TicketsPresenter(view: TicketsContract.View, private val travelId: Int) : 
     }
 
     override fun leaveActionMode() {
+        ticketsChecks = BooleanArray(tickets.size) { false }
         view.onDataSetChanged()
         view.showNoActionMode()
     }
 
-    override fun addTicketToDelete(position: Int) {
-        ticketsToDelete.add(tickets[position])
+    override fun setTicketCheck(position: Int, checked: Boolean) {
+        ticketsChecks[position] = checked
     }
 
-    override fun removeTicketToDelete(position: Int) {
-        ticketsToDelete.remove(tickets[position])
+    private fun getTicketsToDelete(): ArrayList<Scan> {
+        val ticketsToDelete = ArrayList<Scan>()
+        ticketsChecks.mapIndexed { index, isChecked -> if (isChecked) ticketsToDelete.add(tickets[index]) }
+        return ticketsToDelete
     }
 
     private fun handleLoadScansResponse(scans: List<Scan>) {
         tickets = ArrayList(scans)
+        ticketsChecks = BooleanArray(tickets.size) { false }
         view.onDataSetChanged()
         view.setLoadingIndicatorVisibility(false)
 

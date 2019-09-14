@@ -13,7 +13,7 @@ class TravelsPresenter(view: TravelsContract.View) : BasePresenter<TravelsContra
 
     private val compositeDisposable = CompositeDisposable()
     private var travels = ArrayList<Travel>()
-    private var travelsToDeleteIds = ArrayList<Int>()
+    private var travelsChecks = BooleanArray(travels.size)
 
     override fun loadTravels() {
         view.setLoadingIndicatorVisibility(true)
@@ -40,12 +40,13 @@ class TravelsPresenter(view: TravelsContract.View) : BasePresenter<TravelsContra
     }
 
     override fun onDeleteClicked() {
-        if (travels.size > 0) {
+        if (getTravelToDeleteIds().size > 0) {
             view.showConfirmationDialog()
         }
     }
 
     override fun deleteTravels() {
+        val travelsToDeleteIds = getTravelToDeleteIds()
         compositeDisposable.add(CommunicationService.serverApi.deleteTravels(travelsToDeleteIds)
                 .observeOn(SchedulerProvider.ui())
                 .subscribeOn(SchedulerProvider.io())
@@ -59,7 +60,7 @@ class TravelsPresenter(view: TravelsContract.View) : BasePresenter<TravelsContra
     override fun onBindTravelsAtPosition(position: Int, itemView: TravelsContract.TravelItemView) {
         val travel = travels[position]
         itemView.setName(travel.name)
-        itemView.setCheckbox()
+        itemView.setCheckbox(travelsChecks[position])
     }
 
     override fun getTravelsCount(): Int {
@@ -71,12 +72,8 @@ class TravelsPresenter(view: TravelsContract.View) : BasePresenter<TravelsContra
         view.showTravelDetails(travel.id, travel.name)
     }
 
-    override fun addPositionToDelete(position: Int) {
-        travelsToDeleteIds.add(travels[position].id)
-    }
-
-    override fun removePositionToDelete(position: Int) {
-        travelsToDeleteIds.remove(travels[position].id)
+    override fun setTravelCheck(position: Int, checked: Boolean) {
+        travelsChecks[position] = checked
     }
 
     override fun unsubscribe() {
@@ -89,12 +86,20 @@ class TravelsPresenter(view: TravelsContract.View) : BasePresenter<TravelsContra
     }
 
     override fun leaveActionMode() {
+        travelsChecks = BooleanArray(travels.size) { false }
         view.onDataSetChanged()
         view.showNoActionMode()
     }
 
+    private fun getTravelToDeleteIds(): ArrayList<Int> {
+        val travelsToDeleteIds = ArrayList<Int>()
+        travelsChecks.mapIndexed { index, isChecked -> if (isChecked) travelsToDeleteIds.add(travels[index].id) }
+        return travelsToDeleteIds
+    }
+
     private fun handleLoadTravelsResponse(myTravels: List<Travel>) {
         travels = ArrayList(myTravels)
+        travelsChecks = BooleanArray(travels.size) { false }
         view.onDataSetChanged()
         view.setLoadingIndicatorVisibility(false)
         if (travels.isEmpty()) view.showNoTravels() else view.showTravels()
@@ -102,12 +107,12 @@ class TravelsPresenter(view: TravelsContract.View) : BasePresenter<TravelsContra
 
     private fun handleAddTravelResponse(travel: Travel) {
         travels.add(travel)
+        travelsChecks = BooleanArray(travels.size) { false }
         view.showTravels()
         view.onDataSetChanged()
     }
 
     private fun handleDeleteTravelsResponse() {
-        travelsToDeleteIds = ArrayList()
         loadTravels()
         view.showSnackbar(R.string.delete_travels_ok)
     }

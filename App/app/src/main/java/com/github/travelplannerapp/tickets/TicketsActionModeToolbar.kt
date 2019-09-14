@@ -5,11 +5,11 @@ import android.view.MenuItem
 import androidx.appcompat.view.ActionMode
 import com.github.travelplannerapp.R
 
-class TicketsActionModeToolbar(private val ticketsPresenter: TicketsContract.Presenter): ActionMode.Callback {
+class TicketsActionModeToolbar(private val ticketsPresenter: TicketsContract.Presenter) : ActionMode.Callback {
 
     override fun onActionItemClicked(mode: ActionMode, item: MenuItem): Boolean {
         when (item.itemId) {
-            R.id.menuDeleteTickets ->{
+            R.id.menuDeleteTickets -> {
                 ticketsPresenter.onDeleteClicked()
             }
         }
