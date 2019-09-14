@@ -2,11 +2,14 @@ package com.github.travelplannerapp.dayplans.addplan
 
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.github.travelplannerapp.R
+import com.github.travelplannerapp.communication.model.PlaceCategory
+import com.github.travelplannerapp.communication.model.Plan
 import com.github.travelplannerapp.utils.DateTimeUtils
 import com.github.travelplannerapp.utils.DrawerUtils
 import com.google.android.material.snackbar.Snackbar
@@ -23,6 +26,14 @@ class AddPlanActivity : AppCompatActivity(), AddPlanContract.View {
 
     @Inject
     lateinit var presenter: AddPlanContract.Presenter
+
+    private var coordinates = AddPlanContract.Coordinates(0.0, 0.0)
+
+    companion object {
+        const val REQUEST_ADD_PLAN = 0
+        const val REQUEST_ADD_PLAN_RESULT_MESSAGE = "REQUEST_ADD_PLAN_RESULT_MESSAGE"
+        const val REQUEST_ADD_PLAN_RESULT_PLAN = "REQUEST_ADD_PLAN_RESULT_PLAN"
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         AndroidInjection.inject(this)
@@ -43,6 +54,8 @@ class AddPlanActivity : AppCompatActivity(), AddPlanContract.View {
         editTextPlanName.setOnClickListener {
             //TODO [Dorota] Open Search activity
             //temp for testing (this should be invoked in presenter after the search returned result):
+            coordinates.lattitude = 48.8583701
+            coordinates.longitude = 2.2944813
             editTextPlanName.setText("Wieża Eiffla", TextView.BufferType.EDITABLE)
             showLocation("Champ de Mars, 5 Avenue Anatole France, 75007 Paris, Francja")
         }
@@ -57,6 +70,15 @@ class AddPlanActivity : AppCompatActivity(), AddPlanContract.View {
 
     override fun showSnackbar(messageCode: Int) {
         Snackbar.make(coordinatorLayoutAddPlan, messageCode, Snackbar.LENGTH_LONG).show()
+    }
+
+    override fun returnResultAndFinish(messageCode: Int, plan: Plan) {
+        val resultIntent = Intent().apply {
+            putExtra(REQUEST_ADD_PLAN_RESULT_MESSAGE, messageCode)
+            putExtra(REQUEST_ADD_PLAN_RESULT_PLAN, plan)
+        }
+        setResult(RESULT_OK, resultIntent)
+        finish()
     }
 
     private fun openDatePicker(editText: TextInputEditText) {
@@ -90,11 +112,14 @@ class AddPlanActivity : AppCompatActivity(), AddPlanContract.View {
 
     private fun onFabFinishAddPlanClicked() {
         val data = AddPlanContract.NewPlanData(
+                PlaceCategory.values()[dropdownCategoriesAddPlan.selectedItemPosition],
                 editTextPlanName.text.toString(),
                 editTextPlanFromDate.text.toString(),
                 editTextPlanFromTime.text.toString(),
                 editTextPlanToDate.text.toString(),
-                editTextPlanToTime.text.toString()
+                editTextPlanToTime.text.toString(),
+                coordinates,
+                editTextPlanLocation.text.toString()
         )
         presenter.addPlan(data)
     }

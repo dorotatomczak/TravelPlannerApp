@@ -13,5 +13,6 @@
     <color name="transparent">#00000000</color>
     <color name="seeThroughWhite">#75FFFFFF</color>
     <color name="shadyWhite">#99FFFFFF</color>
+    <color name="gray">#868080</color>
     <color name="black">#000000</color>
 </resources>
