@@ -1,9 +1,10 @@
 package com.github.travelplannerapp.tickets
 
+import com.github.travelplannerapp.actionmodewithdelete.DeletableElementsContract
 import com.github.travelplannerapp.communication.model.Scan
 
 interface TicketsContract {
-    interface View {
+    interface View : DeletableElementsContract.View {
         fun verifyPermissions(): Boolean
         fun requestPermissions()
         fun openCamera()
@@ -14,17 +15,13 @@ interface TicketsContract {
         fun onDataSetChanged()
         fun setLoadingIndicatorVisibility(isVisible: Boolean)
         fun showFullScan(url: String)
-        fun showActionMode()
-        fun showNoActionMode()
-        fun showConfirmationDialog()
     }
 
-    interface TicketItemView {
+    interface TicketItemView : DeletableElementsContract.ItemView {
         fun setImage(url: String)
-        fun setCheckbox(checked: Boolean)
     }
 
-    interface Presenter {
+    interface Presenter : DeletableElementsContract.Presenter  {
         fun onAddScanClick()
         fun onPhotoTaken()
         fun loadScans()
@@ -34,9 +31,5 @@ interface TicketsContract {
         fun onAddedScan(scan: Scan)
         fun onScanClicked(position: Int)
         fun deleteTickets()
-        fun onDeleteClicked()
-        fun enterActionMode()
-        fun leaveActionMode()
-        fun setTicketCheck(position: Int, checked: Boolean)
     }
 }

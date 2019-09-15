@@ -11,6 +11,7 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.request.RequestOptions
 import com.github.travelplannerapp.R
+import com.github.travelplannerapp.actionmodewithdelete.ActionModeToolbarWithDelete
 import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.item_ticket.*
 
@@ -45,9 +46,9 @@ class TicketsAdapter(val presenter: TicketsContract.Presenter) : RecyclerView.Ad
             checkboxItemTicket.setOnCheckedChangeListener(CompoundButton.OnCheckedChangeListener(
                     fun(_: CompoundButton, isChecked: Boolean) {
                         if (isChecked) {
-                            presenter.setTicketCheck(adapterPosition, true)
+                            presenter.setCheck(adapterPosition, true)
                         } else {
-                            presenter.setTicketCheck(adapterPosition, false)
+                            presenter.setCheck(adapterPosition, false)
                         }
                     }
             ))
@@ -61,7 +62,7 @@ class TicketsAdapter(val presenter: TicketsContract.Presenter) : RecyclerView.Ad
         override fun onLongClick(v: View?): Boolean {
             checkboxItemTicket.isChecked = true
             if (actionMode == null) actionMode = (containerView.context as AppCompatActivity)
-                    .startSupportActionMode(TicketsActionModeToolbar(presenter))
+                    .startSupportActionMode(ActionModeToolbarWithDelete(presenter))
             return true
         }
 

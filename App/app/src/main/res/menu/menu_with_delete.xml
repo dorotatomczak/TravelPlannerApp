@@ -4,7 +4,7 @@
     android:layout_height="wrap_content">
 
     <item
-        android:id="@+id/menuDeleteTravels"
+        android:id="@+id/menuIconDelete"
         android:icon="@drawable/ic_delete"
         android:title="@string/delete_menu" />
 

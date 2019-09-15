@@ -95,7 +95,7 @@ class TicketsPresenter(view: TicketsContract.View, private val travelId: Int) : 
         view.showNoActionMode()
     }
 
-    override fun setTicketCheck(position: Int, checked: Boolean) {
+    override fun setCheck(position: Int, checked: Boolean) {
         ticketsChecks[position] = checked
     }
 

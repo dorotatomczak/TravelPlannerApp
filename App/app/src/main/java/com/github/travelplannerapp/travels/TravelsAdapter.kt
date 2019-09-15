@@ -8,6 +8,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.view.ActionMode
 import androidx.recyclerview.widget.RecyclerView
 import com.github.travelplannerapp.R
+import com.github.travelplannerapp.actionmodewithdelete.DeletableElementsContract
+import com.github.travelplannerapp.actionmodewithdelete.ActionModeToolbarWithDelete
 import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.item_travel.*
 
@@ -32,7 +34,8 @@ class TravelsAdapter(val presenter: TravelsContract.Presenter) : RecyclerView.Ad
     }
 
     inner class TravelsViewHolder(val presenter: TravelsContract.Presenter, override val containerView: View)
-        : RecyclerView.ViewHolder(containerView), LayoutContainer, TravelsContract.TravelItemView, View.OnClickListener, View.OnLongClickListener {
+        : RecyclerView.ViewHolder(containerView), LayoutContainer, TravelsContract.TravelItemView, DeletableElementsContract.ItemView,
+            View.OnClickListener, View.OnLongClickListener {
 
         init {
             containerView.setOnClickListener(this)
@@ -40,9 +43,9 @@ class TravelsAdapter(val presenter: TravelsContract.Presenter) : RecyclerView.Ad
             checkboxItemTravel.setOnCheckedChangeListener(CompoundButton.OnCheckedChangeListener(
                     fun(_: CompoundButton, isChecked: Boolean) {
                         if (isChecked) {
-                            presenter.setTravelCheck(adapterPosition, true)
+                            presenter.setCheck(adapterPosition, true)
                         } else {
-                            presenter.setTravelCheck(adapterPosition, false)
+                            presenter.setCheck(adapterPosition, false)
                         }
                     }
             ))
@@ -56,7 +59,7 @@ class TravelsAdapter(val presenter: TravelsContract.Presenter) : RecyclerView.Ad
         override fun onLongClick(v: View?): Boolean {
             checkboxItemTravel.isChecked = true
             if (actionMode == null) actionMode = (containerView.context as AppCompatActivity)
-                    .startSupportActionMode(TravelsActionModeToolbar(presenter))
+                    .startSupportActionMode(ActionModeToolbarWithDelete(presenter))
             return true
         }
 

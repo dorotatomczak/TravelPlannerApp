@@ -72,7 +72,7 @@ class TravelsPresenter(view: TravelsContract.View) : BasePresenter<TravelsContra
         view.showTravelDetails(travel.id, travel.name)
     }
 
-    override fun setTravelCheck(position: Int, checked: Boolean) {
+    override fun setCheck(position: Int, checked: Boolean) {
         travelsChecks[position] = checked
     }
 
