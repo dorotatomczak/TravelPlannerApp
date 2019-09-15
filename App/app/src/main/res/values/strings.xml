@@ -57,4 +57,5 @@
     <string name="delete_entry">Delete %1$s</string>
     <string name="delete_confirmation">Are you sure you want to delete selected %1$s?</string>
     <string name="travels">travels</string>
+    <string name="change_travel_name_ok">Travel name has been changed</string>
 </resources>

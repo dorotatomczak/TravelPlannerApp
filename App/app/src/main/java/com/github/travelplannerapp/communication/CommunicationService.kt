@@ -50,6 +50,9 @@ interface ServerApi {
     @POST("/addtravel")
     fun addTravel(@Body travelName: String): Single<Response<Travel>>
 
+    @POST("/changetravelname")
+    fun changeTravelName(@Body travel: Travel): Single<Response<Travel>>
+
     @POST("/deletetravels")
     fun deleteTravels(@Body travelIds: List<Int>): Single<Response<Unit>>
 

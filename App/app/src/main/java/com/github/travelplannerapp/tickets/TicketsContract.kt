@@ -25,7 +25,7 @@ interface TicketsContract {
     }
 
     interface Presenter {
-        fun onAddScanClick()
+        fun onAddScanClicked()
         fun onPhotoTaken()
         fun loadScans()
         fun unsubscribe()

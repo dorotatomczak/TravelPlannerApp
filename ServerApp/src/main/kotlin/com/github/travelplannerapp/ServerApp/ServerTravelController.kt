@@ -37,9 +37,17 @@ class ServerTravelController {
         return Response(ResponseCode.OK, newTravel)
     }
 
+    @PostMapping("/changetravelname")
+    fun changeTravelName(@RequestHeader("authorization") token: String,
+                         @RequestBody travel: Travel): Response<Travel> {
+        userManagement.verifyUser(token)
+        val updatedTravel = travelManagement.updateTravel(travel.id!!, mutableMapOf("name" to travel.name))
+        return Response(ResponseCode.OK, updatedTravel)
+    }
+
     @PostMapping("/deletetravels")
     fun deleteTravels(@RequestHeader("authorization") token: String,
-                     @RequestBody travelIds: List<Int>): Response<Unit> {
+                      @RequestBody travelIds: List<Int>): Response<Unit> {
         userManagement.verifyUser(token)
         val userId = userManagement.getUserId(token)
         travelManagement.deleteTravels(userId, travelIds)

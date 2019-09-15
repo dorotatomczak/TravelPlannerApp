@@ -3,17 +3,21 @@ package com.github.travelplannerapp.traveldetails
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.github.travelplannerapp.R
 import com.github.travelplannerapp.accommodation.AccommodationActivity
+import com.github.travelplannerapp.addtravel.AddTravelDialog
 import com.github.travelplannerapp.dayplans.DayPlansActivity
 import com.github.travelplannerapp.tickets.TicketsActivity
 import com.github.travelplannerapp.transport.TransportActivity
 import com.github.travelplannerapp.utils.DrawerUtils
+import com.google.android.material.snackbar.Snackbar
 import dagger.android.AndroidInjection
 import javax.inject.Inject
 
 import kotlinx.android.synthetic.main.activity_travel_details.*
+import kotlinx.android.synthetic.main.activity_travels.*
 import kotlinx.android.synthetic.main.toolbar.*
 
 class TravelDetailsActivity : AppCompatActivity(), TravelDetailsContract.View {
@@ -32,6 +36,9 @@ class TravelDetailsActivity : AppCompatActivity(), TravelDetailsContract.View {
         setContentView(R.layout.activity_travel_details)
 
         setSupportActionBar(toolbar)
+        buttonEditMode.visibility = View.VISIBLE
+        buttonEditMode.setOnClickListener { showEditTravel() }
+
         supportActionBar?.setHomeButtonEnabled(true)
         DrawerUtils.getDrawer(this, toolbar)
 
@@ -68,5 +75,22 @@ class TravelDetailsActivity : AppCompatActivity(), TravelDetailsContract.View {
         val intent = Intent(this, TicketsActivity::class.java)
         intent.putExtra(TicketsActivity.EXTRA_TRAVEL_ID, travelId)
         startActivity(intent)
+    }
+
+    override fun showEditTravel() {
+        val addTravelDialog = AddTravelDialog()
+        addTravelDialog.onOk = {
+            val travelName = addTravelDialog.travelName.text.toString()
+            presenter.changeTravelName(travelName)
+        }
+        addTravelDialog.show(supportFragmentManager, AddTravelDialog.TAG)
+    }
+
+    override fun showSnackbar(messageCode: Int) {
+        Snackbar.make(coordinatorLayoutTravelDetails, getString(messageCode), Snackbar.LENGTH_LONG).show()
+    }
+
+    override fun showSnackbar(message: String) {
+        Snackbar.make(coordinatorLayoutTravelDetails, message, Snackbar.LENGTH_LONG).show()
     }
 }

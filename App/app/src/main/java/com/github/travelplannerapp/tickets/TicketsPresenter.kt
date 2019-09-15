@@ -15,7 +15,7 @@ class TicketsPresenter(view: TicketsContract.View, private val travelId: Int) : 
     private var tickets = ArrayList<Scan>()
     private var ticketsToDelete = ArrayList<Scan>()
 
-    override fun onAddScanClick() {
+    override fun onAddScanClicked() {
         if (view.verifyPermissions()) {
             view.openCamera()
         } else {

@@ -8,6 +8,9 @@ interface TravelDetailsContract {
         fun showTransport()
         fun showAccommodation()
         fun showTickets(travelId: Int)
+        fun showEditTravel()
+        fun showSnackbar(messageCode: Int)
+        fun showSnackbar(message: String)
     }
 
     interface TileItemView {
@@ -20,5 +23,6 @@ interface TravelDetailsContract {
     interface Presenter {
         fun loadTravel()
         fun openCategory(category: Category.CategoryType)
+        fun changeTravelName(travelName: String)
     }
 }

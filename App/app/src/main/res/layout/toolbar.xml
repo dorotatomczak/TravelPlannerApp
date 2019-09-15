@@ -7,4 +7,16 @@
     android:layout_height="?attr/actionBarSize"
     android:background="?attr/colorPrimary"
     app:layout_collapseMode="pin"
-    app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
+    app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
+
+    <Button
+        android:id="@+id/buttonEditMode"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:background="@drawable/ic_mode_edit"
+        android:layout_marginStart="@dimen/margin_horizontal"
+        android:layout_marginEnd="@dimen/margin_horizontal"
+        android:layout_gravity="end"
+        android:visibility="gone"/>
+
+</androidx.appcompat.widget.Toolbar>

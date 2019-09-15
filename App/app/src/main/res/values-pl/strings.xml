@@ -57,4 +57,5 @@
     <string name="delete_entry">Usuń %1$s</string>
     <string name="delete_confirmation">Czy na pewno chcesz usunąć wybrane %1$s?</string>
     <string name="travels">podróże</string>
+    <string name="change_travel_name_ok">Nazwa podróży zostały zmieniona</string>
 </resources>
