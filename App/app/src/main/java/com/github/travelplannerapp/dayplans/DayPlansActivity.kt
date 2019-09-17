@@ -52,7 +52,7 @@ class DayPlansActivity : AppCompatActivity(), DayPlansContract.View {
                             R.string.scanner_general_error)
                     showSnackbar(messageCode)
                     val plan = data.getSerializableExtra(AddPlanActivity.REQUEST_ADD_PLAN_RESULT_PLAN) as Plan
-                    presenter.onAddedPlan(plan)
+                    presenter.onPlanAdded(plan)
                 }
             }
         }

@@ -48,7 +48,7 @@
     <string name="name">Name</string>
     <string name="wrong_dates_error">\"From\" date and time must be before \"To\" date and time</string>
     <string name="missing_required_fields_error">Fill in all the fields</string>
-    <string name="delete_travels_ok">Selected ravel(s) have been deleted</string>
+    <string name="delete_travels_ok">Selected travel(s) have been deleted</string>
     <string name="delete_tickets_ok">Selected ticket(s) have been deleted</string>
     <string name="delete_scans_error">Error when deleting scan(s)</string>
     <string name="delete_travels_error">Error when deleting travel(s)</string>
