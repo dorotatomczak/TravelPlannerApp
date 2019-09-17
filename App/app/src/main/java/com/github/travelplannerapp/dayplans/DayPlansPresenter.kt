@@ -12,7 +12,7 @@ class DayPlansPresenter(view: DayPlansContract.View) : BasePresenter<DayPlansCon
     private var planItems = ArrayList<DayPlansContract.DayPlanItem>()
     private val plans = ArrayList<Plan>()
 
-    override fun onAddedPlan(plan: Plan) {
+    override fun onPlanAdded(plan: Plan) {
         plans.add(plan)
         plansToDayPlanItems(plans)
 

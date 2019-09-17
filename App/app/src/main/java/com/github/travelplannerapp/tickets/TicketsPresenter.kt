@@ -54,7 +54,7 @@ class TicketsPresenter(view: TicketsContract.View, private val travelId: Int) : 
         itemView.setCheckbox()
     }
 
-    override fun onAddedScan(scan: Scan) {
+    override fun onScanAdded(scan: Scan) {
         tickets.add(scan)
         view.showTickets()
         view.onDataSetChanged()

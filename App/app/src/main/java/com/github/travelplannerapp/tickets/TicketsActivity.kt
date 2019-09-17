@@ -88,7 +88,7 @@ class TicketsActivity : AppCompatActivity(), TicketsContract.View {
                             R.string.scanner_general_error)
                     showSnackbar(messageCode)
                     val scan = data.getSerializableExtra(ScannerActivity.REQUEST_SCANNER_RESULT_SCAN) as Scan
-                    presenter.onAddedScan(scan)
+                    presenter.onScanAdded(scan)
                 }
             }
         }

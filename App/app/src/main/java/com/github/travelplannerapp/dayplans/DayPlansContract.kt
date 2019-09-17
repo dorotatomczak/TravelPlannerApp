@@ -34,7 +34,7 @@ interface DayPlansContract {
     }
 
     interface Presenter {
-        fun onAddedPlan(plan: Plan)
+        fun onPlanAdded(plan: Plan)
         fun unsubscribe()
         fun loadDayPlans()
         fun getPlanItemsCount(): Int
