@@ -18,7 +18,7 @@
     <string name="scanner_initialization_error">Scanner initialization failed</string>
     <string name="scan">Scan</string>
     <string name="scanner_general_error">Something bad happened to scanner</string>
-    <string name="scanner_success">You have added a new scan</string>
+    <string name="scanner_success">You added a new scan</string>
     <string name="server_connection_error">Server connection error</string>
     <string name="scan_upload_error">Something went wrong with uploading the scan</string>
     <string name="save">save</string>
@@ -31,7 +31,7 @@
     <string name="travel_name">Travel name…</string>
     <string name="new_travel">New travel</string>
     <string name="add_travel_error">Error when adding travel</string>
-    <string name="add_travel_ok">You have added a new travel</string>
+    <string name="add_travel_ok">You added a new travel</string>
     <string name="authorization_error">You are not authorized to perform this action</string>
     <string name="no_tickets">You have no tickets</string>
     <string name="add_scan_error">Error when adding scan</string>
@@ -48,14 +48,14 @@
     <string name="name">Name</string>
     <string name="wrong_dates_error">\"From\" date and time must be before \"To\" date and time</string>
     <string name="missing_required_fields_error">Fill in all the fields</string>
-    <string name="delete_travels_ok">You have deleted selected travels(s)</string>
-    <string name="delete_tickets_ok">You have deleted selected scan(s)</string>
+    <string name="delete_travels_ok">You deleted selected travels(s)</string>
+    <string name="delete_tickets_ok">You deleted selected scan(s)</string>
     <string name="delete_scans_error">Error when deleting scan(s)</string>
     <string name="delete_travels_error">Error when deleting travel(s)</string>
     <string name="delete_entry">Delete %1$s</string>
     <string name="delete_confirmation">Are you sure you want to delete selected %1$s?</string>
     <string name="travels">travels</string>
-    <string name="add_plan_ok">You have added a new plan</string>
+    <string name="add_plan_ok">You added a new plan</string>
     <string name="eat_drink">Eat and drink</string>
     <string name="restaurant">Restaurant</string>
     <string name="coffee_tea">Coffee and tea</string>
