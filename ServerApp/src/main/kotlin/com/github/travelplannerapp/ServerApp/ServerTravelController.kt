@@ -52,19 +52,8 @@ class ServerTravelController {
         return Response(ResponseCode.OK, Unit)
     }
 
-    @GetMapping("/findObjects")
-    fun findObjects(@RequestHeader("authorization") token: String, @RequestParam("cat") category: String, @RequestParam("west") west: String, @RequestParam("south") south: String,
-                    @RequestParam("east") east: String, @RequestParam("north") north: String): Response<SearchObjectsResponse> {
-        return Response(
-            ResponseCode.OK,
-            // if you want to test via browser
-            searchService.getObjects("eat-drink", Pair("18.516918", "54.350646"), Pair("18.776903", "54.382190"))
-            //searchService.getObjects(category, Pair(west, south), Pair(east, north))
-        )
-    }
-
-    @GetMapping("/findFacilities")
-    fun findFacilities(
+    @GetMapping("/getObjects")
+    fun getObjects(
         @RequestHeader("authorization") token: String, @RequestParam("cat") category: String,
         @RequestParam("west") west: String, @RequestParam("south") south: String,
         @RequestParam("east") east: String, @RequestParam("north") north: String
@@ -97,7 +86,6 @@ class ServerTravelController {
         try {
             val cities = searchService.findCities(query)
             return Response(ResponseCode.OK, cities)
-
         } catch (ex: Exception) {
             throw SearchNoItemsException(ex.localizedMessage)
         }

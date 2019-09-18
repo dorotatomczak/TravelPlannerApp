@@ -62,6 +62,7 @@
     <string name="load_map_error">Can\'t load map</string>
     <string name="no_items">No items found</string>
 
+    <!-- if you add category - add it in enum "Category" and array.xml -->
     <string name="restaurant">Restaurant</string>
     <string name="sights_museum">Sights and museum</string>
     <string name="leisure_outdoor">Leisure outdoor</string>

@@ -7,48 +7,64 @@ import com.github.travelplannerapp.ServerApp.datamodels.SearchObjectsResponse
 import com.github.travelplannerapp.ServerApp.exceptions.SearchNoItemsException
 import com.google.gson.GsonBuilder
 import com.google.gson.JsonParser
+import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.beans.factory.annotation.Value
+import org.springframework.context.annotation.Configuration
+import org.springframework.context.annotation.PropertySource
 import org.springframework.stereotype.Component
 import java.net.URL
 import java.net.URLConnection
 
 @Component
 class SearchService : ISearchService {
+    @Autowired
+    private lateinit var hereLoader: HereLoader
 
     // test function
     override fun getExampleDataFromHere() {
-        print(findPlaceByText("chrysler", "40.74917", "-73.98529"))
+        print(hereLoader.findPlaceByText("chrysler", "40.74917", "-73.98529"))
         print(
-            findBestWay(
+            hereLoader.findBestWay(
                 "40.74917", "-73.98529", "45.74917",
                 "-72.98529", "fastest", "car", "disabled"
             )
         )
     }
 
-    override fun getObjects(category: String, westSouthPoint: Pair<String, String>, eastNorthPoint: Pair<String, String>): Array<Place> {
-        val places =  findObjects(
+    override fun getObjects(
+        category: String,
+        westSouthPoint: Pair<String, String>,
+        eastNorthPoint: Pair<String, String>
+    ): Array<Place> {
+        val places = hereLoader.findObjects(
             westSouthPoint.first, westSouthPoint.second,
             eastNorthPoint.first, eastNorthPoint.second, category
         ).results.items
 
-        if(places.isEmpty()) throw SearchNoItemsException("No places found")
+        if (places.isEmpty()) throw SearchNoItemsException("No places found")
         return places
     }
 
     override fun getPage(request: String): SearchObjectsResponse {
-        return executeRequest(request)
+        return hereLoader.getPage(request)
     }
 
     override fun findCities(query: String): Array<CityObject> {
-        val cities = getCities(query)
-        if (cities.isEmpty()) throw SearchNoItemsException("No cities found")
+        val cities = hereLoader.getCities(query)
 
+        if (cities.isEmpty()) throw SearchNoItemsException("No cities found")
         return cities
     }
 
-    companion object HereLoader {
-        private val MY_APP_ID = "PFVgm9cqOc2OlIyiFZOO"
-        private val MY_APP_TOKEN = "OrWU0j5Bb1XI5Yj-YLIhVQ"
+    @Component
+    @Configuration
+    private inner class HereLoader {
+        @Value("\${com.here.android.maps.appid}")
+        private lateinit var MY_APP_ID: String
+
+        @Value("\${com.here.android.maps.apptoken}")
+        private lateinit var MY_APP_TOKEN: String
+
         private val bestWayResponseFilter = "response"
         private val jsonFilter = "jsonResponse"
 
@@ -91,7 +107,15 @@ class SearchService : ISearchService {
                           "&cat=$category" +
                           "&pretty"
 
-            return executeRequest(request)
+            var response = executeRequest(request, jsonFilter)
+            return parseResponse(response)
+        }
+
+        fun getPage(request: String): SearchObjectsResponse {
+            val response = executeRequest(request, "")
+
+            // if result is null: app doesn't show anything
+            return parseResponse(response)
         }
 
         fun getCities(query: String): Array<CityObject> {
@@ -103,23 +127,19 @@ class SearchService : ISearchService {
                           "&max=$limit" +
                           "&pretty"
             val response = executeRequest(request, "")
-            val responseText = response.substring(response.indexOf('{'))
-            val jsonElement = JsonParser().parse(responseText)
-            val gson = GsonBuilder().setPrettyPrinting().create()
 
             // if result is null: app doesn't show anything
-            return gson.fromJson(jsonElement, SearchCitiesResponse::class.java).Res.Coverage.Cities.City
+            return parseResponse<SearchCitiesResponse>(response).Res.Coverage.Cities.City
         }
 
-        fun executeRequest(request: String): SearchObjectsResponse {
+        private inline fun <reified T> parseResponse(response: String): T {
 
-            var response = executeRequest(request, jsonFilter)
             val responseText = response.substring(response.indexOf('{'))
 
             var jsonElement = JsonParser().parse(responseText)
             val gson = GsonBuilder().setPrettyPrinting().create()
 
-            return gson.fromJson(jsonElement, SearchObjectsResponse::class.java)
+            return gson.fromJson(jsonElement, T::class.java)
         }
 
         private fun executeRequest(address: String, match: String): String {
@@ -137,4 +157,5 @@ class SearchService : ISearchService {
             return response
         }
     }
+
 }

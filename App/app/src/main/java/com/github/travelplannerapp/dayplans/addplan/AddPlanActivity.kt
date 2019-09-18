@@ -11,6 +11,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.github.travelplannerapp.R
 import com.github.travelplannerapp.communication.model.PlaceCategory
 import com.github.travelplannerapp.communication.model.Plan
+import com.github.travelplannerapp.communication.model.Category
 import com.github.travelplannerapp.dayplans.searchelement.SearchElementActivity
 import com.github.travelplannerapp.utils.DateTimeUtils
 import com.github.travelplannerapp.utils.DrawerUtils
@@ -18,6 +19,7 @@ import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.TextInputEditText
 import dagger.android.AndroidInjection
 import kotlinx.android.synthetic.main.activity_add_plan.*
+import kotlinx.android.synthetic.main.fab_check.*
 import kotlinx.android.synthetic.main.toolbar.*
 import java.util.*
 import javax.inject.Inject
@@ -53,13 +55,9 @@ class AddPlanActivity : AppCompatActivity(), AddPlanContract.View {
         editTextPlanFromTime.setOnClickListener { openTimePicker(it as TextInputEditText) }
         editTextPlanToTime.setOnClickListener { openTimePicker(it as TextInputEditText) }
 
-        editTextPlanName.setOnClickListener {
-            val intent = Intent(this, SearchElementActivity::class.java)
-            intent.putExtra("category", dropdownCategoriesAddPlan.selectedItem.toString())
-            startActivityForResult(intent, SearchElementActivity.REQUEST_SEARCH)
-        }
+        editTextPlanName.setOnClickListener { startSearchElementActivity() }
 
-        fabFinishAddPlan.setOnClickListener { onFabFinishAddPlanClicked() }
+        fabCheck.setOnClickListener { onFabFinishAddPlanClicked() }
     }
 
     override fun showLocation(location: String) {
@@ -78,6 +76,20 @@ class AddPlanActivity : AppCompatActivity(), AddPlanContract.View {
         }
         setResult(RESULT_OK, resultIntent)
         finish()
+    }
+
+    private fun startSearchElementActivity() {
+        val intent = Intent(this, SearchElementActivity::class.java)
+        var categoryName: String? = null
+        val categoryNameDropDown = dropdownCategoriesAddPlan.selectedItem.toString()
+
+        for (category in Category.values()) {
+            if (this.resources.getString(category.stringResurceId) == categoryNameDropDown)
+                categoryName = category.categoryName
+        }
+
+        intent.putExtra(SearchElementActivity.EXTRA_CATEGORY, categoryName)
+        startActivityForResult(intent, SearchElementActivity.REQUEST_SEARCH)
     }
 
     private fun openDatePicker(editText: TextInputEditText) {
@@ -128,11 +140,11 @@ class AddPlanActivity : AppCompatActivity(), AddPlanContract.View {
         when (requestCode) {
             SearchElementActivity.REQUEST_SEARCH -> {
                 if (resultCode == Activity.RESULT_OK && data != null) {
-                    val name = data.getStringExtra(SearchElementActivity.NAME)
-                    val location = data.getStringExtra(SearchElementActivity.LOCATION)
+                    val name = data.getStringExtra(SearchElementActivity.EXTRA_NAME)
+                    val location = data.getStringExtra(SearchElementActivity.EXTRA_LOCATION)
 
                     editTextPlanName.setText(name, TextView.BufferType.EDITABLE)
-                    showLocation(location!!)
+                    location?.let { showLocation(it) }
                 }
             }
         }

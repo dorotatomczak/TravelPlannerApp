@@ -20,10 +20,10 @@
         <item>@string/hospital_health_care_facility</item>
 =======
     <string-array name="plan_categories">
+        <!-- if you add something - add it in enum "Category" -->
         <item>@string/museum</item>
         <item>@string/restaurant</item>
         <item>@string/coffee_tea</item>
-        <item>@string/snack_fast_food</item>
         <item>@string/going_out</item>
         <item>@string/airport</item>
         <item>@string/shopping</item>
