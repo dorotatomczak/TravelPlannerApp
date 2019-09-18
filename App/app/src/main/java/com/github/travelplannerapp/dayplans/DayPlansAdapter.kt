@@ -7,8 +7,8 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.github.travelplannerapp.R
 import kotlinx.android.extensions.LayoutContainer
-import kotlinx.android.synthetic.main.item_plan.*
 import kotlinx.android.synthetic.main.item_plan_date_separator.*
+import kotlinx.android.synthetic.main.item_plan_element.*
 
 class DayPlansAdapter(val presenter: DayPlansContract.Presenter) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
@@ -17,7 +17,7 @@ class DayPlansAdapter(val presenter: DayPlansContract.Presenter) : RecyclerView.
         return when (viewType) {
 
             DayPlansContract.DayPlanItem.TYPE_PLAN -> PlanElementViewHolder(presenter, LayoutInflater.from(parent.context)
-                    .inflate(R.layout.item_plan, parent, false))
+                    .inflate(R.layout.item_plan_element, parent, false))
 
             DayPlansContract.DayPlanItem.TYPE_DATE -> PlanDateSeparatorViewHolder(presenter, LayoutInflater.from(parent.context)
                     .inflate(R.layout.item_plan_date_separator, parent, false))
