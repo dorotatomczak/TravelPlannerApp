@@ -31,7 +31,7 @@
     <string name="travel_name">Travel name…</string>
     <string name="new_travel">New travel</string>
     <string name="add_travel_error">Error when adding travel</string>
-    <string name="add_travel_ok">Travel added successfully</string>
+    <string name="add_travel_ok">You have added a new travel</string>
     <string name="authorization_error">You are not authorized to perform this action</string>
     <string name="no_tickets">You have no tickets</string>
     <string name="add_scan_error">Error when adding scan</string>
@@ -48,8 +48,8 @@
     <string name="name">Name</string>
     <string name="wrong_dates_error">\"From\" date and time must be before \"To\" date and time</string>
     <string name="missing_required_fields_error">Fill in all the fields</string>
-    <string name="delete_travels_ok">Selected travel(s) have been deleted</string>
-    <string name="delete_tickets_ok">Selected ticket(s) have been deleted</string>
+    <string name="delete_travels_ok">You have deleted selected travels(s)</string>
+    <string name="delete_tickets_ok">You have deleted selected scan(s)</string>
     <string name="delete_scans_error">Error when deleting scan(s)</string>
     <string name="delete_travels_error">Error when deleting travel(s)</string>
     <string name="delete_entry">Delete %1$s</string>
