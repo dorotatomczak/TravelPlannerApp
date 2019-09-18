@@ -1,16 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="horizontal" android:layout_width="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:paddingStart="8dp"
-    android:paddingEnd="8dp">
+    android:paddingStart="@dimen/padding_small"
+    android:paddingEnd="@dimen/padding_small">
 
     <TextView
         android:id="@+id/textViewItemPlanFromTime"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:text="08:00 AM"/>
+        android:textSize="@dimen/text_size_item_S"
+        tools:text="08:00 AM"/>
 
     <FrameLayout
         android:id="@+id/layoutImageAndLine"
@@ -31,7 +34,8 @@
             android:id="@+id/imageViewItemPlan"
             android:layout_width="30dp"
             android:layout_height="30dp"
-            android:src="@drawable/ic_circle_plane"/>
+            android:src="@drawable/ic_circle_plane"
+            android:contentDescription="@null"/>
 
     </FrameLayout>
 
@@ -39,21 +43,21 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:layout_marginBottom="8dp">
+        android:layout_marginBottom="@dimen/margin_vertical">
 
         <TextView
-            android:text="Lorem ipsum"
             android:id="@+id/textViewItemPlanName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="16sp"/>
+            android:textSize="@dimen/text_size_item_S"
+            tools:text="Lorem ipsum"/>
 
         <TextView
-            android:text="ac orci phasellus egestas tellus rutrum tellus pellentesque eu tincidunt"
             android:id="@+id/textViewItemPlanLocation"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="14sp"/>
+            android:textSize="@dimen/text_size_item_XS"
+            tools:text="ac orci phasellus egestas tellus rutrum tellus pellentesque eu tincidunt"/>
 
     </LinearLayout>
 
