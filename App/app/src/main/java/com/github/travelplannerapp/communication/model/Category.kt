@@ -1,22 +1,19 @@
 package com.github.travelplannerapp.communication.model
 
-enum class Categories(val categoryName: String) {
-    EAT_DRINK("eat-drink"),
-    RESTAURANT("restaurant"),
-    COFFEE_TEA("coffee-tea"),
-    SNACKS_FAST_FOOD("snack-fast-food"),
-    GOING_OUT("going-out"),
-    SIGHTS_MUSEUM("sights-museum"),
-    TRANSPORT("transport"),
-    AIRPORT("airport"),
-    ACCOMMODATION("accommodation"),
-    SHOPPING("shopping"),
-    LEISURE_OUTDOOR("leisure-outdoor"),
-    ADMINISTRATIVE_AREAS_BUILDINGS("administrative-areas-buildings"),
-    NATURAL_GEOGRAPHICAL("natural-geographical"),
-    PETROL_STATION("petrol-station"),
-    ATM_BANK_EXCHANGE("atm-bank-exchange"),
-    TOILET_REST_AREA("toilet-rest-area"),
-    HOSPITAL_HEALTH_CARE_FACILITY("hospital-health-care-facility")
+import com.github.travelplannerapp.R
+
+enum class Category(val categoryName: String, val stringResurceId: Int) {
+    SIGHTS_MUSEUM("museum", R.string.museum),
+    RESTAURANT("restaurant", R.string.restaurant),
+    COFFEE_TEA("coffee-tea", R.string.coffee_tea),
+    GOING_OUT("going-out", R.string.going_out),
+    AIRPORT("airport", R.string.airport),
+    SHOPPING("shopping", R.string.shopping),
+    LEISURE_OUTDOOR("leisure-outdoor", R.string.outdoor),
+    NATURAL_GEOGRAPHICAL("natural-geographical", R.string.natural_geographical),
+    TOILET_REST_AREA("toilet-rest-area", R.string.rest_area),
+    HOSPITAL_HEALTH_CARE_FACILITY("hospital-health-care-facility", R.string.health_care);
+
+    // more: https://developer.here.com/documentation/places/topics/categories.html
 }
 

@@ -15,8 +15,8 @@
         android:layout_marginLeft="@dimen/margin_horizontal"
         android:layout_marginTop="@dimen/margin_vertical"
         android:layout_marginRight="@dimen/margin_horizontal"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         <androidx.appcompat.widget.SearchView
             android:id="@+id/searchViewCity"
@@ -28,23 +28,16 @@
             android:hint="@string/city"
             android:inputType="text"
             android:textColor="@color/black"
-            android:textSize="@dimen/text_size_edit_text"/>
+            android:textSize="@dimen/text_size_edit_text" />
 
         <fragment
-            class="com.here.android.mpa.mapping.SupportMapFragment"
             android:id="@+id/mapFragment"
+            class="com.here.android.mpa.mapping.SupportMapFragment"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
-
+            android:layout_height="match_parent" />
 
     </LinearLayout>
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fabSelectElement"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end"
-        android:layout_margin="@dimen/fab_margin"
-        app:srcCompat="@drawable/ic_check" />
+    <include layout="@layout/fab_check" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

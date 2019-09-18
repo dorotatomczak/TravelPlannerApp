@@ -19,24 +19,25 @@ import com.here.android.mpa.common.ViewObject
 import com.here.android.mpa.mapping.*
 import com.here.android.mpa.mapping.Map
 import kotlinx.android.synthetic.main.activity_search_element.*
+import kotlinx.android.synthetic.main.fab_check.*
 
 
 class SearchElementActivity : AppCompatActivity(), SearchElementContract.View {
 
     @Inject
     lateinit var presenter: SearchElementContract.Presenter
-    private lateinit var map: Map
     private lateinit var supportMapFragment: SupportMapFragment
+    private lateinit var map: Map
     private val placesContainer = MapContainer()
     private lateinit var selectedMapMarker: MapMarker
 
     companion object {
-        const val SEARCH_RESULT = "SEARCH_RESULT"
-        const val NAME = "NAME"
-        const val LOCATION = "LOCATION"
+        const val EXTRA_NAME = "name"
+        const val EXTRA_LOCATION = "location"
         const val REQUEST_SEARCH = 1
-        const val OK = 0
+        const val EXTRA_CATEGORY = "category"
     }
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         AndroidInjection.inject(this)
@@ -44,9 +45,10 @@ class SearchElementActivity : AppCompatActivity(), SearchElementContract.View {
         setContentView(R.layout.activity_search_element)
         initializeMap()
 
-        fabSelectElement.setOnClickListener {
-            returnResultAndFinish(OK, selectedMapMarker.title, selectedMapMarker.description)
+        fabCheck.setOnClickListener {
+            returnResultAndFinish(selectedMapMarker.title, selectedMapMarker.description)
         }
+
 
         // Get the SearchView and set the searchable configuration
         val searchManager = getSystemService(Context.SEARCH_SERVICE) as SearchManager
@@ -72,11 +74,10 @@ class SearchElementActivity : AppCompatActivity(), SearchElementContract.View {
         }
     }
 
-    override fun returnResultAndFinish(messageCode: Int, name: String, address: String) {
+    override fun returnResultAndFinish(name: String, address: String) {
         val resultIntent = Intent().apply {
-            putExtra(SEARCH_RESULT, messageCode)
-            putExtra(NAME, name)
-            putExtra(LOCATION, address)
+            putExtra(EXTRA_NAME, name)
+            putExtra(EXTRA_LOCATION, address)
         }
         setResult(RESULT_OK, resultIntent)
         finish()
@@ -86,20 +87,33 @@ class SearchElementActivity : AppCompatActivity(), SearchElementContract.View {
         Snackbar.make(linearLayoutSearchElement, messageCode, Snackbar.LENGTH_LONG).show()
     }
 
+    override fun loadObjectsOnMap(places: Array<Place>) {
+        map.removeMapObjects(placesContainer.allMapObjects)
+        placesContainer.removeAllMapObjects()
+
+        for (place in places) {
+            val defaultMarker = MapMarker()
+            defaultMarker.title = place.title
+            defaultMarker.description = place.vicinity
+            defaultMarker.coordinate = GeoCoordinate(place.position[0], place.position[1], 0.0)
+            placesContainer.addMapObject(defaultMarker)
+            map.addMapObject(defaultMarker)
+        }
+    }
+
     private fun initializeMap() {
         supportMapFragment = supportFragmentManager.findFragmentById(R.id.mapFragment) as SupportMapFragment
+
         supportMapFragment.init { error ->
             if (error == OnEngineInitListener.Error.NONE) {
                 supportMapFragment.mapGesture.addOnGestureListener(provideOnGestureListener())
-                map = supportMapFragment.map
+                    map = supportMapFragment.map
 
-                // default center in Gdansk because why not
                 val gdanskGeoCord = GeoCoordinate(54.339787, 18.609653, 0.0)
+                map.setCenter(gdanskGeoCord, Map.Animation.NONE)
                 val zoomRate = 0.3
                 map.zoomLevel = (map.maxZoomLevel + map.minZoomLevel) * zoomRate
-
-                loadObjectsOnMap(gdanskGeoCord)
-
+                loadObjectsOnMap(map.center)
             } else {
                 showSnackbar(R.string.load_map_error)
             }
@@ -149,19 +163,5 @@ class SearchElementActivity : AppCompatActivity(), SearchElementContract.View {
                 map.boundingBox.bottomRight.latitude.toString(),
                 map.boundingBox.bottomRight.longitude.toString(),
                 map.boundingBox.topLeft.latitude.toString())
-    }
-
-    override fun loadObjectsOnMap(places: Array<Place>) {
-        map.removeMapObjects(placesContainer.allMapObjects)
-        placesContainer.removeAllMapObjects()
-
-        for (place in places) {
-            val defaultMarker = MapMarker()
-            defaultMarker.title = place.title
-            defaultMarker.description = place.vicinity
-            defaultMarker.coordinate = GeoCoordinate(place.position[0], place.position[1], 0.0)
-            placesContainer.addMapObject(defaultMarker)
-            map.addMapObject(defaultMarker)
-        }
     }
 }

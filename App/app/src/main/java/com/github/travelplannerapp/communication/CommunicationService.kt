@@ -66,7 +66,7 @@ interface ServerApi {
     @GET("/findCities")
     fun findCities(@Query("query") query: String): Single<Response<List<CityObject>>>
 
-    @GET("/findFacilities")
-    fun findFacilities(@Query("cat") category: String, @Query("west") west: String, @Query("north") north: String,
-                       @Query("east") east: String, @Query("south") south: String): Single<Response<Array<Place>>>
+    @GET("/getObjects")
+    fun findObjects(@Query("cat") category: String, @Query("west") west: String, @Query("north") north: String,
+                    @Query("east") east: String, @Query("south") south: String): Single<Response<Array<Place>>>
 }

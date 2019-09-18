@@ -3,7 +3,7 @@ import com.github.travelplannerapp.communication.model.Place
 
 interface SearchElementContract {
     interface View{
-        fun returnResultAndFinish(messageCode: Int, name: String, address: String)
+        fun returnResultAndFinish(name: String, address: String)
         fun loadObjectsOnMap(places: Array<Place>)
         fun showSnackbar(messageCode: Int)
     }

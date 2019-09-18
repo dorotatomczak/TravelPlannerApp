@@ -13,7 +13,7 @@ class SearchElementPresenter (view: SearchElementContract.View) : BasePresenter<
 
     override fun search(category: String, west: String, north: String, east: String, south: String) {
 
-            compositeDisposable.add(CommunicationService.serverApi.findFacilities(category, west, north, east, south)
+            compositeDisposable.add(CommunicationService.serverApi.findObjects(category, west, north, east, south)
                     .observeOn(SchedulerProvider.ui())
                     .subscribeOn(SchedulerProvider.io())
                     .map { if (it.responseCode == ResponseCode.OK) it.data else throw ApiException(it.responseCode) }

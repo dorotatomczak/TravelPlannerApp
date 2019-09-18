@@ -9,8 +9,8 @@ import android.net.Uri
 import com.github.travelplannerapp.communication.CommunicationService
 
 class CitySuggestionProvider : ContentProvider() {
-    override fun query(p0: Uri, p1: Array<out String>?, p2: String?, p3: Array<out String>?, p4: String?): Cursor? {
-        val searchString = p0.lastPathSegment.toString()
+    override fun query(query: Uri, p1: Array<out String>?, p2: String?, p3: Array<out String>?, p4: String?): Cursor? {
+        val searchString = query.lastPathSegment.toString()
         return createCursor(searchString)
     }
 
