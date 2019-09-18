@@ -59,6 +59,7 @@ class TravelsActivity : AppCompatActivity(), TravelsContract.View {
         addTravelDialog.show(supportFragmentManager, AddTravelDialog.TAG)
     }
 
+
     override fun showTravelDetails(travelId: Int, travelName: String) {
         val intent = Intent(this, TravelDetailsActivity::class.java)
         intent.putExtra(TravelDetailsActivity.EXTRA_TRAVEL_ID, travelId)
