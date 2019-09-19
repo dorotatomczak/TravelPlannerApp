@@ -46,7 +46,7 @@ class DayPlansPresenter(view: DayPlansContract.View) : BasePresenter<DayPlansCon
         }
         itemView.setName(plan.place.title)
         itemView.setFromTime(DateTimeUtils.timeToString(plan.fromDateTime))
-        itemView.setLocation(plan.place.location)
+        itemView.setLocation(plan.place.vicinity)
         itemView.setIcon(plan.place.category.categoryIcon)
     }
 
