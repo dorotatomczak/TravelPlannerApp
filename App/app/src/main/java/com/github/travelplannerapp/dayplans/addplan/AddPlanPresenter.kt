@@ -2,6 +2,7 @@ package com.github.travelplannerapp.dayplans.addplan
 
 import com.github.travelplannerapp.BasePresenter
 import com.github.travelplannerapp.R
+import com.github.travelplannerapp.communication.model.ObjectCategory
 import com.github.travelplannerapp.communication.model.Place
 import com.github.travelplannerapp.communication.model.Plan
 import com.github.travelplannerapp.utils.DateTimeUtils
@@ -13,7 +14,8 @@ class AddPlanPresenter(view: AddPlanContract.View) : BasePresenter<AddPlanContra
         if (isPlanDataValid(data)) {
             //TODO [Dorota] Send to server
 
-            val place = Place(data.name, arrayOf(data.coordinates.lattitude, data.coordinates.longitude), data.location, data.category)
+            val place = Place(data.name, arrayOf(data.coordinates.lattitude, data.coordinates.longitude), data.location,
+                    ObjectCategory("", data.category.categoryName, data.category.categoryIcon))
 
             val plan = Plan(
                     Locale.getDefault(),

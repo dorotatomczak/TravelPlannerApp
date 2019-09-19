@@ -1,10 +1,10 @@
 package com.github.travelplannerapp.ServerApp.datamodels
 
-enum class Category(val categoryName: String) {
+enum class PlaceCategory(val categoryName: String) {
     EAT_DRINK("eat-drink"),
     RESTAURANT("restaurant"),
     COFFEE_TEA("coffee-tea"),
-    SNACKS_FAST_FOOD("snack-fast-food"),
+    SNACKS_FAST_FOOD("snacks-fast-food"),
     GOING_OUT("going-out"),
     SIGHTS_MUSEUM("sights-museum"),
     TRANSPORT("transport"),

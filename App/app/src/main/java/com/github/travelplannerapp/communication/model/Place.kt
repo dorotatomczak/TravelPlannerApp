@@ -3,22 +3,22 @@ package com.github.travelplannerapp.communication.model
 import java.io.Serializable
 
 class Place(
-        val id: String,
-        val title: String,
-        val vicinity: String,
-        val position: Array<Double>,
-        val category: ObjectCategory,
-        val categoryTitle: String,
-        val href: String,
-        val resultType: String,
-        val averageRating: String,
-        val distance: Double
+        var title: String,
+        var position: Array<Double>,
+        var vicinity: String,
+        var category: ObjectCategory,
+        var categoryTitle: String = "",
+        var href: String = "",
+        var resultType: String = "",
+        var averageRating: String = "",
+        var distance: Double = 0.0
 ): Serializable
 
 class ObjectCategory(
-        private val id: String,
-        private val title: String,
-        private val href: String,
-        private val type: String,
-        private val system: String
-)
+        var id: String = "",
+        var title: String = "",
+        var categoryIcon: Int = 0,
+        var href: String = "",
+        var type: String = "",
+        var system: String = ""
+): Serializable

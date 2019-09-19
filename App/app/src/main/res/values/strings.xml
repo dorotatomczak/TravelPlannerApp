@@ -21,8 +21,8 @@
     <string name="scanner_success">You added a new scan</string>
     <string name="server_connection_error">Server connection error</string>
     <string name="scan_upload_error">Something went wrong with uploading the scan</string>
-    <string name="save">save</string>
-    <string name="cancel">cancel</string>
+    <string name="save">Save</string>
+    <string name="cancel">Cancel</string>
     <string name="try_again">Something went wrong. Please try again</string>
     <string name="sign_up_successful">Your account has been created</string>
     <string name="sign_up_email_error">Account exists</string>
@@ -60,7 +60,7 @@
     <string name="choose_category">Choose category</string>
     <string name="city">City</string>
     <string name="load_map_error">Can\'t load map</string>
-    <string name="no_items">No items found</string>
+    <string name="no_items_search_error">No items found</string>
 
     <!-- if you add category - add it in enum "Category" and array.xml -->
     <string name="restaurant">Restaurant</string>
@@ -77,5 +77,6 @@
     <string name="shopping">Shopping</string>
     <string name="outdoor">Outdoor</string>
     <string name="natural_geographical">Natural</string>
+    <string name="snacks_fast_food">Fast food</string>
 
 </resources>

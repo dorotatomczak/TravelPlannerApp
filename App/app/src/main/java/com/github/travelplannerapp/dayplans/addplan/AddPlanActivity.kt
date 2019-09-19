@@ -11,7 +11,6 @@ import androidx.appcompat.app.AppCompatActivity
 import com.github.travelplannerapp.R
 import com.github.travelplannerapp.communication.model.PlaceCategory
 import com.github.travelplannerapp.communication.model.Plan
-import com.github.travelplannerapp.communication.model.Category
 import com.github.travelplannerapp.dayplans.searchelement.SearchElementActivity
 import com.github.travelplannerapp.utils.DateTimeUtils
 import com.github.travelplannerapp.utils.DrawerUtils
@@ -83,7 +82,7 @@ class AddPlanActivity : AppCompatActivity(), AddPlanContract.View {
         var categoryName: String? = null
         val categoryNameDropDown = dropdownCategoriesAddPlan.selectedItem.toString()
 
-        for (category in Category.values()) {
+        for (category in PlaceCategory.values()) {
             if (this.resources.getString(category.stringResurceId) == categoryNameDropDown)
                 categoryName = category.categoryName
         }
