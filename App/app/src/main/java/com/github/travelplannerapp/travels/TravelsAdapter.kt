@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.view.ActionMode
 import androidx.recyclerview.widget.RecyclerView
 import com.github.travelplannerapp.R
+import com.github.travelplannerapp.deleteactionmode.DeleteActionModeToolbar
 import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.item_travel.*
 
@@ -40,9 +41,9 @@ class TravelsAdapter(val presenter: TravelsContract.Presenter) : RecyclerView.Ad
             checkboxItemTravel.setOnCheckedChangeListener(CompoundButton.OnCheckedChangeListener(
                     fun(_: CompoundButton, isChecked: Boolean) {
                         if (isChecked) {
-                            presenter.addPositionToDelete(adapterPosition)
+                            presenter.addTravelToDeleteId(adapterPosition)
                         } else {
-                            presenter.removePositionToDelete(adapterPosition)
+                            presenter.removeTravelToDeleteId(adapterPosition)
                         }
                     }
             ))
@@ -54,8 +55,8 @@ class TravelsAdapter(val presenter: TravelsContract.Presenter) : RecyclerView.Ad
         }
 
         override fun onLongClick(v: View?): Boolean {
-            actionMode = (containerView.context as AppCompatActivity)
-                    .startSupportActionMode(TravelsActionModeToolbar(presenter))
+            if (actionMode == null) actionMode = (containerView.context as AppCompatActivity)
+                    .startSupportActionMode(DeleteActionModeToolbar(presenter))
             return true
         }
 

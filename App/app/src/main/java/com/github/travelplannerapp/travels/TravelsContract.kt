@@ -1,8 +1,10 @@
 package com.github.travelplannerapp.travels
 
+import com.github.travelplannerapp.deleteactionmode.DeleteContract
+
 
 interface TravelsContract {
-    interface View {
+    interface View : DeleteContract.View {
         fun showAddTravel()
         fun showTravelDetails(travelId: Int, travelName: String)
         fun showTravels()
@@ -11,28 +13,21 @@ interface TravelsContract {
         fun showSnackbar(message: String)
         fun onDataSetChanged()
         fun setLoadingIndicatorVisibility(isVisible: Boolean)
-        fun showActionMode()
-        fun showNoActionMode()
-        fun showConfirmationDialog()
     }
 
-    interface TravelItemView {
+    interface TravelItemView : DeleteContract.ItemView {
         fun setName(name: String)
-        fun setCheckbox()
     }
 
-    interface Presenter {
+    interface Presenter : DeleteContract.Presenter {
         fun loadTravels()
         fun addTravel(travelName: String)
-        fun onDeleteClicked()
         fun deleteTravels()
         fun getTravelsCount(): Int
         fun onBindTravelsAtPosition(position: Int, itemView: TravelItemView)
         fun openTravelDetails(position: Int)
-        fun addPositionToDelete(position: Int)
-        fun removePositionToDelete(position: Int)
+        fun addTravelToDeleteId(position: Int)
+        fun removeTravelToDeleteId(position: Int)
         fun unsubscribe()
-        fun enterActionMode()
-        fun leaveActionMode()
     }
 }

@@ -74,7 +74,7 @@ class ServerScanController {
 
     @PostMapping("/deleteScans")
     fun deleteTravels(@RequestHeader("authorization") token: String,
-                      @RequestBody scans: List<Scan>): Response<Unit> {
+                      @RequestBody scans: MutableSet<Scan>): Response<Unit> {
         userManagement.verifyUser(token)
 
         for (scan in scans) {

@@ -11,6 +11,7 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.request.RequestOptions
 import com.github.travelplannerapp.R
+import com.github.travelplannerapp.deleteactionmode.DeleteActionModeToolbar
 import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.item_ticket.*
 
@@ -59,8 +60,8 @@ class TicketsAdapter(val presenter: TicketsContract.Presenter) : RecyclerView.Ad
         }
 
         override fun onLongClick(v: View?): Boolean {
-            actionMode = (containerView.context as AppCompatActivity)
-                    .startSupportActionMode(TicketsActionModeToolbar(presenter))
+            if (actionMode == null) actionMode = (containerView.context as AppCompatActivity)
+                    .startSupportActionMode(DeleteActionModeToolbar(presenter))
             return true
         }
 
