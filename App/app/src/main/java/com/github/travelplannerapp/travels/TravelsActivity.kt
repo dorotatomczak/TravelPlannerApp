@@ -1,5 +1,6 @@
 package com.github.travelplannerapp.travels
 
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
@@ -8,7 +9,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.github.travelplannerapp.R
-import com.github.travelplannerapp.travels.addtravel.AddTravelDialog
+import com.github.travelplannerapp.traveldialog.TravelDialog
 import com.github.travelplannerapp.traveldetails.TravelDetailsActivity
 import com.github.travelplannerapp.utils.DrawerUtils
 import com.google.android.material.snackbar.Snackbar
@@ -51,19 +52,24 @@ class TravelsActivity : AppCompatActivity(), TravelsContract.View {
     }
 
     override fun showAddTravel() {
-        val addTravelDialog = AddTravelDialog(getString(R.string.new_travel))
+        val addTravelDialog = TravelDialog(getString(R.string.new_travel))
         addTravelDialog.onOk = {
             val travelName = addTravelDialog.travelName.text.toString()
             presenter.addTravel(travelName)
         }
-        addTravelDialog.show(supportFragmentManager, AddTravelDialog.TAG)
+        addTravelDialog.show(supportFragmentManager, TravelDialog.TAG)
     }
 
     override fun showTravelDetails(travelId: Int, travelName: String) {
         val intent = Intent(this, TravelDetailsActivity::class.java)
         intent.putExtra(TravelDetailsActivity.EXTRA_TRAVEL_ID, travelId)
         intent.putExtra(TravelDetailsActivity.EXTRA_TRAVEL_NAME, travelName)
-        startActivity(intent)
+        startActivityForResult(intent, TravelDetailsActivity.REQUEST_EDIT_TRAVEL)
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        presenter.loadTravels()
     }
 
     override fun showNoTravels() {

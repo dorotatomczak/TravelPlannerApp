@@ -7,7 +7,7 @@ import android.view.View
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.github.travelplannerapp.R
 import com.github.travelplannerapp.accommodation.AccommodationActivity
-import com.github.travelplannerapp.travels.addtravel.AddTravelDialog
+import com.github.travelplannerapp.traveldialog.TravelDialog
 import com.github.travelplannerapp.dayplans.DayPlansActivity
 import com.github.travelplannerapp.tickets.TicketsActivity
 import com.github.travelplannerapp.transport.TransportActivity
@@ -27,6 +27,7 @@ class TravelDetailsActivity : AppCompatActivity(), TravelDetailsContract.View {
     companion object {
         const val EXTRA_TRAVEL_ID = "EXTRA_TRAVEL_ID"
         const val EXTRA_TRAVEL_NAME = "EXTRA_TRAVEL_NAME"
+        const val REQUEST_EDIT_TRAVEL = 1
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -77,12 +78,12 @@ class TravelDetailsActivity : AppCompatActivity(), TravelDetailsContract.View {
     }
 
     override fun showEditTravel() {
-        val addTravelDialog = AddTravelDialog(getString(R.string.change_travel_name))
-        addTravelDialog.onOk = {
-            val travelName = addTravelDialog.travelName.text.toString()
+        val editTravelDialog = TravelDialog(getString(R.string.change_travel_name))
+        editTravelDialog.onOk = {
+            val travelName = editTravelDialog.travelName.text.toString()
             presenter.changeTravelName(travelName)
         }
-        addTravelDialog.show(supportFragmentManager, AddTravelDialog.TAG)
+        editTravelDialog.show(supportFragmentManager, TravelDialog.TAG)
     }
 
     override fun showSnackbar(messageCode: Int) {
