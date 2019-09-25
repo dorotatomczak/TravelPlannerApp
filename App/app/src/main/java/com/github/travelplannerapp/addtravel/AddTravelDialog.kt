@@ -9,7 +9,7 @@ import androidx.fragment.app.DialogFragment
 import com.github.travelplannerapp.R
 import kotlinx.android.synthetic.main.dialog_add_travel.view.*
 
-class AddTravelDialog : DialogFragment() {
+class AddTravelDialog(private val dialogTitle: String) : DialogFragment() {
 
     companion object {
         const val TAG = "ADD TRAVEL DIALOG"
@@ -23,6 +23,8 @@ class AddTravelDialog : DialogFragment() {
         val view = activity!!.layoutInflater.inflate(R.layout.dialog_add_travel, null)
 
         travelName = view.editTextTravelNameAddTravel
+
+        view.textViewAddTravel.text = dialogTitle
 
         val builder = AlertDialog.Builder(context!!)
                 .setView(view)

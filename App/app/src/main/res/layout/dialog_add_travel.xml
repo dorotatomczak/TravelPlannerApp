@@ -15,7 +15,6 @@
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/margin_add_travel"
             android:background="@color/transparent"
-            android:text="@string/new_travel"
             android:textColor="@color/white"
             android:textSize="@dimen/text_size_title_small" />
 

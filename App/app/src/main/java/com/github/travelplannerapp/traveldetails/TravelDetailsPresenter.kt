@@ -40,6 +40,7 @@ class TravelDetailsPresenter(private val travelId: Int, private var travelName: 
 
     private fun handleChangeTravelNameResponse(travel: Travel) {
         travelName = travel.name
+        view.setTitle(travelName)
         view.showSnackbar(R.string.change_travel_name_ok)
     }
 

@@ -51,7 +51,7 @@ class TravelsActivity : AppCompatActivity(), TravelsContract.View {
     }
 
     override fun showAddTravel() {
-        val addTravelDialog = AddTravelDialog()
+        val addTravelDialog = AddTravelDialog(getString(R.string.new_travel))
         addTravelDialog.onOk = {
             val travelName = addTravelDialog.travelName.text.toString()
             presenter.addTravel(travelName)

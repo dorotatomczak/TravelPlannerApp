@@ -17,7 +17,6 @@ import dagger.android.AndroidInjection
 import javax.inject.Inject
 
 import kotlinx.android.synthetic.main.activity_travel_details.*
-import kotlinx.android.synthetic.main.activity_travels.*
 import kotlinx.android.synthetic.main.toolbar.*
 
 class TravelDetailsActivity : AppCompatActivity(), TravelDetailsContract.View {
@@ -53,7 +52,7 @@ class TravelDetailsActivity : AppCompatActivity(), TravelDetailsContract.View {
     }
 
     override fun setTitle(title: String) {
-        toolbar.title = title
+        collapsing.title = title
     }
 
     override fun showDayPlans() {
@@ -78,7 +77,7 @@ class TravelDetailsActivity : AppCompatActivity(), TravelDetailsContract.View {
     }
 
     override fun showEditTravel() {
-        val addTravelDialog = AddTravelDialog()
+        val addTravelDialog = AddTravelDialog(getString(R.string.change_travel_name))
         addTravelDialog.onOk = {
             val travelName = addTravelDialog.travelName.text.toString()
             presenter.changeTravelName(travelName)
