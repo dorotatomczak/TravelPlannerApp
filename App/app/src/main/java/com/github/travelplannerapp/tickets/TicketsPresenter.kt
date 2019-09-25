@@ -80,8 +80,7 @@ class TicketsPresenter(view: TicketsContract.View, private val travelId: Int) : 
                         { handleDeleteTicketsResponse() },
                         { error -> handleErrorResponse(error) }
                 ))
-
-        ticketsToDelete = mutableSetOf()
+        ticketsToDelete.clear()
     }
 
     override fun enterActionMode() {

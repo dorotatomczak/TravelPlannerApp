@@ -28,7 +28,7 @@ class TravelDetailsPresenter(private val travelId: Int, private var travelName: 
     }
 
     override fun changeTravelName(travelName: String) {
-        compositeDisposable.add(CommunicationService.serverApi.changeTravelName(Travel(travelId,travelName))
+        compositeDisposable.add(CommunicationService.serverApi.changeTravelName(Travel(travelId, travelName))
                 .observeOn(SchedulerProvider.ui())
                 .subscribeOn(SchedulerProvider.io())
                 .map { if (it.responseCode == ResponseCode.OK) it.data!! else throw ApiException(it.responseCode) }
@@ -41,6 +41,7 @@ class TravelDetailsPresenter(private val travelId: Int, private var travelName: 
     private fun handleChangeTravelNameResponse(travel: Travel) {
         travelName = travel.name
         view.setTitle(travelName)
+        view.setResult(travelId, travelName)
         view.showSnackbar(R.string.change_travel_name_ok)
     }
 

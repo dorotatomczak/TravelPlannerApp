@@ -93,6 +93,11 @@ class TravelsPresenter(view: TravelsContract.View) : BasePresenter<TravelsContra
         view.showNoActionMode()
     }
 
+    override fun updateTravelName(travelId: Int, travelName: String) {
+        val position = travels.indexOfFirst { travel -> travel.id == travelId }
+        if (position != -1) travels[position].name = travelName
+    }
+
     private fun handleLoadTravelsResponse(myTravels: List<Travel>) {
         travels = ArrayList(myTravels)
         view.onDataSetChanged()
@@ -107,7 +112,7 @@ class TravelsPresenter(view: TravelsContract.View) : BasePresenter<TravelsContra
     }
 
     private fun handleDeleteTravelsResponse() {
-        travelsToDeleteIds = mutableSetOf()
+        travelsToDeleteIds.clear()
         loadTravels()
         view.showSnackbar(R.string.delete_travels_ok)
     }

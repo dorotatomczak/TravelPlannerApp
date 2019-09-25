@@ -64,12 +64,21 @@ class TravelsActivity : AppCompatActivity(), TravelsContract.View {
         val intent = Intent(this, TravelDetailsActivity::class.java)
         intent.putExtra(TravelDetailsActivity.EXTRA_TRAVEL_ID, travelId)
         intent.putExtra(TravelDetailsActivity.EXTRA_TRAVEL_NAME, travelName)
-        startActivityForResult(intent, TravelDetailsActivity.REQUEST_EDIT_TRAVEL)
+        startActivityForResult(intent, TravelDetailsActivity.REQUEST_TRAVEL_DETAILS)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        presenter.loadTravels()
+        when (requestCode) {
+            TravelDetailsActivity.REQUEST_TRAVEL_DETAILS -> {
+                if (resultCode == Activity.RESULT_OK && data != null) {
+                    val travelId = data.extras!!.getInt(TravelDetailsActivity.EXTRA_TRAVEL_ID, 0)
+                    val travelName = data.extras!!.getString(TravelDetailsActivity.EXTRA_TRAVEL_NAME)!!
+                    presenter.updateTravelName(travelId, travelName)
+                    onDataSetChanged()
+                }
+            }
+        }
     }
 
     override fun showNoTravels() {

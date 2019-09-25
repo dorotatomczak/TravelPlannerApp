@@ -2,7 +2,6 @@ package com.github.travelplannerapp.travels
 
 import com.github.travelplannerapp.deleteactionmode.DeleteContract
 
-
 interface TravelsContract {
     interface View : DeleteContract.View {
         fun showAddTravel()
@@ -29,5 +28,6 @@ interface TravelsContract {
         fun addTravelToDeleteId(position: Int)
         fun removeTravelToDeleteId(position: Int)
         fun unsubscribe()
+        fun updateTravelName(travelId: Int, travelName: String)
     }
 }

@@ -27,7 +27,7 @@ class TravelDetailsActivity : AppCompatActivity(), TravelDetailsContract.View {
     companion object {
         const val EXTRA_TRAVEL_ID = "EXTRA_TRAVEL_ID"
         const val EXTRA_TRAVEL_NAME = "EXTRA_TRAVEL_NAME"
-        const val REQUEST_EDIT_TRAVEL = 1
+        const val REQUEST_TRAVEL_DETAILS = 1
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -55,6 +55,15 @@ class TravelDetailsActivity : AppCompatActivity(), TravelDetailsContract.View {
     override fun setTitle(title: String) {
         collapsing.title = title
     }
+
+    override fun setResult(travelId: Int, travelName: String) {
+        val resultIntent = Intent().apply {
+            putExtra(EXTRA_TRAVEL_ID, travelId)
+            putExtra(EXTRA_TRAVEL_NAME, travelName)
+        }
+        setResult(RESULT_OK, resultIntent)
+    }
+
 
     override fun showDayPlans() {
         val intent = Intent(this, DayPlansActivity::class.java)
