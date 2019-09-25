@@ -40,9 +40,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="0dp"
-            android:entries="@array/plan_categories"
+            android:entries="@array/place_categories"
             android:paddingTop="8dp"
-            android:spinnerMode="dropdown" />
+            android:spinnerMode="dialog" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
@@ -166,12 +166,6 @@
 
     </LinearLayout>
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fabFinishAddPlan"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end"
-        android:layout_margin="@dimen/fab_margin"
-        app:srcCompat="@drawable/ic_check" />
+    <include layout="@layout/fab_check" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

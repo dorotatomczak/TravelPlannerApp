@@ -6,8 +6,8 @@ import com.github.travelplannerapp.ServerApp.db.repositories.UserRepository
 import com.github.travelplannerapp.ServerApp.exceptions.AuthorizationException
 import com.github.travelplannerapp.ServerApp.exceptions.EmailAlreadyExistsException
 import com.github.travelplannerapp.ServerApp.exceptions.WrongCredentialsException
-import com.github.travelplannerapp.ServerApp.jsondatamodels.SignInRequest
-import com.github.travelplannerapp.ServerApp.jsondatamodels.SignUpRequest
+import com.github.travelplannerapp.ServerApp.datamodels.SignInRequest
+import com.github.travelplannerapp.ServerApp.datamodels.SignUpRequest
 import io.jsonwebtoken.Jwts
 import io.jsonwebtoken.SignatureAlgorithm
 import org.springframework.beans.factory.annotation.Autowired

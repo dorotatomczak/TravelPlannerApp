@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingStart="@dimen/padding_small"
+    android:paddingEnd="@dimen/padding_small">
+
+    <TextView
+        android:id="@+id/textViewItemPlanFromTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:textSize="@dimen/text_size_item_S"
+        tools:text="08:00 AM"/>
+
+    <FrameLayout
+        android:id="@+id/layoutImageAndLine"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp">
+
+        <View
+            android:id="@+id/lineItemPlan"
+            android:layout_width="4dp"
+            android:layout_height="match_parent"
+            android:background="@color/colorAccent"
+            android:layout_gravity="center"
+            android:visibility="gone"/>
+
+        <ImageView
+            android:id="@+id/imageViewItemPlan"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:src="@drawable/ic_circle_plane"
+            android:contentDescription="@null"/>
+
+    </FrameLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginBottom="@dimen/margin_vertical">
+
+        <TextView
+            android:id="@+id/textViewItemPlanName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/text_size_item_S"
+            tools:text="Lorem ipsum"/>
+
+        <TextView
+            android:id="@+id/textViewItemPlanLocation"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/text_size_item_XS"
+            tools:text="ac orci phasellus egestas tellus rutrum tellus pellentesque eu tincidunt"/>
+
+    </LinearLayout>
+
+</LinearLayout>

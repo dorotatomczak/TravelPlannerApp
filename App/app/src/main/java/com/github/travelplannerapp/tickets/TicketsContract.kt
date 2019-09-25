@@ -28,7 +28,7 @@ interface TicketsContract {
         fun unsubscribe()
         fun getTicketsCount(): Int
         fun onBindTicketsAtPosition(position: Int, itemView: TicketItemView)
-        fun onAddedScan(scan: Scan)
+        fun onScanAdded(scan: Scan)
         fun onScanClicked(position: Int)
         fun deleteTickets()
         fun addTicketToDelete(position: Int)
