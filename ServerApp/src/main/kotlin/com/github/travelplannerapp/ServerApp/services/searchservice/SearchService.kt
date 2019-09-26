@@ -10,7 +10,7 @@ import com.google.gson.JsonParser
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.context.annotation.Configuration
-import org.springframework.context.annotation.PropertySource
+import org.apache.commons.lang3.StringEscapeUtils
 import org.springframework.stereotype.Component
 import java.net.URL
 import java.net.URLConnection
@@ -40,6 +40,12 @@ class SearchService : ISearchService {
             westSouthPoint.first, westSouthPoint.second,
             eastNorthPoint.first, eastNorthPoint.second, category
         ).results.items
+
+        for(i in 0 until places.size){
+            places[i].title = StringEscapeUtils.unescapeHtml3(places[i].title)
+            places[i].vicinity = StringEscapeUtils.unescapeHtml3(places[i].vicinity)
+            places[i].vicinity = places[i].vicinity.replace("<br/>", "\n")
+        }
 
         if (places.isEmpty()) throw SearchNoItemsException("No places found")
         return places
