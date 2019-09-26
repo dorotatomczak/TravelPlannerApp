@@ -4,7 +4,7 @@ import com.github.travelplannerapp.R
 
 enum class PlaceCategory(val categoryName: String, val categoryIcon: Int, val stringResurceId: Int) : java.io.Serializable {
     EAT_DRINK("eat-drink", R.drawable.ic_circle_restaurant, R.string.eat_drink),
-    SNACKS_FAST_FOOD("snack-fast-food", R.drawable.ic_circle_fast_food, R.string.snacks_fast_food),
+    SNACKS_FAST_FOOD("snacks-fast-food", R.drawable.ic_circle_fast_food, R.string.snacks_fast_food),
     RESTAURANT("restaurant", R.drawable.ic_circle_restaurant, R.string.restaurant),
     COFFEE_TEA("coffee-tea", R.drawable.ic_circle_coffee, R.string.coffee_tea),
     GOING_OUT("going-out", R.drawable.ic_circle_going_out, R.string.going_out),
