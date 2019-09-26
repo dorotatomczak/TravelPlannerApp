@@ -22,9 +22,9 @@ class TravelDialog(private val dialogTitle: String) : DialogFragment() {
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val view = activity!!.layoutInflater.inflate(R.layout.dialog_travel, null)
 
-        travelName = view.editTextTravelNameTravelDialog
+        travelName = view.editTextTravelNameDialogTravel
 
-        view.textViewTravelDialog.text = dialogTitle
+        view.textViewDialogTravel.text = dialogTitle
 
         val builder = AlertDialog.Builder(context!!)
                 .setView(view)

@@ -32,7 +32,7 @@
     <string name="new_travel">Nowa podróż</string>
     <string name="add_travel_error">Wystąpił problem podczas dodawania podróży</string>
     <string name="add_travel_ok">Dodałeś nową podróż</string>
-    <string name="change_travel_name_ok">Zmieniłeś/aś nazwę podróży</string>
+    <string name="change_travel_name_ok">Zmieniłeś nazwę podróży</string>
     <string name="change_travel_name">Zmień nazwę podróży</string>
     <string name="authorization_error">Nie masz uprawnień na wykonanie tej akcji</string>
     <string name="no_tickets">Nie masz żadnego biletu</string>

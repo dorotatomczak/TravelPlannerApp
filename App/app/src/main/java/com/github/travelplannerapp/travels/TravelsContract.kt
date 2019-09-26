@@ -25,8 +25,8 @@ interface TravelsContract {
         fun getTravelsCount(): Int
         fun onBindTravelsAtPosition(position: Int, itemView: TravelItemView)
         fun openTravelDetails(position: Int)
-        fun addTravelToDeleteId(position: Int)
-        fun removeTravelToDeleteId(position: Int)
+        fun addTravelIdToDelete(position: Int)
+        fun removeTravelIdToDelete(position: Int)
         fun unsubscribe()
         fun updateTravelName(travelId: Int, travelName: String)
     }

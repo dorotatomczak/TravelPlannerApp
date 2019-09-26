@@ -41,9 +41,9 @@ class TravelsAdapter(val presenter: TravelsContract.Presenter) : RecyclerView.Ad
             checkboxItemTravel.setOnCheckedChangeListener(CompoundButton.OnCheckedChangeListener(
                     fun(_: CompoundButton, isChecked: Boolean) {
                         if (isChecked) {
-                            presenter.addTravelToDeleteId(adapterPosition)
+                            presenter.addTravelIdToDelete(adapterPosition)
                         } else {
-                            presenter.removeTravelToDeleteId(adapterPosition)
+                            presenter.removeTravelIdToDelete(adapterPosition)
                         }
                     }
             ))

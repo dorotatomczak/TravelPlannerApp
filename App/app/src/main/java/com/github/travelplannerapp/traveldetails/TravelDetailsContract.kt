@@ -11,7 +11,6 @@ interface TravelDetailsContract {
         fun showTickets(travelId: Int)
         fun showEditTravel()
         fun showSnackbar(messageCode: Int)
-        fun showSnackbar(message: String)
     }
 
     interface TileItemView {

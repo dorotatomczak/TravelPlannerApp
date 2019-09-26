@@ -98,8 +98,4 @@ class TravelDetailsActivity : AppCompatActivity(), TravelDetailsContract.View {
     override fun showSnackbar(messageCode: Int) {
         Snackbar.make(coordinatorLayoutTravelDetails, getString(messageCode), Snackbar.LENGTH_LONG).show()
     }
-
-    override fun showSnackbar(message: String) {
-        Snackbar.make(coordinatorLayoutTravelDetails, message, Snackbar.LENGTH_LONG).show()
-    }
 }

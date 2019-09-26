@@ -71,11 +71,11 @@ class TravelsPresenter(view: TravelsContract.View) : BasePresenter<TravelsContra
         view.showTravelDetails(travel.id, travel.name)
     }
 
-    override fun addTravelToDeleteId(position: Int) {
+    override fun addTravelIdToDelete(position: Int) {
         travelsToDeleteIds.add(travels[position].id)
     }
 
-    override fun removeTravelToDeleteId(position: Int) {
+    override fun removeTravelIdToDelete(position: Int) {
         travelsToDeleteIds.remove(travels[position].id)
     }
 

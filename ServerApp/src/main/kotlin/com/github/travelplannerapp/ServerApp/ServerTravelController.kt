@@ -43,7 +43,7 @@ class ServerTravelController {
         return Response(ResponseCode.OK, newTravel)
     }
 
-    @PostMapping("/changetravelname")
+    @PutMapping("/changetravelname")
     fun changeTravelName(@RequestHeader("authorization") token: String,
                          @RequestBody travel: Travel): Response<Travel> {
         userManagement.verifyUser(token)
