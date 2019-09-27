@@ -13,7 +13,7 @@ class TravelsPresenter(view: TravelsContract.View) : BasePresenter<TravelsContra
 
     private val compositeDisposable = CompositeDisposable()
     private var travels = ArrayList<Travel>()
-    private var travelsToDeleteIds = ArrayList<Int>()
+    private var travelsToDeleteIds = mutableSetOf<Int>()
 
     override fun loadTravels() {
         view.setLoadingIndicatorVisibility(true)
@@ -40,7 +40,7 @@ class TravelsPresenter(view: TravelsContract.View) : BasePresenter<TravelsContra
     }
 
     override fun onDeleteClicked() {
-        if (travels.size > 0) {
+        if (travelsToDeleteIds.size > 0) {
             view.showConfirmationDialog()
         }
     }
@@ -71,11 +71,11 @@ class TravelsPresenter(view: TravelsContract.View) : BasePresenter<TravelsContra
         view.showTravelDetails(travel.id, travel.name)
     }
 
-    override fun addPositionToDelete(position: Int) {
+    override fun addTravelIdToDelete(position: Int) {
         travelsToDeleteIds.add(travels[position].id)
     }
 
-    override fun removePositionToDelete(position: Int) {
+    override fun removeTravelIdToDelete(position: Int) {
         travelsToDeleteIds.remove(travels[position].id)
     }
 
@@ -93,6 +93,11 @@ class TravelsPresenter(view: TravelsContract.View) : BasePresenter<TravelsContra
         view.showNoActionMode()
     }
 
+    override fun updateTravelName(travelId: Int, travelName: String) {
+        val position = travels.indexOfFirst { travel -> travel.id == travelId }
+        if (position != -1) travels[position].name = travelName
+    }
+
     private fun handleLoadTravelsResponse(myTravels: List<Travel>) {
         travels = ArrayList(myTravels)
         view.onDataSetChanged()
@@ -107,7 +112,7 @@ class TravelsPresenter(view: TravelsContract.View) : BasePresenter<TravelsContra
     }
 
     private fun handleDeleteTravelsResponse() {
-        travelsToDeleteIds = ArrayList()
+        travelsToDeleteIds.clear()
         loadTravels()
         view.showSnackbar(R.string.delete_travels_ok)
     }

@@ -156,7 +156,6 @@ class SearchElementActivity : AppCompatActivity(), SearchElementContract.View {
         inputManager.hideSoftInputFromWindow(currentFocus?.windowToken, InputMethodManager.SHOW_FORCED)
     }
 
-
     private fun loadObjectsOnMap(geoCord: GeoCoordinate) {
         map.setCenter(geoCord, Map.Animation.NONE)
         val category = intent.getStringExtra(EXTRA_CATEGORY)

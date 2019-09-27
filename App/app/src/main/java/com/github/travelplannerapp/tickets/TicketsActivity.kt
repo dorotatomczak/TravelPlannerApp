@@ -58,7 +58,7 @@ class TicketsActivity : AppCompatActivity(), TicketsContract.View {
         DrawerUtils.getDrawer(this, toolbar)
 
         fabAdd.setOnClickListener {
-            presenter.onAddScanClick()
+            presenter.onAddScanClicked()
         }
 
         swipeRefreshLayoutTickets.setOnRefreshListener { presenter.loadScans() }

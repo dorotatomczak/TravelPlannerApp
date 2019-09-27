@@ -10,19 +10,18 @@
         android:background="@color/colorPrimaryDark">
 
         <TextView
-            android:id="@+id/textViewAddTravel"
+            android:id="@+id/textViewDialogTravel"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/margin_add_travel"
             android:background="@color/transparent"
-            android:text="@string/new_travel"
             android:textColor="@color/white"
             android:textSize="@dimen/text_size_title_small" />
 
     </FrameLayout>
 
     <EditText
-        android:id="@+id/editTextTravelNameAddTravel"
+        android:id="@+id/editTextTravelNameDialogTravel"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/margin_add_travel"

@@ -32,11 +32,13 @@
     <string name="new_travel">New travel</string>
     <string name="add_travel_error">Error when adding travel</string>
     <string name="add_travel_ok">You added a new travel</string>
+    <string name="change_travel_name_ok">You changed travel name</string>
+    <string name="change_travel_name">Change travel name</string>
     <string name="authorization_error">You are not authorized to perform this action</string>
     <string name="no_tickets">You have no tickets</string>
     <string name="add_scan_error">Error when adding scan</string>
-    <string name="delete_menu">Delete</string>
-
+    <string name="menu_delete">Delete</string>
+    <string name="menu_edit">Edit</string>
     <string name="no_day_plans">You have no day plans for this travel</string>
     <string name="search">Search</string>
     <string name="category">Category</string>
@@ -48,7 +50,6 @@
     <string name="name">Name</string>
     <string name="wrong_dates_error">\"From\" date and time must be before \"To\" date and time</string>
     <string name="missing_required_fields_error">Fill in all the fields</string>
-
     <string name="delete_travels_ok">You deleted selected travels(s)</string>
     <string name="delete_tickets_ok">You deleted selected scan(s)</string>
     <string name="delete_scans_error">Error when deleting scan(s)</string>
@@ -78,5 +79,4 @@
     <string name="outdoor">Outdoor</string>
     <string name="natural_geographical">Natural</string>
     <string name="snacks_fast_food">Fast food</string>
-
 </resources>

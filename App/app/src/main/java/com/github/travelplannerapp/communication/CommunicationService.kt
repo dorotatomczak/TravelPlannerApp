@@ -50,15 +50,18 @@ interface ServerApi {
     @POST("/addtravel")
     fun addTravel(@Body travelName: String): Single<Response<Travel>>
 
+    @PUT("/changetravelname")
+    fun changeTravelName(@Body travel: Travel): Single<Response<Travel>>
+
     @POST("/deletetravels")
-    fun deleteTravels(@Body travelIds: List<Int>): Single<Response<Unit>>
+    fun deleteTravels(@Body travelIds: MutableSet<Int>): Single<Response<Unit>>
 
     @Multipart
     @POST("/uploadScan")
     fun uploadScan(@Part("travelId") travelId: RequestBody, @Part file: MultipartBody.Part): Single<Response<Scan>>
 
     @POST("/deleteScans")
-    fun deleteScans(@Body scans: List<Scan>): Single<Response<Unit>>
+    fun deleteScans(@Body scans: MutableSet<Scan>): Single<Response<Unit>>
 
     @GET("/scans")
     fun getScans(@Query("travelId") travelId: Int): Single<Response<List<Scan>>>

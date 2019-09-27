@@ -37,7 +37,7 @@ class TravelManagement : ITravelManagement {
         return if (result) updatedTravel else throw UpdateTravelException("Error when updating travel")
     }
 
-    override fun deleteTravels(userId: Int, travelIds: List<Int>) {
+    override fun deleteTravels(userId: Int, travelIds: MutableSet<Int>) {
         val result = travelTransaction.deleteTravels(userId, travelIds)
         if (!result) throw  DeleteTravelsException("Error when deleting travel")
     }

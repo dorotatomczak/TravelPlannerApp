@@ -4,10 +4,13 @@ interface TravelDetailsContract {
 
     interface View {
         fun setTitle(title: String)
+        fun setResult(travelId: Int, travelName: String)
         fun showDayPlans()
         fun showTransport()
         fun showAccommodation()
         fun showTickets(travelId: Int)
+        fun showEditTravel()
+        fun showSnackbar(messageCode: Int)
     }
 
     interface TileItemView {
@@ -20,5 +23,6 @@ interface TravelDetailsContract {
     interface Presenter {
         fun loadTravel()
         fun openCategory(category: Category.CategoryType)
+        fun changeTravelName(travelName: String)
     }
 }

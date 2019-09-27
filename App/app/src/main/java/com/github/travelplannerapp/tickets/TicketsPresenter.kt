@@ -13,9 +13,9 @@ class TicketsPresenter(view: TicketsContract.View, private val travelId: Int) : 
 
     private val compositeDisposable = CompositeDisposable()
     private var tickets = ArrayList<Scan>()
-    private var ticketsToDelete = ArrayList<Scan>()
+    private var ticketsToDelete = mutableSetOf<Scan>()
 
-    override fun onAddScanClick() {
+    override fun onAddScanClicked() {
         if (view.verifyPermissions()) {
             view.openCamera()
         } else {
@@ -80,8 +80,7 @@ class TicketsPresenter(view: TicketsContract.View, private val travelId: Int) : 
                         { handleDeleteTicketsResponse() },
                         { error -> handleErrorResponse(error) }
                 ))
-
-        ticketsToDelete = ArrayList()
+        ticketsToDelete.clear()
     }
 
     override fun enterActionMode() {
