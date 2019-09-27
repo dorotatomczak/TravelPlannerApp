@@ -3,8 +3,8 @@ package com.github.travelplannerapp.ServerApp.datamodels
 // place has only some fields of original response, it can be more if needed
 class Place(
     val id: String,
-    val title: String,
-    val vicinity: String,
+    var title: String,
+    var vicinity: String,
     val position: Array<Double>,
     val category: ObjectCategory,
     val href: String,

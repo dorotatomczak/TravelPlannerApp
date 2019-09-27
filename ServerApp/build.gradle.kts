@@ -23,6 +23,8 @@ dependencies {
 	implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
 	implementation("org.springframework.boot:spring-boot-starter-web")
 	implementation ("postgresql:postgresql:9.1-901-1.jdbc4")
+	implementation ("org.apache.commons:commons-lang3:3.9")
+
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
 	testImplementation("io.mockk:mockk:1.9.3.kotlin12")
 
