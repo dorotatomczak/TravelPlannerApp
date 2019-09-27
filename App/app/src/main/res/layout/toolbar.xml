@@ -9,14 +9,4 @@
     app:layout_collapseMode="pin"
     app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
 
-    <Button
-        android:id="@+id/buttonEditMode"
-        android:layout_width="@dimen/button_edit_mode_size"
-        android:layout_height="@dimen/button_edit_mode_size"
-        android:background="@drawable/ic_mode_edit"
-        android:layout_marginStart="@dimen/margin_horizontal"
-        android:layout_marginEnd="@dimen/margin_horizontal"
-        android:layout_gravity="end"
-        android:visibility="gone"/>
-
 </androidx.appcompat.widget.Toolbar>

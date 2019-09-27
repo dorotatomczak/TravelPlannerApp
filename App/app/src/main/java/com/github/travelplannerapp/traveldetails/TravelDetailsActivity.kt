@@ -3,9 +3,7 @@ package com.github.travelplannerapp.traveldetails
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.View
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
-import com.github.travelplannerapp.R
 import com.github.travelplannerapp.accommodation.AccommodationActivity
 import com.github.travelplannerapp.traveldialog.TravelDialog
 import com.github.travelplannerapp.dayplans.DayPlansActivity
@@ -18,6 +16,9 @@ import javax.inject.Inject
 
 import kotlinx.android.synthetic.main.activity_travel_details.*
 import kotlinx.android.synthetic.main.toolbar.*
+import android.view.Menu
+import android.view.MenuItem
+import com.github.travelplannerapp.R
 
 class TravelDetailsActivity : AppCompatActivity(), TravelDetailsContract.View {
 
@@ -36,8 +37,6 @@ class TravelDetailsActivity : AppCompatActivity(), TravelDetailsContract.View {
         setContentView(R.layout.activity_travel_details)
 
         setSupportActionBar(toolbar)
-        buttonEditMode.visibility = View.VISIBLE
-        buttonEditMode.setOnClickListener { showEditTravel() }
 
         supportActionBar?.setHomeButtonEnabled(true)
         DrawerUtils.getDrawer(this, toolbar)
@@ -45,6 +44,20 @@ class TravelDetailsActivity : AppCompatActivity(), TravelDetailsContract.View {
         recyclerViewTravelDetails.setHasFixedSize(true)
         recyclerViewTravelDetails.layoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
         recyclerViewTravelDetails.adapter = TravelDetailsAdapter(presenter)
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        menuInflater.inflate(R.menu.menu_edit, menu)
+        menu.findItem(R.id.menuEdit).setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if (item.itemId == R.id.menuEdit) {
+            showEditTravel()
+            return true
+        }
+        return super.onOptionsItemSelected(item)
     }
 
     override fun onResume() {

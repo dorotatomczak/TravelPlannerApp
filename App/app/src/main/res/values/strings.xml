@@ -37,7 +37,8 @@
     <string name="authorization_error">You are not authorized to perform this action</string>
     <string name="no_tickets">You have no tickets</string>
     <string name="add_scan_error">Error when adding scan</string>
-    <string name="delete_menu">Delete</string>
+    <string name="menu_delete">Delete</string>
+    <string name="menu_edit">Edit</string>
     <string name="no_day_plans">You have no day plans for this travel</string>
     <string name="search">Search</string>
     <string name="category">Category</string>

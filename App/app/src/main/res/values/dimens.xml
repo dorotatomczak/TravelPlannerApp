@@ -28,6 +28,5 @@
     <dimen name="line_width">2dp</dimen>
     <dimen name="margin_add_travel_line">5dp</dimen>
     <dimen name="card_view_ticket_height">160dp</dimen>
-    <dimen name="button_edit_mode_size">24dp</dimen>
 
 </resources>
