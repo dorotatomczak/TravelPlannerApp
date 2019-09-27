@@ -60,6 +60,7 @@ class SearchElementActivity : AppCompatActivity(), SearchElementContract.View {
                 override fun onSuggestionClick(position: Int): Boolean {
                     closeKeyboard()
                     val city = CityObject(suggestionsAdapter.getItem(position) as Cursor)
+                    searchViewCity.setQuery(city.name, false)
                     val geoCord = GeoCoordinate(city.x.toDouble(), city.y.toDouble(), 0.0)
                     loadObjectsOnMap(geoCord)
 
@@ -111,7 +112,7 @@ class SearchElementActivity : AppCompatActivity(), SearchElementContract.View {
 
                 val gdanskGeoCord = GeoCoordinate(54.339787, 18.609653, 0.0)
                 map.setCenter(gdanskGeoCord, Map.Animation.NONE)
-                val zoomRate = 0.3
+                val zoomRate = 0.56
                 map.zoomLevel = (map.maxZoomLevel + map.minZoomLevel) * zoomRate
                 loadObjectsOnMap(map.center)
             } else {
@@ -155,11 +156,10 @@ class SearchElementActivity : AppCompatActivity(), SearchElementContract.View {
         inputManager.hideSoftInputFromWindow(currentFocus?.windowToken, InputMethodManager.SHOW_FORCED)
     }
 
-
     private fun loadObjectsOnMap(geoCord: GeoCoordinate) {
         map.setCenter(geoCord, Map.Animation.NONE)
-        val category = intent.getStringExtra("category")
-        presenter.search(category!!, map.boundingBox.topLeft.longitude.toString(),
+        val category = intent.getStringExtra(EXTRA_CATEGORY)
+        presenter.search(category, map.boundingBox.topLeft.longitude.toString(),
                 map.boundingBox.bottomRight.latitude.toString(),
                 map.boundingBox.bottomRight.longitude.toString(),
                 map.boundingBox.topLeft.latitude.toString())
