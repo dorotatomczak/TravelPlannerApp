@@ -58,4 +58,5 @@ ext {
     materialdrawerVersion = '7.0.0-rc05'
     glideVersion = '4.9.0'
     okhttp3Version = '4.0.1'
+    slidinguppanelVersion = '3.4.0'
 }

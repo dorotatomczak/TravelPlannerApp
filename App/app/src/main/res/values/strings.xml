@@ -59,6 +59,9 @@
     <string name="travels">travels</string>
     <string name="add_plan_ok">You added a new plan</string>
     <string name="choose_category">Choose category</string>
+    <string name="choose">Choose</string>
+    <string name="openingHours">Opening hours</string>
+    <string name="rating">Rating</string>
     <string name="city">City</string>
     <string name="load_map_error">Can\'t load map</string>
     <string name="no_items_search_error">No items found</string>

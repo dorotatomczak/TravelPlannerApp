@@ -6,6 +6,7 @@ import android.content.Intent
 import android.database.Cursor
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import android.view.inputmethod.InputMethodManager
 import com.github.travelplannerapp.R
 import com.github.travelplannerapp.communication.model.CityObject
@@ -46,7 +47,7 @@ class SearchElementActivity : AppCompatActivity(), SearchElementContract.View {
         initializeMap()
 
         fabCheck.setOnClickListener {
-            returnResultAndFinish(selectedMapMarker.title, selectedMapMarker.description)
+            returnResultAndFinish()
         }
 
 
@@ -75,10 +76,14 @@ class SearchElementActivity : AppCompatActivity(), SearchElementContract.View {
         }
     }
 
-    override fun returnResultAndFinish(name: String, address: String) {
+    override fun returnResultAndFinish() {
         val resultIntent = Intent().apply {
-            putExtra(EXTRA_NAME, name)
-            putExtra(EXTRA_LOCATION, address)
+            val place = presenter.getPlace(selectedMapMarker)
+            if (place != null) {
+                putExtra(EXTRA_NAME, place.title)
+                putExtra(EXTRA_LOCATION, place.vicinity)
+                //TODO [Ania] put more data when needed
+            }
         }
         setResult(RESULT_OK, resultIntent)
         finish()
@@ -91,13 +96,18 @@ class SearchElementActivity : AppCompatActivity(), SearchElementContract.View {
     override fun loadObjectsOnMap(places: Array<Place>) {
         map.removeMapObjects(placesContainer.allMapObjects)
         placesContainer.removeAllMapObjects()
+        presenter.clearPlacesMap()
 
         for (place in places) {
+            val title = place.title
+            val vicinity = place.vicinity
             val defaultMarker = MapMarker()
-            defaultMarker.title = place.title
-            defaultMarker.description = place.vicinity
+            defaultMarker.title = title
+            defaultMarker.description = vicinity
             defaultMarker.coordinate = GeoCoordinate(place.position[0], place.position[1], 0.0)
             placesContainer.addMapObject(defaultMarker)
+            presenter.savePlaceInMap(defaultMarker, place)
+
             map.addMapObject(defaultMarker)
         }
     }
@@ -108,7 +118,7 @@ class SearchElementActivity : AppCompatActivity(), SearchElementContract.View {
         supportMapFragment.init { error ->
             if (error == OnEngineInitListener.Error.NONE) {
                 supportMapFragment.mapGesture.addOnGestureListener(provideOnGestureListener())
-                    map = supportMapFragment.map
+                map = supportMapFragment.map
 
                 val gdanskGeoCord = GeoCoordinate(54.339787, 18.609653, 0.0)
                 map.setCenter(gdanskGeoCord, Map.Animation.NONE)
@@ -131,17 +141,22 @@ class SearchElementActivity : AppCompatActivity(), SearchElementContract.View {
                 for (viewObj in objects) {
                     if (viewObj.baseType == ViewObject.Type.USER_OBJECT) {
                         if ((viewObj as MapObject).type == MapObject.Type.MARKER) {
+                            if (::selectedMapMarker.isInitialized) selectedMapMarker.hideInfoBubble()
+                            else {
+                                fabCheck.visibility = View.VISIBLE
+                                slidingUpPanelSearchElement.panelHeight = resources.getDimension(R.dimen.sliding_up_panel_height).toInt()
+                            }
 
                             // save to remember chosen marker
                             selectedMapMarker = viewObj as MapMarker
-                            for (mapObject in placesContainer.allMapObjects) {
-                                if (viewObj.baseType == ViewObject.Type.USER_OBJECT) {
-                                    if ((viewObj as MapObject).type == MapObject.Type.MARKER) {
-                                        viewObj.hideInfoBubble()
-                                    }
-                                }
-                            }
                             selectedMapMarker.showInfoBubble()
+
+                            val place = presenter.getPlace(selectedMapMarker)
+                            textViewNameSearchElement.text = place.title
+                            textViewLocationSearchElement.text = place.vicinity
+                            if (place.openingHours != null) textViewOpeningHoursSearchElement.text = place.openingHours.text
+                            textViewRatingSearchElement.text = place.averageRating
+
                             break
                         }
                     }

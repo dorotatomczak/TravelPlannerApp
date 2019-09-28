@@ -11,8 +11,9 @@ class Place(
         var href: String = "",
         var resultType: String = "",
         var averageRating: String = "",
-        var distance: Double = 0.0
-): Serializable
+        var distance: Double = 0.0,
+        val openingHours: OpeningHours? = null
+) : Serializable
 
 class ObjectCategory(
         var id: String = "",
@@ -21,4 +22,6 @@ class ObjectCategory(
         var href: String = "",
         var type: String = "",
         var system: String = ""
-): Serializable
+) : Serializable
+
+class OpeningHours(var text: String) : Serializable
