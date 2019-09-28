@@ -59,8 +59,9 @@
     <string name="travels">Podróże</string>
     <string name="add_plan_ok">Dodałeś nowy plan</string>
     <string name="choose_category">Wybierz kategorię</string>
-    <string name="choose">Wybierz</string>
     <string name="openingHours">Godziny otwarcia</string>
+    <string name="website">Strona internetowa</string>
+    <string name="phone">Telefon</string>
     <string name="rating">Ocena</string>
     <string name="city">Miasto</string>
     <string name="load_map_error">Nie udało się załadować mapy</string>

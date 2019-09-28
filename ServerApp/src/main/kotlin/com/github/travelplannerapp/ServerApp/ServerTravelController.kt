@@ -44,16 +44,20 @@ class ServerTravelController {
     }
 
     @PutMapping("/changetravelname")
-    fun changeTravelName(@RequestHeader("authorization") token: String,
-                         @RequestBody travel: Travel): Response<Travel> {
+    fun changeTravelName(
+        @RequestHeader("authorization") token: String,
+        @RequestBody travel: Travel
+    ): Response<Travel> {
         userManagement.verifyUser(token)
         val updatedTravel = travelManagement.updateTravel(travel.id!!, mutableMapOf("name" to travel.name))
         return Response(ResponseCode.OK, updatedTravel)
     }
 
     @PostMapping("/deletetravels")
-    fun deleteTravels(@RequestHeader("authorization") token: String,
-                      @RequestBody travelIds: MutableSet<Int>): Response<Unit> {
+    fun deleteTravels(
+        @RequestHeader("authorization") token: String,
+        @RequestBody travelIds: MutableSet<Int>
+    ): Response<Unit> {
         userManagement.verifyUser(token)
         val userId = userManagement.getUserId(token)
         travelManagement.deleteTravels(userId, travelIds)
@@ -97,6 +101,12 @@ class ServerTravelController {
         } catch (ex: Exception) {
             throw SearchNoItemsException(ex.localizedMessage)
         }
+    }
 
+    @GetMapping("/getContacts")
+    fun getContacts(@RequestHeader("authorization") token: String, @RequestParam("query") query: String): Response<Contacts> {
+        userManagement.verifyUser(token)
+        val contacts = searchService.getContacts(query)
+        return Response(ResponseCode.OK, contacts)
     }
 }

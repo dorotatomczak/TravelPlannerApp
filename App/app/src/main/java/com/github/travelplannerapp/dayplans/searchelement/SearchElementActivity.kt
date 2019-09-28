@@ -10,6 +10,7 @@ import android.view.View
 import android.view.inputmethod.InputMethodManager
 import com.github.travelplannerapp.R
 import com.github.travelplannerapp.communication.model.CityObject
+import com.github.travelplannerapp.communication.model.Contacts
 import com.github.travelplannerapp.communication.model.Place
 import dagger.android.AndroidInjection
 import javax.inject.Inject
@@ -49,7 +50,6 @@ class SearchElementActivity : AppCompatActivity(), SearchElementContract.View {
         fabCheck.setOnClickListener {
             returnResultAndFinish()
         }
-
 
         // Get the SearchView and set the searchable configuration
         val searchManager = getSystemService(Context.SEARCH_SERVICE) as SearchManager
@@ -112,6 +112,19 @@ class SearchElementActivity : AppCompatActivity(), SearchElementContract.View {
         }
     }
 
+    override fun showContacts(contacts: Contacts) {
+        if (contacts.phone.isNotEmpty()) {
+            textViewPhoneSearchElement.text = contacts.phone[0].value
+        } else {
+            linearLayoutPhone.visibility = View.GONE
+        }
+        if (contacts.website.isNotEmpty()) {
+            textViewWebsiteSearchElement.text = contacts.website[0].value
+        } else {
+            linearLayoutWebsite.visibility = View.GONE
+        }
+    }
+
     private fun initializeMap() {
         supportMapFragment = supportFragmentManager.findFragmentById(R.id.mapFragment) as SupportMapFragment
 
@@ -154,8 +167,12 @@ class SearchElementActivity : AppCompatActivity(), SearchElementContract.View {
                             val place = presenter.getPlace(selectedMapMarker)
                             textViewNameSearchElement.text = place.title
                             textViewLocationSearchElement.text = place.vicinity
+
                             if (place.openingHours != null) textViewOpeningHoursSearchElement.text = place.openingHours.text
+                            else linearLayoutOpeningHours.visibility = View.GONE
+
                             textViewRatingSearchElement.text = place.averageRating
+                            presenter.setContacts(place.href)
 
                             break
                         }
