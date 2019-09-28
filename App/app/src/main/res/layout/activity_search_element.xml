@@ -43,6 +43,7 @@
                 class="com.here.android.mpa.mapping.SupportMapFragment"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />
+
         </LinearLayout>
 
         <LinearLayout
@@ -86,6 +87,7 @@
                         android:layout_gravity="center_vertical|start"
                         android:layout_weight="1"
                         android:textSize="@dimen/text_size_item_S" />
+
                 </LinearLayout>
 
                 <LinearLayout
@@ -115,9 +117,11 @@
                         android:layout_gravity="center_vertical|start"
                         android:layout_weight="1"
                         android:textSize="@dimen/text_size_item_S" />
+
                 </LinearLayout>
 
                 <LinearLayout
+                    android:id="@+id/linearLayoutOpeningHours"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/margin_search_element"
@@ -144,6 +148,7 @@
                         android:layout_gravity="center_vertical|start"
                         android:layout_weight="1"
                         android:textSize="@dimen/text_size_item_S" />
+
                 </LinearLayout>
 
                 <LinearLayout
@@ -173,7 +178,73 @@
                         android:layout_gravity="center_vertical|start"
                         android:layout_weight="1"
                         android:textSize="@dimen/text_size_item_S" />
+
                 </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/linearLayoutPhone"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_search_element"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center_vertical|start"
+                        android:text="@string/phone"
+                        android:textSize="@dimen/text_size_item_S" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center_vertical|start"
+                        android:text=": "
+                        android:textSize="@dimen/text_size_item_S" />
+
+                    <TextView
+                        android:id="@+id/textViewPhoneSearchElement"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center_vertical|start"
+                        android:layout_weight="1"
+                        android:textSize="@dimen/text_size_item_S"
+                        android:autoLink="phone"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/linearLayoutWebsite"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_search_element"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center_vertical|start"
+                        android:text="@string/website"
+                        android:textSize="@dimen/text_size_item_S" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center_vertical|start"
+                        android:text=": "
+                        android:textSize="@dimen/text_size_item_S" />
+
+                    <TextView
+                        android:id="@+id/textViewWebsiteSearchElement"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center_vertical|start"
+                        android:layout_weight="1"
+                        android:textSize="@dimen/text_size_item_S"
+                        android:autoLink="web"/>
+
+                </LinearLayout>
+
             </LinearLayout>
 
             <LinearLayout
@@ -183,11 +254,12 @@
                 android:orientation="vertical">
 
             </LinearLayout>
+
         </LinearLayout>
 
     </com.sothree.slidinguppanel.SlidingUpPanelLayout>
 
     <include layout="@layout/fab_check"
-        android:visibility="invisible"/>
+        android:visibility="gone"/>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
