@@ -41,13 +41,15 @@ class SearchService : ISearchService {
             eastNorthPoint.first, eastNorthPoint.second, category
         ).results.items
 
-        for(i in 0 until places.size){
-            places[i].title = StringEscapeUtils.unescapeHtml3(places[i].title)
-            places[i].vicinity = StringEscapeUtils.unescapeHtml3(places[i].vicinity)
-            places[i].vicinity = places[i].vicinity.replace("<br/>", "\n")
-        }
-
         if (places.isEmpty()) throw SearchNoItemsException("No places found")
+
+        for (i in 0 until places.size) {
+            places[i].title = escapeHtml(places[i].title)
+            places[i].vicinity = escapeHtml(places[i].vicinity)
+            if (places[i].openingHours != null) {
+                places[i].openingHours!!.text = escapeHtml(places[i].openingHours!!.text)
+            }
+        }
         return places
     }
 
@@ -60,6 +62,10 @@ class SearchService : ISearchService {
 
         if (cities.isEmpty()) throw SearchNoItemsException("No cities found")
         return cities
+    }
+
+    private fun escapeHtml(str: String): String {
+        return StringEscapeUtils.unescapeHtml3(str).replace("<br/>", "\n")
     }
 
     @Component

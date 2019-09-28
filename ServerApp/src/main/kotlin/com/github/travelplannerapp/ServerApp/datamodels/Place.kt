@@ -10,23 +10,9 @@ class Place(
     val href: String,
     val resultType: String,
     val averageRating: String,
-    val distance: Double
-) {
-    //TEMPORARY
-    fun printPlace() {
-        println("Place: ")
-        println(id)
-        println(title)
-        println(vicinity)
-        println(position)
-        println("Cat id: " + category.id)
-        println("Cat: " + category.title)
-        println(href)
-        println(resultType)
-        println(averageRating)
-        println(distance.toString())
-    }
-}
+    val distance: Double,
+    val openingHours: OpeningHours?
+)
 
 // some variables might be unused and meant to be deleted, for now I got all of them
 class ObjectCategory(
@@ -36,3 +22,5 @@ class ObjectCategory(
     val type: String,
     val system: String
 )
+
+class OpeningHours(var text: String)
