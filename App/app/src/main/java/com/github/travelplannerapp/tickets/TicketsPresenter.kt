@@ -80,7 +80,6 @@ class TicketsPresenter(view: TicketsContract.View, private val travelId: Int) : 
                         { handleDeleteTicketsResponse() },
                         { error -> handleErrorResponse(error) }
                 ))
-        ticketsToDelete.clear()
     }
 
     override fun enterActionMode() {
@@ -110,11 +109,13 @@ class TicketsPresenter(view: TicketsContract.View, private val travelId: Int) : 
     }
 
     private fun handleDeleteTicketsResponse() {
+        ticketsToDelete.clear()
         loadScans()
         view.showSnackbar(R.string.delete_tickets_ok)
     }
 
     private fun handleErrorResponse(error: Throwable) {
+        ticketsToDelete.clear()
         loadScans()
         if (error is ApiException) view.showSnackbar(error.getErrorMessageCode())
         else view.showSnackbar(R.string.server_connection_error)
