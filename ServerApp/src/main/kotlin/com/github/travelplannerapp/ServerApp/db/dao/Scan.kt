@@ -3,7 +3,7 @@ package com.github.travelplannerapp.ServerApp.db.dao
 import java.io.Serializable
 import java.sql.ResultSet
 
-class Scan(map: MutableMap<String, Any?>) : Serializable {
+class Scan(map: MutableMap<String, Any?>) {
     private val defaultMap = map.withDefault { null }
 
     var id: Int? by defaultMap

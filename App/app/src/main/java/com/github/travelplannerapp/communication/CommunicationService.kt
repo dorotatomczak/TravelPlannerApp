@@ -28,8 +28,8 @@ object CommunicationService {
                 .build()
                 .create(ServerApi::class.java)
 
-    fun getScanUrl(name: String): String {
-        return "$serverUrl/scans/$name"
+    fun getScanUrl(name: String, userId: Int): String {
+        return "$serverUrl/users/$userId/scans/$name"
     }
 }
 

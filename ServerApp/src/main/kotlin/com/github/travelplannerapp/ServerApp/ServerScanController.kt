@@ -26,10 +26,10 @@ class ServerScanController {
     @Autowired
     lateinit var scanManagement: ScanManagement
 
-    @PostMapping("/users/{user-id}/scans")
+    @PostMapping("users/{userId}/scans")
     fun uploadFile(
         @RequestHeader("authorization") token: String,
-        @PathVariable("user-id") userId: Int,
+        @PathVariable userId: Int,
         @RequestParam("travelId") travelId: Int,
         @RequestParam("file") file: MultipartFile
     ): Response<Scan> {
@@ -45,10 +45,10 @@ class ServerScanController {
         }
     }
 
-    @GetMapping("/users/{user-id}/scans")
+    @GetMapping("users/{userId}/scans")
     fun getScans(
         @RequestHeader("authorization") token: String,
-        @PathVariable("user-id") userId: Int,
+        @PathVariable userId: Int,
         @RequestParam travelId: Int
     ): Response<List<Scan>> {
         userManagement.verifyUser(token)
@@ -56,8 +56,8 @@ class ServerScanController {
         return Response(ResponseCode.OK, scans)
     }
 
-    @GetMapping("/scans/{fileName:.+}")
-    fun downloadFile(@PathVariable fileName: String, request: HttpServletRequest): ResponseEntity<Resource> {
+    @GetMapping("users/{userId}/scans/{fileName:.+}")
+    fun downloadFile(@PathVariable userId: Int, @PathVariable fileName: String, request: HttpServletRequest): ResponseEntity<Resource> {
         // Load file as Resource
         val resource = fileStorageService.loadFileAsResource(fileName)
 
@@ -75,18 +75,15 @@ class ServerScanController {
                 .body(resource)
     }
 
-    @DeleteMapping("/users/{user-id}/scans")
+    @DeleteMapping("users/{userId}/scans")
     fun deleteScans(
         @RequestHeader("authorization") token: String,
-        @PathVariable("user-id") userId: Int,
+        @PathVariable userId: Int,
         @RequestBody scans: MutableSet<Scan>
     ): Response<Unit> {
         userManagement.verifyUser(token)
 
-        println("aaaaa")
-        print(scans.toString())
         for (scan in scans) {
-            println("a")
             scanManagement.deleteScan(scan)
             scan.name?.let { fileStorageService.deleteFile(it) }
         }
