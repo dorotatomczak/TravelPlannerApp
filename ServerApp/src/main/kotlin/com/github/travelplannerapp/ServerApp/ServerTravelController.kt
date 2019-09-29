@@ -23,20 +23,20 @@ class ServerTravelController {
     @Autowired
     lateinit var searchService: SearchService
 
-    @GetMapping("users/{user-id}/travels")
+    @GetMapping("users/{userId}/travels")
     fun getTravels(
         @RequestHeader("authorization") token: String,
-        @PathVariable("user-id") userId: Int
+        @PathVariable userId: Int
     ): Response<List<Travel>> {
         userManagement.verifyUser(token)
         val travels = travelRepository.getAllTravelsByUserId(userId)
         return Response(ResponseCode.OK, travels)
     }
 
-    @PostMapping("users/{user-id}/travels")
+    @PostMapping("users/{userId}/travels")
     fun addTravel(
         @RequestHeader("authorization") token: String,
-        @PathVariable("user-id") userId: Int,
+        @PathVariable userId: Int,
         @RequestBody travelName: String
     ): Response<Travel> {
         userManagement.verifyUser(token)
@@ -44,10 +44,10 @@ class ServerTravelController {
         return Response(ResponseCode.OK, newTravel)
     }
 
-    @PutMapping("/users/{user-id}/travels")
+    @PutMapping("users/{userId}/travels")
     fun changeTravelName(
         @RequestHeader("authorization") token: String,
-        @PathVariable("user-id") userId: Int,
+        @PathVariable userId: Int,
         @RequestBody travel: Travel
     ): Response<Travel> {
         userManagement.verifyUser(token)
@@ -55,10 +55,10 @@ class ServerTravelController {
         return Response(ResponseCode.OK, updatedTravel)
     }
 
-    @DeleteMapping("/users/{user-id}/travels")
+    @DeleteMapping("users/{userId}/travels")
     fun deleteTravels(
         @RequestHeader("authorization") token: String,
-        @PathVariable("user-id") userId: Int,
+        @PathVariable userId: Int,
         @RequestBody travelIds: MutableSet<Int>
     ): Response<Unit> {
         userManagement.verifyUser(token)
@@ -66,7 +66,7 @@ class ServerTravelController {
         return Response(ResponseCode.OK, Unit)
     }
 
-    @GetMapping("/here-management/objects")
+    @GetMapping("here-management/objects")
     fun getObjects(
         @RequestHeader("authorization") token: String, @RequestParam("cat") category: String,
         @RequestParam("west") west: String, @RequestParam("south") south: String,
@@ -83,7 +83,7 @@ class ServerTravelController {
     }
 
     // eg. for getting next page
-    @GetMapping("/here-management/objects-next-page")
+    @GetMapping("here-management/objects-next-page")
     fun findObjectsGetPage(
         @RequestHeader("authorization") token: String,
         @RequestParam("request") request: String
@@ -96,7 +96,7 @@ class ServerTravelController {
         )
     }
 
-    @GetMapping("/here-management/cities")
+    @GetMapping("here-management/cities")
     fun findCities(
         @RequestHeader("authorization") token: String,
         @RequestParam("query") query: String

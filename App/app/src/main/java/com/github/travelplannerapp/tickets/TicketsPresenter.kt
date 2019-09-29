@@ -51,7 +51,7 @@ class TicketsPresenter(view: TicketsContract.View, private val travelId: Int) : 
 
     override fun onBindTicketsAtPosition(position: Int, itemView: TicketsContract.TicketItemView) {
         val ticket = tickets[position]
-        itemView.setImage(CommunicationService.getScanUrl(ticket.name))
+        itemView.setImage(CommunicationService.getScanUrl(ticket.name, SharedPreferencesUtils.getUserId()))
         itemView.setCheckbox()
     }
 
@@ -63,7 +63,7 @@ class TicketsPresenter(view: TicketsContract.View, private val travelId: Int) : 
 
     override fun onScanClicked(position: Int) {
         val ticket = tickets[position]
-        view.showFullScan((CommunicationService.getScanUrl(ticket.name)))
+        view.showFullScan((CommunicationService.getScanUrl(ticket.name, SharedPreferencesUtils.getUserId())))
     }
 
     override fun onDeleteClicked() {
