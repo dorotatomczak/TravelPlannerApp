@@ -4,7 +4,8 @@ import java.io.Serializable
 import java.util.*
 
 data class Plan (
-        var locale: Locale,
+        val id: Int,
+        var locale: Locale, // time format that allows time to be correct in every time zone
         var fromDateTime: Calendar,
         var toDateTime: Calendar,
         var place: Place

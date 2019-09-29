@@ -8,6 +8,7 @@ interface DayPlansContract {
         fun showNoDayPlans()
         fun onDataSetChanged()
         fun hideLoadingIndicator()
+        fun showSnackbar(messageCode: Int)
     }
 
     interface PlanElementItemView {

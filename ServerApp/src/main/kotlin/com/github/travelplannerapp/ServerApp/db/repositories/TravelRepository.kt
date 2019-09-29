@@ -15,9 +15,9 @@ class TravelRepository : Repository<Travel>(), ITravelRepository {
     }
 
     override val selectStatement = "SELECT * FROM $tableName "
-    override val insertStatement = "INSERT INTO $tableName (id, name) VALUES (?, ?)"
+    override val insertStatement = "INSERT INTO $tableName ($columnId, $columnName) VALUES (?, ?)"
     override val deleteStatement = "DELETE FROM $tableName "
-    override val updateStatement = "UPDATE $tableName SET name=? WHERE id=?"
+    override val updateStatement = "UPDATE $tableName SET $columnName=? WHERE $columnId=?"
     override val nextIdStatement = "SELECT nextval(pg_get_serial_sequence('$tableName', '$columnId')) AS new_id"
 
     override fun getAllTravelsByUserId(id: Int): MutableList<Travel> {

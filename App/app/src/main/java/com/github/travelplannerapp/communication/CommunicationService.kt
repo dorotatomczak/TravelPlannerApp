@@ -72,4 +72,13 @@ interface ServerApi {
     @GET("/getObjects")
     fun findObjects(@Query("cat") category: String, @Query("west") west: String, @Query("north") north: String,
                     @Query("east") east: String, @Query("south") south: String): Single<Response<Array<Place>>>
+
+    @GET("/plans")
+    fun getPlans(): Observable<Response<List<Plan>>>
+
+    @POST("/addplan")
+    fun addPlan(@Body plan: Plan): Single<Response<Plan>>
+
+    @POST("/deleteplans")
+    fun deletePlans(@Body planIds: MutableSet<Int>): Single<Response<Unit>>
 }

@@ -76,6 +76,10 @@ class DayPlansActivity : AppCompatActivity(), DayPlansContract.View {
         swipeRefreshLayoutDayPlans.isRefreshing = false
     }
 
+    override fun showSnackbar(messageCode: Int) {
+        Snackbar.make(coordinatorLayoutDayPlans, getString(messageCode), Snackbar.LENGTH_SHORT).show()
+    }
+
     private fun refreshDayPlans() {
         swipeRefreshLayoutDayPlans.isRefreshing = true
         presenter.loadDayPlans()
@@ -84,9 +88,5 @@ class DayPlansActivity : AppCompatActivity(), DayPlansContract.View {
     private fun showAddPlan() {
         val intent = Intent(this, AddPlanActivity::class.java)
         startActivityForResult(intent, AddPlanActivity.REQUEST_ADD_PLAN)
-    }
-
-    private fun showSnackbar(messageCode: Int) {
-        Snackbar.make(coordinatorLayoutDayPlans, getString(messageCode), Snackbar.LENGTH_SHORT).show()
     }
 }

@@ -41,7 +41,8 @@ class ScanRepository : Repository<Scan>(), IScanRepository {
     }
 
     override fun T(result: ResultSet): Scan? {
-        return Scan(result)    }
+        return Scan(result)
+    }
 
     override fun prepareInsertStatement(obj: Scan): PreparedStatement {
         val statement = DbConnection

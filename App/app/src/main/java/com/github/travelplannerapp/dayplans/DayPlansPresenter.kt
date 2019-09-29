@@ -1,8 +1,13 @@
 package com.github.travelplannerapp.dayplans
 
 import com.github.travelplannerapp.BasePresenter
+import com.github.travelplannerapp.R
+import com.github.travelplannerapp.communication.ApiException
+import com.github.travelplannerapp.communication.CommunicationService
 import com.github.travelplannerapp.communication.model.Plan
+import com.github.travelplannerapp.communication.model.ResponseCode
 import com.github.travelplannerapp.utils.DateTimeUtils
+import com.github.travelplannerapp.utils.SchedulerProvider
 import io.reactivex.disposables.CompositeDisposable
 
 
@@ -25,8 +30,15 @@ class DayPlansPresenter(view: DayPlansContract.View) : BasePresenter<DayPlansCon
     }
 
     override fun loadDayPlans() {
-        //TODO [Dorota] Request day plans from server
-        handleLoadDayPlansResponse(emptyList())
+        compositeDisposable.add(CommunicationService.serverApi.getPlans()
+                .observeOn(SchedulerProvider.ui())
+                .subscribeOn(SchedulerProvider.io())
+                .map { if (it.responseCode == ResponseCode.OK) it.data!! else throw ApiException(it.responseCode) }
+                .subscribe(
+                        { plans ->  handleLoadDayPlansResponse(plans) },
+                        { error -> handleErrorResponse(error) }
+                ))
+
     }
 
     override fun getPlanItemsCount(): Int {
@@ -90,5 +102,10 @@ class DayPlansPresenter(view: DayPlansContract.View) : BasePresenter<DayPlansCon
         override fun getType(): Int {
             return DayPlansContract.DayPlanItem.TYPE_PLAN
         }
+    }
+
+    private fun handleErrorResponse(error: Throwable) {
+        if (error is ApiException) view.showSnackbar(error.getErrorMessageCode())
+        else view.showSnackbar(R.string.server_connection_error)
     }
 }
