@@ -172,7 +172,7 @@ class SearchElementActivity : AppCompatActivity(), SearchElementContract.View {
                             else linearLayoutOpeningHours.visibility = View.GONE
 
                             textViewRatingSearchElement.text = place.averageRating
-                            presenter.setContacts(place.href)
+                            presenter.setContacts(place.id, place.href)
 
                             break
                         }

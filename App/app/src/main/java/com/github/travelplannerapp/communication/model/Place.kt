@@ -12,7 +12,8 @@ class Place(
         var resultType: String = "",
         var averageRating: String = "",
         var distance: Double = 0.0,
-        val openingHours: OpeningHours? = null
+        val openingHours: OpeningHours? = null,
+        var id: String = ""
 ) : Serializable
 
 class ObjectCategory(

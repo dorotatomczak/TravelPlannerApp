@@ -15,6 +15,6 @@ interface SearchElementContract {
         fun clearPlacesMap()
         fun savePlaceInMap(marker: MapMarker, place: Place)
         fun getPlace(marker: MapMarker): Place
-        fun setContacts(href: String)
+        fun setContacts(objectId: String, href: String)
     }
 }

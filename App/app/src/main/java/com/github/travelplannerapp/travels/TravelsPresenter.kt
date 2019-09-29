@@ -7,6 +7,7 @@ import com.github.travelplannerapp.communication.CommunicationService
 import com.github.travelplannerapp.communication.model.ResponseCode
 import com.github.travelplannerapp.communication.model.Travel
 import com.github.travelplannerapp.utils.SchedulerProvider
+import com.github.travelplannerapp.utils.SharedPreferencesUtils
 import io.reactivex.disposables.CompositeDisposable
 
 class TravelsPresenter(view: TravelsContract.View) : BasePresenter<TravelsContract.View>(view), TravelsContract.Presenter {
@@ -18,7 +19,7 @@ class TravelsPresenter(view: TravelsContract.View) : BasePresenter<TravelsContra
     override fun loadTravels() {
         view.setLoadingIndicatorVisibility(true)
 
-        compositeDisposable.add(CommunicationService.serverApi.getTravels()
+        compositeDisposable.add(CommunicationService.serverApi.getTravels(SharedPreferencesUtils.getUserId())
                 .observeOn(SchedulerProvider.ui())
                 .subscribeOn(SchedulerProvider.io())
                 .map { if (it.responseCode == ResponseCode.OK) it.data!! else throw ApiException(it.responseCode) }
@@ -29,7 +30,7 @@ class TravelsPresenter(view: TravelsContract.View) : BasePresenter<TravelsContra
     }
 
     override fun addTravel(travelName: String) {
-        compositeDisposable.add(CommunicationService.serverApi.addTravel(travelName)
+        compositeDisposable.add(CommunicationService.serverApi.addTravel(SharedPreferencesUtils.getUserId(), travelName)
                 .observeOn(SchedulerProvider.ui())
                 .subscribeOn(SchedulerProvider.io())
                 .map { if (it.responseCode == ResponseCode.OK) it.data!! else throw ApiException(it.responseCode) }
@@ -46,7 +47,9 @@ class TravelsPresenter(view: TravelsContract.View) : BasePresenter<TravelsContra
     }
 
     override fun deleteTravels() {
-        compositeDisposable.add(CommunicationService.serverApi.deleteTravels(travelsToDeleteIds)
+        compositeDisposable.add(CommunicationService.serverApi.deleteTravels(
+                SharedPreferencesUtils.getUserId(),
+                travelsToDeleteIds)
                 .observeOn(SchedulerProvider.ui())
                 .subscribeOn(SchedulerProvider.io())
                 .map { if (it.responseCode == ResponseCode.OK) it.data!! else throw ApiException(it.responseCode) }

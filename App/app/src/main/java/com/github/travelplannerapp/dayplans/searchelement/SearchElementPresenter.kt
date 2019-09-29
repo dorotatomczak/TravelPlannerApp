@@ -38,8 +38,8 @@ class SearchElementPresenter(view: SearchElementContract.View) : BasePresenter<S
         return placesMap[createKeyFromMarker(marker)]!!
     }
 
-    override fun setContacts(href: String) {
-        compositeDisposable.add(CommunicationService.serverApi.getContacts(href)
+    override fun setContacts(objectId: String, href: String) {
+        compositeDisposable.add(CommunicationService.serverApi.getContacts(objectId, href)
                 .observeOn(SchedulerProvider.ui())
                 .subscribeOn(SchedulerProvider.io())
                 .map { if (it.responseCode == ResponseCode.OK) it.data else throw ApiException(it.responseCode) }
