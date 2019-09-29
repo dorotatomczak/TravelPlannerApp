@@ -7,9 +7,9 @@ import androidx.appcompat.app.AppCompatActivity
 import com.github.travelplannerapp.R
 
 
+private var userFriends: UserFriends = UserFriends()
 
 class UserFriendsActivity : AppCompatActivity() {
-    private lateinit var friendsEmailList: Array<String>
     private lateinit var friendsListView: ListView
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -17,9 +17,11 @@ class UserFriendsActivity : AppCompatActivity() {
         setContentView(R.layout.activity_user_friends)
 
         friendsListView = findViewById<ListView>(R.id.friendsList) as ListView
-        friendsEmailList = arrayOf("alakot@wp.pl","zuzannakowalska@gmail.com", "aniakowal@o2.pl")
 
-        val itemsAdapter = ArrayAdapter<String>(this,R.layout.item_one_of_list, friendsEmailList)
-        friendsListView.adapter=itemsAdapter
+        userFriends = UserFriends()
+        var selectedUser = intent.getStringExtra("selectedUser")
+        userFriends.friendsList.add(selectedUser)
+        val itemsAdapter = ArrayAdapter<String>(this, R.layout.item_one_of_list, userFriends.friendsList)
+        friendsListView.adapter = itemsAdapter
     }
 }
