@@ -26,13 +26,14 @@ class ServerScanController {
     @Autowired
     lateinit var scanManagement: ScanManagement
 
-    @PostMapping("/uploadScan")
+    @PostMapping("/users/{user-id}/scans")
     fun uploadFile(
-            @RequestHeader("authorization") token: String,
-            @RequestParam("travelId") travelId: Int,
-            @RequestParam("file") file: MultipartFile): Response<Scan> {
+        @RequestHeader("authorization") token: String,
+        @PathVariable("user-id") userId: Int,
+        @RequestParam("travelId") travelId: Int,
+        @RequestParam("file") file: MultipartFile
+    ): Response<Scan> {
         userManagement.verifyUser(token)
-        val userId = userManagement.getUserId(token)
         var fileName: String? = null
         try {
             fileName = fileStorageService.storeFile(file)
@@ -44,11 +45,13 @@ class ServerScanController {
         }
     }
 
-    @GetMapping("/scans")
-    fun scans(@RequestHeader("authorization") token: String,
-              @RequestParam travelId: Int): Response<List<Scan>> {
+    @GetMapping("/users/{user-id}/scans")
+    fun getScans(
+        @RequestHeader("authorization") token: String,
+        @PathVariable("user-id") userId: Int,
+        @RequestParam travelId: Int
+    ): Response<List<Scan>> {
         userManagement.verifyUser(token)
-        val userId = userManagement.getUserId(token)
         val scans = scanManagement.getScans(userId, travelId)
         return Response(ResponseCode.OK, scans)
     }
@@ -72,12 +75,18 @@ class ServerScanController {
                 .body(resource)
     }
 
-    @PostMapping("/deleteScans")
-    fun deleteTravels(@RequestHeader("authorization") token: String,
-                      @RequestBody scans: MutableSet<Scan>): Response<Unit> {
+    @DeleteMapping("/users/{user-id}/scans")
+    fun deleteScans(
+        @RequestHeader("authorization") token: String,
+        @PathVariable("user-id") userId: Int,
+        @RequestBody scans: MutableSet<Scan>
+    ): Response<Unit> {
         userManagement.verifyUser(token)
 
+        println("aaaaa")
+        print(scans.toString())
         for (scan in scans) {
+            println("a")
             scanManagement.deleteScan(scan)
             scan.name?.let { fileStorageService.deleteFile(it) }
         }

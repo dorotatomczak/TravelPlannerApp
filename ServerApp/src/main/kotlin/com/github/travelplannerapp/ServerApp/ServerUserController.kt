@@ -16,20 +16,20 @@ class ServerUserController {
     lateinit var userManagement: UserManagement
 
 
-    @PostMapping("/authorize")
+    @PostMapping("/user-management/authorize")
     fun authorize(@RequestHeader("authorization") token: String): Response<Unit> {
         userManagement.verifyUser(token)
         return Response(ResponseCode.OK, Unit)
     }
 
-    @PostMapping("/authenticate")
+    @PostMapping("/user-management/authenticate")
     fun authenticate(@RequestBody request: SignInRequest): Response<SignInResponse> {
         val userId = userManagement.authenticateUser(request)
         val token = userManagement.updateAuthorizationToken(userId, request)
         return Response(ResponseCode.OK, SignInResponse(token, userId))
     }
 
-    @PostMapping("/register")
+    @PostMapping("/user-management/register")
     fun register(@RequestBody request: SignUpRequest): Response<Unit> {
         userManagement.addUser(request)
         return Response(ResponseCode.OK, Unit)

@@ -7,6 +7,7 @@ import com.github.travelplannerapp.communication.CommunicationService
 import com.github.travelplannerapp.communication.model.ResponseCode
 import com.github.travelplannerapp.communication.model.Scan
 import com.github.travelplannerapp.utils.SchedulerProvider
+import com.github.travelplannerapp.utils.SharedPreferencesUtils
 import io.reactivex.disposables.CompositeDisposable
 
 class TicketsPresenter(view: TicketsContract.View, private val travelId: Int) : BasePresenter<TicketsContract.View>(view), TicketsContract.Presenter {
@@ -30,7 +31,7 @@ class TicketsPresenter(view: TicketsContract.View, private val travelId: Int) : 
     override fun loadScans() {
         view.setLoadingIndicatorVisibility(true)
 
-        compositeDisposable.add(CommunicationService.serverApi.getScans(travelId)
+        compositeDisposable.add(CommunicationService.serverApi.getScans(SharedPreferencesUtils.getUserId(), travelId)
                 .observeOn(SchedulerProvider.ui())
                 .subscribeOn(SchedulerProvider.io())
                 .map { if (it.responseCode == ResponseCode.OK) it.data!! else throw ApiException(it.responseCode) }
@@ -72,7 +73,7 @@ class TicketsPresenter(view: TicketsContract.View, private val travelId: Int) : 
     }
 
     override fun deleteTickets() {
-        compositeDisposable.add(CommunicationService.serverApi.deleteScans(ticketsToDelete)
+        compositeDisposable.add(CommunicationService.serverApi.deleteScans(SharedPreferencesUtils.getUserId(), ticketsToDelete)
                 .observeOn(SchedulerProvider.ui())
                 .subscribeOn(SchedulerProvider.io())
                 .map { if (it.responseCode == ResponseCode.OK) it.data!! else throw ApiException(it.responseCode) }

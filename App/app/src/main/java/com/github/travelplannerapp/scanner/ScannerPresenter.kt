@@ -8,6 +8,7 @@ import com.github.travelplannerapp.communication.CommunicationService
 import com.github.travelplannerapp.communication.model.ResponseCode
 import com.github.travelplannerapp.communication.model.Scan
 import com.github.travelplannerapp.utils.SchedulerProvider
+import com.github.travelplannerapp.utils.SharedPreferencesUtils
 import io.reactivex.disposables.CompositeDisposable
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
@@ -31,7 +32,10 @@ class ScannerPresenter(view: ScannerContract.View, private val travelId: Int) : 
         val filePart = MultipartBody.Part.createFormData("file", scan.name, fileReqBody)
         val travelIdReqBody = travelId.toString().toRequestBody("text/plain".toMediaTypeOrNull())
 
-        compositeDisposable.add(CommunicationService.serverApi.uploadScan(travelIdReqBody, filePart)
+        compositeDisposable.add(CommunicationService.serverApi.uploadScan(
+                SharedPreferencesUtils.getUserId(),
+                travelIdReqBody,
+                filePart)
                 .observeOn(SchedulerProvider.ui())
                 .subscribeOn(SchedulerProvider.io())
                 .map { if (it.responseCode == ResponseCode.OK) it.data else throw ApiException(it.responseCode) }
@@ -42,7 +46,7 @@ class ScannerPresenter(view: ScannerContract.View, private val travelId: Int) : 
     }
 
     private fun handleUploadResponse(scan: Scan?) {
-        scan?.let {view.returnResultAndFinish(R.string.scanner_success, scan)}
+        scan?.let { view.returnResultAndFinish(R.string.scanner_success, scan) }
     }
 
     private fun handleErrorResponse(error: Throwable) {
