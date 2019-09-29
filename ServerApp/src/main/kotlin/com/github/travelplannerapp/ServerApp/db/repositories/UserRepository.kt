@@ -39,6 +39,17 @@ class UserRepository : Repository<User>(), IUserRepository {
         return null
     }
 
+    override fun getAllEmails(): MutableList<String> {
+        val usersEmails = mutableListOf<String>()
+        val statement = DbConnection
+                .conn
+                .prepareStatement(selectStatement)
+        val result = statement.executeQuery()
+        while (result.next()) {
+            usersEmails.add(result.getString("email"))
+        }
+        return usersEmails
+    }
     override fun T(result: ResultSet): User? {
         return User(result)
     }

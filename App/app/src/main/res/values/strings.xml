@@ -59,4 +59,5 @@
     <string name="delete_entry">Delete %1$s</string>
     <string name="delete_confirmation">Are you sure you want to delete selected %1$s?</string>
     <string name="travels">travels</string>
+    <string name="confirm_friend">Confirm friend</string>
 </resources>

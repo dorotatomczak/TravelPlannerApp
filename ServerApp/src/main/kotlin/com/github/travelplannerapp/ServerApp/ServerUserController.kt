@@ -34,4 +34,9 @@ class ServerUserController {
         userManagement.addUser(request)
         return Response(ResponseCode.OK, Unit)
     }
+    @GetMapping("/getusersemails")
+    fun getUsersEmails(): Response<MutableList<String>>{
+        val emails = userManagement.getUsersEmails()
+        return Response(ResponseCode.OK, emails)
+    }
 }

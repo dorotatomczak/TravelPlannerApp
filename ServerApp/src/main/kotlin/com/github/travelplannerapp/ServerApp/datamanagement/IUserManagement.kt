@@ -6,6 +6,8 @@ import com.github.travelplannerapp.ServerApp.jsondatamodels.SignUpRequest
 interface IUserManagement {
   
     fun getUserId(token: String): Int
+
+    fun getUsersEmails():MutableList<String>
   
     fun verifyUser(token: String)
   

@@ -59,4 +59,5 @@
     <string name="travels">podróże</string>
     <string name="search_friend">Wyszukaj znajomego</string>
     <string name="user_friends">Moi znajomi</string>
+    <string name="confirm_friend">Potwierdź znajomość</string>
 </resources>
