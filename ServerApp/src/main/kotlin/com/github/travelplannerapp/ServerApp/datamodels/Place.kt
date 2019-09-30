@@ -11,27 +11,11 @@ class Place(
         var position: Array<Double>,
         var category: ObjectCategory,
         var href: String = "",
-        var categoryTitle: String = "",
         var resultType: String = "",
         var averageRating: String = "",
-        var distance: Double = 0.0
-): Serializable {
-
-    //TEMPORARY
-    fun printPlace() {
-        println("Place: ")
-        println(id)
-        println(title)
-        println(vicinity)
-        println(position)
-        println("Cat id: " + category.id)
-        println("Cat: " + category.title)
-        println(href)
-        println(resultType)
-        println(averageRating)
-        println(distance.toString())
-    }
-}
+        var distance: Double = 0.0,
+        var openingHours: OpeningHours? = null
+) : Serializable
 
 // some variables might be unused and meant to be deleted, for now I got all of them
 class ObjectCategory(
@@ -40,4 +24,6 @@ class ObjectCategory(
         var href: String = "",
         var type: String = "",
         var system: String = ""
-): Serializable
+) : Serializable
+
+class OpeningHours(var text: String)

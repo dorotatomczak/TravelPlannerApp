@@ -7,6 +7,7 @@ import com.github.travelplannerapp.communication.CommunicationService
 import com.github.travelplannerapp.communication.model.ResponseCode
 import com.github.travelplannerapp.communication.model.Scan
 import com.github.travelplannerapp.utils.SchedulerProvider
+import com.github.travelplannerapp.utils.SharedPreferencesUtils
 import io.reactivex.disposables.CompositeDisposable
 
 class TicketsPresenter(view: TicketsContract.View, private val travelId: Int) : BasePresenter<TicketsContract.View>(view), TicketsContract.Presenter {
@@ -30,7 +31,7 @@ class TicketsPresenter(view: TicketsContract.View, private val travelId: Int) : 
     override fun loadScans() {
         view.setLoadingIndicatorVisibility(true)
 
-        compositeDisposable.add(CommunicationService.serverApi.getScans(travelId)
+        compositeDisposable.add(CommunicationService.serverApi.getScans(SharedPreferencesUtils.getUserId(), travelId)
                 .observeOn(SchedulerProvider.ui())
                 .subscribeOn(SchedulerProvider.io())
                 .map { if (it.responseCode == ResponseCode.OK) it.data!! else throw ApiException(it.responseCode) }
@@ -50,7 +51,7 @@ class TicketsPresenter(view: TicketsContract.View, private val travelId: Int) : 
 
     override fun onBindTicketsAtPosition(position: Int, itemView: TicketsContract.TicketItemView) {
         val ticket = tickets[position]
-        itemView.setImage(CommunicationService.getScanUrl(ticket.name))
+        itemView.setImage(CommunicationService.getScanUrl(ticket.name, SharedPreferencesUtils.getUserId()))
         itemView.setCheckbox()
     }
 
@@ -62,7 +63,7 @@ class TicketsPresenter(view: TicketsContract.View, private val travelId: Int) : 
 
     override fun onScanClicked(position: Int) {
         val ticket = tickets[position]
-        view.showFullScan((CommunicationService.getScanUrl(ticket.name)))
+        view.showFullScan((CommunicationService.getScanUrl(ticket.name, SharedPreferencesUtils.getUserId())))
     }
 
     override fun onDeleteClicked() {
@@ -72,7 +73,7 @@ class TicketsPresenter(view: TicketsContract.View, private val travelId: Int) : 
     }
 
     override fun deleteTickets() {
-        compositeDisposable.add(CommunicationService.serverApi.deleteScans(ticketsToDelete)
+        compositeDisposable.add(CommunicationService.serverApi.deleteScans(SharedPreferencesUtils.getUserId(), ticketsToDelete)
                 .observeOn(SchedulerProvider.ui())
                 .subscribeOn(SchedulerProvider.io())
                 .map { if (it.responseCode == ResponseCode.OK) it.data!! else throw ApiException(it.responseCode) }
@@ -80,7 +81,6 @@ class TicketsPresenter(view: TicketsContract.View, private val travelId: Int) : 
                         { handleDeleteTicketsResponse() },
                         { error -> handleErrorResponse(error) }
                 ))
-        ticketsToDelete.clear()
     }
 
     override fun enterActionMode() {
@@ -110,11 +110,13 @@ class TicketsPresenter(view: TicketsContract.View, private val travelId: Int) : 
     }
 
     private fun handleDeleteTicketsResponse() {
+        ticketsToDelete.clear()
         loadScans()
         view.showSnackbar(R.string.delete_tickets_ok)
     }
 
     private fun handleErrorResponse(error: Throwable) {
+        ticketsToDelete.clear()
         loadScans()
         if (error is ApiException) view.showSnackbar(error.getErrorMessageCode())
         else view.showSnackbar(R.string.server_connection_error)

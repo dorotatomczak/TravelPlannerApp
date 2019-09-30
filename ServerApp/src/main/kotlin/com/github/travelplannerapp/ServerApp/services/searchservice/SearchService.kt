@@ -1,9 +1,6 @@
 package com.github.travelplannerapp.ServerApp.services.searchservice
 
-import com.github.travelplannerapp.ServerApp.datamodels.CityObject
-import com.github.travelplannerapp.ServerApp.datamodels.Place
-import com.github.travelplannerapp.ServerApp.datamodels.SearchCitiesResponse
-import com.github.travelplannerapp.ServerApp.datamodels.SearchObjectsResponse
+import com.github.travelplannerapp.ServerApp.datamodels.*
 import com.github.travelplannerapp.ServerApp.exceptions.SearchNoItemsException
 import com.google.gson.GsonBuilder
 import com.google.gson.JsonParser
@@ -41,13 +38,16 @@ class SearchService : ISearchService {
             eastNorthPoint.first, eastNorthPoint.second, category
         ).results.items
 
-        for(i in 0 until places.size){
-            places[i].title = StringEscapeUtils.unescapeHtml3(places[i].title)
-            places[i].vicinity = StringEscapeUtils.unescapeHtml3(places[i].vicinity)
-            places[i].vicinity = places[i].vicinity.replace("<br/>", "\n")
+        if (places.isEmpty()) throw SearchNoItemsException("No places found")
+
+        for (place in places) {
+            place.title = escapeHtml(place.title)
+            place.vicinity = escapeHtml(place.vicinity)
+            if (place.openingHours != null) {
+                place.openingHours!!.text = escapeHtml(place.openingHours!!.text)
+            }
         }
 
-        if (places.isEmpty()) throw SearchNoItemsException("No places found")
         return places
     }
 
@@ -60,6 +60,14 @@ class SearchService : ISearchService {
 
         if (cities.isEmpty()) throw SearchNoItemsException("No cities found")
         return cities
+    }
+
+    override fun getContacts(href: String): Contacts {
+        return hereLoader.getContacts(href)
+    }
+
+    private fun escapeHtml(str: String): String {
+        return StringEscapeUtils.unescapeHtml3(str).replace("<br/>", "\n")
     }
 
     @Component
@@ -136,6 +144,11 @@ class SearchService : ISearchService {
 
             // if result is null: app doesn't show anything
             return parseResponse<SearchCitiesResponse>(response).Res.Coverage.Cities.City
+        }
+
+        fun getContacts(query: String): Contacts {
+            val response = executeRequest(query, jsonFilter)
+            return parseResponse<PlaceInfo>(response).contacts
         }
 
         private inline fun <reified T> parseResponse(response: String): T {

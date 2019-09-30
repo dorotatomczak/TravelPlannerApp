@@ -28,57 +28,57 @@ object CommunicationService {
                 .build()
                 .create(ServerApi::class.java)
 
-    fun getScanUrl(name: String): String {
-        return "$serverUrl/scans/$name"
+    fun getScanUrl(name: String, userId: Int): String {
+        return "$serverUrl/users/$userId/scans/$name"
     }
 }
 
 interface ServerApi {
 
-    @POST("/authorize")
+    @POST("/user-management/authorize")
     fun authorize(): Single<Response<Unit>>
 
-    @POST("/authenticate")
+    @POST("/user-management/authenticate")
     fun authenticate(@Body body: SignInRequest): Single<Response<SignInResponse>>
 
-    @POST("/register")
+    @POST("/user-management/register")
     fun register(@Body body: SignUpRequest): Single<Response<Unit>>
 
-    @GET("/travels")
-    fun getTravels(): Observable<Response<List<Travel>>>
+    @GET("/users/{userId}/travels")
+    fun getTravels(@Path("userId") userId: Int): Observable<Response<List<Travel>>>
 
-    @POST("/addtravel")
-    fun addTravel(@Body travelName: String): Single<Response<Travel>>
+    @POST("/users/{userId}/travels")
+    fun addTravel(@Path("userId") userId: Int, @Body travelName: String): Single<Response<Travel>>
 
-    @PUT("/changetravelname")
-    fun changeTravelName(@Body travel: Travel): Single<Response<Travel>>
+    @PUT("/users/{userId}/travels")
+    fun changeTravelName(@Path("userId") userId: Int, @Body travel: Travel): Single<Response<Travel>>
 
-    @POST("/deletetravels")
-    fun deleteTravels(@Body travelIds: MutableSet<Int>): Single<Response<Unit>>
+    @HTTP(method = "DELETE", path = "/users/{userId}/travels", hasBody = true)
+    fun deleteTravels(@Path("userId") userId: Int, @Body travelIds: MutableSet<Int>): Single<Response<Unit>>
 
     @Multipart
-    @POST("/uploadScan")
-    fun uploadScan(@Part("travelId") travelId: RequestBody, @Part file: MultipartBody.Part): Single<Response<Scan>>
+    @POST("/users/{userId}/scans")
+    fun uploadScan(@Path("userId") userId: Int, @Part("travelId") travelId: RequestBody, @Part file: MultipartBody.Part): Single<Response<Scan>>
 
-    @POST("/deleteScans")
-    fun deleteScans(@Body scans: MutableSet<Scan>): Single<Response<Unit>>
+    @HTTP(method = "DELETE", path = "/users/{userId}/scans", hasBody = true)
+    fun deleteScans(@Path("userId") userId: Int, @Body scans: MutableSet<Scan>): Single<Response<Unit>>
 
-    @GET("/scans")
-    fun getScans(@Query("travelId") travelId: Int): Single<Response<List<Scan>>>
+    @GET("/users/{userId}/scans")
+    fun getScans(@Path("userId") userId: Int, @Query("travelId") travelId: Int): Single<Response<List<Scan>>>
 
-    @GET("/findCities")
+    @GET("/here-management/cities")
     fun findCities(@Query("query") query: String): Single<Response<List<CityObject>>>
 
-    @GET("/getObjects")
+    @GET("/here-management/objects")
     fun findObjects(@Query("cat") category: String, @Query("west") west: String, @Query("north") north: String,
                     @Query("east") east: String, @Query("south") south: String): Single<Response<Array<Place>>>
 
-    @GET("/plans")
-    fun getPlans(@Query("travelId")travelId: Int): Single<Response<List<Plan>>>
+    @GET("/here-management/objects/{objectId}/contacts")
+    fun getContacts(@Path("objectId") objectId: String, @Query("query") query: String): Single<Response<Contacts>>
 
-    @POST("/addplan")
+    @GET("/travels/{travelId}/plans")
+    fun getPlans(@Path("travelId")travelId: Int): Single<Response<List<Plan>>>
+
+    @POST("/travels/plans")
     fun addPlan(@Body plan: Plan): Single<Response<Plan>>
-
-    @POST("/deleteplans")
-    fun deletePlans(@Body planIds: MutableSet<Int>): Single<Response<Unit>>
 }

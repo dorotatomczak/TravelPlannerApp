@@ -23,44 +23,50 @@ class ServerTravelController {
     @Autowired
     lateinit var searchService: SearchService
 
-    @GetMapping("/travels")
-    fun travels(@RequestHeader("authorization") token: String): Response<List<Travel>> {
+    @GetMapping("users/{userId}/travels")
+    fun getTravels(
+        @RequestHeader("authorization") token: String,
+        @PathVariable userId: Int
+    ): Response<List<Travel>> {
         userManagement.verifyUser(token)
-
-        val userId = userManagement.getUserId(token)
         val travels = travelRepository.getAllTravelsByUserId(userId)
         return Response(ResponseCode.OK, travels)
     }
 
-    @PostMapping("/addtravel")
+    @PostMapping("users/{userId}/travels")
     fun addTravel(
         @RequestHeader("authorization") token: String,
+        @PathVariable userId: Int,
         @RequestBody travelName: String
     ): Response<Travel> {
         userManagement.verifyUser(token)
-        val userId = userManagement.getUserId(token)
         val newTravel = travelManagement.addTravel(userId, travelName)
         return Response(ResponseCode.OK, newTravel)
     }
 
-    @PutMapping("/changetravelname")
-    fun changeTravelName(@RequestHeader("authorization") token: String,
-                         @RequestBody travel: Travel): Response<Travel> {
+    @PutMapping("users/{userId}/travels")
+    fun changeTravelName(
+        @RequestHeader("authorization") token: String,
+        @PathVariable userId: Int,
+        @RequestBody travel: Travel
+    ): Response<Travel> {
         userManagement.verifyUser(token)
         val updatedTravel = travelManagement.updateTravel(travel.id!!, mutableMapOf("name" to travel.name))
         return Response(ResponseCode.OK, updatedTravel)
     }
 
-    @PostMapping("/deletetravels")
-    fun deleteTravels(@RequestHeader("authorization") token: String,
-                      @RequestBody travelIds: MutableSet<Int>): Response<Unit> {
+    @DeleteMapping("users/{userId}/travels")
+    fun deleteTravels(
+        @RequestHeader("authorization") token: String,
+        @PathVariable userId: Int,
+        @RequestBody travelIds: MutableSet<Int>
+    ): Response<Unit> {
         userManagement.verifyUser(token)
-        val userId = userManagement.getUserId(token)
         travelManagement.deleteTravels(userId, travelIds)
         return Response(ResponseCode.OK, Unit)
     }
 
-    @GetMapping("/getObjects")
+    @GetMapping("here-management/objects")
     fun getObjects(
         @RequestHeader("authorization") token: String, @RequestParam("cat") category: String,
         @RequestParam("west") west: String, @RequestParam("south") south: String,
@@ -77,8 +83,11 @@ class ServerTravelController {
     }
 
     // eg. for getting next page
-    @GetMapping("/findObjectsGetPage")
-    fun findObjectsGetPage(@RequestHeader("authorization") token: String, @RequestParam("request") request: String): Response<SearchObjectsResponse> {
+    @GetMapping("here-management/objects-next-page")
+    fun findObjectsGetPage(
+        @RequestHeader("authorization") token: String,
+        @RequestParam("request") request: String
+    ): Response<SearchObjectsResponse> {
         userManagement.verifyUser(token)
 
         return Response(
@@ -87,8 +96,11 @@ class ServerTravelController {
         )
     }
 
-    @GetMapping("/findCities")
-    fun findCities(@RequestHeader("authorization") token: String, @RequestParam("query") query: String): Response<Array<CityObject>> {
+    @GetMapping("here-management/cities")
+    fun findCities(
+        @RequestHeader("authorization") token: String,
+        @RequestParam("query") query: String
+    ): Response<Array<CityObject>> {
         userManagement.verifyUser(token)
 
         try {
@@ -97,6 +109,14 @@ class ServerTravelController {
         } catch (ex: Exception) {
             throw SearchNoItemsException(ex.localizedMessage)
         }
+    }
 
+    @GetMapping("/here-management/objects/{objectId}/contacts")
+    fun getContacts(@RequestHeader("authorization") token: String,
+                    @PathVariable objectId: String,
+                    @RequestParam("query") query: String): Response<Contacts> {
+        userManagement.verifyUser(token)
+        val contacts = searchService.getContacts(query)
+        return Response(ResponseCode.OK, contacts)
     }
 }

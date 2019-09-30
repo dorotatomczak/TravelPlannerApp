@@ -47,6 +47,7 @@ dependencies {
     implementation "androidx.cardview:cardview:$rootProject.cardviewVersion"
     implementation "com.mikepenz:materialdrawer:$rootProject.materialdrawerVersion"
     implementation "androidx.swiperefreshlayout:swiperefreshlayout:$rootProject.swiperefreshlayoutVersion"
+    implementation "com.sothree.slidinguppanel:library:$rootProject.slidinguppanelVersion"
 
     // Dagger dependencies
     implementation "com.google.dagger:dagger:$rootProject.daggerVersion"
