@@ -65,4 +65,7 @@ interface ServerApi {
 
     @GET("/getusersemails")
     fun getUsersEmails():  Single<Response<MutableList<String>>>
+
+    @GET("/getuserfriends")
+    fun getUserFriends():  Observable<Response<List<String>>>
 }

@@ -20,7 +20,7 @@ class SearchFriendActivity : AppCompatActivity(), SearchView.OnQueryTextListener
     private lateinit var usersListView: ListView
     private lateinit var adapter: ListViewAdapter
     private lateinit var userSearch: SearchView
-    
+
     private lateinit var arrayList: ArrayList<UserEmail>
     private lateinit var allArrayList: ArrayList<UserEmail>
     private lateinit var emails: MutableList<String>

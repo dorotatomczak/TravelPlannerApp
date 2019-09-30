@@ -1,6 +1,7 @@
 package com.github.travelplannerapp.ServerApp
 
 import com.github.travelplannerapp.ServerApp.datamanagement.UserManagement
+import com.github.travelplannerapp.ServerApp.db.repositories.UserRepository
 import com.github.travelplannerapp.ServerApp.exceptions.ResponseCode
 import com.github.travelplannerapp.ServerApp.jsondatamodels.Response
 import com.github.travelplannerapp.ServerApp.jsondatamodels.SignInRequest
@@ -14,6 +15,8 @@ class ServerUserController {
 
     @Autowired
     lateinit var userManagement: UserManagement
+    @Autowired
+    lateinit var userRepository: UserRepository
 
 
     @PostMapping("/authorize")
@@ -38,5 +41,13 @@ class ServerUserController {
     fun getUsersEmails(): Response<MutableList<String>>{
         val emails = userManagement.getUsersEmails()
         return Response(ResponseCode.OK, emails)
+    }
+
+    @GetMapping("/getuserfriends")
+    fun getUserFriends(@RequestHeader("authorization") token: String): Response<List<String>>{
+        userManagement.verifyUser(token)
+        val userId = userManagement.getUserId(token)
+        val friends = userRepository.getAllFriendsByUserId(userId)
+        return Response(ResponseCode.OK, friends)
     }
 }
