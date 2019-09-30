@@ -27,6 +27,23 @@ class UserRepository : Repository<User>(), IUserRepository {
             " WHERE $columnId=?"
     override val nextIdStatement = "SELECT nextval(pg_get_serial_sequence('$tableName', '$columnId')) AS new_id"
 
+    override fun getAllFriendsByUserId(id: Int): MutableList<String> {
+        val friendsEmails = mutableListOf<String>()
+        val statement = DbConnection
+                .conn
+                .prepareStatement(
+                        "SELECT * FROM $tableName "+
+                                "INNER JOIN ${UserFriendRepository.tableName} "+
+                                "on $tableName.$columnId = ${UserFriendRepository.tableName}.${UserFriendRepository.columnFriendId}"+
+                                " WHERE ${UserFriendRepository.tableName}.${UserFriendRepository.columnUserId}=?"
+                )
+        statement.setInt(1, id)
+        val result = statement.executeQuery()
+        while (result.next()) {
+            friendsEmails.add(User(result).email.toString())
+        }
+        return friendsEmails
+    }
     override fun getUserByEmail(email: String): User? {
         val statement = DbConnection
                 .conn
