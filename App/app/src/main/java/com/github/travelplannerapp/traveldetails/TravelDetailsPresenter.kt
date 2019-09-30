@@ -20,7 +20,7 @@ class TravelDetailsPresenter(private val travelId: Int, private var travelName: 
 
     override fun openCategory(category: Category.CategoryType) {
         when (category) {
-            Category.CategoryType.DAY_PLANS -> view.showDayPlans()
+            Category.CategoryType.DAY_PLANS -> view.showDayPlans(travelId)
             Category.CategoryType.TRANSPORT -> view.showTransport()
             Category.CategoryType.ACCOMMODATION -> view.showAccommodation()
             Category.CategoryType.TICKETS -> view.showTickets(travelId)

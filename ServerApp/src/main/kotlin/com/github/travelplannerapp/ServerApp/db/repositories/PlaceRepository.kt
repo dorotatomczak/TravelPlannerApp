@@ -12,17 +12,28 @@ class PlaceRepository : Repository<PlaceDao>(), IPlaceRepository {
         const val tableName = "place"
         const val columnId = "id"
         const val columnHereId = "here_id"
+        const val columnHref = "href"
         const val columnTitle = "title"
-        const val columnLocation = "location"
+        const val columnVicinity = "vicinity"
         const val columnCategory = "category"
     }
 
     override val selectStatement = "SELECT * FROM $tableName "
-    override val insertStatement = "INSERT INTO $tableName ($columnId, $columnHereId, $columnTitle, $columnLocation, $columnCategory)" +
-            " VALUES (?, ?, ?, ?, ?)"
+    override val insertStatement = "INSERT INTO $tableName ($columnId, $columnHereId, $columnHref, $columnTitle, $columnVicinity, $columnCategory)" +
+            " VALUES (?, ?, ?, ?, ?, ?)"
     override val deleteStatement = "DELETE FROM $tableName "
-    override val updateStatement = "UPDATE $tableName SET $columnHereId, $columnTitle=?, $columnLocation=?, $columnCategory=? WHERE $columnId=?"
+    override val updateStatement = "UPDATE $tableName SET $columnHereId, $columnHref, $columnTitle=?, $columnVicinity=?, $columnCategory=? WHERE $columnId=?"
     override val nextIdStatement = "SELECT nextval(pg_get_serial_sequence('$tableName', '$columnId')) AS new_id"
+
+    override fun getPlaceByHereId(hereId: String): PlaceDao? {
+        val statement = DbConnection
+                .conn
+                .prepareStatement(selectStatement + "WHERE here_id=?")
+        statement.setString(1, hereId)
+        val result = statement.executeQuery()
+        return if(result.next()) PlaceDao(result)
+        else null
+    }
 
     override fun T(result: ResultSet): PlaceDao? {
         return PlaceDao(result)
@@ -34,9 +45,10 @@ class PlaceRepository : Repository<PlaceDao>(), IPlaceRepository {
                 .prepareStatement(insertStatement)
         statement.setInt(1, obj.id!!)
         statement.setString(2, obj.hereId)
-        statement.setString(3, obj.title)
-        statement.setString(4, obj.location)
-        statement.setString(5, obj.category)
+        statement.setString(3, obj.href)
+        statement.setString(4, obj.title)
+        statement.setString(5, obj.vicinity)
+        statement.setString(6, obj.category)
         return statement
     }
 
@@ -45,10 +57,11 @@ class PlaceRepository : Repository<PlaceDao>(), IPlaceRepository {
                 .conn
                 .prepareStatement(updateStatement)
         statement.setString(1, obj.hereId)
-        statement.setString(2, obj.title)
-        statement.setString(3, obj.location)
-        statement.setString(4, obj.category)
-        statement.setInt(5, obj.id!!)
+        statement.setString(2, obj.href)
+        statement.setString(3, obj.title)
+        statement.setString(4, obj.vicinity)
+        statement.setString(5, obj.category)
+        statement.setInt(6, obj.id!!)
         return statement
     }
 }

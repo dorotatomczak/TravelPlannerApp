@@ -23,6 +23,10 @@ class DayPlansActivity : AppCompatActivity(), DayPlansContract.View {
     @Inject
     lateinit var presenter: DayPlansContract.Presenter
 
+    companion object {
+        const val EXTRA_TRAVEL_ID = "EXTRA_TRAVEL_ID"
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         AndroidInjection.inject(this)
         super.onCreate(savedInstanceState)
@@ -87,6 +91,7 @@ class DayPlansActivity : AppCompatActivity(), DayPlansContract.View {
 
     private fun showAddPlan() {
         val intent = Intent(this, AddPlanActivity::class.java)
+        intent.putExtra(AddPlanActivity.EXTRA_TRAVEL_ID, presenter.getTravelId())
         startActivityForResult(intent, AddPlanActivity.REQUEST_ADD_PLAN)
     }
 }

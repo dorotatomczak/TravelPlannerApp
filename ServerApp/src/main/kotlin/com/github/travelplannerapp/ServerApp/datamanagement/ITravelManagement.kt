@@ -1,5 +1,6 @@
 package com.github.travelplannerapp.ServerApp.datamanagement
 
+import com.github.travelplannerapp.ServerApp.datamodels.Plan
 import com.github.travelplannerapp.ServerApp.db.dao.Travel
 
 interface ITravelManagement {
@@ -8,4 +9,6 @@ interface ITravelManagement {
     fun updateTravel(id: Int, changes: MutableMap<String, Any?>): Travel?
 
     fun deleteTravels(userId: Int, travelIds: MutableSet<Int>)
+
+    fun addPlan(plan: Plan): Plan
 }

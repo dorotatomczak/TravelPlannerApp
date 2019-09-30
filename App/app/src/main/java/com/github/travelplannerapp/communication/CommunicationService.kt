@@ -74,7 +74,7 @@ interface ServerApi {
                     @Query("east") east: String, @Query("south") south: String): Single<Response<Array<Place>>>
 
     @GET("/plans")
-    fun getPlans(): Observable<Response<List<Plan>>>
+    fun getPlans(@Query("travelId")travelId: Int): Single<Response<List<Plan>>>
 
     @POST("/addplan")
     fun addPlan(@Body plan: Plan): Single<Response<Plan>>

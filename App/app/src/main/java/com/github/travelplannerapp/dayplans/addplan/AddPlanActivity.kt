@@ -36,6 +36,7 @@ class AddPlanActivity : AppCompatActivity(), AddPlanContract.View {
         const val REQUEST_ADD_PLAN = 0
         const val REQUEST_ADD_PLAN_RESULT_MESSAGE = "REQUEST_ADD_PLAN_RESULT_MESSAGE"
         const val REQUEST_ADD_PLAN_RESULT_PLAN = "REQUEST_ADD_PLAN_RESULT_PLAN"
+        const val EXTRA_TRAVEL_ID = "EXTRA_TRAVEL_ID"
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -141,7 +142,11 @@ class AddPlanActivity : AppCompatActivity(), AddPlanContract.View {
                 if (resultCode == Activity.RESULT_OK && data != null) {
                     val name = data.getStringExtra(SearchElementActivity.EXTRA_NAME)
                     val location = data.getStringExtra(SearchElementActivity.EXTRA_LOCATION)
+                    val placeId = data.getStringExtra(SearchElementActivity.EXTRA_PLACE_ID)
+                    val href = data.getStringExtra(SearchElementActivity.EXTRA_HREF)
 
+                    //TODO change to passing all Place object
+                    presenter.savePlaceInfo(placeId, href)
                     editTextPlanName.setText(name, TextView.BufferType.EDITABLE)
                     location?.let { showLocation(it) }
                 }

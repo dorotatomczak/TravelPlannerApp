@@ -13,5 +13,6 @@ enum class ResponseCode {
     UPLOAD_SCAN_ERROR,
     DELETE_SCANS_ERROR,
     NO_ITEMS_SEARCH_ERROR,
+    ADD_PLAN_ERROR,
     OTHER_ERROR
 }

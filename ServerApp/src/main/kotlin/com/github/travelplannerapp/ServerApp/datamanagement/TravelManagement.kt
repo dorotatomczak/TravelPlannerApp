@@ -1,9 +1,15 @@
 package com.github.travelplannerapp.ServerApp.datamanagement
 
+import com.github.travelplannerapp.ServerApp.datamodels.Plan
+import com.github.travelplannerapp.ServerApp.db.dao.PlanDao
 import com.github.travelplannerapp.ServerApp.db.dao.Travel
 import com.github.travelplannerapp.ServerApp.db.merge
+import com.github.travelplannerapp.ServerApp.db.repositories.PlaceRepository
+import com.github.travelplannerapp.ServerApp.db.repositories.PlanRepository
 import com.github.travelplannerapp.ServerApp.db.repositories.TravelRepository
+import com.github.travelplannerapp.ServerApp.db.transactions.PlanTransaction
 import com.github.travelplannerapp.ServerApp.db.transactions.TravelTransaction
+import com.github.travelplannerapp.ServerApp.exceptions.AddPlanException
 import com.github.travelplannerapp.ServerApp.exceptions.AddTravelException
 import com.github.travelplannerapp.ServerApp.exceptions.DeleteTravelsException
 import com.github.travelplannerapp.ServerApp.exceptions.UpdateTravelException
@@ -17,6 +23,8 @@ class TravelManagement : ITravelManagement {
     lateinit var travelTransaction: TravelTransaction
     @Autowired
     lateinit var travelRepository: TravelRepository
+    @Autowired
+    lateinit var planTransaction: PlanTransaction
 
     override fun addTravel(userId: Int, travelName: String): Travel {
         val addedTravel = travelTransaction.addTravel(travelName, userId)
@@ -40,5 +48,11 @@ class TravelManagement : ITravelManagement {
     override fun deleteTravels(userId: Int, travelIds: MutableSet<Int>) {
         val result = travelTransaction.deleteTravels(userId, travelIds)
         if (!result) throw  DeleteTravelsException("Error when deleting travel")
+    }
+
+    override fun addPlan(plan: Plan): Plan {
+        val addedPlan = planTransaction.addPlan(plan)
+        if (addedPlan != null) return addedPlan
+        else throw AddPlanException("Error when adding plan")
     }
 }

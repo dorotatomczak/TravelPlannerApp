@@ -1,5 +1,6 @@
-package com.github.travelplannerapp.communication.model
+package com.github.travelplannerapp.ServerApp.datamodels
 
+import com.github.travelplannerapp.ServerApp.db.dao.PlanDao
 import java.io.Serializable
 
 data class Plan(

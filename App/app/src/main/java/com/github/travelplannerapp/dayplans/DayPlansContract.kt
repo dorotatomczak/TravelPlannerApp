@@ -42,5 +42,6 @@ interface DayPlansContract {
         fun getPlanItemType(position: Int): Int
         fun onBindPlanItemAtPosition(position: Int, itemView: PlanElementItemView)
         fun onBindPlanItemAtPosition(position: Int, itemView: PlanDateSeparatorItemView)
+        fun getTravelId(): Int
     }
 }

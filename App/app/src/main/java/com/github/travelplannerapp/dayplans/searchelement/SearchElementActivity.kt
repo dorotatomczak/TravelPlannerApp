@@ -36,8 +36,9 @@ class SearchElementActivity : AppCompatActivity(), SearchElementContract.View {
         const val EXTRA_LOCATION = "location"
         const val REQUEST_SEARCH = 1
         const val EXTRA_CATEGORY = "category"
+        const val EXTRA_PLACE_ID = "placeId"
+        const val EXTRA_HREF = "href"
     }
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         AndroidInjection.inject(this)
@@ -48,7 +49,6 @@ class SearchElementActivity : AppCompatActivity(), SearchElementContract.View {
         fabCheck.setOnClickListener {
             returnResultAndFinish(selectedMapMarker.title, selectedMapMarker.description)
         }
-
 
         // Get the SearchView and set the searchable configuration
         val searchManager = getSystemService(Context.SEARCH_SERVICE) as SearchManager
@@ -75,10 +75,13 @@ class SearchElementActivity : AppCompatActivity(), SearchElementContract.View {
         }
     }
 
-    override fun returnResultAndFinish(name: String, address: String) {
+    override fun returnResultAndFinish(name: String, description: String) {
+        val placeInfo = description.split('\n')
         val resultIntent = Intent().apply {
             putExtra(EXTRA_NAME, name)
-            putExtra(EXTRA_LOCATION, address)
+            putExtra(EXTRA_LOCATION, placeInfo[0])
+            putExtra(EXTRA_PLACE_ID,  placeInfo[1])
+            putExtra(EXTRA_HREF,  placeInfo[2])
         }
         setResult(RESULT_OK, resultIntent)
         finish()
@@ -95,7 +98,7 @@ class SearchElementActivity : AppCompatActivity(), SearchElementContract.View {
         for (place in places) {
             val defaultMarker = MapMarker()
             defaultMarker.title = place.title
-            defaultMarker.description = place.vicinity
+            defaultMarker.description = (place.vicinity + "\n" + place.id + "\n" + place.href)
             defaultMarker.coordinate = GeoCoordinate(place.position[0], place.position[1], 0.0)
             placesContainer.addMapObject(defaultMarker)
             map.addMapObject(defaultMarker)
@@ -108,7 +111,7 @@ class SearchElementActivity : AppCompatActivity(), SearchElementContract.View {
         supportMapFragment.init { error ->
             if (error == OnEngineInitListener.Error.NONE) {
                 supportMapFragment.mapGesture.addOnGestureListener(provideOnGestureListener())
-                    map = supportMapFragment.map
+                map = supportMapFragment.map
 
                 val gdanskGeoCord = GeoCoordinate(54.339787, 18.609653, 0.0)
                 map.setCenter(gdanskGeoCord, Map.Animation.NONE)

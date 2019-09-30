@@ -4,16 +4,20 @@ import com.github.travelplannerapp.BasePresenter
 import com.github.travelplannerapp.R
 import com.github.travelplannerapp.communication.ApiException
 import com.github.travelplannerapp.communication.CommunicationService
+import com.github.travelplannerapp.communication.model.PlaceCategory
 import com.github.travelplannerapp.communication.model.Plan
 import com.github.travelplannerapp.communication.model.ResponseCode
 import com.github.travelplannerapp.utils.DateTimeUtils
 import com.github.travelplannerapp.utils.SchedulerProvider
 import io.reactivex.disposables.CompositeDisposable
+import java.util.*
+import kotlin.collections.ArrayList
 
 
-class DayPlansPresenter(view: DayPlansContract.View) : BasePresenter<DayPlansContract.View>(view), DayPlansContract.Presenter {
+class DayPlansPresenter(private val travelId: Int, view: DayPlansContract.View) : BasePresenter<DayPlansContract.View>(view), DayPlansContract.Presenter {
 
     private val compositeDisposable = CompositeDisposable()
+
     private var planItems = ArrayList<DayPlansContract.DayPlanItem>()
     private val plans = ArrayList<Plan>()
 
@@ -30,12 +34,12 @@ class DayPlansPresenter(view: DayPlansContract.View) : BasePresenter<DayPlansCon
     }
 
     override fun loadDayPlans() {
-        compositeDisposable.add(CommunicationService.serverApi.getPlans()
+        compositeDisposable.add(CommunicationService.serverApi.getPlans(travelId)
                 .observeOn(SchedulerProvider.ui())
                 .subscribeOn(SchedulerProvider.io())
                 .map { if (it.responseCode == ResponseCode.OK) it.data!! else throw ApiException(it.responseCode) }
                 .subscribe(
-                        { plans ->  handleLoadDayPlansResponse(plans) },
+                        { plans -> handleLoadDayPlansResponse(plans) },
                         { error -> handleErrorResponse(error) }
                 ))
 
@@ -53,13 +57,21 @@ class DayPlansPresenter(view: DayPlansContract.View) : BasePresenter<DayPlansCon
         val planElementItem = planItems[position] as PlanElementItem
         val plan = planElementItem.plan
 
-        if (position + 1 < planItems.size && planItems[position+1].getType() == DayPlansContract.DayPlanItem.TYPE_PLAN) {
+        if (position + 1 < planItems.size && planItems[position + 1].getType() == DayPlansContract.DayPlanItem.TYPE_PLAN) {
             itemView.showLine()
         }
+
+        val fromDateTime = Calendar.getInstance()
+        fromDateTime.timeInMillis = plan.fromDateTimeMs
+        var categoryIcon: Int = PlaceCategory.EAT_DRINK.categoryIcon
+        PlaceCategory.values().map {
+            cat -> if(cat.categoryName == plan.place.category.title) categoryIcon = cat.categoryIcon
+        }
+
         itemView.setName(plan.place.title)
-        itemView.setFromTime(DateTimeUtils.timeToString(plan.fromDateTime))
+        itemView.setFromTime(DateTimeUtils.timeToString(fromDateTime))
         itemView.setLocation(plan.place.vicinity)
-        itemView.setIcon(plan.place.category.categoryIcon)
+        itemView.setIcon(categoryIcon)
     }
 
     override fun onBindPlanItemAtPosition(position: Int, itemView: DayPlansContract.PlanDateSeparatorItemView) {
@@ -69,12 +81,8 @@ class DayPlansPresenter(view: DayPlansContract.View) : BasePresenter<DayPlansCon
         itemView.setDate(date)
     }
 
-    private fun handleLoadDayPlansResponse(plans: List<Plan>) {
-        plansToDayPlanItems(plans)
-        view.onDataSetChanged()
-        view.hideLoadingIndicator()
-
-        if (this.planItems.isEmpty()) view.showNoDayPlans() else view.showDayPlans()
+    override fun getTravelId(): Int {
+        return travelId
     }
 
     private fun plansToDayPlanItems(plans: List<Plan>) {
@@ -83,7 +91,9 @@ class DayPlansPresenter(view: DayPlansContract.View) : BasePresenter<DayPlansCon
         var date = ""
 
         for (plan in plans) {
-            val dateCursor = DateTimeUtils.dateToString(plan.fromDateTime)
+            val fromDateTime = Calendar.getInstance()
+            fromDateTime.timeInMillis = plan.fromDateTimeMs
+            val dateCursor = DateTimeUtils.dateToString(fromDateTime)
             if (date != dateCursor) {
                 date = dateCursor
                 planItems.add(DateSeparatorItem(date))
@@ -102,6 +112,14 @@ class DayPlansPresenter(view: DayPlansContract.View) : BasePresenter<DayPlansCon
         override fun getType(): Int {
             return DayPlansContract.DayPlanItem.TYPE_PLAN
         }
+    }
+
+    private fun handleLoadDayPlansResponse(plans: List<Plan>) {
+        plansToDayPlanItems(plans)
+        view.onDataSetChanged()
+        view.hideLoadingIndicator()
+
+        if (this.planItems.isEmpty()) view.showNoDayPlans() else view.showDayPlans()
     }
 
     private fun handleErrorResponse(error: Throwable) {

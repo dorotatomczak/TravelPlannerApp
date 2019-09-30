@@ -28,12 +28,14 @@ create table scan (
 
 create table place (
 	id serial PRIMARY KEY,
+	here_id text,
+	href text,
 	title text,
 	vicinity text,
 	category text
 );
 
-create table plan_element (
+create table plan (
 	id serial PRIMARY KEY,
 	locale text,
 	from_date_time timestamp,
