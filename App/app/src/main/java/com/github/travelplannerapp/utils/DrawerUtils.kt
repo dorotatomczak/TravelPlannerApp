@@ -6,7 +6,7 @@ import android.view.View
 import androidx.appcompat.widget.Toolbar
 import com.github.travelplannerapp.R
 import com.github.travelplannerapp.searchfriend.SearchFriendActivity
-import com.github.travelplannerapp.searchfriend.UserFriendsActivity
+import com.github.travelplannerapp.userfriends.UserFriendsActivity
 import com.github.travelplannerapp.signin.SignInActivity
 import com.mikepenz.materialdrawer.Drawer
 import com.mikepenz.materialdrawer.DrawerBuilder

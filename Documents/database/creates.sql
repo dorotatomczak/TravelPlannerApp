@@ -31,3 +31,5 @@ insert into travel (name) values ('Rzym');
 insert into app_user_travel (app_user_id, travel_id) values (1,1);
 insert into app_user_travel (app_user_id, travel_id) values (1,2);
 insert into app_user_friend (app_user_id, friend_user_id) values (110,1);
+insert into app_user_friend (app_user_id, friend_user_id) values (1,6);
+insert into app_user_friend (app_user_id, friend_user_id) values (110,6);
