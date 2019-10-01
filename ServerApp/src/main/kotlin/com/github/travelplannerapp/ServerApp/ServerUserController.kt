@@ -37,17 +37,34 @@ class ServerUserController {
         userManagement.addUser(request)
         return Response(ResponseCode.OK, Unit)
     }
+
     @GetMapping("/getusersemails")
-    fun getUsersEmails(): Response<MutableList<String>>{
+    fun getUsersEmails(): Response<MutableList<String>> {
         val emails = userManagement.getUsersEmails()
         return Response(ResponseCode.OK, emails)
     }
 
     @GetMapping("/getuserfriends")
-    fun getUserFriends(@RequestHeader("authorization") token: String): Response<List<String>>{
+    fun getUserFriends(@RequestHeader("authorization") token: String): Response<List<String>> {
         userManagement.verifyUser(token)
         val userId = userManagement.getUserId(token)
         val friends = userRepository.getAllFriendsByUserId(userId)
         return Response(ResponseCode.OK, friends)
+    }
+
+    @PostMapping("/addfriend")
+    fun addFriend(@RequestHeader("authorization") token: String,
+                  @RequestBody friendEmail: String): Response<Boolean> {
+        val userId = userManagement.getUserId(token)
+        val result = userManagement.addFriend(userId, friendEmail)
+        return Response(ResponseCode.OK, result)
+    }
+
+    @PostMapping("/deletefriend")
+    fun deleteFriend(@RequestHeader("authorization") token: String,
+                     @RequestBody friendEmail: String): Response<Boolean> {
+        val userId = userManagement.getUserId(token)
+        val result = userManagement.deleteFriend(userId, friendEmail)
+        return Response(ResponseCode.OK, result)
     }
 }

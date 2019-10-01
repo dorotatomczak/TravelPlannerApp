@@ -1,7 +1,9 @@
 package com.github.travelplannerapp.ServerApp.datamanagement
 
 import com.github.travelplannerapp.ServerApp.db.dao.User
+import com.github.travelplannerapp.ServerApp.db.dao.UserFriend
 import com.github.travelplannerapp.ServerApp.db.merge
+import com.github.travelplannerapp.ServerApp.db.repositories.UserFriendRepository
 import com.github.travelplannerapp.ServerApp.db.repositories.UserRepository
 import com.github.travelplannerapp.ServerApp.exceptions.AuthorizationException
 import com.github.travelplannerapp.ServerApp.exceptions.EmailAlreadyExistsException
@@ -21,14 +23,17 @@ class UserManagement : IUserManagement {
 
     @Autowired
     lateinit var userRepository: UserRepository
+    @Autowired
+    lateinit var friendRepository: UserFriendRepository
     private val ACCESS_TOKEN_SUB = "AccessToken"
     private val ACCESS_TOKEN_ISSUER = "TravelApp_Server"
     private val SECRET_KEY =
-        "RdY6EVfEJdMIdxTkUYkZWS3QL9PFrAjxgQXrLloba20BBe4qNaDN9coybj9J5Z6JoVfSt8DepQRyQKbvgpveS8oZUnIknFJsKuDYJ4McQgCm5rZCMpy67EXqxJufoNaDAMhEAkYQhNe3kXfObgmhD6S01v235we6AJ7XITamkhzbzDjx7tmolm6IZYkzkEEEzVWk4ZhotVDP2s2iL5teTe0to7jGNQxrXrU8y3qxEFIjGDfAY7YlrayntqssnbLW"
+            "RdY6EVfEJdMIdxTkUYkZWS3QL9PFrAjxgQXrLloba20BBe4qNaDN9coybj9J5Z6JoVfSt8DepQRyQKbvgpveS8oZUnIknFJsKuDYJ4McQgCm5rZCMpy67EXqxJufoNaDAMhEAkYQhNe3kXfObgmhD6S01v235we6AJ7XITamkhzbzDjx7tmolm6IZYkzkEEEzVWk4ZhotVDP2s2iL5teTe0to7jGNQxrXrU8y3qxEFIjGDfAY7YlrayntqssnbLW"
 
-    override fun getUsersEmails():MutableList<String>{
+    override fun getUsersEmails(): MutableList<String> {
         return userRepository.getAllEmails()
     }
+
     override fun getUserId(token: String): Int {
         return Jwts.parser().setSigningKey(SECRET_KEY).parseClaimsJws(token).body["id"].toString().toInt()
     }
@@ -82,5 +87,25 @@ class UserManagement : IUserManagement {
         val userChanges = User(changes)
         val updatedUser = userChanges merge user!!
         userRepository.update(updatedUser)
+    }
+
+    override fun deleteFriend(userId: Int, friendEmail: String): Boolean {
+        val friend = userRepository.getUserByEmail(friendEmail)
+        if (friend !== null) {
+            friend.id?.let { friendRepository.deleteUserFriendBinding(userId, it) }
+            return true
+        }
+        return false
+    }
+
+    override fun addFriend(userId: Int, friendEmail: String): Boolean {
+        val friendshipId = friendRepository.getNextId()
+        val friend = userRepository.getUserByEmail(friendEmail)
+        if (friend !== null) {
+            val friendship = UserFriend(friendshipId, userId, friend.id)
+            friendRepository.add(friendship)
+            return true
+        }
+        return false
     }
 }

@@ -51,7 +51,7 @@ class UserFriendRepository : Repository<UserFriend>(), IUserFriendRepository {
                 .conn
                 .prepareStatement(deleteStatement + "WHERE $columnUserId=? AND $columnFriendId=?")
         statement.setInt(1, userId)
-        statement.setInt(2,friendId)
+        statement.setInt(2, friendId)
         return statement.executeUpdate() > 0
     }
 

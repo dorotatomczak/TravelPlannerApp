@@ -60,4 +60,14 @@
     <string name="delete_confirmation">Are you sure you want to delete selected %1$s?</string>
     <string name="travels">travels</string>
     <string name="confirm_friend">Confirm friend</string>
+    <string name="error">Error,please try again</string>
+    <string name="friend_added">Friend added</string>
+    <string name="friend_deleted">Friend deleted</string>
+    <string name="friend">friend</string>
+    <string name="user">user</string>
+    <string name="add_one_confirmation">Are you sure you want to add selected %1$s?</string>
+    <string name="add_entry">Add %1$s</string>
+    <string name="delete_one_confirmation">Are you sure you want to delete selected %1$s?</string>
+    <string name="delete_one_entry">Delete %1$s</string>
 </resources>
+

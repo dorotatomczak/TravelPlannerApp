@@ -11,7 +11,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar"
         android:usesCleartextTraffic="true">
-        <activity android:name=".searchfriend.UserFriendsActivity"></activity>
+        <activity android:name=".userfriends.UserFriendsActivity"></activity>
         <activity
             android:name=".launcher.LauncherActivity"
             android:label="@string/app_name"

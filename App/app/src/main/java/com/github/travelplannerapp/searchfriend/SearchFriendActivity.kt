@@ -2,27 +2,31 @@ package com.github.travelplannerapp.searchfriend
 
 import android.content.Intent
 import android.os.Bundle
+import android.widget.ArrayAdapter
 import android.widget.ListView
 import android.widget.SearchView
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.github.travelplannerapp.R
 import com.github.travelplannerapp.communication.ApiException
 import com.github.travelplannerapp.communication.CommunicationService
 import com.github.travelplannerapp.communication.model.ResponseCode
+import com.github.travelplannerapp.userfriends.UserFriendsActivity
+import com.github.travelplannerapp.utils.DrawerUtils
 import com.github.travelplannerapp.utils.SchedulerProvider
+import com.google.android.material.snackbar.Snackbar
 import io.reactivex.disposables.CompositeDisposable
+import kotlinx.android.synthetic.main.toolbar.*
 import java.util.*
 import kotlin.collections.ArrayList
 
-private var friends = ArrayList<String>()
-
 class SearchFriendActivity : AppCompatActivity(), SearchView.OnQueryTextListener {
-    private lateinit var usersListView: ListView
-    private lateinit var adapter: ListViewAdapter
-    private lateinit var userSearch: SearchView
 
-    private lateinit var arrayList: ArrayList<UserEmail>
-    private lateinit var allArrayList: ArrayList<UserEmail>
+    private lateinit var usersListView: ListView
+    private lateinit var adapter: ArrayAdapter<String>
+
+    private lateinit var allArrayList: ArrayList<String>
+    private lateinit var arrayList: ArrayList<String>
     private lateinit var emails: MutableList<String>
 
     private val compositeDisposable = CompositeDisposable()
@@ -30,49 +34,33 @@ class SearchFriendActivity : AppCompatActivity(), SearchView.OnQueryTextListener
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_search_friend)
-        emails = arrayListOf<String>()
         usersListView = findViewById<ListView>(R.id.usersList)
+
+        setSupportActionBar(toolbar)
+        supportActionBar?.setHomeButtonEnabled(true)
+        DrawerUtils.getDrawer(this, toolbar)
+
         loadUsersEmails()
-
-        userSearch = findViewById(R.id.search)
-        userSearch.setOnQueryTextListener(this)
-
+        addSearchAbility()
         usersListView.setOnItemClickListener { _, _, position, _ ->
-            val selectedUser = arrayList[position]
-            val intent = Intent(this, UserFriendsActivity::class.java)
-            intent.putExtra("selectedUser", selectedUser.userEmail)
-            intent.putExtra("friends", friends)
-            this.startActivity(intent)
+            var email = arrayList[position]
+            val userText = getString(R.string.user)
+            AlertDialog.Builder(this)
+                    .setTitle(getString(R.string.add_entry, userText))
+                    .setMessage(getString(R.string.add_one_confirmation, userText))
+                    .setPositiveButton(android.R.string.yes) { _, _ ->
+                        addFriend(email)
+                    }
+                    .setNegativeButton(android.R.string.no) { _, _ ->
+                    }
+                    .show()
+
         }
     }
 
-    override fun onQueryTextChange(queryText: String): Boolean {
-        var text: String = queryText
-        filter(text)
-        return false
-    }
 
-    override fun onQueryTextSubmit(p0: String?): Boolean {
-        return false
-        //TO_DO
-    }
-
-    private fun filter(text: String) {
-        var charText = text
-        charText = charText.toLowerCase(Locale.getDefault())
-        adapter.clear()
-        if (charText.length === 0) {
-            adapter.addAll(allArrayList)
-        } else {
-            for (wp in allArrayList) {
-                if (wp.userEmail.toLowerCase(Locale.getDefault()).contains(charText)) {
-                    adapter.add(wp)
-                }
-            }
-        }
-    }
     private fun loadUsersEmails() {
-
+        emails = arrayListOf<String>()
         compositeDisposable.add(CommunicationService.serverApi.getUsersEmails()
                 .observeOn(SchedulerProvider.ui())
                 .subscribeOn(SchedulerProvider.io())
@@ -83,31 +71,73 @@ class SearchFriendActivity : AppCompatActivity(), SearchView.OnQueryTextListener
                         throw ApiException(it.responseCode)
                 }
                 .subscribe(
-                        { emails ->
-                            handleLoadEmailsResponse(emails)
-                        },
-                        { error ->
-                            handleErrorResponse(error)
-                        }
+                        { emails -> handleLoadEmailsResponse(emails) },
+                        { error -> handleErrorResponse(error) }
                 ))
     }
+
     private fun handleLoadEmailsResponse(usersEmails: List<String>) {
         emails = ArrayList(usersEmails)
         createUsersEmailsList()
-        adapter = ListViewAdapter(this, arrayList)
+        adapter=ArrayAdapter<String>(this, R.layout.item_one_of_list, arrayList)
         usersListView.adapter = adapter
     }
 
-    private fun handleErrorResponse(error: Throwable) {
-        //TO DO
-        println(error)
-    }
-    private fun createUsersEmailsList(){
-        arrayList = ArrayList<UserEmail>()
+    private fun createUsersEmailsList() {
+        arrayList = ArrayList<String>()
         for (x in 0 until emails.size) {
-            var userEmail: UserEmail = UserEmail(emails[x])
-            arrayList.add(userEmail)
+            arrayList.add( emails[x])
         }
-        allArrayList = arrayList.clone() as ArrayList<UserEmail>
+        allArrayList = arrayList.clone() as ArrayList<String>
+    }
+
+    private fun handleErrorResponse(error: Throwable) {
+        Snackbar.make(usersListView, R.string.error, Snackbar.LENGTH_LONG).show()
+    }
+
+    private fun addSearchAbility() {
+        var userSearchView: SearchView = findViewById(R.id.search)
+        userSearchView.setOnQueryTextListener(this)
+
+    }
+
+    override fun onQueryTextChange(queryText: String): Boolean {
+        var text: String = queryText
+        filter(text)
+        return false
+    }
+
+    override fun onQueryTextSubmit(queryText: String?): Boolean {
+        var text: String = queryText.toString()
+        filter(text)
+        return true
+    }
+
+    private fun filter(text: String) {
+        var charText = text.toLowerCase(Locale.getDefault())
+        adapter.clear()
+        if (charText.length !== 0)
+            for (email in allArrayList) {
+                if (email.toLowerCase(Locale.getDefault()).contains(charText))
+                    adapter.add(email)
+            }
+        else adapter.addAll(allArrayList)
+    }
+
+    private fun addFriend(email: String) {
+        compositeDisposable.add(CommunicationService.serverApi.addFriend(email)
+                .observeOn(SchedulerProvider.ui())
+                .subscribeOn(SchedulerProvider.io())
+                .map { if (it.responseCode == ResponseCode.OK) it.data!! else throw ApiException(it.responseCode) }
+                .subscribe(
+                        { isTrue -> handleAddFriendResponse() },
+                        { error -> handleErrorResponse(error) }
+                ))
+    }
+
+    private fun handleAddFriendResponse() {
+        val intent = Intent(this, UserFriendsActivity::class.java)
+        intent.putExtra("notification", getString(R.string.friend_added))
+        this.startActivity(intent)
     }
 }

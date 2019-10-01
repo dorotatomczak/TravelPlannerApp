@@ -6,8 +6,16 @@
     <ListView
         android:id="@+id/friendsList"
         android:layout_width="match_parent"
-        android:layout_height="499dp"
-        android:layout_marginTop="-7dp">
-    </ListView>
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/app_bar_height"></ListView>
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/AppTheme.AppBarOverlay">
+
+        <include layout="@layout/toolbar" />
+
+    </com.google.android.material.appbar.AppBarLayout>
 
 </RelativeLayout>

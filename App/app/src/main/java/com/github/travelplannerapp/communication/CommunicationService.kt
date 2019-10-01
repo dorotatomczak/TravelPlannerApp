@@ -20,13 +20,13 @@ object CommunicationService {
 
     private const val serverUrl: String = "http://192.168.43.155:8080/"
     val serverApi: ServerApi = Retrofit.Builder()
-                .baseUrl(serverUrl)
-                .addConverterFactory(ScalarsConverterFactory.create())
-                .addConverterFactory(GsonConverterFactory.create())
-                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-                .client(OkHttpClient.Builder().addInterceptor(AuthTokenInterceptor()).build())
-                .build()
-                .create(ServerApi::class.java)
+            .baseUrl(serverUrl)
+            .addConverterFactory(ScalarsConverterFactory.create())
+            .addConverterFactory(GsonConverterFactory.create())
+            .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+            .client(OkHttpClient.Builder().addInterceptor(AuthTokenInterceptor()).build())
+            .build()
+            .create(ServerApi::class.java)
 
     fun getScanUrl(name: String): String {
         return "$serverUrl/scans/$name"
@@ -64,8 +64,14 @@ interface ServerApi {
     fun getScans(@Query("travelId") travelId: Int): Single<Response<List<Scan>>>
 
     @GET("/getusersemails")
-    fun getUsersEmails():  Single<Response<MutableList<String>>>
+    fun getUsersEmails(): Single<Response<MutableList<String>>>
 
     @GET("/getuserfriends")
-    fun getUserFriends():  Observable<Response<List<String>>>
+    fun getUserFriends(): Observable<Response<List<String>>>
+
+    @POST("/addfriend")
+    fun addFriend(@Body friendEmail: String): Single<Response<Boolean>>
+
+    @POST("/deletefriend")
+    fun deleteFriend(@Body friendEmail: String): Single<Response<Boolean>>
 }
