@@ -38,7 +38,7 @@ class SearchElementActivity : AppCompatActivity(), SearchElementContract.View {
         const val EXTRA_LOCATION = "location"
         const val REQUEST_SEARCH = 1
         const val EXTRA_CATEGORY = "category"
-        const val EXTRA_PLACE_ID = "placeId"
+        const val EXTRA_PLACE_HERE_ID = "placeId"
         const val EXTRA_HREF = "href"
     }
 
@@ -83,7 +83,7 @@ class SearchElementActivity : AppCompatActivity(), SearchElementContract.View {
             if (place != null) {
                 putExtra(EXTRA_NAME, place.title)
                 putExtra(EXTRA_LOCATION, place.vicinity)
-                putExtra(EXTRA_PLACE_ID,  place.id)
+                putExtra(EXTRA_PLACE_HERE_ID,  place.id)
                 putExtra(EXTRA_HREF,  place.href)
             }
         }
@@ -193,7 +193,7 @@ class SearchElementActivity : AppCompatActivity(), SearchElementContract.View {
     private fun loadObjectsOnMap(geoCord: GeoCoordinate) {
         map.setCenter(geoCord, Map.Animation.NONE)
         val category = intent.getStringExtra(EXTRA_CATEGORY)
-        presenter.search(category, map.boundingBox.topLeft.longitude.toString(),
+        presenter.search(category!!, map.boundingBox.topLeft.longitude.toString(),
                 map.boundingBox.bottomRight.latitude.toString(),
                 map.boundingBox.bottomRight.longitude.toString(),
                 map.boundingBox.topLeft.latitude.toString())

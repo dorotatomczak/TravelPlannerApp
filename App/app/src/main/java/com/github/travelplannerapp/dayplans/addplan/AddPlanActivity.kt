@@ -142,10 +142,10 @@ class AddPlanActivity : AppCompatActivity(), AddPlanContract.View {
                 if (resultCode == Activity.RESULT_OK && data != null) {
                     val name = data.getStringExtra(SearchElementActivity.EXTRA_NAME)
                     val location = data.getStringExtra(SearchElementActivity.EXTRA_LOCATION)
-                    val placeId = data.getStringExtra(SearchElementActivity.EXTRA_PLACE_ID)
+                    val placeHereId = data.getStringExtra(SearchElementActivity.EXTRA_PLACE_HERE_ID)
                     val href = data.getStringExtra(SearchElementActivity.EXTRA_HREF)
 
-                    presenter.savePlaceInfo(placeId!!, href!!)
+                    presenter.savePlaceInfo(placeHereId!!, href!!)
                     editTextPlanName.setText(name, TextView.BufferType.EDITABLE)
                     location?.let { showLocation(it) }
                 }

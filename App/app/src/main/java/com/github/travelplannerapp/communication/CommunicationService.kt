@@ -20,13 +20,13 @@ object CommunicationService {
 
     private const val serverUrl: String = "http://10.0.2.2:8080/"
     val serverApi: ServerApi = Retrofit.Builder()
-                .baseUrl(serverUrl)
-                .addConverterFactory(ScalarsConverterFactory.create())
-                .addConverterFactory(GsonConverterFactory.create())
-                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-                .client(OkHttpClient.Builder().addInterceptor(AuthTokenInterceptor()).build())
-                .build()
-                .create(ServerApi::class.java)
+            .baseUrl(serverUrl)
+            .addConverterFactory(ScalarsConverterFactory.create())
+            .addConverterFactory(GsonConverterFactory.create())
+            .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+            .client(OkHttpClient.Builder().addInterceptor(AuthTokenInterceptor()).build())
+            .build()
+            .create(ServerApi::class.java)
 
     fun getScanUrl(name: String, userId: Int): String {
         return "$serverUrl/users/$userId/scans/$name"
@@ -77,8 +77,8 @@ interface ServerApi {
     fun getContacts(@Path("objectId") objectId: String, @Query("query") query: String): Single<Response<Contacts>>
 
     @GET("/travels/{travelId}/plans")
-    fun getPlans(@Path("travelId")travelId: Int): Single<Response<List<Plan>>>
+    fun getPlans(@Path("travelId") travelId: Int): Single<Response<List<Plan>>>
 
-    @POST("/travels/plans")
-    fun addPlan(@Body plan: Plan): Single<Response<Plan>>
+    @POST("/travels/{travelId}/plans")
+    fun addPlan(@Path("travelId") travelId: Int, @Body plan: Plan): Single<Response<Plan>>
 }

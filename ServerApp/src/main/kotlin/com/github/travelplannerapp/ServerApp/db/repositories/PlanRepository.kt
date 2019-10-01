@@ -62,7 +62,6 @@ class PlanRepository : Repository<PlanDao>(), IPlanRepository {
                     planDao.fromDateTime!!.time,
                     planDao.toDateTime!!.time,
                     planDao.placeId!!,
-                    planDao.travelId!!,
                     place)
 
             plans.add(plan)

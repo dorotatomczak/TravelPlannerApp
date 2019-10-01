@@ -17,10 +17,10 @@ class PlanTransaction {
     @Autowired
     lateinit var planRepository: PlanRepository
 
-    fun addPlan(plan: Plan): Plan? {
+    fun addPlan(travelId: Int, plan: Plan): Plan? {
         DbConnection.conn.autoCommit = false
 
-        val planDao = PlanDao(plan)
+        val planDao = PlanDao(travelId, plan)
         val planId = planRepository.getNextId()
         planDao.id = planId
 

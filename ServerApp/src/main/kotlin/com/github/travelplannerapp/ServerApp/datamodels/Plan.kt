@@ -9,6 +9,5 @@ data class Plan(
         var fromDateTimeMs: Long,
         var toDateTimeMs: Long,
         var placeId: Int,
-        var travelId: Int,
         var place: Place
 ) : Serializable

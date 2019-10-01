@@ -10,5 +10,5 @@ interface ITravelManagement {
 
     fun deleteTravels(userId: Int, travelIds: MutableSet<Int>)
 
-    fun addPlan(plan: Plan): Plan
+    fun addPlan(travelId: Int, plan: Plan): Plan
 }

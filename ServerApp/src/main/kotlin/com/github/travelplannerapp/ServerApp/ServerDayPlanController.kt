@@ -30,14 +30,15 @@ class ServerDayPlanController {
         return Response(ResponseCode.OK, plans)
     }
 
-    @PostMapping("/travels/plans")
+    @PostMapping("/travels/{travelId}/plans")
     fun addPlan(
             @RequestHeader("authorization") token: String,
+            @PathVariable travelId: Int,
             @RequestBody plan: Plan
     ): Response<Plan> {
         userManagement.verifyUser(token)
 
-        val addedPlan = travelManagement.addPlan(plan)
+        val addedPlan = travelManagement.addPlan(travelId, plan)
         return Response(ResponseCode.OK, addedPlan)
     }
 }

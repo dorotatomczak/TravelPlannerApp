@@ -50,8 +50,8 @@ class TravelManagement : ITravelManagement {
         if (!result) throw  DeleteTravelsException("Error when deleting travel")
     }
 
-    override fun addPlan(plan: Plan): Plan {
-        val addedPlan = planTransaction.addPlan(plan)
+    override fun addPlan(travelId: Int, plan: Plan): Plan {
+        val addedPlan = planTransaction.addPlan(travelId, plan)
         if (addedPlan != null) return addedPlan
         else throw AddPlanException("Error when adding plan")
     }

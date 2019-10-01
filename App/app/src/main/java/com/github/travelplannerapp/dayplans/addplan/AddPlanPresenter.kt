@@ -17,13 +17,13 @@ class AddPlanPresenter(private val travelId: Int, view: AddPlanContract.View) : 
 
     private val compositeDisposable = CompositeDisposable()
 
-    private lateinit var placeId: String
+    private lateinit var placeHereId: String
     private lateinit var href: String
 
 
     override fun addPlan(data: AddPlanContract.NewPlanData) {
         if (isPlanDataValid(data)) {
-            val place = Place(placeId, data.name, data.location, arrayOf(data.coordinates.lattitude, data.coordinates.longitude),
+            val place = Place(placeHereId, data.name, data.location, arrayOf(data.coordinates.lattitude, data.coordinates.longitude),
                     ObjectCategory("", data.category.categoryName), href)
 
             val plan = Plan(-1,
@@ -31,10 +31,9 @@ class AddPlanPresenter(private val travelId: Int, view: AddPlanContract.View) : 
                     DateTimeUtils.stringToDateTime(data.fromDate, data.fromTime).timeInMillis,
                     DateTimeUtils.stringToDateTime(data.toDate, data.toTime).timeInMillis,
                     -1,
-                    travelId,
                     place)
 
-            compositeDisposable.add(CommunicationService.serverApi.addPlan(plan)
+            compositeDisposable.add(CommunicationService.serverApi.addPlan(travelId, plan)
                     .observeOn(SchedulerProvider.ui())
                     .subscribeOn(SchedulerProvider.io())
                     .map { if (it.responseCode == ResponseCode.OK) it.data!! else throw ApiException(it.responseCode) }
@@ -46,7 +45,7 @@ class AddPlanPresenter(private val travelId: Int, view: AddPlanContract.View) : 
     }
 
     override fun savePlaceInfo(placeId: String, href: String) {
-        this.placeId = placeId
+        this.placeHereId = placeId
         this.href = href
     }
 
