@@ -22,7 +22,7 @@ class SignInPresenter(view: SignInContract.View) : BasePresenter<SignInContract.
     }
 
     override fun signIn(email: String, password: String) {
-        val hashedPassword = PasswordUtils().hashPassword(password)
+        val hashedPassword = PasswordUtils.hashPassword(password)
         if (hashedPassword == null) {
             view.showSnackbar(R.string.try_again)
         } else {
