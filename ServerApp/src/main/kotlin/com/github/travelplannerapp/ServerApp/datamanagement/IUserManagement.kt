@@ -7,6 +7,8 @@ interface IUserManagement {
 
     fun getUserId(token: String): Int
 
+    fun getUsersEmails():MutableList<String>
+  
     fun verifyUser(token: String)
 
     fun authenticateUser(request: SignInRequest): Int
@@ -16,4 +18,8 @@ interface IUserManagement {
     fun addUser(request: SignUpRequest)
 
     fun updateUser(id: Int, changes: MutableMap<String, Any?>)
+
+    fun addFriend(userId: Int, userEmail: String): Boolean
+
+    fun deleteFriend(userId:Int,userEmail:String):Boolean
 }

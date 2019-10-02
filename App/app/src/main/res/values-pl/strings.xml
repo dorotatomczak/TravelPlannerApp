@@ -21,9 +21,9 @@
     <string name="scanner_initialization_error">Inicjalizacja skanera nie powiodła się</string>
     <string name="scanner_permissions_error">Musisz przyznać uprawnienia do kamery i pamięci masowej</string>
     <string name="scan_upload_error">Coś poszło nie tak podczas przesyłania skanu</string>
-    <string name="save">Zapisz</string>
-    <string name="cancel">Anuluj</string>
-    <string name="try_again" >Spróbuj ponownie</string>
+    <string name="save">zapisz</string>
+    <string name="cancel">anuluj</string>
+    <string name="try_again">Spróbuj ponownie</string>
     <string name="sign_up_successful">Twoje konto zostało utworzone</string>
     <string name="sign_up_email_error">Konto już istnieje</string>
     <string name="sign_in_error">Błędny email lub hasło</string>
@@ -40,6 +40,10 @@
     <string name="menu_delete">Usuń</string>
     <string name="menu_edit">Edytuj</string>
     <string name="no_day_plans">Nie masz żadnego planu dnia w tej podróży</string>
+    <string name="restaurant">Restauracja</string>
+    <string name="museum">Muzeum</string>
+    <string name="monument">Zabytek</string>
+    <string name="error">Błąd, proszę spróbować ponownie</string>
     <string name="search">Szukaj</string>
     <string name="category">Kategoria</string>
     <string name="from_date">Od dnia</string>
@@ -82,4 +86,16 @@
     <string name="outdoor">Outdoor</string>
     <string name="natural_geographical">Natura</string>
     <string name="snacks_fast_food">Fast food</string>
+    <string name="travels">podróże</string>
+    <string name="search_friend">Wyszukaj znajomego</string>
+    <string name="user_friends">Moi znajomi</string>
+    <string name="confirm_friend">Potwierdź znajomość</string>
+    <string name="friend_added">Znajomy został dodany</string>
+    <string name="friend_deleted">Znajomy został usunięty</string>
+    <string name="friend">znajomego</string>
+    <string name="user">użytkownika</string>
+    <string name="add_one_confirmation">Czy na pewno chcesz dodać wybranego %1$s?</string>
+    <string name="add_entry">Dodaj %1$s</string>
+    <string name="delete_one_confirmation">Czy na pewno chcesz usunąć wybranego %1$s?</string>
+    <string name="delete_one_entry">Usuń %1$s</string>
 </resources>
