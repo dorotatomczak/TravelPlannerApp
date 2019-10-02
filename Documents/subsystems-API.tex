@@ -1,0 +1,175 @@
+\documentclass[10pt,twoside,a4paper]{report}
+
+\usepackage{polski}
+\usepackage{geometry}
+\usepackage{indentfirst}
+\usepackage{sectsty}
+\usepackage{helvet}
+\usepackage{caption}
+\usepackage{multirow}
+\usepackage{makecell}
+\usepackage{array}
+\usepackage{subcaption}
+\usepackage{graphicx}
+
+\graphicspath{ {./images/} }
+
+\chapternumberfont{\Large}
+\chaptertitlefont{\huge}
+
+\usepackage[font={normalsize,it}]{caption}
+
+\linespread{1.5}
+\usepackage[table]{xcolor}
+\usepackage{fourier} 
+\renewcommand\theadalign{bc}
+\renewcommand\theadfont{\bfseries}
+
+\newgeometry{tmargin=3cm, bmargin=3cm, lmargin=2.5cm, rmargin=2.5cm}
+
+\begin{document}
+
+\paragraph{Podsystem zarządzania danymi użytkowników}
+\begin{itemize}
+\item AddAccount()
+\item DeleteAccount()
+\item UpdateAccount()
+\item AuthenticateUser()
+\item FindUser(Name)
+\item ClearAccountHistory() - bilety, podróże i oceny
+
+\item AddObjectToFavourites()
+\item AddVisitedObject(Category, Rating) - nie wiem, czy to nie będzie w polecającym.
+Można by stąd wziąć tylko informacje i niech reszta się dzieje w polecającym.
+\item ClearRatingsHistory()
+
+\item AddTicket(Image, Data)
+\item UpdateTicket()
+\item GetTicket(Key)
+\item GetTickets()
+\item DeleteTicket(Key)
+\item ClearTickets()
+
+\item AddTravel()
+\item UpdateTravel()
+\item GetTravel(Key)
+\item GetTravels()
+\item DeleteTravel(Key)
+\item ClearTravels()
+
+\item AddFriend()
+\item DeleteFriend()
+\item GetFriends()
+\item FindFriend(Key)
+\end{itemize}
+
+\paragraph{Podsystem usług społecznościowych}
+\begin{itemize}
+\item InviteNewUser(Mail)
+\item InviteFriend()
+\item DeleteFriend()
+\item SendMessage(User, Text/Image)
+
+\item ShareTravel(Mode) - jak w google docs można zaprosić do wyświetlania lub edycji
+\item SharePlace() - pokaż znajomemu nowe, ciekawe miejsce
+\item ShareOnFacebook/Instagram() - priorytet: niski
+\end{itemize}
+
+\paragraph{Podsystem wyszukiwania}
+\begin{itemize}
+\item FindRoutes()
+\item FindTouristObject(Category)
+\end{itemize}
+
+\paragraph{Podsystem planowania dnia}
+\begin{itemize}
+\item addElement()
+\item deleteElement()
+\item editElement()
+\item loadDayPlan()
+\item generateDayPlan()
+\item deleteDayPlan()
+\item addTravel() -nwm czy to tez bo nazwa sugeruje inaczej ale gdzie indziej jak nie tu
+\item deleteTravel() - same
+\item editTravel() - same
+\end{itemize}
+
+\paragraph{Podsystem skanowania biletów}
+\begin{itemize}
+\item takeScan()- cos jeszcze? ;p 
+\end{itemize}
+
+
+\paragraph{GUI}
+\begin{itemize}
+\item funkcje nasłuchujące akcji użytkownika, zaktualizuj tekst tu zmien kolor tam, itp.
+\end{itemize}
+
+\paragraph{Presenter}
+rozdzielanie pracy na podsystemy, wywołuje funkcje z innych zależnych podsystemów
+\begin{itemize}
+\item UpdateLocalData()
+\item UpdateRemoteData()
+\item ManageScanning()
+\end{itemize}
+
+\paragraph{Podsystem zarządzania plikami}
+\begin{itemize}
+\item WriteUserData/ReadUserData
+\begin{itemize}
+\item WriteFriendsList()
+\item ReadFriendsList()
+\item WriteVisitedPlaces() - z ocenami
+\item ReadVisitedPlaces()
+\item WriteUserInfo() - login, e-mail, itp.
+\item ReadUserInfo()
+\end{itemize}
+\item WriteTravelPlan()
+\item ReadTravelPlan()
+\item WriteDayPlan()
+\item ReadDayPlan()
+\end{itemize}
+
+\paragraph{Podsystem kontaktu serwera z aplikacją}
+\begin{itemize}
+\item InitializeConnection()
+\item Disconnect()
+\item SendUserData()
+\item SendTravelData()
+\item SendDayPrograme()
+\item SendLocalization()
+\item UpdateChanges() – nie wiem czy nie za ogólnie
+\item ChargeTravel() – jak nie będziemy mieć połączenia z Internetem
+\item SendPreferences()-może być w SendUserData ? 
+
+\end{itemize}
+
+\paragraph{Podsystem kontaktu z serwerem}
+\begin{itemize}
+\item InitializeConnection()
+\item Disconnect()
+\item LoadDataFromGoogle()
+\item LoadDataFromHere()
+\item UpdateUserData()
+\item UpdateTravelData()
+\item UpdateDayProgram()
+\item SendMaps()
+\item SetUserData() – dane osobowe mail, imie,nazwisko,numer telefonu,znajomi itp
+\item SetTravelData()
+\item SetDayPrograme()
+\item SetLocalization()
+
+\end{itemize}
+
+\paragraph{Podsystem polecający}
+\begin{itemize}
+\item ChargeMarksFromGoogle() – czy to  może jest w  LoadDataFromGoogle()
+\item DetermineHierarchyOfPreferences() –na jakich typach atrakcji najbardziej użytkownikowi zależy
+\item FindPreferencesInGoogle() – jeśli użytkownik jeszcze nie ma preferencji to wybieray te najbardziej polecane z Google
+\item FindUserPreferences() – jeśli użytkownik ma preferencje to znajdujemy miejsca, które najbardziej mu odpowiadają
+\item SetPreferences(Location) – użytkownik ocenia daną lokację jednocześnie ustawiając preferencję ( podnosi w hierarchii dane kategorie – słowa klucze np. muzeum)
+\item FindBestEquivalent()- znajduje jak najbardziej zbliżoną kategoriami do danej atrakcji lokalizację – takie coś jak zobacz też, inni którzy tam byli ocenili wysoko także takie miejsca
+
+\end{itemize}
+
+\end{document}

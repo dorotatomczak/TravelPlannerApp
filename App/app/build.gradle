@@ -1,0 +1,90 @@
+apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-kapt'
+apply plugin: 'kotlin-android-extensions'
+
+androidExtensions {
+    experimental = true
+}
+
+android {
+    compileSdkVersion 29
+    defaultConfig {
+        applicationId "com.github.travelplannerapp"
+        minSdkVersion rootProject.ext.minSdkVersion
+        targetSdkVersion rootProject.ext.targetSdkVersion
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    packagingOptions {
+        exclude 'META-INF/library-core_release.kotlin_module'
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$rootProject.kotlinVersion"
+    implementation "androidx.appcompat:appcompat:$rootProject.appcompatVersion"
+
+    // UI
+    implementation "androidx.constraintlayout:constraintlayout:$rootProject.constraintlayoutVersion"
+    implementation "com.google.android.material:material:$rootProject.materialVersion"
+    implementation "androidx.recyclerview:recyclerview:$rootProject.recyclerviewVersion"
+    implementation "androidx.cardview:cardview:$rootProject.cardviewVersion"
+    implementation "com.mikepenz:materialdrawer:$rootProject.materialdrawerVersion"
+    implementation "androidx.swiperefreshlayout:swiperefreshlayout:$rootProject.swiperefreshlayoutVersion"
+    implementation "com.sothree.slidinguppanel:library:$rootProject.slidinguppanelVersion"
+
+    // Dagger dependencies
+    implementation "com.google.dagger:dagger:$rootProject.daggerVersion"
+    implementation "com.google.dagger:dagger-android:$rootProject.daggerVersion"
+    implementation "com.google.dagger:dagger-android-support:$rootProject.daggerVersion"
+    kapt "com.google.dagger:dagger-compiler:$rootProject.daggerVersion"
+    kapt "com.google.dagger:dagger-android-processor:$rootProject.daggerVersion"
+
+    // Scanner
+    implementation project(':opencv')
+    implementation "androidx.exifinterface:exifinterface:$rootProject.exifinterfaceVersion"
+    implementation "com.github.bumptech.glide:glide:$rootProject.glideVersion"
+    annotationProcessor "com.github.bumptech.glide:compiler:$rootProject.glideVersion"
+
+    // Testing
+    testImplementation "junit:junit:$rootProject.junitVersion"
+    androidTestImplementation "androidx.test:runner:$rootProject.runnerVersion"
+    androidTestImplementation "androidx.annotation:annotation:$rootProject.annotationVersion"
+
+    // JSON and http requests dependencies
+    implementation "com.squareup.retrofit2:retrofit:$rootProject.retrofitVersion"
+    implementation "com.squareup.retrofit2:converter-gson:$rootProject.gsonVersion"
+    implementation "io.reactivex.rxjava2:rxandroid:$rootProject.rxAndroidVersion"
+    implementation "com.squareup.retrofit2:adapter-rxjava2:$rootProject.rxJava2Version"
+    implementation(name:'HERE-sdk', ext:'aar')
+
+    // Database dependencies
+    implementation "androidx.room:room-runtime:$rootProject.roomVersion"
+    annotationProcessor "androidx.room:room-compiler:$rootProject.roomVersion"
+
+    // Authentication and security
+    implementation "com.squareup.retrofit2:converter-scalars:$rootProject.converter_scalarsVersion"
+    implementation "com.squareup.okhttp3:okhttp:$rootProject.okhttp3Version"
+}
+repositories {
+    mavenCentral()
+    flatDir {
+        dirs 'libs'
+    }
+}

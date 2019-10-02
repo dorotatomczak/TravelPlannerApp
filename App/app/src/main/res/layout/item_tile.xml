@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    card_view:cardUseCompatPadding="true"
+    android:id="@+id/cardViewItemTile">
+
+    <LinearLayout
+        android:id="@+id/linearLayoutItemTile"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:background="@color/neonCarrot">
+
+        <ImageView
+            android:id="@+id/imageViewItemTile"
+            android:layout_width="@dimen/image_size_tile"
+            android:layout_height="@dimen/image_size_tile"
+            android:src="@drawable/ic_place"
+            android:contentDescription="@string/day_plans" />
+
+        <TextView
+            android:id="@+id/textViewItemTileName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/day_plans"
+            android:textAlignment="center"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_size_tile" />
+
+    </LinearLayout>
+
+</androidx.cardview.widget.CardView>

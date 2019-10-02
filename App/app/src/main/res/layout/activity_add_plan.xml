@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/coordinatorLayoutAddPlan"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    android:orientation="horizontal"
+    tools:context=".dayplans.addplan.AddPlanActivity">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/AppTheme.AppBarOverlay">
+
+        <include layout="@layout/toolbar" />
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_margin="16dp"
+        app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/category"
+            android:textColor="?android:textColorHint"
+            android:paddingLeft="4dp"
+            android:paddingRight="4dp"
+            android:textSize="12sp"/>
+
+        <Spinner
+            android:id="@+id/dropdownCategoriesAddPlan"
+            style="@style/Widget.AppCompat.Spinner.Underlined"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="0dp"
+            android:entries="@array/place_categories"
+            android:paddingTop="8dp"
+            android:spinnerMode="dialog" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_vertical">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/editTextPlanName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/name"
+                android:inputType="none"
+                android:focusable="false"
+                android:drawableEnd="@drawable/ic_search"
+                android:drawableTint="?android:textColorHint"/>
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="@dimen/margin_vertical">
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="3"
+                android:layout_marginEnd="@dimen/margin_horizontal">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/editTextPlanFromDate"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/from_date"
+                    android:drawableEnd="@drawable/ic_arrow_drop_down"
+                    android:inputType="none"
+                    android:focusable="false"
+                    android:drawableTint="?android:textColorHint"/>
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="2">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/editTextPlanFromTime"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/from_time"
+                    android:drawableEnd="@drawable/ic_arrow_drop_down"
+                    android:inputType="none"
+                    android:focusable="false"
+                    android:drawableTint="?android:textColorHint"/>
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="@dimen/margin_vertical">
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="3"
+                android:layout_marginEnd="@dimen/margin_horizontal">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/editTextPlanToDate"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/to_date"
+                    android:drawableEnd="@drawable/ic_arrow_drop_down"
+                    android:inputType="none"
+                    android:focusable="false"
+                    android:drawableTint="?android:textColorHint"/>
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="2">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/editTextPlanToTime"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/to_time"
+                    android:drawableEnd="@drawable/ic_arrow_drop_down"
+                    android:inputType="none"
+                    android:focusable="false"
+                    android:drawableTint="?android:textColorHint"/>
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+        </LinearLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/inputLayoutPlanLocation"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_vertical"
+            android:visibility="gone">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/editTextPlanLocation"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/location"
+                android:inputType="none"
+                android:focusable="false"/>
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+    </LinearLayout>
+
+    <include layout="@layout/fab_check" />
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
