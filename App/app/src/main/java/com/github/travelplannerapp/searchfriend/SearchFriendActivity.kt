@@ -19,6 +19,7 @@ import io.reactivex.disposables.CompositeDisposable
 import kotlinx.android.synthetic.main.toolbar.*
 import java.util.*
 import kotlin.collections.ArrayList
+import com.github.travelplannerapp.utils.SharedPreferencesUtils
 
 class SearchFriendActivity : AppCompatActivity(), SearchView.OnQueryTextListener {
 
@@ -125,7 +126,7 @@ class SearchFriendActivity : AppCompatActivity(), SearchView.OnQueryTextListener
     }
 
     private fun addFriend(email: String) {
-        compositeDisposable.add(CommunicationService.serverApi.addFriend(email)
+        compositeDisposable.add(CommunicationService.serverApi.addFriend(SharedPreferencesUtils.getUserId(),email)
                 .observeOn(SchedulerProvider.ui())
                 .subscribeOn(SchedulerProvider.io())
                 .map { if (it.responseCode == ResponseCode.OK) it.data!! else throw ApiException(it.responseCode) }

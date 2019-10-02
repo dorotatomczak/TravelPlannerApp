@@ -75,18 +75,16 @@ interface ServerApi {
 
     @GET("/here-management/objects/{objectId}/contacts")
     fun getContacts(@Path("objectId") objectId: String, @Query("query") query: String): Single<Response<Contacts>>
-    @GET("/scans")
-    fun getScans(@Query("travelId") travelId: Int): Single<Response<List<Scan>>>
 
-    @GET("/getusersemails")
+    @GET("/user-management/getusersemails")
     fun getUsersEmails(): Single<Response<MutableList<String>>>
 
-    @GET("/getuserfriends")
-    fun getUserFriends(): Observable<Response<List<String>>>
+    @GET("users/{userId}/friends")
+    fun getFriends(@Path("userId") userId: Int): Observable<Response<List<String>>>
 
-    @POST("/addfriend")
-    fun addFriend(@Body friendEmail: String): Single<Response<Boolean>>
+    @POST("/users/{userId}/friends")
+    fun addFriend(@Path("userId") userId: Int, @Body friendEmail: String): Single<Response<Boolean>>
 
-    @POST("/deletefriend")
-    fun deleteFriend(@Body friendEmail: String): Single<Response<Boolean>>
+//    @POST("/deletefriend")
+//    fun deleteFriend(@Body friendEmail: String): Single<Response<Boolean>>
 }

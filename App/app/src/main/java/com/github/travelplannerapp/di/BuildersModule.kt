@@ -35,7 +35,6 @@ import com.github.travelplannerapp.traveldetails.TravelDetailsActivity
 import com.github.travelplannerapp.traveldetails.TravelDetailsModule
 import com.github.travelplannerapp.traveldetails.TravelDetailsViewModel
 import com.github.travelplannerapp.travels.TravelsActivity
-import com.github.travelplannerapp.searchfriend.SearchFriendActivity
 import com.github.travelplannerapp.travels.TravelsModule
 import com.github.travelplannerapp.travels.TravelsViewModel
 
@@ -69,20 +68,6 @@ abstract class BuildersModule {
     @ContributesAndroidInjector(modules = [SignUpViewModel::class, SignUpModule::class])
     internal abstract fun bindSignUpActivity(): SignUpActivity
 
-//    @ContributesAndroidInjector(modules = [SearchFriendViewModel::class, SearchFriendModule::class])
-//    internal abstract fun bindSearchFriendActivity(): SearchFriendActivity
-
-    @ContributesAndroidInjector(modules = [TravelsViewModel::class, TravelsModule::class])
-    internal abstract fun bindTravelsActivity(): TravelsActivity
-
-    @ContributesAndroidInjector(modules = [TravelDetailsViewModel::class, TravelDetailsModule::class])
-    internal abstract fun bindTravelDetailsActivity(): TravelDetailsActivity
-
-    @ContributesAndroidInjector(modules = [DayPlansViewModel::class, DayPlansModule::class])
-    internal abstract fun bindDayPlansActivity(): DayPlansActivity
-
-    @ContributesAndroidInjector(modules = [AddPlanViewModel::class, AddPlanModule::class])
-    internal abstract fun bindAddPlanActivity(): AddPlanActivity
 
     @ContributesAndroidInjector(modules = [ScannerViewModel::class, ScannerModule::class])
     internal abstract fun bindScannerActivity(): ScannerActivity

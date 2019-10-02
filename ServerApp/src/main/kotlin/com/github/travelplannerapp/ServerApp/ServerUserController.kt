@@ -1,12 +1,13 @@
 package com.github.travelplannerapp.ServerApp
 
 import com.github.travelplannerapp.ServerApp.datamanagement.UserManagement
-import com.github.travelplannerapp.ServerApp.db.repositories.UserRepository
 import com.github.travelplannerapp.ServerApp.exceptions.ResponseCode
 import com.github.travelplannerapp.ServerApp.datamodels.Response
 import com.github.travelplannerapp.ServerApp.datamodels.SignInRequest
 import com.github.travelplannerapp.ServerApp.datamodels.SignInResponse
 import com.github.travelplannerapp.ServerApp.datamodels.SignUpRequest
+import com.github.travelplannerapp.ServerApp.db.dao.UserFriend
+import com.github.travelplannerapp.ServerApp.db.repositories.UserRepository
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.web.bind.annotation.*
 
@@ -44,27 +45,35 @@ class ServerUserController {
         return Response(ResponseCode.OK, emails)
     }
 
-    @GetMapping("user-management/getuserfriends")
-    fun getUserFriends(@RequestHeader("authorization") token: String): Response<List<String>> {
+
+    @GetMapping("users/{userId}/friends")
+    fun getFriends(
+            @RequestHeader("authorization") token: String,
+            @PathVariable userId: Int
+    ): Response<List<String>> {
         userManagement.verifyUser(token)
-        val userId = userManagement.getUserId(token)
         val friends = userRepository.getAllFriendsByUserId(userId)
         return Response(ResponseCode.OK, friends)
     }
 
-    @PostMapping("user-management/addfriend")
-    fun addFriend(@RequestHeader("authorization") token: String,
-                  @RequestBody friendEmail: String): Response<Boolean> {
-        val userId = userManagement.getUserId(token)
-        val result = userManagement.addFriend(userId, friendEmail)
-        return Response(ResponseCode.OK, result)
+    @PostMapping("users/{userId}/friends")
+    fun addFriend(
+            @RequestHeader("authorization") token: String,
+            @PathVariable userId: Int,
+            @RequestBody friendEmail: String
+    ): Response<Boolean> {
+        userManagement.verifyUser(token)
+        val newTravel = userManagement.addFriend(userId, friendEmail)
+        return Response(ResponseCode.OK, newTravel)
     }
-
-    @PostMapping("user-management/deletefriend")
-    fun deleteFriend(@RequestHeader("authorization") token: String,
-                     @RequestBody friendEmail: String): Response<Boolean> {
-        val userId = userManagement.getUserId(token)
-        val result = userManagement.deleteFriend(userId, friendEmail)
-        return Response(ResponseCode.OK, result)
-    }
+//    @DeleteMapping("users/{userId}/friends")
+//    fun deleteFriends(
+//            @RequestHeader("authorization") token: String,
+//            @PathVariable userId: Int,
+//            @RequestBody friendsIds: MutableSet<Int>
+//    ): Response<Unit> {
+//        userManagement.verifyUser(token)
+//        userManagement.deleteFriends(userId, friendIds)
+//        return Response(ResponseCode.OK, Unit)
+//    }
 }

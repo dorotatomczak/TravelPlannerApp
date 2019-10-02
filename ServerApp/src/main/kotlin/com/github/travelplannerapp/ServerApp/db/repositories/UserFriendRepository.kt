@@ -8,6 +8,7 @@ import java.sql.ResultSet
 
 @Component
 class UserFriendRepository : Repository<UserFriend>(), IUserFriendRepository {
+
     companion object {
         const val tableName = "app_user_friend"
         const val columnId = "id"

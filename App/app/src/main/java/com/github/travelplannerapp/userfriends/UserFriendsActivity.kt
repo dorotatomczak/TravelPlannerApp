@@ -12,6 +12,7 @@ import com.github.travelplannerapp.communication.CommunicationService
 import com.github.travelplannerapp.communication.model.ResponseCode
 import com.github.travelplannerapp.utils.DrawerUtils
 import com.github.travelplannerapp.utils.SchedulerProvider
+import com.github.travelplannerapp.utils.SharedPreferencesUtils
 import com.google.android.material.snackbar.Snackbar
 import io.reactivex.disposables.CompositeDisposable
 import kotlinx.android.synthetic.main.toolbar.*
@@ -55,7 +56,7 @@ class UserFriendsActivity : AppCompatActivity() {
     }
 
     private fun loadFriends() {
-        compositeDisposable.add(CommunicationService.serverApi.getUserFriends()
+        compositeDisposable.add(CommunicationService.serverApi.getFriends(SharedPreferencesUtils.getUserId())
                 .observeOn(SchedulerProvider.ui())
                 .subscribeOn(SchedulerProvider.io())
                 .map {
@@ -81,14 +82,14 @@ class UserFriendsActivity : AppCompatActivity() {
     }
 
     private fun deleteFriendByEmail(email: String) {
-        compositeDisposable.add(CommunicationService.serverApi.deleteFriend(email)
-                .observeOn(SchedulerProvider.ui())
-                .subscribeOn(SchedulerProvider.io())
-                .map { if (it.responseCode == ResponseCode.OK) it.data!! else throw ApiException(it.responseCode) }
-                .subscribe(
-                        { isTrue -> handleDeleteFriendResponse() },
-                        { error -> handleErrorResponse(error) }
-                ))
+//        compositeDisposable.add(CommunicationService.serverApi.deleteFriend(email)
+//                .observeOn(SchedulerProvider.ui())
+//                .subscribeOn(SchedulerProvider.io())
+//                .map { if (it.responseCode == ResponseCode.OK) it.data!! else throw ApiException(it.responseCode) }
+//                .subscribe(
+//                        { isTrue -> handleDeleteFriendResponse() },
+//                        { error -> handleErrorResponse(error) }
+//                ))
     }
 
     private fun handleDeleteFriendResponse() {
