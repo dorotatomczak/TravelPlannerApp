@@ -6,6 +6,7 @@ interface DayPlansContract {
     interface View {
         fun showDayPlans()
         fun showNoDayPlans()
+        fun showAddPlan(travelId: Int)
         fun onDataSetChanged()
         fun hideLoadingIndicator()
         fun showSnackbar(messageCode: Int)
@@ -35,6 +36,7 @@ interface DayPlansContract {
     }
 
     interface Presenter {
+        fun onAddPlanClicked()
         fun onPlanAdded(plan: Plan)
         fun unsubscribe()
         fun loadDayPlans()
@@ -42,6 +44,5 @@ interface DayPlansContract {
         fun getPlanItemType(position: Int): Int
         fun onBindPlanItemAtPosition(position: Int, itemView: PlanElementItemView)
         fun onBindPlanItemAtPosition(position: Int, itemView: PlanDateSeparatorItemView)
-        fun getTravelId(): Int
     }
 }

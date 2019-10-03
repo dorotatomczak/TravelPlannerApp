@@ -76,9 +76,9 @@ interface ServerApi {
     @GET("/here-management/objects/{objectId}/contacts")
     fun getContacts(@Path("objectId") objectId: String, @Query("query") query: String): Single<Response<Contacts>>
 
-    @GET("/travels/{travelId}/plans")
-    fun getPlans(@Path("travelId") travelId: Int): Single<Response<List<Plan>>>
+    @GET("/users/{userId}/travels/{travelId}/plans")
+    fun getPlans(@Path("userId") userId: Int, @Path("travelId") travelId: Int): Single<Response<List<Plan>>>
 
-    @POST("/travels/{travelId}/plans")
-    fun addPlan(@Path("travelId") travelId: Int, @Body plan: Plan): Single<Response<Plan>>
+    @POST("/users/{userId}/travels/{travelId}/plans")
+    fun addPlan(@Path("userId") userId: Int, @Path("travelId") travelId: Int, @Body plan: Plan): Single<Response<Plan>>
 }

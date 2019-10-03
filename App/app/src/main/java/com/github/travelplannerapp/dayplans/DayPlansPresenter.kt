@@ -9,6 +9,7 @@ import com.github.travelplannerapp.communication.model.Plan
 import com.github.travelplannerapp.communication.model.ResponseCode
 import com.github.travelplannerapp.utils.DateTimeUtils
 import com.github.travelplannerapp.utils.SchedulerProvider
+import com.github.travelplannerapp.utils.SharedPreferencesUtils
 import io.reactivex.disposables.CompositeDisposable
 import java.util.*
 import kotlin.collections.ArrayList
@@ -20,6 +21,10 @@ class DayPlansPresenter(private val travelId: Int, view: DayPlansContract.View) 
 
     private var planItems = ArrayList<DayPlansContract.DayPlanItem>()
     private val plans = ArrayList<Plan>()
+
+    override fun onAddPlanClicked() {
+        view.showAddPlan(travelId)
+    }
 
     override fun onPlanAdded(plan: Plan) {
         plans.add(plan)
@@ -34,7 +39,7 @@ class DayPlansPresenter(private val travelId: Int, view: DayPlansContract.View) 
     }
 
     override fun loadDayPlans() {
-        compositeDisposable.add(CommunicationService.serverApi.getPlans(travelId)
+        compositeDisposable.add(CommunicationService.serverApi.getPlans(SharedPreferencesUtils.getUserId(), travelId)
                 .observeOn(SchedulerProvider.ui())
                 .subscribeOn(SchedulerProvider.io())
                 .map { if (it.responseCode == ResponseCode.OK) it.data!! else throw ApiException(it.responseCode) }
@@ -63,10 +68,7 @@ class DayPlansPresenter(private val travelId: Int, view: DayPlansContract.View) 
 
         val fromDateTime = Calendar.getInstance()
         fromDateTime.timeInMillis = plan.fromDateTimeMs
-        var categoryIcon: Int = PlaceCategory.EAT_DRINK.categoryIcon
-        PlaceCategory.values().map {
-            cat -> if(cat.categoryName == plan.place.category.title) categoryIcon = cat.categoryIcon
-        }
+        val categoryIcon = PlaceCategory.values()[plan.place.categoryNumber].categoryIcon
 
         itemView.setName(plan.place.title)
         itemView.setFromTime(DateTimeUtils.timeToString(fromDateTime))
@@ -79,10 +81,6 @@ class DayPlansPresenter(private val travelId: Int, view: DayPlansContract.View) 
         val date = dateSeparatorItem.date
 
         itemView.setDate(date)
-    }
-
-    override fun getTravelId(): Int {
-        return travelId
     }
 
     private fun plansToDayPlanItems(plans: List<Plan>) {

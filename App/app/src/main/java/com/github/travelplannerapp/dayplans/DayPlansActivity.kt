@@ -37,7 +37,7 @@ class DayPlansActivity : AppCompatActivity(), DayPlansContract.View {
         supportActionBar?.setHomeButtonEnabled(true)
         DrawerUtils.getDrawer(this, toolbar)
 
-        fabAdd.setOnClickListener { showAddPlan() }
+        fabAdd.setOnClickListener { presenter.onAddPlanClicked() }
 
         swipeRefreshLayoutDayPlans.setOnRefreshListener { refreshDayPlans() }
 
@@ -72,6 +72,12 @@ class DayPlansActivity : AppCompatActivity(), DayPlansContract.View {
         recyclerViewDayPlans.visibility = View.GONE
     }
 
+    override fun showAddPlan(travelId: Int) {
+        val intent = Intent(this, AddPlanActivity::class.java)
+        intent.putExtra(AddPlanActivity.EXTRA_TRAVEL_ID, travelId)
+        startActivityForResult(intent, AddPlanActivity.REQUEST_ADD_PLAN)
+    }
+
     override fun onDataSetChanged() {
         recyclerViewDayPlans.adapter?.notifyDataSetChanged()
     }
@@ -87,11 +93,5 @@ class DayPlansActivity : AppCompatActivity(), DayPlansContract.View {
     private fun refreshDayPlans() {
         swipeRefreshLayoutDayPlans.isRefreshing = true
         presenter.loadDayPlans()
-    }
-
-    private fun showAddPlan() {
-        val intent = Intent(this, AddPlanActivity::class.java)
-        intent.putExtra(AddPlanActivity.EXTRA_TRAVEL_ID, presenter.getTravelId())
-        startActivityForResult(intent, AddPlanActivity.REQUEST_ADD_PLAN)
     }
 }

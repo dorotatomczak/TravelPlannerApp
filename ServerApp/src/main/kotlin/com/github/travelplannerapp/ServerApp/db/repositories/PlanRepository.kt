@@ -1,12 +1,8 @@
 package com.github.travelplannerapp.ServerApp.db.repositories
 
-import com.github.travelplannerapp.ServerApp.datamodels.ObjectCategory
-import com.github.travelplannerapp.ServerApp.datamodels.Place
-import com.github.travelplannerapp.ServerApp.datamodels.Plan
 import com.github.travelplannerapp.ServerApp.db.DbConnection
 import com.github.travelplannerapp.ServerApp.db.dao.PlaceDao
 import com.github.travelplannerapp.ServerApp.db.dao.PlanDao
-import com.github.travelplannerapp.ServerApp.db.repositories.PlaceRepository.Companion.tableName
 import org.springframework.stereotype.Component
 import java.sql.PreparedStatement
 import java.sql.ResultSet
@@ -33,8 +29,8 @@ class PlanRepository : Repository<PlanDao>(), IPlanRepository {
             "WHERE $columnId=?"
     override val nextIdStatement = "SELECT nextval(pg_get_serial_sequence('$tableName', '$columnId')) AS new_id"
 
-    override fun getPlansByTravelId(travelId: Int): List<Plan> {
-        val plans = mutableListOf<Plan>()
+    override fun getPlansByTravelId(travelId: Int): List<Pair<PlanDao,PlaceDao>> {
+        val plansDaoPlaceDao = mutableListOf<Pair<PlanDao,PlaceDao>>()
         val statement = DbConnection
                 .conn
                 .prepareStatement(
@@ -46,27 +42,12 @@ class PlanRepository : Repository<PlanDao>(), IPlanRepository {
         statement.setInt(1, travelId)
         val result = statement.executeQuery()
         while (result.next()) {
-            val planDao= PlanDao(result)
+            val planDao = PlanDao(result)
             val placeDao = PlaceDao(result)
             placeDao.id = result.getInt("place_id")
-
-            val place = Place(
-                    placeDao.hereId!!,
-                    placeDao.title!!,
-                    placeDao.vicinity!!,
-                    emptyArray<Double>(),
-                    ObjectCategory("", placeDao.category!!),
-                    placeDao.href!!)
-            val plan = Plan(planDao.id!!,
-                    planDao.locale!!,
-                    planDao.fromDateTime!!.time,
-                    planDao.toDateTime!!.time,
-                    planDao.placeId!!,
-                    place)
-
-            plans.add(plan)
+            plansDaoPlaceDao.add(Pair(planDao,placeDao))
         }
-        return plans
+        return plansDaoPlaceDao
     }
 
     override fun T(result: ResultSet): PlanDao? {

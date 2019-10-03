@@ -18,6 +18,6 @@ interface AddPlanContract {
 
     interface Presenter {
         fun addPlan(data: NewPlanData)
-        fun savePlaceInfo(placeId: String, href: String)
+        fun onPlaceFound(placeId: String, href: String)
     }
 }

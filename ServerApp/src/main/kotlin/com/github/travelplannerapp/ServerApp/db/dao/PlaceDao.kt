@@ -10,7 +10,7 @@ class PlaceDao(map: MutableMap<String, Any?>) {
     var href: String? by defaultMap
     var title: String? by defaultMap
     var vicinity: String? by defaultMap
-    var category: String? by defaultMap
+    var category: Int? by defaultMap
 
     constructor(
             id: Int?,
@@ -18,7 +18,7 @@ class PlaceDao(map: MutableMap<String, Any?>) {
             href: String?,
             title: String?,
             vicinity: String?,
-            category: String?) :
+            category: Int?) :
             this(
                     mutableMapOf(
                             "id" to id,

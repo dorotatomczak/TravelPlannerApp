@@ -1,6 +1,5 @@
 package com.github.travelplannerapp.ServerApp.datamodels
 
-import com.github.travelplannerapp.ServerApp.db.dao.PlaceDao
 import java.io.Serializable
 
 // place has only some fields of original response, it can be more if needed
@@ -9,6 +8,7 @@ class Place(
         var title: String,
         var vicinity: String,
         var position: Array<Double>,
+        var categoryNumber: Int,
         var category: ObjectCategory,
         var href: String = "",
         var resultType: String = "",

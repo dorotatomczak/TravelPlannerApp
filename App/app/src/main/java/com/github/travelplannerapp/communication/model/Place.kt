@@ -7,6 +7,7 @@ class Place(
         var title: String,
         var vicinity: String,
         var position: Array<Double>,
+        var categoryNumber: Int,
         var category: ObjectCategory,
         var href: String = "",
         var categoryTitle: String = "",

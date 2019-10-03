@@ -48,7 +48,7 @@ class PlaceRepository : Repository<PlaceDao>(), IPlaceRepository {
         statement.setString(3, obj.href)
         statement.setString(4, obj.title)
         statement.setString(5, obj.vicinity)
-        statement.setString(6, obj.category)
+        statement.setInt(6, obj.category!!)
         return statement
     }
 
@@ -60,7 +60,7 @@ class PlaceRepository : Repository<PlaceDao>(), IPlaceRepository {
         statement.setString(2, obj.href)
         statement.setString(3, obj.title)
         statement.setString(4, obj.vicinity)
-        statement.setString(5, obj.category)
+        statement.setInt(5, obj.category!!)
         statement.setInt(6, obj.id!!)
         return statement
     }

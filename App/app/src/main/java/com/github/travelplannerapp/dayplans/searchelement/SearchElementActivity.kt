@@ -81,6 +81,7 @@ class SearchElementActivity : AppCompatActivity(), SearchElementContract.View {
         val resultIntent = Intent().apply {
             val place = presenter.getPlace(selectedMapMarker)
             if (place != null) {
+                // TODO [Magda] change to put Place if more extras added
                 putExtra(EXTRA_NAME, place.title)
                 putExtra(EXTRA_LOCATION, place.vicinity)
                 putExtra(EXTRA_PLACE_HERE_ID,  place.id)

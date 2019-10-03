@@ -32,7 +32,7 @@ create table place (
 	href text,
 	title text,
 	vicinity text,
-	category text
+	category integer
 );
 
 create table plan (

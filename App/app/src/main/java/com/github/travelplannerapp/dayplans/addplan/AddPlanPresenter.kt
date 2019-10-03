@@ -10,6 +10,7 @@ import com.github.travelplannerapp.communication.model.Plan
 import com.github.travelplannerapp.communication.model.ResponseCode
 import com.github.travelplannerapp.utils.DateTimeUtils
 import com.github.travelplannerapp.utils.SchedulerProvider
+import com.github.travelplannerapp.utils.SharedPreferencesUtils
 import io.reactivex.disposables.CompositeDisposable
 import java.util.*
 
@@ -24,7 +25,7 @@ class AddPlanPresenter(private val travelId: Int, view: AddPlanContract.View) : 
     override fun addPlan(data: AddPlanContract.NewPlanData) {
         if (isPlanDataValid(data)) {
             val place = Place(placeHereId, data.name, data.location, arrayOf(data.coordinates.lattitude, data.coordinates.longitude),
-                    ObjectCategory("", data.category.categoryName), href)
+                    data.category.ordinal, ObjectCategory(), href)
 
             val plan = Plan(-1,
                     Locale.getDefault().toString(),
@@ -33,7 +34,7 @@ class AddPlanPresenter(private val travelId: Int, view: AddPlanContract.View) : 
                     -1,
                     place)
 
-            compositeDisposable.add(CommunicationService.serverApi.addPlan(travelId, plan)
+            compositeDisposable.add(CommunicationService.serverApi.addPlan(SharedPreferencesUtils.getUserId(), travelId, plan)
                     .observeOn(SchedulerProvider.ui())
                     .subscribeOn(SchedulerProvider.io())
                     .map { if (it.responseCode == ResponseCode.OK) it.data!! else throw ApiException(it.responseCode) }
@@ -44,7 +45,7 @@ class AddPlanPresenter(private val travelId: Int, view: AddPlanContract.View) : 
         }
     }
 
-    override fun savePlaceInfo(placeId: String, href: String) {
+    override fun onPlaceFound(placeId: String, href: String) {
         this.placeHereId = placeId
         this.href = href
     }

@@ -2,10 +2,10 @@ package com.github.travelplannerapp.ServerApp
 
 import com.github.travelplannerapp.ServerApp.datamanagement.TravelManagement
 import com.github.travelplannerapp.ServerApp.datamanagement.UserManagement
+import com.github.travelplannerapp.ServerApp.datamodels.*
 import com.github.travelplannerapp.ServerApp.db.dao.Travel
 import com.github.travelplannerapp.ServerApp.db.repositories.TravelRepository
 import com.github.travelplannerapp.ServerApp.exceptions.ResponseCode
-import com.github.travelplannerapp.ServerApp.datamodels.*
 import com.github.travelplannerapp.ServerApp.exceptions.SearchNoItemsException
 import com.github.travelplannerapp.ServerApp.services.searchservice.SearchService
 import org.springframework.beans.factory.annotation.Autowired
@@ -64,6 +64,31 @@ class ServerTravelController {
         userManagement.verifyUser(token)
         travelManagement.deleteTravels(userId, travelIds)
         return Response(ResponseCode.OK, Unit)
+    }
+
+    @GetMapping("/users/{userId}/travels/{travelId}/plans")
+    fun getPlans(
+            @RequestHeader("authorization") token: String,
+            @PathVariable userId: Int,
+            @PathVariable travelId: Int
+    ): Response<List<Plan>> {
+        userManagement.verifyUser(token)
+
+        val plans = travelManagement.getPlans(travelId)
+        return Response(ResponseCode.OK, plans)
+    }
+
+    @PostMapping("/users/{userId}/travels/{travelId}/plans")
+    fun addPlan(
+            @RequestHeader("authorization") token: String,
+            @PathVariable userId: Int,
+            @PathVariable travelId: Int,
+            @RequestBody plan: Plan
+    ): Response<Plan> {
+        userManagement.verifyUser(token)
+
+        val addedPlan = travelManagement.addPlan(travelId, plan)
+        return Response(ResponseCode.OK, addedPlan)
     }
 
     @GetMapping("here-management/objects")

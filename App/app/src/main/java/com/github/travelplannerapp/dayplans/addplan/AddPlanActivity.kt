@@ -145,7 +145,7 @@ class AddPlanActivity : AppCompatActivity(), AddPlanContract.View {
                     val placeHereId = data.getStringExtra(SearchElementActivity.EXTRA_PLACE_HERE_ID)
                     val href = data.getStringExtra(SearchElementActivity.EXTRA_HREF)
 
-                    presenter.savePlaceInfo(placeHereId!!, href!!)
+                    presenter.onPlaceFound(placeHereId!!, href!!)
                     editTextPlanName.setText(name, TextView.BufferType.EDITABLE)
                     location?.let { showLocation(it) }
                 }

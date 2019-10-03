@@ -1,10 +1,10 @@
 package com.github.travelplannerapp.ServerApp.datamanagement
 
+import com.github.travelplannerapp.ServerApp.datamodels.ObjectCategory
+import com.github.travelplannerapp.ServerApp.datamodels.Place
 import com.github.travelplannerapp.ServerApp.datamodels.Plan
-import com.github.travelplannerapp.ServerApp.db.dao.PlanDao
 import com.github.travelplannerapp.ServerApp.db.dao.Travel
 import com.github.travelplannerapp.ServerApp.db.merge
-import com.github.travelplannerapp.ServerApp.db.repositories.PlaceRepository
 import com.github.travelplannerapp.ServerApp.db.repositories.PlanRepository
 import com.github.travelplannerapp.ServerApp.db.repositories.TravelRepository
 import com.github.travelplannerapp.ServerApp.db.transactions.PlanTransaction
@@ -22,9 +22,11 @@ class TravelManagement : ITravelManagement {
     @Autowired
     lateinit var travelTransaction: TravelTransaction
     @Autowired
+    lateinit var planTransaction: PlanTransaction
+    @Autowired
     lateinit var travelRepository: TravelRepository
     @Autowired
-    lateinit var planTransaction: PlanTransaction
+    lateinit var planRepository: PlanRepository
 
     override fun addTravel(userId: Int, travelName: String): Travel {
         val addedTravel = travelTransaction.addTravel(travelName, userId)
@@ -48,6 +50,31 @@ class TravelManagement : ITravelManagement {
     override fun deleteTravels(userId: Int, travelIds: MutableSet<Int>) {
         val result = travelTransaction.deleteTravels(userId, travelIds)
         if (!result) throw  DeleteTravelsException("Error when deleting travel")
+    }
+
+    override fun getPlans(travelId: Int) : MutableList<Plan> {
+        val plans = mutableListOf<Plan>()
+        val plansDaoPlaceDao = planRepository.getPlansByTravelId(travelId)
+        plansDaoPlaceDao.map { pair ->  {
+            val planDao = pair.first
+            val placeDao = pair.second
+            val place = Place(
+                    placeDao.hereId!!,
+                    placeDao.title!!,
+                    placeDao.vicinity!!,
+                    emptyArray<Double>(),
+                    placeDao.category!!,
+                    ObjectCategory(),
+                    placeDao.href!!)
+            val plan = Plan(planDao.id!!,
+                    planDao.locale!!,
+                    planDao.fromDateTime!!.time,
+                    planDao.toDateTime!!.time,
+                    planDao.placeId!!,
+                    place)
+            plans.add(plan)
+        }}
+        return plans
     }
 
     override fun addPlan(travelId: Int, plan: Plan): Plan {

@@ -25,14 +25,21 @@ class PlanTransaction {
         planDao.id = planId
 
         var placeDao = placeRepository.getPlaceByHereId(plan.place.id)
+        var placeId = placeDao!!.id
 
         var queryResult: Boolean
-        if (placeDao != null) {
+        if (placeId != null) {
+            planDao.placeId = placeId
             queryResult = planRepository.add(planDao)
         } else {
-            val placeId = placeRepository.getNextId()
+            placeId = placeRepository.getNextId()
             placeDao = PlaceDao(
-                    placeId, plan.place.id, plan.place.href, plan.place.title, plan.place.vicinity, plan.place.category.title)
+                    placeId,
+                    plan.place.id,
+                    plan.place.href,
+                    plan.place.title,
+                    plan.place.vicinity,
+                    plan.place.categoryNumber)
             queryResult = placeRepository.add(placeDao)
             if (queryResult) {
                 planDao.placeId = placeId
@@ -44,7 +51,7 @@ class PlanTransaction {
             DbConnection.conn.commit()
             DbConnection.conn.autoCommit = true
             plan.id = planId
-            plan.placeId = placeDao.id!!
+            plan.placeId = placeId
             plan
         } else {
             DbConnection.conn.rollback()

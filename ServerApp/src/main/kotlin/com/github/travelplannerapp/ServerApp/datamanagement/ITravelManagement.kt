@@ -5,10 +5,8 @@ import com.github.travelplannerapp.ServerApp.db.dao.Travel
 
 interface ITravelManagement {
     fun addTravel(userId: Int, travelName: String): Travel
-
     fun updateTravel(id: Int, changes: MutableMap<String, Any?>): Travel?
-
     fun deleteTravels(userId: Int, travelIds: MutableSet<Int>)
-
+    fun getPlans(travelId:Int) : MutableList<Plan>
     fun addPlan(travelId: Int, plan: Plan): Plan
 }
