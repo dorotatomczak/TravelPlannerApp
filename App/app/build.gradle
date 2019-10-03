@@ -65,11 +65,15 @@ dependencies {
     // Unit Testing
     testImplementation "junit:junit:$rootProject.junitVersion"
     testImplementation "io.mockk:mockk:$rootProject.mockkVersion"
-    testAnnotationProcessor "com.google.dagger:dagger-compiler:$rootProject.daggerVersion"
 
     // UI Testing
     androidTestImplementation "androidx.test:runner:$rootProject.runnerVersion"
     androidTestImplementation "androidx.annotation:annotation:$rootProject.annotationVersion"
+    androidTestImplementation "androidx.test.espresso:espresso-core:$rootProject.espressoVersion"
+    testImplementation "androidx.test:core:$rootProject.coreVersion"
+    androidTestImplementation "androidx.test.ext:junit:$rootProject.extJUnitVersion"
+    androidTestImplementation "androidx.test.ext:junit-ktx:$rootProject.extJUnitVersion"
+    androidTestImplementation "io.mockk:mockk-android:$rootProject.mockkVersion"
 
     // JSON and http requests dependencies
     implementation "com.squareup.retrofit2:retrofit:$rootProject.retrofitVersion"
