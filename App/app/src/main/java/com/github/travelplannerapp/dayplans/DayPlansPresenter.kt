@@ -11,7 +11,6 @@ import com.github.travelplannerapp.utils.DateTimeUtils
 import com.github.travelplannerapp.utils.SchedulerProvider
 import com.github.travelplannerapp.utils.SharedPreferencesUtils
 import io.reactivex.disposables.CompositeDisposable
-import java.util.*
 import kotlin.collections.ArrayList
 
 
@@ -66,12 +65,11 @@ class DayPlansPresenter(private val travelId: Int, view: DayPlansContract.View) 
             itemView.showLine()
         }
 
-        val fromDateTime = Calendar.getInstance()
-        fromDateTime.timeInMillis = plan.fromDateTimeMs
         val categoryIcon = PlaceCategory.values()[plan.place.categoryNumber].categoryIcon
+        val fromTime = DateTimeUtils.timeToString(plan.fromDateTimeMs)
 
         itemView.setName(plan.place.title)
-        itemView.setFromTime(DateTimeUtils.timeToString(fromDateTime))
+        itemView.setFromTime(fromTime)
         itemView.setLocation(plan.place.vicinity)
         itemView.setIcon(categoryIcon)
     }
@@ -89,9 +87,7 @@ class DayPlansPresenter(private val travelId: Int, view: DayPlansContract.View) 
         var date = ""
 
         for (plan in plans) {
-            val fromDateTime = Calendar.getInstance()
-            fromDateTime.timeInMillis = plan.fromDateTimeMs
-            val dateCursor = DateTimeUtils.dateToString(fromDateTime)
+            val dateCursor = DateTimeUtils.dateToString(plan.fromDateTimeMs)
             if (date != dateCursor) {
                 date = dateCursor
                 planItems.add(DateSeparatorItem(date))

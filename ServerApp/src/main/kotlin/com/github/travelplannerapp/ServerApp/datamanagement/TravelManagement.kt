@@ -55,14 +55,14 @@ class TravelManagement : ITravelManagement {
     override fun getPlans(travelId: Int) : MutableList<Plan> {
         val plans = mutableListOf<Plan>()
         val plansDaoPlaceDao = planRepository.getPlansByTravelId(travelId)
-        plansDaoPlaceDao.map { pair ->  {
+        plansDaoPlaceDao.forEach { pair ->
             val planDao = pair.first
             val placeDao = pair.second
             val place = Place(
                     placeDao.hereId!!,
                     placeDao.title!!,
                     placeDao.vicinity!!,
-                    emptyArray<Double>(),
+                    emptyArray(),
                     placeDao.category!!,
                     ObjectCategory(),
                     placeDao.href!!)
@@ -73,7 +73,7 @@ class TravelManagement : ITravelManagement {
                     planDao.placeId!!,
                     place)
             plans.add(plan)
-        }}
+        }
         return plans
     }
 

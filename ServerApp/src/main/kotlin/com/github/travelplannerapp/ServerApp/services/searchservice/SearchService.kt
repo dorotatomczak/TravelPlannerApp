@@ -44,7 +44,7 @@ class SearchService : ISearchService {
             place.title = escapeHtml(place.title)
             place.vicinity = escapeHtml(place.vicinity)
             if (place.openingHours != null) {
-                place.openingHours!!.text = escapeHtml(place.openingHours!!.text)
+                place.openingHours.text = escapeHtml(place.openingHours.text)
             }
         }
 
@@ -121,7 +121,7 @@ class SearchService : ISearchService {
                           "&cat=$category" +
                           "&pretty"
 
-            var response = executeRequest(request, jsonFilter)
+            val response = executeRequest(request, jsonFilter)
             return parseResponse(response)
         }
 
@@ -155,7 +155,7 @@ class SearchService : ISearchService {
 
             val responseText = response.substring(response.indexOf('{'))
 
-            var jsonElement = JsonParser().parse(responseText)
+            val jsonElement = JsonParser().parse(responseText)
             val gson = GsonBuilder().setPrettyPrinting().create()
 
             return gson.fromJson(jsonElement, T::class.java)

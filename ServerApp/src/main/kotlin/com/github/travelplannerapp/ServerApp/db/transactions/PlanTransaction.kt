@@ -25,7 +25,7 @@ class PlanTransaction {
         planDao.id = planId
 
         var placeDao = placeRepository.getPlaceByHereId(plan.place.id)
-        var placeId = placeDao!!.id
+        var placeId = placeDao?.id
 
         var queryResult: Boolean
         if (placeId != null) {

@@ -37,7 +37,7 @@ class PlaceDao(map: MutableMap<String, Any?>) {
                             "href" to result.getString("href"),
                             "title" to result.getString("title"),
                             "vicinity" to  result.getString("vicinity"),
-                            "category" to  result.getString("category")
+                            "category" to  result.getInt("category")
                     )
             )
 }

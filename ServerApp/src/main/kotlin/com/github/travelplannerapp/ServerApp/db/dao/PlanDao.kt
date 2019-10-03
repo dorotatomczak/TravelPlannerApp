@@ -47,7 +47,7 @@ class PlanDao(map: MutableMap<String, Any?>) {
     constructor(travelId: Int, plan: Plan) :
             this(
                     plan.id,
-                    plan.locale.toString(),
+                    plan.locale,
                     Timestamp(plan.fromDateTimeMs),
                     Timestamp(plan.toDateTimeMs),
                     travelId,
