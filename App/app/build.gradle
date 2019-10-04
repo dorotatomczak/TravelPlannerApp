@@ -70,10 +70,11 @@ dependencies {
     androidTestImplementation "androidx.test:runner:$rootProject.runnerVersion"
     androidTestImplementation "androidx.annotation:annotation:$rootProject.annotationVersion"
     androidTestImplementation "androidx.test.espresso:espresso-core:$rootProject.espressoVersion"
-    testImplementation "androidx.test:core:$rootProject.coreVersion"
+    androidTestImplementation "androidx.test:core:$rootProject.coreVersion"
     androidTestImplementation "androidx.test.ext:junit:$rootProject.extJUnitVersion"
     androidTestImplementation "androidx.test.ext:junit-ktx:$rootProject.extJUnitVersion"
     androidTestImplementation "io.mockk:mockk-android:$rootProject.mockkVersion"
+    androidTestImplementation "androidx.test.espresso:espresso-intents:$rootProject.espressoVersion"
 
     // JSON and http requests dependencies
     implementation "com.squareup.retrofit2:retrofit:$rootProject.retrofitVersion"
