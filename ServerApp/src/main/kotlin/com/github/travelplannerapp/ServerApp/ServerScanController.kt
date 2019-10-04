@@ -3,10 +3,10 @@ package com.github.travelplannerapp.ServerApp
 import com.github.travelplannerapp.ServerApp.datamanagement.ScanManagement
 import com.github.travelplannerapp.ServerApp.datamanagement.UserManagement
 import com.github.travelplannerapp.ServerApp.db.dao.Scan
-import com.github.travelplannerapp.ServerApp.exceptions.ResponseCode
 import com.github.travelplannerapp.ServerApp.exceptions.UploadScanException
-import com.github.travelplannerapp.ServerApp.datamodels.Response
 import com.github.travelplannerapp.ServerApp.services.FileStorageService
+import com.github.travelplannerapp.communication.commonmodel.Response
+import com.github.travelplannerapp.communication.commonmodel.ResponseCode
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.core.io.Resource
 import org.springframework.http.HttpHeaders

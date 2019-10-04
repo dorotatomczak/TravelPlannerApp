@@ -1,6 +1,6 @@
 package com.github.travelplannerapp.dayplans
 
-import com.github.travelplannerapp.communication.model.Plan
+import com.github.travelplannerapp.communication.appmodel.Plan
 
 interface DayPlansContract {
     interface View {

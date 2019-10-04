@@ -1,6 +1,6 @@
 package com.github.travelplannerapp.dayplans.searchelement
-import com.github.travelplannerapp.communication.model.Contacts
-import com.github.travelplannerapp.communication.model.Place
+import com.github.travelplannerapp.communication.commonmodel.Contacts
+import com.github.travelplannerapp.communication.commonmodel.Place
 import com.here.android.mpa.mapping.MapMarker
 
 interface SearchElementContract {

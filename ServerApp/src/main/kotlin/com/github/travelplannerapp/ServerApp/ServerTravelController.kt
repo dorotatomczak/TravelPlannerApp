@@ -4,10 +4,8 @@ import com.github.travelplannerapp.ServerApp.datamanagement.TravelManagement
 import com.github.travelplannerapp.ServerApp.datamanagement.UserManagement
 import com.github.travelplannerapp.ServerApp.db.dao.Travel
 import com.github.travelplannerapp.ServerApp.db.repositories.TravelRepository
-import com.github.travelplannerapp.ServerApp.exceptions.ResponseCode
-import com.github.travelplannerapp.ServerApp.datamodels.*
-import com.github.travelplannerapp.ServerApp.exceptions.SearchNoItemsException
-import com.github.travelplannerapp.ServerApp.services.searchservice.SearchService
+import com.github.travelplannerapp.communication.commonmodel.Response
+import com.github.travelplannerapp.communication.commonmodel.ResponseCode
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.web.bind.annotation.*
 
@@ -20,8 +18,6 @@ class ServerTravelController {
     lateinit var userManagement: UserManagement
     @Autowired
     lateinit var travelManagement: TravelManagement
-    @Autowired
-    lateinit var searchService: SearchService
 
     @GetMapping("users/{userId}/travels")
     fun getTravels(
@@ -64,59 +60,5 @@ class ServerTravelController {
         userManagement.verifyUser(token)
         travelManagement.deleteTravels(userId, travelIds)
         return Response(ResponseCode.OK, Unit)
-    }
-
-    @GetMapping("here-management/objects")
-    fun getObjects(
-        @RequestHeader("authorization") token: String, @RequestParam("cat") category: String,
-        @RequestParam("west") west: String, @RequestParam("south") south: String,
-        @RequestParam("east") east: String, @RequestParam("north") north: String
-    ): Response<Array<Place>> {
-        userManagement.verifyUser(token)
-
-        try {
-            val items = searchService.getObjects(category, Pair(west, south), Pair(east, north))
-            return Response(ResponseCode.OK, items)
-        } catch (ex: Exception) {
-            throw SearchNoItemsException(ex.localizedMessage)
-        }
-    }
-
-    // eg. for getting next page
-    @GetMapping("here-management/objects-next-page")
-    fun findObjectsGetPage(
-        @RequestHeader("authorization") token: String,
-        @RequestParam("request") request: String
-    ): Response<SearchObjectsResponse> {
-        userManagement.verifyUser(token)
-
-        return Response(
-            ResponseCode.OK,
-            searchService.getPage(request)
-        )
-    }
-
-    @GetMapping("here-management/cities")
-    fun findCities(
-        @RequestHeader("authorization") token: String,
-        @RequestParam("query") query: String
-    ): Response<Array<CityObject>> {
-        userManagement.verifyUser(token)
-
-        try {
-            val cities = searchService.findCities(query)
-            return Response(ResponseCode.OK, cities)
-        } catch (ex: Exception) {
-            throw SearchNoItemsException(ex.localizedMessage)
-        }
-    }
-
-    @GetMapping("/here-management/objects/{objectId}/contacts")
-    fun getContacts(@RequestHeader("authorization") token: String,
-                    @PathVariable objectId: String,
-                    @RequestParam("query") query: String): Response<Contacts> {
-        userManagement.verifyUser(token)
-        val contacts = searchService.getContacts(query)
-        return Response(ResponseCode.OK, contacts)
     }
 }

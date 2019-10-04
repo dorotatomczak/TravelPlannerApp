@@ -1,5 +1,6 @@
-package com.github.travelplannerapp.communication.model
+package com.github.travelplannerapp.communication.appmodel
 
+import com.github.travelplannerapp.communication.commonmodel.Place
 import java.io.Serializable
 import java.util.*
 

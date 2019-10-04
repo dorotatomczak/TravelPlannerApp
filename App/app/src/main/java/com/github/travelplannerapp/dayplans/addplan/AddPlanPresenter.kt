@@ -2,9 +2,9 @@ package com.github.travelplannerapp.dayplans.addplan
 
 import com.github.travelplannerapp.BasePresenter
 import com.github.travelplannerapp.R
-import com.github.travelplannerapp.communication.model.ObjectCategory
-import com.github.travelplannerapp.communication.model.Place
-import com.github.travelplannerapp.communication.model.Plan
+import com.github.travelplannerapp.communication.commonmodel.ObjectCategory
+import com.github.travelplannerapp.communication.commonmodel.Place
+import com.github.travelplannerapp.communication.appmodel.Plan
 import com.github.travelplannerapp.utils.DateTimeUtils
 import java.util.*
 
