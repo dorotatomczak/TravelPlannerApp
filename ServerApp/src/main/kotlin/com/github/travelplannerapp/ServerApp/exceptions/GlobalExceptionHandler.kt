@@ -1,10 +1,11 @@
 package com.github.travelplannerapp.ServerApp.exceptions
 
-import com.github.travelplannerapp.ServerApp.datamodels.Response
+import com.github.travelplannerapp.communication.commonmodel.Response
+import com.github.travelplannerapp.communication.commonmodel.ResponseCode
 import org.springframework.http.HttpStatus
-import org.springframework.web.bind.annotation.RestControllerAdvice
 import org.springframework.web.bind.annotation.ExceptionHandler
 import org.springframework.web.bind.annotation.ResponseStatus
+import org.springframework.web.bind.annotation.RestControllerAdvice
 import org.tinylog.kotlin.Logger
 
 @RestControllerAdvice

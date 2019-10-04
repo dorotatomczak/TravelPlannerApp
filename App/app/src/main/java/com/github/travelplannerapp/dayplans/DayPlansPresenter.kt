@@ -1,7 +1,7 @@
 package com.github.travelplannerapp.dayplans
 
 import com.github.travelplannerapp.BasePresenter
-import com.github.travelplannerapp.communication.model.Plan
+import com.github.travelplannerapp.communication.appmodel.Plan
 import com.github.travelplannerapp.utils.DateTimeUtils
 import io.reactivex.disposables.CompositeDisposable
 

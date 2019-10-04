@@ -2,10 +2,10 @@ package com.github.travelplannerapp.dayplans.searchelement
 
 import com.github.travelplannerapp.BasePresenter
 import com.github.travelplannerapp.R
+import com.github.travelplannerapp.communication.commonmodel.Place
+import com.github.travelplannerapp.communication.commonmodel.ResponseCode
 import com.github.travelplannerapp.communication.ApiException
 import com.github.travelplannerapp.communication.CommunicationService
-import com.github.travelplannerapp.communication.model.Place
-import com.github.travelplannerapp.communication.model.ResponseCode
 import com.github.travelplannerapp.utils.SchedulerProvider
 import com.here.android.mpa.mapping.MapMarker
 import io.reactivex.disposables.CompositeDisposable

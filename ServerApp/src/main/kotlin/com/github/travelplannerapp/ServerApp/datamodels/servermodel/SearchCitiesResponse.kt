@@ -1,4 +1,4 @@
-package com.github.travelplannerapp.ServerApp.datamodels
+package com.github.travelplannerapp.ServerApp.datamodels.servermodel
 
 
 //variables must be uppercase as they are in json response

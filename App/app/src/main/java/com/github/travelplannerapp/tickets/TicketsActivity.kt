@@ -18,7 +18,7 @@ import androidx.fragment.app.DialogFragment
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.github.travelplannerapp.BuildConfig
 import com.github.travelplannerapp.R
-import com.github.travelplannerapp.communication.model.Scan
+import com.github.travelplannerapp.communication.appmodel.Scan
 import com.github.travelplannerapp.scanner.ScannerActivity
 import com.github.travelplannerapp.utils.DrawerUtils
 import com.google.android.material.snackbar.Snackbar

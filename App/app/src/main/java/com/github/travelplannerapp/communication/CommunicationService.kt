@@ -1,6 +1,8 @@
 package com.github.travelplannerapp.communication
 
-import com.github.travelplannerapp.communication.model.*
+import com.github.travelplannerapp.communication.commonmodel.*
+import com.github.travelplannerapp.communication.commonmodel.Response
+import com.github.travelplannerapp.communication.appmodel.*
 import io.reactivex.Observable
 import io.reactivex.Single
 import okhttp3.MultipartBody

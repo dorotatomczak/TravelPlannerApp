@@ -1,7 +1,7 @@
 package com.github.travelplannerapp.ServerApp.datamanagement
 
-import com.github.travelplannerapp.ServerApp.datamodels.SignInRequest
-import com.github.travelplannerapp.ServerApp.datamodels.SignUpRequest
+import com.github.travelplannerapp.communication.commonmodel.SignInRequest
+import com.github.travelplannerapp.communication.commonmodel.SignUpRequest
 
 interface IUserManagement {
 
