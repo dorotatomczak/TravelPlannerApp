@@ -1,0 +1,6 @@
+[submodule "App/app/src/main/java/com/github/travelplannerapp/communication/commonmodel"]
+	path = App/app/src/main/java/com/github/travelplannerapp/communication/commonmodel
+	url = git@github.com:anna-malizjusz/commonmodel.git
+[submodule "ServerApp/src/main/kotlin/com/github/travelplannerapp/ServerApp/datamodels/commonmodel"]
+	path = ServerApp/src/main/kotlin/com/github/travelplannerapp/ServerApp/datamodels/commonmodel
+	url = git@github.com:anna-malizjusz/commonmodel.git

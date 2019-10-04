@@ -1,7 +1,7 @@
 package com.github.travelplannerapp.communication
 
 import com.github.travelplannerapp.R
-import com.github.travelplannerapp.communication.model.ResponseCode
+import com.github.travelplannerapp.communication.commonmodel.ResponseCode
 
 class ApiException(private val responseCode: ResponseCode): Throwable() {
 

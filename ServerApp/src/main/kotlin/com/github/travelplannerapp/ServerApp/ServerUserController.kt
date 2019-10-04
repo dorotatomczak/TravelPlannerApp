@@ -1,13 +1,12 @@
 package com.github.travelplannerapp.ServerApp
 
 import com.github.travelplannerapp.ServerApp.datamanagement.UserManagement
-import com.github.travelplannerapp.ServerApp.exceptions.ResponseCode
-import com.github.travelplannerapp.ServerApp.datamodels.Response
-import com.github.travelplannerapp.ServerApp.datamodels.SignInRequest
-import com.github.travelplannerapp.ServerApp.datamodels.SignInResponse
-import com.github.travelplannerapp.ServerApp.datamodels.SignUpRequest
+import com.github.travelplannerapp.communication.commonmodel.*
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.web.bind.annotation.*
+import org.springframework.web.bind.annotation.PostMapping
+import org.springframework.web.bind.annotation.RequestBody
+import org.springframework.web.bind.annotation.RequestHeader
+import org.springframework.web.bind.annotation.RestController
 
 @RestController
 class ServerUserController {

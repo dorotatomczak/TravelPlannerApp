@@ -4,24 +4,24 @@ import android.app.SearchManager
 import android.content.Context
 import android.content.Intent
 import android.database.Cursor
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.view.inputmethod.InputMethodManager
+import androidx.appcompat.app.AppCompatActivity
 import com.github.travelplannerapp.R
-import com.github.travelplannerapp.communication.model.CityObject
-import com.github.travelplannerapp.communication.model.Contacts
-import com.github.travelplannerapp.communication.model.Place
-import dagger.android.AndroidInjection
-import javax.inject.Inject
+import com.github.travelplannerapp.communication.commonmodel.Contacts
+import com.github.travelplannerapp.communication.commonmodel.Place
+import com.github.travelplannerapp.communication.appmodel.CityObject
 import com.google.android.material.snackbar.Snackbar
 import com.here.android.mpa.common.GeoCoordinate
 import com.here.android.mpa.common.OnEngineInitListener
 import com.here.android.mpa.common.ViewObject
 import com.here.android.mpa.mapping.*
 import com.here.android.mpa.mapping.Map
+import dagger.android.AndroidInjection
 import kotlinx.android.synthetic.main.activity_search_element.*
 import kotlinx.android.synthetic.main.fab_check.*
+import javax.inject.Inject
 
 
 class SearchElementActivity : AppCompatActivity(), SearchElementContract.View {

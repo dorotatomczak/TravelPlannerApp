@@ -2,7 +2,7 @@ package com.github.travelplannerapp.scanner
 
 import android.graphics.Bitmap
 import android.graphics.PointF
-import com.github.travelplannerapp.communication.model.Scan
+import com.github.travelplannerapp.communication.appmodel.Scan
 import java.io.File
 
 interface ScannerContract {

@@ -1,4 +1,4 @@
-package com.github.travelplannerapp.ServerApp.datamodels
+package com.github.travelplannerapp.ServerApp.datamodels.servermodel
 
 enum class PlaceCategory(val categoryName: String) {
     EAT_DRINK("eat-drink"),

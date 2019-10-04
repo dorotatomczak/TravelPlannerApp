@@ -1,4 +1,4 @@
-package com.github.travelplannerapp.communication.model
+package com.github.travelplannerapp.communication.appmodel
 
 class FindFacilitiesRequest (
         val query: String = "",
