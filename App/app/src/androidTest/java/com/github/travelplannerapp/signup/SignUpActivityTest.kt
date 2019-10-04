@@ -1,5 +1,6 @@
 package com.github.travelplannerapp.signup
 
+import android.content.Intent
 import androidx.lifecycle.Lifecycle
 import androidx.test.ext.junit.rules.activityScenarioRule
 import androidx.test.espresso.Espresso.onView
@@ -31,9 +32,9 @@ class SignUpActivityTest {
 
     @Before
     fun setUp() {
-        signInRule.scenario.onActivity { activity -> activity.showSignUp() }
+        signInRule.scenario.onActivity { activity -> activity.startActivityForResult(
+                Intent(activity, SignUpActivity::class.java), SignUpActivity.REQUEST_SIGN_UP) }
     }
-
 
     @Test
     fun should_GoBackToSignInScreen_When_SignInButtonWasClicked() {
@@ -49,16 +50,21 @@ class SignUpActivityTest {
     fun should_DisplaySnackBar_When_SignUpButtonWasClickedAndConnectionToServerFailed() {
 
         // given
+        val email = "email"
+        val password = "password"
         val hashedPassword = "hashed password"
 
         mockkObject(PasswordUtils)
-        every { PasswordUtils.hashPassword("") } returns hashedPassword
+        every { PasswordUtils.hashPassword(password) } returns hashedPassword
 
-        val signUpRequest = SignUpRequest("", hashedPassword)
+        val signUpRequest = SignUpRequest(email, hashedPassword)
         mockkObject(CommunicationService)
         every { CommunicationService.serverApi.register(signUpRequest) } returns Single.error(Exception())
 
         // when
+        onView(withId(R.id.editTextEmail)).perform(typeText(email))
+        onView(withId(R.id.editTextPassword)).perform(typeText(password))
+        onView(withId(R.id.editTextConfirmPassword)).perform(typeText(password), closeSoftKeyboard())
         onView(withId(R.id.buttonSignUp)).perform(click())
 
         // then
