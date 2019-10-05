@@ -47,7 +47,7 @@ interface ServerApi {
     fun register(@Body body: SignUpRequest): Single<Response<Unit>>
 
     @GET("/users/{userId}/travels")
-    fun getTravels(@Path("userId") userId: Int): Observable<Response<List<Travel>>>
+    fun getTravels(@Path("userId") userId: Int): Single<Response<List<Travel>>>
 
     @POST("/users/{userId}/travels")
     fun addTravel(@Path("userId") userId: Int, @Body travelName: String): Single<Response<Travel>>

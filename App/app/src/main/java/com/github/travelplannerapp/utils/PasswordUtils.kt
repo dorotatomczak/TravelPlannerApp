@@ -2,7 +2,7 @@ package com.github.travelplannerapp.utils
 
 import java.security.MessageDigest
 
-class PasswordUtils {
+object PasswordUtils {
 
     fun hashPassword(password: String): String? {
         return MessageDigest.getInstance("SHA-256")

@@ -29,10 +29,10 @@ class SignInActivity : AppCompatActivity(), SignInContract.View {
 
         //set up buttons
         buttonSignIn.setOnClickListener {
-            presenter.signIn(editTextEmail.text.toString(), editTextPassword.text.toString())
+            presenter.onSignInClicked(editTextEmail.text.toString(), editTextPassword.text.toString())
         }
 
-        buttonSignUp.setOnClickListener { presenter.signUp() }
+        buttonSignUp.setOnClickListener { presenter.onSignUpClicked() }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

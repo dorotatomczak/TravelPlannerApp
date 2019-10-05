@@ -12,8 +12,8 @@ interface SignInContract {
     }
 
     interface Presenter {
-        fun signIn(email: String, password: String)
-        fun signUp()
+        fun onSignInClicked(email: String, password: String)
+        fun onSignUpClicked()
         fun unsubscribe()
     }
 }
