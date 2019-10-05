@@ -4,9 +4,7 @@ import com.github.travelplannerapp.R
 import com.github.travelplannerapp.RxImmediateSchedulerRule
 import com.github.travelplannerapp.communication.ApiException
 import com.github.travelplannerapp.communication.CommunicationService
-import com.github.travelplannerapp.communication.model.Response
-import com.github.travelplannerapp.communication.model.ResponseCode
-import com.github.travelplannerapp.communication.model.SignUpRequest
+import com.github.travelplannerapp.communication.model.*
 import com.github.travelplannerapp.utils.PasswordUtils
 import io.mockk.*
 import io.mockk.impl.annotations.MockK
@@ -44,7 +42,7 @@ class SignUpPresenterTest {
     }
 
     @Test
-    fun `Should display snackbar with info message when given passwords in SignUp are different`() {
+    fun `Should display snackBar with info message when given passwords in SignUp are different`() {
 
         // given
         val email = "email"
@@ -59,7 +57,7 @@ class SignUpPresenterTest {
     }
 
     @Test
-    fun `Should display snackbar with info message when hash of the given password is null`() {
+    fun `Should display snackBar with info message when hash of the given password is null`() {
 
         // given
         val email = "email"
@@ -73,6 +71,30 @@ class SignUpPresenterTest {
 
         // then
         verify { view.showSnackbar(R.string.try_again) }
+    }
+
+    @Test
+    fun `Should send request to server when passwords are the same and hashed password is not null`() {
+
+        // given
+        val email = "email"
+        val password = "password"
+        val confirmPassword = "password"
+        val hashedPassword = "hashed password"
+
+        mockkObject(PasswordUtils)
+        every { PasswordUtils.hashPassword(password) } returns hashedPassword
+
+        val signUpRequest = SignUpRequest(email, hashedPassword)
+        mockkObject(CommunicationService)
+        every { CommunicationService.serverApi.register(signUpRequest) } returns Single.just(
+                Response(ResponseCode.OK, Unit))
+
+        // when
+        presenter.onSignUpClicked(email, password, confirmPassword)
+
+        // then
+        verify { CommunicationService.serverApi.register(signUpRequest) }
     }
 
     @Test
@@ -103,7 +125,7 @@ class SignUpPresenterTest {
     }
 
     @Test
-    fun `Should show snackbar with error message when server returns error code on sign up`() {
+    fun `Should show snackBar with error message when server returns error code on sign up`() {
 
         // given
         val email = "email"
@@ -130,7 +152,8 @@ class SignUpPresenterTest {
     }
 
     @Test
-    fun `Should show snackbar with error message when server connection failed on sign up`() {
+    fun `Should show snackBar with error message when server connection failed on sign up`() {
+
         // given
         val email = "email"
         val password = "password"

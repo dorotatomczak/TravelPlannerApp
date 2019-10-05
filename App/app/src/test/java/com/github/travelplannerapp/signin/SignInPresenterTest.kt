@@ -43,7 +43,7 @@ class SignInPresenterTest {
     }
 
     @Test
-    fun `Should display snackbar with info message when hash of the given password is null`() {
+    fun `Should display snackBar with info message when hash of the given password is null`() {
 
         // given
         val email = "email"
@@ -56,6 +56,31 @@ class SignInPresenterTest {
 
         // then
         verify { view.showSnackbar(R.string.try_again) }
+    }
+
+    @Test
+    fun `Should send request to server when passwords are the same and hashed password is not null`() {
+
+        // given
+        val email = "email"
+        val password = "password"
+        val hashedPassword = "hashed password"
+        val token = "token"
+        val userId = 1
+
+        mockkObject(PasswordUtils)
+        every { PasswordUtils.hashPassword(password) } returns hashedPassword
+
+        val signInRequest = SignInRequest(email, hashedPassword)
+        mockkObject(CommunicationService)
+        every { CommunicationService.serverApi.authenticate(signInRequest) } returns Single.just(
+                Response(ResponseCode.OK, SignInResponse(token, userId)))
+
+        // when
+        presenter.onSignInClicked(email, password)
+
+        // then
+        verify { CommunicationService.serverApi.authenticate(signInRequest) }
     }
 
     @Test
@@ -87,7 +112,7 @@ class SignInPresenterTest {
     }
 
     @Test
-    fun `Should show snackbar with error message when server returns error code on sign in`() {
+    fun `Should show snackBar with error message when server returns error code on sign in`() {
 
         // given
         val email = "email"
@@ -114,7 +139,7 @@ class SignInPresenterTest {
     }
 
     @Test
-    fun `Should show snackbar with error message when server connection failed on sign up`() {
+    fun `Should show snackBar with error message when server connection failed on sign up`() {
 
         // given
         val email = "email"
