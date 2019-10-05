@@ -38,15 +38,15 @@ class ServerUserController {
     }
 
 
-//    @GetMapping("users/{userId}/friends")
-//    fun getFriends(
-//            @RequestHeader("authorization") token: String,
-//            @PathVariable userId: Int
-//    ): Response<List<String>> {
-//        userManagement.verifyUser(token)
-//        val friends = userRepository.getAllFriendsByUserId(userId)
-//        return Response(ResponseCode.OK, friends)
-//    }
+    @GetMapping("users/{userId}/friends")
+    fun getFriends(
+            @RequestHeader("authorization") token: String,
+            @PathVariable userId: Int
+    ): Response<List<UserInfo>> {
+        userManagement.verifyUser(token)
+        val friends = userRepository.getAllFriendsByUserId(userId)
+        return Response(ResponseCode.OK, friends)
+    }
 
     @PostMapping("users/{userId}/friends")
     fun addFriend(
@@ -69,5 +69,16 @@ class ServerUserController {
         } catch (ex: Exception) {
             throw SearchNoItemsException(ex.localizedMessage)
         }
+    }
+
+    @DeleteMapping("users/{userId}/friends")
+    fun deleteFriends(
+            @RequestHeader("authorization") token: String,
+            @PathVariable userId: Int,
+            @RequestBody friendsIds: MutableSet<Int>
+    ): Response<Unit> {
+        userManagement.verifyUser(token)
+        userManagement.deleteFriends(userId, friendsIds)
+        return Response(ResponseCode.OK, Unit)
     }
 }

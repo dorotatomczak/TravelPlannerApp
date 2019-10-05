@@ -41,7 +41,16 @@
                 android:hint="@string/user"
                 android:inputType="text"
                 android:textColor="@color/black"
-                android:textSize="@dimen/text_size_edit_text" />
+                android:textSize="@dimen/text_size_edit_text">
+
+            </androidx.appcompat.widget.SearchView>
+
+            <TextView
+                android:id="@+id/textView2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/user_friends"
+                android:textSize="@dimen/text_size_item_XL" />
 
             <requestFocus />
 

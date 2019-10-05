@@ -1,6 +1,8 @@
 package com.github.travelplannerapp.travels
 
+import android.view.View
 import com.github.travelplannerapp.deleteactionmode.DeleteContract
+import kotlinx.android.synthetic.main.activity_search_friend.*
 
 interface TravelsContract {
     interface View : DeleteContract.View {

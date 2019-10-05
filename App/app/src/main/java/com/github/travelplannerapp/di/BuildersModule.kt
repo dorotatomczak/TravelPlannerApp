@@ -3,12 +3,15 @@ package com.github.travelplannerapp.di
 import com.github.travelplannerapp.accommodation.AccommodationActivity
 import com.github.travelplannerapp.accommodation.AccommodationModule
 import com.github.travelplannerapp.accommodation.AccommodationViewModel
-import com.github.travelplannerapp.dayplans.addplan.AddPlanActivity
-import com.github.travelplannerapp.dayplans.addplan.AddPlanModule
-import com.github.travelplannerapp.dayplans.addplan.AddPlanViewModel
 import com.github.travelplannerapp.dayplans.DayPlansActivity
 import com.github.travelplannerapp.dayplans.DayPlansModule
 import com.github.travelplannerapp.dayplans.DayPlansViewModel
+import com.github.travelplannerapp.dayplans.addplan.AddPlanActivity
+import com.github.travelplannerapp.dayplans.addplan.AddPlanModule
+import com.github.travelplannerapp.dayplans.addplan.AddPlanViewModel
+import com.github.travelplannerapp.dayplans.searchelement.SearchElementActivity
+import com.github.travelplannerapp.dayplans.searchelement.SearchElementModule
+import com.github.travelplannerapp.dayplans.searchelement.SearchElementViewModel
 import com.github.travelplannerapp.initializers.InitializerModule
 import com.github.travelplannerapp.launcher.LauncherActivity
 import com.github.travelplannerapp.launcher.LauncherModule
@@ -16,9 +19,9 @@ import com.github.travelplannerapp.launcher.LauncherViewModel
 import com.github.travelplannerapp.scanner.ScannerActivity
 import com.github.travelplannerapp.scanner.ScannerModule
 import com.github.travelplannerapp.scanner.ScannerViewModel
-import com.github.travelplannerapp.dayplans.searchelement.SearchElementActivity
-import com.github.travelplannerapp.dayplans.searchelement.SearchElementModule
-import com.github.travelplannerapp.dayplans.searchelement.SearchElementViewModel
+import com.github.travelplannerapp.searchfriend.SearchFriendActivity
+import com.github.travelplannerapp.searchfriend.SearchFriendModule
+import com.github.travelplannerapp.searchfriend.SearchFriendViewModel
 import com.github.travelplannerapp.signin.SignInActivity
 import com.github.travelplannerapp.signin.SignInModule
 import com.github.travelplannerapp.signin.SignInViewModel
@@ -37,10 +40,6 @@ import com.github.travelplannerapp.traveldetails.TravelDetailsViewModel
 import com.github.travelplannerapp.travels.TravelsActivity
 import com.github.travelplannerapp.travels.TravelsModule
 import com.github.travelplannerapp.travels.TravelsViewModel
-import com.github.travelplannerapp.searchfriend.SearchFriendModule
-import com.github.travelplannerapp.searchfriend.SearchFriendViewModel
-import com.github.travelplannerapp.searchfriend.SearchFriendActivity
-
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
 

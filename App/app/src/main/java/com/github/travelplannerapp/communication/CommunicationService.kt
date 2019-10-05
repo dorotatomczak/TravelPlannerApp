@@ -77,7 +77,7 @@ interface ServerApi {
     fun getContacts(@Path("objectId") objectId: String, @Query("query") query: String): Single<Response<Contacts>>
 
     @GET("users/{userId}/friends")
-    fun getFriends(@Path("userId") userId: Int): Observable<Response<List<String>>>
+    fun getFriends(@Path("userId") userId: Int): Observable<Response<List<UserInfo>>>
 
     @POST("/users/{userId}/friends")
     fun addFriend(@Path("userId") userId: Int, @Body friendEmail: String): Single<Response<Boolean>>
@@ -85,6 +85,6 @@ interface ServerApi {
     @GET("/user-management/usersemails")
     fun findUsersEmails(@Query("query") query: String): Single<Response<MutableList<UserInfo>>>
 
-    @POST("/deletefriend")
-    fun deleteFriend(@Body friendEmail: String): Single<Response<Boolean>>
+    @HTTP(method = "DELETE", path = "/users/{userId}/friends", hasBody = true)
+    fun deleteFriends(@Path("userId") userId: Int, @Body friendsIds: MutableSet<Int>): Single<Response<Unit>>
 }

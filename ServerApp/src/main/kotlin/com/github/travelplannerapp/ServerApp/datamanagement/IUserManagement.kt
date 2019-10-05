@@ -19,5 +19,5 @@ interface IUserManagement {
 
     fun addFriend(userId: Int, userEmail: String): Boolean
 
-    fun deleteFriend(userId: Int, userEmail: String): Boolean
+    fun deleteFriends(userId: Int, friendsIds: MutableSet<Int>)
 }

@@ -91,8 +91,8 @@ class UserRepository : Repository<User>(), IUserRepository {
         return null
     }
 
-    override fun getAllFriendsByUserId(id: Int): MutableList<String> {
-        val friendsEmails = mutableListOf<String>()
+    override fun getAllFriendsByUserId(id: Int): MutableList<UserInfo> {
+        val friends = mutableListOf<UserInfo>()
         val statement = DbConnection
                 .conn
                 .prepareStatement(
@@ -104,9 +104,10 @@ class UserRepository : Repository<User>(), IUserRepository {
         statement.setInt(1, id)
         val result = statement.executeQuery()
         while (result.next()) {
-            friendsEmails.add(User(result).email.toString())
+            var friend=User(result)
+            friends.add(UserInfo(friend.id!!,friend.email!!))
         }
-        return friendsEmails
+        return friends
     }
 
 }

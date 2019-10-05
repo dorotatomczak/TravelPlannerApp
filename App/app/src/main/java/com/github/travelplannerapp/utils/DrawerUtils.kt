@@ -6,7 +6,6 @@ import android.view.View
 import androidx.appcompat.widget.Toolbar
 import com.github.travelplannerapp.R
 import com.github.travelplannerapp.searchfriend.SearchFriendActivity
-import com.github.travelplannerapp.userfriends.UserFriendsActivity
 import com.github.travelplannerapp.signin.SignInActivity
 import com.mikepenz.materialdrawer.Drawer
 import com.mikepenz.materialdrawer.DrawerBuilder
@@ -23,8 +22,6 @@ object DrawerUtils {
                 .withName(Menu.SIGN_OUT.color).withIcon(Menu.SIGN_OUT.icon)
         val drawerItemSearchFriend = PrimaryDrawerItem().withIdentifier(Menu.SEARCH_FRIEND.ordinal.toLong())
                 .withName(Menu.SEARCH_FRIEND.color).withIcon(Menu.SEARCH_FRIEND.icon)
-        val drawerItemUserFriends = PrimaryDrawerItem().withIdentifier(Menu.USER_FRIENDS.ordinal.toLong())
-                .withName(Menu.USER_FRIENDS.color).withIcon(Menu.USER_FRIENDS.icon)
 
         DrawerBuilder()
                 .withActivity(activity)
@@ -36,8 +33,7 @@ object DrawerUtils {
                 .addDrawerItems(
                         drawerItemSettings,
                         drawerItemSignOut,
-                        drawerItemSearchFriend,
-                        drawerItemUserFriends
+                        drawerItemSearchFriend
 
                 )
                 .withOnDrawerItemClickListener(object : Drawer.OnDrawerItemClickListener {
@@ -64,15 +60,9 @@ object DrawerUtils {
                 view.context.startActivity(intent)
             }
         },
-        SEARCH_FRIEND(R.string.search_friend, R.drawable.ic_add_person) {
+        SEARCH_FRIEND(R.string.user_friends, R.drawable.ic_person) {
             override fun onClick(view: View) {
                 val intent = Intent(view.context, SearchFriendActivity::class.java)
-                view.context.startActivity(intent)
-            }
-        },
-        USER_FRIENDS(R.string.user_friends, R.drawable.ic_person) {
-            override fun onClick(view: View) {
-                val intent = Intent(view.context, UserFriendsActivity::class.java)
                 view.context.startActivity(intent)
             }
         };

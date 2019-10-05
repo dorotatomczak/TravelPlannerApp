@@ -95,5 +95,7 @@
     <string name="add_entry">Add %1$s</string>
     <string name="delete_one_confirmation">Are you sure you want to delete selected %1$s?</string>
     <string name="delete_one_entry">Delete %1$s</string>
+    <string name="friends">friends</string>
+    <string name="delete_friends_ok">You deleted selected friend(s)</string>
 </resources>
 

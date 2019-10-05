@@ -94,4 +94,6 @@
     <string name="add_entry">Dodaj %1$s</string>
     <string name="delete_one_confirmation">Czy na pewno chcesz usunąć wybranego %1$s?</string>
     <string name="delete_one_entry">Usuń %1$s</string>
+    <string name="friends">znajomych</string>
+    <string name="delete_friends_ok">Usunąłeś wybranych znajomych</string>
 </resources>

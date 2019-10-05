@@ -4,6 +4,7 @@ import android.app.SearchManager
 import android.content.Context
 import android.database.Cursor
 import android.os.Bundle
+import android.view.View
 import android.view.inputmethod.InputMethodManager
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
@@ -33,9 +34,9 @@ class SearchFriendActivity : AppCompatActivity(), SearchFriendContract.View {
         supportActionBar?.setHomeButtonEnabled(true)
         DrawerUtils.getDrawer(this, toolbar)
 
-        swipeRefreshLayoutFriends.setOnRefreshListener { }
+        swipeRefreshLayoutFriends.setOnRefreshListener { presenter.loadFriends() }
         recyclerViewFriend.layoutManager = LinearLayoutManager(this, RecyclerView.VERTICAL, false)
-
+        recyclerViewFriend.adapter = FriendAdapter(presenter)
         val searchManager = getSystemService(Context.SEARCH_SERVICE) as SearchManager
 
         searchViewFriend.apply {
@@ -56,6 +57,7 @@ class SearchFriendActivity : AppCompatActivity(), SearchFriendContract.View {
                 }
             })
         }
+        presenter.loadFriends()
     }
 
     override fun showAddFriend(friend: UserInfo) {
@@ -75,11 +77,44 @@ class SearchFriendActivity : AppCompatActivity(), SearchFriendContract.View {
         Snackbar.make(linearLayoutSearchFriend, messageCode, Snackbar.LENGTH_LONG).show()
     }
 
-    private fun closeKeyboard() {
+    override fun closeKeyboard() {
         val inputManager: InputMethodManager = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
         inputManager.hideSoftInputFromWindow(currentFocus?.windowToken, InputMethodManager.SHOW_FORCED)
     }
 
+    override fun onDataSetChanged() {
+        recyclerViewFriend.adapter?.notifyDataSetChanged()
+    }
+
+    override fun showActionMode() {
+        searchViewFriend.visibility = View.GONE
+    }
+
+    override fun showNoActionMode() {
+        searchViewFriend.visibility = View.VISIBLE
+        (recyclerViewFriend.adapter as FriendAdapter).leaveActionMode()
+    }
+
+    override fun showConfirmationDialog() {
+        val friendsText = getString(R.string.friends)
+        AlertDialog.Builder(this)
+                .setTitle(getString(R.string.delete_entry, friendsText))
+                .setMessage(getString(R.string.delete_confirmation, friendsText))
+                .setPositiveButton(android.R.string.yes) { _, _ ->
+                    presenter.deleteFriends()
+                }
+                .setNegativeButton(android.R.string.no) { _, _ ->
+                }
+                .show()
+    }
+
+    override fun showFriends() {
+        recyclerViewFriend.visibility = View.VISIBLE
+    }
+
+    override fun setLoadingIndicatorVisibility(isVisible: Boolean) {
+        swipeRefreshLayoutFriends.isRefreshing = isVisible
+    }
 }
 
 
