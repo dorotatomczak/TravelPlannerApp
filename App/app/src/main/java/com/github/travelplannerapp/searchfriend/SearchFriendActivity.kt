@@ -1,144 +1,85 @@
 package com.github.travelplannerapp.searchfriend
 
-import android.content.Intent
+import android.app.SearchManager
+import android.content.Context
+import android.database.Cursor
 import android.os.Bundle
-import android.widget.ArrayAdapter
-import android.widget.ListView
-import android.widget.SearchView
+import android.view.inputmethod.InputMethodManager
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.github.travelplannerapp.R
-import com.github.travelplannerapp.communication.ApiException
-import com.github.travelplannerapp.communication.CommunicationService
-import com.github.travelplannerapp.communication.model.ResponseCode
-import com.github.travelplannerapp.userfriends.UserFriendsActivity
+import com.github.travelplannerapp.communication.model.UserInfo
 import com.github.travelplannerapp.utils.DrawerUtils
-import com.github.travelplannerapp.utils.SchedulerProvider
 import com.google.android.material.snackbar.Snackbar
-import io.reactivex.disposables.CompositeDisposable
+import dagger.android.AndroidInjection
+import kotlinx.android.synthetic.main.activity_search_friend.*
 import kotlinx.android.synthetic.main.toolbar.*
-import java.util.*
-import kotlin.collections.ArrayList
-import com.github.travelplannerapp.utils.SharedPreferencesUtils
+import javax.inject.Inject
 
-class SearchFriendActivity : AppCompatActivity(), SearchView.OnQueryTextListener {
+class SearchFriendActivity : AppCompatActivity(), SearchFriendContract.View {
 
-    private lateinit var usersListView: ListView
-    private lateinit var adapter: ArrayAdapter<String>
-
-    private lateinit var allArrayList: ArrayList<String>
-    private lateinit var arrayList: ArrayList<String>
-    private lateinit var emails: MutableList<String>
-
-    private val compositeDisposable = CompositeDisposable()
+    @Inject
+    lateinit var presenter: SearchFriendContract.Presenter
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        AndroidInjection.inject(this)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_search_friend)
-        usersListView = findViewById<ListView>(R.id.usersList)
 
+        // Set up toolbar
         setSupportActionBar(toolbar)
         supportActionBar?.setHomeButtonEnabled(true)
         DrawerUtils.getDrawer(this, toolbar)
 
-        loadUsersEmails()
-        addSearchAbility()
-        usersListView.setOnItemClickListener { _, _, position, _ ->
-            var email = arrayList[position]
-            val userText = getString(R.string.user)
-            AlertDialog.Builder(this)
-                    .setTitle(getString(R.string.add_entry, userText))
-                    .setMessage(getString(R.string.add_one_confirmation, userText))
-                    .setPositiveButton(android.R.string.yes) { _, _ ->
-                        addFriend(email)
-                    }
-                    .setNegativeButton(android.R.string.no) { _, _ ->
-                    }
-                    .show()
+        swipeRefreshLayoutFriends.setOnRefreshListener { }
+        recyclerViewFriend.layoutManager = LinearLayoutManager(this, RecyclerView.VERTICAL, false)
 
-        }
-    }
+        val searchManager = getSystemService(Context.SEARCH_SERVICE) as SearchManager
 
+        searchViewFriend.apply {
+            setSearchableInfo(searchManager.getSearchableInfo(componentName))
+            setIconifiedByDefault(false)
 
-    private fun loadUsersEmails() {
-        emails = arrayListOf<String>()
-        compositeDisposable.add(CommunicationService.serverApi.getUsersEmails()
-                .observeOn(SchedulerProvider.ui())
-                .subscribeOn(SchedulerProvider.io())
-                .map {
-                    if (it.responseCode == ResponseCode.OK)
-                        it.data!!
-                    else
-                        throw ApiException(it.responseCode)
+            setOnSuggestionListener(object : androidx.appcompat.widget.SearchView.OnSuggestionListener {
+                override fun onSuggestionSelect(position: Int): Boolean {
+                    return false
                 }
-                .subscribe(
-                        { emails -> handleLoadEmailsResponse(emails) },
-                        { error -> handleErrorResponse(error) }
-                ))
-    }
 
-    private fun handleLoadEmailsResponse(usersEmails: List<String>) {
-        emails = ArrayList(usersEmails)
-        createUsersEmailsList()
-        adapter=ArrayAdapter<String>(this, R.layout.item_one_of_list, arrayList)
-        usersListView.adapter = adapter
-    }
-
-    private fun createUsersEmailsList() {
-        arrayList = ArrayList<String>()
-        for (x in 0 until emails.size) {
-            arrayList.add( emails[x])
+                override fun onSuggestionClick(position: Int): Boolean {
+                    closeKeyboard()
+                    var c = suggestionsAdapter.getItem(position) as Cursor
+                    val friend = UserInfo(suggestionsAdapter.getItem(position) as Cursor)
+                    showAddFriend(friend)
+                    return true
+                }
+            })
         }
-        allArrayList = arrayList.clone() as ArrayList<String>
     }
 
-    private fun handleErrorResponse(error: Throwable) {
-        Snackbar.make(usersListView, R.string.error, Snackbar.LENGTH_LONG).show()
+    override fun showAddFriend(friend: UserInfo) {
+        val userText = getString(R.string.user)
+        AlertDialog.Builder(this)
+                .setTitle(getString(R.string.add_entry, userText))
+                .setMessage(getString(R.string.add_one_confirmation, friend.email))
+                .setPositiveButton(android.R.string.yes) { _, _ ->
+                    presenter.addFriend(friend)
+                }
+                .setNegativeButton(android.R.string.no) { _, _ ->
+                }
+                .show()
     }
 
-    private fun addSearchAbility() {
-        var userSearchView: SearchView = findViewById(R.id.search)
-        userSearchView.setOnQueryTextListener(this)
-
+    override fun showSnackbar(messageCode: Int) {
+        Snackbar.make(linearLayoutSearchFriend, messageCode, Snackbar.LENGTH_LONG).show()
     }
 
-    override fun onQueryTextChange(queryText: String): Boolean {
-        var text: String = queryText
-        filter(text)
-        return false
+    private fun closeKeyboard() {
+        val inputManager: InputMethodManager = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        inputManager.hideSoftInputFromWindow(currentFocus?.windowToken, InputMethodManager.SHOW_FORCED)
     }
 
-    override fun onQueryTextSubmit(queryText: String?): Boolean {
-        var text: String = queryText.toString()
-        filter(text)
-        return true
-    }
-
-    private fun filter(text: String) {
-        var charText = text.toLowerCase(Locale.getDefault())
-        adapter.clear()
-        if (charText.length !== 0)
-            for (email in allArrayList) {
-                if (email.toLowerCase(Locale.getDefault()).contains(charText))
-                    adapter.add(email)
-            }
-        else adapter.addAll(allArrayList)
-    }
-
-    private fun addFriend(email: String) {
-        compositeDisposable.add(CommunicationService.serverApi.addFriend(SharedPreferencesUtils.getUserId(),email)
-                .observeOn(SchedulerProvider.ui())
-                .subscribeOn(SchedulerProvider.io())
-                .map { if (it.responseCode == ResponseCode.OK) it.data!! else throw ApiException(it.responseCode) }
-                .subscribe(
-                        { isTrue -> handleAddFriendResponse() },
-                        { error -> handleErrorResponse(error) }
-                ))
-    }
-
-    private fun handleAddFriendResponse() {
-        val intent = Intent(this, UserFriendsActivity::class.java)
-        intent.putExtra("notification", getString(R.string.friend_added))
-        this.startActivity(intent)
-    }
 }
+
+

@@ -37,6 +37,9 @@ import com.github.travelplannerapp.traveldetails.TravelDetailsViewModel
 import com.github.travelplannerapp.travels.TravelsActivity
 import com.github.travelplannerapp.travels.TravelsModule
 import com.github.travelplannerapp.travels.TravelsViewModel
+import com.github.travelplannerapp.searchfriend.SearchFriendModule
+import com.github.travelplannerapp.searchfriend.SearchFriendViewModel
+import com.github.travelplannerapp.searchfriend.SearchFriendActivity
 
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
@@ -84,5 +87,7 @@ abstract class BuildersModule {
     @ContributesAndroidInjector(modules = [TravelsViewModel::class, TravelsModule::class])
     internal abstract fun bindTravelsActivity(): TravelsActivity
 
+    @ContributesAndroidInjector(modules = [SearchFriendViewModel::class, SearchFriendModule::class])
+    internal abstract fun bindSearchFiendActivity(): SearchFriendActivity
     // Add bindings for other sub-components here
 }

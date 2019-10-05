@@ -18,7 +18,7 @@ object CommunicationService {
     //localhost via emulator is emulator itself
     //remote server: https://journello.herokuapp.com/
 
-    private const val serverUrl: String = "http://192.168.43.155:8080/"
+    private const val serverUrl: String = "http://192.168.1.8:8080/"
     val serverApi: ServerApi = Retrofit.Builder()
             .baseUrl(serverUrl)
             .addConverterFactory(ScalarsConverterFactory.create())
@@ -76,15 +76,15 @@ interface ServerApi {
     @GET("/here-management/objects/{objectId}/contacts")
     fun getContacts(@Path("objectId") objectId: String, @Query("query") query: String): Single<Response<Contacts>>
 
-    @GET("/user-management/getusersemails")
-    fun getUsersEmails(): Single<Response<MutableList<String>>>
-
     @GET("users/{userId}/friends")
     fun getFriends(@Path("userId") userId: Int): Observable<Response<List<String>>>
 
     @POST("/users/{userId}/friends")
     fun addFriend(@Path("userId") userId: Int, @Body friendEmail: String): Single<Response<Boolean>>
 
-//    @POST("/deletefriend")
-//    fun deleteFriend(@Body friendEmail: String): Single<Response<Boolean>>
+    @GET("/user-management/usersemails")
+    fun findUsersEmails(@Query("query") query: String): Single<Response<MutableList<UserInfo>>>
+
+    @POST("/deletefriend")
+    fun deleteFriend(@Body friendEmail: String): Single<Response<Boolean>>
 }

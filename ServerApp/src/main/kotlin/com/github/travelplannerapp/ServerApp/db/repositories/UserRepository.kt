@@ -1,5 +1,6 @@
 package com.github.travelplannerapp.ServerApp.db.repositories
 
+import com.github.travelplannerapp.ServerApp.datamodels.UserInfo
 import com.github.travelplannerapp.ServerApp.db.DbConnection
 import com.github.travelplannerapp.ServerApp.db.dao.User
 import org.springframework.stereotype.Component
@@ -8,6 +9,28 @@ import java.sql.ResultSet
 
 @Component
 class UserRepository : Repository<User>(), IUserRepository {
+    override fun findEmails(searchString: String): MutableList<UserInfo> {
+        val usersEmails = mutableListOf<UserInfo>()
+        val statement = DbConnection
+                .conn
+                .prepareStatement(
+                        "SELECT * FROM $tableName " +
+                                "WHERE $tableName.$columnEmail LIKE ?"
+                )
+        statement.setString(1, "%$searchString%")
+        val result = statement.executeQuery()
+        var u: User
+        while (result.next()) {
+            u = User(result)
+
+            usersEmails.add(UserInfo(u.id.toString().toInt(), u.email.toString()))
+        }
+
+        return usersEmails
+
+    }
+
+
     companion object {
         const val tableName = "app_user"
         const val columnId = "id"
@@ -27,6 +50,47 @@ class UserRepository : Repository<User>(), IUserRepository {
             " WHERE $columnId=?"
     override val nextIdStatement = "SELECT nextval(pg_get_serial_sequence('$tableName', '$columnId')) AS new_id"
 
+
+    override fun T(result: ResultSet): User? {
+        return User(result)
+    }
+
+    override fun prepareInsertStatement(obj: User): PreparedStatement {
+        val statement = DbConnection
+                .conn
+                .prepareStatement(insertStatement)
+        statement.setInt(1, obj.id!!)
+        statement.setString(2, obj.email)
+        statement.setString(3, obj.password)
+        statement.setString(4, obj.token)
+        statement.setTimestamp(5, obj.expirationDate)
+        return statement
+    }
+
+    override fun prepareUpdateStatement(obj: User): PreparedStatement {
+        val statement = DbConnection
+                .conn
+                .prepareStatement(updateStatement)
+        statement.setString(1, obj.email)
+        statement.setString(2, obj.password)
+        statement.setString(3, obj.token)
+        statement.setTimestamp(4, obj.expirationDate)
+        statement.setInt(5, obj.id!!)
+        return statement
+    }
+
+    override fun getUserByEmail(email: String): User? {
+        val statement = DbConnection
+                .conn
+                .prepareStatement(selectStatement + "WHERE $columnEmail=?")
+        statement.setString(1, email)
+        val result: ResultSet = statement.executeQuery()
+        if (result.next()) {
+            return User(result)
+        }
+        return null
+    }
+
     override fun getAllFriendsByUserId(id: Int): MutableList<String> {
         val friendsEmails = mutableListOf<String>()
         val statement = DbConnection
@@ -44,54 +108,5 @@ class UserRepository : Repository<User>(), IUserRepository {
         }
         return friendsEmails
     }
-    override fun getUserByEmail(email: String): User? {
-        val statement = DbConnection
-                .conn
-                .prepareStatement(selectStatement + "WHERE $columnEmail=?")
-        statement.setString(1, email)
-        val result: ResultSet = statement.executeQuery()
-        if (result.next()) {
-            return User(result)
-        }
-        return null
-    }
 
-    override fun getAllEmails(): MutableList<String> {
-        val usersEmails = mutableListOf<String>()
-        val statement = DbConnection
-                .conn
-                .prepareStatement(selectStatement)
-        val result = statement.executeQuery()
-        while (result.next()) {
-            usersEmails.add(result.getString("email"))
-        }
-        return usersEmails
-    }
-    override fun T(result: ResultSet): User? {
-        return User(result)
-    }
-
-    override fun prepareInsertStatement(obj: User): PreparedStatement {
-        val statement = DbConnection
-                .conn
-                .prepareStatement(insertStatement)
-        statement.setInt(1,obj.id!!)
-        statement.setString(2, obj.email)
-        statement.setString(3, obj.password)
-        statement.setString(4, obj.token)
-        statement.setTimestamp(5, obj.expirationDate)
-        return statement
-    }
-
-    override fun prepareUpdateStatement(obj: User): PreparedStatement {
-        val statement = DbConnection
-                .conn
-                .prepareStatement(updateStatement)
-        statement.setString(1, obj.email)
-        statement.setString(2, obj.password)
-        statement.setString(3, obj.token)
-        statement.setTimestamp(4, obj.expirationDate)
-        statement.setInt(5,obj.id!!)
-        return statement
-    }
 }
