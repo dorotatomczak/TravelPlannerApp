@@ -4,7 +4,9 @@ import com.github.travelplannerapp.R
 import com.github.travelplannerapp.RxImmediateSchedulerRule
 import com.github.travelplannerapp.communication.ApiException
 import com.github.travelplannerapp.communication.CommunicationService
-import com.github.travelplannerapp.communication.model.*
+import com.github.travelplannerapp.communication.commonmodel.Response
+import com.github.travelplannerapp.communication.commonmodel.ResponseCode
+import com.github.travelplannerapp.communication.commonmodel.SignUpRequest
 import com.github.travelplannerapp.utils.PasswordUtils
 import io.mockk.*
 import io.mockk.impl.annotations.MockK

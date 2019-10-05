@@ -10,9 +10,9 @@ import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.espresso.matcher.ViewMatchers.withText
 import com.github.travelplannerapp.R
 import com.github.travelplannerapp.communication.CommunicationService
-import com.github.travelplannerapp.communication.model.Response
-import com.github.travelplannerapp.communication.model.ResponseCode
-import com.github.travelplannerapp.communication.model.SignUpRequest
+import com.github.travelplannerapp.communication.commonmodel.Response
+import com.github.travelplannerapp.communication.commonmodel.ResponseCode
+import com.github.travelplannerapp.communication.commonmodel.SignUpRequest
 import com.github.travelplannerapp.signin.SignInActivity
 import com.github.travelplannerapp.utils.PasswordUtils
 import io.mockk.every

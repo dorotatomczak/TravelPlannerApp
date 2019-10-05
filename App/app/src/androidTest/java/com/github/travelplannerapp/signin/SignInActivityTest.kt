@@ -19,12 +19,15 @@ import org.junit.Test
 import androidx.test.espresso.intent.Intents.intended
 import androidx.test.espresso.intent.matcher.IntentMatchers.hasComponent
 import androidx.test.platform.app.InstrumentationRegistry
-import com.github.travelplannerapp.communication.model.*
 import com.github.travelplannerapp.travels.TravelsActivity
 import com.github.travelplannerapp.utils.SharedPreferencesUtils
 import junit.framework.TestCase.assertEquals
 import android.content.ComponentName
 import androidx.test.espresso.intent.Intents
+import com.github.travelplannerapp.communication.commonmodel.Response
+import com.github.travelplannerapp.communication.commonmodel.ResponseCode
+import com.github.travelplannerapp.communication.commonmodel.SignInRequest
+import com.github.travelplannerapp.communication.commonmodel.SignInResponse
 import org.junit.After
 import org.junit.Before
 
