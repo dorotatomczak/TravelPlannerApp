@@ -65,6 +65,7 @@ dependencies {
     // Unit Testing
     testImplementation "junit:junit:$rootProject.junitVersion"
     testImplementation "io.mockk:mockk:$rootProject.mockkVersion"
+    testImplementation "pl.pragmatists:JUnitParams:$rootProject.junitParamsVersion"
 
     // UI Testing
     androidTestImplementation "androidx.test:runner:$rootProject.runnerVersion"
