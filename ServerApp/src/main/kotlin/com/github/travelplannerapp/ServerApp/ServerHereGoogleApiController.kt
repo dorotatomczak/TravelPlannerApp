@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*
 
 
 @RestController
-class ServerHereController {
+class ServerHereGoogleApiController {
 
     @Autowired
     lateinit var userManagement: UserManagement
