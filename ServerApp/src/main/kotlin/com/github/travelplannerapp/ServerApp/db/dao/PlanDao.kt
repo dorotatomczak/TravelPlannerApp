@@ -1,6 +1,6 @@
 package com.github.travelplannerapp.ServerApp.db.dao
 
-import com.github.travelplannerapp.ServerApp.datamodels.Plan
+import com.github.travelplannerapp.communication.commonmodel.Plan
 import java.sql.ResultSet
 import java.sql.Timestamp
 

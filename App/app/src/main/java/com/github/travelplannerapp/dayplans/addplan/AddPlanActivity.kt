@@ -9,8 +9,8 @@ import android.view.View
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.github.travelplannerapp.R
-import com.github.travelplannerapp.communication.model.PlaceCategory
-import com.github.travelplannerapp.communication.model.Plan
+import com.github.travelplannerapp.communication.appmodel.PlaceCategory
+import com.github.travelplannerapp.communication.commonmodel.Plan
 import com.github.travelplannerapp.dayplans.searchelement.SearchElementActivity
 import com.github.travelplannerapp.utils.DateTimeUtils
 import com.github.travelplannerapp.utils.DrawerUtils

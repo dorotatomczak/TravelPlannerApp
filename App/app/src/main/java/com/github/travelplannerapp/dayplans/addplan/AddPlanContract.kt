@@ -1,7 +1,7 @@
 package com.github.travelplannerapp.dayplans.addplan
 
-import com.github.travelplannerapp.communication.model.PlaceCategory
-import com.github.travelplannerapp.communication.model.Plan
+import com.github.travelplannerapp.communication.appmodel.PlaceCategory
+import com.github.travelplannerapp.communication.commonmodel.Plan
 
 interface AddPlanContract {
 

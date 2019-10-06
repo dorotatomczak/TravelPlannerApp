@@ -25,9 +25,9 @@ class SignUpActivity : AppCompatActivity(), SignUpContract.View {
         setContentView(R.layout.activity_sign_up)
 
         //set up buttons
-        buttonSignIn.setOnClickListener { presenter.signIn() }
+        buttonSignIn.setOnClickListener { presenter.onSignInClicked() }
         buttonSignUp.setOnClickListener {
-            presenter.signUp(editTextEmail.text.toString(),
+            presenter.onSignUpClicked(editTextEmail.text.toString(),
                     editTextPassword.text.toString(), editTextConfirmPassword.text.toString())
         }
     }

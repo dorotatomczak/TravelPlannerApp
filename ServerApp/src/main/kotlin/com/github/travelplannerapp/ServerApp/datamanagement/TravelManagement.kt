@@ -1,8 +1,5 @@
 package com.github.travelplannerapp.ServerApp.datamanagement
 
-import com.github.travelplannerapp.ServerApp.datamodels.ObjectCategory
-import com.github.travelplannerapp.ServerApp.datamodels.Place
-import com.github.travelplannerapp.ServerApp.datamodels.Plan
 import com.github.travelplannerapp.ServerApp.db.dao.Travel
 import com.github.travelplannerapp.ServerApp.db.merge
 import com.github.travelplannerapp.ServerApp.db.repositories.PlanRepository
@@ -13,6 +10,9 @@ import com.github.travelplannerapp.ServerApp.exceptions.AddPlanException
 import com.github.travelplannerapp.ServerApp.exceptions.AddTravelException
 import com.github.travelplannerapp.ServerApp.exceptions.DeleteTravelsException
 import com.github.travelplannerapp.ServerApp.exceptions.UpdateTravelException
+import com.github.travelplannerapp.communication.commonmodel.ObjectCategory
+import com.github.travelplannerapp.communication.commonmodel.Place
+import com.github.travelplannerapp.communication.commonmodel.Plan
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component
 
@@ -63,9 +63,8 @@ class TravelManagement : ITravelManagement {
                     placeDao.title!!,
                     placeDao.vicinity!!,
                     emptyArray(),
-                    placeDao.category!!,
-                    ObjectCategory(),
-                    placeDao.href!!)
+                    placeDao.href!!,
+                    placeDao.category!!)
             val plan = Plan(planDao.id!!,
                     planDao.locale!!,
                     planDao.fromDateTime!!.time,

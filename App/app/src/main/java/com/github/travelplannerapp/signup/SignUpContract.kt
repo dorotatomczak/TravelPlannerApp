@@ -9,8 +9,8 @@ interface SignUpContract {
     }
 
     interface Presenter {
-        fun signUp(email: String, password: String, confirmPassword: String)
-        fun signIn()
+        fun onSignUpClicked(email: String, password: String, confirmPassword: String)
+        fun onSignInClicked()
         fun unsubscribe()
     }
 }

@@ -1,11 +1,11 @@
 package com.github.travelplannerapp.ServerApp.db.transactions
 
-import com.github.travelplannerapp.ServerApp.datamodels.Plan
 import com.github.travelplannerapp.ServerApp.db.DbConnection
 import com.github.travelplannerapp.ServerApp.db.dao.PlaceDao
 import com.github.travelplannerapp.ServerApp.db.dao.PlanDao
 import com.github.travelplannerapp.ServerApp.db.repositories.PlaceRepository
 import com.github.travelplannerapp.ServerApp.db.repositories.PlanRepository
+import com.github.travelplannerapp.communication.commonmodel.Plan
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component
 
@@ -39,7 +39,7 @@ class PlanTransaction {
                     plan.place.href,
                     plan.place.title,
                     plan.place.vicinity,
-                    plan.place.categoryNumber)
+                    plan.place.categoryIcon)
             queryResult = placeRepository.add(placeDao)
             if (queryResult) {
                 planDao.placeId = placeId

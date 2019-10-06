@@ -4,9 +4,9 @@ import com.github.travelplannerapp.BasePresenter
 import com.github.travelplannerapp.R
 import com.github.travelplannerapp.communication.ApiException
 import com.github.travelplannerapp.communication.CommunicationService
-import com.github.travelplannerapp.communication.model.PlaceCategory
-import com.github.travelplannerapp.communication.model.Plan
-import com.github.travelplannerapp.communication.model.ResponseCode
+import com.github.travelplannerapp.communication.appmodel.PlaceCategory
+import com.github.travelplannerapp.communication.commonmodel.Plan
+import com.github.travelplannerapp.communication.commonmodel.ResponseCode
 import com.github.travelplannerapp.utils.DateTimeUtils
 import com.github.travelplannerapp.utils.SchedulerProvider
 import com.github.travelplannerapp.utils.SharedPreferencesUtils
@@ -65,7 +65,7 @@ class DayPlansPresenter(private val travelId: Int, view: DayPlansContract.View) 
             itemView.showLine()
         }
 
-        val categoryIcon = PlaceCategory.values()[plan.place.categoryNumber].categoryIcon
+        val categoryIcon = PlaceCategory.values()[plan.place.categoryIcon].categoryIcon
         val fromTime = DateTimeUtils.timeToString(plan.fromDateTimeMs)
 
         itemView.setName(plan.place.title)
