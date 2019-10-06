@@ -3,9 +3,7 @@ Wprowadzone w bazie:
 create table app_user (
 	id serial PRIMARY KEY,
 	email varchar(40) NOT NULL,
-	password varchar(20) NOT NULL,
-  	authToken varchar(40),
-    	expirationDate timestamp
+	password varchar(20) NOT NULL
 );
 
 create table travel (
@@ -21,7 +19,7 @@ create table app_user_travel (
 
 create table scan (
 	id serial PRIMARY KEY,
-	user_id integer references app_user(id),
+	app_user_id integer references app_user(id),
 	travel_id integer references travel(id),
 	name varchar(40) NOT NULL
 );
