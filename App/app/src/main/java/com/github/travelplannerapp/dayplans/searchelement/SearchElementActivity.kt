@@ -38,8 +38,9 @@ class SearchElementActivity : AppCompatActivity(), SearchElementContract.View {
         const val EXTRA_LOCATION = "location"
         const val REQUEST_SEARCH = 1
         const val EXTRA_CATEGORY = "category"
+        const val EXTRA_PLACE_HERE_ID = "placeId"
+        const val EXTRA_HREF = "href"
     }
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         AndroidInjection.inject(this)
@@ -80,9 +81,11 @@ class SearchElementActivity : AppCompatActivity(), SearchElementContract.View {
         val resultIntent = Intent().apply {
             val place = presenter.getPlace(selectedMapMarker)
             if (place != null) {
+                // TODO [Magda] change to put Place if more extras added
                 putExtra(EXTRA_NAME, place.title)
                 putExtra(EXTRA_LOCATION, place.vicinity)
-                //TODO [Ania] put more data when needed
+                putExtra(EXTRA_PLACE_HERE_ID,  place.id)
+                putExtra(EXTRA_HREF,  place.href)
             }
         }
         setResult(RESULT_OK, resultIntent)
@@ -191,7 +194,7 @@ class SearchElementActivity : AppCompatActivity(), SearchElementContract.View {
     private fun loadObjectsOnMap(geoCord: GeoCoordinate) {
         map.setCenter(geoCord, Map.Animation.NONE)
         val category = intent.getStringExtra(EXTRA_CATEGORY)
-        presenter.search(category, map.boundingBox.topLeft.longitude.toString(),
+        presenter.search(category!!, map.boundingBox.topLeft.longitude.toString(),
                 map.boundingBox.bottomRight.latitude.toString(),
                 map.boundingBox.bottomRight.longitude.toString(),
                 map.boundingBox.topLeft.latitude.toString())

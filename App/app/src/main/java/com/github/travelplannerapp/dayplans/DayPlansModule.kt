@@ -10,7 +10,8 @@ import dagger.Provides
 class DayPlansModule {
 
     @Provides
-    internal fun provideDayPlansPresenter(dayPlansView: DayPlansContract.View): DayPlansContract.Presenter {
-        return DayPlansPresenter(dayPlansView)
+    internal fun provideDayPlansPresenter(dayPlansActivity: DayPlansActivity, dayPlansView: DayPlansContract.View): DayPlansContract.Presenter {
+        val travelId = dayPlansActivity.intent.getIntExtra(DayPlansActivity.EXTRA_TRAVEL_ID, -1)
+        return DayPlansPresenter(travelId,dayPlansView)
     }
 }
