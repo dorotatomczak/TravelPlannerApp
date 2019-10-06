@@ -13,7 +13,7 @@ class LauncherPresenter (view: LauncherContract.View) : BasePresenter<LauncherCo
     private var compositeDisposable = CompositeDisposable()
 
     override fun redirect(credentials: SharedPreferencesUtils.Credentials) {
-        if (isLoggedIn(credentials)) {
+        if (isSignedIn(credentials)) {
             verifyAccessToken()
         } else view.showSignIn()
     }
@@ -22,9 +22,9 @@ class LauncherPresenter (view: LauncherContract.View) : BasePresenter<LauncherCo
         compositeDisposable.clear()
     }
 
-    private fun isLoggedIn(credentials: SharedPreferencesUtils.Credentials): Boolean {
-        return !(credentials.userId == -1 && credentials.email.isNullOrEmpty() && credentials.token.isNullOrEmpty())
-    }
+    private fun isSignedIn(credentials: SharedPreferencesUtils.Credentials): Boolean =
+            !(credentials.userId == -1 || credentials.email.isNullOrEmpty() || credentials.token.isNullOrEmpty())
+
 
     private fun verifyAccessToken() {
         compositeDisposable.add(CommunicationService.serverApi.authorize()
