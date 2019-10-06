@@ -13,18 +13,16 @@ class UserRepository : Repository<User>(), IUserRepository {
         const val columnId = "id"
         const val columnEmail = "email"
         const val columnPassword = "password"
-        const val columnAuthToken = "authtoken"
-        const val columnExpirationDate = "expirationdate"
     }
 
     override val selectStatement = "SELECT * FROM $tableName "
     override val insertStatement = "INSERT INTO $tableName " +
-            "($columnId,$columnEmail,$columnPassword,$columnAuthToken,$columnExpirationDate) " +
-            "VALUES (?,?,?,?,?) "
+            "($columnId,$columnEmail,$columnPassword) " +
+            "VALUES (?,?,?) "
     override val deleteStatement = "DELETE FROM $tableName "
     override val updateStatement = "UPDATE $tableName " +
-            "SET $columnEmail=?, $columnPassword=?, $columnAuthToken=?, $columnExpirationDate=?" +
-            " WHERE $columnId=?"
+            "SET $columnEmail=?, $columnPassword=? " +
+            "WHERE $columnId=? "
     override val nextIdStatement = "SELECT nextval(pg_get_serial_sequence('$tableName', '$columnId')) AS new_id"
 
     override fun getUserByEmail(email: String): User? {
@@ -47,11 +45,9 @@ class UserRepository : Repository<User>(), IUserRepository {
         val statement = DbConnection
                 .conn
                 .prepareStatement(insertStatement)
-        statement.setInt(1,obj.id!!)
+        statement.setInt(1, obj.id!!)
         statement.setString(2, obj.email)
         statement.setString(3, obj.password)
-        statement.setString(4, obj.token)
-        statement.setTimestamp(5, obj.expirationDate)
         return statement
     }
 
@@ -61,9 +57,7 @@ class UserRepository : Repository<User>(), IUserRepository {
                 .prepareStatement(updateStatement)
         statement.setString(1, obj.email)
         statement.setString(2, obj.password)
-        statement.setString(3, obj.token)
-        statement.setTimestamp(4, obj.expirationDate)
-        statement.setInt(5,obj.id!!)
+        statement.setInt(3, obj.id!!)
         return statement
     }
 }

@@ -4,8 +4,8 @@ import com.github.travelplannerapp.BasePresenter
 import com.github.travelplannerapp.R
 import com.github.travelplannerapp.communication.ApiException
 import com.github.travelplannerapp.communication.CommunicationService
-import com.github.travelplannerapp.communication.commonmodel.Plan
 import com.github.travelplannerapp.communication.commonmodel.Place
+import com.github.travelplannerapp.communication.commonmodel.Plan
 import com.github.travelplannerapp.communication.commonmodel.ResponseCode
 import com.github.travelplannerapp.utils.DateTimeUtils
 import com.github.travelplannerapp.utils.SchedulerProvider
@@ -16,22 +16,17 @@ import java.util.*
 class AddPlanPresenter(private val travelId: Int, view: AddPlanContract.View) : BasePresenter<AddPlanContract.View>(view), AddPlanContract.Presenter {
 
     private val compositeDisposable = CompositeDisposable()
-
-    private lateinit var placeHereId: String
-    private lateinit var href: String
+    private var place: Place? = null
 
 
     override fun addPlan(data: AddPlanContract.NewPlanData) {
         if (isPlanDataValid(data)) {
-            val place = Place(placeHereId, data.name, data.location, arrayOf(data.coordinates.lattitude, data.coordinates.longitude),
-                    href, data.category.ordinal )
-
             val plan = Plan(-1,
                     Locale.getDefault().toString(),
                     DateTimeUtils.stringToDateTime(data.fromDate, data.fromTime).timeInMillis,
                     DateTimeUtils.stringToDateTime(data.toDate, data.toTime).timeInMillis,
                     -1,
-                    place)
+                    place!!)
 
             compositeDisposable.add(CommunicationService.serverApi.addPlan(SharedPreferencesUtils.getUserId(), travelId, plan)
                     .observeOn(SchedulerProvider.ui())
@@ -44,9 +39,8 @@ class AddPlanPresenter(private val travelId: Int, view: AddPlanContract.View) : 
         }
     }
 
-    override fun onPlaceFound(placeId: String, href: String) {
-        this.placeHereId = placeId
-        this.href = href
+    override fun onPlaceFound(place: Place) {
+        this.place = place
     }
 
     private fun isPlanDataValid(data: AddPlanContract.NewPlanData): Boolean {
@@ -59,6 +53,10 @@ class AddPlanPresenter(private val travelId: Int, view: AddPlanContract.View) : 
 
         if (!DateTimeUtils.isDateTimeABeforeDateTimeB(data.fromDate, data.fromTime, data.toDate, data.toTime)) {
             view.showSnackbar(R.string.wrong_dates_error)
+            return false
+        }
+
+        if(place == null){
             return false
         }
 

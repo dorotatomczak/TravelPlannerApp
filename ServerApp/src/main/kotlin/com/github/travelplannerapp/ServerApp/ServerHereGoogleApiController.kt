@@ -56,7 +56,7 @@ class ServerHereGoogleApiController {
         userManagement.verifyUser(token)
 
         try {
-            val cities = searchService.findCities(query)
+            val cities = searchService.getCities(query)
             return Response(ResponseCode.OK, cities)
         } catch (ex: Exception) {
             throw SearchNoItemsException(ex.localizedMessage)
@@ -74,14 +74,22 @@ class ServerHereGoogleApiController {
         return Response(ResponseCode.OK, contacts)
     }
 
-    @GetMapping("/here-management/transport")
-    fun getTransport(
-        /*@RequestHeader("authorization") token: String,
-        @PathVariable objectId: String,
-        @RequestParam("query") query: String*/
-    ): Response<String> {
-        val response = searchService.getTransport(Pair("54.356246", "18.645546"),Pair("52.273956", "21.022613"), "publicTransport")
-        return Response(ResponseCode.OK, "")
-        //AIzaSyDf4j9NNh-YZe6iChP-ThT-CCDzBSJgcmE
+    @GetMapping("google-management/routes")
+    fun getRoutes(
+        @RequestHeader("authorization") token: String,
+        @RequestParam("origin_latitude") originLat: String,
+        @RequestParam("origin_longitude") originLng: String,
+        @RequestParam("destination_latitude") destinationLat: String,
+        @RequestParam("destination_longitude") destinationLng: String,
+        @RequestParam("travel_mode") travelMode: String,
+        @RequestParam("departure_time") departureTime: String
+    ): Response<Routes> {
+        val response = searchService.getRoutes(
+            Pair(originLat, originLng),
+            Pair(destinationLat, destinationLng),
+            travelMode,
+            departureTime
+        )
+        return Response(ResponseCode.OK, response)
     }
 }

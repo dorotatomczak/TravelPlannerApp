@@ -11,7 +11,7 @@ class ScanRepository : Repository<Scan>(), IScanRepository {
     companion object {
         const val tableName = "scan"
         const val columnId = "id"
-        const val columnUserId = "user_id"
+        const val columnUserId = "app_user_id"
         const val columnTravelId = "travel_id"
         const val columnName = "name"
     }

@@ -11,7 +11,6 @@ import com.github.travelplannerapp.utils.DateTimeUtils
 import com.github.travelplannerapp.utils.SchedulerProvider
 import com.github.travelplannerapp.utils.SharedPreferencesUtils
 import io.reactivex.disposables.CompositeDisposable
-import kotlin.collections.ArrayList
 
 
 class DayPlansPresenter(private val travelId: Int, view: DayPlansContract.View) : BasePresenter<DayPlansContract.View>(view), DayPlansContract.Presenter {
@@ -28,9 +27,9 @@ class DayPlansPresenter(private val travelId: Int, view: DayPlansContract.View) 
     override fun onPlanAdded(plan: Plan) {
         plans.add(plan)
         plansToDayPlanItems(plans)
-
         view.showDayPlans()
         view.onDataSetChanged()
+
     }
 
     override fun unsubscribe() {

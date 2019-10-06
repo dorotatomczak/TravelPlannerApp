@@ -10,7 +10,7 @@ import java.sql.ResultSet
 @Component
 class PlanRepository : Repository<PlanDao>(), IPlanRepository {
     companion object {
-        const val tableName = "plan"
+        const val tableName = "plan_element"
         const val columnId = "id"
         const val columnLocale = "locale"
         const val columnFromDateTime = "from_date_time"

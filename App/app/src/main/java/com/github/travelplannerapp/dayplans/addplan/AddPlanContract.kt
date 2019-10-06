@@ -1,6 +1,7 @@
 package com.github.travelplannerapp.dayplans.addplan
 
 import com.github.travelplannerapp.communication.appmodel.PlaceCategory
+import com.github.travelplannerapp.communication.commonmodel.Place
 import com.github.travelplannerapp.communication.commonmodel.Plan
 
 interface AddPlanContract {
@@ -18,6 +19,6 @@ interface AddPlanContract {
 
     interface Presenter {
         fun addPlan(data: NewPlanData)
-        fun onPlaceFound(placeId: String, href: String)
+        fun onPlaceFound(place: Place)
     }
 }
