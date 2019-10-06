@@ -5,7 +5,7 @@ interface TravelDetailsContract {
     interface View {
         fun setTitle(title: String)
         fun setResult(travelId: Int, travelName: String)
-        fun showDayPlans()
+        fun showDayPlans(travelId: Int)
         fun showTransport()
         fun showAccommodation()
         fun showTickets(travelId: Int)

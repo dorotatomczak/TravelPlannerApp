@@ -19,15 +19,15 @@ class SearchElementPresenter(view: SearchElementContract.View) : BasePresenter<S
                 || north != "0.0"
                 || east != "0.0"
                 || south != "0.0") {
-            compositeDisposable.add(CommunicationService.serverApi.findObjects(category, west, north, east, south)
-                    .observeOn(SchedulerProvider.ui())
-                    .subscribeOn(SchedulerProvider.io())
-                    .map { if (it.responseCode == ResponseCode.OK) it.data else throw ApiException(it.responseCode) }
-                    .subscribe(
-                            { places -> view.loadObjectsOnMap(places!!) },
-                            { error -> handleErrorResponse(error) }
-                    ))
-        }
+        compositeDisposable.add(CommunicationService.serverApi.findObjects(category, west, north, east, south)
+                .observeOn(SchedulerProvider.ui())
+                .subscribeOn(SchedulerProvider.io())
+                .map { if (it.responseCode == ResponseCode.OK) it.data else throw ApiException(it.responseCode) }
+                .subscribe(
+                        { places -> view.loadObjectsOnMap(places!!) },
+                        { error -> handleErrorResponse(error) }
+                ))
+    }
     }
 
     override fun clearPlacesMap() {

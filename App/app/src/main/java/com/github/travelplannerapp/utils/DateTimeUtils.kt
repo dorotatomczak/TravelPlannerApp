@@ -22,6 +22,18 @@ object DateTimeUtils {
         return formatter.format(calendar.time)
     }
 
+    fun dateToString(dateTimeMs: Long) : String {
+        val calendar = GregorianCalendar.getInstance()
+        calendar.timeInMillis = dateTimeMs
+        return dateToString(calendar)
+    }
+
+    fun timeToString(dateTimeMs: Long) : String {
+        val calendar = GregorianCalendar.getInstance()
+        calendar.timeInMillis = dateTimeMs
+        return timeToString(calendar)
+    }
+
     fun stringToDateTime(date: String, time: String) : Calendar {
         val dateTimeText = "$date $time"
         val calendar = GregorianCalendar.getInstance()

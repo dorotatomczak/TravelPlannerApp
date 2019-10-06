@@ -17,12 +17,12 @@ class SignInPresenter(view: SignInContract.View) : BasePresenter<SignInContract.
     private val compositeDisposable = CompositeDisposable()
     lateinit var email: String
 
-    override fun signUp() {
+    override fun onSignUpClicked() {
         view.showSignUp()
     }
 
-    override fun signIn(email: String, password: String) {
-        val hashedPassword = PasswordUtils().hashPassword(password)
+    override fun onSignInClicked(email: String, password: String) {
+        val hashedPassword = PasswordUtils.hashPassword(password)
         if (hashedPassword == null) {
             view.showSnackbar(R.string.try_again)
         } else {

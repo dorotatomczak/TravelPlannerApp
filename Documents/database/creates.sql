@@ -25,3 +25,22 @@ create table scan (
 	travel_id integer references travel(id),
 	name varchar(40) NOT NULL
 );
+
+create table place (
+	id serial PRIMARY KEY,
+	here_id text,
+	href text,
+	title text,
+	vicinity text,
+	category integer
+);
+
+create table plan (
+	id serial PRIMARY KEY,
+	locale text,
+	from_date_time timestamp,
+	to_date_time timestamp,
+	place_id integer references place(id),
+	travel_id integer references travel(id)
+);
+

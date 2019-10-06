@@ -14,7 +14,6 @@ class ServerUserController {
     @Autowired
     lateinit var userManagement: UserManagement
 
-
     @PostMapping("user-management/authorize")
     fun authorize(@RequestHeader("authorization") token: String): Response<Unit> {
         userManagement.verifyUser(token)
