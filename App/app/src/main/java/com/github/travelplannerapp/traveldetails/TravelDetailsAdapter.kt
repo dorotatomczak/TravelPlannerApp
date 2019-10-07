@@ -17,7 +17,7 @@ class TravelDetailsAdapter (val presenter: TravelDetailsContract.Presenter): Rec
     var categories = listOf(Category(Category.CategoryType.DAY_PLANS, R.string.day_plans, R.drawable.ic_place, R.color.sunsetOrange, 1000),
             Category(Category.CategoryType.TRANSPORT, R.string.transport, R.drawable.ic_plane, R.color.moonstoneBlue, 700),
             Category(Category.CategoryType.ACCOMMODATION, R.string.accommodation, R.drawable.ic_hotel, R.color.raspberryGlace, 800),
-            Category(Category.CategoryType.TICKETS, R.string.tickets, R.drawable.ic_ticket, R.color.neonCarrot, 500))
+            Category(Category.CategoryType.SCANS, R.string.scans, R.drawable.ic_scan, R.color.neonCarrot, 500))
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TravelDetailsViewHolder {
         return TravelDetailsViewHolder(presenter, LayoutInflater.from(parent.context)

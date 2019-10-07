@@ -3,7 +3,7 @@
     <string name="menu_settings">Settings</string>
     <string name="sign_in">Sign In</string>
     <string name="day_plans">Day Plans</string>
-    <string name="tickets">Tickets</string>
+    <string name="scans">Scans</string>
     <string name="transport">Transport</string>
     <string name="accommodation">Accommodation</string>
     <string name="no_travels">You have no travels</string>
@@ -41,7 +41,7 @@
     <string name="add_plan_error">Error when adding plan</string>
     <string name="no_day_plans">You have no day plans for this travel</string>
     <string name="authorization_error">You are not authorized to perform this action</string>
-    <string name="no_tickets">You have no tickets</string>
+    <string name="no_scans">You have no scans</string>
     <string name="add_scan_error">Error when adding scan</string>
     <string name="search">Search</string>
     <string name="category">Category</string>
@@ -55,7 +55,7 @@
     <string name="missing_required_fields_error">Fill in all the fields</string>
     <string name="menu_delete">Delete</string>
     <string name="menu_edit">Edit</string>
-    <string name="delete_tickets_ok">You deleted selected scan(s)</string>
+    <string name="delete_scans_ok">You deleted selected scan(s)</string>
     <string name="delete_scans_error">Error when deleting scan(s)</string>
     <string name="delete_entry">Delete %1$s</string>
     <string name="delete_confirmation">Are you sure you want to delete selected %1$s?</string>

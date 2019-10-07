@@ -41,7 +41,7 @@
 
         <activity android:name=".transport.TransportActivity" />
 
-        <activity android:name=".tickets.TicketsActivity" />
+        <activity android:name=".scans.ScansActivity" />
 
         <activity android:name=".scanner.ScannerActivity" />
 

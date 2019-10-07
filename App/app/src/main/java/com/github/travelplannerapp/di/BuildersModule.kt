@@ -25,9 +25,9 @@ import com.github.travelplannerapp.signin.SignInViewModel
 import com.github.travelplannerapp.signup.SignUpActivity
 import com.github.travelplannerapp.signup.SignUpModule
 import com.github.travelplannerapp.signup.SignUpViewModel
-import com.github.travelplannerapp.tickets.TicketsActivity
-import com.github.travelplannerapp.tickets.TicketsModule
-import com.github.travelplannerapp.tickets.TicketsViewModel
+import com.github.travelplannerapp.scans.ScansActivity
+import com.github.travelplannerapp.scans.ScansModule
+import com.github.travelplannerapp.scans.ScansViewModel
 import com.github.travelplannerapp.transport.TransportActivity
 import com.github.travelplannerapp.transport.TransportModule
 import com.github.travelplannerapp.transport.TransportViewModel
@@ -72,8 +72,8 @@ abstract class BuildersModule {
     @ContributesAndroidInjector(modules = [ScannerViewModel::class, ScannerModule::class])
     internal abstract fun bindScannerActivity(): ScannerActivity
 
-    @ContributesAndroidInjector(modules = [TicketsViewModel::class, TicketsModule::class])
-    internal abstract fun bindTicketsActivity(): TicketsActivity
+    @ContributesAndroidInjector(modules = [ScansViewModel::class, ScansModule::class])
+    internal abstract fun bindScansActivity(): ScansActivity
 
     @ContributesAndroidInjector(modules = [TransportViewModel::class, TransportModule::class])
     internal abstract fun bindTransportActivity(): TransportActivity
