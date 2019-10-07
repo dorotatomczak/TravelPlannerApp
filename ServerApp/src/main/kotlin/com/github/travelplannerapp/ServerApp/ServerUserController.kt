@@ -1,9 +1,7 @@
 package com.github.travelplannerapp.ServerApp
 
 import com.github.travelplannerapp.ServerApp.datamanagement.UserManagement
-import com.github.travelplannerapp.ServerApp.datamodels.*
-import com.github.travelplannerapp.ServerApp.db.dao.UserFriend
-import com.github.travelplannerapp.ServerApp.db.repositories.UserRepository
+import com.github.travelplannerapp.ServerApp.datamodels.commonmodel.UserInfo
 import com.github.travelplannerapp.ServerApp.exceptions.SearchNoItemsException
 import com.github.travelplannerapp.communication.commonmodel.*
 import org.springframework.beans.factory.annotation.Autowired
@@ -49,10 +47,10 @@ class ServerUserController {
     fun addFriend(
             @RequestHeader("authorization") token: String,
             @PathVariable userId: Int,
-            @RequestBody friendEmail: String
-    ): Response<UserFriend> {
+            @RequestBody friend: UserInfo
+    ): Response<Int> {
         userManagement.verifyUser(token)
-        val response = userManagement.addFriend(userId, friendEmail)
+        val response = userManagement.addFriend(userId, friend.id).id
         return Response(ResponseCode.OK, response)
     }
 

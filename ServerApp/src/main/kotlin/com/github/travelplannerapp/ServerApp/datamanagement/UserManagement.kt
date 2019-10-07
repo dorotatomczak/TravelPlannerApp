@@ -1,6 +1,6 @@
 package com.github.travelplannerapp.ServerApp.datamanagement
 
-import com.github.travelplannerapp.ServerApp.datamodels.UserInfo
+import com.github.travelplannerapp.ServerApp.datamodels.commonmodel.UserInfo
 import com.github.travelplannerapp.ServerApp.db.dao.User
 import com.github.travelplannerapp.ServerApp.db.dao.UserFriend
 import com.github.travelplannerapp.ServerApp.db.merge
@@ -85,10 +85,9 @@ class UserManagement : IUserManagement {
         userRepository.update(updatedUser)
     }
 
-    override fun addFriend(userId: Int, friendEmail: String): UserFriend {
+    override fun addFriend(userId: Int, friendId: Int): UserFriend {
         val userFriendId = userFriendRepository.getNextId()
-        val friend = userRepository.getUserByEmail(friendEmail)
-        val userFriend = UserFriend(userFriendId, userId, friend!!.id)
+        val userFriend = UserFriend(userFriendId, userId, friendId)
         if (userFriendRepository.add(userFriend))
             return userFriend
         else throw AddFriendException("Error when adding friend")
@@ -103,10 +102,20 @@ class UserManagement : IUserManagement {
     }
 
     override fun findEmails(query: String): MutableList<UserInfo> {
-        return userRepository.findEmails(query)
+        val userInfos = mutableListOf<UserInfo>()
+        val friends = userRepository.findEmails(query)
+        friends.forEach { user ->
+            userInfos.add(UserInfo(user.id!!, user.email!!))
+        }
+        return userInfos
     }
 
     override fun getAllFriendsByUserId(userId: Int): MutableList<UserInfo> {
-        return userRepository.getAllFriendsByUserId(userId)
+        val userInfos = mutableListOf<UserInfo>()
+        val friends = userRepository.getAllFriendsByUserId(userId)
+        friends.forEach { user ->
+            userInfos.add(UserInfo(user.id!!, user.email!!))
+        }
+        return userInfos
     }
 }

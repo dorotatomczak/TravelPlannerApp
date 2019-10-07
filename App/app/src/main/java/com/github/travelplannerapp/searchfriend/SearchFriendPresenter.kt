@@ -27,12 +27,12 @@ class SearchFriendPresenter(view: SearchFriendContract.View) : BasePresenter<Sea
     }
 
     override fun addFriend(friend: UserInfo) {
-        compositeDisposable.add(CommunicationService.serverApi.addFriend(SharedPreferencesUtils.getUserId(), friend.email)
+        compositeDisposable.add(CommunicationService.serverApi.addFriend(SharedPreferencesUtils.getUserId(), friend)
                 .observeOn(SchedulerProvider.ui())
                 .subscribeOn(SchedulerProvider.io())
                 .map { if (it.responseCode == ResponseCode.OK) it.data!! else throw ApiException(it.responseCode) }
                 .subscribe(
-                        { email -> handleAddFriendResponse(friend) },
+                        { id -> handleAddFriendResponse(id) },
                         { error -> handleErrorResponse(error) }
                 ))
     }
@@ -57,11 +57,11 @@ class SearchFriendPresenter(view: SearchFriendContract.View) : BasePresenter<Sea
         view.showFriends()
     }
 
-    private fun handleAddFriendResponse(friend: UserInfo) {
+    private fun handleAddFriendResponse(userFriendId: Int) {
         view.showSnackbar(R.string.friend_added)
         view.onDataSetChanged()
         view.setLoadingIndicatorVisibility(false)
-        view.showFriends()
+        loadFriends()
     }
 
     private fun handleDeleteFriendsResponse() {
@@ -71,6 +71,7 @@ class SearchFriendPresenter(view: SearchFriendContract.View) : BasePresenter<Sea
     }
 
     private fun handleErrorResponse(error: Throwable) {
+        loadFriends()
         view.showSnackbar(R.string.error)
     }
 
