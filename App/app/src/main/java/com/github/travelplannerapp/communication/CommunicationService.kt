@@ -3,6 +3,7 @@ package com.github.travelplannerapp.communication
 import com.github.travelplannerapp.communication.commonmodel.*
 import com.github.travelplannerapp.communication.commonmodel.Response
 import com.github.travelplannerapp.communication.appmodel.*
+import com.github.travelplannerapp.communication.model.UserInfo
 import io.reactivex.Observable
 import io.reactivex.Single
 import okhttp3.MultipartBody
@@ -20,7 +21,8 @@ object CommunicationService {
     //localhost via emulator is emulator itself
     //remote server: https://journello.herokuapp.com/
 
-    private const val serverUrl: String = "http://192.168.1.8:8080/"
+    //change to 10.0.2.2
+    private const val serverUrl: String = "http://192.168.43.155:8080/"
     val serverApi: ServerApi = Retrofit.Builder()
             .baseUrl(serverUrl)
             .addConverterFactory(ScalarsConverterFactory.create())
@@ -81,14 +83,15 @@ interface ServerApi {
     @GET("users/{userId}/friends")
     fun getFriends(@Path("userId") userId: Int): Observable<Response<List<UserInfo>>>
 
-    @POST("/users/{userId}/friends")
+    @POST("users/{userId}/friends")
     fun addFriend(@Path("userId") userId: Int, @Body friendEmail: String): Single<Response<Boolean>>
 
-    @GET("/user-management/usersemails")
+    @GET("user-management/usersemails")
     fun findUsersEmails(@Query("query") query: String): Single<Response<MutableList<UserInfo>>>
 
-    @HTTP(method = "DELETE", path = "/users/{userId}/friends", hasBody = true)
+    @HTTP(method = "DELETE", path = "users/{userId}/friends", hasBody = true)
     fun deleteFriends(@Path("userId") userId: Int, @Body friendsIds: MutableSet<Int>): Single<Response<Unit>>
+
     @GET("users/{userId}/travels/{travelId}/plans")
     fun getPlans(@Path("userId") userId: Int, @Path("travelId") travelId: Int): Single<Response<List<Plan>>>
 

@@ -60,7 +60,7 @@ object DrawerUtils {
                 view.context.startActivity(intent)
             }
         },
-        SEARCH_FRIEND(R.string.user_friends, R.drawable.ic_person) {
+        SEARCH_FRIEND(R.string.user_friends, R.drawable.ic_user) {
             override fun onClick(view: View) {
                 val intent = Intent(view.context, SearchFriendActivity::class.java)
                 view.context.startActivity(intent)

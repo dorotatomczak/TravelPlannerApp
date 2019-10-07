@@ -50,7 +50,6 @@ class SearchFriendActivity : AppCompatActivity(), SearchFriendContract.View {
 
                 override fun onSuggestionClick(position: Int): Boolean {
                     closeKeyboard()
-                    var c = suggestionsAdapter.getItem(position) as Cursor
                     val friend = UserInfo(suggestionsAdapter.getItem(position) as Cursor)
                     showAddFriend(friend)
                     return true

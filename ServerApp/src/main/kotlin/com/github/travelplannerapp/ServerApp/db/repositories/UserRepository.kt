@@ -25,9 +25,7 @@ class UserRepository : Repository<User>(), IUserRepository {
 
             usersEmails.add(UserInfo(u.id.toString().toInt(), u.email.toString()))
         }
-
         return usersEmails
-
     }
 
 
@@ -69,13 +67,7 @@ class UserRepository : Repository<User>(), IUserRepository {
                 .prepareStatement(updateStatement)
         statement.setString(1, obj.email)
         statement.setString(2, obj.password)
-                statement.setInt(3, obj.id!!)
-        return statement
-    }
-
-        statement.setString(3, obj.token)
-        statement.setTimestamp(4, obj.expirationDate)
-        statement.setInt(5, obj.id!!)
+        statement.setInt(3, obj.id!!)
         return statement
     }
 
@@ -96,16 +88,16 @@ class UserRepository : Repository<User>(), IUserRepository {
         val statement = DbConnection
                 .conn
                 .prepareStatement(
-                        "SELECT * FROM $tableName "+
-                                "INNER JOIN ${UserFriendRepository.tableName} "+
-                                "on $tableName.$columnId = ${UserFriendRepository.tableName}.${UserFriendRepository.columnFriendId}"+
-                                " WHERE ${UserFriendRepository.tableName}.${UserFriendRepository.columnUserId}=?"
+                        "SELECT * FROM $tableName " +
+                                "INNER JOIN ${UserFriendRepository.tableName} " +
+                                "on $tableName.$columnId = ${UserFriendRepository.tableName}.${UserFriendRepository.columnFriendId} " +
+                                "WHERE ${UserFriendRepository.tableName}.${UserFriendRepository.columnUserId}=?"
                 )
         statement.setInt(1, id)
         val result = statement.executeQuery()
         while (result.next()) {
-            var friend=User(result)
-            friends.add(UserInfo(friend.id!!,friend.email!!))
+            var friend = User(result)
+            friends.add(UserInfo(friend.id!!, friend.email!!))
         }
         return friends
     }

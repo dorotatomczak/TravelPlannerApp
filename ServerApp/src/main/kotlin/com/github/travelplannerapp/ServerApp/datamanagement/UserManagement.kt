@@ -1,13 +1,12 @@
 package com.github.travelplannerapp.ServerApp.datamanagement
 
+import com.github.travelplannerapp.ServerApp.datamodels.UserInfo
 import com.github.travelplannerapp.ServerApp.db.dao.User
 import com.github.travelplannerapp.ServerApp.db.dao.UserFriend
 import com.github.travelplannerapp.ServerApp.db.merge
 import com.github.travelplannerapp.ServerApp.db.repositories.UserFriendRepository
 import com.github.travelplannerapp.ServerApp.db.repositories.UserRepository
-import com.github.travelplannerapp.ServerApp.exceptions.AuthorizationException
-import com.github.travelplannerapp.ServerApp.exceptions.EmailAlreadyExistsException
-import com.github.travelplannerapp.ServerApp.exceptions.WrongCredentialsException
+import com.github.travelplannerapp.ServerApp.exceptions.*
 import com.github.travelplannerapp.communication.commonmodel.SignInRequest
 import com.github.travelplannerapp.communication.commonmodel.SignUpRequest
 import io.jsonwebtoken.Jwts
@@ -24,7 +23,7 @@ class UserManagement : IUserManagement {
     @Autowired
     lateinit var userRepository: UserRepository
     @Autowired
-    lateinit var friendRepository: UserFriendRepository
+    lateinit var userFriendRepository: UserFriendRepository
     private val ACCESS_TOKEN_SUB = "AccessToken"
     private val ACCESS_TOKEN_ISSUER = "TravelApp_Server"
     private val SECRET_KEY =
@@ -86,25 +85,28 @@ class UserManagement : IUserManagement {
         userRepository.update(updatedUser)
     }
 
-    override fun addFriend(userId: Int, friendEmail: String): Boolean {
-        val friendshipId = friendRepository.getNextId()
+    override fun addFriend(userId: Int, friendEmail: String): UserFriend {
+        val userFriendId = userFriendRepository.getNextId()
         val friend = userRepository.getUserByEmail(friendEmail)
-        if (friend !== null) {
-            val friendship = UserFriend(friendshipId, userId, friend.id)
-            friendRepository.add(friendship)
-            return true
-        }
-        return false
+        val userFriend = UserFriend(userFriendId, userId, friend!!.id)
+        if (userFriendRepository.add(userFriend))
+            return userFriend
+        else throw AddFriendException("Error when adding friend")
+
     }
 
     override fun deleteFriends(userId: Int, friendsIds: MutableSet<Int>) {
-        var result = true
         for (friendId in friendsIds) {
-            result = friendRepository.deleteUserFriendBinding(userId, friendId)
-            if (!result) break
+            if (!userFriendRepository.deleteUserFriendBinding(userId, friendId))
+                throw  DeleteFriendException("Error when deleting friend")
         }
-
-        if (!result) throw  Exception("Error when deleting friend")
     }
 
+    override fun findEmails(query: String): MutableList<UserInfo> {
+        return userRepository.findEmails(query)
+    }
+
+    override fun getAllFriendsByUserId(userId: Int): MutableList<UserInfo> {
+        return userRepository.getAllFriendsByUserId(userId)
+    }
 }

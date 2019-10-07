@@ -2,24 +2,18 @@ package com.github.travelplannerapp.ServerApp
 
 import com.github.travelplannerapp.ServerApp.datamanagement.UserManagement
 import com.github.travelplannerapp.ServerApp.datamodels.*
-import com.github.travelplannerapp.ServerApp.exceptions.ResponseCode
 import com.github.travelplannerapp.ServerApp.db.dao.UserFriend
 import com.github.travelplannerapp.ServerApp.db.repositories.UserRepository
 import com.github.travelplannerapp.ServerApp.exceptions.SearchNoItemsException
 import com.github.travelplannerapp.communication.commonmodel.*
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.web.bind.annotation.PostMapping
-import org.springframework.web.bind.annotation.RequestBody
-import org.springframework.web.bind.annotation.RequestHeader
-import org.springframework.web.bind.annotation.RestController
+import org.springframework.web.bind.annotation.*
 
 @RestController
 class ServerUserController {
 
     @Autowired
     lateinit var userManagement: UserManagement
-    @Autowired
-    lateinit var userRepository: UserRepository
 
     @PostMapping("user-management/authorize")
     fun authorize(@RequestHeader("authorization") token: String): Response<Unit> {
@@ -47,7 +41,7 @@ class ServerUserController {
             @PathVariable userId: Int
     ): Response<List<UserInfo>> {
         userManagement.verifyUser(token)
-        val friends = userRepository.getAllFriendsByUserId(userId)
+        val friends = userManagement.getAllFriendsByUserId(userId)
         return Response(ResponseCode.OK, friends)
     }
 
@@ -56,7 +50,7 @@ class ServerUserController {
             @RequestHeader("authorization") token: String,
             @PathVariable userId: Int,
             @RequestBody friendEmail: String
-    ): Response<Boolean> {
+    ): Response<UserFriend> {
         userManagement.verifyUser(token)
         val response = userManagement.addFriend(userId, friendEmail)
         return Response(ResponseCode.OK, response)
@@ -67,7 +61,7 @@ class ServerUserController {
             @RequestParam("query") query: String
     ): Response<MutableList<UserInfo>> {
         try {
-            val users = userRepository.findEmails(query)
+            val users = userManagement.findEmails(query)
             return Response(ResponseCode.OK, users)
         } catch (ex: Exception) {
             throw SearchNoItemsException(ex.localizedMessage)

@@ -59,7 +59,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:visibility="gone"
-                tools:listitem="@layout/item_one_of_list" />
+                tools:listitem="@layout/item_friend" />
 
         </LinearLayout>
 

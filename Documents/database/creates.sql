@@ -14,6 +14,12 @@ create table travel (
 create table app_user_travel (
 	id serial PRIMARY KEY,
 	app_user_id integer references app_user(id),
+	travel_id integer references travel(id)
+);
+
+create table scan (
+	id serial PRIMARY KEY,
+	app_user_id integer references app_user(id),
 	travel_id integer references travel(id),
 	name varchar(40) NOT NULL
 );

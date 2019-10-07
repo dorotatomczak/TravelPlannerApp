@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.github.travelplannerapp.R
 import com.github.travelplannerapp.deleteactionmode.DeleteActionModeToolbar
 import kotlinx.android.extensions.LayoutContainer
-import kotlinx.android.synthetic.main.item_one_of_list.*
+import kotlinx.android.synthetic.main.item_friend.*
 
 class FriendAdapter(val presenter: SearchFriendContract.Presenter) : RecyclerView.Adapter<FriendAdapter.FriendsViewHolder>() {
 
@@ -18,7 +18,7 @@ class FriendAdapter(val presenter: SearchFriendContract.Presenter) : RecyclerVie
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FriendsViewHolder {
         return FriendsViewHolder(presenter, LayoutInflater.from(parent.context)
-                .inflate(R.layout.item_one_of_list, parent, false)); }
+                .inflate(R.layout.item_friend, parent, false)); }
 
     override fun getItemCount(): Int {
         return presenter.getFriendsCount()

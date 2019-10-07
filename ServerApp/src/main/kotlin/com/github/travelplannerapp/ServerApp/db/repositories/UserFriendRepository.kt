@@ -55,17 +55,4 @@ class UserFriendRepository : Repository<UserFriend>(), IUserFriendRepository {
         statement.setInt(2, friendId)
         return statement.executeUpdate() > 0
     }
-
-    override fun countByUserId(friendId: Int): Int {
-        val statement = DbConnection
-                .conn
-                .prepareStatement("SELECT COUNT(*) AS friend_bindings " +
-                        "FROM $tableName WHERE $columnFriendId=?")
-        statement.setInt(1, friendId)
-        val result: ResultSet = statement.executeQuery()
-        if (result.next()) {
-            return result.getInt("friend_bindings")
-        }
-        return 0
-    }
 }
