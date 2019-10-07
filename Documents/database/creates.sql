@@ -3,9 +3,7 @@ Wprowadzone w bazie:
 create table app_user (
 	id serial PRIMARY KEY,
 	email varchar(40) NOT NULL,
-	password varchar(20) NOT NULL,
-  	authToken varchar(40),
-    	expirationDate timestamp
+	password varchar(20) NOT NULL
 );
 
 create table travel (
@@ -16,20 +14,35 @@ create table travel (
 create table app_user_travel (
 	id serial PRIMARY KEY,
 	app_user_id integer references app_user(id),
+	travel_id integer references travel(id),
+	name varchar(40) NOT NULL
+);
+
+create table place (
+	id serial PRIMARY KEY,
+	here_id text,
+	href text,
+	title text,
+	vicinity text,
+	category integer
+);
+
+create table plan (
+	id serial PRIMARY KEY,
+	locale text,
+	from_date_time timestamp,
+	to_date_time timestamp,
+	place_id integer references place(id),
 	travel_id integer references travel(id)
 );
+
 create table app_user_friend (
 	id serial PRIMARY KEY,
 	app_user_id integer references app_user(id),
 	friend_user_id integer references app_user(id)
 );
+	
 
 
-insert into app_user (email,password) values ('jan.kowalski@gmail.com','password');
-insert into travel (name) values ('Pary�');
-insert into travel (name) values ('Rzym');
-insert into app_user_travel (app_user_id, travel_id) values (1,1);
-insert into app_user_travel (app_user_id, travel_id) values (1,2);
-insert into app_user_friend (app_user_id, friend_user_id) values (110,1);
-insert into app_user_friend (app_user_id, friend_user_id) values (1,6);
-insert into app_user_friend (app_user_id, friend_user_id) values (110,6);
+
+

@@ -14,9 +14,10 @@ object SharedPreferencesUtils {
     private const val PREF_KEY_USER_ID = "PREF_KEY_USER_ID"
     private const val PREF_KEY_EMAIL = "PREF_KEY_EMAIL"
 
-    fun initialize(context: Context){
+    fun initialize(context: Context) {
         sharedPref = context.getSharedPreferences(PREF_FILE_NAME, MODE_PRIVATE)
     }
+
     fun clear() {
         sharedPref.edit().clear().apply()
     }

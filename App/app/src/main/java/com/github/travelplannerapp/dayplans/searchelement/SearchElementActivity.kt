@@ -4,24 +4,24 @@ import android.app.SearchManager
 import android.content.Context
 import android.content.Intent
 import android.database.Cursor
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.view.inputmethod.InputMethodManager
+import androidx.appcompat.app.AppCompatActivity
 import com.github.travelplannerapp.R
-import com.github.travelplannerapp.communication.model.CityObject
-import com.github.travelplannerapp.communication.model.Contacts
-import com.github.travelplannerapp.communication.model.Place
-import dagger.android.AndroidInjection
-import javax.inject.Inject
+import com.github.travelplannerapp.communication.commonmodel.Contacts
+import com.github.travelplannerapp.communication.commonmodel.Place
+import com.github.travelplannerapp.communication.appmodel.CityObject
 import com.google.android.material.snackbar.Snackbar
 import com.here.android.mpa.common.GeoCoordinate
 import com.here.android.mpa.common.OnEngineInitListener
 import com.here.android.mpa.common.ViewObject
 import com.here.android.mpa.mapping.*
 import com.here.android.mpa.mapping.Map
+import dagger.android.AndroidInjection
 import kotlinx.android.synthetic.main.activity_search_element.*
 import kotlinx.android.synthetic.main.fab_check.*
+import javax.inject.Inject
 
 
 class SearchElementActivity : AppCompatActivity(), SearchElementContract.View {
@@ -38,8 +38,9 @@ class SearchElementActivity : AppCompatActivity(), SearchElementContract.View {
         const val EXTRA_LOCATION = "location"
         const val REQUEST_SEARCH = 1
         const val EXTRA_CATEGORY = "category"
+        const val EXTRA_PLACE_HERE_ID = "placeId"
+        const val EXTRA_HREF = "href"
     }
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         AndroidInjection.inject(this)
@@ -80,9 +81,11 @@ class SearchElementActivity : AppCompatActivity(), SearchElementContract.View {
         val resultIntent = Intent().apply {
             val place = presenter.getPlace(selectedMapMarker)
             if (place != null) {
+                // TODO [Magda] change to put Place if more extras added
                 putExtra(EXTRA_NAME, place.title)
                 putExtra(EXTRA_LOCATION, place.vicinity)
-                //TODO [Ania] put more data when needed
+                putExtra(EXTRA_PLACE_HERE_ID,  place.id)
+                putExtra(EXTRA_HREF,  place.href)
             }
         }
         setResult(RESULT_OK, resultIntent)
@@ -191,7 +194,7 @@ class SearchElementActivity : AppCompatActivity(), SearchElementContract.View {
     private fun loadObjectsOnMap(geoCord: GeoCoordinate) {
         map.setCenter(geoCord, Map.Animation.NONE)
         val category = intent.getStringExtra(EXTRA_CATEGORY)
-        presenter.search(category, map.boundingBox.topLeft.longitude.toString(),
+        presenter.search(category!!, map.boundingBox.topLeft.longitude.toString(),
                 map.boundingBox.bottomRight.latitude.toString(),
                 map.boundingBox.bottomRight.longitude.toString(),
                 map.boundingBox.topLeft.latitude.toString())

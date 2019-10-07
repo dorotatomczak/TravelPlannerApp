@@ -1,13 +1,18 @@
 package com.github.travelplannerapp.ServerApp.services.searchservice
 
-import com.github.travelplannerapp.ServerApp.datamodels.*
+import com.github.travelplannerapp.ServerApp.datamodels.servermodel.CityObject
+import com.github.travelplannerapp.ServerApp.datamodels.servermodel.SearchCitiesResponse
 import com.github.travelplannerapp.ServerApp.exceptions.SearchNoItemsException
+import com.github.travelplannerapp.communication.commonmodel.Contacts
+import com.github.travelplannerapp.communication.commonmodel.Place
+import com.github.travelplannerapp.communication.commonmodel.PlaceInfo
+import com.github.travelplannerapp.communication.commonmodel.SearchObjectsResponse
 import com.google.gson.GsonBuilder
 import com.google.gson.JsonParser
+import org.apache.commons.lang3.StringEscapeUtils
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.context.annotation.Configuration
-import org.apache.commons.lang3.StringEscapeUtils
 import org.springframework.stereotype.Component
 import java.net.URL
 import java.net.URLConnection
@@ -19,11 +24,11 @@ class SearchService : ISearchService {
 
     // test function
     override fun getExampleDataFromHere() {
-        print(hereLoader.findPlaceByText("chrysler", "40.74917", "-73.98529"))
+        print(hereLoader.getPlaceByText("chrysler", "40.74917", "-73.98529"))
         print(
-            hereLoader.findBestWay(
+            hereLoader.getTransport(
                 "40.74917", "-73.98529", "45.74917",
-                "-72.98529", "fastest", "car", "disabled"
+                "-72.98529", "car"
             )
         )
     }
@@ -33,7 +38,7 @@ class SearchService : ISearchService {
         westSouthPoint: Pair<String, String>,
         eastNorthPoint: Pair<String, String>
     ): Array<Place> {
-        val places = hereLoader.findObjects(
+        val places = hereLoader.getObjects(
             westSouthPoint.first, westSouthPoint.second,
             eastNorthPoint.first, eastNorthPoint.second, category
         ).results.items
@@ -66,6 +71,20 @@ class SearchService : ISearchService {
         return hereLoader.getContacts(href)
     }
 
+    override fun getTransport(
+        startCoordinates: Pair<String, String>,
+        destinationCoordinates: Pair<String, String>,
+        transportMode: String
+    ): String {
+        return hereLoader.getTransport(
+            startCoordinates.first,
+            startCoordinates.second,
+            destinationCoordinates.first,
+            destinationCoordinates.second,
+            transportMode
+        )
+    }
+
     private fun escapeHtml(str: String): String {
         return StringEscapeUtils.unescapeHtml3(str).replace("<br/>", "\n")
     }
@@ -82,7 +101,7 @@ class SearchService : ISearchService {
         private val bestWayResponseFilter = "response"
         private val jsonFilter = "jsonResponse"
 
-        fun findPlaceByText(text: String, latitude: String, longitude: String): String {
+        fun getPlaceByText(text: String, latitude: String, longitude: String): String {
             val request = "https://places.cit.api.here.com/places/v1/" +
                           "autosuggest?at=$latitude,$longitude" +
                           "&q=$text" +
@@ -92,22 +111,24 @@ class SearchService : ISearchService {
             return executeRequest(request, jsonFilter)
         }
 
-        fun findBestWay(
+        fun getTransport(
             first_latitude: String, first_longitude: String, second_latitude: String,
-            second_longitude: String, mode: String, transport: String, traffic: String
+            second_longitude: String, transportMode: String
         ): String {
             val request = "https://route.api.here.com/routing/7.2/calculateroute.json" +
                           "?app_id=$MY_APP_ID" +
                           "&app_code=$MY_APP_TOKEN" +
                           "&waypoint0=geo!$first_latitude,$first_longitude" +
                           "&waypoint1=geo!$second_latitude,$second_longitude" +
-                          "&mode=$mode;$transport;traffic:$traffic"
+                          "&departure=2019-10-05T11:50:00" +
+                          "&mode=fastest;$transportMode" +
+                          "&pretty"
 
 
             return executeRequest(request, bestWayResponseFilter)
         }
 
-        fun findObjects(
+        fun getObjects(
             west: String,
             north: String,
             east: String,
@@ -121,7 +142,7 @@ class SearchService : ISearchService {
                           "&cat=$category" +
                           "&pretty"
 
-            var response = executeRequest(request, jsonFilter)
+            val response = executeRequest(request, jsonFilter)
             return parseResponse(response)
         }
 
@@ -155,7 +176,7 @@ class SearchService : ISearchService {
 
             val responseText = response.substring(response.indexOf('{'))
 
-            var jsonElement = JsonParser().parse(responseText)
+            val jsonElement = JsonParser().parse(responseText)
             val gson = GsonBuilder().setPrettyPrinting().create()
 
             return gson.fromJson(jsonElement, T::class.java)

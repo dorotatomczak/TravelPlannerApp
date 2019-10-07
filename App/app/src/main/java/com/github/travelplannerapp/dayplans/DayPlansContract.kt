@@ -1,13 +1,15 @@
 package com.github.travelplannerapp.dayplans
 
-import com.github.travelplannerapp.communication.model.Plan
+import com.github.travelplannerapp.communication.commonmodel.Plan
 
 interface DayPlansContract {
     interface View {
         fun showDayPlans()
         fun showNoDayPlans()
+        fun showAddPlan(travelId: Int)
         fun onDataSetChanged()
         fun hideLoadingIndicator()
+        fun showSnackbar(messageCode: Int)
     }
 
     interface PlanElementItemView {
@@ -34,6 +36,7 @@ interface DayPlansContract {
     }
 
     interface Presenter {
+        fun onAddPlanClicked()
         fun onPlanAdded(plan: Plan)
         fun unsubscribe()
         fun loadDayPlans()

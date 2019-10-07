@@ -6,8 +6,12 @@ import com.github.travelplannerapp.ServerApp.exceptions.ResponseCode
 import com.github.travelplannerapp.ServerApp.db.dao.UserFriend
 import com.github.travelplannerapp.ServerApp.db.repositories.UserRepository
 import com.github.travelplannerapp.ServerApp.exceptions.SearchNoItemsException
+import com.github.travelplannerapp.communication.commonmodel.*
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.web.bind.annotation.*
+import org.springframework.web.bind.annotation.PostMapping
+import org.springframework.web.bind.annotation.RequestBody
+import org.springframework.web.bind.annotation.RequestHeader
+import org.springframework.web.bind.annotation.RestController
 
 @RestController
 class ServerUserController {
@@ -16,7 +20,6 @@ class ServerUserController {
     lateinit var userManagement: UserManagement
     @Autowired
     lateinit var userRepository: UserRepository
-
 
     @PostMapping("user-management/authorize")
     fun authorize(@RequestHeader("authorization") token: String): Response<Unit> {

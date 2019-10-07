@@ -4,8 +4,8 @@ import com.github.travelplannerapp.BasePresenter
 import com.github.travelplannerapp.R
 import com.github.travelplannerapp.communication.ApiException
 import com.github.travelplannerapp.communication.CommunicationService
-import com.github.travelplannerapp.communication.model.ResponseCode
-import com.github.travelplannerapp.communication.model.SignUpRequest
+import com.github.travelplannerapp.communication.commonmodel.ResponseCode
+import com.github.travelplannerapp.communication.commonmodel.SignUpRequest
 import com.github.travelplannerapp.utils.PasswordUtils
 import com.github.travelplannerapp.utils.SchedulerProvider
 import io.reactivex.disposables.CompositeDisposable
@@ -14,13 +14,13 @@ class SignUpPresenter(view: SignUpContract.View) : BasePresenter<SignUpContract.
 
     private val compositeDisposable = CompositeDisposable()
 
-    override fun signUp(email: String, password: String, confirmPassword: String) {
+    override fun onSignUpClicked(email: String, password: String, confirmPassword: String) {
         if (password != confirmPassword) {
             view.showSnackbar(R.string.sign_up_diff_passwords)
             return
         }
 
-        val hashedPassword = PasswordUtils().hashPassword(password)
+        val hashedPassword = PasswordUtils.hashPassword(password)
         if (hashedPassword == null) {
             view.showSnackbar(R.string.try_again)
         } else {
@@ -35,7 +35,7 @@ class SignUpPresenter(view: SignUpContract.View) : BasePresenter<SignUpContract.
         }
     }
 
-    override fun signIn() {
+    override fun onSignInClicked() {
         view.showSignIn()
     }
 

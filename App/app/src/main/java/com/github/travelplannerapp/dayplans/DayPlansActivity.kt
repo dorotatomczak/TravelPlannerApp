@@ -8,7 +8,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.github.travelplannerapp.R
-import com.github.travelplannerapp.communication.model.Plan
+import com.github.travelplannerapp.communication.commonmodel.Plan
 import com.github.travelplannerapp.dayplans.addplan.AddPlanActivity
 import com.github.travelplannerapp.utils.DrawerUtils
 import com.google.android.material.snackbar.Snackbar
@@ -23,6 +23,10 @@ class DayPlansActivity : AppCompatActivity(), DayPlansContract.View {
     @Inject
     lateinit var presenter: DayPlansContract.Presenter
 
+    companion object {
+        const val EXTRA_TRAVEL_ID = "EXTRA_TRAVEL_ID"
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         AndroidInjection.inject(this)
         super.onCreate(savedInstanceState)
@@ -33,7 +37,7 @@ class DayPlansActivity : AppCompatActivity(), DayPlansContract.View {
         supportActionBar?.setHomeButtonEnabled(true)
         DrawerUtils.getDrawer(this, toolbar)
 
-        fabAdd.setOnClickListener { showAddPlan() }
+        fabAdd.setOnClickListener { presenter.onAddPlanClicked() }
 
         swipeRefreshLayoutDayPlans.setOnRefreshListener { refreshDayPlans() }
 
@@ -68,6 +72,12 @@ class DayPlansActivity : AppCompatActivity(), DayPlansContract.View {
         recyclerViewDayPlans.visibility = View.GONE
     }
 
+    override fun showAddPlan(travelId: Int) {
+        val intent = Intent(this, AddPlanActivity::class.java)
+        intent.putExtra(AddPlanActivity.EXTRA_TRAVEL_ID, travelId)
+        startActivityForResult(intent, AddPlanActivity.REQUEST_ADD_PLAN)
+    }
+
     override fun onDataSetChanged() {
         recyclerViewDayPlans.adapter?.notifyDataSetChanged()
     }
@@ -76,17 +86,12 @@ class DayPlansActivity : AppCompatActivity(), DayPlansContract.View {
         swipeRefreshLayoutDayPlans.isRefreshing = false
     }
 
+    override fun showSnackbar(messageCode: Int) {
+        Snackbar.make(coordinatorLayoutDayPlans, getString(messageCode), Snackbar.LENGTH_SHORT).show()
+    }
+
     private fun refreshDayPlans() {
         swipeRefreshLayoutDayPlans.isRefreshing = true
         presenter.loadDayPlans()
-    }
-
-    private fun showAddPlan() {
-        val intent = Intent(this, AddPlanActivity::class.java)
-        startActivityForResult(intent, AddPlanActivity.REQUEST_ADD_PLAN)
-    }
-
-    private fun showSnackbar(messageCode: Int) {
-        Snackbar.make(coordinatorLayoutDayPlans, getString(messageCode), Snackbar.LENGTH_SHORT).show()
     }
 }

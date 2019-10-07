@@ -1,7 +1,7 @@
 package com.github.travelplannerapp.tickets
 
+import com.github.travelplannerapp.communication.appmodel.Scan
 import com.github.travelplannerapp.deleteactionmode.DeleteContract
-import com.github.travelplannerapp.communication.model.Scan
 
 interface TicketsContract {
     interface View : DeleteContract.View {

@@ -4,8 +4,8 @@ import com.github.travelplannerapp.BasePresenter
 import com.github.travelplannerapp.R
 import com.github.travelplannerapp.communication.ApiException
 import com.github.travelplannerapp.communication.CommunicationService
-import com.github.travelplannerapp.communication.model.ResponseCode
-import com.github.travelplannerapp.communication.model.Travel
+import com.github.travelplannerapp.communication.appmodel.Travel
+import com.github.travelplannerapp.communication.commonmodel.ResponseCode
 import com.github.travelplannerapp.utils.SchedulerProvider
 import com.github.travelplannerapp.utils.SharedPreferencesUtils
 import io.reactivex.disposables.CompositeDisposable
@@ -21,7 +21,7 @@ class TravelDetailsPresenter(private val travelId: Int, private var travelName: 
 
     override fun openCategory(category: Category.CategoryType) {
         when (category) {
-            Category.CategoryType.DAY_PLANS -> view.showDayPlans()
+            Category.CategoryType.DAY_PLANS -> view.showDayPlans(travelId)
             Category.CategoryType.TRANSPORT -> view.showTransport()
             Category.CategoryType.ACCOMMODATION -> view.showAccommodation()
             Category.CategoryType.TICKETS -> view.showTickets(travelId)

@@ -27,15 +27,15 @@ class LauncherActivity : AppCompatActivity(), LauncherContract.View {
 
     override fun showSignIn() {
         val intent = Intent(this, SignInActivity::class.java)
-        startActivity(intent)
         intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP
+        startActivity(intent)
         finish()
     }
 
     override fun showTravels() {
         val intent = Intent(this, TravelsActivity::class.java)
-        startActivity(intent)
         intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP
+        startActivity(intent)
         finish()
     }
 }

@@ -84,6 +84,10 @@
             android:name="com.here.android.maps.apptoken"
             android:value="1pBsuZwrgZBAeyHBpy5XIA" />
 
+        <meta-data
+            android:name="com.google.android.maps.apptoken"
+            android:value="AIzaSyDf4j9NNh-YZe6iChP-ThT-CCDzBSJgcmE" />
+
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="com.github.travelplannerapp.fileprovider"
