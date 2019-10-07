@@ -37,8 +37,8 @@
     <string name="update_travel_error">Wystąpił problem podczas zmieniania nazwy</string>
     <string name="delete_travels_ok">Usunąłeś wybrane podróż/e</string>
     <string name="delete_travels_error">Wystąpił problem podczas usuwania podróż/y</string>
-    <string name="add_plan_ok">Dodałeś nowy plan</string>
-    <string name="add_plan_error">Wystąpił problem podczas dodawania planu</string>
+    <string name="add_plan_ok">Dodałeś nowy element planu dnia</string>
+    <string name="add_plan_error">Wystąpił problem podczas dodawania elementu planu dnia</string>
     <string name="no_day_plans">Nie masz żadnego planu dnia w tej podróży</string>
     <string name="authorization_error">Nie masz uprawnień na wykonanie tej akcji</string>
     <string name="no_scans">Nie masz żadnego skanu</string>

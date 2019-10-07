@@ -37,8 +37,8 @@
     <string name="update_travel_error">Error when updating travel</string>
     <string name="delete_travels_ok">You deleted selected travels(s)</string>
     <string name="delete_travels_error">Error when deleting travel(s)</string>
-    <string name="add_plan_ok">You added a new plan</string>
-    <string name="add_plan_error">Error when adding plan</string>
+    <string name="add_plan_ok">You added a new plan element</string>
+    <string name="add_plan_error">Error when adding plan element</string>
     <string name="no_day_plans">You have no day plans for this travel</string>
     <string name="authorization_error">You are not authorized to perform this action</string>
     <string name="no_scans">You have no scans</string>

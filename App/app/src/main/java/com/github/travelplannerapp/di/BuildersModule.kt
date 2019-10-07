@@ -3,9 +3,9 @@ package com.github.travelplannerapp.di
 import com.github.travelplannerapp.accommodation.AccommodationActivity
 import com.github.travelplannerapp.accommodation.AccommodationModule
 import com.github.travelplannerapp.accommodation.AccommodationViewModel
-import com.github.travelplannerapp.dayplans.addplan.AddPlanActivity
-import com.github.travelplannerapp.dayplans.addplan.AddPlanModule
-import com.github.travelplannerapp.dayplans.addplan.AddPlanViewModel
+import com.github.travelplannerapp.dayplans.addplanelement.AddPlanElementActivity
+import com.github.travelplannerapp.dayplans.addplanelement.AddPlanElementModule
+import com.github.travelplannerapp.dayplans.addplanelement.AddPlanElementViewModel
 import com.github.travelplannerapp.dayplans.DayPlansActivity
 import com.github.travelplannerapp.dayplans.DayPlansModule
 import com.github.travelplannerapp.dayplans.DayPlansViewModel
@@ -50,8 +50,8 @@ abstract class BuildersModule {
     @ContributesAndroidInjector(modules = [AccommodationViewModel::class, AccommodationModule::class])
     internal abstract fun bindAccommodationActivity(): AccommodationActivity
 
-    @ContributesAndroidInjector(modules = [AddPlanViewModel::class, AddPlanModule::class])
-    internal abstract fun bindAddPlanActivity(): AddPlanActivity
+    @ContributesAndroidInjector(modules = [AddPlanElementViewModel::class, AddPlanElementModule::class])
+    internal abstract fun bindAddPlanActivity(): AddPlanElementActivity
 
     @ContributesAndroidInjector(modules = [DayPlansViewModel::class, DayPlansModule::class])
     internal abstract fun bindDayPlansActivity(): DayPlansActivity

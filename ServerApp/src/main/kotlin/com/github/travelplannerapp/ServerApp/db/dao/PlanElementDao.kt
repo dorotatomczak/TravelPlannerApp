@@ -1,11 +1,11 @@
 package com.github.travelplannerapp.ServerApp.db.dao
 
-import com.github.travelplannerapp.communication.commonmodel.Plan
+import com.github.travelplannerapp.communication.commonmodel.PlanElement
 import java.sql.ResultSet
 import java.sql.Timestamp
 
 
-class PlanDao(map: MutableMap<String, Any?>) {
+class PlanElementDao(map: MutableMap<String, Any?>) {
     private val defaultMap = map.withDefault { null }
 
     var id: Int? by defaultMap
@@ -44,13 +44,13 @@ class PlanDao(map: MutableMap<String, Any?>) {
                     )
             )
 
-    constructor(travelId: Int, plan: Plan) :
+    constructor(travelId: Int, planElement: PlanElement) :
             this(
-                    plan.id,
-                    plan.locale,
-                    Timestamp(plan.fromDateTimeMs),
-                    Timestamp(plan.toDateTimeMs),
+                    planElement.id,
+                    planElement.locale,
+                    Timestamp(planElement.fromDateTimeMs),
+                    Timestamp(planElement.toDateTimeMs),
                     travelId,
-                    plan.placeId
+                    planElement.placeId
             )
 }
