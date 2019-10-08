@@ -46,7 +46,7 @@
             </androidx.appcompat.widget.SearchView>
 
             <TextView
-                android:id="@+id/textView2"
+                android:id="@+id/userFriendsHeader"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/user_friends"

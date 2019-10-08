@@ -71,8 +71,9 @@ class SearchFriendPresenter(view: SearchFriendContract.View) : BasePresenter<Sea
     }
 
     private fun handleErrorResponse(error: Throwable) {
+        if (error is ApiException) view.showSnackbar(error.getErrorMessageCode())
+        else view.showSnackbar(R.string.server_connection_error)
         loadFriends()
-        view.showSnackbar(R.string.error)
     }
 
     override fun getFriendsCount(): Int {

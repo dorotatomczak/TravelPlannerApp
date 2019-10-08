@@ -23,7 +23,7 @@ interface SearchFriendContract {
         fun getFriendsCount(): Int
         fun addFriendIdToDelete(position: Int)
         fun removeFriendIdToDelete(position: Int)
-        fun onBindFriendAtPosition(position: Int, itemView: SearchFriendContract.FriendItemView)
+        fun onBindFriendAtPosition(position: Int, itemView: FriendItemView)
         fun deleteFriends()
     }
 }
