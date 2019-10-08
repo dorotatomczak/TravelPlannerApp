@@ -23,14 +23,12 @@ object DateTimeUtils {
     }
 
     fun dateToString(dateTimeMs: Long) : String {
-        val calendar = GregorianCalendar.getInstance()
-        calendar.timeInMillis = dateTimeMs
+        val calendar = longToDateTime(dateTimeMs)
         return dateToString(calendar)
     }
 
     fun timeToString(dateTimeMs: Long) : String {
-        val calendar = GregorianCalendar.getInstance()
-        calendar.timeInMillis = dateTimeMs
+        val calendar = longToDateTime(dateTimeMs)
         return timeToString(calendar)
     }
 
@@ -40,6 +38,13 @@ object DateTimeUtils {
         val formatter = SimpleDateFormat.getDateTimeInstance(SimpleDateFormat.DEFAULT, SimpleDateFormat.SHORT)
 
         formatter.parse(dateTimeText)?.let { calendar.time = it }
+
+        return calendar
+    }
+
+    fun longToDateTime(dateTimeMs: Long) : Calendar {
+        val calendar = GregorianCalendar.getInstance()
+        calendar.timeInMillis = dateTimeMs
 
         return calendar
     }

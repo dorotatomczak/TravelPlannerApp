@@ -11,6 +11,7 @@ import com.github.travelplannerapp.utils.DateTimeUtils
 import com.github.travelplannerapp.utils.SchedulerProvider
 import com.github.travelplannerapp.utils.SharedPreferencesUtils
 import io.reactivex.disposables.CompositeDisposable
+import java.util.*
 import kotlin.collections.ArrayList
 
 
@@ -19,7 +20,7 @@ class DayPlansPresenter(private val travelId: Int, view: DayPlansContract.View) 
     private val compositeDisposable = CompositeDisposable()
 
     private var dayPlanItems = ArrayList<DayPlansContract.DayPlanItem>()
-    private var planElements = ArrayList<PlanElement>()
+    private var planElements = TreeSet<PlanElement>()
 
     override fun onAddPlanElementClicked() {
         view.showAddPlanElement(travelId)
@@ -80,7 +81,7 @@ class DayPlansPresenter(private val travelId: Int, view: DayPlansContract.View) 
         itemView.setDate(date)
     }
 
-    private fun planElementsToDayPlanItems(planElements: List<PlanElement>) {
+    private fun planElementsToDayPlanItems(planElements: Set<PlanElement>) {
 
         dayPlanItems = ArrayList()
         var date = ""
@@ -108,8 +109,8 @@ class DayPlansPresenter(private val travelId: Int, view: DayPlansContract.View) 
     }
 
     private fun handleLoadDayPlansResponse(planElements: List<PlanElement>) {
-        this.planElements = ArrayList(planElements)
-        planElementsToDayPlanItems(planElements)
+        this.planElements = TreeSet(planElements)
+        planElementsToDayPlanItems(this.planElements)
         view.onDataSetChanged()
         view.hideLoadingIndicator()
 

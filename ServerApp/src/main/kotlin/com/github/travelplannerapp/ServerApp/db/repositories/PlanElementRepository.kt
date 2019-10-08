@@ -35,8 +35,8 @@ class PlanElementRepository : Repository<PlanElementDao>(), IPlanElementReposito
                 .prepareStatement(
                         "SELECT *" +
                                 "FROM $tableName INNER JOIN ${PlaceRepository.tableName} " +
-                                "on $tableName.$columnPlaceId = ${PlaceRepository.tableName}.${PlaceRepository.columnId} " +
-                                "where $columnTravelId = ?"
+                                "ON $tableName.$columnPlaceId = ${PlaceRepository.tableName}.${PlaceRepository.columnId} " +
+                                "WHERE $columnTravelId = ? ORDER BY $columnFromDateTime ASC"
                 )
         statement.setInt(1, travelId)
         val result = statement.executeQuery()
@@ -71,9 +71,9 @@ class PlanElementRepository : Repository<PlanElementDao>(), IPlanElementReposito
                 .prepareStatement(updateStatement)
         statement.setString(1, obj.locale)
         statement.setTimestamp(2, obj.fromDateTime!!)
-        statement.setInt(4, obj.placeId!!)
-        statement.setInt(5, obj.travelId!!)
-        statement.setInt(6, obj.id!!)
+        statement.setInt(3, obj.placeId!!)
+        statement.setInt(4, obj.travelId!!)
+        statement.setInt(5, obj.id!!)
         return statement
     }
 }
