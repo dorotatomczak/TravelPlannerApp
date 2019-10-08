@@ -5,7 +5,7 @@ import com.github.travelplannerapp.R
 import com.github.travelplannerapp.communication.ApiException
 import com.github.travelplannerapp.communication.CommunicationService
 import com.github.travelplannerapp.communication.appmodel.PlaceCategory
-import com.github.travelplannerapp.communication.commonmodel.Plan
+import com.github.travelplannerapp.communication.commonmodel.PlanElement
 import com.github.travelplannerapp.communication.commonmodel.ResponseCode
 import com.github.travelplannerapp.utils.DateTimeUtils
 import com.github.travelplannerapp.utils.SchedulerProvider
@@ -18,16 +18,16 @@ class DayPlansPresenter(private val travelId: Int, view: DayPlansContract.View) 
 
     private val compositeDisposable = CompositeDisposable()
 
-    private var planItems = ArrayList<DayPlansContract.DayPlanItem>()
-    private val plans = ArrayList<Plan>()
+    private var dayPlanItems = ArrayList<DayPlansContract.DayPlanItem>()
+    private val planElements = ArrayList<PlanElement>()
 
-    override fun onAddPlanClicked() {
-        view.showAddPlan(travelId)
+    override fun onAddPlanElementClicked() {
+        view.showAddPlanElement(travelId)
     }
 
-    override fun onPlanAdded(plan: Plan) {
-        plans.add(plan)
-        plansToDayPlanItems(plans)
+    override fun onPlanElementAdded(planElement: PlanElement) {
+        planElements.add(planElement)
+        planElementsToDayPlanItems(planElements)
 
         view.showDayPlans()
         view.onDataSetChanged()
@@ -38,61 +38,60 @@ class DayPlansPresenter(private val travelId: Int, view: DayPlansContract.View) 
     }
 
     override fun loadDayPlans() {
-        compositeDisposable.add(CommunicationService.serverApi.getPlans(SharedPreferencesUtils.getUserId(), travelId)
+        compositeDisposable.add(CommunicationService.serverApi.getPlanElements(SharedPreferencesUtils.getUserId(), travelId)
                 .observeOn(SchedulerProvider.ui())
                 .subscribeOn(SchedulerProvider.io())
                 .map { if (it.responseCode == ResponseCode.OK) it.data!! else throw ApiException(it.responseCode) }
                 .subscribe(
-                        { plans -> handleLoadDayPlansResponse(plans) },
+                        { planElements -> handleLoadDayPlansResponse(planElements) },
                         { error -> handleErrorResponse(error) }
                 ))
-
     }
 
-    override fun getPlanItemsCount(): Int {
-        return planItems.size
+    override fun getDayPlanItemsCount(): Int {
+        return dayPlanItems.size
     }
 
-    override fun getPlanItemType(position: Int): Int {
-        return planItems[position].getType()
+    override fun getDayPlanItemType(position: Int): Int {
+        return dayPlanItems[position].getType()
     }
 
-    override fun onBindPlanItemAtPosition(position: Int, itemView: DayPlansContract.PlanElementItemView) {
-        val planElementItem = planItems[position] as PlanElementItem
-        val plan = planElementItem.plan
+    override fun onBindDayPlanItemAtPosition(position: Int, itemView: DayPlansContract.PlanElementItemView) {
+        val planElementItem = dayPlanItems[position] as PlanElementItem
+        val planElement = planElementItem.planElement
 
-        if (position + 1 < planItems.size && planItems[position + 1].getType() == DayPlansContract.DayPlanItem.TYPE_PLAN) {
+        if (position + 1 < dayPlanItems.size && dayPlanItems[position + 1].getType() == DayPlansContract.DayPlanItem.TYPE_PLAN) {
             itemView.showLine()
         }
 
-        val categoryIcon = PlaceCategory.values()[plan.place.categoryIcon].categoryIcon
-        val fromTime = DateTimeUtils.timeToString(plan.fromDateTimeMs)
+        val categoryIcon = PlaceCategory.values()[planElement.place.categoryIcon].categoryIcon
+        val fromTime = DateTimeUtils.timeToString(planElement.fromDateTimeMs)
 
-        itemView.setName(plan.place.title)
+        itemView.setName(planElement.place.title)
         itemView.setFromTime(fromTime)
-        itemView.setLocation(plan.place.vicinity)
+        itemView.setLocation(planElement.place.vicinity)
         itemView.setIcon(categoryIcon)
     }
 
-    override fun onBindPlanItemAtPosition(position: Int, itemView: DayPlansContract.PlanDateSeparatorItemView) {
-        val dateSeparatorItem = planItems[position] as DateSeparatorItem
+    override fun onBindDayPlanItemAtPosition(position: Int, itemView: DayPlansContract.DateSeparatorItemView) {
+        val dateSeparatorItem = dayPlanItems[position] as DateSeparatorItem
         val date = dateSeparatorItem.date
 
         itemView.setDate(date)
     }
 
-    private fun plansToDayPlanItems(plans: List<Plan>) {
+    private fun planElementsToDayPlanItems(planElements: List<PlanElement>) {
 
-        planItems = ArrayList()
+        dayPlanItems = ArrayList()
         var date = ""
 
-        for (plan in plans) {
+        for (plan in planElements) {
             val dateCursor = DateTimeUtils.dateToString(plan.fromDateTimeMs)
             if (date != dateCursor) {
                 date = dateCursor
-                planItems.add(DateSeparatorItem(date))
+                dayPlanItems.add(DateSeparatorItem(date))
             }
-            planItems.add(PlanElementItem(plan))
+            dayPlanItems.add(PlanElementItem(plan))
         }
     }
 
@@ -102,18 +101,18 @@ class DayPlansPresenter(private val travelId: Int, view: DayPlansContract.View) 
         }
     }
 
-    inner class PlanElementItem(val plan: Plan) : DayPlansContract.DayPlanItem {
+    inner class PlanElementItem(val planElement: PlanElement) : DayPlansContract.DayPlanItem {
         override fun getType(): Int {
             return DayPlansContract.DayPlanItem.TYPE_PLAN
         }
     }
 
-    private fun handleLoadDayPlansResponse(plans: List<Plan>) {
-        plansToDayPlanItems(plans)
+    private fun handleLoadDayPlansResponse(planElements: List<PlanElement>) {
+        planElementsToDayPlanItems(planElements)
         view.onDataSetChanged()
         view.hideLoadingIndicator()
 
-        if (this.planItems.isEmpty()) view.showNoDayPlans() else view.showDayPlans()
+        if (this.dayPlanItems.isEmpty()) view.showNoDayPlans() else view.showDayPlans()
     }
 
     private fun handleErrorResponse(error: Throwable) {

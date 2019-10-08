@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.github.travelplannerapp.accommodation.AccommodationActivity
 import com.github.travelplannerapp.traveldialog.TravelDialog
 import com.github.travelplannerapp.dayplans.DayPlansActivity
-import com.github.travelplannerapp.tickets.TicketsActivity
+import com.github.travelplannerapp.scans.ScansActivity
 import com.github.travelplannerapp.transport.TransportActivity
 import com.github.travelplannerapp.utils.DrawerUtils
 import com.google.android.material.snackbar.Snackbar
@@ -94,9 +94,9 @@ class TravelDetailsActivity : AppCompatActivity(), TravelDetailsContract.View {
         startActivity(intent)
     }
 
-    override fun showTickets(travelId: Int) {
-        val intent = Intent(this, TicketsActivity::class.java)
-        intent.putExtra(TicketsActivity.EXTRA_TRAVEL_ID, travelId)
+    override fun showScans(travelId: Int) {
+        val intent = Intent(this, ScansActivity::class.java)
+        intent.putExtra(ScansActivity.EXTRA_TRAVEL_ID, travelId)
         startActivity(intent)
     }
 

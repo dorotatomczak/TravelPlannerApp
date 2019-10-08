@@ -4,7 +4,7 @@ import dagger.Module
 import dagger.Provides
 
 /**
- * Define TicketsActivity-specific dependencies here.
+ * Define TransportActivity-specific dependencies here.
  */
 @Module
 class TransportModule {

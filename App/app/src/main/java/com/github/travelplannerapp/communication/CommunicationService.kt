@@ -3,7 +3,6 @@ package com.github.travelplannerapp.communication
 import com.github.travelplannerapp.communication.commonmodel.*
 import com.github.travelplannerapp.communication.commonmodel.Response
 import com.github.travelplannerapp.communication.appmodel.*
-import io.reactivex.Observable
 import io.reactivex.Single
 import okhttp3.MultipartBody
 import okhttp3.OkHttpClient
@@ -79,8 +78,8 @@ interface ServerApi {
     fun getContacts(@Path("objectId") objectId: String, @Query("query") query: String): Single<Response<Contacts>>
 
     @GET("users/{userId}/travels/{travelId}/plans")
-    fun getPlans(@Path("userId") userId: Int, @Path("travelId") travelId: Int): Single<Response<List<Plan>>>
+    fun getPlanElements(@Path("userId") userId: Int, @Path("travelId") travelId: Int): Single<Response<List<PlanElement>>>
 
     @POST("users/{userId}/travels/{travelId}/plans")
-    fun addPlan(@Path("userId") userId: Int, @Path("travelId") travelId: Int, @Body plan: Plan): Single<Response<Plan>>
+    fun addPlanElement(@Path("userId") userId: Int, @Path("travelId") travelId: Int, @Body planElement: PlanElement): Single<Response<PlanElement>>
 }
