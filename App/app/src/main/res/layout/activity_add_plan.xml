@@ -104,49 +104,6 @@
 
         </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginTop="@dimen/margin_vertical">
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="3"
-                android:layout_marginEnd="@dimen/margin_horizontal">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/editTextPlanToDate"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/to_date"
-                    android:drawableEnd="@drawable/ic_arrow_drop_down"
-                    android:inputType="none"
-                    android:focusable="false"
-                    android:drawableTint="?android:textColorHint"/>
-
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="2">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/editTextPlanToTime"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/to_time"
-                    android:drawableEnd="@drawable/ic_arrow_drop_down"
-                    android:inputType="none"
-                    android:focusable="false"
-                    android:drawableTint="?android:textColorHint"/>
-
-            </com.google.android.material.textfield.TextInputLayout>
-
-        </LinearLayout>
-
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/inputLayoutPlanLocation"
             android:layout_width="match_parent"

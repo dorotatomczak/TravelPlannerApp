@@ -116,12 +116,12 @@ class SearchElementActivity : AppCompatActivity(), SearchElementContract.View {
     }
 
     override fun showContacts(contacts: Contacts) {
-        if (contacts.phone.isNotEmpty()) {
+        if (!contacts.phone.isNullOrEmpty()) {
             textViewPhoneSearchElement.text = contacts.phone[0].value
         } else {
             linearLayoutPhone.visibility = View.GONE
         }
-        if (contacts.website.isNotEmpty()) {
+        if (!contacts.website.isNullOrEmpty()) {
             textViewWebsiteSearchElement.text = contacts.website[0].value
         } else {
             linearLayoutWebsite.visibility = View.GONE

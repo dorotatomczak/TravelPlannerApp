@@ -51,7 +51,6 @@
     <string name="to_time">To time</string>
     <string name="location">Location</string>
     <string name="name">Name</string>
-    <string name="wrong_dates_error">\"From\" date and time must be before \"To\" date and time</string>
     <string name="missing_required_fields_error">Fill in all the fields</string>
     <string name="menu_delete">Delete</string>
     <string name="menu_edit">Edit</string>

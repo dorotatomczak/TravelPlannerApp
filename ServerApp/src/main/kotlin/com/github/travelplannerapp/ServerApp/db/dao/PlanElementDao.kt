@@ -11,7 +11,6 @@ class PlanElementDao(map: MutableMap<String, Any?>) {
     var id: Int? by defaultMap
     var locale: String? by defaultMap
     var fromDateTime: Timestamp? by defaultMap
-    var toDateTime: Timestamp? by defaultMap
     var travelId: Int? by defaultMap
     var placeId: Int? by defaultMap
 
@@ -19,7 +18,6 @@ class PlanElementDao(map: MutableMap<String, Any?>) {
             id: Int?,
             locale: String?,
             fromDateTime: Timestamp?,
-            toDateTime: Timestamp?,
             travelId: Int?,
             placeId: Int?) :
             this(
@@ -27,7 +25,6 @@ class PlanElementDao(map: MutableMap<String, Any?>) {
                             "id" to id,
                             "locale" to locale,
                             "fromDateTime" to fromDateTime,
-                            "toDateTime" to toDateTime,
                             "travelId" to travelId,
                             "placeId" to placeId)
             )
@@ -38,7 +35,6 @@ class PlanElementDao(map: MutableMap<String, Any?>) {
                             "id" to result.getInt("id"),
                             "locale" to result.getString("locale"),
                             "fromDateTime" to result.getTimestamp("from_date_time"),
-                            "toDateTime" to result.getTimestamp("to_date_time"),
                             "travelId" to result.getInt("travel_id"),
                             "placeId" to result.getInt("place_id")
                     )
@@ -49,7 +45,6 @@ class PlanElementDao(map: MutableMap<String, Any?>) {
                     planElement.id,
                     planElement.locale,
                     Timestamp(planElement.fromDateTimeMs),
-                    Timestamp(planElement.toDateTimeMs),
                     travelId,
                     planElement.placeId
             )

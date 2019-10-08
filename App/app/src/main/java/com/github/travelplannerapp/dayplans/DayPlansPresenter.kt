@@ -19,7 +19,7 @@ class DayPlansPresenter(private val travelId: Int, view: DayPlansContract.View) 
     private val compositeDisposable = CompositeDisposable()
 
     private var dayPlanItems = ArrayList<DayPlansContract.DayPlanItem>()
-    private val planElements = ArrayList<PlanElement>()
+    private var planElements = ArrayList<PlanElement>()
 
     override fun onAddPlanElementClicked() {
         view.showAddPlanElement(travelId)
@@ -108,6 +108,7 @@ class DayPlansPresenter(private val travelId: Int, view: DayPlansContract.View) 
     }
 
     private fun handleLoadDayPlansResponse(planElements: List<PlanElement>) {
+        this.planElements = ArrayList(planElements)
         planElementsToDayPlanItems(planElements)
         view.onDataSetChanged()
         view.hideLoadingIndicator()

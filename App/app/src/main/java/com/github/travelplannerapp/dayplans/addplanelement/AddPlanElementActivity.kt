@@ -51,9 +51,7 @@ class AddPlanElementActivity : AppCompatActivity(), AddPlanElementContract.View 
 
         // Set up edit texts
         editTextPlanFromDate.setOnClickListener { openDatePicker(it as TextInputEditText) }
-        editTextPlanToDate.setOnClickListener { openDatePicker(it as TextInputEditText) }
         editTextPlanFromTime.setOnClickListener { openTimePicker(it as TextInputEditText) }
-        editTextPlanToTime.setOnClickListener { openTimePicker(it as TextInputEditText) }
 
         editTextPlanName.setOnClickListener { startSearchElementActivity() }
 
@@ -127,8 +125,6 @@ class AddPlanElementActivity : AppCompatActivity(), AddPlanElementContract.View 
                 editTextPlanName.text.toString(),
                 editTextPlanFromDate.text.toString(),
                 editTextPlanFromTime.text.toString(),
-                editTextPlanToDate.text.toString(),
-                editTextPlanToTime.text.toString(),
                 coordinates,
                 editTextPlanLocation.text.toString()
         )

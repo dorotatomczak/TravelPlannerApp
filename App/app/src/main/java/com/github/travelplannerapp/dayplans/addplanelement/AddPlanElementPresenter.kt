@@ -29,7 +29,6 @@ class AddPlanElementPresenter(private val travelId: Int, view: AddPlanElementCon
             val planElement = PlanElement(-1,
                     Locale.getDefault().toString(),
                     DateTimeUtils.stringToDateTime(data.fromDate, data.fromTime).timeInMillis,
-                    DateTimeUtils.stringToDateTime(data.toDate, data.toTime).timeInMillis,
                     -1,
                     place)
 
@@ -51,14 +50,8 @@ class AddPlanElementPresenter(private val travelId: Int, view: AddPlanElementCon
 
     private fun isPlanDataValid(data: AddPlanElementContract.NewPlanElementData): Boolean {
 
-        if (data.name.isEmpty() || data.fromDate.isEmpty() || data.fromTime.isEmpty() ||
-                data.toDate.isEmpty() || data.toTime.isEmpty()) {
+        if (data.name.isEmpty() || data.fromDate.isEmpty() || data.fromTime.isEmpty()) {
             view.showSnackbar(R.string.missing_required_fields_error)
-            return false
-        }
-
-        if (!DateTimeUtils.isDateTimeABeforeDateTimeB(data.fromDate, data.fromTime, data.toDate, data.toTime)) {
-            view.showSnackbar(R.string.wrong_dates_error)
             return false
         }
 

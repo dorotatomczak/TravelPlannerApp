@@ -53,7 +53,7 @@ class DayPlansActivity : AppCompatActivity(), DayPlansContract.View {
             AddPlanElementActivity.REQUEST_ADD_PLAN -> {
                 if (resultCode == Activity.RESULT_OK && data != null) {
                     val messageCode = data.getIntExtra(AddPlanElementActivity.REQUEST_ADD_PLAN_ELEMENT_RESULT_MESSAGE,
-                            R.string.scanner_general_error)
+                            R.string.try_again)
                     showSnackbar(messageCode)
                     val plan = data.getSerializableExtra(AddPlanElementActivity.REQUEST_ADD_PLAN_ELEMENT_RESULT_PLAN) as PlanElement
                     presenter.onPlanElementAdded(plan)
