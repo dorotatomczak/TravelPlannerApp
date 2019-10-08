@@ -43,7 +43,7 @@ class DayPlansPresenter(private val travelId: Int, view: DayPlansContract.View) 
                 .subscribeOn(SchedulerProvider.io())
                 .map { if (it.responseCode == ResponseCode.OK) it.data!! else throw ApiException(it.responseCode) }
                 .subscribe(
-                        { plans -> handleLoadDayPlansResponse(plans) },
+                        { planElements -> handleLoadDayPlansResponse(planElements) },
                         { error -> handleErrorResponse(error) }
                 ))
     }
