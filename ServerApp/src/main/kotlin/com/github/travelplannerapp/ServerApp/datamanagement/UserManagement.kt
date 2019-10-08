@@ -88,23 +88,25 @@ class UserManagement : IUserManagement {
     override fun addFriend(userId: Int, friendId: Int): UserFriend {
         val userFriendId = userFriendRepository.getNextId()
         val userFriend = UserFriend(userFriendId, userId, friendId)
-        if (userFriendRepository.add(userFriend))
+        if (userFriendRepository.add(userFriend)){
             return userFriend
-        else throw AddFriendException("Error when adding friend")
-
+        }else {
+            throw AddFriendException("Error when adding friend")
+        }
     }
 
     override fun deleteFriends(userId: Int, friendsIds: MutableSet<Int>) {
         for (friendId in friendsIds) {
-            if (!userFriendRepository.deleteUserFriendBinding(userId, friendId))
+            if (!userFriendRepository.deleteUserFriendBinding(userId, friendId)){
                 throw  DeleteFriendException("Error when deleting friend")
+            }
         }
     }
 
-    override fun findEmails(query: String): MutableList<UserInfo> {
+    override fun findMatchingEmails(query: String): MutableList<UserInfo> {
         val userInfos = mutableListOf<UserInfo>()
-        val friends = userRepository.findEmails(query)
-        friends.forEach { user ->
+        val users = userRepository.findEmails(query)
+        users.forEach { user ->
             userInfos.add(UserInfo(user.id!!, user.email!!))
         }
         return userInfos

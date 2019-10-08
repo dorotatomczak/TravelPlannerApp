@@ -55,11 +55,11 @@ class ServerUserController {
     }
 
     @GetMapping("user-management/usersemails")
-    fun findUsersEmails(
+    fun findMatchingEmails(
             @RequestParam("query") query: String
     ): Response<MutableList<UserInfo>> {
         try {
-            val users = userManagement.findEmails(query)
+            val users = userManagement.findMatchingEmails(query)
             return Response(ResponseCode.OK, users)
         } catch (ex: Exception) {
             throw SearchNoItemsException(ex.localizedMessage)

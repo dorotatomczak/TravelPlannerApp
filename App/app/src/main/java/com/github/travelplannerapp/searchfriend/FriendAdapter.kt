@@ -54,8 +54,10 @@ class FriendAdapter(val presenter: SearchFriendContract.Presenter) : RecyclerVie
         }
 
         override fun onLongClick(v: View?): Boolean {
-            if (actionMode == null) actionMode = (containerView.context as AppCompatActivity)
-                    .startSupportActionMode(DeleteActionModeToolbar(presenter))
+            if (actionMode == null) {
+                actionMode = (containerView.context as AppCompatActivity)
+                        .startSupportActionMode(DeleteActionModeToolbar(presenter))
+            }
             return true
         }
 
@@ -64,9 +66,11 @@ class FriendAdapter(val presenter: SearchFriendContract.Presenter) : RecyclerVie
         }
 
         override fun setCheckbox() {
-            if (actionMode != null) checkboxItemFriend.visibility = View.VISIBLE
-            else checkboxItemFriend.visibility = View.GONE
-
+            if (actionMode != null) {
+                checkboxItemFriend.visibility = View.VISIBLE
+            }else {
+                checkboxItemFriend.visibility = View.GONE
+            }
             checkboxItemFriend.isChecked = false
         }
     }

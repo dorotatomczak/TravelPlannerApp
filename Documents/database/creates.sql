@@ -47,8 +47,3 @@ create table app_user_friend (
 	app_user_id integer references app_user(id),
 	friend_user_id integer references app_user(id)
 );
-	
-
-
-
-

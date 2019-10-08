@@ -32,7 +32,7 @@ class SearchFriendPresenter(view: SearchFriendContract.View) : BasePresenter<Sea
                 .subscribeOn(SchedulerProvider.io())
                 .map { if (it.responseCode == ResponseCode.OK) it.data!! else throw ApiException(it.responseCode) }
                 .subscribe(
-                        { id -> handleAddFriendResponse(id) },
+                        { friend -> handleAddFriendResponse(friend) },
                         { error -> handleErrorResponse(error) }
                 ))
     }
@@ -48,32 +48,6 @@ class SearchFriendPresenter(view: SearchFriendContract.View) : BasePresenter<Sea
                         { handleDeleteFriendsResponse() },
                         { error -> handleErrorResponse(error) }
                 ))
-    }
-
-    private fun handleLoadFriendsResponse(userFriends: List<UserInfo>) {
-        friends = ArrayList(userFriends)
-        view.onDataSetChanged()
-        view.setLoadingIndicatorVisibility(false)
-        view.showFriends()
-    }
-
-    private fun handleAddFriendResponse(userFriendId: Int) {
-        view.showSnackbar(R.string.friend_added)
-        view.onDataSetChanged()
-        view.setLoadingIndicatorVisibility(false)
-        loadFriends()
-    }
-
-    private fun handleDeleteFriendsResponse() {
-        friendsToDeleteIds.clear()
-        loadFriends()
-        view.showSnackbar(R.string.delete_friends_ok)
-    }
-
-    private fun handleErrorResponse(error: Throwable) {
-        if (error is ApiException) view.showSnackbar(error.getErrorMessageCode())
-        else view.showSnackbar(R.string.server_connection_error)
-        loadFriends()
     }
 
     override fun getFriendsCount(): Int {
@@ -107,6 +81,34 @@ class SearchFriendPresenter(view: SearchFriendContract.View) : BasePresenter<Sea
     override fun onDeleteClicked() {
         if (friendsToDeleteIds.size > 0) {
             view.showConfirmationDialog()
+        }
+    }
+
+    private fun handleLoadFriendsResponse(userFriends: List<UserInfo>) {
+        friends = ArrayList(userFriends)
+        view.onDataSetChanged()
+        view.setLoadingIndicatorVisibility(false)
+        view.showFriends()
+    }
+
+    private fun handleAddFriendResponse(friend: UserInfo) {
+        friends.add(friend)
+        view.showSnackbar(R.string.friend_added)
+        view.onDataSetChanged()
+        view.showFriends()
+    }
+
+    private fun handleDeleteFriendsResponse() {
+        friendsToDeleteIds.clear()
+        loadFriends()
+        view.showSnackbar(R.string.delete_friends_ok)
+    }
+
+    private fun handleErrorResponse(error: Throwable) {
+        if (error is ApiException){
+            view.showSnackbar(error.getErrorMessageCode())
+        }else {
+            view.showSnackbar(R.string.server_connection_error)
         }
     }
 }

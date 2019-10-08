@@ -6,9 +6,7 @@ import com.github.travelplannerapp.deleteactionmode.DeleteContract
 interface SearchFriendContract {
     interface View : DeleteContract.View {
         fun showSnackbar(messageCode: Int)
-        fun showAddFriend(friend: UserInfo)
         fun onDataSetChanged()
-        fun closeKeyboard()
         fun showFriends()
         fun setLoadingIndicatorVisibility(isVisible: Boolean)
     }

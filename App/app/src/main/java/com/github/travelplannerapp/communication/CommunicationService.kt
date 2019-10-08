@@ -84,10 +84,10 @@ interface ServerApi {
     fun getFriends(@Path("userId") userId: Int): Observable<Response<List<UserInfo>>>
 
     @POST("users/{userId}/friends")
-    fun addFriend(@Path("userId") userId: Int, @Body friend: UserInfo): Single<Response<Int>>
+    fun addFriend(@Path("userId") userId: Int, @Body friend: UserInfo): Single<Response<UserInfo>>
 
     @GET("user-management/usersemails")
-    fun findUsersEmails(@Query("query") query: String): Single<Response<MutableList<UserInfo>>>
+    fun findMatchingEmails(@Query("query") query: String): Single<Response<MutableList<UserInfo>>>
 
     @HTTP(method = "DELETE", path = "users/{userId}/friends", hasBody = true)
     fun deleteFriends(@Path("userId") userId: Int, @Body friendsIds: MutableSet<Int>): Single<Response<Unit>>

@@ -58,29 +58,6 @@ class SearchFriendActivity : AppCompatActivity(), SearchFriendContract.View {
         }
         presenter.loadFriends()
     }
-
-    override fun showAddFriend(friend: UserInfo) {
-        val userText = getString(R.string.user)
-        AlertDialog.Builder(this)
-                .setTitle(getString(R.string.add_entry, userText))
-                .setMessage(getString(R.string.add_one_confirmation, friend.email))
-                .setPositiveButton(android.R.string.yes) { _, _ ->
-                    presenter.addFriend(friend)
-                }
-                .setNegativeButton(android.R.string.no) { _, _ ->
-                }
-                .show()
-    }
-
-    override fun showSnackbar(messageCode: Int) {
-        Snackbar.make(linearLayoutSearchFriend, messageCode, Snackbar.LENGTH_LONG).show()
-    }
-
-    override fun closeKeyboard() {
-        val inputManager: InputMethodManager = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-        inputManager.hideSoftInputFromWindow(currentFocus?.windowToken, InputMethodManager.SHOW_FORCED)
-    }
-
     override fun onDataSetChanged() {
         recyclerViewFriend.adapter?.notifyDataSetChanged()
     }
@@ -95,10 +72,9 @@ class SearchFriendActivity : AppCompatActivity(), SearchFriendContract.View {
     }
 
     override fun showConfirmationDialog() {
-        val friendsText = getString(R.string.friends)
         AlertDialog.Builder(this)
-                .setTitle(getString(R.string.delete_entry, friendsText))
-                .setMessage(getString(R.string.delete_confirmation, friendsText))
+                .setTitle(getString(R.string.delete_friends))
+                .setMessage(getString(R.string.delete_friends_confirmation))
                 .setPositiveButton(android.R.string.yes) { _, _ ->
                     presenter.deleteFriends()
                 }
@@ -113,6 +89,27 @@ class SearchFriendActivity : AppCompatActivity(), SearchFriendContract.View {
 
     override fun setLoadingIndicatorVisibility(isVisible: Boolean) {
         swipeRefreshLayoutFriends.isRefreshing = isVisible
+    }
+
+    override fun showSnackbar(messageCode: Int) {
+        Snackbar.make(linearLayoutSearchFriend, messageCode, Snackbar.LENGTH_LONG).show()
+    }
+
+    private fun showAddFriend(friend: UserInfo) {
+        AlertDialog.Builder(this)
+                .setTitle(getString(R.string.add_friend))
+                .setMessage(getString(R.string.add_user_confirmation))
+                .setPositiveButton(android.R.string.yes) { _, _ ->
+                    presenter.addFriend(friend)
+                }
+                .setNegativeButton(android.R.string.no) { _, _ ->
+                }
+                .show()
+    }
+
+    private fun closeKeyboard() {
+        val inputManager: InputMethodManager = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        inputManager.hideSoftInputFromWindow(currentFocus?.windowToken, InputMethodManager.SHOW_FORCED)
     }
 }
 

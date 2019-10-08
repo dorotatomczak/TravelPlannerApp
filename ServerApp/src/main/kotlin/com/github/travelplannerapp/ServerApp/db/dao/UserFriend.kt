@@ -9,7 +9,9 @@ class UserFriend(map: MutableMap<String, Any?>) {
     var userId: Int? by defaultMap
     var friendId: Int? by defaultMap
 
-    constructor(id: Int?, userId: Int?, friendId: Int?) :
+    constructor(id: Int?,
+                userId: Int?,
+                friendId: Int?) :
             this(
                     mutableMapOf<String, Any?>(
                             "id" to id,
@@ -21,8 +23,8 @@ class UserFriend(map: MutableMap<String, Any?>) {
             this(
                     mutableMapOf<String, Any?>(
                             "id" to result.getInt("id"),
-                            "userId" to result.getInt("app_user_id"),
-                            "friendId" to result.getInt("friend_user_id")
+                            "userId" to result.getInt("userId"),
+                            "friendId" to result.getInt("friendId")
                     )
             )
 }

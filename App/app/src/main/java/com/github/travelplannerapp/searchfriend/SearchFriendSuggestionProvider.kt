@@ -15,17 +15,6 @@ class SearchFriendSuggestionProvider : ContentProvider() {
         return createCursor(searchString)
     }
 
-    private fun createCursor(searchString: String): MatrixCursor {
-        val cursor = MatrixCursor(arrayOf("_id", SearchManager.SUGGEST_COLUMN_TEXT_1, SearchManager.SUGGEST_COLUMN_TEXT_2))
-
-        var list = CommunicationService.serverApi.findUsersEmails(searchString)
-
-        for ((index, u) in list.blockingGet().data.orEmpty().withIndex()) {
-            cursor.addRow(arrayOf(index, u.email, u.id))
-        }
-        return cursor
-    }
-
     override fun onCreate(): Boolean {
         return true
     }
@@ -44,5 +33,16 @@ class SearchFriendSuggestionProvider : ContentProvider() {
 
     override fun insert(p0: Uri, p1: ContentValues?): Uri? {
         return null
+    }
+
+    private fun createCursor(searchString: String): MatrixCursor {
+        val cursor = MatrixCursor(arrayOf("_id", SearchManager.SUGGEST_COLUMN_TEXT_1, SearchManager.SUGGEST_COLUMN_TEXT_2))
+
+        var list = CommunicationService.serverApi.findMatchingEmails(searchString)
+
+        for ((index, userInfo) in list.blockingGet().data.orEmpty().withIndex()) {
+            cursor.addRow(arrayOf(index, userInfo.email, userInfo.id))
+        }
+        return cursor
     }
 }

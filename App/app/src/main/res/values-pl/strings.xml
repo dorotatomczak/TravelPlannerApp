@@ -44,7 +44,6 @@
     <string name="no_tickets">Nie masz żadnego biletu</string>
     <string name="add_scan_error">Wystąpił problem podczas dodawania skanu</string>
     <string name="restaurant">Restauracja</string>
-    <string name="error_try_again">Błąd, proszę spróbować ponownie</string>
     <string name="search">Szukaj</string>
     <string name="category">Kategoria</string>
     <string name="from_date">Od dnia</string>
@@ -88,12 +87,10 @@
     <string name="user_friends">Moi znajomi</string>
     <string name="friend_added">Znajomy został dodany</string>
     <string name="friend_deleted">Znajomy został usunięty</string>
-    <string name="friend">znajomego</string>
-    <string name="user">użytkownika</string>
-    <string name="add_one_confirmation">Czy na pewno chcesz dodać wybranego %1$s?</string>
+    <string name="add_user_confirmation">Czy na pewno chcesz dodać wybranego użytkownika?</string>
     <string name="add_entry">Dodaj %1$s</string>
-    <string name="delete_one_confirmation">Czy na pewno chcesz usunąć wybranego %1$s?</string>
-    <string name="delete_one_entry">Usuń %1$s</string>
-    <string name="friends">znajomych</string>
     <string name="delete_friends_ok">Usunąłeś wybranych znajomych</string>
+    <string name="add_friend">Dodaj znajomego</string>
+    <string name="delete_friends">Usuń znajomych</string>
+    <string name="delete_friends_confirmation">Czy na pewno chcesz usunąć wybranych znajomych?</string>
 </resources>
