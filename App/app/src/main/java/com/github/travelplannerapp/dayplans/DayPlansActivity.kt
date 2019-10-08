@@ -8,8 +8,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.github.travelplannerapp.R
-import com.github.travelplannerapp.communication.commonmodel.Plan
-import com.github.travelplannerapp.dayplans.addplan.AddPlanActivity
+import com.github.travelplannerapp.communication.commonmodel.PlanElement
+import com.github.travelplannerapp.dayplans.addplanelement.AddPlanElementActivity
 import com.github.travelplannerapp.utils.DrawerUtils
 import com.google.android.material.snackbar.Snackbar
 import dagger.android.AndroidInjection
@@ -37,7 +37,7 @@ class DayPlansActivity : AppCompatActivity(), DayPlansContract.View {
         supportActionBar?.setHomeButtonEnabled(true)
         DrawerUtils.getDrawer(this, toolbar)
 
-        fabAdd.setOnClickListener { presenter.onAddPlanClicked() }
+        fabAdd.setOnClickListener { presenter.onAddPlanElementClicked() }
 
         swipeRefreshLayoutDayPlans.setOnRefreshListener { refreshDayPlans() }
 
@@ -50,13 +50,13 @@ class DayPlansActivity : AppCompatActivity(), DayPlansContract.View {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         when (requestCode) {
-            AddPlanActivity.REQUEST_ADD_PLAN -> {
+            AddPlanElementActivity.REQUEST_ADD_PLAN -> {
                 if (resultCode == Activity.RESULT_OK && data != null) {
-                    val messageCode = data.getIntExtra(AddPlanActivity.REQUEST_ADD_PLAN_RESULT_MESSAGE,
+                    val messageCode = data.getIntExtra(AddPlanElementActivity.REQUEST_ADD_PLAN_ELEMENT_RESULT_MESSAGE,
                             R.string.scanner_general_error)
                     showSnackbar(messageCode)
-                    val plan = data.getSerializableExtra(AddPlanActivity.REQUEST_ADD_PLAN_RESULT_PLAN) as Plan
-                    presenter.onPlanAdded(plan)
+                    val plan = data.getSerializableExtra(AddPlanElementActivity.REQUEST_ADD_PLAN_ELEMENT_RESULT_PLAN) as PlanElement
+                    presenter.onPlanElementAdded(plan)
                 }
             }
         }
@@ -72,10 +72,10 @@ class DayPlansActivity : AppCompatActivity(), DayPlansContract.View {
         recyclerViewDayPlans.visibility = View.GONE
     }
 
-    override fun showAddPlan(travelId: Int) {
-        val intent = Intent(this, AddPlanActivity::class.java)
-        intent.putExtra(AddPlanActivity.EXTRA_TRAVEL_ID, travelId)
-        startActivityForResult(intent, AddPlanActivity.REQUEST_ADD_PLAN)
+    override fun showAddPlanElement(travelId: Int) {
+        val intent = Intent(this, AddPlanElementActivity::class.java)
+        intent.putExtra(AddPlanElementActivity.EXTRA_TRAVEL_ID, travelId)
+        startActivityForResult(intent, AddPlanElementActivity.REQUEST_ADD_PLAN)
     }
 
     override fun onDataSetChanged() {

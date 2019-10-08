@@ -1,9 +1,7 @@
 package com.github.travelplannerapp.communication
 
-import com.github.travelplannerapp.communication.appmodel.CityObject
-import com.github.travelplannerapp.communication.appmodel.Scan
-import com.github.travelplannerapp.communication.appmodel.Travel
 import com.github.travelplannerapp.communication.commonmodel.*
+import com.github.travelplannerapp.communication.appmodel.*
 import io.reactivex.Single
 import okhttp3.MultipartBody
 import okhttp3.OkHttpClient
@@ -87,8 +85,8 @@ interface ServerApi {
                      @Query("departure_time") departureTime: String): Single<Response<Routes>>
 
     @GET("users/{userId}/travels/{travelId}/plans")
-    fun getPlans(@Path("userId") userId: Int, @Path("travelId") travelId: Int): Single<Response<List<Plan>>>
+    fun getPlanElements(@Path("userId") userId: Int, @Path("travelId") travelId: Int): Single<Response<List<PlanElement>>>
 
     @POST("users/{userId}/travels/{travelId}/plans")
-    fun addPlan(@Path("userId") userId: Int, @Path("travelId") travelId: Int, @Body plan: Plan): Single<Response<Plan>>
+    fun addPlanElement(@Path("userId") userId: Int, @Path("travelId") travelId: Int, @Body planElement: PlanElement): Single<Response<PlanElement>>
 }

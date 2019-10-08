@@ -1,4 +1,4 @@
-package com.github.travelplannerapp.tickets
+package com.github.travelplannerapp.scans
 
 import android.Manifest
 import android.app.Activity
@@ -23,7 +23,7 @@ import com.github.travelplannerapp.scanner.ScannerActivity
 import com.github.travelplannerapp.utils.DrawerUtils
 import com.google.android.material.snackbar.Snackbar
 import dagger.android.AndroidInjection
-import kotlinx.android.synthetic.main.activity_tickets.*
+import kotlinx.android.synthetic.main.activity_scans.*
 import kotlinx.android.synthetic.main.fab_add.*
 import kotlinx.android.synthetic.main.toolbar.*
 import java.io.File
@@ -32,7 +32,7 @@ import java.text.SimpleDateFormat
 import java.util.*
 import javax.inject.Inject
 
-class TicketsActivity : AppCompatActivity(), TicketsContract.View {
+class ScansActivity : AppCompatActivity(), ScansContract.View {
 
     companion object {
         const val REQUEST_PERMISSIONS = 0
@@ -44,13 +44,13 @@ class TicketsActivity : AppCompatActivity(), TicketsContract.View {
             Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA)
 
     @Inject
-    lateinit var presenter: TicketsContract.Presenter
+    lateinit var presenter: ScansContract.Presenter
     private var photoPath: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         AndroidInjection.inject(this)
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_tickets)
+        setContentView(R.layout.activity_scans)
 
         // Set up toolbar
         setSupportActionBar(toolbar)
@@ -61,10 +61,10 @@ class TicketsActivity : AppCompatActivity(), TicketsContract.View {
             presenter.onAddScanClicked()
         }
 
-        swipeRefreshLayoutTickets.setOnRefreshListener { presenter.loadScans() }
+        swipeRefreshLayoutScans.setOnRefreshListener { presenter.loadScans() }
 
-        recyclerViewTickets.layoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
-        recyclerViewTickets.adapter = TicketsAdapter(presenter)
+        recyclerViewScans.layoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
+        recyclerViewScans.adapter = ScansAdapter(presenter)
 
         presenter.loadScans()
     }
@@ -148,25 +148,25 @@ class TicketsActivity : AppCompatActivity(), TicketsContract.View {
     }
 
     override fun showSnackbar(messageCode: Int) {
-        Snackbar.make(coordinatorLayoutTickets, getString(messageCode), Snackbar.LENGTH_SHORT).show()
+        Snackbar.make(coordinatorLayoutScans, getString(messageCode), Snackbar.LENGTH_SHORT).show()
     }
 
-    override fun showTickets() {
-        textViewNoTickets.visibility = View.GONE
-        recyclerViewTickets.visibility = View.VISIBLE
+    override fun showScans() {
+        textViewNoScans.visibility = View.GONE
+        recyclerViewScans.visibility = View.VISIBLE
     }
 
-    override fun showNoTickets() {
-        textViewNoTickets.visibility = View.VISIBLE
-        recyclerViewTickets.visibility = View.GONE
+    override fun showNoScans() {
+        textViewNoScans.visibility = View.VISIBLE
+        recyclerViewScans.visibility = View.GONE
     }
 
     override fun onDataSetChanged() {
-        recyclerViewTickets.adapter?.notifyDataSetChanged()
+        recyclerViewScans.adapter?.notifyDataSetChanged()
     }
 
     override fun setLoadingIndicatorVisibility(isVisible: Boolean) {
-        swipeRefreshLayoutTickets.isRefreshing = isVisible
+        swipeRefreshLayoutScans.isRefreshing = isVisible
     }
 
     override fun showFullScan(url: String) {
@@ -181,16 +181,16 @@ class TicketsActivity : AppCompatActivity(), TicketsContract.View {
 
     override fun showNoActionMode() {
         fabAdd.visibility = View.VISIBLE
-        (recyclerViewTickets.adapter as TicketsAdapter).leaveActionMode()
+        (recyclerViewScans.adapter as ScansAdapter).leaveActionMode()
     }
 
     override fun showConfirmationDialog() {
-        val ticketsText = getString(R.string.tickets).decapitalize()
+        val scansText = getString(R.string.scans).decapitalize()
         AlertDialog.Builder(this)
-                .setTitle(getString(R.string.delete_entry, ticketsText))
-                .setMessage(getString(R.string.delete_confirmation, ticketsText))
+                .setTitle(getString(R.string.delete_entry, scansText))
+                .setMessage(getString(R.string.delete_confirmation, scansText))
                 .setPositiveButton(android.R.string.yes) { _, _ ->
-                    presenter.deleteTickets()
+                    presenter.deleteScans()
                 }
                 .setNegativeButton(android.R.string.no) { _, _ ->
                 }
