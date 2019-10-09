@@ -5,7 +5,7 @@ import com.github.travelplannerapp.R
 import com.github.travelplannerapp.communication.ApiException
 import com.github.travelplannerapp.communication.CommunicationService
 import com.github.travelplannerapp.communication.commonmodel.ResponseCode
-import com.github.travelplannerapp.communication.model.UserInfo
+import com.github.travelplannerapp.communication.appmodel.UserInfo
 import com.github.travelplannerapp.utils.SchedulerProvider
 import com.github.travelplannerapp.utils.SharedPreferencesUtils
 import io.reactivex.disposables.CompositeDisposable
@@ -93,9 +93,9 @@ class SearchFriendPresenter(view: SearchFriendContract.View) : BasePresenter<Sea
 
     private fun handleAddFriendResponse(friend: UserInfo) {
         friends.add(friend)
-        view.showSnackbar(R.string.friend_added)
-        view.onDataSetChanged()
         view.showFriends()
+        view.onDataSetChanged()
+        view.showSnackbar(R.string.friend_added)
     }
 
     private fun handleDeleteFriendsResponse() {

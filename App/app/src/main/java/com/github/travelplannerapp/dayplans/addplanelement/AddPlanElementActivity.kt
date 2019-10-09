@@ -1,4 +1,4 @@
-package com.github.travelplannerapp.dayplans.addplan
+package com.github.travelplannerapp.dayplans.addplanelement
 
 import android.app.Activity
 import android.app.DatePickerDialog
@@ -10,7 +10,8 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.github.travelplannerapp.R
 import com.github.travelplannerapp.communication.appmodel.PlaceCategory
-import com.github.travelplannerapp.communication.commonmodel.Plan
+import com.github.travelplannerapp.communication.commonmodel.Place
+import com.github.travelplannerapp.communication.commonmodel.PlanElement
 import com.github.travelplannerapp.dayplans.searchelement.SearchElementActivity
 import com.github.travelplannerapp.utils.DateTimeUtils
 import com.github.travelplannerapp.utils.DrawerUtils
@@ -24,18 +25,18 @@ import java.util.*
 import javax.inject.Inject
 
 
-//TODO [Dorota] This could be also for edit plan, if so then rename it to AddEditPlanActivity
-class AddPlanActivity : AppCompatActivity(), AddPlanContract.View {
+//TODO [Dorota] This could be also for edit planElement, if so then rename it to AddEditPlanActivity
+class AddPlanElementActivity : AppCompatActivity(), AddPlanElementContract.View {
 
     @Inject
-    lateinit var presenter: AddPlanContract.Presenter
+    lateinit var presenter: AddPlanElementContract.Presenter
 
-    private var coordinates = AddPlanContract.Coordinates(0.0, 0.0)
+    private var coordinates = AddPlanElementContract.Coordinates(0.0, 0.0)
 
     companion object {
         const val REQUEST_ADD_PLAN = 0
-        const val REQUEST_ADD_PLAN_RESULT_MESSAGE = "REQUEST_ADD_PLAN_RESULT_MESSAGE"
-        const val REQUEST_ADD_PLAN_RESULT_PLAN = "REQUEST_ADD_PLAN_RESULT_PLAN"
+        const val REQUEST_ADD_PLAN_ELEMENT_RESULT_MESSAGE = "REQUEST_ADD_PLAN_ELEMENT_RESULT_MESSAGE"
+        const val REQUEST_ADD_PLAN_ELEMENT_RESULT_PLAN = "REQUEST_ADD_PLAN_ELEMENT_RESULT_PLAN"
         const val EXTRA_TRAVEL_ID = "EXTRA_TRAVEL_ID"
     }
 
@@ -69,10 +70,10 @@ class AddPlanActivity : AppCompatActivity(), AddPlanContract.View {
         Snackbar.make(coordinatorLayoutAddPlan, messageCode, Snackbar.LENGTH_LONG).show()
     }
 
-    override fun returnResultAndFinish(messageCode: Int, plan: Plan) {
+    override fun returnResultAndFinish(messageCode: Int, planElement: PlanElement) {
         val resultIntent = Intent().apply {
-            putExtra(REQUEST_ADD_PLAN_RESULT_MESSAGE, messageCode)
-            putExtra(REQUEST_ADD_PLAN_RESULT_PLAN, plan)
+            putExtra(REQUEST_ADD_PLAN_ELEMENT_RESULT_MESSAGE, messageCode)
+            putExtra(REQUEST_ADD_PLAN_ELEMENT_RESULT_PLAN, planElement)
         }
         setResult(RESULT_OK, resultIntent)
         finish()
@@ -122,7 +123,7 @@ class AddPlanActivity : AppCompatActivity(), AddPlanContract.View {
     }
 
     private fun onFabFinishAddPlanClicked() {
-        val data = AddPlanContract.NewPlanData(
+        val data = AddPlanElementContract.NewPlanElementData(
                 PlaceCategory.values()[dropdownCategoriesAddPlan.selectedItemPosition],
                 editTextPlanName.text.toString(),
                 editTextPlanFromDate.text.toString(),
@@ -132,7 +133,7 @@ class AddPlanActivity : AppCompatActivity(), AddPlanContract.View {
                 coordinates,
                 editTextPlanLocation.text.toString()
         )
-        presenter.addPlan(data)
+        presenter.addPlanElement(data)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -140,14 +141,11 @@ class AddPlanActivity : AppCompatActivity(), AddPlanContract.View {
         when (requestCode) {
             SearchElementActivity.REQUEST_SEARCH -> {
                 if (resultCode == Activity.RESULT_OK && data != null) {
-                    val name = data.getStringExtra(SearchElementActivity.EXTRA_NAME)
-                    val location = data.getStringExtra(SearchElementActivity.EXTRA_LOCATION)
-                    val placeHereId = data.getStringExtra(SearchElementActivity.EXTRA_PLACE_HERE_ID)
-                    val href = data.getStringExtra(SearchElementActivity.EXTRA_HREF)
+                    val place = data.getSerializableExtra(SearchElementActivity.EXTRA_PLACE) as Place
 
-                    presenter.onPlaceFound(placeHereId!!, href!!)
-                    editTextPlanName.setText(name, TextView.BufferType.EDITABLE)
-                    location?.let { showLocation(it) }
+                    presenter.onPlaceFound(place)
+                    editTextPlanName.setText(place.title, TextView.BufferType.EDITABLE)
+                    showLocation(place.vicinity)
                 }
             }
         }

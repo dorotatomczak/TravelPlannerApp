@@ -1,9 +1,9 @@
-package com.github.travelplannerapp.communication.model
+package com.github.travelplannerapp.communication.appmodel
 
 import android.app.SearchManager
 import android.database.Cursor
 
-class UserInfo(
+data class UserInfo(
         val id: Int,
         val email: String
 

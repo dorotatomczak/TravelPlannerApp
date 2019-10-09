@@ -19,7 +19,7 @@ class DayPlansAdapter(val presenter: DayPlansContract.Presenter) : RecyclerView.
             DayPlansContract.DayPlanItem.TYPE_PLAN -> PlanElementViewHolder(presenter, LayoutInflater.from(parent.context)
                     .inflate(R.layout.item_plan_element, parent, false))
 
-            DayPlansContract.DayPlanItem.TYPE_DATE -> PlanDateSeparatorViewHolder(presenter, LayoutInflater.from(parent.context)
+            DayPlansContract.DayPlanItem.TYPE_DATE -> DateSeparatorViewHolder(presenter, LayoutInflater.from(parent.context)
                     .inflate(R.layout.item_plan_date_separator, parent, false))
 
             else -> throw Exception("There is no ViewHolder that matches the type $viewType")
@@ -27,24 +27,24 @@ class DayPlansAdapter(val presenter: DayPlansContract.Presenter) : RecyclerView.
     }
 
     override fun getItemCount(): Int {
-        return presenter.getPlanItemsCount()
+        return presenter.getDayPlanItemsCount()
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
 
         when (holder.itemViewType) {
-            DayPlansContract.DayPlanItem.TYPE_PLAN -> presenter.onBindPlanItemAtPosition(position, holder as PlanElementViewHolder)
-            DayPlansContract.DayPlanItem.TYPE_DATE -> presenter.onBindPlanItemAtPosition(position, holder as PlanDateSeparatorViewHolder)
+            DayPlansContract.DayPlanItem.TYPE_PLAN -> presenter.onBindDayPlanItemAtPosition(position, holder as PlanElementViewHolder)
+            DayPlansContract.DayPlanItem.TYPE_DATE -> presenter.onBindDayPlanItemAtPosition(position, holder as DateSeparatorViewHolder)
             else -> throw Exception("There is no method that would bind ViewHolder with type ${holder.itemViewType}")
         }
     }
 
     override fun getItemViewType(position: Int): Int {
-        return presenter.getPlanItemType(position)
+        return presenter.getDayPlanItemType(position)
     }
 
-    inner class PlanDateSeparatorViewHolder(val presenter: DayPlansContract.Presenter, override val containerView: View) : RecyclerView.ViewHolder(containerView),
-            LayoutContainer, DayPlansContract.PlanDateSeparatorItemView {
+    inner class DateSeparatorViewHolder(val presenter: DayPlansContract.Presenter, override val containerView: View) : RecyclerView.ViewHolder(containerView),
+            LayoutContainer, DayPlansContract.DateSeparatorItemView {
 
         override fun setDate(date: String) {
             textViewPlanDateSeparator.text = date
@@ -60,7 +60,7 @@ class DayPlansAdapter(val presenter: DayPlansContract.Presenter) : RecyclerView.
         }
 
         override fun onClick(v: View?) {
-            //TODO [Dorota] Show plan details
+            //TODO [Dorota] Show planElement details
         }
 
         override fun setName(name: String) {

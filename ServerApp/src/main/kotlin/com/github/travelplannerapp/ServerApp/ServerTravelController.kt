@@ -4,7 +4,7 @@ import com.github.travelplannerapp.ServerApp.datamanagement.TravelManagement
 import com.github.travelplannerapp.ServerApp.datamanagement.UserManagement
 import com.github.travelplannerapp.ServerApp.db.dao.Travel
 import com.github.travelplannerapp.ServerApp.db.repositories.TravelRepository
-import com.github.travelplannerapp.communication.commonmodel.Plan
+import com.github.travelplannerapp.communication.commonmodel.PlanElement
 import com.github.travelplannerapp.communication.commonmodel.Response
 import com.github.travelplannerapp.communication.commonmodel.ResponseCode
 import org.springframework.beans.factory.annotation.Autowired
@@ -63,16 +63,16 @@ class ServerTravelController {
         return Response(ResponseCode.OK, Unit)
     }
 
-    @GetMapping("/users/{userId}/travels/{travelId}/plans")
+    @GetMapping("users/{userId}/travels/{travelId}/plans")
     fun getPlans(
             @RequestHeader("authorization") token: String,
             @PathVariable userId: Int,
             @PathVariable travelId: Int
-    ): Response<List<Plan>> {
+    ): Response<List<PlanElement>> {
         userManagement.verifyUser(token)
 
-        val plans = travelManagement.getPlans(travelId)
-        return Response(ResponseCode.OK, plans)
+        val planElements = travelManagement.getPlanElements(travelId)
+        return Response(ResponseCode.OK, planElements)
     }
 
     @PostMapping("/users/{userId}/travels/{travelId}/plans")
@@ -80,11 +80,11 @@ class ServerTravelController {
             @RequestHeader("authorization") token: String,
             @PathVariable userId: Int,
             @PathVariable travelId: Int,
-            @RequestBody plan: Plan
-    ): Response<Plan> {
+            @RequestBody planElement: PlanElement
+    ): Response<PlanElement> {
         userManagement.verifyUser(token)
 
-        val addedPlan = travelManagement.addPlan(travelId, plan)
-        return Response(ResponseCode.OK, addedPlan)
+        val addedPlanElement = travelManagement.addPlanElement(travelId, planElement)
+        return Response(ResponseCode.OK, addedPlanElement)
     }
 }

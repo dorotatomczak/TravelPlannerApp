@@ -29,7 +29,7 @@
     <dimen name="margin_search_element">20dp</dimen>
     <dimen name="line_width">2dp</dimen>
     <dimen name="margin_add_travel_line">5dp</dimen>
-    <dimen name="card_view_ticket_height">160dp</dimen>
+    <dimen name="card_view_scan_height">160dp</dimen>
     <dimen name="sliding_up_panel_height">80dp</dimen>
     <dimen name="sliding_up_shadow_height">5dp</dimen>
 

@@ -8,7 +8,7 @@ interface TravelDetailsContract {
         fun showDayPlans(travelId: Int)
         fun showTransport()
         fun showAccommodation()
-        fun showTickets(travelId: Int)
+        fun showScans(travelId: Int)
         fun showEditTravel()
         fun showSnackbar(messageCode: Int)
     }

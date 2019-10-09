@@ -2,12 +2,12 @@
 <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/coordinatorLayoutTickets"
+    android:id="@+id/coordinatorLayoutScans"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
     android:orientation="horizontal"
-    tools:context=".tickets.TicketsActivity">
+    tools:context=".scans.ScansActivity">
 
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
@@ -19,7 +19,7 @@
     </com.google.android.material.appbar.AppBarLayout>
 
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-        android:id="@+id/swipeRefreshLayoutTickets"
+        android:id="@+id/swipeRefreshLayoutScans"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginLeft="@dimen/margin_horizontal"
@@ -37,20 +37,20 @@
                 android:orientation="vertical">
 
                 <TextView
-                    android:id="@+id/textViewNoTickets"
+                    android:id="@+id/textViewNoScans"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center_horizontal"
-                    android:text="@string/no_tickets"
+                    android:text="@string/no_scans"
                     android:textSize="@dimen/text_size_info"
                     android:visibility="visible" />
 
                 <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/recyclerViewTickets"
+                    android:id="@+id/recyclerViewScans"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:visibility="gone"
-                    tools:listitem="@layout/item_ticket" />
+                    tools:listitem="@layout/item_scan" />
 
             </LinearLayout>
 

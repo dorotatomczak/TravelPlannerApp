@@ -3,7 +3,7 @@
     <string name="menu_settings">Ustawienia</string>
     <string name="sign_in">Zaloguj się</string>
     <string name="day_plans">Plany dni</string>
-    <string name="tickets">Bilety</string>
+    <string name="scans">Skany</string>
     <string name="transport">Transport</string>
     <string name="accommodation">Nocleg</string>
     <string name="no_travels">Nie masz żadnej podróży</string>
@@ -37,11 +37,11 @@
     <string name="update_travel_error">Wystąpił problem podczas zmieniania nazwy</string>
     <string name="delete_travels_ok">Usunąłeś wybrane podróż/e</string>
     <string name="delete_travels_error">Wystąpił problem podczas usuwania podróż/y</string>
-    <string name="add_plan_ok">Dodałeś nowy plan</string>
-    <string name="add_plan_error">Wystąpił problem podczas dodawania planu</string>
+    <string name="add_plan_ok">Dodałeś nowy element planu dnia</string>
+    <string name="add_plan_error">Wystąpił problem podczas dodawania elementu planu dnia</string>
     <string name="no_day_plans">Nie masz żadnego planu dnia w tej podróży</string>
     <string name="authorization_error">Nie masz uprawnień na wykonanie tej akcji</string>
-    <string name="no_tickets">Nie masz żadnego biletu</string>
+    <string name="no_scans">Nie masz żadnego skanu</string>
     <string name="add_scan_error">Wystąpił problem podczas dodawania skanu</string>
     <string name="restaurant">Restauracja</string>
     <string name="search">Szukaj</string>
@@ -56,7 +56,7 @@
     <string name="missing_required_fields_error">Wypełnij wszystkie pola</string>
     <string name="menu_delete">Usuń</string>
     <string name="menu_edit">Edytuj</string>
-    <string name="delete_tickets_ok">Usunąłeś wybrane skan/y</string>
+    <string name="delete_scans_ok">Usunąłeś wybrane skan/y</string>
     <string name="delete_scans_error">Wystąpił problem podczas usuwania skanu/ów</string>
     <string name="delete_entry">Usuń %1$s</string>
     <string name="delete_confirmation">Czy na pewno chcesz usunąć wybrane %1$s?</string>

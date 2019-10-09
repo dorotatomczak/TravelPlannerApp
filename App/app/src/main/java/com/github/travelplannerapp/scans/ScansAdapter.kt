@@ -1,4 +1,4 @@
-package com.github.travelplannerapp.tickets
+package com.github.travelplannerapp.scans
 
 import android.view.LayoutInflater
 import android.view.View
@@ -13,49 +13,49 @@ import com.bumptech.glide.request.RequestOptions
 import com.github.travelplannerapp.R
 import com.github.travelplannerapp.deleteactionmode.DeleteActionModeToolbar
 import kotlinx.android.extensions.LayoutContainer
-import kotlinx.android.synthetic.main.item_ticket.*
+import kotlinx.android.synthetic.main.item_scan.*
 
-class TicketsAdapter(val presenter: TicketsContract.Presenter) : RecyclerView.Adapter<TicketsAdapter.TicketsViewHolder>() {
+class ScansAdapter(val presenter: ScansContract.Presenter) : RecyclerView.Adapter<ScansAdapter.ScansViewHolder>() {
 
     private var actionMode: ActionMode? = null
     val requestOptions = RequestOptions().diskCacheStrategy(DiskCacheStrategy.ALL)
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TicketsViewHolder {
-        return TicketsViewHolder(presenter, LayoutInflater.from(parent.context)
-                .inflate(R.layout.item_ticket, parent, false)); }
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ScansViewHolder {
+        return ScansViewHolder(presenter, LayoutInflater.from(parent.context)
+                .inflate(R.layout.item_scan, parent, false)); }
 
     override fun getItemCount(): Int {
-        return presenter.getTicketsCount()
+        return presenter.getScansCount()
     }
 
-    override fun onBindViewHolder(holder: TicketsViewHolder, position: Int) {
-        presenter.onBindTicketsAtPosition(position, holder)
+    override fun onBindViewHolder(holder: ScansViewHolder, position: Int) {
+        presenter.onBindScansAtPosition(position, holder)
     }
 
     fun leaveActionMode() {
         actionMode = null
     }
 
-    inner class TicketsViewHolder(val presenter: TicketsContract.Presenter, override val containerView: View) : RecyclerView.ViewHolder(containerView),
-            LayoutContainer, TicketsContract.TicketItemView, View.OnClickListener, View.OnLongClickListener {
+    inner class ScansViewHolder(val presenter: ScansContract.Presenter, override val containerView: View) : RecyclerView.ViewHolder(containerView),
+            LayoutContainer, ScansContract.ScanItemView, View.OnClickListener, View.OnLongClickListener {
 
         init {
             containerView.setOnClickListener(this)
             containerView.setOnLongClickListener(this)
 
-            checkboxItemTicket.setOnCheckedChangeListener(CompoundButton.OnCheckedChangeListener(
+            checkboxItemScan.setOnCheckedChangeListener(CompoundButton.OnCheckedChangeListener(
                     fun(_: CompoundButton, isChecked: Boolean) {
                         if (isChecked) {
-                            presenter.addTicketToDelete(adapterPosition)
+                            presenter.addScanToDelete(adapterPosition)
                         } else {
-                            presenter.removeTicketToDelete(adapterPosition)
+                            presenter.removeScanToDelete(adapterPosition)
                         }
                     }
             ))
         }
 
         override fun onClick(v: View?) {
-            if (actionMode != null) checkboxItemTicket.isChecked = !checkboxItemTicket.isChecked
+            if (actionMode != null) checkboxItemScan.isChecked = !checkboxItemScan.isChecked
             else presenter.onScanClicked(adapterPosition)
         }
 
@@ -69,14 +69,14 @@ class TicketsAdapter(val presenter: TicketsContract.Presenter) : RecyclerView.Ad
             Glide.with(this.itemView.context)
                     .apply { requestOptions }
                     .load(url)
-                    .into(imageViewItemTicket)
+                    .into(imageViewItemScan)
         }
 
         override fun setCheckbox() {
-            if (actionMode != null) checkboxItemTicket.visibility = View.VISIBLE
-            else checkboxItemTicket.visibility = View.GONE
+            if (actionMode != null) checkboxItemScan.visibility = View.VISIBLE
+            else checkboxItemScan.visibility = View.GONE
 
-            checkboxItemTicket.isChecked = false
+            checkboxItemScan.isChecked = false
         }
     }
 }

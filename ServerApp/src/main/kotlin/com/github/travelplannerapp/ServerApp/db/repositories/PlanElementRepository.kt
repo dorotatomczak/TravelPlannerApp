@@ -2,15 +2,15 @@ package com.github.travelplannerapp.ServerApp.db.repositories
 
 import com.github.travelplannerapp.ServerApp.db.DbConnection
 import com.github.travelplannerapp.ServerApp.db.dao.PlaceDao
-import com.github.travelplannerapp.ServerApp.db.dao.PlanDao
+import com.github.travelplannerapp.ServerApp.db.dao.PlanElementDao
 import org.springframework.stereotype.Component
 import java.sql.PreparedStatement
 import java.sql.ResultSet
 
 @Component
-class PlanRepository : Repository<PlanDao>(), IPlanRepository {
+class PlanElementRepository : Repository<PlanElementDao>(), IPlanElementRepository {
     companion object {
-        const val tableName = "plan"
+        const val tableName = "plan_element"
         const val columnId = "id"
         const val columnLocale = "locale"
         const val columnFromDateTime = "from_date_time"
@@ -29,8 +29,8 @@ class PlanRepository : Repository<PlanDao>(), IPlanRepository {
             "WHERE $columnId=?"
     override val nextIdStatement = "SELECT nextval(pg_get_serial_sequence('$tableName', '$columnId')) AS new_id"
 
-    override fun getPlansByTravelId(travelId: Int): List<Pair<PlanDao,PlaceDao>> {
-        val plansDaoPlaceDao = mutableListOf<Pair<PlanDao,PlaceDao>>()
+    override fun getPlanElementsByTravelId(travelId: Int): List<Pair<PlanElementDao,PlaceDao>> {
+        val planElementDaoPlaceDao = mutableListOf<Pair<PlanElementDao,PlaceDao>>()
         val statement = DbConnection
                 .conn
                 .prepareStatement(
@@ -42,19 +42,19 @@ class PlanRepository : Repository<PlanDao>(), IPlanRepository {
         statement.setInt(1, travelId)
         val result = statement.executeQuery()
         while (result.next()) {
-            val planDao = PlanDao(result)
+            val planElementDao = PlanElementDao(result)
             val placeDao = PlaceDao(result)
             placeDao.id = result.getInt("place_id")
-            plansDaoPlaceDao.add(Pair(planDao,placeDao))
+            planElementDaoPlaceDao.add(Pair(planElementDao,placeDao))
         }
-        return plansDaoPlaceDao
+        return planElementDaoPlaceDao
     }
 
-    override fun T(result: ResultSet): PlanDao? {
-        return PlanDao(result)
+    override fun T(result: ResultSet): PlanElementDao? {
+        return PlanElementDao(result)
     }
 
-    override fun prepareInsertStatement(obj: PlanDao): PreparedStatement {
+    override fun prepareInsertStatement(obj: PlanElementDao): PreparedStatement {
         val statement = DbConnection
                 .conn
                 .prepareStatement(insertStatement)
@@ -67,7 +67,7 @@ class PlanRepository : Repository<PlanDao>(), IPlanRepository {
         return statement
     }
 
-    override fun prepareUpdateStatement(obj: PlanDao): PreparedStatement {
+    override fun prepareUpdateStatement(obj: PlanElementDao): PreparedStatement {
         val statement = DbConnection
                 .conn
                 .prepareStatement(updateStatement)

@@ -44,7 +44,7 @@ class SearchElementPresenter(view: SearchElementContract.View) : BasePresenter<S
                 .subscribeOn(SchedulerProvider.io())
                 .map { if (it.responseCode == ResponseCode.OK) it.data else throw ApiException(it.responseCode) }
                 .subscribe(
-                        { contacts -> view.showContacts(contacts!!) },
+                        { contacts -> contacts?.let { view.showContacts(contacts) } },
                         { error -> handleErrorResponse(error) }
                 ))
     }

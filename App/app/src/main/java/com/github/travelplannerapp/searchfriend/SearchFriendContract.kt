@@ -1,6 +1,6 @@
 package com.github.travelplannerapp.searchfriend
 
-import com.github.travelplannerapp.communication.model.UserInfo
+import com.github.travelplannerapp.communication.appmodel.UserInfo
 import com.github.travelplannerapp.deleteactionmode.DeleteContract
 
 interface SearchFriendContract {
