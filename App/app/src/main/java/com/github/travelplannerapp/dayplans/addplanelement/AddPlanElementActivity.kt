@@ -10,6 +10,7 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.github.travelplannerapp.R
 import com.github.travelplannerapp.communication.appmodel.PlaceCategory
+import com.github.travelplannerapp.communication.commonmodel.Place
 import com.github.travelplannerapp.communication.commonmodel.PlanElement
 import com.github.travelplannerapp.dayplans.searchelement.SearchElementActivity
 import com.github.travelplannerapp.utils.DateTimeUtils
@@ -140,14 +141,11 @@ class AddPlanElementActivity : AppCompatActivity(), AddPlanElementContract.View 
         when (requestCode) {
             SearchElementActivity.REQUEST_SEARCH -> {
                 if (resultCode == Activity.RESULT_OK && data != null) {
-                    val name = data.getStringExtra(SearchElementActivity.EXTRA_NAME)
-                    val location = data.getStringExtra(SearchElementActivity.EXTRA_LOCATION)
-                    val placeHereId = data.getStringExtra(SearchElementActivity.EXTRA_PLACE_HERE_ID)
-                    val href = data.getStringExtra(SearchElementActivity.EXTRA_HREF)
+                    val place = data.getSerializableExtra(SearchElementActivity.EXTRA_PLACE) as Place
 
-                    presenter.onPlaceFound(placeHereId!!, href!!)
-                    editTextPlanName.setText(name, TextView.BufferType.EDITABLE)
-                    location?.let { showLocation(it) }
+                    presenter.onPlaceFound(place)
+                    editTextPlanName.setText(place.title, TextView.BufferType.EDITABLE)
+                    showLocation(place.vicinity)
                 }
             }
         }

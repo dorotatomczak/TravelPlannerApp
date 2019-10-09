@@ -63,7 +63,7 @@ class ServerTravelController {
         return Response(ResponseCode.OK, Unit)
     }
 
-    @GetMapping("/users/{userId}/travels/{travelId}/plans")
+    @GetMapping("users/{userId}/travels/{travelId}/plans")
     fun getPlans(
             @RequestHeader("authorization") token: String,
             @PathVariable userId: Int,

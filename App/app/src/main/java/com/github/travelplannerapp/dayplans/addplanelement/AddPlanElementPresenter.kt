@@ -16,22 +16,17 @@ import java.util.*
 class AddPlanElementPresenter(private val travelId: Int, view: AddPlanElementContract.View) : BasePresenter<AddPlanElementContract.View>(view), AddPlanElementContract.Presenter {
 
     private val compositeDisposable = CompositeDisposable()
-
-    private lateinit var placeHereId: String
-    private lateinit var href: String
+    private var place: Place? = null
 
 
     override fun addPlanElement(data: AddPlanElementContract.NewPlanElementData) {
         if (isPlanDataValid(data)) {
-            val place = Place(placeHereId, data.name, data.location, arrayOf(data.coordinates.lattitude, data.coordinates.longitude),
-                    href, data.category.ordinal )
-
             val planElement = PlanElement(-1,
                     Locale.getDefault().toString(),
                     DateTimeUtils.stringToDateTime(data.fromDate, data.fromTime).timeInMillis,
                     DateTimeUtils.stringToDateTime(data.toDate, data.toTime).timeInMillis,
                     -1,
-                    place)
+                    place!!)
 
             compositeDisposable.add(CommunicationService.serverApi.addPlanElement(SharedPreferencesUtils.getUserId(), travelId, planElement)
                     .observeOn(SchedulerProvider.ui())
@@ -44,9 +39,8 @@ class AddPlanElementPresenter(private val travelId: Int, view: AddPlanElementCon
         }
     }
 
-    override fun onPlaceFound(placeId: String, href: String) {
-        this.placeHereId = placeId
-        this.href = href
+    override fun onPlaceFound(place: Place) {
+        this.place = place
     }
 
     private fun isPlanDataValid(data: AddPlanElementContract.NewPlanElementData): Boolean {
@@ -59,6 +53,10 @@ class AddPlanElementPresenter(private val travelId: Int, view: AddPlanElementCon
 
         if (!DateTimeUtils.isDateTimeABeforeDateTimeB(data.fromDate, data.fromTime, data.toDate, data.toTime)) {
             view.showSnackbar(R.string.wrong_dates_error)
+            return false
+        }
+
+        if(place == null){
             return false
         }
 

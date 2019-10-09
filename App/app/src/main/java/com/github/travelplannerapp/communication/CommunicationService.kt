@@ -1,7 +1,6 @@
 package com.github.travelplannerapp.communication
 
 import com.github.travelplannerapp.communication.commonmodel.*
-import com.github.travelplannerapp.communication.commonmodel.Response
 import com.github.travelplannerapp.communication.appmodel.*
 import io.reactivex.Single
 import okhttp3.MultipartBody
@@ -76,6 +75,14 @@ interface ServerApi {
 
     @GET("here-management/objects/{objectId}/contacts")
     fun getContacts(@Path("objectId") objectId: String, @Query("query") query: String): Single<Response<Contacts>>
+
+    @GET("google-management/routes")
+    fun getTransport(@Query("origin_latitude") originLat: String,
+                     @Query("origin_longitude") originLng: String,
+                     @Query("destination_latitude") destinationLat: String,
+                     @Query("destination_longitude") destinationLng: String,
+                     @Query("travel_mode") travelMode: String,
+                     @Query("departure_time") departureTime: String): Single<Response<Routes>>
 
     @GET("users/{userId}/travels/{travelId}/plans")
     fun getPlanElements(@Path("userId") userId: Int, @Path("travelId") travelId: Int): Single<Response<List<PlanElement>>>
