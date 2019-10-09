@@ -59,4 +59,22 @@ class PlanElementTransaction {
             null
         }
     }
+
+    fun deletePlanElements(planElementIds: List<Int>): Boolean {
+        DbConnection.conn.autoCommit = false
+        var queryResult: Boolean
+
+        for (planElementId in planElementIds) {
+            queryResult = planElementRepository.delete(planElementId)
+            if (!queryResult) {
+                DbConnection.conn.rollback()
+                DbConnection.conn.autoCommit = true
+                return false
+            }
+        }
+
+        DbConnection.conn.commit()
+        DbConnection.conn.autoCommit = true
+        return true
+    }
 }

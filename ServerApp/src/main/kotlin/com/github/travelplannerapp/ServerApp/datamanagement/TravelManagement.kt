@@ -76,8 +76,8 @@ class TravelManagement : ITravelManagement {
         else throw AddPlanElementException("Error when adding plan element")
     }
 
-    override fun deletePlanElements(userId: Int, planElementIds: List<Int>) {
-        val result = planElementTransaction.deletePlanElements(userId, planElementIds)
+    override fun deletePlanElements(planElementIds: List<Int>) {
+        val result = planElementTransaction.deletePlanElements(planElementIds)
         if (!result) throw DeletePlanElementsException("Error when deleting plan elements")
     }
 }

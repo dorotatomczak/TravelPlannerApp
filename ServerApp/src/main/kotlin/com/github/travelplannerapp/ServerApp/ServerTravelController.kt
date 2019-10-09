@@ -95,7 +95,7 @@ class ServerTravelController {
             @RequestBody planElementIds: List<Int>
     ): Response<Unit> {
         userManagement.verifyUser(token)
-        travelManagement.deletePlanElements(userId, planElementIds)
+        travelManagement.deletePlanElements(planElementIds)
         return Response(ResponseCode.OK, Unit)
     }
 }
