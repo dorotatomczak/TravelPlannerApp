@@ -1,11 +1,13 @@
 package com.github.travelplannerapp.dayplans
 
+import android.text.format.DateFormat
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.github.travelplannerapp.R
+import com.github.travelplannerapp.utils.DateTimeUtils
 import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.item_plan_date_separator.*
 import kotlinx.android.synthetic.main.item_plan_element.*
@@ -68,7 +70,7 @@ class DayPlansAdapter(val presenter: DayPlansContract.Presenter) : RecyclerView.
         }
 
         override fun setFromTime(time: String) {
-            textViewItemPlanFromTime.text = time
+            textViewItemPlanFromTime.text = DateTimeUtils.addLeadingZeroToTime(DateFormat.is24HourFormat(containerView.context), time)
         }
 
         override fun setIcon(icon: Int) {
