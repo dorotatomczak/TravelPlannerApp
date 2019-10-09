@@ -1,9 +1,7 @@
 package com.github.travelplannerapp.communication
 
 import com.github.travelplannerapp.communication.commonmodel.*
-import com.github.travelplannerapp.communication.commonmodel.Response
 import com.github.travelplannerapp.communication.appmodel.*
-import io.reactivex.Observable
 import io.reactivex.Single
 import okhttp3.MultipartBody
 import okhttp3.OkHttpClient
@@ -78,9 +76,17 @@ interface ServerApi {
     @GET("here-management/objects/{objectId}/contacts")
     fun getContacts(@Path("objectId") objectId: String, @Query("query") query: String): Single<Response<Contacts>>
 
+    @GET("google-management/routes")
+    fun getTransport(@Query("origin_latitude") originLat: String,
+                     @Query("origin_longitude") originLng: String,
+                     @Query("destination_latitude") destinationLat: String,
+                     @Query("destination_longitude") destinationLng: String,
+                     @Query("travel_mode") travelMode: String,
+                     @Query("departure_time") departureTime: String): Single<Response<Routes>>
+
     @GET("users/{userId}/travels/{travelId}/plans")
-    fun getPlans(@Path("userId") userId: Int, @Path("travelId") travelId: Int): Single<Response<List<Plan>>>
+    fun getPlanElements(@Path("userId") userId: Int, @Path("travelId") travelId: Int): Single<Response<List<PlanElement>>>
 
     @POST("users/{userId}/travels/{travelId}/plans")
-    fun addPlan(@Path("userId") userId: Int, @Path("travelId") travelId: Int, @Body plan: Plan): Single<Response<Plan>>
+    fun addPlanElement(@Path("userId") userId: Int, @Path("travelId") travelId: Int, @Body planElement: PlanElement): Single<Response<PlanElement>>
 }

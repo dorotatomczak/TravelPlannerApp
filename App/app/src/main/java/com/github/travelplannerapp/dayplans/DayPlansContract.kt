@@ -1,12 +1,12 @@
 package com.github.travelplannerapp.dayplans
 
-import com.github.travelplannerapp.communication.commonmodel.Plan
+import com.github.travelplannerapp.communication.commonmodel.PlanElement
 
 interface DayPlansContract {
     interface View {
         fun showDayPlans()
         fun showNoDayPlans()
-        fun showAddPlan(travelId: Int)
+        fun showAddPlanElement(travelId: Int)
         fun onDataSetChanged()
         fun hideLoadingIndicator()
         fun showSnackbar(messageCode: Int)
@@ -21,7 +21,7 @@ interface DayPlansContract {
         fun hideLine()
     }
 
-    interface PlanDateSeparatorItemView {
+    interface DateSeparatorItemView {
         fun setDate(date: String)
     }
 
@@ -36,13 +36,13 @@ interface DayPlansContract {
     }
 
     interface Presenter {
-        fun onAddPlanClicked()
-        fun onPlanAdded(plan: Plan)
+        fun onAddPlanElementClicked()
+        fun onPlanElementAdded(planElement: PlanElement)
         fun unsubscribe()
         fun loadDayPlans()
-        fun getPlanItemsCount(): Int
-        fun getPlanItemType(position: Int): Int
-        fun onBindPlanItemAtPosition(position: Int, itemView: PlanElementItemView)
-        fun onBindPlanItemAtPosition(position: Int, itemView: PlanDateSeparatorItemView)
+        fun getDayPlanItemsCount(): Int
+        fun getDayPlanItemType(position: Int): Int
+        fun onBindDayPlanItemAtPosition(position: Int, itemView: PlanElementItemView)
+        fun onBindDayPlanItemAtPosition(position: Int, itemView: DateSeparatorItemView)
     }
 }

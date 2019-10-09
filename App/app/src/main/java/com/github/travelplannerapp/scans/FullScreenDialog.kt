@@ -1,4 +1,4 @@
-package com.github.travelplannerapp.tickets
+package com.github.travelplannerapp.scans
 
 import android.os.Bundle
 import android.view.LayoutInflater
