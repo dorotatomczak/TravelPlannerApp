@@ -11,7 +11,7 @@ import com.github.travelplannerapp.utils.DateTimeUtils
 import com.github.travelplannerapp.utils.SchedulerProvider
 import com.github.travelplannerapp.utils.SharedPreferencesUtils
 import io.reactivex.disposables.CompositeDisposable
-import java.util.*
+
 
 class AddPlanElementPresenter(private val travelId: Int, view: AddPlanElementContract.View) : BasePresenter<AddPlanElementContract.View>(view), AddPlanElementContract.Presenter {
 
@@ -27,7 +27,6 @@ class AddPlanElementPresenter(private val travelId: Int, view: AddPlanElementCon
                     href, data.category.ordinal )
 
             val planElement = PlanElement(-1,
-                    Locale.getDefault().toString(),
                     DateTimeUtils.stringToDateTime(data.fromDate, data.fromTime).timeInMillis,
                     -1,
                     place)

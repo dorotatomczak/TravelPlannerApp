@@ -20,7 +20,7 @@ class DayPlansPresenter(private val travelId: Int, view: DayPlansContract.View) 
     private val compositeDisposable = CompositeDisposable()
 
     private var dayPlanItems = ArrayList<DayPlansContract.DayPlanItem>()
-    private var planElements = TreeSet<PlanElement>()
+    private var planElements = TreeSet<PlanElement>(PlanElementComparator())
 
     override fun onAddPlanElementClicked() {
         view.showAddPlanElement(travelId)
@@ -109,7 +109,8 @@ class DayPlansPresenter(private val travelId: Int, view: DayPlansContract.View) 
     }
 
     private fun handleLoadDayPlansResponse(planElements: List<PlanElement>) {
-        this.planElements = TreeSet(planElements)
+        this.planElements = TreeSet(PlanElementComparator())
+        this.planElements.addAll(planElements)
         planElementsToDayPlanItems(this.planElements)
         view.onDataSetChanged()
         view.hideLoadingIndicator()

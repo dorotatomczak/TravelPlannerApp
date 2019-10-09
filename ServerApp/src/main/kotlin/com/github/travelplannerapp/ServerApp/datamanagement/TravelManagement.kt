@@ -65,7 +65,6 @@ class TravelManagement : ITravelManagement {
                     placeDao.href!!,
                     placeDao.category!!)
             val planElement = PlanElement(planElementDao.id!!,
-                    planElementDao.locale!!,
                     planElementDao.fromDateTime!!.time,
                     planElementDao.placeId!!,
                     place)

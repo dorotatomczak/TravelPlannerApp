@@ -9,21 +9,18 @@ class PlanElementDao(map: MutableMap<String, Any?>) {
     private val defaultMap = map.withDefault { null }
 
     var id: Int? by defaultMap
-    var locale: String? by defaultMap
     var fromDateTime: Timestamp? by defaultMap
     var travelId: Int? by defaultMap
     var placeId: Int? by defaultMap
 
     constructor(
             id: Int?,
-            locale: String?,
             fromDateTime: Timestamp?,
             travelId: Int?,
             placeId: Int?) :
             this(
                     mutableMapOf(
                             "id" to id,
-                            "locale" to locale,
                             "fromDateTime" to fromDateTime,
                             "travelId" to travelId,
                             "placeId" to placeId)
@@ -33,7 +30,6 @@ class PlanElementDao(map: MutableMap<String, Any?>) {
             this(
                     mutableMapOf(
                             "id" to result.getInt("id"),
-                            "locale" to result.getString("locale"),
                             "fromDateTime" to result.getTimestamp("from_date_time"),
                             "travelId" to result.getInt("travel_id"),
                             "placeId" to result.getInt("place_id")
@@ -43,7 +39,6 @@ class PlanElementDao(map: MutableMap<String, Any?>) {
     constructor(travelId: Int, planElement: PlanElement) :
             this(
                     planElement.id,
-                    planElement.locale,
                     Timestamp(planElement.fromDateTimeMs),
                     travelId,
                     planElement.placeId
