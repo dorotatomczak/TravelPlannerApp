@@ -4,15 +4,21 @@ import android.text.format.DateFormat
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.CompoundButton
+import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.view.ActionMode
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.github.travelplannerapp.R
+import com.github.travelplannerapp.deleteactionmode.DeleteActionModeToolbar
 import com.github.travelplannerapp.utils.DateTimeUtils
 import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.item_plan_date_separator.*
 import kotlinx.android.synthetic.main.item_plan_element.*
 
 class DayPlansAdapter(val presenter: DayPlansContract.Presenter) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+
+    private var actionMode: ActionMode? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
 
@@ -45,6 +51,10 @@ class DayPlansAdapter(val presenter: DayPlansContract.Presenter) : RecyclerView.
         return presenter.getDayPlanItemType(position)
     }
 
+    fun leaveActionMode() {
+        actionMode = null
+    }
+
     inner class DateSeparatorViewHolder(val presenter: DayPlansContract.Presenter, override val containerView: View) : RecyclerView.ViewHolder(containerView),
             LayoutContainer, DayPlansContract.DateSeparatorItemView {
 
@@ -55,14 +65,30 @@ class DayPlansAdapter(val presenter: DayPlansContract.Presenter) : RecyclerView.
     }
 
     inner class PlanElementViewHolder(val presenter: DayPlansContract.Presenter, override val containerView: View) : RecyclerView.ViewHolder(containerView),
-            LayoutContainer, DayPlansContract.PlanElementItemView, View.OnClickListener {
+            LayoutContainer, DayPlansContract.PlanElementItemView, View.OnClickListener, View.OnLongClickListener {
 
         init {
             containerView.setOnClickListener(this)
+            containerView.setOnLongClickListener(this)
+            checkboxItemPlanElement.setOnCheckedChangeListener(CompoundButton.OnCheckedChangeListener(
+                    fun(_: CompoundButton, isChecked: Boolean) {
+                        if (isChecked) {
+                            presenter.addPlanElementIdToDelete(adapterPosition)
+                        } else {
+                            presenter.removePlanElementIdToDelete(adapterPosition)
+                        }
+                    }
+            ))
         }
 
         override fun onClick(v: View?) {
             //TODO [Dorota] Show planElement details
+        }
+
+        override fun onLongClick(v: View?): Boolean {
+            if (actionMode == null) actionMode = (containerView.context as AppCompatActivity)
+                    .startSupportActionMode(DeleteActionModeToolbar(presenter))
+            return true
         }
 
         override fun setName(name: String) {
@@ -87,6 +113,13 @@ class DayPlansAdapter(val presenter: DayPlansContract.Presenter) : RecyclerView.
 
         override fun hideLine() {
             lineItemPlan.visibility = View.INVISIBLE
+        }
+
+        override fun setCheckbox() {
+            if (actionMode != null) checkboxItemPlanElement.visibility = View.VISIBLE
+            else checkboxItemPlanElement.visibility = View.INVISIBLE
+
+            checkboxItemPlanElement.isChecked = false
         }
     }
 }

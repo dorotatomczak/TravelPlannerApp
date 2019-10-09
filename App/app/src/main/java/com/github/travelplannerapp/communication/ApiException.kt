@@ -18,6 +18,7 @@ class ApiException(private val responseCode: ResponseCode): Throwable() {
             ResponseCode.DELETE_SCANS_ERROR -> R.string.delete_scans_error
             ResponseCode.NO_ITEMS_SEARCH_ERROR -> R.string.no_items_search_error
             ResponseCode.ADD_PLAN_ERROR -> R.string.add_plan_error
+            ResponseCode.DELETE_PLANS_ERROR -> R.string.delete_plan_elements_error
             ResponseCode.OTHER_ERROR-> R.string.try_again
             else -> R.string.try_again
         }

@@ -21,6 +21,7 @@ class DayPlansPresenter(private val travelId: Int, view: DayPlansContract.View) 
 
     private var dayPlanItems = ArrayList<DayPlansContract.DayPlanItem>()
     private var planElements = TreeSet<PlanElement>(PlanElementComparator())
+    private var planElementIdsToDelete = mutableSetOf<Int>()
 
     override fun onAddPlanElementClicked() {
         view.showAddPlanElement(travelId)
@@ -72,6 +73,7 @@ class DayPlansPresenter(private val travelId: Int, view: DayPlansContract.View) 
         itemView.setFromTime(fromTime)
         itemView.setLocation(planElement.place.vicinity)
         itemView.setIcon(categoryIcon)
+        itemView.setCheckbox()
     }
 
     override fun onBindDayPlanItemAtPosition(position: Int, itemView: DayPlansContract.DateSeparatorItemView) {
@@ -79,6 +81,45 @@ class DayPlansPresenter(private val travelId: Int, view: DayPlansContract.View) 
         val date = dateSeparatorItem.date
 
         itemView.setDate(date)
+    }
+
+    override fun addPlanElementIdToDelete(position: Int) {
+        val planElementItem = dayPlanItems[position] as PlanElementItem
+        planElementIdsToDelete.add(planElementItem.planElement.id)
+    }
+
+    override fun removePlanElementIdToDelete(position: Int) {
+        val planElementItem = dayPlanItems[position] as PlanElementItem
+        planElementIdsToDelete.remove(planElementItem.planElement.id)
+    }
+
+    override fun deletePlanElements() {
+        compositeDisposable.add(CommunicationService.serverApi.deletePlanElements(
+                SharedPreferencesUtils.getUserId(),
+                planElementIdsToDelete.toList())
+                .observeOn(SchedulerProvider.ui())
+                .subscribeOn(SchedulerProvider.io())
+                .map { if (it.responseCode == ResponseCode.OK) it.data!! else throw ApiException(it.responseCode) }
+                .subscribe(
+                        { handleDeletePlanElementsResponse() },
+                        { error -> handleErrorResponse(error) }
+                ))
+    }
+
+    override fun onDeleteClicked() {
+        if (planElementIdsToDelete.size > 0) {
+            view.showConfirmationDialog()
+        }
+    }
+
+    override fun enterActionMode() {
+        view.onDataSetChanged()
+        view.showActionMode()
+    }
+
+    override fun leaveActionMode() {
+        view.onDataSetChanged()
+        view.showNoActionMode()
     }
 
     private fun planElementsToDayPlanItems(planElements: Set<PlanElement>) {
@@ -116,6 +157,12 @@ class DayPlansPresenter(private val travelId: Int, view: DayPlansContract.View) 
         view.hideLoadingIndicator()
 
         if (this.dayPlanItems.isEmpty()) view.showNoDayPlans() else view.showDayPlans()
+    }
+
+    private fun handleDeletePlanElementsResponse() {
+        planElementIdsToDelete.clear()
+        loadDayPlans()
+        view.showSnackbar(R.string.delete_plan_elements_ok)
     }
 
     private fun handleErrorResponse(error: Throwable) {

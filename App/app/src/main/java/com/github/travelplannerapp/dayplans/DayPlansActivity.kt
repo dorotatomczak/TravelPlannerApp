@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -88,6 +89,28 @@ class DayPlansActivity : AppCompatActivity(), DayPlansContract.View {
 
     override fun showSnackbar(messageCode: Int) {
         Snackbar.make(coordinatorLayoutDayPlans, getString(messageCode), Snackbar.LENGTH_SHORT).show()
+    }
+
+    override fun showActionMode() {
+        fabAdd.visibility = View.GONE
+    }
+
+    override fun showNoActionMode() {
+        fabAdd.visibility = View.VISIBLE
+        (recyclerViewDayPlans.adapter as DayPlansAdapter).leaveActionMode()
+    }
+
+    override fun showConfirmationDialog() {
+        val travelsText = getString(R.string.day_plans)
+        AlertDialog.Builder(this)
+                .setTitle(getString(R.string.delete_entry, travelsText))
+                .setMessage(getString(R.string.delete_confirmation, travelsText))
+                .setPositiveButton(android.R.string.yes) { _, _ ->
+                    presenter.deletePlanElements()
+                }
+                .setNegativeButton(android.R.string.no) { _, _ ->
+                }
+                .show()
     }
 
     private fun refreshDayPlans() {

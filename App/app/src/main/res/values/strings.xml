@@ -84,4 +84,6 @@
     <string name="outdoor">Outdoor</string>
     <string name="natural_geographical">Natural</string>
     <string name="snacks_fast_food">Fast food</string>
+    <string name="delete_plan_elements_ok">You deleted selected plan element(s)</string>
+    <string name="delete_plan_elements_error">Error when deleting plan element(s)</string>
 </resources>
