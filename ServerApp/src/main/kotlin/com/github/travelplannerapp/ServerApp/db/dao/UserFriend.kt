@@ -23,8 +23,8 @@ class UserFriend(map: MutableMap<String, Any?>) {
             this(
                     mutableMapOf<String, Any?>(
                             "id" to result.getInt("id"),
-                            "userId" to result.getInt("userId"),
-                            "friendId" to result.getInt("friendId")
+                            "userId" to result.getInt("app_user_id"),
+                            "friendId" to result.getInt("friend_user_id")
                     )
             )
 }

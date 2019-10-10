@@ -5,6 +5,6 @@ import com.github.travelplannerapp.ServerApp.db.dao.User
 interface IUserRepository : IRepository<User> {
     fun getUserByEmail(email: String): User?
     fun getAllFriendsByUserId(id: Int): MutableList<User>
-    fun findEmails(email: String): MutableList<User>
+    fun findMatchingEmails(email: String): MutableList<User>
 
 }

@@ -105,7 +105,7 @@ class UserManagement : IUserManagement {
 
     override fun findMatchingEmails(query: String): MutableList<UserInfo> {
         val userInfos = mutableListOf<UserInfo>()
-        val users = userRepository.findEmails(query)
+        val users = userRepository.findMatchingEmails(query)
         users.forEach { user ->
             userInfos.add(UserInfo(user.id!!, user.email!!))
         }

@@ -55,7 +55,7 @@ class UserRepository : Repository<User>(), IUserRepository {
         return friends
     }
 
-    override fun findEmails(email: String): MutableList<User> {
+    override fun findMatchingEmails(email: String): MutableList<User> {
         val users = mutableListOf<User>()
         val statement = DbConnection
                 .conn
