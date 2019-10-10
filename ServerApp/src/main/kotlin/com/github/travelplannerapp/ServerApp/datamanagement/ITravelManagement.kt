@@ -1,7 +1,7 @@
 package com.github.travelplannerapp.ServerApp.datamanagement
 
-import com.github.travelplannerapp.ServerApp.datamodels.commonmodel.PlanElement
 import com.github.travelplannerapp.ServerApp.db.dao.Travel
+import com.github.travelplannerapp.communication.commonmodel.PlanElement
 
 interface ITravelManagement {
     fun addTravel(userId: Int, travelName: String): Travel

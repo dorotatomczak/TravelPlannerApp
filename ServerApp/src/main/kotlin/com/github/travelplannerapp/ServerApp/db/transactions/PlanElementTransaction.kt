@@ -1,11 +1,11 @@
 package com.github.travelplannerapp.ServerApp.db.transactions
 
-import com.github.travelplannerapp.ServerApp.datamodels.commonmodel.PlanElement
 import com.github.travelplannerapp.ServerApp.db.DbConnection
 import com.github.travelplannerapp.ServerApp.db.dao.PlaceDao
 import com.github.travelplannerapp.ServerApp.db.dao.PlanElementDao
 import com.github.travelplannerapp.ServerApp.db.repositories.PlaceRepository
 import com.github.travelplannerapp.ServerApp.db.repositories.PlanElementRepository
+import com.github.travelplannerapp.communication.commonmodel.PlanElement
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component
 

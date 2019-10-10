@@ -1,7 +1,5 @@
 package com.github.travelplannerapp.ServerApp.datamanagement
 
-import com.github.travelplannerapp.ServerApp.datamodels.commonmodel.Place
-import com.github.travelplannerapp.ServerApp.datamodels.commonmodel.PlanElement
 import com.github.travelplannerapp.ServerApp.db.dao.Travel
 import com.github.travelplannerapp.ServerApp.db.merge
 import com.github.travelplannerapp.ServerApp.db.repositories.PlanElementRepository
@@ -12,6 +10,8 @@ import com.github.travelplannerapp.ServerApp.exceptions.AddPlanElementException
 import com.github.travelplannerapp.ServerApp.exceptions.AddTravelException
 import com.github.travelplannerapp.ServerApp.exceptions.DeleteTravelsException
 import com.github.travelplannerapp.ServerApp.exceptions.UpdateTravelException
+import com.github.travelplannerapp.communication.commonmodel.Place
+import com.github.travelplannerapp.communication.commonmodel.PlanElement
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component
 

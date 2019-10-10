@@ -1,6 +1,4 @@
-package com.github.travelplannerapp.ServerApp.datamodels.commonmodel
-
-import com.github.travelplannerapp.ServerApp.datamodels.commonmodel.Place
+package com.github.travelplannerapp.communication.commonmodel
 
 class SearchObjectsResponse(val results: Results)
 

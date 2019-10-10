@@ -1,10 +1,10 @@
 package com.github.travelplannerapp.ServerApp.services.searchservice
 
-import com.github.travelplannerapp.ServerApp.datamodels.commonmodel.Contacts
-import com.github.travelplannerapp.ServerApp.datamodels.commonmodel.Place
-import com.github.travelplannerapp.ServerApp.datamodels.commonmodel.Routes
-import com.github.travelplannerapp.ServerApp.datamodels.commonmodel.SearchObjectsResponse
 import com.github.travelplannerapp.ServerApp.datamodels.servermodel.CityObject
+import com.github.travelplannerapp.communication.commonmodel.Contacts
+import com.github.travelplannerapp.communication.commonmodel.Place
+import com.github.travelplannerapp.communication.commonmodel.Routes
+import com.github.travelplannerapp.communication.commonmodel.SearchObjectsResponse
 
 interface ISearchService {
     fun getExampleDataFromHere()

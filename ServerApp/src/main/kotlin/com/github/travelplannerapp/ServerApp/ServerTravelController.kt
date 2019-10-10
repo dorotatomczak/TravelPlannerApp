@@ -2,9 +2,11 @@ package com.github.travelplannerapp.ServerApp
 
 import com.github.travelplannerapp.ServerApp.datamanagement.TravelManagement
 import com.github.travelplannerapp.ServerApp.datamanagement.UserManagement
-import com.github.travelplannerapp.ServerApp.datamodels.commonmodel.*
 import com.github.travelplannerapp.ServerApp.db.dao.Travel
 import com.github.travelplannerapp.ServerApp.db.repositories.TravelRepository
+import com.github.travelplannerapp.communication.commonmodel.PlanElement
+import com.github.travelplannerapp.communication.commonmodel.Response
+import com.github.travelplannerapp.communication.commonmodel.ResponseCode
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.web.bind.annotation.*
 

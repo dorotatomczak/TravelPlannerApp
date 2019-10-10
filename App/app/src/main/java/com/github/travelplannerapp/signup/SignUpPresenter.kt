@@ -19,12 +19,6 @@ class SignUpPresenter(view: SignUpContract.View) : BasePresenter<SignUpContract.
             view.showSnackbar(R.string.sign_up_diff_passwords)
             return
         }
-        if (!validateEmail(email)){
-
-        }
-        if (!validatePassword(password)){
-
-        }
 
         val hashedPassword = PasswordUtils.hashPassword(password)
         if (hashedPassword == null) {
@@ -56,16 +50,5 @@ class SignUpPresenter(view: SignUpContract.View) : BasePresenter<SignUpContract.
     private fun handleErrorResponse(error: Throwable) {
         if (error is ApiException) view.showSnackbar(error.getErrorMessageCode())
         else view.showSnackbar(R.string.server_connection_error)
-    }
-
-    private fun validateEmail(email: String): Boolean{
-
-    }
-
-    private fun validatePassword(pwd: String): Boolean {
-        if (pwd.length<8) return false
-        if (pwd.contains())
-
-            return true
     }
 }

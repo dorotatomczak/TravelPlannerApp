@@ -1,6 +1,6 @@
 package com.github.travelplannerapp.ServerApp.exceptions
 
-import com.github.travelplannerapp.ServerApp.datamodels.commonmodel.ResponseCode
+import com.github.travelplannerapp.communication.commonmodel.ResponseCode
 
 interface ApiException {
     val code: ResponseCode

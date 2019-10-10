@@ -1,4 +1,4 @@
-package com.github.travelplannerapp.ServerApp.datamodels.commonmodel
+package com.github.travelplannerapp.communication.commonmodel
 
 class Element(
     val value: String,
