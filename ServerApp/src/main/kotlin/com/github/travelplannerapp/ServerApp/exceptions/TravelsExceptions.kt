@@ -1,6 +1,6 @@
 package com.github.travelplannerapp.ServerApp.exceptions
 
-import com.github.travelplannerapp.communication.commonmodel.ResponseCode
+import com.github.travelplannerapp.ServerApp.datamodels.commonmodel.ResponseCode
 
 class AddTravelException (override val message: String,
                           override val code: ResponseCode = ResponseCode.ADD_TRAVEL_ERROR): Exception(message), ApiException

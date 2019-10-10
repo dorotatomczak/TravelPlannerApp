@@ -1,13 +1,13 @@
 package com.github.travelplannerapp.ServerApp.datamanagement
 
+import com.github.travelplannerapp.ServerApp.datamodels.commonmodel.SignInRequest
+import com.github.travelplannerapp.ServerApp.datamodels.commonmodel.SignUpRequest
 import com.github.travelplannerapp.ServerApp.db.dao.User
 import com.github.travelplannerapp.ServerApp.db.merge
 import com.github.travelplannerapp.ServerApp.db.repositories.UserRepository
 import com.github.travelplannerapp.ServerApp.exceptions.AuthorizationException
 import com.github.travelplannerapp.ServerApp.exceptions.EmailAlreadyExistsException
 import com.github.travelplannerapp.ServerApp.exceptions.WrongCredentialsException
-import com.github.travelplannerapp.communication.commonmodel.SignInRequest
-import com.github.travelplannerapp.communication.commonmodel.SignUpRequest
 import io.jsonwebtoken.Jwts
 import io.jsonwebtoken.SignatureAlgorithm
 import org.springframework.beans.factory.annotation.Autowired

@@ -1,7 +1,7 @@
 package com.github.travelplannerapp.ServerApp
 
 import com.github.travelplannerapp.ServerApp.datamanagement.UserManagement
-import com.github.travelplannerapp.communication.commonmodel.*
+import com.github.travelplannerapp.ServerApp.datamodels.commonmodel.*
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody

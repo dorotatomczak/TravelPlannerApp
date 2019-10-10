@@ -1,9 +1,9 @@
 package com.github.travelplannerapp.ServerApp.services.searchservice
 
+import com.github.travelplannerapp.ServerApp.datamodels.commonmodel.*
 import com.github.travelplannerapp.ServerApp.datamodels.servermodel.CityObject
 import com.github.travelplannerapp.ServerApp.datamodels.servermodel.SearchCitiesResponse
 import com.github.travelplannerapp.ServerApp.exceptions.SearchNoItemsException
-import com.github.travelplannerapp.communication.commonmodel.*
 import com.google.gson.GsonBuilder
 import com.google.gson.JsonParser
 import org.apache.commons.lang3.StringEscapeUtils

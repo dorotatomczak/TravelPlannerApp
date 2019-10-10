@@ -1,7 +1,7 @@
 package com.github.travelplannerapp.ServerApp.datamanagement
 
-import com.github.travelplannerapp.communication.commonmodel.SignInRequest
-import com.github.travelplannerapp.communication.commonmodel.SignUpRequest
+import com.github.travelplannerapp.ServerApp.datamodels.commonmodel.SignInRequest
+import com.github.travelplannerapp.ServerApp.datamodels.commonmodel.SignUpRequest
 
 interface IUserManagement {
     fun getUserId(token: String): Int

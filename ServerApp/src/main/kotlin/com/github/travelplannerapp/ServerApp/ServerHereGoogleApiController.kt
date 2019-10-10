@@ -1,10 +1,10 @@
 package com.github.travelplannerapp.ServerApp
 
 import com.github.travelplannerapp.ServerApp.datamanagement.UserManagement
+import com.github.travelplannerapp.ServerApp.datamodels.commonmodel.*
 import com.github.travelplannerapp.ServerApp.datamodels.servermodel.CityObject
 import com.github.travelplannerapp.ServerApp.exceptions.SearchNoItemsException
 import com.github.travelplannerapp.ServerApp.services.searchservice.SearchService
-import com.github.travelplannerapp.communication.commonmodel.*
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.web.bind.annotation.*
 

@@ -1,6 +1,6 @@
 package com.github.travelplannerapp.ServerApp.exceptions
 
-import com.github.travelplannerapp.communication.commonmodel.ResponseCode
+import com.github.travelplannerapp.ServerApp.datamodels.commonmodel.ResponseCode
 
 class SearchNoItemsException(
     override val message: String,
