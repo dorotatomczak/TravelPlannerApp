@@ -98,7 +98,7 @@ class UserManagement : IUserManagement {
     override fun deleteFriends(userId: Int, friendsIds: MutableSet<Int>) {
         for (friendId in friendsIds) {
             if (!userFriendRepository.deleteUserFriendBinding(userId, friendId)){
-                throw  DeleteFriendException("Error when deleting friend")
+                throw  DeleteFriendsException("Error when deleting friends")
             }
         }
     }

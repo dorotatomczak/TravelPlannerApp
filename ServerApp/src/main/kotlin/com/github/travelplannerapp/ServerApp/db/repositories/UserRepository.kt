@@ -25,31 +25,6 @@ class UserRepository : Repository<User>(), IUserRepository {
             "WHERE $columnId=? "
     override val nextIdStatement = "SELECT nextval(pg_get_serial_sequence('$tableName', '$columnId')) AS new_id"
 
-
-    override fun T(result: ResultSet): User? {
-        return User(result)
-    }
-
-    override fun prepareInsertStatement(obj: User): PreparedStatement {
-        val statement = DbConnection
-                .conn
-                .prepareStatement(insertStatement)
-        statement.setInt(1, obj.id!!)
-        statement.setString(2, obj.email)
-        statement.setString(3, obj.password)
-        return statement
-    }
-
-    override fun prepareUpdateStatement(obj: User): PreparedStatement {
-        val statement = DbConnection
-                .conn
-                .prepareStatement(updateStatement)
-        statement.setString(1, obj.email)
-        statement.setString(2, obj.password)
-        statement.setInt(3, obj.id!!)
-        return statement
-    }
-
     override fun getUserByEmail(email: String): User? {
         val statement = DbConnection
                 .conn
@@ -96,6 +71,29 @@ class UserRepository : Repository<User>(), IUserRepository {
         return users
     }
 
+    override fun T(result: ResultSet): User? {
+        return User(result)
+    }
+
+    override fun prepareInsertStatement(obj: User): PreparedStatement {
+        val statement = DbConnection
+                .conn
+                .prepareStatement(insertStatement)
+        statement.setInt(1, obj.id!!)
+        statement.setString(2, obj.email)
+        statement.setString(3, obj.password)
+        return statement
+    }
+
+    override fun prepareUpdateStatement(obj: User): PreparedStatement {
+        val statement = DbConnection
+                .conn
+                .prepareStatement(updateStatement)
+        statement.setString(1, obj.email)
+        statement.setString(2, obj.password)
+        statement.setInt(3, obj.id!!)
+        return statement
+    }
 }
 
 
