@@ -62,8 +62,10 @@ class DayPlansPresenter(private val travelId: Int, view: DayPlansContract.View) 
         val planElementItem = dayPlanItems[position] as PlanElementItem
         val planElement = planElementItem.planElement
 
-        if (position + 1 < dayPlanItems.size && dayPlanItems[position + 1].getType() == DayPlansContract.DayPlanItem.TYPE_PLAN) {
+        if (position + 1 < dayPlanItems.size && dayPlanItems[position+1].getType() == DayPlansContract.DayPlanItem.TYPE_PLAN) {
             itemView.showLine()
+        } else {
+            itemView.hideLine()
         }
 
         val categoryIcon = PlaceCategory.values()[planElement.place.categoryIcon].categoryIcon
