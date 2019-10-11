@@ -68,6 +68,8 @@
     <string name="city">Miasto</string>
     <string name="load_map_error">Nie udało się załadować mapy</string>
     <string name="no_items_search_error">Nic nie znaleziono</string>
+    <string name="email_incorrect">Email jest niepoprawny</string>
+    <string name="password_too_simple">Hasło musi co najmniej 8 znaków, zawierać 1 cyfrę, 1 małą i jedną wielką literę</string>
 
     <string name="atm_bank_exchange">Bankomat</string>
     <string name="hospital_health_care_facility">Opieka zdrowotna</string>

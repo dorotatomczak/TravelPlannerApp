@@ -14,7 +14,6 @@ import io.reactivex.Single
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
-import java.lang.Exception
 
 class SignUpPresenterTest {
 
@@ -56,6 +55,81 @@ class SignUpPresenterTest {
 
         // then
         verify { view.showSnackbar(R.string.sign_up_diff_passwords) }
+    }
+
+    @Test
+    fun `Should display snackBar with info message when given email in SignUp is incorrect`() {
+
+        // given
+        val email = "email"
+        val password = "passworD1"
+        val confirmPassword = "passworD1"
+
+        // when
+        presenter.onSignUpClicked(email, password, confirmPassword)
+
+        // then
+        verify { view.showSnackbar(R.string.email_incorrect) }
+    }
+
+    @Test
+    fun `Should display snackBar with info message when given password in SignUp doesn't have capital letter`() {
+
+        // given
+        val email = "email@gmail.com"
+        val password = "password1"
+        val confirmPassword = "password1"
+
+        // when
+        presenter.onSignUpClicked(email, password, confirmPassword)
+
+        // then
+        verify { view.showSnackbar(R.string.password_too_simple) }
+    }
+
+    @Test
+    fun `Should display snackBar with info message when given password in SignUp doesn't have small letter`() {
+
+        // given
+        val email = "email@gmail.com"
+        val password = "PASSWORD1"
+        val confirmPassword = "PASSWORD1"
+
+        // when
+        presenter.onSignUpClicked(email, password, confirmPassword)
+
+        // then
+        verify { view.showSnackbar(R.string.password_too_simple) }
+    }
+
+    @Test
+    fun `Should display snackBar with info message when given password in SignUp doesn't have number`() {
+
+        // given
+        val email = "email@gmail.com"
+        val password = "passWord"
+        val confirmPassword = "passWord"
+
+        // when
+        presenter.onSignUpClicked(email, password, confirmPassword)
+
+        // then
+        verify { view.showSnackbar(R.string.password_too_simple) }
+    }
+
+    @Test
+    fun `Should display snackBar with info message when given password in SignUp is shorter than 8 characters`() {
+
+        // given
+        val email = "email@gmail.com"
+        val password = "passW1"
+        val confirmPassword = "passW1"
+
+        // when
+        presenter.onSignUpClicked(email, password, confirmPassword)
+
+        // then
+        verify { view.showSnackbar(R.string.password_too_simple) }
     }
 
     @Test
@@ -103,9 +177,9 @@ class SignUpPresenterTest {
     fun `Should return result and finish when server returns 200 on sign up`() {
 
         // given
-        val email = "email"
-        val password = "password"
-        val confirmPassword = "password"
+        val email = "email@e.com"
+        val password = "passwordD1"
+        val confirmPassword = "passwordD1"
         val hashedPassword = "hashed password"
 
         mockkObject(PasswordUtils)
