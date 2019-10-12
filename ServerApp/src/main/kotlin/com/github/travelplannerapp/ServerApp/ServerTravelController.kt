@@ -3,7 +3,6 @@ package com.github.travelplannerapp.ServerApp
 import com.github.travelplannerapp.ServerApp.datamanagement.TravelManagement
 import com.github.travelplannerapp.ServerApp.datamanagement.UserManagement
 import com.github.travelplannerapp.ServerApp.db.dao.Travel
-import com.github.travelplannerapp.ServerApp.db.repositories.TravelRepository
 import com.github.travelplannerapp.communication.commonmodel.PlanElement
 import com.github.travelplannerapp.communication.commonmodel.Response
 import com.github.travelplannerapp.communication.commonmodel.ResponseCode
@@ -13,8 +12,6 @@ import org.springframework.web.bind.annotation.*
 @RestController
 class ServerTravelController {
 
-    @Autowired
-    lateinit var travelRepository: TravelRepository
     @Autowired
     lateinit var userManagement: UserManagement
     @Autowired
@@ -26,7 +23,7 @@ class ServerTravelController {
         @PathVariable userId: Int
     ): Response<List<Travel>> {
         userManagement.verifyUser(token)
-        val travels = travelRepository.getAllTravelsByUserId(userId)
+        val travels = travelManagement.getTravels(userId)
         return Response(ResponseCode.OK, travels)
     }
 

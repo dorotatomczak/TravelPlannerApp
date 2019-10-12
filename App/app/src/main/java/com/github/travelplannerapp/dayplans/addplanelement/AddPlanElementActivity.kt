@@ -124,7 +124,6 @@ class AddPlanElementActivity : AppCompatActivity(), AddPlanElementContract.View 
 
     private fun onFabFinishAddPlanClicked() {
         val data = AddPlanElementContract.NewPlanElementData(
-                PlaceCategory.values()[dropdownCategoriesAddPlan.selectedItemPosition],
                 editTextPlanName.text.toString(),
                 editTextPlanFromDate.text.toString(),
                 editTextPlanFromTime.text.toString(),
@@ -142,7 +141,7 @@ class AddPlanElementActivity : AppCompatActivity(), AddPlanElementContract.View 
             SearchElementActivity.REQUEST_SEARCH -> {
                 if (resultCode == Activity.RESULT_OK && data != null) {
                     val place = data.getSerializableExtra(SearchElementActivity.EXTRA_PLACE) as Place
-
+                    place.categoryIcon = PlaceCategory.values()[dropdownCategoriesAddPlan.selectedItemPosition].ordinal
                     presenter.onPlaceFound(place)
                     editTextPlanName.setText(place.title, TextView.BufferType.EDITABLE)
                     showLocation(place.vicinity)
