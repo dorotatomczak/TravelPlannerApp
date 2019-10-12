@@ -9,9 +9,6 @@ import com.github.travelplannerapp.dayplans.addplanelement.AddPlanElementViewMod
 import com.github.travelplannerapp.dayplans.DayPlansActivity
 import com.github.travelplannerapp.dayplans.DayPlansModule
 import com.github.travelplannerapp.dayplans.DayPlansViewModel
-//import com.github.travelplannerapp.dayplans.addplan.AddPlanActivity
-//import com.github.travelplannerapp.dayplans.addplan.AddPlanModule
-//import com.github.travelplannerapp.dayplans.addplan.AddPlanViewModel
 import com.github.travelplannerapp.dayplans.searchelement.SearchElementActivity
 import com.github.travelplannerapp.dayplans.searchelement.SearchElementModule
 import com.github.travelplannerapp.dayplans.searchelement.SearchElementViewModel

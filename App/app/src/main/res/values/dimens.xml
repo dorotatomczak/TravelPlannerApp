@@ -32,7 +32,4 @@
     <dimen name="card_view_scan_height">160dp</dimen>
     <dimen name="sliding_up_panel_height">80dp</dimen>
     <dimen name="sliding_up_shadow_height">5dp</dimen>
-
-    <dimen name="margin_add_friend">20dp</dimen>
-    <dimen name="app_bar_height">50dp</dimen>
 </resources>

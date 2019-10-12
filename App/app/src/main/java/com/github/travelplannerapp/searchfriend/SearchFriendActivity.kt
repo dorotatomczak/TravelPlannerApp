@@ -37,27 +37,11 @@ class SearchFriendActivity : AppCompatActivity(), SearchFriendContract.View {
         swipeRefreshLayoutFriends.setOnRefreshListener { presenter.loadFriends() }
         recyclerViewFriend.layoutManager = LinearLayoutManager(this, RecyclerView.VERTICAL, false)
         recyclerViewFriend.adapter = FriendAdapter(presenter)
-        val searchManager = getSystemService(Context.SEARCH_SERVICE) as SearchManager
 
-        searchViewFriend.apply {
-            setSearchableInfo(searchManager.getSearchableInfo(componentName))
-            setIconifiedByDefault(false)
-
-            setOnSuggestionListener(object : androidx.appcompat.widget.SearchView.OnSuggestionListener {
-                override fun onSuggestionSelect(position: Int): Boolean {
-                    return false
-                }
-
-                override fun onSuggestionClick(position: Int): Boolean {
-                    closeKeyboard()
-                    val friend = UserInfo(suggestionsAdapter.getItem(position) as Cursor)
-                    showAddFriend(friend)
-                    return true
-                }
-            })
-        }
+        addSearchAbility();
         presenter.loadFriends()
     }
+
     override fun onDataSetChanged() {
         recyclerViewFriend.adapter?.notifyDataSetChanged()
     }
@@ -95,7 +79,7 @@ class SearchFriendActivity : AppCompatActivity(), SearchFriendContract.View {
         Snackbar.make(linearLayoutSearchFriend, messageCode, Snackbar.LENGTH_LONG).show()
     }
 
-    private fun showAddFriend(friend: UserInfo) {
+    private fun showAddFriendConfirmationDialog(friend: UserInfo) {
         AlertDialog.Builder(this)
                 .setTitle(getString(R.string.add_friend))
                 .setMessage(getString(R.string.add_user_confirmation))
@@ -110,6 +94,27 @@ class SearchFriendActivity : AppCompatActivity(), SearchFriendContract.View {
     private fun closeKeyboard() {
         val inputManager: InputMethodManager = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
         inputManager.hideSoftInputFromWindow(currentFocus?.windowToken, InputMethodManager.SHOW_FORCED)
+    }
+
+    private fun addSearchAbility() {
+        val searchManager = getSystemService(Context.SEARCH_SERVICE) as SearchManager
+        searchViewFriend.apply {
+            setSearchableInfo(searchManager.getSearchableInfo(componentName))
+            setIconifiedByDefault(false)
+
+            setOnSuggestionListener(object : androidx.appcompat.widget.SearchView.OnSuggestionListener {
+                override fun onSuggestionSelect(position: Int): Boolean {
+                    return false
+                }
+
+                override fun onSuggestionClick(position: Int): Boolean {
+                    closeKeyboard()
+                    val friend = UserInfo(suggestionsAdapter.getItem(position) as Cursor)
+                    showAddFriendConfirmationDialog(friend)
+                    return true
+                }
+            })
+        }
     }
 }
 
