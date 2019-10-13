@@ -73,9 +73,6 @@ class SignUpPresenter(view: SignUpContract.View) : BasePresenter<SignUpContract.
         return true
     }
 
-    private fun verifyEmail(email: String): Boolean {
-        if (!email.matches("[^\\s]+@[^\\s]+\\.[^\\s]+".toRegex())) return false
-
-        return true
-    }
+    private fun verifyEmail(email: String): Boolean =
+            email.matches("[^\\s]+@[^\\s]+\\.[^\\s]+".toRegex())
 }
