@@ -85,4 +85,15 @@
     <string name="outdoor">Outdoor</string>
     <string name="natural_geographical">Natural</string>
     <string name="snacks_fast_food">Fast food</string>
+
+    <string name="friend_added"> You added a friend</string>
+    <string name="friend_deleted">You deleted a friend</string>
+    <string name="add_user_confirmation">Are you sure you want to add selected user?</string>
+    <string name="add_entry">Add %1$s</string>
+    <string name="delete_friends_ok">You deleted selected friend(s)</string>
+    <string name="add_friend">Add friend</string>
+    <string name="delete_friends">Delete friends</string>
+    <string name="delete_friends_confirmation">Are you sure you want to delete selected friends?</string>
+    <string name="my_friends">My friends</string>
 </resources>
+
