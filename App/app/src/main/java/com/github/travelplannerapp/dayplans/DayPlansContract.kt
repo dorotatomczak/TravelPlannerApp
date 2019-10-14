@@ -1,6 +1,6 @@
 package com.github.travelplannerapp.dayplans
 
-import com.github.travelplannerapp.communication.commonmodel.PlanElement
+import com.github.travelplannerapp.communication.appmodel.PlanElement
 import com.github.travelplannerapp.deleteactionmode.DeleteContract
 
 interface DayPlansContract {

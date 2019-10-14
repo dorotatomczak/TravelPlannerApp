@@ -9,8 +9,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.github.travelplannerapp.R
-import com.github.travelplannerapp.traveldialog.TravelDialog
 import com.github.travelplannerapp.traveldetails.TravelDetailsActivity
+import com.github.travelplannerapp.traveldialog.TravelDialog
 import com.github.travelplannerapp.utils.DrawerUtils
 import com.google.android.material.snackbar.Snackbar
 import dagger.android.AndroidInjection

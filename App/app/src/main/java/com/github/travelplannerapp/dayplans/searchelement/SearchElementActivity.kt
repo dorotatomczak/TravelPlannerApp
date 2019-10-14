@@ -9,9 +9,9 @@ import android.view.View
 import android.view.inputmethod.InputMethodManager
 import androidx.appcompat.app.AppCompatActivity
 import com.github.travelplannerapp.R
+import com.github.travelplannerapp.communication.appmodel.CityObject
 import com.github.travelplannerapp.communication.commonmodel.Contacts
 import com.github.travelplannerapp.communication.commonmodel.Place
-import com.github.travelplannerapp.communication.appmodel.CityObject
 import com.google.android.material.snackbar.Snackbar
 import com.here.android.mpa.common.GeoCoordinate
 import com.here.android.mpa.common.OnEngineInitListener
@@ -34,12 +34,9 @@ class SearchElementActivity : AppCompatActivity(), SearchElementContract.View {
     private lateinit var selectedMapMarker: MapMarker
 
     companion object {
-        const val EXTRA_NAME = "name"
-        const val EXTRA_LOCATION = "location"
-        const val REQUEST_SEARCH = 1
+        const val EXTRA_PLACE = "place"
         const val EXTRA_CATEGORY = "category"
-        const val EXTRA_PLACE_HERE_ID = "placeId"
-        const val EXTRA_HREF = "href"
+        const val REQUEST_SEARCH = 1
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -81,11 +78,7 @@ class SearchElementActivity : AppCompatActivity(), SearchElementContract.View {
         val resultIntent = Intent().apply {
             val place = presenter.getPlace(selectedMapMarker)
             if (place != null) {
-                // TODO [Magda] change to put Place if more extras added
-                putExtra(EXTRA_NAME, place.title)
-                putExtra(EXTRA_LOCATION, place.vicinity)
-                putExtra(EXTRA_PLACE_HERE_ID,  place.id)
-                putExtra(EXTRA_HREF,  place.href)
+                putExtra(EXTRA_PLACE, place)
             }
         }
         setResult(RESULT_OK, resultIntent)

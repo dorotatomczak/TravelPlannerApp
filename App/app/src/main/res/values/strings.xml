@@ -67,6 +67,9 @@
     <string name="city">City</string>
     <string name="load_map_error">Can\'t load map</string>
     <string name="no_items_search_error">No items found</string>
+    <string name="email_incorrect">Email is incorrect</string>
+    <string name="password_too_simple">Password must be at least 8 characters long,
+        contain at least 1 number, 1 lowercase and 1 uppercase letter</string>
 
     <!-- if you add category - add it in enum "Category" and array.xml -->
     <string name="restaurant">Restaurant</string>
@@ -86,4 +89,14 @@
     <string name="snacks_fast_food">Fast food</string>
     <string name="delete_plan_elements_ok">You deleted selected plan element(s)</string>
     <string name="delete_plan_elements_error">Error when deleting plan element(s)</string>
+
+    <string name="friend_added"> You added a friend</string>
+    <string name="friend_deleted">You deleted a friend</string>
+    <string name="add_user_confirmation">Are you sure you want to add selected user?</string>
+    <string name="add_entry">Add %1$s</string>
+    <string name="delete_friends_ok">You deleted selected friend(s)</string>
+    <string name="add_friend">Add friend</string>
+    <string name="delete_friends">Delete friends</string>
+    <string name="delete_friends_confirmation">Are you sure you want to delete selected friends?</string>
+    <string name="my_friends">My friends</string>
 </resources>

@@ -4,7 +4,7 @@ import com.github.travelplannerapp.BasePresenter
 import com.github.travelplannerapp.R
 import com.github.travelplannerapp.communication.ApiException
 import com.github.travelplannerapp.communication.CommunicationService
-import com.github.travelplannerapp.communication.commonmodel.PlanElement
+import com.github.travelplannerapp.communication.appmodel.PlanElement
 import com.github.travelplannerapp.communication.commonmodel.Place
 import com.github.travelplannerapp.communication.commonmodel.ResponseCode
 import com.github.travelplannerapp.utils.DateTimeUtils
@@ -16,20 +16,15 @@ import io.reactivex.disposables.CompositeDisposable
 class AddPlanElementPresenter(private val travelId: Int, view: AddPlanElementContract.View) : BasePresenter<AddPlanElementContract.View>(view), AddPlanElementContract.Presenter {
 
     private val compositeDisposable = CompositeDisposable()
-
-    private lateinit var placeHereId: String
-    private lateinit var href: String
+    private var place: Place? = null
 
 
     override fun addPlanElement(data: AddPlanElementContract.NewPlanElementData) {
         if (isPlanDataValid(data)) {
-            val place = Place(placeHereId, data.name, data.location, arrayOf(data.coordinates.lattitude, data.coordinates.longitude),
-                    href, data.category.ordinal )
-
             val planElement = PlanElement(-1,
                     DateTimeUtils.stringToDateTime(data.fromDate, data.fromTime).timeInMillis,
                     -1,
-                    place)
+                    place!!)
 
             compositeDisposable.add(CommunicationService.serverApi.addPlanElement(SharedPreferencesUtils.getUserId(), travelId, planElement)
                     .observeOn(SchedulerProvider.ui())
@@ -42,15 +37,18 @@ class AddPlanElementPresenter(private val travelId: Int, view: AddPlanElementCon
         }
     }
 
-    override fun onPlaceFound(placeId: String, href: String) {
-        this.placeHereId = placeId
-        this.href = href
+    override fun onPlaceFound(place: Place) {
+        this.place = place
     }
 
     private fun isPlanDataValid(data: AddPlanElementContract.NewPlanElementData): Boolean {
 
         if (data.name.isEmpty() || data.fromDate.isEmpty() || data.fromTime.isEmpty()) {
             view.showSnackbar(R.string.missing_required_fields_error)
+            return false
+        }
+
+        if(place == null){
             return false
         }
 

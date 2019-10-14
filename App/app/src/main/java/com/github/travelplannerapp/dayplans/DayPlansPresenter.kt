@@ -5,7 +5,7 @@ import com.github.travelplannerapp.R
 import com.github.travelplannerapp.communication.ApiException
 import com.github.travelplannerapp.communication.CommunicationService
 import com.github.travelplannerapp.communication.appmodel.PlaceCategory
-import com.github.travelplannerapp.communication.commonmodel.PlanElement
+import com.github.travelplannerapp.communication.appmodel.PlanElement
 import com.github.travelplannerapp.communication.commonmodel.ResponseCode
 import com.github.travelplannerapp.utils.DateTimeUtils
 import com.github.travelplannerapp.utils.SchedulerProvider
@@ -20,7 +20,7 @@ class DayPlansPresenter(private val travelId: Int, view: DayPlansContract.View) 
     private val compositeDisposable = CompositeDisposable()
 
     private var dayPlanItems = ArrayList<DayPlansContract.DayPlanItem>()
-    private var planElements = TreeSet<PlanElement>(PlanElementComparator())
+    private var planElements = TreeSet<PlanElement>()
     private var planElementIdsToDelete = mutableSetOf<Int>()
 
     override fun onAddPlanElementClicked() {
@@ -29,7 +29,7 @@ class DayPlansPresenter(private val travelId: Int, view: DayPlansContract.View) 
 
     override fun onPlanElementAdded(planElement: PlanElement) {
         planElements.add(planElement)
-        planElementsToDayPlanItems(planElements)
+        planElementsToDayPlanItems()
 
         view.showDayPlans()
         view.onDataSetChanged()
@@ -124,8 +124,7 @@ class DayPlansPresenter(private val travelId: Int, view: DayPlansContract.View) 
         view.showNoActionMode()
     }
 
-    private fun planElementsToDayPlanItems(planElements: Set<PlanElement>) {
-
+    private fun planElementsToDayPlanItems() {
         dayPlanItems = ArrayList()
         var date = ""
 
@@ -152,9 +151,9 @@ class DayPlansPresenter(private val travelId: Int, view: DayPlansContract.View) 
     }
 
     private fun handleLoadDayPlansResponse(planElements: List<PlanElement>) {
-        this.planElements = TreeSet(PlanElementComparator())
+        this.planElements = TreeSet()
         this.planElements.addAll(planElements)
-        planElementsToDayPlanItems(this.planElements)
+        planElementsToDayPlanItems()
         view.onDataSetChanged()
         view.hideLoadingIndicator()
 

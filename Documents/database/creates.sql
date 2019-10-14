@@ -42,3 +42,8 @@ create table plan (
 	travel_id integer references travel(id)
 );
 
+create table app_user_friend (
+	id serial PRIMARY KEY,
+	app_user_id integer references app_user(id),
+	friend_user_id integer references app_user(id)
+);

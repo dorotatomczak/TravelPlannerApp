@@ -21,9 +21,9 @@
     <string name="scanner_initialization_error">Inicjalizacja skanera nie powiodła się</string>
     <string name="scanner_permissions_error">Musisz przyznać uprawnienia do kamery i pamięci masowej</string>
     <string name="scan_upload_error">Coś poszło nie tak podczas przesyłania skanu</string>
-    <string name="save">Zapisz</string>
-    <string name="cancel">Anuluj</string>
-    <string name="try_again" >Spróbuj ponownie</string>
+    <string name="save">zapisz</string>
+    <string name="cancel">anuluj</string>
+    <string name="try_again">Spróbuj ponownie</string>
     <string name="sign_up_successful">Twoje konto zostało utworzone</string>
     <string name="sign_up_email_error">Konto już istnieje</string>
     <string name="sign_in_error">Błędny email lub hasło</string>
@@ -67,6 +67,8 @@
     <string name="city">Miasto</string>
     <string name="load_map_error">Nie udało się załadować mapy</string>
     <string name="no_items_search_error">Nic nie znaleziono</string>
+    <string name="email_incorrect">Email jest niepoprawny</string>
+    <string name="password_too_simple">Hasło musi co najmniej 8 znaków, zawierać 1 cyfrę, 1 małą i 1 wielką literę</string>
 
     <string name="atm_bank_exchange">Bankomat</string>
     <string name="hospital_health_care_facility">Opieka zdrowotna</string>
@@ -85,4 +87,13 @@
     <string name="snacks_fast_food">Fast food</string>
     <string name="delete_plan_elements_ok">Usunąłeś wybrane elementy planu</string>
     <string name="delete_plan_elements_error">Wystąpił problem podczas usuwania element/ów planu</string>
+    <string name="my_friends">Moi znajomi</string>
+    <string name="friend_added">Znajomy został dodany</string>
+    <string name="friend_deleted">Znajomy został usunięty</string>
+    <string name="add_user_confirmation">Czy na pewno chcesz dodać wybranego użytkownika?</string>
+    <string name="add_entry">Dodaj %1$s</string>
+    <string name="delete_friends_ok">Usunąłeś wybranych znajomych</string>
+    <string name="add_friend">Dodaj znajomego</string>
+    <string name="delete_friends">Usuń znajomych</string>
+    <string name="delete_friends_confirmation">Czy na pewno chcesz usunąć wybranych znajomych?</string>
 </resources>

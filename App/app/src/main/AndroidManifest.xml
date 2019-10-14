@@ -53,6 +53,16 @@
 
         <activity android:name=".traveldetails.TravelDetailsActivity" />
 
+        <activity android:name="com.github.travelplannerapp.searchfriend.SearchFriendActivity"
+            android:launchMode="singleTop">
+            <intent-filter>
+                <action android:name="android.intent.action.SEARCH" />
+                <action android:name="android.intent.action.VIEW" />
+            </intent-filter>
+            <meta-data android:name="android.app.searchable"
+                android:resource="@xml/searchableusers"/>
+        </activity>
+
         <activity
             android:name="com.github.travelplannerapp.dayplans.searchelement.SearchElementActivity"
             android:launchMode="singleTop">
@@ -89,6 +99,12 @@
         <provider
             android:name="com.github.travelplannerapp.dayplans.searchelement.CitySuggestionProvider"
             android:authorities="com.github.travelplannerapp.dayplans.searchelement.CitySuggestionProvider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+        </provider>
+        <provider
+            android:name="com.github.travelplannerapp.searchfriend.SearchFriendSuggestionProvider"
+            android:authorities="com.github.travelplannerapp.searchfriend.SearchFriendSuggestionProvider"
             android:exported="false"
             android:grantUriPermissions="true">
         </provider>

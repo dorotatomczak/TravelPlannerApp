@@ -1,12 +1,11 @@
 package com.github.travelplannerapp.ServerApp
 
 import com.github.travelplannerapp.ServerApp.datamanagement.UserManagement
+import com.github.travelplannerapp.ServerApp.datamodels.commonmodel.UserInfo
+import com.github.travelplannerapp.ServerApp.exceptions.SearchNoItemsException
 import com.github.travelplannerapp.communication.commonmodel.*
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.web.bind.annotation.PostMapping
-import org.springframework.web.bind.annotation.RequestBody
-import org.springframework.web.bind.annotation.RequestHeader
-import org.springframework.web.bind.annotation.RestController
+import org.springframework.web.bind.annotation.*
 
 @RestController
 class ServerUserController {
@@ -30,6 +29,51 @@ class ServerUserController {
     @PostMapping("user-management/register")
     fun register(@RequestBody request: SignUpRequest): Response<Unit> {
         userManagement.addUser(request)
+        return Response(ResponseCode.OK, Unit)
+    }
+
+
+    @GetMapping("users/{userId}/friends")
+    fun getFriends(
+            @RequestHeader("authorization") token: String,
+            @PathVariable userId: Int
+    ): Response<List<UserInfo>> {
+        userManagement.verifyUser(token)
+        val friends = userManagement.getAllFriendsByUserId(userId)
+        return Response(ResponseCode.OK, friends)
+    }
+
+    @PostMapping("users/{userId}/friends")
+    fun addFriend(
+            @RequestHeader("authorization") token: String,
+            @PathVariable userId: Int,
+            @RequestBody friend: UserInfo
+    ): Response<Int> {
+        userManagement.verifyUser(token)
+        val response = userManagement.addFriend(userId, friend.id).id
+        return Response(ResponseCode.OK, response)
+    }
+
+    @GetMapping("user-management/usersemails")
+    fun findMatchingEmails(
+            @RequestParam("query") query: String
+    ): Response<MutableList<UserInfo>> {
+        try {
+            val users = userManagement.findMatchingEmails(query)
+            return Response(ResponseCode.OK, users)
+        } catch (ex: Exception) {
+            throw SearchNoItemsException(ex.localizedMessage)
+        }
+    }
+
+    @DeleteMapping("users/{userId}/friends")
+    fun deleteFriends(
+            @RequestHeader("authorization") token: String,
+            @PathVariable userId: Int,
+            @RequestBody friendsIds: MutableSet<Int>
+    ): Response<Unit> {
+        userManagement.verifyUser(token)
+        userManagement.deleteFriends(userId, friendsIds)
         return Response(ResponseCode.OK, Unit)
     }
 }

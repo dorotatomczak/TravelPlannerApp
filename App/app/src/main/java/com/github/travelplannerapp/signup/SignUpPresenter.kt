@@ -20,6 +20,18 @@ class SignUpPresenter(view: SignUpContract.View) : BasePresenter<SignUpContract.
             return
         }
 
+        /*
+        if(!verifyEmail(email)){
+            view.showSnackbar(R.string.email_incorrect)
+            return
+        }
+
+        if(!verifyPassword(password)){
+            view.showSnackbar(R.string.password_too_simple)
+            return
+        }
+        */
+
         val hashedPassword = PasswordUtils.hashPassword(password)
         if (hashedPassword == null) {
             view.showSnackbar(R.string.try_again)
@@ -51,4 +63,16 @@ class SignUpPresenter(view: SignUpContract.View) : BasePresenter<SignUpContract.
         if (error is ApiException) view.showSnackbar(error.getErrorMessageCode())
         else view.showSnackbar(R.string.server_connection_error)
     }
+
+    private fun verifyPassword(password: String): Boolean {
+        if (password.length < 8) return false
+        if ("[a-z]".toRegex().find(password) == null) return false
+        if ("[A-Z]".toRegex().find(password) == null) return false
+        if ("[0-9]".toRegex().find(password) == null) return false
+
+        return true
+    }
+
+    private fun verifyEmail(email: String): Boolean =
+            email.matches("[^\\s]+@[^\\s]+\\.[^\\s]+".toRegex())
 }
