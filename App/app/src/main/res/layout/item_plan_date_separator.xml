@@ -14,7 +14,7 @@
         android:paddingStart="4dp"
         android:paddingEnd="4dp"
         android:textColor="@color/white"
-        android:background="@color/gray"
+        android:background="@color/colorDivider"
         android:textSize="@dimen/text_size_item_XS"
         tools:text="lorem ipsum"/>
 

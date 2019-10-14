@@ -19,10 +19,9 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_marginBottom="@dimen/margin_horizontal"
-            android:background="@color/transparent"
             android:text="@string/sign_in_to_your_account"
             android:textAlignment="center"
-            android:textColor="@color/seeThroughWhite"
+            android:textColor="@color/white"
             android:textSize="@dimen/text_size_title_small" />
 
         <LinearLayout
