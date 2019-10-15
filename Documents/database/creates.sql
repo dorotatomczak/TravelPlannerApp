@@ -35,10 +35,13 @@ create table place (
 
 create table plan (
 	id serial PRIMARY KEY,
-	locale text,
 	from_date_time timestamp,
-	to_date_time timestamp,
 	place_id integer references place(id),
 	travel_id integer references travel(id)
 );
 
+create table app_user_friend (
+	id serial PRIMARY KEY,
+	app_user_id integer references app_user(id),
+	friend_user_id integer references app_user(id)
+);

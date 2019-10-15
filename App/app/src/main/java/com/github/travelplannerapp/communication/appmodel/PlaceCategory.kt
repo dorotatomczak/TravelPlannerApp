@@ -12,7 +12,7 @@ enum class PlaceCategory(val categoryName: String, val categoryIcon: Int, val st
     TRANSPORT("transport", R.drawable.ic_circle_transport, R.string.transport),
     AIRPORT("airport", R.drawable.ic_circle_plane, R.string.airport),
     ACCOMMODATION("accommodation", R.drawable.ic_circle_hotel, R.string.accommodation),
-    SHOPPING("shopping", R.drawable.ic_circle_plane, R.string.shopping),
+    SHOPPING("shopping", R.drawable.ic_circle_shopping, R.string.shopping),
     LEISURE_OUTDOOR("leisure-outdoor", R.drawable.ic_circle_outdoor, R.string.leisure_outdoor),
     NATURAL_GEOGRAPHICAL("natural-geographical", R.drawable.ic_circle_natural, R.string.natural_geographical),
     PETROL_STATION("petrol-station", R.drawable.ic_circle_petrol_station, R.string.petrol_station),

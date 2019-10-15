@@ -4,11 +4,12 @@ import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.github.travelplannerapp.R
-import com.github.travelplannerapp.communication.commonmodel.PlanElement
+import com.github.travelplannerapp.communication.appmodel.PlanElement
 import com.github.travelplannerapp.dayplans.addplanelement.AddPlanElementActivity
 import com.github.travelplannerapp.utils.DrawerUtils
 import com.google.android.material.snackbar.Snackbar
@@ -53,7 +54,7 @@ class DayPlansActivity : AppCompatActivity(), DayPlansContract.View {
             AddPlanElementActivity.REQUEST_ADD_PLAN -> {
                 if (resultCode == Activity.RESULT_OK && data != null) {
                     val messageCode = data.getIntExtra(AddPlanElementActivity.REQUEST_ADD_PLAN_ELEMENT_RESULT_MESSAGE,
-                            R.string.scanner_general_error)
+                            R.string.try_again)
                     showSnackbar(messageCode)
                     val plan = data.getSerializableExtra(AddPlanElementActivity.REQUEST_ADD_PLAN_ELEMENT_RESULT_PLAN) as PlanElement
                     presenter.onPlanElementAdded(plan)
@@ -88,6 +89,28 @@ class DayPlansActivity : AppCompatActivity(), DayPlansContract.View {
 
     override fun showSnackbar(messageCode: Int) {
         Snackbar.make(coordinatorLayoutDayPlans, getString(messageCode), Snackbar.LENGTH_SHORT).show()
+    }
+
+    override fun showActionMode() {
+        fabAdd.visibility = View.GONE
+    }
+
+    override fun showNoActionMode() {
+        fabAdd.visibility = View.VISIBLE
+        (recyclerViewDayPlans.adapter as DayPlansAdapter).leaveActionMode()
+    }
+
+    override fun showConfirmationDialog() {
+        val travelsText = getString(R.string.day_plans)
+        AlertDialog.Builder(this)
+                .setTitle(getString(R.string.delete_entry, travelsText))
+                .setMessage(getString(R.string.delete_confirmation, travelsText))
+                .setPositiveButton(android.R.string.yes) { _, _ ->
+                    presenter.deletePlanElements()
+                }
+                .setNegativeButton(android.R.string.no) { _, _ ->
+                }
+                .show()
     }
 
     private fun refreshDayPlans() {

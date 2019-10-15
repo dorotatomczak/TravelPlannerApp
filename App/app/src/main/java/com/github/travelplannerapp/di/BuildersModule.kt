@@ -9,6 +9,9 @@ import com.github.travelplannerapp.dayplans.addplanelement.AddPlanElementViewMod
 import com.github.travelplannerapp.dayplans.DayPlansActivity
 import com.github.travelplannerapp.dayplans.DayPlansModule
 import com.github.travelplannerapp.dayplans.DayPlansViewModel
+import com.github.travelplannerapp.dayplans.searchelement.SearchElementActivity
+import com.github.travelplannerapp.dayplans.searchelement.SearchElementModule
+import com.github.travelplannerapp.dayplans.searchelement.SearchElementViewModel
 import com.github.travelplannerapp.initializers.InitializerModule
 import com.github.travelplannerapp.launcher.LauncherActivity
 import com.github.travelplannerapp.launcher.LauncherModule
@@ -16,9 +19,9 @@ import com.github.travelplannerapp.launcher.LauncherViewModel
 import com.github.travelplannerapp.scanner.ScannerActivity
 import com.github.travelplannerapp.scanner.ScannerModule
 import com.github.travelplannerapp.scanner.ScannerViewModel
-import com.github.travelplannerapp.dayplans.searchelement.SearchElementActivity
-import com.github.travelplannerapp.dayplans.searchelement.SearchElementModule
-import com.github.travelplannerapp.dayplans.searchelement.SearchElementViewModel
+import com.github.travelplannerapp.searchfriend.SearchFriendActivity
+import com.github.travelplannerapp.searchfriend.SearchFriendModule
+import com.github.travelplannerapp.searchfriend.SearchFriendViewModel
 import com.github.travelplannerapp.signin.SignInActivity
 import com.github.travelplannerapp.signin.SignInModule
 import com.github.travelplannerapp.signin.SignInViewModel
@@ -37,7 +40,6 @@ import com.github.travelplannerapp.traveldetails.TravelDetailsViewModel
 import com.github.travelplannerapp.travels.TravelsActivity
 import com.github.travelplannerapp.travels.TravelsModule
 import com.github.travelplannerapp.travels.TravelsViewModel
-
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
 
@@ -84,5 +86,7 @@ abstract class BuildersModule {
     @ContributesAndroidInjector(modules = [TravelsViewModel::class, TravelsModule::class])
     internal abstract fun bindTravelsActivity(): TravelsActivity
 
+    @ContributesAndroidInjector(modules = [SearchFriendViewModel::class, SearchFriendModule::class])
+    internal abstract fun bindSearchFiendActivity(): SearchFriendActivity
     // Add bindings for other sub-components here
 }

@@ -37,6 +37,40 @@ class UserRepository : Repository<User>(), IUserRepository {
         return null
     }
 
+    override fun getAllFriendsByUserId(id: Int): MutableList<User> {
+        val friends = mutableListOf<User>()
+        val statement = DbConnection
+                .conn
+                .prepareStatement(
+                        "SELECT * FROM $tableName " +
+                                "INNER JOIN ${UserFriendRepository.tableName} " +
+                                "on $tableName.$columnId = ${UserFriendRepository.tableName}.${UserFriendRepository.columnFriendId} " +
+                                "WHERE ${UserFriendRepository.tableName}.${UserFriendRepository.columnUserId}=?"
+                )
+        statement.setInt(1, id)
+        val result = statement.executeQuery()
+        while (result.next()) {
+            friends.add(User(result))
+        }
+        return friends
+    }
+
+    override fun findMatchingEmails(email: String): MutableList<User> {
+        val users = mutableListOf<User>()
+        val statement = DbConnection
+                .conn
+                .prepareStatement(
+                        "SELECT * FROM $tableName " +
+                                "WHERE $tableName.$columnEmail LIKE ?"
+                )
+        statement.setString(1, "%$email%")
+        val result = statement.executeQuery()
+        while (result.next()) {
+            users.add(User(result))
+        }
+        return users
+    }
+
     override fun T(result: ResultSet): User? {
         return User(result)
     }
@@ -61,3 +95,5 @@ class UserRepository : Repository<User>(), IUserRepository {
         return statement
     }
 }
+
+

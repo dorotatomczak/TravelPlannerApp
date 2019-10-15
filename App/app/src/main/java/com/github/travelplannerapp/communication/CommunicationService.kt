@@ -1,7 +1,7 @@
 package com.github.travelplannerapp.communication
 
-import com.github.travelplannerapp.communication.commonmodel.*
 import com.github.travelplannerapp.communication.appmodel.*
+import com.github.travelplannerapp.communication.commonmodel.*
 import io.reactivex.Single
 import okhttp3.MultipartBody
 import okhttp3.OkHttpClient
@@ -76,6 +76,18 @@ interface ServerApi {
     @GET("here-management/objects/{objectId}/contacts")
     fun getContacts(@Path("objectId") objectId: String, @Query("query") query: String): Single<Response<Contacts>>
 
+    @GET("users/{userId}/friends")
+    fun getFriends(@Path("userId") userId: Int): Single<Response<List<UserInfo>>>
+
+    @POST("users/{userId}/friends")
+    fun addFriend(@Path("userId") userId: Int, @Body friend: UserInfo): Single<Response<UserInfo>>
+
+    @GET("user-management/usersemails")
+    fun findMatchingEmails(@Query("query") query: String): Single<Response<MutableList<UserInfo>>>
+
+    @HTTP(method = "DELETE", path = "users/{userId}/friends", hasBody = true)
+    fun deleteFriends(@Path("userId") userId: Int, @Body friendsIds: MutableSet<Int>): Single<Response<Unit>>
+    
     @GET("google-management/routes")
     fun getTransport(@Query("origin_latitude") originLat: String,
                      @Query("origin_longitude") originLng: String,
@@ -89,4 +101,7 @@ interface ServerApi {
 
     @POST("users/{userId}/travels/{travelId}/plans")
     fun addPlanElement(@Path("userId") userId: Int, @Path("travelId") travelId: Int, @Body planElement: PlanElement): Single<Response<PlanElement>>
+
+    @HTTP(method = "DELETE", path = "users/{userId}/plans", hasBody = true)
+    fun deletePlanElements(@Path("userId") userId: Int, @Body planElementIds: List<Int>): Single<Response<Unit>>
 }

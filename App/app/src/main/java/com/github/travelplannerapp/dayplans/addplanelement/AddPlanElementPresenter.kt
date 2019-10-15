@@ -4,14 +4,14 @@ import com.github.travelplannerapp.BasePresenter
 import com.github.travelplannerapp.R
 import com.github.travelplannerapp.communication.ApiException
 import com.github.travelplannerapp.communication.CommunicationService
-import com.github.travelplannerapp.communication.commonmodel.PlanElement
+import com.github.travelplannerapp.communication.appmodel.PlanElement
 import com.github.travelplannerapp.communication.commonmodel.Place
 import com.github.travelplannerapp.communication.commonmodel.ResponseCode
 import com.github.travelplannerapp.utils.DateTimeUtils
 import com.github.travelplannerapp.utils.SchedulerProvider
 import com.github.travelplannerapp.utils.SharedPreferencesUtils
 import io.reactivex.disposables.CompositeDisposable
-import java.util.*
+
 
 class AddPlanElementPresenter(private val travelId: Int, view: AddPlanElementContract.View) : BasePresenter<AddPlanElementContract.View>(view), AddPlanElementContract.Presenter {
 
@@ -22,9 +22,7 @@ class AddPlanElementPresenter(private val travelId: Int, view: AddPlanElementCon
     override fun addPlanElement(data: AddPlanElementContract.NewPlanElementData) {
         if (isPlanDataValid(data)) {
             val planElement = PlanElement(-1,
-                    Locale.getDefault().toString(),
                     DateTimeUtils.stringToDateTime(data.fromDate, data.fromTime).timeInMillis,
-                    DateTimeUtils.stringToDateTime(data.toDate, data.toTime).timeInMillis,
                     -1,
                     place!!)
 
@@ -45,14 +43,8 @@ class AddPlanElementPresenter(private val travelId: Int, view: AddPlanElementCon
 
     private fun isPlanDataValid(data: AddPlanElementContract.NewPlanElementData): Boolean {
 
-        if (data.name.isEmpty() || data.fromDate.isEmpty() || data.fromTime.isEmpty() ||
-                data.toDate.isEmpty() || data.toTime.isEmpty()) {
+        if (data.name.isEmpty() || data.fromDate.isEmpty() || data.fromTime.isEmpty()) {
             view.showSnackbar(R.string.missing_required_fields_error)
-            return false
-        }
-
-        if (!DateTimeUtils.isDateTimeABeforeDateTimeB(data.fromDate, data.fromTime, data.toDate, data.toTime)) {
-            view.showSnackbar(R.string.wrong_dates_error)
             return false
         }
 

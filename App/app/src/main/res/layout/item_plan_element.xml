@@ -7,11 +7,18 @@
     android:paddingStart="@dimen/padding_small"
     android:paddingEnd="@dimen/padding_small">
 
+    <CheckBox
+        android:id="@+id/checkboxItemPlanElement"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/margin_horizontal"
+        android:checked="false"
+        android:visibility="invisible" />
+
     <TextView
         android:id="@+id/textViewItemPlanFromTime"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
         android:textSize="@dimen/text_size_item_S"
         tools:text="08:00 AM"/>
 

@@ -11,11 +11,14 @@ import com.github.travelplannerapp.utils.PasswordUtils
 import io.mockk.*
 import io.mockk.impl.annotations.MockK
 import io.reactivex.Single
+import junitparams.JUnitParamsRunner
+import junitparams.Parameters
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
-import java.lang.Exception
+import org.junit.runner.RunWith
 
+@RunWith(JUnitParamsRunner::class)
 class SignUpPresenterTest {
 
     @MockK(relaxUnitFun = true)
@@ -56,6 +59,40 @@ class SignUpPresenterTest {
 
         // then
         verify { view.showSnackbar(R.string.sign_up_diff_passwords) }
+    }
+
+    @Test
+    fun `Should display snackBar with info message when given email in SignUp is incorrect`() {
+
+        // given
+        val email = "email"
+        val password = "passworD1"
+        val confirmPassword = "passworD1"
+
+        // when
+        presenter.onSignUpClicked(email, password, confirmPassword)
+
+        // then
+        verify { view.showSnackbar(R.string.email_incorrect) }
+    }
+
+    @Test
+    @Parameters(value = [
+        "paSS12",
+        "passw0rd",
+        "PASSWORD1",
+        "paSSword"])
+    fun `Should display snackBar with info message when given password in SignUp is incorrect`(password: String) {
+
+        // given
+        val email = "email@gmail.com"
+        val confirmPassword = password
+
+        // when
+        presenter.onSignUpClicked(email, password, confirmPassword)
+
+        // then
+        verify { view.showSnackbar(R.string.password_too_simple) }
     }
 
     @Test
@@ -103,9 +140,9 @@ class SignUpPresenterTest {
     fun `Should return result and finish when server returns 200 on sign up`() {
 
         // given
-        val email = "email"
-        val password = "password"
-        val confirmPassword = "password"
+        val email = "email@e.com"
+        val password = "passwordD1"
+        val confirmPassword = "passwordD1"
         val hashedPassword = "hashed password"
 
         mockkObject(PasswordUtils)

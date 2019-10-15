@@ -11,7 +11,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.github.travelplannerapp.R
 import com.github.travelplannerapp.communication.appmodel.PlaceCategory
 import com.github.travelplannerapp.communication.commonmodel.Place
-import com.github.travelplannerapp.communication.commonmodel.PlanElement
+import com.github.travelplannerapp.communication.appmodel.PlanElement
 import com.github.travelplannerapp.dayplans.searchelement.SearchElementActivity
 import com.github.travelplannerapp.utils.DateTimeUtils
 import com.github.travelplannerapp.utils.DrawerUtils
@@ -52,9 +52,7 @@ class AddPlanElementActivity : AppCompatActivity(), AddPlanElementContract.View 
 
         // Set up edit texts
         editTextPlanFromDate.setOnClickListener { openDatePicker(it as TextInputEditText) }
-        editTextPlanToDate.setOnClickListener { openDatePicker(it as TextInputEditText) }
         editTextPlanFromTime.setOnClickListener { openTimePicker(it as TextInputEditText) }
-        editTextPlanToTime.setOnClickListener { openTimePicker(it as TextInputEditText) }
 
         editTextPlanName.setOnClickListener { startSearchElementActivity() }
 
@@ -127,8 +125,6 @@ class AddPlanElementActivity : AppCompatActivity(), AddPlanElementContract.View 
                 editTextPlanName.text.toString(),
                 editTextPlanFromDate.text.toString(),
                 editTextPlanFromTime.text.toString(),
-                editTextPlanToDate.text.toString(),
-                editTextPlanToTime.text.toString(),
                 coordinates,
                 editTextPlanLocation.text.toString()
         )
