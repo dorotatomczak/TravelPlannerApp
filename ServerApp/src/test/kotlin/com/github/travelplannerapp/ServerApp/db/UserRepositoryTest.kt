@@ -10,7 +10,7 @@ class UserRepositoryTest {
     private val userRepository = spyk(UserRepository())
 
     @Test
-    fun `When get called on existing id expect one user returned`() {
+    fun `When get called on existing id expect one User returned`() {
         val result = userRepository.get(1)
         Assert.assertTrue(result is User)
     }

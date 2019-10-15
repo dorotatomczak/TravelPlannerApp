@@ -1,7 +1,6 @@
 package com.github.travelplannerapp.ServerApp.db
 
 import com.github.travelplannerapp.ServerApp.db.dao.Scan
-import com.github.travelplannerapp.ServerApp.db.dao.Travel
 import com.github.travelplannerapp.ServerApp.db.repositories.ScanRepository
 import io.mockk.spyk
 import org.junit.Assert
@@ -11,7 +10,7 @@ class ScanRepositoryTest {
     private val scanRepository = spyk(ScanRepository())
 
     @Test
-    fun `When getAll called with right parameters expect list of users returned`() {
+    fun `When getAll called with right parameters expect list of Scan returned`() {
         val result = scanRepository.getAll(1,1)
         Assert.assertTrue(result != emptyList<Scan>())
     }
@@ -19,11 +18,11 @@ class ScanRepositoryTest {
     @Test
     fun `When getAll called with wrong parameters expect empty list returned`() {
         val result = scanRepository.getAll(-1,-1)
-        Assert.assertTrue(result == emptyList<Travel>())
+        Assert.assertTrue(result == emptyList<Scan>())
     }
 
     @Test
-    fun `When get called on existing id expect one Travel returned`() {
+    fun `When get called on existing id expect one Scan returned`() {
         val result = scanRepository.get(1)
         Assert.assertTrue(result is Scan)
     }
