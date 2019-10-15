@@ -69,6 +69,18 @@
     <string name="no_items_search_error">Nic nie znaleziono</string>
     <string name="email_incorrect">Email jest niepoprawny</string>
     <string name="password_too_simple">Hasło musi co najmniej 8 znaków, zawierać 1 cyfrę, 1 małą i 1 wielką literę</string>
+    <string name="snacks_fast_food">Fast food</string>
+    <string name="delete_plan_elements_ok">Usunąłeś wybrane elementy planu</string>
+    <string name="delete_plan_elements_error">Wystąpił problem podczas usuwania wybranych elementów planu</string>
+    <string name="my_friends">Moi znajomi</string>
+    <string name="friend_added">Znajomy został dodany</string>
+    <string name="friend_deleted">Znajomy został usunięty</string>
+    <string name="add_user_confirmation">Czy na pewno chcesz dodać wybranego użytkownika?</string>
+    <string name="add_entry">Dodaj %1$s</string>
+    <string name="delete_friends_ok">Usunąłeś wybranych znajomych</string>
+    <string name="add_friend">Dodaj znajomego</string>
+    <string name="delete_friends">Usuń znajomych</string>
+    <string name="delete_friends_confirmation">Czy na pewno chcesz usunąć wybranych znajomych?</string>
 
     <string name="atm_bank_exchange">Bankomat</string>
     <string name="hospital_health_care_facility">Opieka zdrowotna</string>
@@ -84,16 +96,4 @@
     <string name="shopping">Zakupy</string>
     <string name="outdoor">Outdoor</string>
     <string name="natural_geographical">Natura</string>
-    <string name="snacks_fast_food">Fast food</string>
-    <string name="delete_plan_elements_ok">Usunąłeś wybrane elementy planu</string>
-    <string name="delete_plan_elements_error">Wystąpił problem podczas usuwania element/ów planu</string>
-    <string name="my_friends">Moi znajomi</string>
-    <string name="friend_added">Znajomy został dodany</string>
-    <string name="friend_deleted">Znajomy został usunięty</string>
-    <string name="add_user_confirmation">Czy na pewno chcesz dodać wybranego użytkownika?</string>
-    <string name="add_entry">Dodaj %1$s</string>
-    <string name="delete_friends_ok">Usunąłeś wybranych znajomych</string>
-    <string name="add_friend">Dodaj znajomego</string>
-    <string name="delete_friends">Usuń znajomych</string>
-    <string name="delete_friends_confirmation">Czy na pewno chcesz usunąć wybranych znajomych?</string>
 </resources>
