@@ -85,19 +85,22 @@ class UserManagement : IUserManagement {
         userRepository.update(updatedUser)
     }
 
-    override fun addFriend(userId: Int, friendId: Int): UserFriend {
-        val userFriendId = userFriendRepository.getNextId()
-        val userFriend = UserFriend(userFriendId, userId, friendId)
-        if (userFriendRepository.add(userFriend)){
+    override fun addFriend(userId: Int, friendEmail: String): UserFriend {
+        var friendId = userRepository.getUserByEmail(friendEmail)!!.id
+        var userFriendBindingId = userFriendRepository.getUserFriendBindingID(userId, friendId!!)
+        if (userFriendBindingId < 0) {
+            val userFriendId = userFriendRepository.getNextId()
+            val userFriend = UserFriend(userFriendId, userId, friendId)
+            userFriendRepository.add(userFriend)
             return userFriend
-        }else {
-            throw AddFriendException("Error when adding friend")
+        } else {
+            throw AddFriendException("Error, user is in the friend list")
         }
     }
 
     override fun deleteFriends(userId: Int, friendsIds: MutableSet<Int>) {
         for (friendId in friendsIds) {
-            if (!userFriendRepository.deleteUserFriendBinding(userId, friendId)){
+            if (!userFriendRepository.deleteUserFriendBinding(userId, friendId)) {
                 throw  DeleteFriendsException("Error when deleting friends")
             }
         }

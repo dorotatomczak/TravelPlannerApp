@@ -11,7 +11,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.github.travelplannerapp.R
-import com.github.travelplannerapp.communication.appmodel.UserInfo
+import com.github.travelplannerapp.communication.appmodel.Email
 import com.github.travelplannerapp.utils.DrawerUtils
 import com.google.android.material.snackbar.Snackbar
 import dagger.android.AndroidInjection
@@ -79,12 +79,12 @@ class SearchFriendActivity : AppCompatActivity(), SearchFriendContract.View {
         Snackbar.make(linearLayoutSearchFriend, messageCode, Snackbar.LENGTH_LONG).show()
     }
 
-    private fun showAddFriendConfirmationDialog(friend: UserInfo) {
+    private fun showAddFriendConfirmationDialog(friendEmail: String) {
         AlertDialog.Builder(this)
                 .setTitle(getString(R.string.add_friend))
                 .setMessage(getString(R.string.add_user_confirmation))
                 .setPositiveButton(android.R.string.yes) { _, _ ->
-                    presenter.addFriend(friend)
+                    presenter.addFriend(friendEmail)
                 }
                 .setNegativeButton(android.R.string.no) { _, _ ->
                 }
@@ -109,8 +109,8 @@ class SearchFriendActivity : AppCompatActivity(), SearchFriendContract.View {
 
                 override fun onSuggestionClick(position: Int): Boolean {
                     closeKeyboard()
-                    val friend = UserInfo(suggestionsAdapter.getItem(position) as Cursor)
-                    showAddFriendConfirmationDialog(friend)
+                    val email = Email(suggestionsAdapter.getItem(position) as Cursor)
+                    showAddFriendConfirmationDialog(email.value)
                     return true
                 }
             })

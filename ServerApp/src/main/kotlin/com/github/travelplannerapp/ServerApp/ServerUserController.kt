@@ -47,11 +47,12 @@ class ServerUserController {
     fun addFriend(
             @RequestHeader("authorization") token: String,
             @PathVariable userId: Int,
-            @RequestBody friend: UserInfo
-    ): Response<Int> {
+            @RequestBody friendEmail: String
+    ): Response<UserInfo> {
         userManagement.verifyUser(token)
-        val response = userManagement.addFriend(userId, friend.id).id
-        return Response(ResponseCode.OK, response)
+        val response = userManagement.addFriend(userId, friendEmail)
+        var friend: UserInfo = UserInfo(response.friendId!!, friendEmail)
+        return Response(ResponseCode.OK, friend)
     }
 
     @GetMapping("user-management/usersemails")
