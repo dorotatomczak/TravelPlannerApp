@@ -87,4 +87,15 @@ class ServerTravelController {
         val addedPlanElement = travelManagement.addPlanElement(travelId, planElement)
         return Response(ResponseCode.OK, addedPlanElement)
     }
+
+    @DeleteMapping("users/{userId}/plans")
+    fun deletePlanElements(
+            @RequestHeader("authorization") token: String,
+            @PathVariable userId: Int,
+            @RequestBody planElementIds: List<Int>
+    ): Response<Unit> {
+        userManagement.verifyUser(token)
+        travelManagement.deletePlanElements(planElementIds)
+        return Response(ResponseCode.OK, Unit)
+    }
 }

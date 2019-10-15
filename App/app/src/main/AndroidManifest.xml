@@ -63,8 +63,6 @@
                 android:resource="@xml/searchableusers"/>
         </activity>
 
-        <activity android:name=".userfriends.UserFriendsActivity" />
-
         <activity
             android:name="com.github.travelplannerapp.dayplans.searchelement.SearchElementActivity"
             android:launchMode="singleTop">

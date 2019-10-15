@@ -5,6 +5,8 @@ import java.util.*
 
 object DateTimeUtils {
 
+    private const val TWELVE_HOUR_FORMAT = "HH:mm AM"
+
     fun isDateTimeABeforeDateTimeB(dateA: String, timeA: String, dateB:String, timeB: String) : Boolean {
         val calendarA = stringToDateTime(dateA, timeA)
         val calendarB = stringToDateTime(dateB, timeB)
@@ -23,14 +25,12 @@ object DateTimeUtils {
     }
 
     fun dateToString(dateTimeMs: Long) : String {
-        val calendar = GregorianCalendar.getInstance()
-        calendar.timeInMillis = dateTimeMs
+        val calendar = longToDateTime(dateTimeMs)
         return dateToString(calendar)
     }
 
     fun timeToString(dateTimeMs: Long) : String {
-        val calendar = GregorianCalendar.getInstance()
-        calendar.timeInMillis = dateTimeMs
+        val calendar = longToDateTime(dateTimeMs)
         return timeToString(calendar)
     }
 
@@ -42,5 +42,20 @@ object DateTimeUtils {
         formatter.parse(dateTimeText)?.let { calendar.time = it }
 
         return calendar
+    }
+
+    fun longToDateTime(dateTimeMs: Long) : Calendar {
+        val calendar = GregorianCalendar.getInstance()
+        calendar.timeInMillis = dateTimeMs
+
+        return calendar
+    }
+
+    fun addLeadingZeroToTime(is24HourFormat: Boolean, time: String): String {
+
+        return when (!is24HourFormat && time.count() < TWELVE_HOUR_FORMAT.count()) {
+            true -> "0$time"
+            else -> time
+        }
     }
 }

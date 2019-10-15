@@ -1,10 +1,7 @@
 package com.github.travelplannerapp.communication
 
-import com.github.travelplannerapp.communication.appmodel.CityObject
-import com.github.travelplannerapp.communication.appmodel.Scan
-import com.github.travelplannerapp.communication.appmodel.Travel
+import com.github.travelplannerapp.communication.appmodel.*
 import com.github.travelplannerapp.communication.commonmodel.*
-import com.github.travelplannerapp.communication.appmodel.UserInfo
 import io.reactivex.Single
 import okhttp3.MultipartBody
 import okhttp3.OkHttpClient
@@ -104,4 +101,7 @@ interface ServerApi {
 
     @POST("users/{userId}/travels/{travelId}/plans")
     fun addPlanElement(@Path("userId") userId: Int, @Path("travelId") travelId: Int, @Body planElement: PlanElement): Single<Response<PlanElement>>
+
+    @HTTP(method = "DELETE", path = "users/{userId}/plans", hasBody = true)
+    fun deletePlanElements(@Path("userId") userId: Int, @Body planElementIds: List<Int>): Single<Response<Unit>>
 }
