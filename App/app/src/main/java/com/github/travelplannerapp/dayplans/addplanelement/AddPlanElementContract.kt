@@ -8,7 +8,7 @@ interface AddPlanElementContract {
 
     data class Coordinates(var lattitude: Double, var longitude: Double)
 
-    data class NewPlanElementData(val category: PlaceCategory, val name: String, val fromDate: String, val fromTime: String,
+    data class NewPlanElementData(val name: String, val fromDate: String, val fromTime: String,
                                   val coordinates: Coordinates, val location: String)
 
     interface View {

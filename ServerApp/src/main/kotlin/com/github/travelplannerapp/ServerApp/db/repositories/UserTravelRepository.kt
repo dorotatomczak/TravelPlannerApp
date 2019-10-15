@@ -22,6 +22,28 @@ class UserTravelRepository : Repository<UserTravel>(), IUserTravelRepository {
     override val updateStatement = "UPDATE $tableName SET $columnUserId=?, $columnTravelId=?  WHERE $columnId=?"
     override val nextIdStatement = "SELECT nextval(pg_get_serial_sequence('$tableName', '$columnId')) AS new_id"
 
+    override fun deleteUserTravelBinding(userId: Int, travelId: Int): Boolean {
+        val statement = DbConnection
+                .conn
+                .prepareStatement(deleteStatement + "WHERE $columnUserId=? AND $columnTravelId=?")
+        statement.setInt(1, userId)
+        statement.setInt(2, travelId)
+        return statement.executeUpdate() > 0
+    }
+
+    override fun countByTravelId(travelId: Int): Int {
+        val statement = DbConnection
+                .conn
+                .prepareStatement("SELECT COUNT(*) AS travel_bindings " +
+                        "FROM $tableName WHERE $columnTravelId=?")
+        statement.setInt(1, travelId)
+        val result: ResultSet = statement.executeQuery()
+        if (result.next()) {
+            return result.getInt("travel_bindings")
+        }
+        return 0
+    }
+
     override fun T(result: ResultSet): UserTravel? {
         return UserTravel(result)
     }
@@ -44,27 +66,5 @@ class UserTravelRepository : Repository<UserTravel>(), IUserTravelRepository {
         statement.setInt(2, obj.travelId!!)
         statement.setInt(3, obj.id!!)
         return statement
-    }
-
-    override fun deleteUserTravelBinding(userId: Int, travelId: Int): Boolean {
-        val statement = DbConnection
-                .conn
-                .prepareStatement(deleteStatement + "WHERE $columnUserId=? AND $columnTravelId=?")
-        statement.setInt(1, userId)
-        statement.setInt(2, travelId)
-        return statement.executeUpdate() > 0
-    }
-
-    override fun countByTravelId(travelId: Int): Int {
-        val statement = DbConnection
-                .conn
-                .prepareStatement("SELECT COUNT(*) AS travel_bindings " +
-                        "FROM $tableName WHERE $columnTravelId=?")
-        statement.setInt(1, travelId)
-        val result: ResultSet = statement.executeQuery()
-        if (result.next()) {
-            return result.getInt("travel_bindings")
-        }
-        return 0
     }
 }
