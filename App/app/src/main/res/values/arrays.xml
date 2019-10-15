@@ -18,6 +18,5 @@
         <item>@string/atm_bank_exchange</item>
         <item>@string/toilet_rest_area</item>
         <item>@string/hospital_health_care_facility</item>
-        <item>@string/outdoor</item>
     </string-array>
 </resources>
