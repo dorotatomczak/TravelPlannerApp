@@ -12,13 +12,13 @@ class ScanRepositoryTest {
     @Test
     fun `When getAll called with right parameters expect list of Scan returned`() {
         val result = scanRepository.getAll(1,1)
-        Assert.assertTrue(result != emptyList<Scan>())
+        Assert.assertTrue(result.isNotEmpty())
     }
 
     @Test
     fun `When getAll called with wrong parameters expect empty list returned`() {
         val result = scanRepository.getAll(-1,-1)
-        Assert.assertTrue(result == emptyList<Scan>())
+        Assert.assertTrue(result.isEmpty())
     }
 
     @Test

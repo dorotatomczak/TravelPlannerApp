@@ -14,13 +14,13 @@ class PlanElementRepositoryTest {
     @Test
     fun `When getAllTravelsByUserId called on existing id expect list of PlanElementDao returned`() {
         val result = planElementRepository.getPlanElementsByTravelId(1)
-        Assert.assertTrue(result != emptyList<PlanElementDao>())
+        Assert.assertTrue(result.isNotEmpty())
     }
 
     @Test
     fun `When getAllTravelsByUserId called on non existing id expect empty list returned`() {
         val result = planElementRepository.getPlanElementsByTravelId(-1)
-        Assert.assertTrue(result == emptyList<PlanElementDao>())
+        Assert.assertTrue(result.isEmpty())
     }
 
     @Test

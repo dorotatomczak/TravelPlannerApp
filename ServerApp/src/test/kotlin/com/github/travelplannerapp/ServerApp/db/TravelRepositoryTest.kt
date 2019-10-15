@@ -12,13 +12,13 @@ class TravelRepositoryTest {
     @Test
     fun `When getAllTravelsByUserId called on existing id expect list of Travel returned`() {
         val result = travelRepository.getAllTravelsByUserId(1)
-        Assert.assertTrue(result != emptyList<Travel>())
+        Assert.assertTrue(result.isNotEmpty())
     }
 
     @Test
     fun `When getAllTravelsByUserId called on non existing id expect empty list returned`() {
         val result = travelRepository.getAllTravelsByUserId(-1)
-        Assert.assertTrue(result == emptyList<Travel>())
+        Assert.assertTrue(result.isEmpty())
     }
 
     @Test
