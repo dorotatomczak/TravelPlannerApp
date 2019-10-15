@@ -2,6 +2,7 @@ package com.github.travelplannerapp.dayplans
 
 import com.github.travelplannerapp.communication.appmodel.PlanElement
 import com.github.travelplannerapp.deleteactionmode.DeleteContract
+import com.github.travelplannerapp.communication.commonmodel.Place
 
 interface DayPlansContract {
     interface View : DeleteContract.View{
@@ -11,6 +12,7 @@ interface DayPlansContract {
         fun onDataSetChanged()
         fun hideLoadingIndicator()
         fun showSnackbar(messageCode: Int)
+        fun showPlanElementDetails(place: Place)
     }
 
     interface PlanElementItemView : DeleteContract.ItemView{
@@ -48,5 +50,6 @@ interface DayPlansContract {
         fun addPlanElementIdToDelete(position: Int)
         fun removePlanElementIdToDelete(position: Int)
         fun deletePlanElements()
+        fun openPlanElementDetails(position: Int)
     }
 }

@@ -10,7 +10,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.github.travelplannerapp.R
 import com.github.travelplannerapp.communication.appmodel.PlanElement
+import com.github.travelplannerapp.communication.commonmodel.Place
 import com.github.travelplannerapp.dayplans.addplanelement.AddPlanElementActivity
+import com.github.travelplannerapp.planelementdetails.PlanElementDetailsActivity
 import com.github.travelplannerapp.utils.DrawerUtils
 import com.google.android.material.snackbar.Snackbar
 import dagger.android.AndroidInjection
@@ -117,5 +119,11 @@ class DayPlansActivity : AppCompatActivity(), DayPlansContract.View {
     private fun refreshDayPlans() {
         swipeRefreshLayoutDayPlans.isRefreshing = true
         presenter.loadDayPlans()
+    }
+
+    override fun showPlanElementDetails(place: Place) {
+        val intent = Intent(this, PlanElementDetailsActivity::class.java)
+        intent.putExtra(PlanElementDetailsActivity.EXTRA_PLACE, place)
+        startActivity(intent)
     }
 }

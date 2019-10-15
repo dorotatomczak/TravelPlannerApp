@@ -1,5 +1,6 @@
 package com.github.travelplannerapp.dayplans
 
+import android.util.Log
 import com.github.travelplannerapp.BasePresenter
 import com.github.travelplannerapp.R
 import com.github.travelplannerapp.communication.ApiException
@@ -33,6 +34,14 @@ class DayPlansPresenter(private val travelId: Int, view: DayPlansContract.View) 
 
         view.showDayPlans()
         view.onDataSetChanged()
+    }
+
+    override fun openPlanElementDetails(position: Int) {
+        Log.e("pos", position.toString())
+        Log.e("planElements", planElements.size.toString())
+
+        val planElement = planElements.elementAt(position)
+        view.showPlanElementDetails(planElement.place)
     }
 
     override fun unsubscribe() {
@@ -136,6 +145,7 @@ class DayPlansPresenter(private val travelId: Int, view: DayPlansContract.View) 
             }
             dayPlanItems.add(PlanElementItem(plan))
         }
+        Log.e("dayPlanItems", dayPlanItems.size.toString())
     }
 
     inner class DateSeparatorItem(val date: String) : DayPlansContract.DayPlanItem {

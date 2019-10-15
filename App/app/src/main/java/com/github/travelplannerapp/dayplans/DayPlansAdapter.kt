@@ -82,7 +82,7 @@ class DayPlansAdapter(val presenter: DayPlansContract.Presenter) : RecyclerView.
         }
 
         override fun onClick(v: View?) {
-            //TODO [Dorota] Show planElement details
+            presenter.openPlanElementDetails(adapterPosition)
         }
 
         override fun onLongClick(v: View?): Boolean {

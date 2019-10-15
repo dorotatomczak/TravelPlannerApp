@@ -74,6 +74,8 @@
                 android:resource="@xml/searchable"/>
         </activity>
 
+        <activity android:name=".planelementdetails.PlanElementDetailsActivity" />
+
         <meta-data
             android:name="com.here.android.maps.appid"
             android:value="FcxYwwtlgIIwY1awmIax" />
