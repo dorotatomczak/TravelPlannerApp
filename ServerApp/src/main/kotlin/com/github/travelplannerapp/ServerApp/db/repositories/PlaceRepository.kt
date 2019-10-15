@@ -22,7 +22,7 @@ class PlaceRepository : Repository<PlaceDao>(), IPlaceRepository {
     override val insertStatement = "INSERT INTO $tableName ($columnId, $columnHereId, $columnHref, $columnTitle, $columnVicinity, $columnCategory)" +
             " VALUES (?, ?, ?, ?, ?, ?)"
     override val deleteStatement = "DELETE FROM $tableName "
-    override val updateStatement = "UPDATE $tableName SET $columnHereId, $columnHref, $columnTitle=?, $columnVicinity=?, $columnCategory=? WHERE $columnId=?"
+    override val updateStatement = "UPDATE $tableName SET $columnHereId=?, $columnHref=?, $columnTitle=?, $columnVicinity=?, $columnCategory=? WHERE $columnId=?"
     override val nextIdStatement = "SELECT nextval(pg_get_serial_sequence('$tableName', '$columnId')) AS new_id"
 
     override fun getPlaceByHereId(hereId: String): PlaceDao? {

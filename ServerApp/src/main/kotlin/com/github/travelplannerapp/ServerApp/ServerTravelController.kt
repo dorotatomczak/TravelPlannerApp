@@ -22,8 +22,6 @@ import javax.servlet.http.HttpServletRequest
 class ServerTravelController {
 
     @Autowired
-    lateinit var travelRepository: TravelRepository
-    @Autowired
     lateinit var userManagement: UserManagement
     @Autowired
     lateinit var travelManagement: TravelManagement
@@ -36,7 +34,7 @@ class ServerTravelController {
         @PathVariable userId: Int
     ): Response<List<Travel>> {
         userManagement.verifyUser(token)
-        val travels = travelRepository.getAllTravelsByUserId(userId)
+        val travels = travelManagement.getTravels(userId)
         return Response(ResponseCode.OK, travels)
     }
 

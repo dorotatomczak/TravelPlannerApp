@@ -24,6 +24,10 @@ class TravelManagement : ITravelManagement {
     @Autowired
     lateinit var planElementRepository: PlanElementRepository
 
+    override fun getTravels(userId: Int): MutableList<Travel> {
+        return travelRepository.getAllTravelsByUserId(userId)
+    }
+
     override fun addTravel(userId: Int, travelName: String): Travel {
         val addedTravel = travelTransaction.addTravel(travelName, userId)
         if (addedTravel != null) {

@@ -15,15 +15,19 @@ class TravelTransaction {
     @Autowired
     lateinit var userTravelRepository: UserTravelRepository
 
+    lateinit var travel: Travel
+    lateinit var userTravel: UserTravel
+
     fun addTravel(travelName: String, userId: Int): Travel? {
         DbConnection.conn.autoCommit = false
 
         val travelId = travelRepository.getNextId()
-        val travel = Travel(travelId, travelName)
+        travel = Travel(travelId, travelName)
         var queryResult = travelRepository.add(travel)
         if (queryResult) {
             val userTravelId = userTravelRepository.getNextId()
-            queryResult = userTravelRepository.add(UserTravel(userTravelId, userId, travelId))
+            userTravel = UserTravel(userTravelId, userId, travelId)
+            queryResult = userTravelRepository.add(userTravel)
             if (queryResult) {
                 DbConnection.conn.commit()
                 DbConnection.conn.autoCommit = true
