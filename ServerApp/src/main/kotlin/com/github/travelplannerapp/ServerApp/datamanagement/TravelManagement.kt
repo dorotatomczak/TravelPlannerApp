@@ -33,6 +33,10 @@ class TravelManagement : ITravelManagement {
         }
     }
 
+    override fun getTravel(id:Int): Travel? {
+        return travelRepository.get(id)
+    }
+
     override fun updateTravel(id: Int, changes: MutableMap<String, Any?>): Travel? {
         val travel = travelRepository.get(id)
         val travelChanges = Travel(changes)

@@ -72,8 +72,10 @@ class ServerTravelController {
         userManagement.verifyUser(token)
         var fileName: String? = null
         try {
+            val travel = travelManagement.getTravel(travelId)
             fileName = fileStorageService.storeFile(file)
             val updatedTravel = travelManagement.updateTravel(travelId, mutableMapOf("imageUrl" to fileName))
+            travel?.imageUrl?.let { fileStorageService.deleteFile(it) }
             return Response(ResponseCode.OK, updatedTravel)
         } catch (ex: Exception) {
             fileName?.let { fileStorageService.deleteFile(it) }

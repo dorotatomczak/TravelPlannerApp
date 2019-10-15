@@ -26,7 +26,6 @@ object DrawerUtils {
                                 .withIcon(activity.getDrawable(R.drawable.profile_picture))
                 )
                 .withSelectionListEnabled(false)
-
                 .build()
 
 
