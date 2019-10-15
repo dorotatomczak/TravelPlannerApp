@@ -38,25 +38,6 @@ class TravelRepository : Repository<Travel>(), ITravelRepository {
         return travels
     }
 
-    override fun getAllTravelsByUserEmail(email: String): MutableList<Travel> {
-        val travels = mutableListOf<Travel>()
-        val statement = DbConnection.conn
-                .prepareStatement(
-                        "SELECT $tableName.$columnId, $tableName.$columnName " +
-                                "FROM $tableName INNER JOIN ${UserTravelRepository.tableName} " +
-                                "ON $tableName.$columnId = ${UserTravelRepository.tableName}.${UserTravelRepository.columnTravelId} " +
-                                "INNER JOIN ${UserRepository.tableName} " +
-                                "ON ${UserTravelRepository.tableName}.${UserTravelRepository.columnUserId} = ${UserRepository.tableName}.${UserTravelRepository.columnId} " +
-                                "WHERE ${UserRepository.tableName}.${UserRepository.columnEmail} = ?"
-                )
-        statement.setString(1, email)
-        val result = statement.executeQuery()
-        while (result.next()) {
-            travels.add(Travel(result))
-        }
-        return travels
-    }
-
     override fun T(result: ResultSet): Travel? {
         return Travel(result)
     }
