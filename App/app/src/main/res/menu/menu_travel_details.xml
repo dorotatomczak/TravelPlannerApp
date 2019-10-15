@@ -1,11 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content">
 
     <item
+        android:id="@+id/menuSetPhoto"
+        android:icon="@drawable/ic_photo"
+        app:showAsAction="ifRoom"
+        android:title="@string/menu_set_photo" />
+
+    <item
         android:id="@+id/menuEdit"
         android:icon="@drawable/ic_mode_edit"
+        app:showAsAction="ifRoom"
         android:title="@string/menu_edit" />
 
 </menu>

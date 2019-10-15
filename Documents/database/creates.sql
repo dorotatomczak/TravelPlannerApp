@@ -8,7 +8,8 @@ create table app_user (
 
 create table travel (
 	id serial PRIMARY KEY,
-	name varchar(40) NOT NULL
+	name varchar(40) NOT NULL,
+	image_url varchar(40)
 );
 
 create table app_user_travel (

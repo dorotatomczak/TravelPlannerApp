@@ -13,7 +13,9 @@ import java.nio.file.Path
 import java.nio.file.Paths
 import java.net.MalformedURLException
 import org.springframework.core.io.UrlResource
+import org.tinylog.Logger
 import java.io.FileNotFoundException
+import java.nio.file.NoSuchFileException
 
 
 @Service
@@ -61,6 +63,10 @@ constructor(fileStorageProperties: FileStorageProperties) {
 
     fun deleteFile(fileName: String) {
         val targetLocation = this.fileStorageLocation.resolve(fileName)
-        Files.delete(targetLocation)
+        try {
+            Files.delete(targetLocation)
+        } catch (ex: NoSuchFileException) {
+            Logger.info(ex)
+        }
     }
 }

@@ -35,6 +35,7 @@ class DayPlansActivity : AppCompatActivity(), DayPlansContract.View {
 
         // Set up toolbar
         setSupportActionBar(toolbar)
+        supportActionBar?.title = getString(R.string.day_plans)
         supportActionBar?.setHomeButtonEnabled(true)
         DrawerUtils.getDrawer(this, toolbar)
 

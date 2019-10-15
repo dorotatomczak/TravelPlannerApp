@@ -1,6 +1,5 @@
 package com.github.travelplannerapp.ServerApp.db.dao
 
-import java.io.Serializable
 import java.sql.ResultSet
 
 class Scan(map: MutableMap<String, Any?>) {

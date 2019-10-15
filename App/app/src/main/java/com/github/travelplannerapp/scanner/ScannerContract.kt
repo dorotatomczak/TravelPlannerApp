@@ -15,7 +15,7 @@ interface ScannerContract {
 
     interface Presenter {
         fun takeScan(photoPath: String, corners: List<PointF>, scaleRatio: Int)
-        fun uploadScan(scan: File?, token: String, userId: Int)
+        fun uploadScan(scan: File?)
     }
 
 }

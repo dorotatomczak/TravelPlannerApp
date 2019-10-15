@@ -9,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.github.travelplannerapp.R
+import com.github.travelplannerapp.communication.appmodel.Travel
 import com.github.travelplannerapp.traveldetails.TravelDetailsActivity
 import com.github.travelplannerapp.traveldialog.TravelDialog
 import com.github.travelplannerapp.utils.DrawerUtils
@@ -31,6 +32,7 @@ class TravelsActivity : AppCompatActivity(), TravelsContract.View {
 
         // Set up toolbar
         setSupportActionBar(toolbar)
+        supportActionBar?.title = getString(R.string.travels)
         supportActionBar?.setHomeButtonEnabled(true)
         DrawerUtils.getDrawer(this, toolbar)
 
@@ -60,10 +62,9 @@ class TravelsActivity : AppCompatActivity(), TravelsContract.View {
         addTravelDialog.show(supportFragmentManager, TravelDialog.TAG)
     }
 
-    override fun showTravelDetails(travelId: Int, travelName: String) {
+    override fun showTravelDetails(travel: Travel) {
         val intent = Intent(this, TravelDetailsActivity::class.java)
-        intent.putExtra(TravelDetailsActivity.EXTRA_TRAVEL_ID, travelId)
-        intent.putExtra(TravelDetailsActivity.EXTRA_TRAVEL_NAME, travelName)
+        intent.putExtra(TravelDetailsActivity.EXTRA_TRAVEL, travel)
         startActivityForResult(intent, TravelDetailsActivity.REQUEST_TRAVEL_DETAILS)
     }
 
@@ -72,10 +73,8 @@ class TravelsActivity : AppCompatActivity(), TravelsContract.View {
         when (requestCode) {
             TravelDetailsActivity.REQUEST_TRAVEL_DETAILS -> {
                 if (resultCode == Activity.RESULT_OK && data != null) {
-                    val travelId = data.extras!!.getInt(TravelDetailsActivity.EXTRA_TRAVEL_ID, 0)
-                    val travelName = data.extras!!.getString(TravelDetailsActivity.EXTRA_TRAVEL_NAME)!!
-                    presenter.updateTravelName(travelId, travelName)
-                    onDataSetChanged()
+                    val travel = data.getSerializableExtra(TravelDetailsActivity.EXTRA_TRAVEL) as Travel
+                    presenter.updateTravel(travel)
                 }
             }
         }

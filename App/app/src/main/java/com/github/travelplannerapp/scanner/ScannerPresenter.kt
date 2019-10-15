@@ -26,7 +26,7 @@ class ScannerPresenter(view: ScannerContract.View, private val travelId: Int) : 
         else view.returnResultAndFinish(R.string.scanner_general_error)
     }
 
-    override fun uploadScan(scan: File?, token: String, userId: Int) {
+    override fun uploadScan(scan: File?) {
         if (scan == null) view.returnResultAndFinish(R.string.scan_upload_error)
         val fileReqBody = scan!!.asRequestBody("multipart/form-data".toMediaTypeOrNull())
         val filePart = MultipartBody.Part.createFormData("file", scan.name, fileReqBody)
