@@ -10,7 +10,7 @@ class TravelRepositoryTest {
     private val travelRepository = spyk(TravelRepository())
 
     @Test
-    fun `When getAllTravelsByUserId called on existing id expect list of travels returned`() {
+    fun `When getAllTravelsByUserId called on existing id expect list of Travel returned`() {
         val result = travelRepository.getAllTravelsByUserId(1)
         Assert.assertTrue(result != emptyList<Travel>())
     }
