@@ -31,6 +31,7 @@ class TravelsActivity : AppCompatActivity(), TravelsContract.View {
 
         // Set up toolbar
         setSupportActionBar(toolbar)
+        supportActionBar?.title = getString(R.string.travels)
         supportActionBar?.setHomeButtonEnabled(true)
         DrawerUtils.getDrawer(this, toolbar)
 
