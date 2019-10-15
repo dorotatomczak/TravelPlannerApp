@@ -6,10 +6,7 @@ import com.github.travelplannerapp.ServerApp.db.repositories.PlanElementReposito
 import com.github.travelplannerapp.ServerApp.db.repositories.TravelRepository
 import com.github.travelplannerapp.ServerApp.db.transactions.PlanElementTransaction
 import com.github.travelplannerapp.ServerApp.db.transactions.TravelTransaction
-import com.github.travelplannerapp.ServerApp.exceptions.AddPlanElementException
-import com.github.travelplannerapp.ServerApp.exceptions.AddTravelException
-import com.github.travelplannerapp.ServerApp.exceptions.DeleteTravelsException
-import com.github.travelplannerapp.ServerApp.exceptions.UpdateTravelException
+import com.github.travelplannerapp.ServerApp.exceptions.*
 import com.github.travelplannerapp.communication.commonmodel.Place
 import com.github.travelplannerapp.communication.commonmodel.PlanElement
 import org.springframework.beans.factory.annotation.Autowired
@@ -51,7 +48,7 @@ class TravelManagement : ITravelManagement {
         if (!result) throw  DeleteTravelsException("Error when deleting travel")
     }
 
-    override fun getPlanElements(travelId: Int) : MutableList<PlanElement> {
+    override fun getPlanElements(travelId: Int): MutableList<PlanElement> {
         val planElements = mutableListOf<PlanElement>()
         val planElementsDaoPlaceDao = planElementRepository.getPlanElementsByTravelId(travelId)
         planElementsDaoPlaceDao.forEach { pair ->
@@ -65,9 +62,7 @@ class TravelManagement : ITravelManagement {
                     placeDao.href!!,
                     placeDao.category!!)
             val planElement = PlanElement(planElementDao.id!!,
-                    planElementDao.locale!!,
                     planElementDao.fromDateTime!!.time,
-                    planElementDao.toDateTime!!.time,
                     planElementDao.placeId!!,
                     place)
             planElements.add(planElement)
@@ -79,5 +74,10 @@ class TravelManagement : ITravelManagement {
         val addedPlanElement = planElementTransaction.addPlanElement(travelId, planElement)
         if (addedPlanElement != null) return addedPlanElement
         else throw AddPlanElementException("Error when adding plan element")
+    }
+
+    override fun deletePlanElements(planElementIds: List<Int>) {
+        val result = planElementTransaction.deletePlanElements(planElementIds)
+        if (!result) throw DeletePlanElementsException("Error when deleting plan elements")
     }
 }

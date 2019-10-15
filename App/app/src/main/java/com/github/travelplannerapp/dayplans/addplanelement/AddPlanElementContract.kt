@@ -2,14 +2,14 @@ package com.github.travelplannerapp.dayplans.addplanelement
 
 import com.github.travelplannerapp.communication.appmodel.PlaceCategory
 import com.github.travelplannerapp.communication.commonmodel.Place
-import com.github.travelplannerapp.communication.commonmodel.PlanElement
+import com.github.travelplannerapp.communication.appmodel.PlanElement
 
 interface AddPlanElementContract {
 
     data class Coordinates(var lattitude: Double, var longitude: Double)
 
     data class NewPlanElementData(val category: PlaceCategory, val name: String, val fromDate: String, val fromTime: String,
-                                  val toDate: String, val toTime: String, val coordinates: Coordinates, val location: String)
+                                  val coordinates: Coordinates, val location: String)
 
     interface View {
         fun showLocation(location: String)
