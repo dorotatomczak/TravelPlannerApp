@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name" translatable="false">TravelPlannerApp</string>
+    <string name="app_name" translatable="false">Travel Planner</string>
     <string name="menu_settings">Settings</string>
     <string name="sign_in">Sign In</string>
     <string name="day_plans">Day Plans</string>

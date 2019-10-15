@@ -1,10 +1,12 @@
-<?xml version="1.0" encoding="utf-8"?><!--TODO [Dorota] Colors and background to be changed in the future-->
+<?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/sign_in_background"
     tools:context=".signin.SignInActivity">
+
+    <include layout="@layout/logo" />
 
     <LinearLayout
         android:id="@+id/linearLayoutSignIn"
