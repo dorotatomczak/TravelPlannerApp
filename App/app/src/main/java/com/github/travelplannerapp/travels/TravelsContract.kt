@@ -29,6 +29,6 @@ interface TravelsContract {
         fun addTravelIdToDelete(position: Int)
         fun removeTravelIdToDelete(position: Int)
         fun unsubscribe()
-        fun updateTravelName(travelId: Int, travelName: String)
+        fun updateTravel(travel: Travel)
     }
 }

@@ -73,6 +73,7 @@ class TravelDetailsPresenter(private var travel: Travel, view: TravelDetailsCont
 
     private fun handleUploadTravelImageResponse(travel: Travel) {
         this.travel = travel
+        view.setResult(travel)
         view.showImage(CommunicationService.getTravelImageUrl(travel.imageUrl!!, SharedPreferencesUtils.getUserId()))
     }
 

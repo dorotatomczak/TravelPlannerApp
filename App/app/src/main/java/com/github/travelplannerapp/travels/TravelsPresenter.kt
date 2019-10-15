@@ -95,9 +95,10 @@ class TravelsPresenter(view: TravelsContract.View) : BasePresenter<TravelsContra
         view.showNoActionMode()
     }
 
-    override fun updateTravelName(travelId: Int, travelName: String) {
-        val position = travels.indexOfFirst { travel -> travel.id == travelId }
-        if (position != -1) travels[position].name = travelName
+    override fun updateTravel(travel: Travel) {
+        val position = travels.indexOfFirst { oldTravel -> oldTravel.id == travel.id }
+        if (position != -1) travels[position] = travel
+        view.onDataSetChanged()
     }
 
     private fun handleLoadTravelsResponse(myTravels: List<Travel>) {

@@ -74,8 +74,7 @@ class TravelsActivity : AppCompatActivity(), TravelsContract.View {
             TravelDetailsActivity.REQUEST_TRAVEL_DETAILS -> {
                 if (resultCode == Activity.RESULT_OK && data != null) {
                     val travel = data.getSerializableExtra(TravelDetailsActivity.EXTRA_TRAVEL) as Travel
-                    presenter.updateTravelName(travel.id, travel.name)
-                    onDataSetChanged()
+                    presenter.updateTravel(travel)
                 }
             }
         }

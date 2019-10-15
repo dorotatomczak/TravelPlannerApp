@@ -77,7 +77,7 @@ class TravelDetailsActivity : AppCompatActivity(), TravelDetailsContract.View {
             REQUEST_SELECT_IMAGE -> {
                 if (resultCode == Activity.RESULT_OK && data != null) {
                     val selectedImage = data.data
-
+                    
                     selectedImage?.let {
                         contentResolver.openInputStream(selectedImage)?.use { inputStream ->
                             val file = File.createTempFile("TRAVEL_", ".jpg", cacheDir)
@@ -100,9 +100,7 @@ class TravelDetailsActivity : AppCompatActivity(), TravelDetailsContract.View {
     }
 
     override fun setResult(travel: Travel) {
-        val resultIntent = Intent().apply {
-            putExtra(EXTRA_TRAVEL, travel)
-        }
+        val resultIntent = Intent().putExtra(EXTRA_TRAVEL, travel)
         setResult(RESULT_OK, resultIntent)
     }
 
