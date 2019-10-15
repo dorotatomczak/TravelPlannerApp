@@ -55,4 +55,16 @@ class ScanRepositoryTest {
         val result = scanRepository.delete(-1)
         Assert.assertTrue(!result)
     }
+
+    @Test
+    fun `When update called on existing Scan expect true returned`(){
+        val result = scanRepository.update(Scan(1,1,1,"scanName"))
+        Assert.assertTrue(result)
+    }
+
+    @Test
+    fun `When update called on non existing Scan expect false returned`(){
+        val result = scanRepository.update(Scan(0,1,1,"scanName"))
+        Assert.assertTrue(!result)
+    }
 }

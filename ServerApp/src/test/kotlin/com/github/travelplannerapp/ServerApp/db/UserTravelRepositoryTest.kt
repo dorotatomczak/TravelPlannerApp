@@ -76,4 +76,16 @@ class UserTravelRepositoryTest {
         val result = userTravelRepository.delete(-1)
         Assert.assertTrue(!result)
     }
+
+    @Test
+    fun `When update called on existing UserTravel expect true returned`(){
+        val result = userTravelRepository.update(UserTravel(1,1,1))
+        Assert.assertTrue(result)
+    }
+
+    @Test
+    fun `When update called on non existing UserTravel expect false returned`(){
+        val result = userTravelRepository.update(UserTravel(0,0,0))
+        Assert.assertTrue(!result)
+    }
 }

@@ -40,4 +40,16 @@ class UserRepositoryTest {
         val result = userRepository.delete(-1)
         Assert.assertTrue(!result)
     }
+
+    @Test
+    fun `When update called on existing User expect true returned`(){
+        val result = userRepository.update(User(1,"email@email","password"))
+        Assert.assertTrue(result)
+    }
+
+    @Test
+    fun `When update called on non existing User expect false returned`(){
+        val result = userRepository.update(User(0,"email","password"))
+        Assert.assertTrue(!result)
+    }
 }
