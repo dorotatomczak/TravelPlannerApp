@@ -9,15 +9,16 @@ import java.sql.ResultSet
 @Component
 class TravelRepository : Repository<Travel>(), ITravelRepository {
     companion object {
-        const val tableName = "travel"
+        const val tableName = "travel_tmp"
         const val columnId = "id"
         const val columnName = "name"
+        const val columnImageUrl = "image_url"
     }
 
     override val selectStatement = "SELECT * FROM $tableName "
     override val insertStatement = "INSERT INTO $tableName ($columnId, $columnName) VALUES (?, ?)"
     override val deleteStatement = "DELETE FROM $tableName "
-    override val updateStatement = "UPDATE $tableName SET $columnName=? WHERE $columnId=?"
+    override val updateStatement = "UPDATE $tableName SET $columnName=?, $columnImageUrl=? WHERE $columnId=?"
     override val nextIdStatement = "SELECT nextval(pg_get_serial_sequence('$tableName', '$columnId')) AS new_id"
 
     override fun getAllTravelsByUserId(id: Int): MutableList<Travel> {
@@ -25,7 +26,7 @@ class TravelRepository : Repository<Travel>(), ITravelRepository {
         val statement = DbConnection
                 .conn
                 .prepareStatement(
-                        "SELECT $tableName.$columnId, $tableName.$columnName " +
+                        "SELECT $tableName.$columnId, $tableName.$columnName, $tableName.$columnImageUrl " +
                                 "FROM $tableName INNER JOIN ${UserTravelRepository.tableName} " +
                                 "on $tableName.$columnId = ${UserTravelRepository.tableName}.${UserTravelRepository.columnTravelId} " +
                                 "where ${UserTravelRepository.tableName}.${UserTravelRepository.columnUserId} = ?"
@@ -75,7 +76,8 @@ class TravelRepository : Repository<Travel>(), ITravelRepository {
                 .conn
                 .prepareStatement(updateStatement)
         statement.setString(1, obj.name)
-        statement.setInt(2, obj.id!!)
+        statement.setString(2, obj.imageUrl)
+        statement.setInt(3, obj.id!!)
         return statement
     }
 }

@@ -31,6 +31,10 @@ object CommunicationService {
     fun getScanUrl(name: String, userId: Int): String {
         return "$serverUrl/users/$userId/scans/$name"
     }
+
+    fun getTravelImageUrl(name: String, userId: Int): String {
+        return "$serverUrl/users/$userId/travels/$name"
+    }
 }
 
 interface ServerApi {
@@ -52,6 +56,10 @@ interface ServerApi {
 
     @PUT("users/{userId}/travels")
     fun changeTravelName(@Path("userId") userId: Int, @Body travel: Travel): Single<Response<Travel>>
+
+    @Multipart
+    @PUT("users/{userId}/travels")
+    fun uploadTravelImage(@Path("userId") userId: Int, @Part("travelId") travelId: RequestBody, @Part file: MultipartBody.Part): Single<Response<Travel>>
 
     @HTTP(method = "DELETE", path = "users/{userId}/travels", hasBody = true)
     fun deleteTravels(@Path("userId") userId: Int, @Body travelIds: MutableSet<Int>): Single<Response<Unit>>

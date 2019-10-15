@@ -7,19 +7,22 @@ class Travel(map: MutableMap<String, Any?>) {
 
     var id: Int? by defaultMap
     var name: String? by defaultMap
+    var imageUrl: String? by defaultMap
 
-    constructor(id: Int?, name: String?) :
+    constructor(id: Int?, name: String?, imageUrl: String? = null) :
             this(
                     mutableMapOf(
                             "id" to id,
-                            "name" to name)
+                            "name" to name,
+                            "imageUrl" to imageUrl)
             )
 
     constructor(result: ResultSet) :
             this(
                     mutableMapOf(
                             "id" to result.getInt("id"),
-                            "name" to result.getString("name")
+                            "name" to result.getString("name"),
+                            "imageUrl" to result.getString("image_url")
                     )
             )
 }

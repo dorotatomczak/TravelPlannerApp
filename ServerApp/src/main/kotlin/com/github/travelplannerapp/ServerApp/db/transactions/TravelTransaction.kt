@@ -19,7 +19,7 @@ class TravelTransaction {
         DbConnection.conn.autoCommit = false
 
         val travelId = travelRepository.getNextId()
-        val travel = Travel( travelId, travelName)
+        val travel = Travel(travelId, travelName)
         var queryResult = travelRepository.add(travel)
         if (queryResult) {
             val userTravelId = userTravelRepository.getNextId()

@@ -70,8 +70,7 @@ class TravelsPresenter(view: TravelsContract.View) : BasePresenter<TravelsContra
     }
 
     override fun openTravelDetails(position: Int) {
-        val travel = travels[position]
-        view.showTravelDetails(travel.id, travel.name)
+        view.showTravelDetails(travels[position])
     }
 
     override fun addTravelIdToDelete(position: Int) {

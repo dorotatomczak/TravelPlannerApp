@@ -95,4 +95,5 @@
     <string name="airport">Lotnisko</string>
     <string name="shopping">Zakupy</string>
     <string name="natural_geographical">Natura</string>
+    <string name="menu_set_photo">Ustaw zdjęcie</string>
 </resources>
