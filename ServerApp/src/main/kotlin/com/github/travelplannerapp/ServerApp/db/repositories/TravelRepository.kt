@@ -9,7 +9,7 @@ import java.sql.ResultSet
 @Component
 class TravelRepository : Repository<Travel>(), ITravelRepository {
     companion object {
-        const val tableName = "travel_tmp"
+        const val tableName = "travel"
         const val columnId = "id"
         const val columnName = "name"
         const val columnImageUrl = "image_url"

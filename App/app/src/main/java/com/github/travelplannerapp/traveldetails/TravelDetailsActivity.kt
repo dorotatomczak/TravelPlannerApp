@@ -79,8 +79,6 @@ class TravelDetailsActivity : AppCompatActivity(), TravelDetailsContract.View {
                     val selectedImage = data.data
 
                     selectedImage?.let {
-                        imageTravelDetails.setImageURI(selectedImage)
-
                         contentResolver.openInputStream(selectedImage)?.use { inputStream ->
                             val file = File.createTempFile("TRAVEL_", ".jpg", cacheDir)
                             file.copyInputStreamToFile(inputStream)
