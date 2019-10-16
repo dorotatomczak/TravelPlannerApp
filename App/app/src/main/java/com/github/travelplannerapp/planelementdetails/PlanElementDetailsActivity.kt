@@ -2,7 +2,6 @@ package com.github.travelplannerapp.planelementdetails
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.github.travelplannerapp.R
 import com.github.travelplannerapp.utils.DrawerUtils
 import dagger.android.AndroidInjection
@@ -23,14 +22,17 @@ class PlanElementDetailsActivity : AppCompatActivity(), PlanElementDetailsContra
 
         AndroidInjection.inject(this)
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_travel_details)
+        setContentView(R.layout.activity_plan_element_details)
 
         setSupportActionBar(toolbar)
 
         supportActionBar?.setHomeButtonEnabled(true)
         DrawerUtils.getDrawer(this, toolbar)
+        setTitle("tytul")
 
-        recyclerViewTravelDetails.setHasFixedSize(true)
-        recyclerViewTravelDetails.layoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
+    }
+
+    override fun setTitle(title: String) {
+        collapsing.title = title
     }
 }

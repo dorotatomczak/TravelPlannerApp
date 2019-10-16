@@ -33,13 +33,18 @@ class PlanElementTransaction {
             queryResult = planElementRepository.add(planElementDao)
         } else {
             placeId = placeRepository.getNextId()
+            val rateCount = 0
+            val rating = planElement.place.averageRating?.toDouble() ?: 0.0
+
             placeDao = PlaceDao(
                     placeId,
                     planElement.place.id,
                     planElement.place.href,
                     planElement.place.title,
                     planElement.place.vicinity,
-                    planElement.place.categoryIcon)
+                    planElement.place.categoryIcon,
+                    rating,
+                    rateCount)
             queryResult = placeRepository.add(placeDao)
             if (queryResult) {
                 planElementDao.placeId = placeId

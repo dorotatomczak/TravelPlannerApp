@@ -21,6 +21,7 @@ import com.here.android.mpa.mapping.Map
 import dagger.android.AndroidInjection
 import kotlinx.android.synthetic.main.activity_search_element.*
 import kotlinx.android.synthetic.main.fab_check.*
+import kotlinx.android.synthetic.main.item_place_element_info.*
 import javax.inject.Inject
 
 
@@ -110,12 +111,12 @@ class SearchElementActivity : AppCompatActivity(), SearchElementContract.View {
 
     override fun showContacts(contacts: Contacts) {
         if (!contacts.phone.isNullOrEmpty()) {
-            textViewPhoneSearchElement.text = contacts.phone[0].value
+            textViewPhonePlanElementInfo.text = contacts.phone[0].value
         } else {
             linearLayoutPhone.visibility = View.GONE
         }
         if (!contacts.website.isNullOrEmpty()) {
-            textViewWebsiteSearchElement.text = contacts.website[0].value
+            textViewWebsitePlanElementInfo.text = contacts.website[0].value
         } else {
             linearLayoutWebsite.visibility = View.GONE
         }
@@ -161,13 +162,13 @@ class SearchElementActivity : AppCompatActivity(), SearchElementContract.View {
                             selectedMapMarker.showInfoBubble()
 
                             val place = presenter.getPlace(selectedMapMarker)
-                            textViewNameSearchElement.text = place.title
-                            textViewLocationSearchElement.text = place.vicinity
+                            textViewNamePlanElementInfo.text = place.title
+                            textViewLocationPlanElementInfo.text = place.vicinity
 
-                            if (place.openingHours != null) textViewOpeningHoursSearchElement.text = place.openingHours.text
+                            if (place.openingHours != null) textViewOpeningHoursPlanElementInfo.text = place.openingHours.text
                             else linearLayoutOpeningHours.visibility = View.GONE
 
-                            textViewRatingSearchElement.text = place.averageRating
+                            textViewRatingPlanElementInfo.text = place.averageRating
                             presenter.setContacts(place.id, place.href)
 
                             break

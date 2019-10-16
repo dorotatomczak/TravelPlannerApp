@@ -11,6 +11,8 @@ class PlaceDao(map: MutableMap<String, Any?>) {
     var title: String? by defaultMap
     var vicinity: String? by defaultMap
     var category: Int? by defaultMap
+    var rating: Double? by defaultMap
+    var rateCount: Int? by defaultMap
 
     constructor(
             id: Int?,
@@ -18,7 +20,9 @@ class PlaceDao(map: MutableMap<String, Any?>) {
             href: String?,
             title: String?,
             vicinity: String?,
-            category: Int?) :
+            category: Int?,
+            rating: Double?,
+            rateCount: Int?) :
             this(
                     mutableMapOf(
                             "id" to id,
@@ -26,7 +30,9 @@ class PlaceDao(map: MutableMap<String, Any?>) {
                             "href" to href,
                             "title" to title,
                             "vicinity" to vicinity,
-                            "category" to category)
+                            "category" to category,
+                            "rating" to rating,
+                            "rateCount" to rateCount)
             )
 
     constructor(result: ResultSet) :
@@ -37,7 +43,9 @@ class PlaceDao(map: MutableMap<String, Any?>) {
                             "href" to result.getString("href"),
                             "title" to result.getString("title"),
                             "vicinity" to  result.getString("vicinity"),
-                            "category" to  result.getInt("category")
+                            "category" to  result.getInt("category"),
+                            "rating" to  result.getDouble("rating"),
+                            "rateCount" to  result.getInt("rateCount")
                     )
             )
 }
