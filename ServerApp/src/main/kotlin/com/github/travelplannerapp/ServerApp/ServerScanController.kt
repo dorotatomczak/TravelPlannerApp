@@ -50,7 +50,7 @@ class ServerScanController {
         @RequestHeader("authorization") token: String,
         @PathVariable userId: Int,
         @RequestParam travelId: Int
-    ): Response<List<Scan>> {
+    ): Response<MutableSet<Scan>> {
         userManagement.verifyUser(token)
         val scans = scanManagement.getScans(userId, travelId)
         return Response(ResponseCode.OK, scans)
@@ -83,10 +83,8 @@ class ServerScanController {
     ): Response<Unit> {
         userManagement.verifyUser(token)
 
-        for (scan in scans) {
-            scanManagement.deleteScan(scan)
-            scan.name?.let { fileStorageService.deleteFile(it) }
-        }
+        scanManagement.deleteScans(scans)
+
         return Response(ResponseCode.OK, Unit)
     }
 }

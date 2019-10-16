@@ -5,4 +5,5 @@ import com.github.travelplannerapp.ServerApp.db.dao.PlanElementDao
 
 interface IPlanElementRepository : IRepository<PlanElementDao>{
     fun getPlanElementsByTravelId(travelId: Int): List<Pair<PlanElementDao, PlaceDao>>
+    fun deletePlanElementsByTravelId(travelId: Int): Boolean
 }

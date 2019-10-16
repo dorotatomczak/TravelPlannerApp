@@ -24,8 +24,8 @@ class ScanRepository : Repository<Scan>(), IScanRepository {
             "WHERE $columnId=?"
     override val nextIdStatement = "SELECT nextval(pg_get_serial_sequence('$tableName', '$columnId')) AS new_id"
 
-    override fun getAll(userId: Int, travelId: Int): MutableList<Scan> {
-        val scans = mutableListOf<Scan>()
+    override fun getAll(userId: Int, travelId: Int): MutableSet<Scan> {
+        val scans = mutableSetOf<Scan>()
         val statement = DbConnection
                 .conn
                 .prepareStatement(
