@@ -1,4 +1,4 @@
-package com.github.travelplannerapp.dayplans.addplanelement
+package com.github.travelplannerapp.traveldetails.addplanelement
 
 import dagger.Module
 import dagger.Provides

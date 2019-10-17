@@ -1,6 +1,5 @@
-package com.github.travelplannerapp.dayplans.addplanelement
+package com.github.travelplannerapp.traveldetails.addplanelement
 
-import com.github.travelplannerapp.communication.appmodel.PlaceCategory
 import com.github.travelplannerapp.communication.commonmodel.Place
 import com.github.travelplannerapp.communication.appmodel.PlanElement
 
