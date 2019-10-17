@@ -69,6 +69,8 @@ class TravelManagement : ITravelManagement {
                     emptyArray(),
                     placeDao.href!!,
                     placeDao.category!!)
+            place.averageRating = placeDao.averageRating.toString()
+
             val planElement = PlanElement(planElementDao.id!!,
                     planElementDao.fromDateTime!!.time,
                     planElementDao.placeId!!,

@@ -123,7 +123,9 @@ class DayPlansActivity : AppCompatActivity(), DayPlansContract.View {
 
     override fun showPlanElementDetails(place: Place) {
         val intent = Intent(this, PlanElementDetailsActivity::class.java)
-        intent.putExtra(PlanElementDetailsActivity.EXTRA_PLACE, place)
+        intent.putExtra(PlanElementDetailsActivity.EXTRA_PLACE_HREF, place.href)
+        intent.putExtra(PlanElementDetailsActivity.EXTRA_AVERAGE_RATING, place.averageRating)
+        intent.putExtra(PlanElementDetailsActivity.EXTRA_PLACE_NAME, place.title)
         startActivity(intent)
     }
 }

@@ -37,11 +37,8 @@ class DayPlansPresenter(private val travelId: Int, view: DayPlansContract.View) 
     }
 
     override fun openPlanElementDetails(position: Int) {
-        Log.e("pos", position.toString())
-        Log.e("planElements", planElements.size.toString())
-
-        val planElement = planElements.elementAt(position)
-        view.showPlanElementDetails(planElement.place)
+        val planElementItem = dayPlanItems[position] as PlanElementItem
+        view.showPlanElementDetails(planElementItem.planElement.place)
     }
 
     override fun unsubscribe() {

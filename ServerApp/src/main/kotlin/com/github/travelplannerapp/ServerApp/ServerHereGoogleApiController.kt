@@ -1,6 +1,7 @@
 package com.github.travelplannerapp.ServerApp
 
 import com.github.travelplannerapp.ServerApp.datamanagement.UserManagement
+import com.github.travelplannerapp.ServerApp.datamodels.commonmodel.PlaceData
 import com.github.travelplannerapp.ServerApp.datamodels.servermodel.CityObject
 import com.github.travelplannerapp.ServerApp.exceptions.SearchNoItemsException
 import com.github.travelplannerapp.ServerApp.services.searchservice.SearchService
@@ -72,6 +73,18 @@ class ServerHereGoogleApiController {
         userManagement.verifyUser(token)
         val contacts = searchService.getContacts(query)
         return Response(ResponseCode.OK, contacts)
+    }
+
+    @GetMapping("here-management/objects/{objectId}")
+    fun getPlace(
+        @RequestHeader("authorization") token: String,
+        @PathVariable objectId: String,
+        @RequestParam("query") query: String
+    ): Response<PlaceData> {
+        userManagement.verifyUser(token)
+        val place = searchService.getPlace(query)
+        println(place.name)
+        return Response(ResponseCode.OK, place)
     }
 
     @GetMapping("google-management/routes")

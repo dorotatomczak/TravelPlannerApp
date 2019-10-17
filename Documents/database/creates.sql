@@ -31,7 +31,9 @@ create table place (
 	href text,
 	title text,
 	vicinity text,
-	category integer
+	category integer,
+	average_rating real,
+	rates_count integer
 );
 
 create table plan (

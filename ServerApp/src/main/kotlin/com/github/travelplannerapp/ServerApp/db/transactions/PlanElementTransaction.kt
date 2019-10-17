@@ -18,10 +18,14 @@ class PlanElementTransaction {
     lateinit var planElementRepository: PlanElementRepository
 
     fun addPlanElement(travelId: Int, planElement: PlanElement): PlanElement? {
+        println("0")
         DbConnection.conn.autoCommit = false
+        println("30")
 
         val planElementDao = PlanElementDao(travelId, planElement)
+        println("340")
         val planElementId = planElementRepository.getNextId()
+        println("2340")
         planElementDao.id = planElementId
 
         var placeDao = placeRepository.getPlaceByHereId(planElement.place.id)
@@ -29,13 +33,16 @@ class PlanElementTransaction {
 
         var queryResult: Boolean
         if (placeId != null) {
+            println("40")
             planElementDao.placeId = placeId
             queryResult = planElementRepository.add(planElementDao)
         } else {
             placeId = placeRepository.getNextId()
             val rateCount = 0
+            println("20")
             val rating = planElement.place.averageRating?.toDouble() ?: 0.0
 
+            println("1")
             placeDao = PlaceDao(
                     placeId,
                     planElement.place.id,
@@ -45,6 +52,7 @@ class PlanElementTransaction {
                     planElement.place.categoryIcon,
                     rating,
                     rateCount)
+            println("0")
             queryResult = placeRepository.add(placeDao)
             if (queryResult) {
                 planElementDao.placeId = placeId

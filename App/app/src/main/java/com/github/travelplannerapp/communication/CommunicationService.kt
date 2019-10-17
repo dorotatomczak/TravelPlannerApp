@@ -1,5 +1,6 @@
 package com.github.travelplannerapp.communication
 
+import com.github.travelplannerapp.ServerApp.datamodels.commonmodel.PlaceData
 import com.github.travelplannerapp.communication.appmodel.*
 import com.github.travelplannerapp.communication.commonmodel.*
 import io.reactivex.Single
@@ -18,7 +19,7 @@ object CommunicationService {
     //localhost via emulator is emulator itself
     //remote server: https://journello.herokuapp.com/
 
-    private const val serverUrl: String = "https://journello.herokuapp.com/"
+    private const val serverUrl: String = "http://10.0.2.2:8080/"
     val serverApi: ServerApi = Retrofit.Builder()
             .baseUrl(serverUrl)
             .addConverterFactory(ScalarsConverterFactory.create())
@@ -110,6 +111,9 @@ interface ServerApi {
 
     @GET("here-management/objects/{objectId}/contacts")
     fun getContacts(@Path("objectId") objectId: String, @Query("query") query: String): Single<Response<Contacts>>
+
+    @GET("here-management/objects/{objectId}")
+    fun getPlace(@Path("objectId") objectId: String, @Query("query") query: String): Single<Response<PlaceData>>
 
     @GET("google-management/routes")
     fun getTransport(@Query("origin_latitude") originLat: String,
