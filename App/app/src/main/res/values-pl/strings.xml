@@ -83,6 +83,7 @@
     <string name="delete_friends_confirmation">Czy na pewno chcesz usunąć wybranych znajomych?</string>
 
     <string name="rate_place">Oceń miejsce!</string>
+    <string name="rate_place_completed">Dzięki!</string>
 
     <string name="atm_bank_exchange">Bankomat</string>
     <string name="hospital_health_care_facility">Opieka zdrowotna</string>

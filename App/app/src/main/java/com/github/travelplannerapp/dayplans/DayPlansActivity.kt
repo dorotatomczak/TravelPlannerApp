@@ -9,8 +9,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.github.travelplannerapp.R
-import com.github.travelplannerapp.communication.appmodel.PlanElement
 import com.github.travelplannerapp.communication.commonmodel.Place
+import com.github.travelplannerapp.communication.commonmodel.PlanElement
 import com.github.travelplannerapp.dayplans.addplanelement.AddPlanElementActivity
 import com.github.travelplannerapp.planelementdetails.PlanElementDetailsActivity
 import com.github.travelplannerapp.utils.DrawerUtils
@@ -28,6 +28,8 @@ class DayPlansActivity : AppCompatActivity(), DayPlansContract.View {
 
     companion object {
         const val EXTRA_TRAVEL_ID = "EXTRA_TRAVEL_ID"
+        const val REQUEST_ADD_PLAN = 0
+        const val REQUEST_SHOW_DETAILS = 1
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -54,13 +56,20 @@ class DayPlansActivity : AppCompatActivity(), DayPlansContract.View {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         when (requestCode) {
-            AddPlanElementActivity.REQUEST_ADD_PLAN -> {
+            REQUEST_ADD_PLAN -> {
                 if (resultCode == Activity.RESULT_OK && data != null) {
                     val messageCode = data.getIntExtra(AddPlanElementActivity.REQUEST_ADD_PLAN_ELEMENT_RESULT_MESSAGE,
                             R.string.try_again)
                     showSnackbar(messageCode)
                     val plan = data.getSerializableExtra(AddPlanElementActivity.REQUEST_ADD_PLAN_ELEMENT_RESULT_PLAN) as PlanElement
                     presenter.onPlanElementAdded(plan)
+                }
+            }
+            REQUEST_SHOW_DETAILS -> {
+                if (resultCode == Activity.RESULT_OK && data != null) {
+                    val rating = data.getIntExtra(PlanElementDetailsActivity.EXTRA_MY_RATING, 0)
+                    presenter.saveRating(rating)
+                    refreshDayPlans()
                 }
             }
         }
@@ -79,7 +88,7 @@ class DayPlansActivity : AppCompatActivity(), DayPlansContract.View {
     override fun showAddPlanElement(travelId: Int) {
         val intent = Intent(this, AddPlanElementActivity::class.java)
         intent.putExtra(AddPlanElementActivity.EXTRA_TRAVEL_ID, travelId)
-        startActivityForResult(intent, AddPlanElementActivity.REQUEST_ADD_PLAN)
+        startActivityForResult(intent, REQUEST_ADD_PLAN)
     }
 
     override fun onDataSetChanged() {
@@ -121,11 +130,12 @@ class DayPlansActivity : AppCompatActivity(), DayPlansContract.View {
         presenter.loadDayPlans()
     }
 
-    override fun showPlanElementDetails(place: Place) {
+    override fun showPlanElementDetails(place: Place, rating: Int) {
         val intent = Intent(this, PlanElementDetailsActivity::class.java)
         intent.putExtra(PlanElementDetailsActivity.EXTRA_PLACE_HREF, place.href)
         intent.putExtra(PlanElementDetailsActivity.EXTRA_AVERAGE_RATING, place.averageRating)
         intent.putExtra(PlanElementDetailsActivity.EXTRA_PLACE_NAME, place.title)
-        startActivity(intent)
+        intent.putExtra(PlanElementDetailsActivity.EXTRA_MY_RATING, rating)
+        startActivityForResult(intent, REQUEST_SHOW_DETAILS)
     }
 }

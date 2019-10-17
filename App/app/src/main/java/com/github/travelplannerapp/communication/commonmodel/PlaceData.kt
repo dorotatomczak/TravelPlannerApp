@@ -1,7 +1,5 @@
-package com.github.travelplannerapp.ServerApp.datamodels.commonmodel
+package com.github.travelplannerapp.communication.commonmodel
 
-import com.github.travelplannerapp.communication.commonmodel.Contacts
-import com.github.travelplannerapp.communication.commonmodel.OpeningHours
 import java.io.Serializable
 
 class PlaceData(

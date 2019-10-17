@@ -13,7 +13,6 @@ class ServerRecommendationController {
     @Autowired
     lateinit var recommendationManagement: RecommendationManagement
 
-
     @PostMapping("places/{placeHereId}/rating")
     fun ratePlace(
         @RequestHeader("authorization") token: String,
@@ -21,8 +20,7 @@ class ServerRecommendationController {
         @RequestParam("rating") rating: Int
     ): Response<Unit> {
         val result = recommendationManagement.ratePlace(placeHereId, rating)
-
-        if (result) return Response(ResponseCode.OK)
+        if (result) return Response(ResponseCode.OK, Unit)
         else throw RatePlaceException("Couldn't save rating")
     }
 }

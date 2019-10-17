@@ -16,13 +16,14 @@ interface PlanElementDetailsContract {
         fun showAverageRating(rating: String)
         fun showContacts(contacts: Contacts)
 
-        fun showRatingOnRatingBar(rating: String)
+        fun showRatingOnRatingBar(rating: Int)
+        fun changeRatingTextToCompleted()
     }
 
     interface Presenter {
         fun showPlaceInfo(placeHref: String)
         fun saveRating(stars: Int)
         fun setAverageRating(rating: String)
-
+        fun isRatingChanged():Boolean
     }
 }

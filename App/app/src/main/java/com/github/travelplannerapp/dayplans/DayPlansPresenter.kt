@@ -1,12 +1,11 @@
 package com.github.travelplannerapp.dayplans
 
-import android.util.Log
 import com.github.travelplannerapp.BasePresenter
 import com.github.travelplannerapp.R
 import com.github.travelplannerapp.communication.ApiException
 import com.github.travelplannerapp.communication.CommunicationService
 import com.github.travelplannerapp.communication.appmodel.PlaceCategory
-import com.github.travelplannerapp.communication.appmodel.PlanElement
+import com.github.travelplannerapp.communication.commonmodel.PlanElement
 import com.github.travelplannerapp.communication.commonmodel.ResponseCode
 import com.github.travelplannerapp.utils.DateTimeUtils
 import com.github.travelplannerapp.utils.SchedulerProvider
@@ -23,6 +22,8 @@ class DayPlansPresenter(private val travelId: Int, view: DayPlansContract.View) 
     private var dayPlanItems = ArrayList<DayPlansContract.DayPlanItem>()
     private var planElements = TreeSet<PlanElement>()
     private var planElementIdsToDelete = mutableSetOf<Int>()
+    private var openedPlanElementDetailsId: Int = 0
+    private var rating: Int = 0
 
     override fun onAddPlanElementClicked() {
         view.showAddPlanElement(travelId)
@@ -37,8 +38,9 @@ class DayPlansPresenter(private val travelId: Int, view: DayPlansContract.View) 
     }
 
     override fun openPlanElementDetails(position: Int) {
+        openedPlanElementDetailsId = position
         val planElementItem = dayPlanItems[position] as PlanElementItem
-        view.showPlanElementDetails(planElementItem.planElement.place)
+        view.showPlanElementDetails(planElementItem.planElement.place, planElementItem.planElement.myRating)
     }
 
     override fun unsubscribe() {
@@ -68,7 +70,7 @@ class DayPlansPresenter(private val travelId: Int, view: DayPlansContract.View) 
         val planElementItem = dayPlanItems[position] as PlanElementItem
         val planElement = planElementItem.planElement
 
-        if (position + 1 < dayPlanItems.size && dayPlanItems[position+1].getType() == DayPlansContract.DayPlanItem.TYPE_PLAN) {
+        if (position + 1 < dayPlanItems.size && dayPlanItems[position + 1].getType() == DayPlansContract.DayPlanItem.TYPE_PLAN) {
             itemView.showLine()
         } else {
             itemView.hideLine()
@@ -130,6 +132,16 @@ class DayPlansPresenter(private val travelId: Int, view: DayPlansContract.View) 
         view.showNoActionMode()
     }
 
+    override fun saveRating(newRating: Int) {
+        rating = newRating
+        if (openedPlanElementDetailsId >= 0) {
+            val planElementItem = dayPlanItems[openedPlanElementDetailsId] as PlanElementItem
+            planElementItem.planElement.myRating = rating
+            updatePlanElement()
+
+        }
+    }
+
     private fun planElementsToDayPlanItems() {
         dayPlanItems = ArrayList()
         var date = ""
@@ -142,7 +154,6 @@ class DayPlansPresenter(private val travelId: Int, view: DayPlansContract.View) 
             }
             dayPlanItems.add(PlanElementItem(plan))
         }
-        Log.e("dayPlanItems", dayPlanItems.size.toString())
     }
 
     inner class DateSeparatorItem(val date: String) : DayPlansContract.DayPlanItem {
@@ -176,5 +187,24 @@ class DayPlansPresenter(private val travelId: Int, view: DayPlansContract.View) 
     private fun handleErrorResponse(error: Throwable) {
         if (error is ApiException) view.showSnackbar(error.getErrorMessageCode())
         else view.showSnackbar(R.string.server_connection_error)
+    }
+
+    private fun updatePlanElement() {
+        val element = dayPlanItems[openedPlanElementDetailsId] as PlanElementItem
+        compositeDisposable.add(CommunicationService.serverApi.updatePlanElement(SharedPreferencesUtils.getUserId(), travelId,
+                element.planElement)
+                .observeOn(SchedulerProvider.ui())
+                .subscribeOn(SchedulerProvider.io())
+                .map { if (it.responseCode == ResponseCode.OK) it.data!! else throw ApiException(it.responseCode) }
+                .subscribe(
+                        { handleUpdatePlanElementResponse() },
+                        { error -> handleErrorResponse(error) }
+                ))
+    }
+
+    private fun handleUpdatePlanElementResponse() {
+        val planElementItem = dayPlanItems[openedPlanElementDetailsId] as PlanElementItem
+        planElementItem.planElement.myRating = rating
+        openedPlanElementDetailsId = -1
     }
 }

@@ -83,6 +83,7 @@
     <string name="my_friends">My friends</string>
 
     <string name="rate_place">Rate place!</string>
+    <string name="rate_place_completed">Thanks!</string>
 
     <!-- if you add category - add it in enum "Category" and array.xml -->
     <string name="restaurant">Restaurant</string>

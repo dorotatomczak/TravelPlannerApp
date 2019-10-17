@@ -26,7 +26,7 @@ class PlaceRepository : Repository<PlaceDao>(), IPlaceRepository {
         " VALUES (?, ?, ?, ?, ?, ?, ?, ?)"
     override val deleteStatement = "DELETE FROM $tableName "
     override val updateStatement =
-        "UPDATE $tableName SET $columnHereId, $columnHref, $columnTitle=?, $columnVicinity=?, $columnCategory=?, $columnAverageRating=?, $columnRatesCount=? WHERE $columnId=?"
+        "UPDATE $tableName SET $columnHereId=?, $columnHref=?, $columnTitle=?, $columnVicinity=?, $columnCategory=?, $columnAverageRating=?, $columnRatesCount=? WHERE $columnId=?"
     override val nextIdStatement = "SELECT nextval(pg_get_serial_sequence('$tableName', '$columnId')) AS new_id"
 
     override fun getPlaceByHereId(hereId: String): PlaceDao? {
@@ -34,7 +34,6 @@ class PlaceRepository : Repository<PlaceDao>(), IPlaceRepository {
                 .conn
                 .prepareStatement(selectStatement + "WHERE $columnHereId=?")
         statement.setString(1, hereId)
-        println(statement)
         val result = statement.executeQuery()
         return if (result.next()) PlaceDao(result)
         else null

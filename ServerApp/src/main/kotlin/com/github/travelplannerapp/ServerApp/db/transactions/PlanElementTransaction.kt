@@ -18,14 +18,10 @@ class PlanElementTransaction {
     lateinit var planElementRepository: PlanElementRepository
 
     fun addPlanElement(travelId: Int, planElement: PlanElement): PlanElement? {
-        println("0")
         DbConnection.conn.autoCommit = false
-        println("30")
 
         val planElementDao = PlanElementDao(travelId, planElement)
-        println("340")
         val planElementId = planElementRepository.getNextId()
-        println("2340")
         planElementDao.id = planElementId
 
         var placeDao = placeRepository.getPlaceByHereId(planElement.place.id)
@@ -33,26 +29,24 @@ class PlanElementTransaction {
 
         var queryResult: Boolean
         if (placeId != null) {
-            println("40")
             planElementDao.placeId = placeId
             queryResult = planElementRepository.add(planElementDao)
-        } else {
+        }
+        else {
             placeId = placeRepository.getNextId()
             val rateCount = 0
-            println("20")
             val rating = planElement.place.averageRating?.toDouble() ?: 0.0
 
-            println("1")
             placeDao = PlaceDao(
-                    placeId,
-                    planElement.place.id,
-                    planElement.place.href,
-                    planElement.place.title,
-                    planElement.place.vicinity,
-                    planElement.place.categoryIcon,
-                    rating,
-                    rateCount)
-            println("0")
+                placeId,
+                planElement.place.id,
+                planElement.place.href,
+                planElement.place.title,
+                planElement.place.vicinity,
+                planElement.place.categoryIcon,
+                rating,
+                rateCount
+            )
             queryResult = placeRepository.add(placeDao)
             if (queryResult) {
                 planElementDao.placeId = placeId
@@ -66,7 +60,33 @@ class PlanElementTransaction {
             planElement.id = planElementId
             planElement.placeId = placeId
             planElement
-        } else {
+        }
+        else {
+            DbConnection.conn.rollback()
+            DbConnection.conn.autoCommit = true
+            null
+        }
+    }
+
+    fun updatePlanElement(travelId: Int, planElement: PlanElement): PlanElement? {
+        DbConnection.conn.autoCommit = false
+
+        val planElementDao = PlanElementDao(travelId, planElement)
+        planElementDao.id = planElement.id
+
+        val placeDao = placeRepository.getPlaceByHereId(planElement.place.id)
+        val placeId = placeDao?.id
+
+        planElementDao.placeId = placeId
+        val queryResult = planElementRepository.update(planElementDao)
+
+        return if (queryResult) {
+            DbConnection.conn.commit()
+            DbConnection.conn.autoCommit = true
+            planElement.placeId = placeId!!
+            planElement
+        }
+        else {
             DbConnection.conn.rollback()
             DbConnection.conn.autoCommit = true
             null

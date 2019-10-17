@@ -1,6 +1,5 @@
 package com.github.travelplannerapp.ServerApp.services.searchservice
 
-import com.github.travelplannerapp.ServerApp.datamodels.commonmodel.PlaceData
 import com.github.travelplannerapp.ServerApp.datamodels.servermodel.CityObject
 import com.github.travelplannerapp.ServerApp.datamodels.servermodel.SearchCitiesResponse
 import com.github.travelplannerapp.ServerApp.exceptions.SearchNoItemsException

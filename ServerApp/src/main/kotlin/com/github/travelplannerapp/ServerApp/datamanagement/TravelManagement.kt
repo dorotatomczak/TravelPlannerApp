@@ -32,12 +32,13 @@ class TravelManagement : ITravelManagement {
         val addedTravel = travelTransaction.addTravel(travelName, userId)
         if (addedTravel != null) {
             return addedTravel
-        } else {
+        }
+        else {
             throw AddTravelException("Error when adding travel")
         }
     }
 
-    override fun getTravel(id:Int): Travel? {
+    override fun getTravel(id: Int): Travel? {
         return travelRepository.get(id)
     }
 
@@ -63,18 +64,22 @@ class TravelManagement : ITravelManagement {
             val planElementDao = pair.first
             val placeDao = pair.second
             val place = Place(
-                    placeDao.hereId!!,
-                    placeDao.title!!,
-                    placeDao.vicinity!!,
-                    emptyArray(),
-                    placeDao.href!!,
-                    placeDao.category!!)
+                placeDao.hereId!!,
+                placeDao.title!!,
+                placeDao.vicinity!!,
+                emptyArray(),
+                placeDao.href!!,
+                placeDao.category!!
+            )
             place.averageRating = placeDao.averageRating.toString()
 
-            val planElement = PlanElement(planElementDao.id!!,
-                    planElementDao.fromDateTime!!.time,
-                    planElementDao.placeId!!,
-                    place)
+            val planElement = PlanElement(
+                planElementDao.id!!,
+                planElementDao.fromDateTime!!.time,
+                planElementDao.placeId!!,
+                place,
+                planElementDao.myRating ?: 0
+            )
             planElements.add(planElement)
         }
         return planElements
@@ -84,6 +89,12 @@ class TravelManagement : ITravelManagement {
         val addedPlanElement = planElementTransaction.addPlanElement(travelId, planElement)
         if (addedPlanElement != null) return addedPlanElement
         else throw AddPlanElementException("Error when adding plan element")
+    }
+
+    override fun updatePlanElement(travelId: Int, planElement: PlanElement): PlanElement {
+        val updatedPlanElement = planElementTransaction.updatePlanElement(travelId, planElement)
+        if (updatedPlanElement != null) return updatedPlanElement
+        else throw UpdatePlanElementException("Error when updating plan element")
     }
 
     override fun deletePlanElements(planElementIds: List<Int>) {

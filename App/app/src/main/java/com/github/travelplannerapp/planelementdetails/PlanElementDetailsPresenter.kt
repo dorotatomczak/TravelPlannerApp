@@ -2,9 +2,9 @@ package com.github.travelplannerapp.planelementdetails
 
 import com.github.travelplannerapp.BasePresenter
 import com.github.travelplannerapp.R
-import com.github.travelplannerapp.ServerApp.datamodels.commonmodel.PlaceData
 import com.github.travelplannerapp.communication.ApiException
 import com.github.travelplannerapp.communication.CommunicationService
+import com.github.travelplannerapp.communication.commonmodel.PlaceData
 import com.github.travelplannerapp.communication.commonmodel.ResponseCode
 import com.github.travelplannerapp.utils.SchedulerProvider
 import io.reactivex.disposables.CompositeDisposable
@@ -12,14 +12,30 @@ import io.reactivex.disposables.CompositeDisposable
 class PlanElementDetailsPresenter(view: PlanElementDetailsContract.View) : BasePresenter<PlanElementDetailsContract.View>(view), PlanElementDetailsContract.Presenter {
 
     private val compositeDisposable = CompositeDisposable()
-    private var averageRating: String? = null
+    private lateinit var averageRating: String
+    private lateinit var placeId: String
+    private var changedRating = false
 
     override fun showPlaceInfo(placeHref: String) {
-        loadPlace(placeHref)        
+        loadPlace(placeHref)
+    }
+
+    override fun isRatingChanged(): Boolean {
+        return changedRating
     }
 
     override fun saveRating(stars: Int) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        compositeDisposable.add(CommunicationService.serverApi.ratePlace(placeId, stars)
+                .observeOn(SchedulerProvider.ui())
+                .subscribeOn(SchedulerProvider.io())
+                .map { if (it.responseCode == ResponseCode.OK) it.data!! else throw ApiException(it.responseCode) }
+                .subscribe(
+                        {
+                            changedRating = true
+                            view.changeRatingTextToCompleted()
+                        },
+                        { error -> handleErrorResponse(error) }
+                ))
     }
 
     private fun handleErrorResponse(error: Throwable) {
@@ -39,10 +55,12 @@ class PlanElementDetailsPresenter(view: PlanElementDetailsContract.View) : BaseP
     }
 
     private fun handleLoadPlaceResponse(placeData: PlaceData) {
+        placeId = placeData.placeId!!
+
         view.showName(placeData.name ?: "")
         view.showLocation(placeData.location?.address?.text ?: "")
         view.showOpeningHours(placeData.extended?.openingHours?.text ?: "")
-        view.showAverageRating(averageRating ?: "0.0")
+        view.showAverageRating(averageRating)
         view.showContacts(placeData.contacts!!)
 
         view.showProgressIndicator(false)

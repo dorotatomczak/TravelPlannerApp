@@ -11,7 +11,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.github.travelplannerapp.R
 import com.github.travelplannerapp.communication.appmodel.PlaceCategory
 import com.github.travelplannerapp.communication.commonmodel.Place
-import com.github.travelplannerapp.communication.appmodel.PlanElement
+import com.github.travelplannerapp.communication.commonmodel.PlanElement
 import com.github.travelplannerapp.dayplans.searchelement.SearchElementActivity
 import com.github.travelplannerapp.utils.DateTimeUtils
 import com.github.travelplannerapp.utils.DrawerUtils
@@ -34,7 +34,6 @@ class AddPlanElementActivity : AppCompatActivity(), AddPlanElementContract.View 
     private var coordinates = AddPlanElementContract.Coordinates(0.0, 0.0)
 
     companion object {
-        const val REQUEST_ADD_PLAN = 0
         const val REQUEST_ADD_PLAN_ELEMENT_RESULT_MESSAGE = "REQUEST_ADD_PLAN_ELEMENT_RESULT_MESSAGE"
         const val REQUEST_ADD_PLAN_ELEMENT_RESULT_PLAN = "REQUEST_ADD_PLAN_ELEMENT_RESULT_PLAN"
         const val EXTRA_TRAVEL_ID = "EXTRA_TRAVEL_ID"

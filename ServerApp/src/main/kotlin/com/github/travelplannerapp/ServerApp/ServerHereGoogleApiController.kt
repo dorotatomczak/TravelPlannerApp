@@ -1,7 +1,6 @@
 package com.github.travelplannerapp.ServerApp
 
 import com.github.travelplannerapp.ServerApp.datamanagement.UserManagement
-import com.github.travelplannerapp.ServerApp.datamodels.commonmodel.PlaceData
 import com.github.travelplannerapp.ServerApp.datamodels.servermodel.CityObject
 import com.github.travelplannerapp.ServerApp.exceptions.SearchNoItemsException
 import com.github.travelplannerapp.ServerApp.services.searchservice.SearchService
@@ -83,7 +82,6 @@ class ServerHereGoogleApiController {
     ): Response<PlaceData> {
         userManagement.verifyUser(token)
         val place = searchService.getPlace(query)
-        println(place.name)
         return Response(ResponseCode.OK, place)
     }
 

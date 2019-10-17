@@ -1,7 +1,9 @@
 package com.github.travelplannerapp.planelementdetails
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import android.widget.RatingBar
 import androidx.appcompat.app.AppCompatActivity
 import com.github.travelplannerapp.R
 import com.github.travelplannerapp.communication.commonmodel.Contacts
@@ -24,6 +26,7 @@ class PlanElementDetailsActivity : AppCompatActivity(), PlanElementDetailsContra
         const val EXTRA_PLACE_HREF = "place"
         const val EXTRA_PLACE_NAME = "place_name"
         const val EXTRA_AVERAGE_RATING = "average_rating"
+        const val EXTRA_MY_RATING = "my_rating"
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -39,24 +42,39 @@ class PlanElementDetailsActivity : AppCompatActivity(), PlanElementDetailsContra
         supportActionBar?.setHomeButtonEnabled(true)
         DrawerUtils.getDrawer(this, toolbar)
 
-        progressBarPlanElementDetails.visibility = View.VISIBLE
+        initializeRating()
+
         showTitle(intent.getStringExtra(EXTRA_PLACE_NAME)!!)
         val placeHref = intent.getStringExtra(EXTRA_PLACE_HREF)
         presenter.setAverageRating(intent.getStringExtra(EXTRA_AVERAGE_RATING) ?: "0.0")
-        placeHref.let{presenter.showPlaceInfo(placeHref!!)}
+        placeHref.let { presenter.showPlaceInfo(placeHref!!) }
+    }
 
+    override fun onBackPressed() {
+        if (presenter.isRatingChanged()) {
+            val intent = Intent()
+            intent.putExtra(EXTRA_MY_RATING, ratingBarPlanElementDetails.rating.toInt())
+            setResult(RESULT_OK, intent)
+            finish()
+        } else super.onBackPressed()
     }
 
     override fun showTitle(title: String) {
         collapsing.title = title
     }
 
-    override fun showInfoLayout(isVisible: Boolean){
-        if (isVisible) linearLayoutPlaceElementInfo.visibility = View.VISIBLE
-        else linearLayoutPlaceElementInfo.visibility = View.GONE
+    override fun showInfoLayout(isVisible: Boolean) {
+        if (isVisible) {
+            linearLayoutPlaceElementInfo.visibility = View.VISIBLE
+            linearLayoutRatingPlanElementDetails.visibility = View.VISIBLE
+        }
+        else {
+            linearLayoutPlaceElementInfo.visibility = View.GONE
+            linearLayoutRatingPlanElementDetails.visibility = View.GONE
+        }
     }
 
-    override fun showProgressIndicator(isVisible: Boolean){
+    override fun showProgressIndicator(isVisible: Boolean) {
         if (isVisible) progressBarPlanElementDetails.visibility = View.VISIBLE
         else progressBarPlanElementDetails.visibility = View.GONE
     }
@@ -91,12 +109,31 @@ class PlanElementDetailsActivity : AppCompatActivity(), PlanElementDetailsContra
         }
     }
 
-    override fun showRatingOnRatingBar(rating: String) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    override fun showRatingOnRatingBar(rating: Int) {
+        ratingBarPlanElementDetails.rating = rating.toFloat()
     }
-
 
     override fun showSnackbar(messageCode: Int) {
         Snackbar.make(linearLayoutSearchElement, messageCode, Snackbar.LENGTH_LONG).show()
+    }
+
+    override fun changeRatingTextToCompleted() {
+        textViewRatePlace.text = getString(R.string.rate_place_completed)
+    }
+
+    private fun initializeRating(){
+        val myRating = intent.getIntExtra(EXTRA_MY_RATING, 0)
+        if (myRating != 0) {
+            changeRatingTextToCompleted()
+            ratingBarPlanElementDetails.setIsIndicator(true)
+            showRatingOnRatingBar(myRating)
+        } else {
+            ratingBarPlanElementDetails.onRatingBarChangeListener = object : RatingBar.OnRatingBarChangeListener {
+                override fun onRatingChanged(ratingBar: RatingBar?, rating: Float, fromUser: Boolean) {
+                    presenter.saveRating(rating.toInt())
+                    ratingBarPlanElementDetails.setIsIndicator(true)
+                }
+            }
+        }
     }
 }

@@ -1,7 +1,9 @@
 package com.github.travelplannerapp.communication
 
-import com.github.travelplannerapp.ServerApp.datamodels.commonmodel.PlaceData
-import com.github.travelplannerapp.communication.appmodel.*
+import com.github.travelplannerapp.communication.appmodel.CityObject
+import com.github.travelplannerapp.communication.appmodel.Scan
+import com.github.travelplannerapp.communication.appmodel.Travel
+import com.github.travelplannerapp.communication.appmodel.UserInfo
 import com.github.travelplannerapp.communication.commonmodel.*
 import io.reactivex.Single
 import okhttp3.MultipartBody
@@ -101,6 +103,9 @@ interface ServerApi {
     @HTTP(method = "DELETE", path = "users/{userId}/plans", hasBody = true)
     fun deletePlanElements(@Path("userId") userId: Int, @Body planElementIds: List<Int>): Single<Response<Unit>>
 
+    @PUT("/users/{userId}/travels/{travelId}/plans")
+    fun updatePlanElement(@Path("userId") userId: Int, @Path("travelId") travelId: Int, @Body planElement: PlanElement): Single<Response<Unit>>
+
     //here and google
     @GET("here-management/cities")
     fun findCities(@Query("query") query: String): Single<Response<List<CityObject>>>
@@ -125,5 +130,5 @@ interface ServerApi {
 
     //recommendation - places
     @POST("places/{placeHereId}/rating")
-    fun ratePlace(@Path("placeHereId") placeHereId: String, @Query("rating") rating: Int)
+    fun ratePlace(@Path("placeHereId") placeHereId: String, @Query("rating") rating: Int): Single<Response<Unit>>
 }
