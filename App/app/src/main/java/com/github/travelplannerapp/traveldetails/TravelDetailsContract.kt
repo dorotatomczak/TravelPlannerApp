@@ -9,14 +9,14 @@ interface TravelDetailsContract {
 
     interface View : DeleteContract.View {
         fun setTitle(title: String)
-        fun setResult(travel: Travel)
-        fun showSnackbar(messageCode: Int)
         fun showImage(url: String)
         fun showDayPlans()
         fun showNoDayPlans()
         fun showAddPlanElement(travelId: Int)
         fun onDataSetChanged()
         fun hideLoadingIndicator()
+        fun setResult(travel: Travel)
+        fun showSnackbar(messageCode: Int)
     }
 
     interface PlanElementItemView : DeleteContract.ItemView {

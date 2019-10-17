@@ -10,8 +10,8 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.github.travelplannerapp.R
 import com.github.travelplannerapp.communication.appmodel.PlaceCategory
-import com.github.travelplannerapp.communication.commonmodel.Place
 import com.github.travelplannerapp.communication.appmodel.PlanElement
+import com.github.travelplannerapp.communication.commonmodel.Place
 import com.github.travelplannerapp.traveldetails.searchelement.SearchElementActivity
 import com.github.travelplannerapp.utils.DateTimeUtils
 import com.github.travelplannerapp.utils.DrawerUtils
@@ -48,7 +48,9 @@ class AddPlanElementActivity : AppCompatActivity(), AddPlanElementContract.View 
         // Set up toolbar
         setSupportActionBar(toolbar)
         supportActionBar?.setHomeButtonEnabled(true)
-        DrawerUtils.getDrawer(this, toolbar)
+
+        val travelId = intent.getIntExtra(EXTRA_TRAVEL_ID, -1)
+        DrawerUtils.getDrawer(this, toolbar, travelId)
 
         // Set up edit texts
         editTextPlanFromDate.setOnClickListener { openDatePicker(it as TextInputEditText) }

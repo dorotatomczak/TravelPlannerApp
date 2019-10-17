@@ -51,7 +51,9 @@ class TravelDetailsActivity : AppCompatActivity(), TravelDetailsContract.View {
 
         setSupportActionBar(toolbar)
         supportActionBar?.setHomeButtonEnabled(true)
-        DrawerUtils.getDrawer(this, toolbar)
+
+        val travel = intent.getSerializableExtra(EXTRA_TRAVEL) as Travel
+        DrawerUtils.getDrawer(this, toolbar, travel.id)
 
         recyclerViewDayPlans.layoutManager = LinearLayoutManager(this, RecyclerView.VERTICAL, false)
         recyclerViewDayPlans.adapter = TravelDetailsAdapter(presenter)
