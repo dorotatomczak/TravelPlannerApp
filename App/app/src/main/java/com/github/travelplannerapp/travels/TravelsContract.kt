@@ -17,6 +17,7 @@ interface TravelsContract {
 
     interface TravelItemView : DeleteContract.ItemView {
         fun setName(name: String)
+        fun setImage(url: String)
     }
 
     interface Presenter : DeleteContract.Presenter {

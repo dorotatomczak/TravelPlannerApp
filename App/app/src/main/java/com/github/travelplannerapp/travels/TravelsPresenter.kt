@@ -62,6 +62,9 @@ class TravelsPresenter(view: TravelsContract.View) : BasePresenter<TravelsContra
     override fun onBindTravelsAtPosition(position: Int, itemView: TravelsContract.TravelItemView) {
         val travel = travels[position]
         itemView.setName(travel.name)
+        travel.imageUrl?.let {
+            itemView.setImage(CommunicationService.getTravelImageUrl(it, SharedPreferencesUtils.getUserId()))
+        }
         itemView.setCheckbox()
     }
 
