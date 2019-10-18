@@ -32,7 +32,7 @@
             android:layout_gravity="center_horizontal"
             android:background="@drawable/round_background"
             android:orientation="vertical"
-            android:padding="@dimen/padding_small">
+            android:padding="@dimen/padding_S">
 
             <EditText
                 android:id="@+id/editTextEmail"
@@ -40,7 +40,7 @@
                 android:layout_height="@dimen/edit_text_height"
                 android:background="@color/transparent"
                 android:drawableStart="@drawable/ic_mail"
-                android:drawablePadding="@dimen/padding_small"
+                android:drawablePadding="@dimen/padding_S"
                 android:hint="@string/email"
                 android:inputType="textEmailAddress"
                 android:textColor="@color/black"
@@ -52,7 +52,7 @@
                 android:layout_height="@dimen/edit_text_height"
                 android:background="@color/transparent"
                 android:drawableStart="@drawable/ic_lock"
-                android:drawablePadding="@dimen/padding_small"
+                android:drawablePadding="@dimen/padding_S"
                 android:hint="@string/password"
                 android:inputType="textPassword"
                 android:textColor="@color/black"

@@ -16,8 +16,11 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="start|bottom"
-        android:background="@android:drawable/screen_background_dark_transparent"
-        android:orientation="horizontal">
+        android:background="@color/seeThroughBlack"
+        android:orientation="horizontal"
+        android:paddingStart="@dimen/padding_S"
+        android:paddingEnd="@dimen/padding_S"
+        android:paddingBottom="@dimen/padding_XS">
 
         <CheckBox
             android:id="@+id/checkboxItemTravel"
@@ -32,7 +35,6 @@
             android:id="@+id/textViewItemTravelName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="4dp"
             android:textColor="@color/white"
             android:textSize="@dimen/text_size_item_XL" />
 

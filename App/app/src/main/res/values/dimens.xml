@@ -23,7 +23,8 @@
     <dimen name="image_size_tile">100dp</dimen>
     <dimen name="edit_text_width">250dp</dimen>
     <dimen name="edit_text_height">48dp</dimen>
-    <dimen name="padding_small">8dp</dimen>
+    <dimen name="padding_XS">4dp</dimen>
+    <dimen name="padding_S">8dp</dimen>
     <dimen name="radius_small">8dp</dimen>
     <dimen name="margin_add_travel">20dp</dimen>
     <dimen name="margin_search_element">20dp</dimen>
