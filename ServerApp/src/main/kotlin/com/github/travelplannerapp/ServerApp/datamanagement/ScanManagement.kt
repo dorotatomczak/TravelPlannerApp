@@ -24,11 +24,11 @@ class ScanManagement : IScanManagement {
         } else return newScan
     }
 
-    override fun getScans(userId: Int, travelId: Int): MutableSet<Scan> {
+    override fun getScans(userId: Int, travelId: Int): List<Scan> {
         return scanRepository.getAll(userId, travelId)
     }
 
-    override fun deleteScans(scans: MutableSet<Scan>) {
+    override fun deleteScans(scans: List<Scan>) {
         for (scan in scans) {
             val result = scanRepository.delete(scan.id!!)
             if (!result) throw DeleteScansException("Error when deleting scans")

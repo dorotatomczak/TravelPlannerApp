@@ -50,7 +50,7 @@ class ServerScanController {
         @RequestHeader("authorization") token: String,
         @PathVariable userId: Int,
         @RequestParam travelId: Int
-    ): Response<MutableSet<Scan>> {
+    ): Response<List<Scan>> {
         userManagement.verifyUser(token)
         val scans = scanManagement.getScans(userId, travelId)
         return Response(ResponseCode.OK, scans)
@@ -79,7 +79,7 @@ class ServerScanController {
     fun deleteScans(
         @RequestHeader("authorization") token: String,
         @PathVariable userId: Int,
-        @RequestBody scans: MutableSet<Scan>
+        @RequestBody scans: List<Scan>
     ): Response<Unit> {
         userManagement.verifyUser(token)
 
