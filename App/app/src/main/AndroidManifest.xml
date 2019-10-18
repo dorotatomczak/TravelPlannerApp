@@ -39,17 +39,11 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".transport.TransportActivity" />
-
         <activity android:name=".scans.ScansActivity" />
 
         <activity android:name=".scanner.ScannerActivity" />
 
-        <activity android:name=".accommodation.AccommodationActivity" />
-
-        <activity android:name=".dayplans.DayPlansActivity" />
-
-        <activity android:name=".dayplans.addplanelement.AddPlanElementActivity" />
+        <activity android:name="com.github.travelplannerapp.traveldetails.addplanelement.AddPlanElementActivity" />
 
         <activity android:name=".traveldetails.TravelDetailsActivity" />
 
@@ -64,7 +58,7 @@
         </activity>
 
         <activity
-            android:name="com.github.travelplannerapp.dayplans.searchelement.SearchElementActivity"
+            android:name="com.github.travelplannerapp.traveldetails.searchelement.SearchElementActivity"
             android:launchMode="singleTop">
 
             <intent-filter>
@@ -97,8 +91,8 @@
         </provider>
 
         <provider
-            android:name="com.github.travelplannerapp.dayplans.searchelement.CitySuggestionProvider"
-            android:authorities="com.github.travelplannerapp.dayplans.searchelement.CitySuggestionProvider"
+            android:name="com.github.travelplannerapp.traveldetails.searchelement.CitySuggestionProvider"
+            android:authorities="com.github.travelplannerapp.traveldetails.searchelement.CitySuggestionProvider"
             android:exported="false"
             android:grantUriPermissions="true">
         </provider>

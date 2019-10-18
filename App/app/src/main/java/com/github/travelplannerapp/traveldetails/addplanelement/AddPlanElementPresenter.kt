@@ -1,4 +1,4 @@
-package com.github.travelplannerapp.dayplans.addplanelement
+package com.github.travelplannerapp.traveldetails.addplanelement
 
 import com.github.travelplannerapp.BasePresenter
 import com.github.travelplannerapp.R

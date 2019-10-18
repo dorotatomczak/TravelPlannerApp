@@ -1,4 +1,4 @@
-package com.github.travelplannerapp.dayplans.searchelement
+package com.github.travelplannerapp.traveldetails.searchelement
 
 import android.app.SearchManager
 import android.content.Context

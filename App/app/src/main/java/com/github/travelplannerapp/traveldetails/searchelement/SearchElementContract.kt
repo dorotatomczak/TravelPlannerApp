@@ -1,4 +1,4 @@
-package com.github.travelplannerapp.dayplans.searchelement
+package com.github.travelplannerapp.traveldetails.searchelement
 import com.github.travelplannerapp.communication.commonmodel.Contacts
 import com.github.travelplannerapp.communication.commonmodel.Place
 import com.here.android.mpa.mapping.MapMarker
