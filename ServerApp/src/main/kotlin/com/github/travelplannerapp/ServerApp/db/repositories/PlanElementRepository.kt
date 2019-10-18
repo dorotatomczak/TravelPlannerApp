@@ -24,11 +24,11 @@ class PlanElementRepository : Repository<PlanElementDao>(), IPlanElementReposito
     override val deleteStatement = "DELETE FROM $tableName "
     override val updateStatement = "UPDATE $tableName " +
             "SET $columnFromDateTime=?, $columnPlaceId=?, $columnTravelId=? " +
-            "WHERE $columnId=?"
+            "WHERE $columnId=? "
     override val nextIdStatement = "SELECT nextval(pg_get_serial_sequence('$tableName', '$columnId')) AS new_id"
 
-    override fun getPlanElementsByTravelId(travelId: Int): List<Pair<PlanElementDao,PlaceDao>> {
-        val planElementDaoPlaceDao = mutableListOf<Pair<PlanElementDao,PlaceDao>>()
+    override fun getPlanElementsByTravelId(travelId: Int): List<Pair<PlanElementDao, PlaceDao>> {
+        val planElementDaoPlaceDao = mutableListOf<Pair<PlanElementDao, PlaceDao>>()
         val statement = DbConnection
                 .conn
                 .prepareStatement(
@@ -42,10 +42,18 @@ class PlanElementRepository : Repository<PlanElementDao>(), IPlanElementReposito
         while (result.next()) {
             val planElementDao = PlanElementDao(result)
             val placeDao = PlaceDao(result)
-            placeDao.id = result.getInt("place_id")
-            planElementDaoPlaceDao.add(Pair(planElementDao,placeDao))
+            placeDao.id = result.getInt(columnPlaceId)
+            planElementDaoPlaceDao.add(Pair(planElementDao, placeDao))
         }
         return planElementDaoPlaceDao
+    }
+
+    override fun deletePlanElementsByTravelId(travelId: Int): Boolean {
+        val statement = DbConnection
+                .conn
+                .prepareStatement(deleteStatement + "WHERE $columnTravelId=?")
+        statement.setInt(1, travelId)
+        return statement.executeUpdate() > 0
     }
 
     override fun T(result: ResultSet): PlanElementDao? {

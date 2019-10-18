@@ -79,14 +79,12 @@ class ServerScanController {
     fun deleteScans(
         @RequestHeader("authorization") token: String,
         @PathVariable userId: Int,
-        @RequestBody scans: MutableSet<Scan>
+        @RequestBody scans: List<Scan>
     ): Response<Unit> {
         userManagement.verifyUser(token)
 
-        for (scan in scans) {
-            scanManagement.deleteScan(scan)
-            scan.name?.let { fileStorageService.deleteFile(it) }
-        }
+        scanManagement.deleteScans(scans)
+
         return Response(ResponseCode.OK, Unit)
     }
 }
