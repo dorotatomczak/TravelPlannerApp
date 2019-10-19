@@ -46,6 +46,17 @@ class TravelDetailsPresenter(private var travel: Travel, view: TravelDetailsCont
                 ))
     }
 
+    override fun shareTravel(choseFriendsIds: ArrayList<Int>) {
+        compositeDisposable.add(CommunicationService.serverApi.shareTravel(SharedPreferencesUtils.getUserId(), travel.id, choseFriendsIds)
+                .observeOn(SchedulerProvider.ui())
+                .subscribeOn(SchedulerProvider.io())
+                .map { if (it.responseCode == ResponseCode.OK) it.data!! else throw ApiException(it.responseCode) }
+                .subscribe(
+                        { handleShareTravelResponse() },
+                        { error -> handleErrorResponse(error) }
+                ))
+    }
+
     override fun uploadTravelImage(image: File) {
         val fileReqBody = image.asRequestBody("multipart/form-data".toMediaTypeOrNull())
         val filePart = MultipartBody.Part.createFormData("file", image.name, fileReqBody)
@@ -196,6 +207,10 @@ class TravelDetailsPresenter(private var travel: Travel, view: TravelDetailsCont
         view.setTitle(travel.name)
         view.setResult(travel)
         view.showSnackbar(R.string.change_travel_name_ok)
+    }
+
+    private fun handleShareTravelResponse() {
+        view.showSnackbar(R.string.share_travel_ok)
     }
 
     private fun handleUploadTravelImageResponse(travel: Travel) {

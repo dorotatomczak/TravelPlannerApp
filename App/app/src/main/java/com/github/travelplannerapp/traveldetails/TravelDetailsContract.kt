@@ -13,6 +13,7 @@ interface TravelDetailsContract {
         fun showDayPlans()
         fun showNoDayPlans()
         fun showAddPlanElement(travelId: Int)
+        fun showShareTravel()
         fun onDataSetChanged()
         fun hideLoadingIndicator()
         fun setResult(travel: Travel)
@@ -45,6 +46,7 @@ interface TravelDetailsContract {
     interface Presenter : DeleteContract.Presenter {
         fun loadTravel()
         fun changeTravelName(travelName: String)
+        fun shareTravel(choseFriendsIds: ArrayList<Int>)
         fun uploadTravelImage(image: File)
         fun onAddPlanElementClicked()
         fun onPlanElementAdded(planElement: PlanElement)

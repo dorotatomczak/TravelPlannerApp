@@ -98,4 +98,6 @@
     <string name="natural_geographical">Natural</string>
     <string name="snacks_fast_food">Fast food</string>
     <string name="menu_set_photo">Set photo</string>
+    <string name="share_travel_ok">You shared travel</string>
+    <string name="share_travel">Share travel</string>
 </resources>

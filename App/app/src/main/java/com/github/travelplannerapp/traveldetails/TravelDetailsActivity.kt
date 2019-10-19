@@ -14,8 +14,10 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.request.RequestOptions
 import com.github.travelplannerapp.R
+import com.github.travelplannerapp.ServerApp.datamodels.commonmodel.UserInfo
 import com.github.travelplannerapp.communication.appmodel.PlanElement
 import com.github.travelplannerapp.communication.appmodel.Travel
+import com.github.travelplannerapp.sharetraveldialog.ShareTravelDialog
 import com.github.travelplannerapp.traveldetails.addplanelement.AddPlanElementActivity
 import com.github.travelplannerapp.traveldialog.TravelDialog
 import com.github.travelplannerapp.utils.DrawerUtils
@@ -47,6 +49,7 @@ class TravelDetailsActivity : AppCompatActivity(), TravelDetailsContract.View {
 
         fabAdd.setOnClickListener { presenter.onAddPlanElementClicked() }
 
+
         swipeRefreshLayoutTravelDetails.setOnRefreshListener { presenter.loadDayPlans() }
 
         setSupportActionBar(toolbar)
@@ -65,6 +68,8 @@ class TravelDetailsActivity : AppCompatActivity(), TravelDetailsContract.View {
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.menu_travel_details, menu)
         menu.findItem(R.id.menuEdit).setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS)
+        menuInflater.inflate(R.menu.menu_share_travel, menu)
+        menu.findItem(R.id.menuShareTravel).setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS)
         return true
     }
 
@@ -74,6 +79,10 @@ class TravelDetailsActivity : AppCompatActivity(), TravelDetailsContract.View {
             return true
         } else if (item.itemId == R.id.menuEdit) {
             showEditTravel()
+            return true
+        }
+        else if (item.itemId == R.id.menuShareTravel) {
+            showShareTravel()
             return true
         }
         return super.onOptionsItemSelected(item)
@@ -182,6 +191,15 @@ class TravelDetailsActivity : AppCompatActivity(), TravelDetailsContract.View {
         editTravelDialog.show(supportFragmentManager, TravelDialog.TAG)
     }
 
+    override fun showShareTravel() {
+        val shareTravelDialog = ShareTravelDialog(getString(R.string.share_travel), getFriends())
+        shareTravelDialog.onOk = {
+            val choseFriendsIds = shareTravelDialog.selectedFriendsId;
+            presenter.shareTravel(choseFriendsIds)
+        }
+        shareTravelDialog.show(supportFragmentManager, ShareTravelDialog.TAG)
+    }
+
     private fun showImageSelection() {
         val getIntent = Intent(Intent.ACTION_GET_CONTENT)
         getIntent.type = "image/*"
@@ -198,5 +216,15 @@ class TravelDetailsActivity : AppCompatActivity(), TravelDetailsContract.View {
     private fun refreshDayPlans() {
         swipeRefreshLayoutTravelDetails.isRefreshing = true
         presenter.loadDayPlans()
+    }
+    //TO DO: charge friends if #111 be accepted
+    private fun getFriends(): ArrayList<UserInfo> {
+        var friends = ArrayList<UserInfo>()
+        var u: UserInfo = UserInfo(6, "karolinam28@wp.pl")
+        for (i in 0..20) {
+            friends.add(u)
+        }
+        friends.add(UserInfo(13, "a@a.com"))
+        return friends
     }
 }

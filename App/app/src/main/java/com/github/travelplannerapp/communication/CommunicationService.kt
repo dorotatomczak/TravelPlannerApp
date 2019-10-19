@@ -112,4 +112,7 @@ interface ServerApi {
 
     @HTTP(method = "DELETE", path = "users/{userId}/plans", hasBody = true)
     fun deletePlanElements(@Path("userId") userId: Int, @Body planElementIds: List<Int>): Single<Response<Unit>>
+
+    @POST("users/{userId}/travels/{travelId}/share")
+    fun shareTravel(@Path("userId") userId: Int, @Path("travelId") travelId: Int, @Body selectedFriendsIds: ArrayList<Int>): Single<Response<Boolean>>
 }

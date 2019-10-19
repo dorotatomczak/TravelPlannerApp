@@ -68,4 +68,9 @@ class TravelTransaction {
             false
         }
     }
+
+    fun shareTravel(travelId: Int, choseFriendId: Int): Boolean {
+        val userTravelId = userTravelRepository.getNextId()
+        return userTravelRepository.add(UserTravel(userTravelId, choseFriendId, travelId))
+    }
 }

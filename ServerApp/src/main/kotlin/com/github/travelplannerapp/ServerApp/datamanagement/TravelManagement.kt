@@ -98,4 +98,12 @@ class TravelManagement : ITravelManagement {
         val result = planElementTransaction.deletePlanElements(planElementIds)
         if (!result) throw DeletePlanElementsException("Error when deleting plan elements")
     }
+
+    override fun shareTravel(travelId: Int, selectedFriendsIds: ArrayList<Int>): Boolean {
+        for (choseFriendId in selectedFriendsIds) {
+            if (!travelTransaction.shareTravel(travelId,choseFriendId))
+                ShareTravelException("Error when sharing travel")
+        }
+        return true
+    }
 }

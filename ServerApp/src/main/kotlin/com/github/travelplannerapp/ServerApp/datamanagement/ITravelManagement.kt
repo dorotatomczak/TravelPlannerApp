@@ -12,4 +12,5 @@ interface ITravelManagement {
     fun getPlanElements(travelId: Int): MutableList<PlanElement>
     fun addPlanElement(travelId: Int, planElement: PlanElement): PlanElement
     fun deletePlanElements(planElementIds: List<Int>)
+    fun shareTravel(travelId: Int, selectedFriendsIds: ArrayList<Int>): Boolean
 }

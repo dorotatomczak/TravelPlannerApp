@@ -10,3 +10,6 @@ class UpdateTravelException (override val message: String,
 
 class DeleteTravelsException (override val message: String,
                               override val code: ResponseCode = ResponseCode.DELETE_TRAVELS_ERROR): Exception(message), ApiException
+
+class ShareTravelException(override val message: String,
+                           override val code: ResponseCode = ResponseCode.SHARE_TRAVEL_ERROR) : Exception(message), ApiException
