@@ -14,7 +14,7 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.request.RequestOptions
 import com.github.travelplannerapp.R
-import com.github.travelplannerapp.ServerApp.datamodels.commonmodel.UserInfo
+import com.github.travelplannerapp.communication.commonmodel.UserInfo
 import com.github.travelplannerapp.communication.appmodel.PlanElement
 import com.github.travelplannerapp.communication.appmodel.Travel
 import com.github.travelplannerapp.sharetraveldialog.ShareTravelDialog
@@ -62,6 +62,7 @@ class TravelDetailsActivity : AppCompatActivity(), TravelDetailsContract.View {
         recyclerViewDayPlans.adapter = TravelDetailsAdapter(presenter)
 
         presenter.loadTravel()
+        presenter.loadFriendsWithoutAccessToTravel()
         refreshDayPlans()
     }
 
@@ -192,7 +193,7 @@ class TravelDetailsActivity : AppCompatActivity(), TravelDetailsContract.View {
     }
 
     override fun showShareTravel() {
-        val shareTravelDialog = ShareTravelDialog(getString(R.string.share_travel), getFriends())
+        val shareTravelDialog = ShareTravelDialog(getString(R.string.share_travel),presenter.getFriendWithoutAccessToTravel())
         shareTravelDialog.onOk = {
             val choseFriendsIds = shareTravelDialog.selectedFriendsId;
             presenter.shareTravel(choseFriendsIds)
@@ -217,14 +218,5 @@ class TravelDetailsActivity : AppCompatActivity(), TravelDetailsContract.View {
         swipeRefreshLayoutTravelDetails.isRefreshing = true
         presenter.loadDayPlans()
     }
-    //TO DO: charge friends if #111 be accepted
-    private fun getFriends(): ArrayList<UserInfo> {
-        var friends = ArrayList<UserInfo>()
-        var u: UserInfo = UserInfo(6, "karolinam28@wp.pl")
-        for (i in 0..20) {
-            friends.add(u)
-        }
-        friends.add(UserInfo(13, "a@a.com"))
-        return friends
-    }
+
 }

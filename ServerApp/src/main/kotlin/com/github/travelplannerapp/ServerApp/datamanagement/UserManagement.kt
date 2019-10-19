@@ -6,6 +6,7 @@ import com.github.travelplannerapp.ServerApp.db.dao.UserFriend
 import com.github.travelplannerapp.ServerApp.db.merge
 import com.github.travelplannerapp.ServerApp.db.repositories.UserFriendRepository
 import com.github.travelplannerapp.ServerApp.db.repositories.UserRepository
+import com.github.travelplannerapp.ServerApp.db.repositories.UserTravelRepository
 import com.github.travelplannerapp.ServerApp.exceptions.*
 import com.github.travelplannerapp.communication.commonmodel.SignInRequest
 import com.github.travelplannerapp.communication.commonmodel.SignUpRequest
@@ -24,6 +25,8 @@ class UserManagement : IUserManagement {
     lateinit var userRepository: UserRepository
     @Autowired
     lateinit var userFriendRepository: UserFriendRepository
+    @Autowired
+    lateinit var userTravelRepository: UserTravelRepository
     private val ACCESS_TOKEN_SUB = "AccessToken"
     private val ACCESS_TOKEN_ISSUER = "TravelApp_Server"
     private val SECRET_KEY =
@@ -117,6 +120,16 @@ class UserManagement : IUserManagement {
         val friends = userRepository.getAllFriendsByUserId(userId)
         friends.forEach { user ->
             userInfos.add(UserInfo(user.id!!, user.email!!))
+        }
+        return userInfos
+    }
+
+    override fun getFriendsWithoutAccessToTravel(userId: Int,travelId: Int): MutableList<UserInfo> {
+        val userInfos = mutableListOf<UserInfo>()
+        val friends = userRepository.getAllFriendsByUserId(userId)
+        friends.forEach { friend ->
+            if(!userTravelRepository.ifUserTravelBindingExist(travelId,friend.id!!))
+            userInfos.add(UserInfo(friend.id!!, friend.email!!))
         }
         return userInfos
     }

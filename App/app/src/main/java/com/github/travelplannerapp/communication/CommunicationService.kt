@@ -2,6 +2,7 @@ package com.github.travelplannerapp.communication
 
 import com.github.travelplannerapp.communication.appmodel.*
 import com.github.travelplannerapp.communication.commonmodel.*
+import com.github.travelplannerapp.communication.commonmodel.UserInfo
 import io.reactivex.Single
 import okhttp3.MultipartBody
 import okhttp3.OkHttpClient
@@ -115,4 +116,7 @@ interface ServerApi {
 
     @POST("users/{userId}/travels/{travelId}/share")
     fun shareTravel(@Path("userId") userId: Int, @Path("travelId") travelId: Int, @Body selectedFriendsIds: ArrayList<Int>): Single<Response<Boolean>>
+
+    @GET("users/{userId}/travels/{travelId}/friends-without-access")
+    fun getFriendsWithoutAccessToTravel(@Path("userId") userId: Int,@Path("travelId") travelId:Int): Single<Response<List<UserInfo>>>
 }

@@ -11,7 +11,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.github.travelplannerapp.R
-import com.github.travelplannerapp.communication.appmodel.UserInfo
+import com.github.travelplannerapp.communication.commonmodel.UserInfo
 import com.github.travelplannerapp.utils.DrawerUtils
 import com.google.android.material.snackbar.Snackbar
 import dagger.android.AndroidInjection
@@ -110,8 +110,8 @@ class SearchFriendActivity : AppCompatActivity(), SearchFriendContract.View {
 
                 override fun onSuggestionClick(position: Int): Boolean {
                     closeKeyboard()
-                    val friend = UserInfo(suggestionsAdapter.getItem(position) as Cursor)
-                    showAddFriendConfirmationDialog(friend)
+//                    val friend = UserInfo(suggestionsAdapter.getItem(position) as Cursor)
+//                    showAddFriendConfirmationDialog(friend)
                     return true
                 }
             })

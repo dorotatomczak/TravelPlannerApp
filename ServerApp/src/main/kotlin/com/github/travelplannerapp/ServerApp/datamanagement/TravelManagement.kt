@@ -101,7 +101,7 @@ class TravelManagement : ITravelManagement {
 
     override fun shareTravel(travelId: Int, selectedFriendsIds: ArrayList<Int>): Boolean {
         for (choseFriendId in selectedFriendsIds) {
-            if (!travelTransaction.shareTravel(travelId,choseFriendId))
+            if (travelTransaction.shareTravel(travelId,choseFriendId)===null)
                 ShareTravelException("Error when sharing travel")
         }
         return true

@@ -2,6 +2,7 @@ package com.github.travelplannerapp.ServerApp
 
 import com.github.travelplannerapp.ServerApp.datamanagement.TravelManagement
 import com.github.travelplannerapp.ServerApp.datamanagement.UserManagement
+import com.github.travelplannerapp.ServerApp.datamodels.commonmodel.UserInfo
 import com.github.travelplannerapp.ServerApp.db.dao.Travel
 import com.github.travelplannerapp.ServerApp.db.repositories.TravelRepository
 import com.github.travelplannerapp.ServerApp.exceptions.UpdateTravelException
@@ -158,6 +159,4 @@ class ServerTravelController {
         val shareTravel =travelManagement.shareTravel(travelId, selectedFriendsIds)
         return Response(ResponseCode.OK, shareTravel)
     }
-
-
 }

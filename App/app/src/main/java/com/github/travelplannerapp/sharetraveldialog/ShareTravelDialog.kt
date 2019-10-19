@@ -5,9 +5,9 @@ import android.os.Bundle
 import android.view.WindowManager
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.DialogFragment
-import com.github.travelplannerapp.ServerApp.datamodels.commonmodel.UserInfo
+import com.github.travelplannerapp.communication.commonmodel.UserInfo
 
-class ShareTravelDialog(private val dialogTitle: String, private val friends: ArrayList<UserInfo>) : DialogFragment() {
+class ShareTravelDialog(private val dialogTitle: String,private var friends: ArrayList<UserInfo>) : DialogFragment() {
 
     companion object {
         const val TAG = "SHARE TRAVEL DIALOG"
@@ -16,6 +16,7 @@ class ShareTravelDialog(private val dialogTitle: String, private val friends: Ar
     var onOk: (() -> Unit)? = null
     var onCancel: (() -> Unit)? = null
     var selectedFriendsId = ArrayList<Int>()
+
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         var friendsEmails = arrayOfNulls<String>(friends.size)
@@ -45,4 +46,6 @@ class ShareTravelDialog(private val dialogTitle: String, private val friends: Ar
         dialog.window!!.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE)
         return dialog
     }
+
+
 }

@@ -7,6 +7,7 @@ import com.github.travelplannerapp.communication.CommunicationService
 import com.github.travelplannerapp.communication.appmodel.PlaceCategory
 import com.github.travelplannerapp.communication.appmodel.PlanElement
 import com.github.travelplannerapp.communication.appmodel.Travel
+import com.github.travelplannerapp.communication.commonmodel.UserInfo
 import com.github.travelplannerapp.communication.commonmodel.ResponseCode
 import com.github.travelplannerapp.utils.DateTimeUtils
 import com.github.travelplannerapp.utils.SchedulerProvider
@@ -28,6 +29,7 @@ class TravelDetailsPresenter(private var travel: Travel, view: TravelDetailsCont
     private var dayPlanItems = ArrayList<TravelDetailsContract.DayPlanItem>()
     private var planElements = TreeSet<PlanElement>()
     private var planElementIdsToDelete = mutableSetOf<Int>()
+    private var friendsWithoutAccessToTravel = ArrayList<UserInfo>()
 
     override fun loadTravel() {
         view.setTitle(travel.name)
@@ -53,6 +55,17 @@ class TravelDetailsPresenter(private var travel: Travel, view: TravelDetailsCont
                 .map { if (it.responseCode == ResponseCode.OK) it.data!! else throw ApiException(it.responseCode) }
                 .subscribe(
                         { handleShareTravelResponse() },
+                        { error -> handleErrorResponse(error) }
+                ))
+    }
+
+    override fun loadFriendsWithoutAccessToTravel() {
+        compositeDisposable.add(CommunicationService.serverApi.getFriendsWithoutAccessToTravel(SharedPreferencesUtils.getUserId(),travel.id)
+                .observeOn(SchedulerProvider.ui())
+                .subscribeOn(SchedulerProvider.io())
+                .map { if (it.responseCode == ResponseCode.OK) it.data!! else throw ApiException(it.responseCode) }
+                .subscribe(
+                        { friends -> handleLoadFriendsResponse(friends) },
                         { error -> handleErrorResponse(error) }
                 ))
     }
@@ -212,6 +225,9 @@ class TravelDetailsPresenter(private var travel: Travel, view: TravelDetailsCont
     private fun handleShareTravelResponse() {
         view.showSnackbar(R.string.share_travel_ok)
     }
+    private fun handleLoadFriendsResponse(userFriends: List<UserInfo>) {
+        friendsWithoutAccessToTravel = ArrayList(userFriends)
+    }
 
     private fun handleUploadTravelImageResponse(travel: Travel) {
         this.travel = travel
@@ -238,5 +254,8 @@ class TravelDetailsPresenter(private var travel: Travel, view: TravelDetailsCont
     private fun handleErrorResponse(error: Throwable) {
         if (error is ApiException) view.showSnackbar(error.getErrorMessageCode())
         else view.showSnackbar(R.string.server_connection_error)
+    }
+    override fun getFriendWithoutAccessToTravel(): ArrayList<UserInfo> {
+        return friendsWithoutAccessToTravel;
     }
 }
