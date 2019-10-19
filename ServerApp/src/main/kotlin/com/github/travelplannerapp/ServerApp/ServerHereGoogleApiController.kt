@@ -74,6 +74,17 @@ class ServerHereGoogleApiController {
         return Response(ResponseCode.OK, contacts)
     }
 
+    @GetMapping("here-management/objects/{objectId}")
+    fun getPlace(
+        @RequestHeader("authorization") token: String,
+        @PathVariable objectId: String,
+        @RequestParam("query") query: String
+    ): Response<PlaceData> {
+        userManagement.verifyUser(token)
+        val place = searchService.getPlace(query)
+        return Response(ResponseCode.OK, place)
+    }
+
     @GetMapping("google-management/routes")
     fun getRoutes(
         @RequestHeader("authorization") token: String,

@@ -78,6 +78,16 @@ class SearchService : ISearchService {
         )
     }
 
+    fun getPlace(query: String) : PlaceData{
+        val place = hereLoader.getPlace(query)
+
+        if (place.name != null) place.name = escapeHtml(place.name!!)
+        if (place.location != null) place.location!!.address.text = escapeHtml(place.location!!.address.text)
+        if (place.extended != null && place.extended!!.openingHours != null) place.extended!!.openingHours!!.text = escapeHtml(place.extended!!.openingHours!!.text)
+
+        return place
+    }
+
     private fun escapeHtml(str: String): String {
         return StringEscapeUtils.unescapeHtml3(str).replace("<br/>", "\n")
     }
@@ -166,7 +176,12 @@ class SearchService : ISearchService {
 
         fun getContacts(query: String): Contacts {
             val response = executeHereRequest(query, jsonFilter)
-            return parseResponse<PlaceInfo>(response).contacts
+            return parseResponse<PlaceContactInfo>(response).contacts
+        }
+
+        fun getPlace(query: String) : PlaceData {
+            val response = executeHereRequest(query, jsonFilter)
+            return parseResponse(response)
         }
 
         private inline fun <reified T> parseResponse(response: String): T {

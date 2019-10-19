@@ -35,14 +35,14 @@ class PlaceRepositoryTest {
 
     @Test
     fun `When add called expect one row returned`(){
-        val result = placeRepository.add(PlaceDao(0,"hereId","href","title","vicinity",0))
+        val result = placeRepository.add(PlaceDao(0,"hereId","href","title","vicinity",0,0.0,0))
         Assert.assertTrue(result)
         placeRepository.delete(0)
     }
 
     @Test
     fun `When delete called on existing id expect true returned`() {
-        placeRepository.add(PlaceDao(0,"hereId","href","title","vicinity",0))
+        placeRepository.add(PlaceDao(0,"hereId","href","title","vicinity",0,0.0,0))
         val result = placeRepository.delete(0)
         Assert.assertTrue(result)
     }
@@ -55,13 +55,13 @@ class PlaceRepositoryTest {
 
     @Test
     fun `When update called on existing PlaceDao expect true returned`(){
-        val result = placeRepository.update(PlaceDao(1,"hereId","href","title","vicinity",0))
+        val result = placeRepository.update(PlaceDao(1,"hereId","href","title","vicinity",0,0.0,0))
         Assert.assertTrue(result)
     }
 
     @Test
     fun `When update called on non existing PlaceDao expect false returned`(){
-        val result = placeRepository.update(PlaceDao(0,"hereId","href","title","vicinity",0))
+        val result = placeRepository.update(PlaceDao(0,"hereId","href","title","vicinity",0,0.0,0))
         Assert.assertTrue(!result)
     }
 }

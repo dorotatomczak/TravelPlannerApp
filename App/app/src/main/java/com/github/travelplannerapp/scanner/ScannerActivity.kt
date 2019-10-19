@@ -79,11 +79,7 @@ class ScannerActivity : AppCompatActivity(), ScannerContract.View {
 
         dialog.setPositiveButton(R.string.save) { _, _ ->
             val scanFile = BitmapHelper.bitmapToFile(scan, cacheDir)
-            presenter.uploadScan(
-                    scanFile,
-                    SharedPreferencesUtils.getAccessToken()!!,
-                    SharedPreferencesUtils.getUserId()
-            )
+            presenter.uploadScan(scanFile)
         }
 
         dialog.setNegativeButton(R.string.cancel) { _, _ ->

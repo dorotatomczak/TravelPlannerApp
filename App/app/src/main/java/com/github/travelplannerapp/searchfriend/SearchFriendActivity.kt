@@ -31,6 +31,7 @@ class SearchFriendActivity : AppCompatActivity(), SearchFriendContract.View {
 
         // Set up toolbar
         setSupportActionBar(toolbar)
+        supportActionBar?.title = getString(R.string.my_friends)
         supportActionBar?.setHomeButtonEnabled(true)
         DrawerUtils.getDrawer(this, toolbar)
 

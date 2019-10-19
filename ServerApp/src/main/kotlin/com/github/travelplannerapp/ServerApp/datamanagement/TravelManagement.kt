@@ -16,6 +16,8 @@ import org.springframework.stereotype.Component
 class TravelManagement : ITravelManagement {
 
     @Autowired
+    lateinit var scanManagement: ScanManagement
+    @Autowired
     lateinit var travelTransaction: TravelTransaction
     @Autowired
     lateinit var planElementTransaction: PlanElementTransaction
@@ -37,6 +39,10 @@ class TravelManagement : ITravelManagement {
         }
     }
 
+    override fun getTravel(id: Int): Travel? {
+        return travelRepository.get(id)
+    }
+
     override fun updateTravel(id: Int, changes: MutableMap<String, Any?>): Travel? {
         val travel = travelRepository.get(id)
         val travelChanges = Travel(changes)
@@ -48,8 +54,16 @@ class TravelManagement : ITravelManagement {
     }
 
     override fun deleteTravels(userId: Int, travelIds: MutableSet<Int>) {
-        val result = travelTransaction.deleteTravels(userId, travelIds)
-        if (!result) throw  DeleteTravelsException("Error when deleting travel")
+        for (travelId in travelIds) {
+            var result = planElementRepository.deletePlanElementsByTravelId(travelId)
+            if (!result) throw DeletePlanElementsException("Error when deleting plan elements")
+
+            val scans = scanManagement.getScans(userId, travelId)
+            scanManagement.deleteScans(scans)
+
+            result = travelTransaction.deleteTravels(userId, mutableSetOf(travelId))
+            if (!result) throw  DeleteTravelsException("Error when deleting travel")
+        }
     }
 
     override fun getPlanElements(travelId: Int): MutableList<PlanElement> {
@@ -59,16 +73,22 @@ class TravelManagement : ITravelManagement {
             val planElementDao = pair.first
             val placeDao = pair.second
             val place = Place(
-                    placeDao.hereId!!,
-                    placeDao.title!!,
-                    placeDao.vicinity!!,
-                    emptyArray(),
-                    placeDao.href!!,
-                    placeDao.category!!)
-            val planElement = PlanElement(planElementDao.id!!,
-                    planElementDao.fromDateTime!!.time,
-                    planElementDao.placeId!!,
-                    place)
+                placeDao.hereId!!,
+                placeDao.title!!,
+                placeDao.vicinity!!,
+                emptyArray(),
+                placeDao.href!!,
+                placeDao.category!!
+            )
+            place.averageRating = placeDao.averageRating.toString()
+
+            val planElement = PlanElement(
+                planElementDao.id!!,
+                planElementDao.fromDateTime!!.time,
+                planElementDao.placeId!!,
+                place,
+                planElementDao.myRating ?: 0
+            )
             planElements.add(planElement)
         }
         return planElements
@@ -78,6 +98,12 @@ class TravelManagement : ITravelManagement {
         val addedPlanElement = planElementTransaction.addPlanElement(travelId, planElement)
         if (addedPlanElement != null) return addedPlanElement
         else throw AddPlanElementException("Error when adding plan element")
+    }
+
+    override fun updatePlanElement(travelId: Int, planElement: PlanElement): PlanElement {
+        val updatedPlanElement = planElementTransaction.updatePlanElement(travelId, planElement)
+        if (updatedPlanElement != null) return updatedPlanElement
+        else throw UpdatePlanElementException("Error when updating plan element")
     }
 
     override fun deletePlanElements(planElementIds: List<Int>) {

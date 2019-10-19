@@ -54,6 +54,7 @@ class ScansActivity : AppCompatActivity(), ScansContract.View {
 
         // Set up toolbar
         setSupportActionBar(toolbar)
+        supportActionBar?.title = getString(R.string.scans)
         supportActionBar?.setHomeButtonEnabled(true)
         DrawerUtils.getDrawer(this, toolbar)
 
