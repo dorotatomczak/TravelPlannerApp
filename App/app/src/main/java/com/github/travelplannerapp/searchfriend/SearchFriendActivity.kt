@@ -38,7 +38,7 @@ class SearchFriendActivity : AppCompatActivity(), SearchFriendContract.View {
         recyclerViewFriend.layoutManager = LinearLayoutManager(this, RecyclerView.VERTICAL, false)
         recyclerViewFriend.adapter = FriendAdapter(presenter)
 
-        addSearchAbility();
+        addSearchAbility()
         presenter.loadFriends()
     }
 

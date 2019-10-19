@@ -14,6 +14,6 @@ interface IUserManagement {
     fun updateUser(id: Int, changes: MutableMap<String, Any?>)
     fun addFriend(userId: Int, friendEmail: String): UserFriend
     fun deleteFriends(userId: Int, friendsIds: MutableSet<Int>)
-    fun findMatchingEmails(query: String): MutableList<UserInfo>
+    fun findMatchingEmails(userId:Int,query: String): MutableList<UserInfo>
     fun getAllFriendsByUserId(userId: Int): MutableList<UserInfo>
 }

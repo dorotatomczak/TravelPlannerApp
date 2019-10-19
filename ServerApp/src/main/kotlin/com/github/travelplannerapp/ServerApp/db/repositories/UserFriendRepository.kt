@@ -23,7 +23,7 @@ class UserFriendRepository : Repository<UserFriend>(), IUserFriendRepository {
     override val updateStatement = "UPDATE $tableName SET $columnUserId=?, $columnFriendId=?  WHERE $columnId=?"
     override val nextIdStatement = "SELECT nextval(pg_get_serial_sequence('$tableName', '$columnId')) AS new_id"
 
-    override fun getUserFriendBindingID(userId: Int, friendId: Int): Int {
+    override fun ifUserFriendBindingExist(userId: Int, friendId: Int): Boolean {
         val statement = DbConnection
                 .conn
                 .prepareStatement("SELECT $columnId FROM $tableName WHERE $columnUserId=? AND $columnFriendId=?")
@@ -31,9 +31,9 @@ class UserFriendRepository : Repository<UserFriend>(), IUserFriendRepository {
         statement.setInt(2, friendId)
         val result: ResultSet = statement.executeQuery()
         if (result.next()) {
-            return result.getInt("id")
+            return true
         }
-        return -1;
+        return false;
     }
     override fun deleteUserFriendBinding(userId: Int, friendId: Int): Boolean {
         val statement = DbConnection
