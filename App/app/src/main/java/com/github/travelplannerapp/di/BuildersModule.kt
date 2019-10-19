@@ -4,6 +4,9 @@ import com.github.travelplannerapp.initializers.InitializerModule
 import com.github.travelplannerapp.launcher.LauncherActivity
 import com.github.travelplannerapp.launcher.LauncherModule
 import com.github.travelplannerapp.launcher.LauncherViewModel
+import com.github.travelplannerapp.planelementdetails.PlanElementDetailsActivity
+import com.github.travelplannerapp.planelementdetails.PlanElementDetailsModule
+import com.github.travelplannerapp.planelementdetails.PlanElementDetailsViewModel
 import com.github.travelplannerapp.scanner.ScannerActivity
 import com.github.travelplannerapp.scanner.ScannerModule
 import com.github.travelplannerapp.scanner.ScannerViewModel
@@ -45,6 +48,9 @@ abstract class BuildersModule {
 
     @ContributesAndroidInjector(modules = [LauncherViewModel::class, LauncherModule::class, InitializerModule::class])
     internal abstract fun bindLauncherActivity(): LauncherActivity
+
+    @ContributesAndroidInjector(modules = [PlanElementDetailsViewModel::class, PlanElementDetailsModule::class])
+    internal abstract fun bindPlanElementDetailsActivity(): PlanElementDetailsActivity
 
     @ContributesAndroidInjector(modules = [SearchElementViewModel::class, SearchElementModule::class])
     internal abstract fun bindSearchElementActivity(): SearchElementActivity

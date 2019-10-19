@@ -1,7 +1,7 @@
 package com.github.travelplannerapp.traveldetails.addplanelement
 
-import com.github.travelplannerapp.communication.appmodel.PlanElement
 import com.github.travelplannerapp.communication.commonmodel.Place
+import com.github.travelplannerapp.communication.commonmodel.PlanElement
 
 interface AddPlanElementContract {
 

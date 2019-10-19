@@ -14,8 +14,10 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.request.RequestOptions
 import com.github.travelplannerapp.R
-import com.github.travelplannerapp.communication.appmodel.PlanElement
 import com.github.travelplannerapp.communication.appmodel.Travel
+import com.github.travelplannerapp.communication.commonmodel.Place
+import com.github.travelplannerapp.communication.commonmodel.PlanElement
+import com.github.travelplannerapp.planelementdetails.PlanElementDetailsActivity
 import com.github.travelplannerapp.traveldetails.addplanelement.AddPlanElementActivity
 import com.github.travelplannerapp.traveldialog.TravelDialog
 import com.github.travelplannerapp.utils.DrawerUtils
@@ -38,6 +40,8 @@ class TravelDetailsActivity : AppCompatActivity(), TravelDetailsContract.View {
         const val EXTRA_TRAVEL = "EXTRA_TRAVEL"
         const val REQUEST_TRAVEL_DETAILS = 1
         const val REQUEST_SELECT_IMAGE = 2
+        const val REQUEST_ADD_PLAN = 3
+        const val REQUEST_SHOW_DETAILS = 4
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -95,13 +99,20 @@ class TravelDetailsActivity : AppCompatActivity(), TravelDetailsContract.View {
                     }
                 }
             }
-            AddPlanElementActivity.REQUEST_ADD_PLAN -> {
+            REQUEST_ADD_PLAN -> {
                 if (resultCode == Activity.RESULT_OK && data != null) {
                     val messageCode = data.getIntExtra(AddPlanElementActivity.REQUEST_ADD_PLAN_ELEMENT_RESULT_MESSAGE,
                             R.string.try_again)
                     showSnackbar(messageCode)
                     val plan = data.getSerializableExtra(AddPlanElementActivity.REQUEST_ADD_PLAN_ELEMENT_RESULT_PLAN) as PlanElement
                     presenter.onPlanElementAdded(plan)
+                }
+            }
+            REQUEST_SHOW_DETAILS -> {
+                if (resultCode == Activity.RESULT_OK && data != null) {
+                    val rating = data.getIntExtra(PlanElementDetailsActivity.EXTRA_MY_RATING, 0)
+                    presenter.saveRating(rating)
+                    refreshDayPlans()
                 }
             }
         }
@@ -136,7 +147,7 @@ class TravelDetailsActivity : AppCompatActivity(), TravelDetailsContract.View {
     override fun showAddPlanElement(travelId: Int) {
         val intent = Intent(this, AddPlanElementActivity::class.java)
         intent.putExtra(AddPlanElementActivity.EXTRA_TRAVEL_ID, travelId)
-        startActivityForResult(intent, AddPlanElementActivity.REQUEST_ADD_PLAN)
+        startActivityForResult(intent, REQUEST_ADD_PLAN)
     }
 
     override fun onDataSetChanged() {
@@ -171,6 +182,16 @@ class TravelDetailsActivity : AppCompatActivity(), TravelDetailsContract.View {
                 .setNegativeButton(android.R.string.no) { _, _ ->
                 }
                 .show()
+    }
+
+    override fun showPlanElementDetails(place: Place, rating: Int, placeId: Int) {
+        val intent = Intent(this, PlanElementDetailsActivity::class.java)
+        intent.putExtra(PlanElementDetailsActivity.EXTRA_PLACE_HREF, place.href)
+        intent.putExtra(PlanElementDetailsActivity.EXTRA_AVERAGE_RATING, place.averageRating)
+        intent.putExtra(PlanElementDetailsActivity.EXTRA_PLACE_NAME, place.title)
+        intent.putExtra(PlanElementDetailsActivity.EXTRA_MY_RATING, rating)
+        intent.putExtra(PlanElementDetailsActivity.EXTRA_PLACE_ID, placeId)
+        startActivityForResult(intent, REQUEST_SHOW_DETAILS)
     }
 
     private fun showEditTravel() {

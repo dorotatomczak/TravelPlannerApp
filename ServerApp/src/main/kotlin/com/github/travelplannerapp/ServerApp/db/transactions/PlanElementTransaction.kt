@@ -31,15 +31,22 @@ class PlanElementTransaction {
         if (placeId != null) {
             planElementDao.placeId = placeId
             queryResult = planElementRepository.add(planElementDao)
-        } else {
+        }
+        else {
             placeId = placeRepository.getNextId()
+            val rateCount = 0
+            val rating = planElement.place.averageRating?.toDouble() ?: 0.0
+
             placeDao = PlaceDao(
-                    placeId,
-                    planElement.place.id,
-                    planElement.place.href,
-                    planElement.place.title,
-                    planElement.place.vicinity,
-                    planElement.place.categoryIcon)
+                placeId,
+                planElement.place.id,
+                planElement.place.href,
+                planElement.place.title,
+                planElement.place.vicinity,
+                planElement.place.categoryIcon,
+                rating,
+                rateCount
+            )
             queryResult = placeRepository.add(placeDao)
             if (queryResult) {
                 planElementDao.placeId = placeId
@@ -53,8 +60,33 @@ class PlanElementTransaction {
             planElement.id = planElementId
             planElement.placeId = placeId
             planElement
-        } else {
+        }
+        else {
             DbConnection.conn.rollback()
+            DbConnection.conn.autoCommit = true
+            null
+        }
+    }
+
+    fun updatePlanElement(travelId: Int, planElement: PlanElement): PlanElement? {
+        DbConnection.conn.autoCommit = false
+
+        val planElementDao = PlanElementDao(travelId, planElement)
+        planElementDao.id = planElement.id
+
+        val placeDao = placeRepository.getPlaceByHereId(planElement.place.id)
+        val placeId = placeDao?.id
+
+        planElementDao.placeId = placeId
+        val queryResult = planElementRepository.update(planElementDao)
+
+        return if (queryResult) {
+            DbConnection.conn.commit()
+            DbConnection.conn.autoCommit = true
+            planElement.placeId = placeId!!
+            planElement
+        }
+        else {
             DbConnection.conn.autoCommit = true
             null
         }
