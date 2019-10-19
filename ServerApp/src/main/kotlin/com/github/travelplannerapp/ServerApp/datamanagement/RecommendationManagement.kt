@@ -12,8 +12,8 @@ class RecommendationManagement : IRecommendationManagement {
     lateinit var placeRepository: PlaceRepository
 
 
-    override fun ratePlace(placeHereId: String, rating: Int): Boolean {
-        val placeDao = placeRepository.getPlaceByHereId(placeHereId)
+    override fun ratePlace(placeId: Int, rating: Int): Boolean {
+        val placeDao = placeRepository.get(placeId)
         if (placeDao != null) {
             placeDao.averageRating =
                 (placeDao.averageRating!! * placeDao.ratesCount!! + rating) / (placeDao.ratesCount!! + 1.0)

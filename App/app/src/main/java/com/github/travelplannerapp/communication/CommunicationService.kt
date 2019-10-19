@@ -129,6 +129,6 @@ interface ServerApi {
                      @Query("departure_time") departureTime: String): Single<Response<Routes>>
 
     //recommendation - places
-    @POST("places/{placeHereId}/rating")
-    fun ratePlace(@Path("placeHereId") placeHereId: String, @Query("rating") rating: Int): Single<Response<Unit>>
+    @POST("places/{placeId}/rating")
+    fun ratePlace(@Path("placeId") placeId: Int, @Query("rating") rating: Int): Single<Response<Unit>>
 }

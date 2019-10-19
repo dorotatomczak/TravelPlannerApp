@@ -6,5 +6,5 @@ import com.github.travelplannerapp.communication.commonmodel.PlanElement
 
 interface IPlanElementRepository : IRepository<PlanElementDao>{
     fun getPlanElementsByTravelId(travelId: Int): List<Pair<PlanElementDao, PlaceDao>>
-    fun getPlanElementById(travelId: Int, planElement: PlanElement): PlanElementDao
+    fun deletePlanElementsByTravelId(travelId: Int): Boolean
 }

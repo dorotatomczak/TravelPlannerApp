@@ -16,6 +16,8 @@ import org.springframework.stereotype.Component
 class TravelManagement : ITravelManagement {
 
     @Autowired
+    lateinit var scanManagement: ScanManagement
+    @Autowired
     lateinit var travelTransaction: TravelTransaction
     @Autowired
     lateinit var planElementTransaction: PlanElementTransaction
@@ -32,8 +34,7 @@ class TravelManagement : ITravelManagement {
         val addedTravel = travelTransaction.addTravel(travelName, userId)
         if (addedTravel != null) {
             return addedTravel
-        }
-        else {
+        } else {
             throw AddTravelException("Error when adding travel")
         }
     }
@@ -53,8 +54,16 @@ class TravelManagement : ITravelManagement {
     }
 
     override fun deleteTravels(userId: Int, travelIds: MutableSet<Int>) {
-        val result = travelTransaction.deleteTravels(userId, travelIds)
-        if (!result) throw  DeleteTravelsException("Error when deleting travel")
+        for (travelId in travelIds) {
+            var result = planElementRepository.deletePlanElementsByTravelId(travelId)
+            if (!result) throw DeletePlanElementsException("Error when deleting plan elements")
+
+            val scans = scanManagement.getScans(userId, travelId)
+            scanManagement.deleteScans(scans)
+
+            result = travelTransaction.deleteTravels(userId, mutableSetOf(travelId))
+            if (!result) throw  DeleteTravelsException("Error when deleting travel")
+        }
     }
 
     override fun getPlanElements(travelId: Int): MutableList<PlanElement> {

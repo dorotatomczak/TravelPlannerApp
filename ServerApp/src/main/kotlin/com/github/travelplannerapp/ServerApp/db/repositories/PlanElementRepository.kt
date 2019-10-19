@@ -3,7 +3,6 @@ package com.github.travelplannerapp.ServerApp.db.repositories
 import com.github.travelplannerapp.ServerApp.db.DbConnection
 import com.github.travelplannerapp.ServerApp.db.dao.PlaceDao
 import com.github.travelplannerapp.ServerApp.db.dao.PlanElementDao
-import com.github.travelplannerapp.communication.commonmodel.PlanElement
 import org.springframework.stereotype.Component
 import java.sql.PreparedStatement
 import java.sql.ResultSet
@@ -50,24 +49,12 @@ class PlanElementRepository : Repository<PlanElementDao>(), IPlanElementReposito
         return planElementDaoPlaceDao
     }
 
-    override fun getPlanElementById(travelId: Int, planElement: PlanElement): PlanElementDao {
-        val planElementDao = PlanElementDao(travelId, planElement)
-
+    override fun deletePlanElementsByTravelId(travelId: Int): Boolean {
         val statement = DbConnection
                 .conn
-                .prepareStatement(
-                    selectStatement +
-                    "WHERE $columnTravelId = ? AND $columnPlaceId = ? AND $columnFromDateTime = ?"
-                )
+                .prepareStatement(deleteStatement + "WHERE $columnTravelId=?")
         statement.setInt(1, travelId)
-        statement.setInt(2, planElement.placeId)
-        statement.setLong(3, planElement.fromDateTimeMs)
-        val result = statement.executeQuery()
-        if (result.next()) {
-            planElementDao.id = result.getInt(columnId)
-        }
-
-        return planElementDao
+        return statement.executeUpdate() > 0
     }
 
     override fun T(result: ResultSet): PlanElementDao? {

@@ -53,7 +53,6 @@
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
         android:id="@+id/nestedScrollViewPlanElementDetails">
 
-
         <include layout="@layout/item_place_element_info"/>
 
     </androidx.core.widget.NestedScrollView>

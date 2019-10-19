@@ -13,7 +13,7 @@ class PlanElementDetailsPresenter(view: PlanElementDetailsContract.View) : BaseP
 
     private val compositeDisposable = CompositeDisposable()
     private lateinit var averageRating: String
-    private lateinit var placeId: String
+    private var placeId = 0
     private var changedRating = false
 
     override fun showPlaceInfo(placeHref: String) {
@@ -24,7 +24,8 @@ class PlanElementDetailsPresenter(view: PlanElementDetailsContract.View) : BaseP
         return changedRating
     }
 
-    override fun saveRating(stars: Int) {
+    override fun saveRating(stars: Int, chosenPlaceId: Int) {
+        placeId = chosenPlaceId
         compositeDisposable.add(CommunicationService.serverApi.ratePlace(placeId, stars)
                 .observeOn(SchedulerProvider.ui())
                 .subscribeOn(SchedulerProvider.io())
@@ -36,6 +37,10 @@ class PlanElementDetailsPresenter(view: PlanElementDetailsContract.View) : BaseP
                         },
                         { error -> handleErrorResponse(error) }
                 ))
+    }
+
+    override fun setAverageRating(rating: String) {
+        averageRating = rating
     }
 
     private fun handleErrorResponse(error: Throwable) {
@@ -55,20 +60,16 @@ class PlanElementDetailsPresenter(view: PlanElementDetailsContract.View) : BaseP
     }
 
     private fun handleLoadPlaceResponse(placeData: PlaceData) {
-        placeId = placeData.placeId!!
+        showPlaceData(placeData)
+        view.showProgressIndicator(false)
+        view.showInfoLayout(true)
+    }
 
+    private fun showPlaceData(placeData: PlaceData) {
         view.showName(placeData.name ?: "")
         view.showLocation(placeData.location?.address?.text ?: "")
         view.showOpeningHours(placeData.extended?.openingHours?.text ?: "")
         view.showAverageRating(averageRating)
         view.showContacts(placeData.contacts!!)
-
-        view.showProgressIndicator(false)
-        view.showInfoLayout(true)
     }
-
-    override fun setAverageRating(rating: String) {
-        averageRating = rating
-    }
-
 }

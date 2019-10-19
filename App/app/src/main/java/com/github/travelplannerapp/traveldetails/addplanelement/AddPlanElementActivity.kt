@@ -1,4 +1,4 @@
-package com.github.travelplannerapp.dayplans.addplanelement
+package com.github.travelplannerapp.traveldetails.addplanelement
 
 import android.app.Activity
 import android.app.DatePickerDialog
@@ -12,7 +12,7 @@ import com.github.travelplannerapp.R
 import com.github.travelplannerapp.communication.appmodel.PlaceCategory
 import com.github.travelplannerapp.communication.commonmodel.Place
 import com.github.travelplannerapp.communication.commonmodel.PlanElement
-import com.github.travelplannerapp.dayplans.searchelement.SearchElementActivity
+import com.github.travelplannerapp.traveldetails.searchelement.SearchElementActivity
 import com.github.travelplannerapp.utils.DateTimeUtils
 import com.github.travelplannerapp.utils.DrawerUtils
 import com.google.android.material.snackbar.Snackbar
@@ -47,7 +47,9 @@ class AddPlanElementActivity : AppCompatActivity(), AddPlanElementContract.View 
         // Set up toolbar
         setSupportActionBar(toolbar)
         supportActionBar?.setHomeButtonEnabled(true)
-        DrawerUtils.getDrawer(this, toolbar)
+
+        val travelId = intent.getIntExtra(EXTRA_TRAVEL_ID, -1)
+        DrawerUtils.getDrawer(this, toolbar, travelId)
 
         // Set up edit texts
         editTextPlanFromDate.setOnClickListener { openDatePicker(it as TextInputEditText) }

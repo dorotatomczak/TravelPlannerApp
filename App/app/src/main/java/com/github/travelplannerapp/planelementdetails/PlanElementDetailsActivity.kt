@@ -24,6 +24,7 @@ class PlanElementDetailsActivity : AppCompatActivity(), PlanElementDetailsContra
 
     companion object {
         const val EXTRA_PLACE_HREF = "place"
+        const val EXTRA_PLACE_ID = "place_id"
         const val EXTRA_PLACE_NAME = "place_name"
         const val EXTRA_AVERAGE_RATING = "average_rating"
         const val EXTRA_MY_RATING = "my_rating"
@@ -67,8 +68,7 @@ class PlanElementDetailsActivity : AppCompatActivity(), PlanElementDetailsContra
         if (isVisible) {
             linearLayoutPlaceElementInfo.visibility = View.VISIBLE
             linearLayoutRatingPlanElementDetails.visibility = View.VISIBLE
-        }
-        else {
+        } else {
             linearLayoutPlaceElementInfo.visibility = View.GONE
             linearLayoutRatingPlanElementDetails.visibility = View.GONE
         }
@@ -121,8 +121,9 @@ class PlanElementDetailsActivity : AppCompatActivity(), PlanElementDetailsContra
         textViewRatePlace.text = getString(R.string.rate_place_completed)
     }
 
-    private fun initializeRating(){
+    private fun initializeRating() {
         val myRating = intent.getIntExtra(EXTRA_MY_RATING, 0)
+        val placeId = intent.getIntExtra(EXTRA_PLACE_ID, 0)
         if (myRating != 0) {
             changeRatingTextToCompleted()
             ratingBarPlanElementDetails.setIsIndicator(true)
@@ -130,7 +131,7 @@ class PlanElementDetailsActivity : AppCompatActivity(), PlanElementDetailsContra
         } else {
             ratingBarPlanElementDetails.onRatingBarChangeListener = object : RatingBar.OnRatingBarChangeListener {
                 override fun onRatingChanged(ratingBar: RatingBar?, rating: Float, fromUser: Boolean) {
-                    presenter.saveRating(rating.toInt())
+                    presenter.saveRating(rating.toInt(), placeId)
                     ratingBarPlanElementDetails.setIsIndicator(true)
                 }
             }

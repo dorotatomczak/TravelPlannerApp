@@ -87,7 +87,6 @@ class PlanElementTransaction {
             planElement
         }
         else {
-            DbConnection.conn.rollback()
             DbConnection.conn.autoCommit = true
             null
         }

@@ -22,7 +22,7 @@ interface PlanElementDetailsContract {
 
     interface Presenter {
         fun showPlaceInfo(placeHref: String)
-        fun saveRating(stars: Int)
+        fun saveRating(stars: Int, chosenPlaceId: Int)
         fun setAverageRating(rating: String)
         fun isRatingChanged():Boolean
     }

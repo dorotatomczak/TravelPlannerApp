@@ -1,4 +1,4 @@
-package com.github.travelplannerapp.dayplans.searchelement
+package com.github.travelplannerapp.traveldetails.searchelement
 
 import dagger.Binds
 import dagger.Module
