@@ -1,6 +1,6 @@
 package com.github.travelplannerapp.communication.commonmodel
 
-class PlaceInfo(val contacts: Contacts)
+class PlaceContactInfo(val contacts: Contacts)
 
 class Contacts(
         val phone: Array<Element>,

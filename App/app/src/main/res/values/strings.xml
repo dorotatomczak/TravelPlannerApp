@@ -82,6 +82,9 @@
     <string name="delete_friends_confirmation">Are you sure you want to delete selected friends?</string>
     <string name="my_friends">My friends</string>
 
+    <string name="rate_place">Rate place!</string>
+    <string name="rate_place_completed">Thanks!</string>
+
     <!-- if you add category - add it in enum "Category" and array.xml -->
     <string name="restaurant">Restaurant</string>
     <string name="sights_museum">Sights and museum</string>

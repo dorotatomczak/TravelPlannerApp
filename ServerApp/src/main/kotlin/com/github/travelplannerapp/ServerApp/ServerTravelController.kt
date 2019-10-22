@@ -4,7 +4,6 @@ import com.github.travelplannerapp.ServerApp.datamanagement.TravelManagement
 import com.github.travelplannerapp.ServerApp.datamanagement.UserManagement
 import com.github.travelplannerapp.ServerApp.datamodels.commonmodel.UserInfo
 import com.github.travelplannerapp.ServerApp.db.dao.Travel
-import com.github.travelplannerapp.ServerApp.db.repositories.TravelRepository
 import com.github.travelplannerapp.ServerApp.exceptions.UpdateTravelException
 import com.github.travelplannerapp.ServerApp.services.FileStorageService
 import com.github.travelplannerapp.communication.commonmodel.PlanElement
@@ -124,17 +123,29 @@ class ServerTravelController {
         return Response(ResponseCode.OK, planElements)
     }
 
-    @PostMapping("/users/{userId}/travels/{travelId}/plans")
+    @PostMapping("users/{userId}/travels/{travelId}/plans")
     fun addPlan(
-            @RequestHeader("authorization") token: String,
-            @PathVariable userId: Int,
-            @PathVariable travelId: Int,
-            @RequestBody planElement: PlanElement
+        @RequestHeader("authorization") token: String,
+        @PathVariable userId: Int,
+        @PathVariable travelId: Int,
+        @RequestBody planElement: PlanElement
     ): Response<PlanElement> {
         userManagement.verifyUser(token)
 
         val addedPlanElement = travelManagement.addPlanElement(travelId, planElement)
         return Response(ResponseCode.OK, addedPlanElement)
+    }
+
+    @PutMapping("users/{userId}/travels/{travelId}/plans")
+    fun updatePlanElement(
+        @RequestHeader("authorization") token: String,
+        @PathVariable userId: Int,
+        @PathVariable travelId: Int,
+        @RequestBody planElement: PlanElement
+    ): Response<Unit> {
+        userManagement.verifyUser(token)
+        travelManagement.updatePlanElement(travelId, planElement)
+        return Response(ResponseCode.OK, Unit)
     }
 
     @DeleteMapping("users/{userId}/plans")

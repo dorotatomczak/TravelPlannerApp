@@ -82,7 +82,7 @@ class TravelDetailsAdapter(val presenter: TravelDetailsContract.Presenter) : Rec
         }
 
         override fun onClick(v: View?) {
-            //TODO [Dorota] Show planElement details
+            presenter.onPlanElementClicked(adapterPosition)
         }
 
         override fun onLongClick(v: View?): Boolean {

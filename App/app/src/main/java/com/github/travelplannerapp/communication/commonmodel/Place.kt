@@ -12,7 +12,7 @@ class Place(
         var category: ObjectCategory = ObjectCategory(),
         var categoryTitle: String? = "",
         var resultType: String? = "",
-        var averageRating: String? = "",
+        var averageRating: String? = "0.0",
         var distance: Double? = 0.0,
         val openingHours: OpeningHours? = null
 ) : Serializable
