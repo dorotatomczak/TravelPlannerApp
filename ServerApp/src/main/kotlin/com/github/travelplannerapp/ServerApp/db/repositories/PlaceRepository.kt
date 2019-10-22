@@ -16,22 +16,26 @@ class PlaceRepository : Repository<PlaceDao>(), IPlaceRepository {
         const val columnTitle = "title"
         const val columnVicinity = "vicinity"
         const val columnCategory = "category"
+        const val columnAverageRating = "average_rating"
+        const val columnRatesCount = "rates_count"
     }
 
     override val selectStatement = "SELECT * FROM $tableName "
-    override val insertStatement = "INSERT INTO $tableName ($columnId, $columnHereId, $columnHref, $columnTitle, $columnVicinity, $columnCategory)" +
-            " VALUES (?, ?, ?, ?, ?, ?)"
+    override val insertStatement =
+        "INSERT INTO $tableName ($columnId, $columnHereId, $columnHref, $columnTitle, $columnVicinity, $columnCategory, $columnAverageRating, $columnRatesCount)" +
+        " VALUES (?, ?, ?, ?, ?, ?, ?, ?)"
     override val deleteStatement = "DELETE FROM $tableName "
-    override val updateStatement = "UPDATE $tableName SET $columnHereId=?, $columnHref=?, $columnTitle=?, $columnVicinity=?, $columnCategory=? WHERE $columnId=?"
+    override val updateStatement =
+        "UPDATE $tableName SET $columnHereId=?, $columnHref=?, $columnTitle=?, $columnVicinity=?, $columnCategory=?, $columnAverageRating=?, $columnRatesCount=? WHERE $columnId=?"
     override val nextIdStatement = "SELECT nextval(pg_get_serial_sequence('$tableName', '$columnId')) AS new_id"
 
     override fun getPlaceByHereId(hereId: String): PlaceDao? {
         val statement = DbConnection
                 .conn
-                .prepareStatement(selectStatement + "WHERE here_id=?")
+                .prepareStatement(selectStatement + "WHERE $columnHereId=?")
         statement.setString(1, hereId)
         val result = statement.executeQuery()
-        return if(result.next()) PlaceDao(result)
+        return if (result.next()) PlaceDao(result)
         else null
     }
 
@@ -49,6 +53,8 @@ class PlaceRepository : Repository<PlaceDao>(), IPlaceRepository {
         statement.setString(4, obj.title)
         statement.setString(5, obj.vicinity)
         statement.setInt(6, obj.category!!)
+        statement.setDouble(7, obj.averageRating!!)
+        statement.setInt(8, obj.ratesCount!!)
         return statement
     }
 
@@ -61,7 +67,10 @@ class PlaceRepository : Repository<PlaceDao>(), IPlaceRepository {
         statement.setString(3, obj.title)
         statement.setString(4, obj.vicinity)
         statement.setInt(5, obj.category!!)
-        statement.setInt(6, obj.id!!)
+        statement.setDouble(6, obj.averageRating!!)
+        statement.setInt(7, obj.ratesCount!!)
+        // id at the end
+        statement.setInt(8, obj.id!!)
         return statement
     }
 }

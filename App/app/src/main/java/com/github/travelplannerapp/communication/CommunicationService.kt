@@ -1,6 +1,9 @@
 package com.github.travelplannerapp.communication
 
-import com.github.travelplannerapp.communication.appmodel.*
+import com.github.travelplannerapp.communication.appmodel.CityObject
+import com.github.travelplannerapp.communication.appmodel.Scan
+import com.github.travelplannerapp.communication.appmodel.Travel
+import com.github.travelplannerapp.communication.appmodel.UserInfo
 import com.github.travelplannerapp.communication.commonmodel.*
 import io.reactivex.Single
 import okhttp3.MultipartBody
@@ -39,6 +42,7 @@ object CommunicationService {
 
 interface ServerApi {
 
+    // user-management
     @POST("user-management/authorize")
     fun authorize(): Single<Response<Unit>>
 
@@ -48,6 +52,10 @@ interface ServerApi {
     @POST("user-management/register")
     fun register(@Body body: SignUpRequest): Single<Response<Unit>>
 
+    @GET("user-management/usersemails")
+    fun findMatchingEmails(@Query("query") query: String): Single<Response<MutableList<UserInfo>>>
+
+    // users - travels
     @GET("users/{userId}/travels")
     fun getTravels(@Path("userId") userId: Int): Single<Response<List<Travel>>>
 
@@ -64,6 +72,7 @@ interface ServerApi {
     @HTTP(method = "DELETE", path = "users/{userId}/travels", hasBody = true)
     fun deleteTravels(@Path("userId") userId: Int, @Body travelIds: MutableSet<Int>): Single<Response<Unit>>
 
+    //users - scans
     @Multipart
     @POST("users/{userId}/scans")
     fun uploadScan(@Path("userId") userId: Int, @Part("travelId") travelId: RequestBody, @Part file: MultipartBody.Part): Single<Response<Scan>>
@@ -74,6 +83,30 @@ interface ServerApi {
     @GET("users/{userId}/scans")
     fun getScans(@Path("userId") userId: Int, @Query("travelId") travelId: Int): Single<Response<List<Scan>>>
 
+    //users - friends
+    @GET("users/{userId}/friends")
+    fun getFriends(@Path("userId") userId: Int): Single<Response<List<UserInfo>>>
+
+    @POST("users/{userId}/friends")
+    fun addFriend(@Path("userId") userId: Int, @Body friend: UserInfo): Single<Response<UserInfo>>
+
+    @HTTP(method = "DELETE", path = "users/{userId}/friends", hasBody = true)
+    fun deleteFriends(@Path("userId") userId: Int, @Body friendsIds: MutableSet<Int>): Single<Response<Unit>>
+
+    //users - plans
+    @GET("users/{userId}/travels/{travelId}/plans")
+    fun getPlanElements(@Path("userId") userId: Int, @Path("travelId") travelId: Int): Single<Response<List<PlanElement>>>
+
+    @POST("users/{userId}/travels/{travelId}/plans")
+    fun addPlanElement(@Path("userId") userId: Int, @Path("travelId") travelId: Int, @Body planElement: PlanElement): Single<Response<PlanElement>>
+
+    @HTTP(method = "DELETE", path = "users/{userId}/plans", hasBody = true)
+    fun deletePlanElements(@Path("userId") userId: Int, @Body planElementIds: List<Int>): Single<Response<Unit>>
+
+    @PUT("/users/{userId}/travels/{travelId}/plans")
+    fun updatePlanElement(@Path("userId") userId: Int, @Path("travelId") travelId: Int, @Body planElement: PlanElement): Single<Response<Unit>>
+
+    //here and google
     @GET("here-management/cities")
     fun findCities(@Query("query") query: String): Single<Response<List<CityObject>>>
 
@@ -84,18 +117,9 @@ interface ServerApi {
     @GET("here-management/objects/{objectId}/contacts")
     fun getContacts(@Path("objectId") objectId: String, @Query("query") query: String): Single<Response<Contacts>>
 
-    @GET("users/{userId}/friends")
-    fun getFriends(@Path("userId") userId: Int): Single<Response<List<UserInfo>>>
+    @GET("here-management/objects/{objectId}")
+    fun getPlace(@Path("objectId") objectId: String, @Query("query") query: String): Single<Response<PlaceData>>
 
-    @POST("users/{userId}/friends")
-    fun addFriend(@Path("userId") userId: Int, @Body friend: UserInfo): Single<Response<UserInfo>>
-
-    @GET("user-management/usersemails")
-    fun findMatchingEmails(@Query("query") query: String): Single<Response<MutableList<UserInfo>>>
-
-    @HTTP(method = "DELETE", path = "users/{userId}/friends", hasBody = true)
-    fun deleteFriends(@Path("userId") userId: Int, @Body friendsIds: MutableSet<Int>): Single<Response<Unit>>
-    
     @GET("google-management/routes")
     fun getTransport(@Query("origin_latitude") originLat: String,
                      @Query("origin_longitude") originLng: String,
@@ -104,12 +128,7 @@ interface ServerApi {
                      @Query("travel_mode") travelMode: String,
                      @Query("departure_time") departureTime: String): Single<Response<Routes>>
 
-    @GET("users/{userId}/travels/{travelId}/plans")
-    fun getPlanElements(@Path("userId") userId: Int, @Path("travelId") travelId: Int): Single<Response<List<PlanElement>>>
-
-    @POST("users/{userId}/travels/{travelId}/plans")
-    fun addPlanElement(@Path("userId") userId: Int, @Path("travelId") travelId: Int, @Body planElement: PlanElement): Single<Response<PlanElement>>
-
-    @HTTP(method = "DELETE", path = "users/{userId}/plans", hasBody = true)
-    fun deletePlanElements(@Path("userId") userId: Int, @Body planElementIds: List<Int>): Single<Response<Unit>>
+    //recommendation - places
+    @POST("places/{placeId}/rating")
+    fun ratePlace(@Path("placeId") placeId: Int, @Query("rating") rating: Int): Single<Response<Unit>>
 }

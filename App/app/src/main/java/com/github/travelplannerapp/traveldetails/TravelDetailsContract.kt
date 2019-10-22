@@ -1,7 +1,8 @@
 package com.github.travelplannerapp.traveldetails
 
-import com.github.travelplannerapp.communication.appmodel.PlanElement
 import com.github.travelplannerapp.communication.appmodel.Travel
+import com.github.travelplannerapp.communication.commonmodel.Place
+import com.github.travelplannerapp.communication.commonmodel.PlanElement
 import com.github.travelplannerapp.deleteactionmode.DeleteContract
 import java.io.File
 
@@ -17,6 +18,7 @@ interface TravelDetailsContract {
         fun hideLoadingIndicator()
         fun setResult(travel: Travel)
         fun showSnackbar(messageCode: Int)
+        fun showPlanElementDetails(place: Place, rating: Int, placeId: Int)
     }
 
     interface PlanElementItemView : DeleteContract.ItemView {
@@ -57,5 +59,7 @@ interface TravelDetailsContract {
         fun addPlanElementIdToDelete(position: Int)
         fun removePlanElementIdToDelete(position: Int)
         fun deletePlanElements()
+        fun saveRating(newRating: Int)
+        fun onPlanElementClicked(position: Int)
     }
 }
