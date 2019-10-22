@@ -25,7 +25,7 @@
             android:text="@string/create_an_account"
             android:textAlignment="center"
             android:textColor="@color/seeThroughWhite"
-            android:textSize="@dimen/text_size_title_small" />
+            android:textSize="@dimen/text_size_title_S" />
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -76,7 +76,7 @@
         <Button
             android:id="@+id/buttonSignUp"
             android:layout_width="@dimen/button_width"
-            android:layout_height="@dimen/button_height"
+            android:layout_height="@dimen/button_height_L"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="24dp"
             android:background="@drawable/button_style"
@@ -89,7 +89,7 @@
     <Button
         android:id="@+id/buttonSignIn"
         android:layout_width="@dimen/button_width"
-        android:layout_height="@dimen/button_height"
+        android:layout_height="@dimen/button_height_L"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="40dp"
