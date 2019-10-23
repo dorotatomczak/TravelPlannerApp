@@ -69,10 +69,10 @@ class TravelTransaction {
         }
     }
 
-    fun shareTravel(travelId: Int, choseFriendId: Int): Boolean? {
-        if(!userTravelRepository.ifUserTravelBindingExist(travelId,choseFriendId)){
+    fun shareTravel(travelId: Int, selectedFriendId: Int): Boolean? {
+        if(!userTravelRepository.ifUserTravelBindingExist(travelId,selectedFriendId)){
             val userTravelId = userTravelRepository.getNextId()
-            return userTravelRepository.add(UserTravel(userTravelId, choseFriendId, travelId))
+            return userTravelRepository.add(UserTravel(userTravelId, selectedFriendId, travelId))
         }
       return null
     }

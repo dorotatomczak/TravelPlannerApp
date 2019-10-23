@@ -1,7 +1,6 @@
 package com.github.travelplannerapp.ServerApp
 
 import com.github.travelplannerapp.ServerApp.datamanagement.UserManagement
-import com.github.travelplannerapp.ServerApp.datamodels.commonmodel.UserInfo
 import com.github.travelplannerapp.ServerApp.exceptions.SearchNoItemsException
 import com.github.travelplannerapp.communication.commonmodel.*
 import org.springframework.beans.factory.annotation.Autowired
@@ -77,12 +76,12 @@ class ServerUserController {
         return Response(ResponseCode.OK, Unit)
     }
 
-    @GetMapping("users/{userId}/travels/{travelId}/friends-without-access")
+    @GetMapping("users/{userId}/travels/{travelId}/share/friends")
     fun getFriendsWithoutAccessToTravel(
             @PathVariable("userId") userId: Int,
-            @PathVariable("travelId") travelId:Int
-    ): Response<List<UserInfo>>{
-        val friends = userManagement.getFriendsWithoutAccessToTravel(userId,travelId)
+            @PathVariable("travelId") travelId: Int
+    ): Response<List<UserInfo>> {
+        val friends = userManagement.getFriendsWithoutAccessToTravel(userId, travelId)
         return Response(ResponseCode.OK, friends)
     }
 }

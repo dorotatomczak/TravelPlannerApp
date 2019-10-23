@@ -2,7 +2,6 @@ package com.github.travelplannerapp.ServerApp
 
 import com.github.travelplannerapp.ServerApp.datamanagement.TravelManagement
 import com.github.travelplannerapp.ServerApp.datamanagement.UserManagement
-import com.github.travelplannerapp.ServerApp.datamodels.commonmodel.UserInfo
 import com.github.travelplannerapp.ServerApp.db.dao.Travel
 import com.github.travelplannerapp.ServerApp.exceptions.UpdateTravelException
 import com.github.travelplannerapp.ServerApp.services.FileStorageService
@@ -30,8 +29,8 @@ class ServerTravelController {
 
     @GetMapping("users/{userId}/travels")
     fun getTravels(
-        @RequestHeader("authorization") token: String,
-        @PathVariable userId: Int
+            @RequestHeader("authorization") token: String,
+            @PathVariable userId: Int
     ): Response<List<Travel>> {
         userManagement.verifyUser(token)
         val travels = travelManagement.getTravels(userId)
@@ -40,9 +39,9 @@ class ServerTravelController {
 
     @PostMapping("users/{userId}/travels")
     fun addTravel(
-        @RequestHeader("authorization") token: String,
-        @PathVariable userId: Int,
-        @RequestBody travelName: String
+            @RequestHeader("authorization") token: String,
+            @PathVariable userId: Int,
+            @RequestBody travelName: String
     ): Response<Travel> {
         userManagement.verifyUser(token)
         val newTravel = travelManagement.addTravel(userId, travelName)
@@ -51,9 +50,9 @@ class ServerTravelController {
 
     @PutMapping("users/{userId}/travels", consumes = ["application/json"])
     fun changeTravelName(
-        @RequestHeader("authorization") token: String,
-        @PathVariable userId: Int,
-        @RequestBody travel: Travel
+            @RequestHeader("authorization") token: String,
+            @PathVariable userId: Int,
+            @RequestBody travel: Travel
     ): Response<Travel> {
         userManagement.verifyUser(token)
         val updatedTravel = travelManagement.updateTravel(travel.id!!, mutableMapOf("name" to travel.name))
@@ -102,9 +101,9 @@ class ServerTravelController {
 
     @DeleteMapping("users/{userId}/travels")
     fun deleteTravels(
-        @RequestHeader("authorization") token: String,
-        @PathVariable userId: Int,
-        @RequestBody travelIds: MutableSet<Int>
+            @RequestHeader("authorization") token: String,
+            @PathVariable userId: Int,
+            @RequestBody travelIds: MutableSet<Int>
     ): Response<Unit> {
         userManagement.verifyUser(token)
         travelManagement.deleteTravels(userId, travelIds)
@@ -125,10 +124,10 @@ class ServerTravelController {
 
     @PostMapping("users/{userId}/travels/{travelId}/plans")
     fun addPlan(
-        @RequestHeader("authorization") token: String,
-        @PathVariable userId: Int,
-        @PathVariable travelId: Int,
-        @RequestBody planElement: PlanElement
+            @RequestHeader("authorization") token: String,
+            @PathVariable userId: Int,
+            @PathVariable travelId: Int,
+            @RequestBody planElement: PlanElement
     ): Response<PlanElement> {
         userManagement.verifyUser(token)
 
@@ -138,10 +137,10 @@ class ServerTravelController {
 
     @PutMapping("users/{userId}/travels/{travelId}/plans")
     fun updatePlanElement(
-        @RequestHeader("authorization") token: String,
-        @PathVariable userId: Int,
-        @PathVariable travelId: Int,
-        @RequestBody planElement: PlanElement
+            @RequestHeader("authorization") token: String,
+            @PathVariable userId: Int,
+            @PathVariable travelId: Int,
+            @RequestBody planElement: PlanElement
     ): Response<Unit> {
         userManagement.verifyUser(token)
         travelManagement.updatePlanElement(travelId, planElement)
@@ -159,15 +158,15 @@ class ServerTravelController {
         return Response(ResponseCode.OK, Unit)
     }
 
-    @PostMapping("/users/{userId}/travels/{travelId}/share")
+    @PutMapping("/users/{userId}/travels/{travelId}/share")
     fun shareTravel(
             @RequestHeader("authorization") token: String,
             @PathVariable userId: Int,
             @PathVariable travelId: Int,
-            @RequestBody selectedFriendsIds:ArrayList<Int>
+            @RequestBody selectedFriendsIds: ArrayList<Int>
     ): Response<Boolean> {
         userManagement.verifyUser(token)
-        val shareTravel =travelManagement.shareTravel(travelId, selectedFriendsIds)
+        val shareTravel = travelManagement.shareTravel(travelId, selectedFriendsIds)
         return Response(ResponseCode.OK, shareTravel)
     }
 }

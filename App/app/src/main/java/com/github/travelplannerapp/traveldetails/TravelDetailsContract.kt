@@ -49,7 +49,7 @@ interface TravelDetailsContract {
     interface Presenter : DeleteContract.Presenter {
         fun loadTravel()
         fun changeTravelName(travelName: String)
-        fun shareTravel(choseFriendsIds: ArrayList<Int>)
+        fun shareTravel(selectedFriendsIds: ArrayList<Int>)
         fun uploadTravelImage(image: File)
         fun onAddPlanElementClicked()
         fun onPlanElementAdded(planElement: PlanElement)

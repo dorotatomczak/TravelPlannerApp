@@ -50,8 +50,8 @@ class TravelDetailsPresenter(private var travel: Travel, view: TravelDetailsCont
                 ))
     }
 
-    override fun shareTravel(choseFriendsIds: ArrayList<Int>) {
-        compositeDisposable.add(CommunicationService.serverApi.shareTravel(SharedPreferencesUtils.getUserId(), travel.id, choseFriendsIds)
+    override fun shareTravel(selectedFriendsIds: ArrayList<Int>) {
+        compositeDisposable.add(CommunicationService.serverApi.shareTravel(SharedPreferencesUtils.getUserId(), travel.id, selectedFriendsIds)
                 .observeOn(SchedulerProvider.ui())
                 .subscribeOn(SchedulerProvider.io())
                 .map { if (it.responseCode == ResponseCode.OK) it.data!! else throw ApiException(it.responseCode) }
@@ -62,7 +62,7 @@ class TravelDetailsPresenter(private var travel: Travel, view: TravelDetailsCont
     }
 
     override fun loadFriendsWithoutAccessToTravel() {
-        compositeDisposable.add(CommunicationService.serverApi.getFriendsWithoutAccessToTravel(SharedPreferencesUtils.getUserId(),travel.id)
+        compositeDisposable.add(CommunicationService.serverApi.getFriendsWithoutAccessToTravel(SharedPreferencesUtils.getUserId(), travel.id)
                 .observeOn(SchedulerProvider.ui())
                 .subscribeOn(SchedulerProvider.io())
                 .map { if (it.responseCode == ResponseCode.OK) it.data!! else throw ApiException(it.responseCode) }
@@ -245,6 +245,7 @@ class TravelDetailsPresenter(private var travel: Travel, view: TravelDetailsCont
     private fun handleShareTravelResponse() {
         view.showSnackbar(R.string.share_travel_ok)
     }
+
     private fun handleLoadFriendsResponse(userFriends: List<UserInfo>) {
         friendsWithoutAccessToTravel = ArrayList(userFriends)
     }
@@ -275,11 +276,11 @@ class TravelDetailsPresenter(private var travel: Travel, view: TravelDetailsCont
         if (error is ApiException) view.showSnackbar(error.getErrorMessageCode())
         else view.showSnackbar(R.string.server_connection_error)
     }
-          
+
     override fun getFriendWithoutAccessToTravel(): ArrayList<UserInfo> {
-        return friendsWithoutAccessToTravel;
+        return friendsWithoutAccessToTravel
     }
-      
+
     private fun updatePlanElement() {
         val element = dayPlanItems[openedPlanElementDetailsId] as PlanElementItem
         compositeDisposable.add(CommunicationService.serverApi.updatePlanElement(SharedPreferencesUtils.getUserId(), travel.id,

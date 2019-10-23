@@ -1,6 +1,5 @@
 package com.github.travelplannerapp.ServerApp.datamanagement
 
-import com.github.travelplannerapp.ServerApp.datamodels.commonmodel.UserInfo
 import com.github.travelplannerapp.ServerApp.db.dao.User
 import com.github.travelplannerapp.ServerApp.db.dao.UserFriend
 import com.github.travelplannerapp.ServerApp.db.merge
@@ -10,6 +9,7 @@ import com.github.travelplannerapp.ServerApp.db.repositories.UserTravelRepositor
 import com.github.travelplannerapp.ServerApp.exceptions.*
 import com.github.travelplannerapp.communication.commonmodel.SignInRequest
 import com.github.travelplannerapp.communication.commonmodel.SignUpRequest
+import com.github.travelplannerapp.communication.commonmodel.UserInfo
 import io.jsonwebtoken.Jwts
 import io.jsonwebtoken.SignatureAlgorithm
 import org.springframework.beans.factory.annotation.Autowired
@@ -91,16 +91,16 @@ class UserManagement : IUserManagement {
     override fun addFriend(userId: Int, friendId: Int): UserFriend {
         val userFriendId = userFriendRepository.getNextId()
         val userFriend = UserFriend(userFriendId, userId, friendId)
-        if (userFriendRepository.add(userFriend)){
+        if (userFriendRepository.add(userFriend)) {
             return userFriend
-        }else {
+        } else {
             throw AddFriendException("Error when adding friend")
         }
     }
 
     override fun deleteFriends(userId: Int, friendsIds: MutableSet<Int>) {
         for (friendId in friendsIds) {
-            if (!userFriendRepository.deleteUserFriendBinding(userId, friendId)){
+            if (!userFriendRepository.deleteUserFriendBinding(userId, friendId)) {
                 throw  DeleteFriendsException("Error when deleting friends")
             }
         }
@@ -124,12 +124,12 @@ class UserManagement : IUserManagement {
         return userInfos
     }
 
-    override fun getFriendsWithoutAccessToTravel(userId: Int,travelId: Int): MutableList<UserInfo> {
+    override fun getFriendsWithoutAccessToTravel(userId: Int, travelId: Int): MutableList<UserInfo> {
         val userInfos = mutableListOf<UserInfo>()
         val friends = userRepository.getAllFriendsByUserId(userId)
         friends.forEach { friend ->
-            if(!userTravelRepository.ifUserTravelBindingExist(travelId,friend.id!!))
-            userInfos.add(UserInfo(friend.id!!, friend.email!!))
+            if (!userTravelRepository.ifUserTravelBindingExist(travelId, friend.id!!))
+                userInfos.add(UserInfo(friend.id!!, friend.email!!))
         }
         return userInfos
     }

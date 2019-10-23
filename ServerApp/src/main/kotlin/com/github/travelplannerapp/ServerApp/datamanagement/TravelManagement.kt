@@ -73,21 +73,21 @@ class TravelManagement : ITravelManagement {
             val planElementDao = pair.first
             val placeDao = pair.second
             val place = Place(
-                placeDao.hereId!!,
-                placeDao.title!!,
-                placeDao.vicinity!!,
-                emptyArray(),
-                placeDao.href!!,
-                placeDao.category!!
+                    placeDao.hereId!!,
+                    placeDao.title!!,
+                    placeDao.vicinity!!,
+                    emptyArray(),
+                    placeDao.href!!,
+                    placeDao.category!!
             )
             place.averageRating = placeDao.averageRating.toString()
 
             val planElement = PlanElement(
-                planElementDao.id!!,
-                planElementDao.fromDateTime!!.time,
-                planElementDao.placeId!!,
-                place,
-                planElementDao.myRating ?: 0
+                    planElementDao.id!!,
+                    planElementDao.fromDateTime!!.time,
+                    planElementDao.placeId!!,
+                    place,
+                    planElementDao.myRating ?: 0
             )
             planElements.add(planElement)
         }
@@ -112,9 +112,10 @@ class TravelManagement : ITravelManagement {
     }
 
     override fun shareTravel(travelId: Int, selectedFriendsIds: ArrayList<Int>): Boolean {
-        for (choseFriendId in selectedFriendsIds) {
-            if (travelTransaction.shareTravel(travelId,choseFriendId)===null)
+        for (selectedFriendId in selectedFriendsIds) {
+            if (travelTransaction.shareTravel(travelId, selectedFriendId) === null) {
                 ShareTravelException("Error when sharing travel")
+            }
         }
         return true
     }

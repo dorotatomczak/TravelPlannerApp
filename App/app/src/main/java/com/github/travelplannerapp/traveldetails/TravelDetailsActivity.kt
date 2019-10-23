@@ -14,7 +14,6 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.request.RequestOptions
 import com.github.travelplannerapp.R
-import com.github.travelplannerapp.communication.commonmodel.UserInfo
 import com.github.travelplannerapp.sharetraveldialog.ShareTravelDialog
 import com.github.travelplannerapp.communication.appmodel.Travel
 import com.github.travelplannerapp.communication.commonmodel.Place
@@ -53,7 +52,6 @@ class TravelDetailsActivity : AppCompatActivity(), TravelDetailsContract.View {
 
         fabAdd.setOnClickListener { presenter.onAddPlanElementClicked() }
 
-
         swipeRefreshLayoutTravelDetails.setOnRefreshListener { presenter.loadDayPlans() }
 
         setSupportActionBar(toolbar)
@@ -72,7 +70,7 @@ class TravelDetailsActivity : AppCompatActivity(), TravelDetailsContract.View {
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.menu_share_travel, menu)
-        menu.findItem(R.id.menuShareTravel).setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS)
+        menu.findItem(R.id.menuShareTravelItem).setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS)
         menuInflater.inflate(R.menu.menu_travel_details, menu)
         menu.findItem(R.id.menuEdit).setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS)
         return true
@@ -85,8 +83,7 @@ class TravelDetailsActivity : AppCompatActivity(), TravelDetailsContract.View {
         } else if (item.itemId == R.id.menuEdit) {
             showEditTravel()
             return true
-        }
-        else if (item.itemId == R.id.menuShareTravel) {
+        } else if (item.itemId == R.id.menuShareTravelItem) {
             showShareTravel()
             return true
         }
@@ -214,10 +211,10 @@ class TravelDetailsActivity : AppCompatActivity(), TravelDetailsContract.View {
     }
 
     override fun showShareTravel() {
-        val shareTravelDialog = ShareTravelDialog(getString(R.string.share_travel),presenter.getFriendWithoutAccessToTravel())
+        val shareTravelDialog = ShareTravelDialog(getString(R.string.share_travel), presenter.getFriendWithoutAccessToTravel())
         shareTravelDialog.onOk = {
-            val choseFriendsIds = shareTravelDialog.selectedFriendsId;
-            presenter.shareTravel(choseFriendsIds)
+            val selectedFriendsIds = shareTravelDialog.selectedFriendsId;
+            presenter.shareTravel(selectedFriendsIds)
         }
         shareTravelDialog.show(supportFragmentManager, ShareTravelDialog.TAG)
     }

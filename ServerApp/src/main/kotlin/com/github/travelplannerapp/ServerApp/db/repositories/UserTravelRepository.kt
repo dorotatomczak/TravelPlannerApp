@@ -25,15 +25,16 @@ class UserTravelRepository : Repository<UserTravel>(), IUserTravelRepository {
     override fun ifUserTravelBindingExist(travelId: Int, userId: Int): Boolean {
         val statement = DbConnection
                 .conn
-                .prepareStatement("SELECT $columnId FROM $tableName WHERE $columnTravelId=? AND $columnUserId=? " )
+                .prepareStatement("SELECT $columnId FROM $tableName WHERE $columnTravelId=? AND $columnUserId=? ")
         statement.setInt(1, travelId)
         statement.setInt(2, userId)
         val result: ResultSet = statement.executeQuery()
         if (result.next()) {
             return true
         }
-        return false;
+        return false
     }
+
     override fun deleteUserTravelBinding(userId: Int, travelId: Int): Boolean {
         val statement = DbConnection
                 .conn

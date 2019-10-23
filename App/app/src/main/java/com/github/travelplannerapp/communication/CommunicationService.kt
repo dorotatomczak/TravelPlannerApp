@@ -3,9 +3,7 @@ package com.github.travelplannerapp.communication
 import com.github.travelplannerapp.communication.appmodel.CityObject
 import com.github.travelplannerapp.communication.appmodel.Scan
 import com.github.travelplannerapp.communication.appmodel.Travel
-import com.github.travelplannerapp.communication.appmodel.UserInfo
 import com.github.travelplannerapp.communication.commonmodel.*
-import com.github.travelplannerapp.communication.commonmodel.UserInfo
 import io.reactivex.Single
 import okhttp3.MultipartBody
 import okhttp3.OkHttpClient
@@ -94,15 +92,23 @@ interface ServerApi {
     @HTTP(method = "DELETE", path = "users/{userId}/friends", hasBody = true)
     fun deleteFriends(@Path("userId") userId: Int, @Body friendsIds: MutableSet<Int>): Single<Response<Unit>>
 
+    //users - friends - travels
+    @PUT("users/{userId}/travels/{travelId}/share")
+    fun shareTravel(@Path("userId") userId: Int, @Path("travelId") travelId: Int, @Body selectedFriendsIds: ArrayList<Int>): Single<Response<Boolean>>
+
+    @GET("users/{userId}/travels/{travelId}/share/friends")
+    fun getFriendsWithoutAccessToTravel(@Path("userId") userId: Int, @Path("travelId") travelId: Int): Single<Response<List<UserInfo>>>
+
     //users - plans
-    @GET("users/{userId}/travels/{travelId}/plans")
-    fun getPlanElements(@Path("userId") userId: Int, @Path("travelId") travelId: Int): Single<Response<List<PlanElement>>>
 
     @POST("users/{userId}/travels/{travelId}/plans")
     fun addPlanElement(@Path("userId") userId: Int, @Path("travelId") travelId: Int, @Body planElement: PlanElement): Single<Response<PlanElement>>
 
     @HTTP(method = "DELETE", path = "users/{userId}/plans", hasBody = true)
     fun deletePlanElements(@Path("userId") userId: Int, @Body planElementIds: List<Int>): Single<Response<Unit>>
+
+    @GET("users/{userId}/travels/{travelId}/plans")
+    fun getPlanElements(@Path("userId") userId: Int, @Path("travelId") travelId: Int): Single<Response<List<PlanElement>>>
 
     @PUT("/users/{userId}/travels/{travelId}/plans")
     fun updatePlanElement(@Path("userId") userId: Int, @Path("travelId") travelId: Int, @Body planElement: PlanElement): Single<Response<Unit>>
@@ -128,22 +134,6 @@ interface ServerApi {
                      @Query("destination_longitude") destinationLng: String,
                      @Query("travel_mode") travelMode: String,
                      @Query("departure_time") departureTime: String): Single<Response<Routes>>
-
-
-    @GET("users/{userId}/travels/{travelId}/plans")
-    fun getPlanElements(@Path("userId") userId: Int, @Path("travelId") travelId: Int): Single<Response<List<PlanElement>>>
-
-    @POST("users/{userId}/travels/{travelId}/plans")
-    fun addPlanElement(@Path("userId") userId: Int, @Path("travelId") travelId: Int, @Body planElement: PlanElement): Single<Response<PlanElement>>
-
-    @HTTP(method = "DELETE", path = "users/{userId}/plans", hasBody = true)
-    fun deletePlanElements(@Path("userId") userId: Int, @Body planElementIds: List<Int>): Single<Response<Unit>>
-
-    @POST("users/{userId}/travels/{travelId}/share")
-    fun shareTravel(@Path("userId") userId: Int, @Path("travelId") travelId: Int, @Body selectedFriendsIds: ArrayList<Int>): Single<Response<Boolean>>
-
-    @GET("users/{userId}/travels/{travelId}/friends-without-access")
-    fun getFriendsWithoutAccessToTravel(@Path("userId") userId: Int,@Path("travelId") travelId:Int): Single<Response<List<UserInfo>>>
 
     //recommendation - places
     @POST("places/{placeId}/rating")
