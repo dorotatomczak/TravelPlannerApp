@@ -35,6 +35,7 @@ class UserFriendRepository : Repository<UserFriend>(), IUserFriendRepository {
         }
         return false;
     }
+
     override fun deleteUserFriendBinding(userId: Int, friendId: Int): Boolean {
         val statement = DbConnection
                 .conn

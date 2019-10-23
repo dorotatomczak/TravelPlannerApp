@@ -1,6 +1,6 @@
 package com.github.travelplannerapp.ServerApp.datamanagement
 
-import com.github.travelplannerapp.ServerApp.datamodels.commonmodel.UserInfo
+import com.github.travelplannerapp.communication.commonmodel.UserInfo
 import com.github.travelplannerapp.ServerApp.db.dao.User
 import com.github.travelplannerapp.ServerApp.db.dao.UserFriend
 import com.github.travelplannerapp.ServerApp.db.merge
@@ -93,7 +93,7 @@ class UserManagement : IUserManagement {
             userFriendRepository.add(userFriend)
             return userFriend
         } else {
-            throw AddFriendException("Error, user is in the friend list")
+            throw AddFriendException("Error when adding friend")
         }
     }
 
@@ -105,7 +105,7 @@ class UserManagement : IUserManagement {
         }
     }
 
-    override fun findMatchingEmails(userId:Int,query: String): MutableList<UserInfo> {
+    override fun findMatchingEmails(userId: Int, query: String): MutableList<UserInfo> {
         val userInfos = mutableListOf<UserInfo>()
         val users = userRepository.findMatchingEmails(query)
         users.forEach { matchingUser ->

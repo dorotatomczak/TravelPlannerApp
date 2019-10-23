@@ -1,7 +1,6 @@
 package com.github.travelplannerapp.ServerApp
 
 import com.github.travelplannerapp.ServerApp.datamanagement.UserManagement
-import com.github.travelplannerapp.ServerApp.datamodels.commonmodel.UserInfo
 import com.github.travelplannerapp.ServerApp.exceptions.SearchNoItemsException
 import com.github.travelplannerapp.communication.commonmodel.*
 import org.springframework.beans.factory.annotation.Autowired
@@ -61,7 +60,7 @@ class ServerUserController {
             @RequestParam("query") query: String
     ): Response<MutableList<UserInfo>> {
         try {
-            val users = userManagement.findMatchingEmails(userId,query)
+            val users = userManagement.findMatchingEmails(userId, query)
             return Response(ResponseCode.OK, users)
         } catch (ex: Exception) {
             throw SearchNoItemsException(ex.localizedMessage)

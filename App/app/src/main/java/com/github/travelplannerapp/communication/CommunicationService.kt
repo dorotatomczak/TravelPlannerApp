@@ -1,7 +1,6 @@
 package com.github.travelplannerapp.communication
 
 import com.github.travelplannerapp.communication.appmodel.CityObject
-import com.github.travelplannerapp.communication.appmodel.PlanElement
 import com.github.travelplannerapp.communication.appmodel.Scan
 import com.github.travelplannerapp.communication.appmodel.Travel
 import com.github.travelplannerapp.communication.commonmodel.*
@@ -87,11 +86,14 @@ interface ServerApi {
     @GET("users/{userId}/friends")
     fun getFriends(@Path("userId") userId: Int): Single<Response<List<UserInfo>>>
 
-    @POST("users/{userId}/friends")
-    fun addFriend(@Path("userId") userId: Int, @Body friend: UserInfo): Single<Response<UserInfo>>
-
     @HTTP(method = "DELETE", path = "users/{userId}/friends", hasBody = true)
     fun deleteFriends(@Path("userId") userId: Int, @Body friendsIds: MutableSet<Int>): Single<Response<Unit>>
+
+    @POST("users/{userId}/friends")
+    fun addFriend(@Path("userId") userId: Int, @Body friendEmail: String): Single<Response<UserInfo>>
+
+    @GET("users/{userId}/usersemails")
+    fun findMatchingEmails(@Path("userId") userId: Int, @Query("query") query: String): Single<Response<MutableList<UserInfo>>>
 
     //users - plans
     @GET("users/{userId}/travels/{travelId}/plans")
@@ -116,18 +118,6 @@ interface ServerApi {
 
     @GET("here-management/objects/{objectId}/contacts")
     fun getContacts(@Path("objectId") objectId: String, @Query("query") query: String): Single<Response<Contacts>>
-
-    @GET("users/{userId}/friends")
-    fun getFriends(@Path("userId") userId: Int): Single<Response<List<UserInfo>>>
-
-    @POST("users/{userId}/friends")
-    fun addFriend(@Path("userId") userId: Int, @Body friendEmail: String): Single<Response<UserInfo>>
-
-    @GET("users/{userId}/usersemails")
-    fun findMatchingEmails(@Path("userId") userId: Int,@Query("query") query: String): Single<Response<MutableList<UserInfo>>>
-
-    @HTTP(method = "DELETE", path = "users/{userId}/friends", hasBody = true)
-    fun deleteFriends(@Path("userId") userId: Int, @Body friendsIds: MutableSet<Int>): Single<Response<Unit>>
 
     @GET("here-management/objects/{objectId}")
     fun getPlace(@Path("objectId") objectId: String, @Query("query") query: String): Single<Response<PlaceData>>
