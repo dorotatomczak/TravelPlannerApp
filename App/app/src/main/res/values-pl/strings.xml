@@ -82,7 +82,7 @@
     <string name="delete_friends">Usuń znajomych</string>
     <string name="delete_friends_confirmation">Czy na pewno chcesz usunąć wybranych znajomych?</string>
     <string name="delete_friends_error">Wystąpił problem podczas usuwania znajomych</string>
-    <string name="add_friend_error">Wystąpił problem podczas dodawania znajomego, masz już go na liście</string>
+    <string name="add_friend_error">Wystąpił problem podczas dodawania znajomego</string>
 
     <string name="rate_place">Oceń miejsce!</string>
     <string name="rate_place_completed">Dzięki!</string>

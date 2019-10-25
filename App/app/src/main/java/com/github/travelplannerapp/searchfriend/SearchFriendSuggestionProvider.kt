@@ -40,8 +40,8 @@ class SearchFriendSuggestionProvider : ContentProvider() {
 
         var list = CommunicationService.serverApi.findMatchingEmails(SharedPreferencesUtils.getUserId(), searchString)
 
-        for ((index, userInfo) in list.blockingGet().data.orEmpty().withIndex()) {
-            cursor.addRow(arrayOf(index, userInfo.email))
+        list.blockingGet().data.orEmpty().forEach {
+            cursor.addRow(arrayOf(it.id, it.email))
         }
         return cursor
     }

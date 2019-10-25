@@ -1,6 +1,5 @@
 package com.github.travelplannerapp.ServerApp.datamanagement
 
-import com.github.travelplannerapp.communication.commonmodel.UserInfo
 import com.github.travelplannerapp.ServerApp.db.dao.User
 import com.github.travelplannerapp.ServerApp.db.dao.UserFriend
 import com.github.travelplannerapp.ServerApp.db.merge
@@ -9,6 +8,7 @@ import com.github.travelplannerapp.ServerApp.db.repositories.UserRepository
 import com.github.travelplannerapp.ServerApp.exceptions.*
 import com.github.travelplannerapp.communication.commonmodel.SignInRequest
 import com.github.travelplannerapp.communication.commonmodel.SignUpRequest
+import com.github.travelplannerapp.communication.commonmodel.UserInfo
 import io.jsonwebtoken.Jwts
 import io.jsonwebtoken.SignatureAlgorithm
 import org.springframework.beans.factory.annotation.Autowired
@@ -85,13 +85,13 @@ class UserManagement : IUserManagement {
         userRepository.update(updatedUser)
     }
 
-    override fun addFriend(userId: Int, friendEmail: String): UserFriend {
-        var friendId = userRepository.getUserByEmail(friendEmail)!!.id
-        if (!userFriendRepository.ifUserFriendBindingExist(userId, friendId!!)) {
-            val userFriendId = userFriendRepository.getNextId()
-            val userFriend = UserFriend(userFriendId, userId, friendId)
-            userFriendRepository.add(userFriend)
-            return userFriend
+    override fun addFriend(userId: Int, friendId: Int): UserInfo {
+        val userFriendId = userFriendRepository.getNextId()
+        val userFriend = UserFriend(userFriendId, userId, friendId)
+        val ifUserFriendAdded = userFriendRepository.add(userFriend)
+        if (ifUserFriendAdded) {
+            val addedFriend = userRepository.get(friendId)
+            return UserInfo(addedFriend!!.id!!, addedFriend!!.email!!)
         } else {
             throw AddFriendException("Error when adding friend")
         }

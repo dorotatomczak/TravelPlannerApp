@@ -15,7 +15,7 @@ interface SearchFriendContract {
     }
 
     interface Presenter : DeleteContract.Presenter {
-        fun addFriend(friendEmail: String)
+        fun addFriend(friendId: Int)
         fun loadFriends()
         fun getFriendsCount(): Int
         fun addFriendIdToDelete(position: Int)

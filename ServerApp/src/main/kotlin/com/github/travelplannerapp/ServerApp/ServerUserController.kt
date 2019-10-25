@@ -42,16 +42,15 @@ class ServerUserController {
         return Response(ResponseCode.OK, friends)
     }
 
-    @PostMapping("users/{userId}/friends")
-    fun addFriend(
+    @PostMapping("users/{userId}/friends/{friendId}")
+    fun addTravel(
             @RequestHeader("authorization") token: String,
             @PathVariable userId: Int,
-            @RequestBody friendEmail: String
+            @PathVariable friendId: Int
     ): Response<UserInfo> {
         userManagement.verifyUser(token)
-        val response = userManagement.addFriend(userId, friendEmail)
-        var friend: UserInfo = UserInfo(response.friendId!!, friendEmail)
-        return Response(ResponseCode.OK, friend)
+        val newFriend = userManagement.addFriend(userId, friendId)
+        return Response(ResponseCode.OK, newFriend)
     }
 
     @GetMapping("users/{userId}/usersemails")

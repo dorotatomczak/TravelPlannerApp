@@ -1,9 +1,8 @@
 package com.github.travelplannerapp.ServerApp.datamanagement
 
-import com.github.travelplannerapp.communication.commonmodel.UserInfo
-import com.github.travelplannerapp.ServerApp.db.dao.UserFriend
 import com.github.travelplannerapp.communication.commonmodel.SignInRequest
 import com.github.travelplannerapp.communication.commonmodel.SignUpRequest
+import com.github.travelplannerapp.communication.commonmodel.UserInfo
 
 interface IUserManagement {
     fun getUserId(token: String): Int
@@ -12,7 +11,7 @@ interface IUserManagement {
     fun updateAuthorizationToken(id: Int, request: SignInRequest): String
     fun addUser(request: SignUpRequest)
     fun updateUser(id: Int, changes: MutableMap<String, Any?>)
-    fun addFriend(userId: Int, friendEmail: String): UserFriend
+    fun addFriend(userId: Int, friendId: Int): UserInfo
     fun deleteFriends(userId: Int, friendsIds: MutableSet<Int>)
     fun findMatchingEmails(userId: Int, query: String): MutableList<UserInfo>
     fun getAllFriendsByUserId(userId: Int): MutableList<UserInfo>
