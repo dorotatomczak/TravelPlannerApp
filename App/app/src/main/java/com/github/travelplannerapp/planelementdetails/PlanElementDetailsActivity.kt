@@ -12,7 +12,6 @@ import com.google.android.material.snackbar.Snackbar
 import dagger.android.AndroidInjection
 import kotlinx.android.synthetic.main.activity_plan_element_details.*
 import kotlinx.android.synthetic.main.activity_search_element.*
-import kotlinx.android.synthetic.main.activity_travel_details.collapsing
 import kotlinx.android.synthetic.main.item_place_element_info.*
 import kotlinx.android.synthetic.main.toolbar.*
 import javax.inject.Inject
@@ -61,7 +60,7 @@ class PlanElementDetailsActivity : AppCompatActivity(), PlanElementDetailsContra
     }
 
     override fun showTitle(title: String) {
-        collapsing.title = title
+        supportActionBar?.title = title
     }
 
     override fun showInfoLayout(isVisible: Boolean) {
