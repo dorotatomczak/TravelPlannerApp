@@ -37,9 +37,9 @@ class UserRepository : Repository<User>(), IUserRepository {
         return null
     }
 
-    override fun getFriendsWithCheckAccessToTravel(userId: Int, travelId: Int, ifHaveAccess: Boolean): MutableList<User> {
+    override fun getFriendsBySharedTravel(userId: Int, travelId: Int, selectFriendsWithAccess: Boolean): MutableList<User> {
         var negation = "NOT"
-        if (ifHaveAccess) negation = ""
+        if (selectFriendsWithAccess) negation = ""
         val friends = mutableListOf<User>()
         val statement = DbConnection
                 .conn

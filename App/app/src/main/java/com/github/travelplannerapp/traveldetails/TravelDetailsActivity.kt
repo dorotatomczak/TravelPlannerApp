@@ -214,10 +214,11 @@ class TravelDetailsActivity : AppCompatActivity(), TravelDetailsContract.View {
         val shareTravelDialog = ShareTravelDialog(getString(R.string.share_travel), presenter.getFriendWithoutAccessToTravel())
         shareTravelDialog.onOk = {
             val selectedFriendsIds = shareTravelDialog.selectedFriendsId
-            if (selectedFriendsIds.size > 0)
+            if (selectedFriendsIds.size > 0) {
                 presenter.shareTravel(selectedFriendsIds)
-            else
+            } else {
                 showSnackbar(R.string.no_selected_friends)
+            }
         }
         shareTravelDialog.show(supportFragmentManager, ShareTravelDialog.TAG)
     }

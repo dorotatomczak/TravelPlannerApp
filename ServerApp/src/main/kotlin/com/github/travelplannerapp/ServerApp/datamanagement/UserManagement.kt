@@ -124,9 +124,9 @@ class UserManagement : IUserManagement {
         return userInfos
     }
 
-    override fun getFriendsWithCheckAccessToTravel(userId: Int, travelId: Int, ifHaveAcces: Boolean): MutableList<UserInfo> {
+    override fun getFriendsBySharedTravel(userId: Int, travelId: Int, selectFriendsWithAccess: Boolean): MutableList<UserInfo> {
         val userInfos = mutableListOf<UserInfo>()
-        val friendsWithoutAccess = userRepository.getFriendsWithCheckAccessToTravel(userId, travelId, ifHaveAcces)
+        val friendsWithoutAccess = userRepository.getFriendsBySharedTravel(userId, travelId, selectFriendsWithAccess)
         friendsWithoutAccess.forEach { friend ->
             userInfos.add(UserInfo(friend.id!!, friend.email!!))
         }
