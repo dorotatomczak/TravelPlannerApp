@@ -7,20 +7,47 @@
     android:paddingStart="@dimen/padding_small"
     android:paddingEnd="@dimen/padding_small">
 
-    <CheckBox
-        android:id="@+id/checkboxItemPlanElement"
+    <LinearLayout
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="@dimen/margin_horizontal"
-        android:checked="false"
-        android:visibility="invisible" />
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <CheckBox
+            android:id="@+id/checkboxIsPlanElementDone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/margin_horizontal"
+            android:buttonTint="@color/md_green_900"
+            android:checked="false"
+            android:cursorVisible="false"
+            android:minHeight="@dimen/edit_text_height"
+            android:visibility="visible" />
+
+        <CheckBox
+            android:id="@+id/checkboxItemPlanElement"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/margin_horizontal"
+            android:buttonTint="@color/colorDivider"
+            android:checked="false"
+            android:visibility="invisible" />
+    </LinearLayout>
+
 
     <TextView
         android:id="@+id/textViewItemPlanFromTime"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="@dimen/text_size_item_S"
-        tools:text="08:00 AM"/>
+        tools:text="08:00 AM" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+    </LinearLayout>
+
 
     <FrameLayout
         android:id="@+id/layoutImageAndLine"
