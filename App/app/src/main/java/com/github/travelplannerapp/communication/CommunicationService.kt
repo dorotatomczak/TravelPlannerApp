@@ -96,8 +96,8 @@ interface ServerApi {
     @PUT("users/{userId}/travels/{travelId}/share")
     fun shareTravel(@Path("userId") userId: Int, @Path("travelId") travelId: Int, @Body selectedFriendsIds: ArrayList<Int>): Single<Response<Boolean>>
 
-    @GET("users/{userId}/travels/{travelId}/share/friends")
-    fun getFriendsWithoutAccessToTravel(@Path("userId") userId: Int, @Path("travelId") travelId: Int): Single<Response<List<UserInfo>>>
+    @GET("users/{userId}/travels/{travelId}/share/friends/{ifHaveAccess}")
+    fun getFriendsWithCheckAccessToTravel(@Path("userId") userId: Int, @Path("travelId") travelId: Int, @Path("ifHaveAccess") ifHaveAccess: Boolean): Single<Response<List<UserInfo>>>
 
     //users - plans
 

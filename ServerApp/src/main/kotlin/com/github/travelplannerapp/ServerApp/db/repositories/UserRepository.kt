@@ -37,6 +37,31 @@ class UserRepository : Repository<User>(), IUserRepository {
         return null
     }
 
+    override fun getFriendsWithCheckAccessToTravel(userId: Int, travelId: Int, ifHaveAccess: Boolean): MutableList<User> {
+        var negation = "NOT"
+        if (ifHaveAccess) negation = ""
+        val friends = mutableListOf<User>()
+        val statement = DbConnection
+                .conn
+                .prepareStatement(
+                        "SELECT DISTINCT $tableName.* FROM $tableName " +
+                                "INNER JOIN ${UserFriendRepository.tableName} " +
+                                "on $tableName.$columnId = ${UserFriendRepository.tableName}.${UserFriendRepository.columnFriendId} " +
+                                "WHERE ${UserFriendRepository.tableName}.${UserFriendRepository.columnUserId}=? " +
+                                "AND $tableName.$columnId " + negation + " IN " +
+                                "(SELECT ${UserTravelRepository.tableName}.${UserTravelRepository.columnUserId} " +
+                                "FROM ${UserTravelRepository.tableName} " +
+                                "WHERE ${UserTravelRepository.tableName}.${UserTravelRepository.columnTravelId}=?) "
+                )
+        statement.setInt(1, userId)
+        statement.setInt(2, travelId)
+        val result = statement.executeQuery()
+        while (result.next()) {
+            friends.add(User(result))
+        }
+        return friends
+    }
+
     override fun getAllFriendsByUserId(id: Int): MutableList<User> {
         val friends = mutableListOf<User>()
         val statement = DbConnection

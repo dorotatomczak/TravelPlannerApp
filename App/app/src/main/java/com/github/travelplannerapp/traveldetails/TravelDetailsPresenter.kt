@@ -62,7 +62,7 @@ class TravelDetailsPresenter(private var travel: Travel, view: TravelDetailsCont
     }
 
     override fun loadFriendsWithoutAccessToTravel() {
-        compositeDisposable.add(CommunicationService.serverApi.getFriendsWithoutAccessToTravel(SharedPreferencesUtils.getUserId(), travel.id)
+        compositeDisposable.add(CommunicationService.serverApi.getFriendsWithCheckAccessToTravel(SharedPreferencesUtils.getUserId(), travel.id, false)
                 .observeOn(SchedulerProvider.ui())
                 .subscribeOn(SchedulerProvider.io())
                 .map { if (it.responseCode == ResponseCode.OK) it.data!! else throw ApiException(it.responseCode) }

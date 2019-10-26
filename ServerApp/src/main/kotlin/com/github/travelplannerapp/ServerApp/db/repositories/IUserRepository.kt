@@ -6,5 +6,5 @@ interface IUserRepository : IRepository<User> {
     fun getUserByEmail(email: String): User?
     fun getAllFriendsByUserId(id: Int): MutableList<User>
     fun findMatchingEmails(email: String): MutableList<User>
-
+    fun getFriendsWithCheckAccessToTravel(userId: Int, travelId: Int,ifHaveAccess: Boolean): MutableList<User>
 }

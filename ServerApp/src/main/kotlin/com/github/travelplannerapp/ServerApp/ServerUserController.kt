@@ -76,12 +76,13 @@ class ServerUserController {
         return Response(ResponseCode.OK, Unit)
     }
 
-    @GetMapping("users/{userId}/travels/{travelId}/share/friends")
-    fun getFriendsWithoutAccessToTravel(
+    @GetMapping("users/{userId}/travels/{travelId}/share/friends/{ifHaveAccess}")
+    fun getFriendsWithCheckAccessToTravel(
             @PathVariable("userId") userId: Int,
-            @PathVariable("travelId") travelId: Int
+            @PathVariable("travelId") travelId: Int,
+            @PathVariable("ifHaveAccess") ifHaveAccess: Boolean
     ): Response<List<UserInfo>> {
-        val friends = userManagement.getFriendsWithoutAccessToTravel(userId, travelId)
+        val friends = userManagement.getFriendsWithCheckAccessToTravel(userId, travelId, ifHaveAccess)
         return Response(ResponseCode.OK, friends)
     }
 }

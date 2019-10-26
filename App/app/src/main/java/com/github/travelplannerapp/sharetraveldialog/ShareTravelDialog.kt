@@ -46,6 +46,4 @@ class ShareTravelDialog(private val dialogTitle: String, private var friends: Ar
         dialog.window!!.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE)
         return dialog
     }
-
-
 }
