@@ -6,6 +6,7 @@ import android.app.TimePickerDialog
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import android.widget.AdapterView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.github.travelplannerapp.R
@@ -54,10 +55,13 @@ class AddPlanElementActivity : AppCompatActivity(), AddPlanElementContract.View 
         // Set up edit texts
         editTextPlanFromDate.setOnClickListener { openDatePicker(it as TextInputEditText) }
         editTextPlanFromTime.setOnClickListener { openTimePicker(it as TextInputEditText) }
+        editTextPlanToDate.setOnClickListener { openDatePicker(it as TextInputEditText) }
+        editTextPlanToTime.setOnClickListener { openTimePicker(it as TextInputEditText) }
 
         editTextPlanName.setOnClickListener { startSearchElementActivity() }
 
         fabCheck.setOnClickListener { onFabFinishAddPlanClicked() }
+        setOnSpinnerItemSelectListener()
     }
 
     override fun showLocation(location: String) {
@@ -76,6 +80,28 @@ class AddPlanElementActivity : AppCompatActivity(), AddPlanElementContract.View 
         }
         setResult(RESULT_OK, resultIntent)
         finish()
+    }
+
+    private fun setOnSpinnerItemSelectListener() {
+        dropdownCategoriesAddPlan.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+                // pass
+            }
+
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                if (isCategoryAccommodation()) {
+                    linearLayoutToTime.visibility = View.VISIBLE
+                } else {
+                    linearLayoutToTime.visibility = View.GONE
+                }
+            }
+        }
+    }
+
+    private fun isCategoryAccommodation(): Boolean {
+        val categoryNameDropDown = dropdownCategoriesAddPlan.selectedItem.toString()
+
+        return this.resources.getString(R.string.accommodation) == categoryNameDropDown
     }
 
     private fun startSearchElementActivity() {
@@ -122,14 +148,23 @@ class AddPlanElementActivity : AppCompatActivity(), AddPlanElementContract.View 
     }
 
     private fun onFabFinishAddPlanClicked() {
-        val data = AddPlanElementContract.NewPlanElementData(
+        var accommodationData: AddPlanElementContract.AccommodationData? = null
+
+        if (isCategoryAccommodation()) {
+            accommodationData = AddPlanElementContract.AccommodationData(
+                    editTextPlanToDate.text.toString(),
+                    editTextPlanToTime.text.toString())
+        }
+
+        val placeData = AddPlanElementContract.NewPlanElementData(
                 editTextPlanName.text.toString(),
                 editTextPlanFromDate.text.toString(),
                 editTextPlanFromTime.text.toString(),
                 coordinates,
-                editTextPlanLocation.text.toString()
+                editTextPlanLocation.text.toString(),
+                accommodationData
         )
-        presenter.addPlanElement(data)
+        presenter.addPlanElement(placeData)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

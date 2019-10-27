@@ -106,6 +106,7 @@ class TravelDetailsActivity : AppCompatActivity(), TravelDetailsContract.View {
                     showSnackbar(messageCode)
                     val plan = data.getSerializableExtra(AddPlanElementActivity.REQUEST_ADD_PLAN_ELEMENT_RESULT_PLAN) as PlanElement
                     presenter.onPlanElementAdded(plan)
+                    refreshDayPlans()
                 }
             }
             REQUEST_SHOW_DETAILS -> {
@@ -182,13 +183,25 @@ class TravelDetailsActivity : AppCompatActivity(), TravelDetailsContract.View {
                 .show()
     }
 
-    override fun showPlanElementDetails(placeId: Int, place: Place) {
+    override fun showPlanElementDetails(placeId: Int, place: Place, placeTitle: String) {
         val intent = Intent(this, PlanElementDetailsActivity::class.java)
         intent.putExtra(PlanElementDetailsActivity.EXTRA_PLACE_HREF, place.href)
         intent.putExtra(PlanElementDetailsActivity.EXTRA_AVERAGE_RATING, place.averageRating)
-        intent.putExtra(PlanElementDetailsActivity.EXTRA_PLACE_NAME, place.title)
+        intent.putExtra(PlanElementDetailsActivity.EXTRA_PLACE_NAME, placeTitle)
         intent.putExtra(PlanElementDetailsActivity.EXTRA_PLACE_ID, placeId)
+
+        val checkInString = getString(R.string.check_in)
+        intent.putExtra(PlanElementDetailsActivity.EXTRA_CAN_BE_RATED, !placeTitle.startsWith(checkInString))
+
         startActivityForResult(intent, REQUEST_SHOW_DETAILS)
+    }
+
+    override fun getAccommodationName(isCheckIn: Boolean, placeTitle: String): String {
+        val resourceId: Int
+        if (isCheckIn) resourceId = R.string.check_in
+        else resourceId = R.string.check_out
+
+        return getString(resourceId) + ": " + placeTitle
     }
 
     private fun showEditTravel() {

@@ -34,7 +34,6 @@ class UserManagement : IUserManagement {
         return Jwts.parser().setSigningKey(SECRET_KEY).parseClaimsJws(token).body["id"].toString().toInt()
     }
 
-
     override fun verifyUser(token: String) {
         val expirationDate = Jwts.parser().setSigningKey(SECRET_KEY).parseClaimsJws(token).body.expiration
 
