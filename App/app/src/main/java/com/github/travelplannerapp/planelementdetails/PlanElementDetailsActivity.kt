@@ -25,6 +25,7 @@ class PlanElementDetailsActivity : AppCompatActivity(), PlanElementDetailsContra
         const val EXTRA_PLACE_ID = "place_id"
         const val EXTRA_PLACE_NAME = "place_name"
         const val EXTRA_AVERAGE_RATING = "average_rating"
+        const val EXTRA_CAN_BE_RATED = "can_be_rated"
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -50,7 +51,10 @@ class PlanElementDetailsActivity : AppCompatActivity(), PlanElementDetailsContra
     override fun showInfoLayout(isVisible: Boolean) {
         if (isVisible) {
             linearLayoutPlaceElementInfo.visibility = View.VISIBLE
-            linearLayoutRatingPlanElementDetails.visibility = View.VISIBLE
+
+            if (intent.getBooleanExtra(EXTRA_CAN_BE_RATED, true)) {
+                linearLayoutRatingPlanElementDetails.visibility = View.VISIBLE
+            }
         } else {
             linearLayoutPlaceElementInfo.visibility = View.GONE
             linearLayoutRatingPlanElementDetails.visibility = View.GONE

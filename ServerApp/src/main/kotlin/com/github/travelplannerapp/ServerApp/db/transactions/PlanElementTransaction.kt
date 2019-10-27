@@ -8,6 +8,7 @@ import com.github.travelplannerapp.ServerApp.db.repositories.PlanElementReposito
 import com.github.travelplannerapp.communication.commonmodel.PlanElement
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component
+import java.lang.Thread.sleep
 
 @Component
 class PlanElementTransaction {
@@ -31,8 +32,7 @@ class PlanElementTransaction {
         if (placeId != null) {
             planElementDao.placeId = placeId
             queryResult = planElementRepository.add(planElementDao)
-        }
-        else {
+        } else {
             placeId = placeRepository.getNextId()
             val rateCount = 0
             val rating = planElement.place.averageRating?.toDouble() ?: 0.0
@@ -54,14 +54,20 @@ class PlanElementTransaction {
             }
         }
 
-        return if (queryResult) {
+        val limit = 5
+        var counter = 0
+        while (DbConnection.conn.autoCommit && counter < limit) {
+            sleep(1000)
+            counter += 1
+        }
+
+        return if (queryResult && !DbConnection.conn.autoCommit) {
             DbConnection.conn.commit()
             DbConnection.conn.autoCommit = true
             planElement.id = planElementId
             planElement.placeId = placeId
             planElement
-        }
-        else {
+        } else {
             DbConnection.conn.rollback()
             DbConnection.conn.autoCommit = true
             null
@@ -85,8 +91,7 @@ class PlanElementTransaction {
             DbConnection.conn.autoCommit = true
             planElement.placeId = placeId!!
             planElement
-        }
-        else {
+        } else {
             DbConnection.conn.autoCommit = true
             null
         }

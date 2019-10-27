@@ -18,7 +18,8 @@ interface TravelDetailsContract {
         fun hideLoadingIndicator()
         fun setResult(travel: Travel)
         fun showSnackbar(messageCode: Int)
-        fun showPlanElementDetails(placeId: Int, place: Place)
+        fun showPlanElementDetails(placeId: Int, place: Place, placeTitle: String)
+        fun getAccommodationName(isCheckIn: Boolean, placeTitle: String): String
     }
 
     interface PlanElementItemView : DeleteContract.ItemView {
@@ -59,6 +60,6 @@ interface TravelDetailsContract {
         fun addPlanElementIdToDelete(position: Int)
         fun removePlanElementIdToDelete(position: Int)
         fun deletePlanElements()
-        fun onPlanElementClicked(position: Int)
+        fun onPlanElementClicked(position: Int, placeTitle: String)
     }
 }

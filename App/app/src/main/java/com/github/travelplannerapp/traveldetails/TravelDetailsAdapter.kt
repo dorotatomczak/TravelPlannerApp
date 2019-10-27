@@ -82,7 +82,7 @@ class TravelDetailsAdapter(val presenter: TravelDetailsContract.Presenter) : Rec
         }
 
         override fun onClick(v: View?) {
-            presenter.onPlanElementClicked(adapterPosition)
+            presenter.onPlanElementClicked(adapterPosition, textViewItemPlanName.text.toString())
         }
 
         override fun onLongClick(v: View?): Boolean {
