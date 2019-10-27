@@ -92,9 +92,6 @@ interface ServerApi {
     @POST("users/{userId}/friends/{friendId}")
     fun addFriend(@Path("userId") userId: Int, @Path("friendId") friendId: Int): Single<Response<UserInfo>>
 
-    @GET("users/{userId}/usersemails")
-    fun findMatchingEmails(@Path("userId") userId: Int, @Query("query") query: String): Single<Response<MutableList<UserInfo>>>
-
     //users - plans
     @GET("users/{userId}/travels/{travelId}/plans")
     fun getPlanElements(@Path("userId") userId: Int, @Path("travelId") travelId: Int): Single<Response<List<PlanElement>>>

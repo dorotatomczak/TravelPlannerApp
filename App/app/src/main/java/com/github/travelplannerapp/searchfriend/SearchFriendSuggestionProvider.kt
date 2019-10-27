@@ -38,7 +38,7 @@ class SearchFriendSuggestionProvider : ContentProvider() {
     private fun createCursor(searchString: String): MatrixCursor {
         val cursor = MatrixCursor(arrayOf("_id", SearchManager.SUGGEST_COLUMN_TEXT_1))
 
-        var list = CommunicationService.serverApi.findMatchingEmails(SharedPreferencesUtils.getUserId(), searchString)
+        var list = CommunicationService.serverApi.findMatchingEmails(searchString)
 
         list.blockingGet().data.orEmpty().forEach {
             cursor.addRow(arrayOf(it.id, it.email))

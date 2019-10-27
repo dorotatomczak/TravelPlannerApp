@@ -53,12 +53,14 @@ class ServerUserController {
         return Response(ResponseCode.OK, newFriend)
     }
 
-    @GetMapping("users/{userId}/usersemails")
+    @GetMapping("user-management/usersemails")
     fun findMatchingEmails(
-            @PathVariable userId: Int,
+            @RequestHeader("authorization") token: String,
             @RequestParam("query") query: String
     ): Response<MutableList<UserInfo>> {
         try {
+            userManagement.verifyUser(token)
+            val userId = userManagement.getUserId(token)
             val users = userManagement.findMatchingEmails(userId, query)
             return Response(ResponseCode.OK, users)
         } catch (ex: Exception) {
