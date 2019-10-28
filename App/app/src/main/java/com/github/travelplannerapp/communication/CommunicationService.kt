@@ -86,8 +86,8 @@ interface ServerApi {
     @GET("users/{userId}/friends")
     fun getFriends(@Path("userId") userId: Int): Single<Response<List<UserInfo>>>
 
-    @HTTP(method = "DELETE", path = "users/{userId}/friends", hasBody = true)
-    fun deleteFriends(@Path("userId") userId: Int, @Body friendsIds: MutableSet<Int>): Single<Response<Unit>>
+    @POST("users/{userId}/friends")
+    fun deleteFriends(@Path("userId") userId: Int, @Query("friendsIds") friendsIds: MutableSet<Int>): Single<Response<Unit>>
 
     @POST("users/{userId}/friends/{friendId}")
     fun addFriend(@Path("userId") userId: Int, @Path("friendId") friendId: Int): Single<Response<UserInfo>>

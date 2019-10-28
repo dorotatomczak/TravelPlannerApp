@@ -66,11 +66,11 @@ class ServerUserController {
         }
     }
 
-    @DeleteMapping("users/{userId}/friends")
+    @PostMapping("users/{userId}/friends")
     fun deleteFriends(
             @RequestHeader("authorization") token: String,
             @PathVariable userId: Int,
-            @RequestBody friendsIds: MutableSet<Int>
+            @RequestParam friendsIds: MutableSet<Int>
     ): Response<Unit> {
         userManagement.verifyUser(token)
         userManagement.deleteFriends(userId, friendsIds)
