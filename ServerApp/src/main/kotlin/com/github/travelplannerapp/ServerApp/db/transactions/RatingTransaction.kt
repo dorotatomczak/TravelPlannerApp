@@ -28,8 +28,10 @@ class RatingTransaction {
                 placeDao.ratesCount = placeDao.ratesCount!! + 1
 
                 if (placeRepository.update(placeDao)) {
+
                     val userPlaceId = userPlaceRepository.getNextId()
                     val userPlace = UserPlace(userPlaceId, userId, placeId, rating)
+
                     if (userPlaceRepository.add(userPlace)) {
                         DbConnection.conn.commit()
                         DbConnection.conn.autoCommit = true
@@ -40,10 +42,6 @@ class RatingTransaction {
         } catch (ex: Exception) {
         }
 
-        return rollback()
-    }
-
-    private fun rollback(): Boolean {
         DbConnection.conn.rollback()
         DbConnection.conn.autoCommit = true
         return false
