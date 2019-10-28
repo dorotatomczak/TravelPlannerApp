@@ -88,8 +88,7 @@ class UserManagement : IUserManagement {
     override fun addFriend(userId: Int, friendId: Int): UserInfo {
         val userFriendId = userFriendRepository.getNextId()
         val userFriend = UserFriend(userFriendId, userId, friendId)
-        val ifUserFriendAdded = userFriendRepository.add(userFriend)
-        if (ifUserFriendAdded) {
+        if (userFriendRepository.add(userFriend)) {
             val addedFriend = userRepository.get(friendId)
             return UserInfo(addedFriend!!.id!!, addedFriend!!.email!!)
         } else {
@@ -107,12 +106,9 @@ class UserManagement : IUserManagement {
 
     override fun findMatchingEmails(userId: Int, query: String): MutableList<UserInfo> {
         val userInfos = mutableListOf<UserInfo>()
-        val users = userRepository.findMatchingEmails(query)
+        val users = userRepository.findMatchingEmails(query, userId)
         users.forEach { matchingUser ->
-            if (!userFriendRepository.ifUserFriendBindingExist(userId, matchingUser.id!!)) {
-                userInfos.add(UserInfo(matchingUser.id!!, matchingUser.email!!))
-            }
-
+            userInfos.add(UserInfo(matchingUser.id!!, matchingUser.email!!))
         }
         return userInfos
     }
