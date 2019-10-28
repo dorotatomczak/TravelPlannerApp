@@ -48,3 +48,10 @@ create table app_user_friend (
 	app_user_id integer references app_user(id),
 	friend_user_id integer references app_user(id)
 );
+
+create table app_user_place (
+	id serial PRIMARY KEY,
+	app_user_id integer references app_user(id),
+	place_id integer references place(id),
+	rating integer
+);

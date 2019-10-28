@@ -15,18 +15,7 @@
         android:fitsSystemWindows="true"
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
 
-        <com.google.android.material.appbar.MaterialToolbar
-            android:id="@+id/materialPlanElementDetails"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:fitsSystemWindows="true"
-            app:contentScrim="?attr/colorPrimary"
-            app:expandedTitleMarginEnd="64dp"
-            app:expandedTitleMarginStart="48dp">
-
-            <include layout="@layout/toolbar" />
-
-        </com.google.android.material.appbar.MaterialToolbar>
+        <include layout="@layout/toolbar" />
 
     </com.google.android.material.appbar.AppBarLayout>
 

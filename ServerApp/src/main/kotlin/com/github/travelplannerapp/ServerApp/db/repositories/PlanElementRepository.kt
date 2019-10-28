@@ -15,16 +15,15 @@ class PlanElementRepository : Repository<PlanElementDao>(), IPlanElementReposito
         const val columnFromDateTime = "from_date_time"
         const val columnPlaceId = "place_id"
         const val columnTravelId = "travel_id"
-        const val columnMyRating = "my_rating"
     }
 
     override val insertStatement = "INSERT INTO $tableName " +
-                                   "($columnId, $columnFromDateTime, $columnPlaceId, $columnTravelId, $columnMyRating) " +
-                                   "VALUES (?, ?, ?, ?, ?) "
+                                   "($columnId, $columnFromDateTime, $columnPlaceId, $columnTravelId) " +
+                                   "VALUES (?, ?, ?, ?) "
     override val selectStatement = "SELECT * FROM $tableName "
     override val deleteStatement = "DELETE FROM $tableName "
     override val updateStatement = "UPDATE $tableName " +
-                                   "SET $columnFromDateTime=?, $columnPlaceId=?, $columnTravelId=?, $columnMyRating=? " +
+                                   "SET $columnFromDateTime=?, $columnPlaceId=?, $columnTravelId=? " +
                                    "WHERE $columnId=?"
     override val nextIdStatement = "SELECT nextval(pg_get_serial_sequence('$tableName', '$columnId')) AS new_id"
 
@@ -69,7 +68,6 @@ class PlanElementRepository : Repository<PlanElementDao>(), IPlanElementReposito
         statement.setTimestamp(2, obj.fromDateTime!!)
         statement.setInt(3, obj.placeId!!)
         statement.setInt(4, obj.travelId!!)
-        statement.setInt(5, obj.myRating!!)
         return statement
     }
 
@@ -80,8 +78,7 @@ class PlanElementRepository : Repository<PlanElementDao>(), IPlanElementReposito
         statement.setTimestamp(1, obj.fromDateTime!!)
         statement.setInt(2, obj.placeId!!)
         statement.setInt(3, obj.travelId!!)
-        statement.setInt(4, obj.myRating!!)
-        statement.setInt(5, obj.id!!)
+        statement.setInt(4, obj.id!!)
         return statement
     }
 }
