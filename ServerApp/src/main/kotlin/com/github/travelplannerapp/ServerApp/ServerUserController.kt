@@ -42,17 +42,6 @@ class ServerUserController {
         return Response(ResponseCode.OK, friends)
     }
 
-    @PostMapping("users/{userId}/friends/{friendId}")
-    fun addTravel(
-            @RequestHeader("authorization") token: String,
-            @PathVariable userId: Int,
-            @PathVariable friendId: Int
-    ): Response<UserInfo> {
-        userManagement.verifyUser(token)
-        val newFriend = userManagement.addFriend(userId, friendId)
-        return Response(ResponseCode.OK, newFriend)
-    }
-
     @GetMapping("user-management/usersemails")
     fun findMatchingEmails(
             @RequestHeader("authorization") token: String,
@@ -69,6 +58,17 @@ class ServerUserController {
     }
 
     @PostMapping("users/{userId}/friends")
+    fun addFriend(
+            @RequestHeader("authorization") token: String,
+            @PathVariable userId: Int,
+            @RequestParam friendId: Int
+    ): Response<UserInfo> {
+        userManagement.verifyUser(token)
+        val newFriend = userManagement.addFriend(userId, friendId)
+        return Response(ResponseCode.OK, newFriend)
+    }
+
+    @DeleteMapping("users/{userId}/friends")
     fun deleteFriends(
             @RequestHeader("authorization") token: String,
             @PathVariable userId: Int,
