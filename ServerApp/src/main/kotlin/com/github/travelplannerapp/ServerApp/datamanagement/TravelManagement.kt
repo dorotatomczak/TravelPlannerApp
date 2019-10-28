@@ -1,9 +1,11 @@
 package com.github.travelplannerapp.ServerApp.datamanagement
 
 import com.github.travelplannerapp.ServerApp.db.dao.Travel
+import com.github.travelplannerapp.ServerApp.db.dao.UserTravel
 import com.github.travelplannerapp.ServerApp.db.merge
 import com.github.travelplannerapp.ServerApp.db.repositories.PlanElementRepository
 import com.github.travelplannerapp.ServerApp.db.repositories.TravelRepository
+import com.github.travelplannerapp.ServerApp.db.repositories.UserTravelRepository
 import com.github.travelplannerapp.ServerApp.db.transactions.PlanElementTransaction
 import com.github.travelplannerapp.ServerApp.db.transactions.TravelTransaction
 import com.github.travelplannerapp.ServerApp.exceptions.*
@@ -23,6 +25,8 @@ class TravelManagement : ITravelManagement {
     lateinit var planElementTransaction: PlanElementTransaction
     @Autowired
     lateinit var travelRepository: TravelRepository
+    @Autowired
+    lateinit var userTravelRepository: UserTravelRepository
     @Autowired
     lateinit var planElementRepository: PlanElementRepository
 
@@ -113,7 +117,8 @@ class TravelManagement : ITravelManagement {
 
     override fun shareTravel(travelId: Int, selectedFriendsIds: ArrayList<Int>): Boolean {
         for (selectedFriendId in selectedFriendsIds) {
-            if (travelTransaction.shareTravel(travelId, selectedFriendId) === null) {
+            val userTravelId = userTravelRepository.getNextId()
+            if (!userTravelRepository.add(UserTravel(userTravelId, selectedFriendId, travelId))) {
                 ShareTravelException("Error when sharing travel")
             }
         }
