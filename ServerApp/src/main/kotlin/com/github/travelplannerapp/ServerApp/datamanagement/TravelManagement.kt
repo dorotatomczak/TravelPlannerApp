@@ -86,8 +86,7 @@ class TravelManagement : ITravelManagement {
                 planElementDao.id!!,
                 planElementDao.fromDateTime!!.time,
                 planElementDao.placeId!!,
-                place,
-                planElementDao.myRating ?: 0
+                place
             )
             planElements.add(planElement)
         }

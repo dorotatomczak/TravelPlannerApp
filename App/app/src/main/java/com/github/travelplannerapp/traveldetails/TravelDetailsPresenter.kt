@@ -28,8 +28,6 @@ class TravelDetailsPresenter(private var travel: Travel, view: TravelDetailsCont
     private var dayPlanItems = ArrayList<TravelDetailsContract.DayPlanItem>()
     private var planElements = TreeSet<PlanElement>()
     private var planElementIdsToDelete = mutableSetOf<Int>()
-    private var openedPlanElementDetailsId: Int = 0
-    private var rating: Int = 0
 
     override fun loadTravel() {
         view.setTitle(travel.name)
@@ -167,16 +165,6 @@ class TravelDetailsPresenter(private var travel: Travel, view: TravelDetailsCont
         view.showNoActionMode()
     }
 
-    override fun saveRating(newRating: Int) {
-        rating = newRating
-        if (openedPlanElementDetailsId >= 0) {
-            val planElementItem = dayPlanItems[openedPlanElementDetailsId] as PlanElementItem
-            planElementItem.planElement.myRating = rating
-            updatePlanElement()
-
-        }
-    }
-
     private fun planElementsToDayPlanItems() {
         dayPlanItems = ArrayList()
         var date = ""
@@ -192,11 +180,8 @@ class TravelDetailsPresenter(private var travel: Travel, view: TravelDetailsCont
     }
 
     override fun onPlanElementClicked(position: Int) {
-        openedPlanElementDetailsId = position
         val planElementItem = dayPlanItems[position] as PlanElementItem
-        view.showPlanElementDetails(planElementItem.planElement.place,
-                planElementItem.planElement.myRating,
-                planElementItem.planElement.placeId)
+        view.showPlanElementDetails(planElementItem.planElement.placeId, planElementItem.planElement.place)
     }
 
     inner class DateSeparatorItem(val date: String) : TravelDetailsContract.DayPlanItem {
@@ -243,24 +228,5 @@ class TravelDetailsPresenter(private var travel: Travel, view: TravelDetailsCont
     private fun handleErrorResponse(error: Throwable) {
         if (error is ApiException) view.showSnackbar(error.getErrorMessageCode())
         else view.showSnackbar(R.string.server_connection_error)
-    }
-
-    private fun updatePlanElement() {
-        val element = dayPlanItems[openedPlanElementDetailsId] as PlanElementItem
-        compositeDisposable.add(CommunicationService.serverApi.updatePlanElement(SharedPreferencesUtils.getUserId(), travel.id,
-                element.planElement)
-                .observeOn(SchedulerProvider.ui())
-                .subscribeOn(SchedulerProvider.io())
-                .map { if (it.responseCode == ResponseCode.OK) it.data!! else throw ApiException(it.responseCode) }
-                .subscribe(
-                        { handleUpdatePlanElementResponse() },
-                        { error -> handleErrorResponse(error) }
-                ))
-    }
-
-    private fun handleUpdatePlanElementResponse() {
-        val planElementItem = dayPlanItems[openedPlanElementDetailsId] as PlanElementItem
-        planElementItem.planElement.myRating = rating
-        openedPlanElementDetailsId = -1
     }
 }

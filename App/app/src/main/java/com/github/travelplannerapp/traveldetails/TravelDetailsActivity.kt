@@ -109,9 +109,7 @@ class TravelDetailsActivity : AppCompatActivity(), TravelDetailsContract.View {
                 }
             }
             REQUEST_SHOW_DETAILS -> {
-                if (resultCode == Activity.RESULT_OK && data != null) {
-                    val rating = data.getIntExtra(PlanElementDetailsActivity.EXTRA_MY_RATING, 0)
-                    presenter.saveRating(rating)
+                if (resultCode == Activity.RESULT_OK) {
                     refreshDayPlans()
                 }
             }
@@ -184,12 +182,11 @@ class TravelDetailsActivity : AppCompatActivity(), TravelDetailsContract.View {
                 .show()
     }
 
-    override fun showPlanElementDetails(place: Place, rating: Int, placeId: Int) {
+    override fun showPlanElementDetails(placeId: Int, place: Place) {
         val intent = Intent(this, PlanElementDetailsActivity::class.java)
         intent.putExtra(PlanElementDetailsActivity.EXTRA_PLACE_HREF, place.href)
         intent.putExtra(PlanElementDetailsActivity.EXTRA_AVERAGE_RATING, place.averageRating)
         intent.putExtra(PlanElementDetailsActivity.EXTRA_PLACE_NAME, place.title)
-        intent.putExtra(PlanElementDetailsActivity.EXTRA_MY_RATING, rating)
         intent.putExtra(PlanElementDetailsActivity.EXTRA_PLACE_ID, placeId)
         startActivityForResult(intent, REQUEST_SHOW_DETAILS)
     }

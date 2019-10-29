@@ -7,69 +7,75 @@ import com.github.travelplannerapp.communication.CommunicationService
 import com.github.travelplannerapp.communication.commonmodel.PlaceData
 import com.github.travelplannerapp.communication.commonmodel.ResponseCode
 import com.github.travelplannerapp.utils.SchedulerProvider
+import com.github.travelplannerapp.utils.SharedPreferencesUtils
 import io.reactivex.disposables.CompositeDisposable
 
-class PlanElementDetailsPresenter(view: PlanElementDetailsContract.View) : BasePresenter<PlanElementDetailsContract.View>(view), PlanElementDetailsContract.Presenter {
+class PlanElementDetailsPresenter(private val placeId: Int, private val placeName: String, private val placeHref: String,
+                                  private val placeAverageRating: String, view: PlanElementDetailsContract.View)
+    : BasePresenter<PlanElementDetailsContract.View>(view), PlanElementDetailsContract.Presenter {
 
     private val compositeDisposable = CompositeDisposable()
-    private lateinit var averageRating: String
-    private var placeId = 0
-    private var changedRating = false
 
-    override fun showPlaceInfo(placeHref: String) {
-        loadPlace(placeHref)
+    override fun loadPlace() {
+        view.showName(placeName)
+        view.showAverageRating(placeAverageRating)
+
+        loadPlaceHereData()
+        loadPlaceRating()
     }
 
-    override fun isRatingChanged(): Boolean {
-        return changedRating
-    }
-
-    override fun saveRating(stars: Int, chosenPlaceId: Int) {
-        placeId = chosenPlaceId
-        compositeDisposable.add(CommunicationService.serverApi.ratePlace(placeId, stars)
+    override fun onRatingChanged(rating: Int) {
+        compositeDisposable.add(CommunicationService.serverApi.ratePlace(SharedPreferencesUtils.getUserId(), placeId, rating)
                 .observeOn(SchedulerProvider.ui())
                 .subscribeOn(SchedulerProvider.io())
                 .map { if (it.responseCode == ResponseCode.OK) it.data!! else throw ApiException(it.responseCode) }
                 .subscribe(
-                        {
-                            changedRating = true
-                            view.changeRatingTextToCompleted()
-                        },
+                        { view.changeRatingTextToCompleted() },
                         { error -> handleErrorResponse(error) }
                 ))
     }
 
-    override fun setAverageRating(rating: String) {
-        averageRating = rating
-    }
-
-    private fun handleErrorResponse(error: Throwable) {
-        if (error is ApiException) view.showSnackbar(error.getErrorMessageCode())
-        else view.showSnackbar(R.string.server_connection_error)
-    }
-
-    private fun loadPlace(placeHref: String) {
+    private fun loadPlaceHereData() {
         compositeDisposable.add(CommunicationService.serverApi.getPlace("0", placeHref)
                 .observeOn(SchedulerProvider.ui())
                 .subscribeOn(SchedulerProvider.io())
                 .map { if (it.responseCode == ResponseCode.OK) it.data!! else throw ApiException(it.responseCode) }
                 .subscribe(
-                        { place -> handleLoadPlaceResponse(place) },
+                        { place -> handleLoadPlaceHereDataResponse(place) },
                         { error -> handleErrorResponse(error) }
                 ))
     }
 
-    private fun handleLoadPlaceResponse(placeData: PlaceData) {
-        showPlaceData(placeData)
+    private fun loadPlaceRating() {
+        compositeDisposable.add(CommunicationService.serverApi.getPlaceRating(SharedPreferencesUtils.getUserId(), placeId)
+                .observeOn(SchedulerProvider.ui())
+                .subscribeOn(SchedulerProvider.io())
+                .map { if (it.responseCode == ResponseCode.OK) it.data!! else throw ApiException(it.responseCode) }
+                .subscribe(
+                        { rating -> handleLoadPlaceRatingResponse(rating) },
+                        { error -> handleErrorResponse(error) }
+                ))
+    }
+
+    private fun handleLoadPlaceHereDataResponse(placeData: PlaceData) {
+        showPlaceHereData(placeData)
         view.showProgressIndicator(false)
         view.showInfoLayout(true)
     }
 
-    private fun showPlaceData(placeData: PlaceData) {
-        view.showName(placeData.name ?: "")
+    private fun handleLoadPlaceRatingResponse(rating: Int) {
+        view.showRatingOnRatingBar(rating)
+    }
+
+    private fun handleErrorResponse(error: Throwable) {
+        view.showProgressIndicator(false)
+        if (error is ApiException) view.showSnackbar(error.getErrorMessageCode())
+        else view.showSnackbar(R.string.server_connection_error)
+    }
+
+    private fun showPlaceHereData(placeData: PlaceData) {
         view.showLocation(placeData.location?.address?.text ?: "")
         view.showOpeningHours(placeData.extended?.openingHours?.text ?: "")
-        view.showAverageRating(averageRating)
         view.showContacts(placeData.contacts!!)
     }
 }

@@ -18,7 +18,7 @@ interface TravelDetailsContract {
         fun hideLoadingIndicator()
         fun setResult(travel: Travel)
         fun showSnackbar(messageCode: Int)
-        fun showPlanElementDetails(place: Place, rating: Int, placeId: Int)
+        fun showPlanElementDetails(placeId: Int, place: Place)
     }
 
     interface PlanElementItemView : DeleteContract.ItemView {
@@ -59,7 +59,6 @@ interface TravelDetailsContract {
         fun addPlanElementIdToDelete(position: Int)
         fun removePlanElementIdToDelete(position: Int)
         fun deletePlanElements()
-        fun saveRating(newRating: Int)
         fun onPlanElementClicked(position: Int)
     }
 }
