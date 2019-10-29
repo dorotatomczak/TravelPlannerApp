@@ -16,7 +16,7 @@
             android:layout_margin="@dimen/margin_add_travel"
             android:background="@color/transparent"
             android:textColor="@color/white"
-            android:textSize="@dimen/text_size_title_small" />
+            android:textSize="@dimen/text_size_title_S" />
 
     </FrameLayout>
 

@@ -138,7 +138,22 @@ class TravelDetailsPresenter(private var travel: Travel, view: TravelDetailsCont
         val categoryIcon = PlaceCategory.values()[planElement.place.categoryIcon].categoryIcon
         val fromTime = DateTimeUtils.timeToString(planElement.fromDateTimeMs)
 
-        itemView.setName(planElement.place.title)
+
+        if (categoryIcon == PlaceCategory.ACCOMMODATION.categoryIcon) {
+            var isCheckIn = true
+
+            for (iterableItem in dayPlanItems.subList(0, position)) {
+                if (iterableItem.getType() == TravelDetailsContract.DayPlanItem.TYPE_PLAN) {
+                    val item = iterableItem as PlanElementItem
+                    if (item.planElement.place.title == planElement.place.title) isCheckIn = !isCheckIn
+                }
+            }
+
+            itemView.setName(view.getAccommodationName(isCheckIn, planElement.place.title))
+        } else {
+            itemView.setName(planElement.place.title)
+        }
+
         itemView.setFromTime(fromTime)
         itemView.setLocation(planElement.place.vicinity)
         itemView.setIcon(categoryIcon)
@@ -191,16 +206,6 @@ class TravelDetailsPresenter(private var travel: Travel, view: TravelDetailsCont
         view.showNoActionMode()
     }
 
-    override fun saveRating(newRating: Int) {
-        rating = newRating
-        if (openedPlanElementDetailsId >= 0) {
-            val planElementItem = dayPlanItems[openedPlanElementDetailsId] as PlanElementItem
-            planElementItem.planElement.myRating = rating
-            updatePlanElement()
-
-        }
-    }
-
     private fun planElementsToDayPlanItems() {
         dayPlanItems = ArrayList()
         var date = ""
@@ -215,12 +220,11 @@ class TravelDetailsPresenter(private var travel: Travel, view: TravelDetailsCont
         }
     }
 
-    override fun onPlanElementClicked(position: Int) {
-        openedPlanElementDetailsId = position
+    override fun onPlanElementClicked(position: Int, placeTitle: String) {
         val planElementItem = dayPlanItems[position] as PlanElementItem
-        view.showPlanElementDetails(planElementItem.planElement.place,
-                planElementItem.planElement.myRating,
-                planElementItem.planElement.placeId)
+        view.showPlanElementDetails(planElementItem.planElement.placeId,
+                planElementItem.planElement.place,
+                placeTitle)
     }
 
     inner class DateSeparatorItem(val date: String) : TravelDetailsContract.DayPlanItem {

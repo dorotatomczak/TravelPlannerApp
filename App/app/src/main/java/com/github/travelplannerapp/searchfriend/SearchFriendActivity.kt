@@ -39,7 +39,7 @@ class SearchFriendActivity : AppCompatActivity(), SearchFriendContract.View {
         recyclerViewFriend.layoutManager = LinearLayoutManager(this, RecyclerView.VERTICAL, false)
         recyclerViewFriend.adapter = FriendAdapter(presenter)
 
-        addSearchAbility();
+        addSearchAbility()
         presenter.loadFriends()
     }
 
@@ -110,8 +110,10 @@ class SearchFriendActivity : AppCompatActivity(), SearchFriendContract.View {
 
                 override fun onSuggestionClick(position: Int): Boolean {
                     closeKeyboard()
-//                    val friend = UserInfo(suggestionsAdapter.getItem(position) as Cursor)
-//                    showAddFriendConfirmationDialog(friend)
+                    val cursor = suggestionsAdapter.getItem(position) as Cursor
+                    val friendEmail = cursor.getString(cursor.getColumnIndex(SearchManager.SUGGEST_COLUMN_TEXT_1))
+                    val friendId = suggestionsAdapter.getItemId(position).toInt()
+                    showAddFriendConfirmationDialog(UserInfo(friendId, friendEmail))
                     return true
                 }
             })

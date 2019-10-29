@@ -80,15 +80,22 @@ class UserRepository : Repository<User>(), IUserRepository {
         return friends
     }
 
-    override fun findMatchingEmails(email: String): MutableList<User> {
+    override fun findMatchingEmails(query: String, userId: Int): MutableList<User> {
         val users = mutableListOf<User>()
         val statement = DbConnection
                 .conn
                 .prepareStatement(
                         "SELECT * FROM $tableName " +
-                                "WHERE $tableName.$columnEmail LIKE ?"
+                                "WHERE $tableName.$columnEmail LIKE ? " +
+                                "AND $tableName.$columnId !=?" +
+                                "AND $tableName.$columnId NOT IN " +
+                                "(SELECT ${UserFriendRepository.tableName}.${UserFriendRepository.columnFriendId} " +
+                                "FROM ${UserFriendRepository.tableName} " +
+                                "WHERE ${UserFriendRepository.tableName}.${UserFriendRepository.columnUserId} =?); "
                 )
-        statement.setString(1, "%$email%")
+        statement.setString(1, "%$query%")
+        statement.setInt(2, userId)
+        statement.setInt(3, userId)
         val result = statement.executeQuery()
         while (result.next()) {
             users.add(User(result))
