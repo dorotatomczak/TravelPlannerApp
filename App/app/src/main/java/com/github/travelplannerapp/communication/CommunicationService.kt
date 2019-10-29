@@ -90,7 +90,7 @@ interface ServerApi {
     fun deleteFriends(@Path("userId") userId: Int, @Query("friendsIds") friendsIds: MutableSet<Int>): Single<Response<Unit>>
 
     @POST("users/{userId}/friends")
-    fun addFriend(@Path("userId") userId: Int, @Query("friendId") friendId: Int): Single<Response<UserInfo>>
+    fun addFriend(@Path("userId") userId: Int, @Body friend: UserInfo): Single<Response<UserInfo>>
 
     //users - plans
     @GET("users/{userId}/travels/{travelId}/plans")

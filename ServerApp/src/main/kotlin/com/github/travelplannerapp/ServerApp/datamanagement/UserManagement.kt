@@ -85,12 +85,11 @@ class UserManagement : IUserManagement {
         userRepository.update(updatedUser)
     }
 
-    override fun addFriend(userId: Int, friendId: Int): UserInfo {
+    override fun addFriend(userId: Int, friend: UserInfo): UserInfo {
         val userFriendId = userFriendRepository.getNextId()
-        val userFriend = UserFriend(userFriendId, userId, friendId)
+        val userFriend = UserFriend(userFriendId, userId, friend.id)
         if (userFriendRepository.add(userFriend)) {
-            val addedFriend = userRepository.get(friendId)
-            return UserInfo(addedFriend!!.id!!, addedFriend!!.email!!)
+            return friend
         } else {
             throw AddFriendException("Error when adding friend")
         }

@@ -1,5 +1,6 @@
 package com.github.travelplannerapp.searchfriend
 
+import com.github.travelplannerapp.communication.commonmodel.UserInfo
 import com.github.travelplannerapp.deleteactionmode.DeleteContract
 
 interface SearchFriendContract {
@@ -15,7 +16,7 @@ interface SearchFriendContract {
     }
 
     interface Presenter : DeleteContract.Presenter {
-        fun addFriend(friendId: Int)
+        fun addFriend(friend: UserInfo)
         fun loadFriends()
         fun getFriendsCount(): Int
         fun addFriendIdToDelete(position: Int)

@@ -2,6 +2,7 @@ package com.github.travelplannerapp.searchfriend
 
 import android.app.SearchManager
 import android.content.Context
+import android.database.Cursor
 import android.os.Bundle
 import android.view.View
 import android.view.inputmethod.InputMethodManager
@@ -10,6 +11,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.github.travelplannerapp.R
+import com.github.travelplannerapp.communication.commonmodel.UserInfo
 import com.github.travelplannerapp.utils.DrawerUtils
 import com.google.android.material.snackbar.Snackbar
 import dagger.android.AndroidInjection
@@ -78,12 +80,12 @@ class SearchFriendActivity : AppCompatActivity(), SearchFriendContract.View {
         Snackbar.make(linearLayoutSearchFriend, messageCode, Snackbar.LENGTH_LONG).show()
     }
 
-    private fun showAddFriendConfirmationDialog(friendId: Int) {
+    private fun showAddFriendConfirmationDialog(friend: UserInfo) {
         AlertDialog.Builder(this)
                 .setTitle(getString(R.string.add_friend))
                 .setMessage(getString(R.string.add_user_confirmation))
                 .setPositiveButton(android.R.string.yes) { _, _ ->
-                    presenter.addFriend(friendId)
+                    presenter.addFriend(friend)
                 }
                 .setNegativeButton(android.R.string.no) { _, _ ->
                 }
@@ -108,8 +110,10 @@ class SearchFriendActivity : AppCompatActivity(), SearchFriendContract.View {
 
                 override fun onSuggestionClick(position: Int): Boolean {
                     closeKeyboard()
-                    val friendId = suggestionsAdapter.getItemId(position)
-                    showAddFriendConfirmationDialog(friendId.toInt())
+                    val cursor = suggestionsAdapter.getItem(position) as Cursor
+                    val friendEmail = cursor.getString(cursor.getColumnIndex(SearchManager.SUGGEST_COLUMN_TEXT_1))
+                    val friendId = suggestionsAdapter.getItemId(position).toInt()
+                    showAddFriendConfirmationDialog(UserInfo(friendId, friendEmail))
                     return true
                 }
             })

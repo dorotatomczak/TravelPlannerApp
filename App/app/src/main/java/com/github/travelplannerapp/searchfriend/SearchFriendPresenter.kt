@@ -26,8 +26,8 @@ class SearchFriendPresenter(view: SearchFriendContract.View) : BasePresenter<Sea
                 ))
     }
 
-    override fun addFriend(friendId: Int) {
-        compositeDisposable.add(CommunicationService.serverApi.addFriend(SharedPreferencesUtils.getUserId(), friendId)
+    override fun addFriend(friend: UserInfo) {
+        compositeDisposable.add(CommunicationService.serverApi.addFriend(SharedPreferencesUtils.getUserId(), friend)
                 .observeOn(SchedulerProvider.ui())
                 .subscribeOn(SchedulerProvider.io())
                 .map { if (it.responseCode == ResponseCode.OK) it.data!! else throw ApiException(it.responseCode) }

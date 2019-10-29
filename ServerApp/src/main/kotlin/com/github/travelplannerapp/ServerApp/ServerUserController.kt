@@ -61,11 +61,11 @@ class ServerUserController {
     fun addFriend(
             @RequestHeader("authorization") token: String,
             @PathVariable userId: Int,
-            @RequestParam friendId: Int
+            @RequestBody friend: UserInfo
     ): Response<UserInfo> {
         userManagement.verifyUser(token)
-        val newFriend = userManagement.addFriend(userId, friendId)
-        return Response(ResponseCode.OK, newFriend)
+        val addedFriend = userManagement.addFriend(userId, friend)
+        return Response(ResponseCode.OK, addedFriend)
     }
 
     @DeleteMapping("users/{userId}/friends")
