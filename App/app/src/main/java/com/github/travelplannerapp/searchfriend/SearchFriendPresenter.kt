@@ -5,7 +5,7 @@ import com.github.travelplannerapp.R
 import com.github.travelplannerapp.communication.ApiException
 import com.github.travelplannerapp.communication.CommunicationService
 import com.github.travelplannerapp.communication.commonmodel.ResponseCode
-import com.github.travelplannerapp.communication.appmodel.UserInfo
+import com.github.travelplannerapp.communication.commonmodel.UserInfo
 import com.github.travelplannerapp.utils.SchedulerProvider
 import com.github.travelplannerapp.utils.SharedPreferencesUtils
 import io.reactivex.disposables.CompositeDisposable
@@ -93,8 +93,9 @@ class SearchFriendPresenter(view: SearchFriendContract.View) : BasePresenter<Sea
 
     private fun handleAddFriendResponse(friend: UserInfo) {
         friends.add(friend)
-        view.showFriends()
         view.onDataSetChanged()
+        view.setLoadingIndicatorVisibility(false)
+        view.showFriends()
         view.showSnackbar(R.string.friend_added)
     }
 
@@ -105,10 +106,8 @@ class SearchFriendPresenter(view: SearchFriendContract.View) : BasePresenter<Sea
     }
 
     private fun handleErrorResponse(error: Throwable) {
-        if (error is ApiException){
-            view.showSnackbar(error.getErrorMessageCode())
-        }else {
-            view.showSnackbar(R.string.server_connection_error)
-        }
+        view.setLoadingIndicatorVisibility(false)
+        if (error is ApiException) view.showSnackbar(error.getErrorMessageCode())
+        else view.showSnackbar(R.string.server_connection_error)
     }
 }

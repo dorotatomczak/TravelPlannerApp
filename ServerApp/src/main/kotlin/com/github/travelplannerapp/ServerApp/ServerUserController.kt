@@ -1,7 +1,6 @@
 package com.github.travelplannerapp.ServerApp
 
 import com.github.travelplannerapp.ServerApp.datamanagement.UserManagement
-import com.github.travelplannerapp.ServerApp.datamodels.commonmodel.UserInfo
 import com.github.travelplannerapp.ServerApp.exceptions.SearchNoItemsException
 import com.github.travelplannerapp.communication.commonmodel.*
 import org.springframework.beans.factory.annotation.Autowired
@@ -43,34 +42,37 @@ class ServerUserController {
         return Response(ResponseCode.OK, friends)
     }
 
-    @PostMapping("users/{userId}/friends")
-    fun addFriend(
-            @RequestHeader("authorization") token: String,
-            @PathVariable userId: Int,
-            @RequestBody friend: UserInfo
-    ): Response<Int> {
-        userManagement.verifyUser(token)
-        val response = userManagement.addFriend(userId, friend.id).id
-        return Response(ResponseCode.OK, response)
-    }
-
     @GetMapping("user-management/usersemails")
     fun findMatchingEmails(
+            @RequestHeader("authorization") token: String,
             @RequestParam("query") query: String
     ): Response<MutableList<UserInfo>> {
         try {
-            val users = userManagement.findMatchingEmails(query)
+            userManagement.verifyUser(token)
+            val userId = userManagement.getUserId(token)
+            val users = userManagement.findMatchingEmails(userId, query)
             return Response(ResponseCode.OK, users)
         } catch (ex: Exception) {
             throw SearchNoItemsException(ex.localizedMessage)
         }
     }
 
+    @PostMapping("users/{userId}/friends")
+    fun addFriend(
+            @RequestHeader("authorization") token: String,
+            @PathVariable userId: Int,
+            @RequestBody friend: UserInfo
+    ): Response<UserInfo> {
+        userManagement.verifyUser(token)
+        val addedFriend = userManagement.addFriend(userId, friend)
+        return Response(ResponseCode.OK, addedFriend)
+    }
+
     @DeleteMapping("users/{userId}/friends")
     fun deleteFriends(
             @RequestHeader("authorization") token: String,
             @PathVariable userId: Int,
-            @RequestBody friendsIds: MutableSet<Int>
+            @RequestParam friendsIds: MutableSet<Int>
     ): Response<Unit> {
         userManagement.verifyUser(token)
         userManagement.deleteFriends(userId, friendsIds)

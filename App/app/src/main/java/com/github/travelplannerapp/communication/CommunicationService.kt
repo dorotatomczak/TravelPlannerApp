@@ -3,7 +3,6 @@ package com.github.travelplannerapp.communication
 import com.github.travelplannerapp.communication.appmodel.CityObject
 import com.github.travelplannerapp.communication.appmodel.Scan
 import com.github.travelplannerapp.communication.appmodel.Travel
-import com.github.travelplannerapp.communication.appmodel.UserInfo
 import com.github.travelplannerapp.communication.commonmodel.*
 import io.reactivex.Single
 import okhttp3.MultipartBody
@@ -87,11 +86,11 @@ interface ServerApi {
     @GET("users/{userId}/friends")
     fun getFriends(@Path("userId") userId: Int): Single<Response<List<UserInfo>>>
 
+    @HTTP(method = "DELETE", path = "users/{userId}/friends", hasBody = false)
+    fun deleteFriends(@Path("userId") userId: Int, @Query("friendsIds") friendsIds: MutableSet<Int>): Single<Response<Unit>>
+
     @POST("users/{userId}/friends")
     fun addFriend(@Path("userId") userId: Int, @Body friend: UserInfo): Single<Response<UserInfo>>
-
-    @HTTP(method = "DELETE", path = "users/{userId}/friends", hasBody = true)
-    fun deleteFriends(@Path("userId") userId: Int, @Body friendsIds: MutableSet<Int>): Single<Response<Unit>>
 
     //users - plans
     @GET("users/{userId}/travels/{travelId}/plans")

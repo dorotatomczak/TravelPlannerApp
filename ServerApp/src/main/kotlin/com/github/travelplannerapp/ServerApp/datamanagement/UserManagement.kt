@@ -1,6 +1,5 @@
 package com.github.travelplannerapp.ServerApp.datamanagement
 
-import com.github.travelplannerapp.ServerApp.datamodels.commonmodel.UserInfo
 import com.github.travelplannerapp.ServerApp.db.dao.User
 import com.github.travelplannerapp.ServerApp.db.dao.UserFriend
 import com.github.travelplannerapp.ServerApp.db.merge
@@ -9,6 +8,7 @@ import com.github.travelplannerapp.ServerApp.db.repositories.UserRepository
 import com.github.travelplannerapp.ServerApp.exceptions.*
 import com.github.travelplannerapp.communication.commonmodel.SignInRequest
 import com.github.travelplannerapp.communication.commonmodel.SignUpRequest
+import com.github.travelplannerapp.communication.commonmodel.UserInfo
 import io.jsonwebtoken.Jwts
 import io.jsonwebtoken.SignatureAlgorithm
 import org.springframework.beans.factory.annotation.Autowired
@@ -85,29 +85,29 @@ class UserManagement : IUserManagement {
         userRepository.update(updatedUser)
     }
 
-    override fun addFriend(userId: Int, friendId: Int): UserFriend {
+    override fun addFriend(userId: Int, friend: UserInfo): UserInfo {
         val userFriendId = userFriendRepository.getNextId()
-        val userFriend = UserFriend(userFriendId, userId, friendId)
-        if (userFriendRepository.add(userFriend)){
-            return userFriend
-        }else {
+        val userFriend = UserFriend(userFriendId, userId, friend.id)
+        if (userFriendRepository.add(userFriend)) {
+            return friend
+        } else {
             throw AddFriendException("Error when adding friend")
         }
     }
 
     override fun deleteFriends(userId: Int, friendsIds: MutableSet<Int>) {
         for (friendId in friendsIds) {
-            if (!userFriendRepository.deleteUserFriendBinding(userId, friendId)){
+            if (!userFriendRepository.deleteUserFriendBinding(userId, friendId)) {
                 throw  DeleteFriendsException("Error when deleting friends")
             }
         }
     }
 
-    override fun findMatchingEmails(query: String): MutableList<UserInfo> {
+    override fun findMatchingEmails(userId: Int, query: String): MutableList<UserInfo> {
         val userInfos = mutableListOf<UserInfo>()
-        val users = userRepository.findMatchingEmails(query)
-        users.forEach { user ->
-            userInfos.add(UserInfo(user.id!!, user.email!!))
+        val users = userRepository.findMatchingEmails(query, userId)
+        users.forEach { matchingUser ->
+            userInfos.add(UserInfo(matchingUser.id!!, matchingUser.email!!))
         }
         return userInfos
     }
