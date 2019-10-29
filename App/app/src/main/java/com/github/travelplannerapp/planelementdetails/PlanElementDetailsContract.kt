@@ -21,9 +21,7 @@ interface PlanElementDetailsContract {
     }
 
     interface Presenter {
-        fun showPlaceInfo(placeHref: String)
-        fun saveRating(stars: Int, chosenPlaceId: Int)
-        fun setAverageRating(rating: String)
-        fun isRatingChanged():Boolean
+        fun loadPlace()
+        fun onRatingChanged(rating: Int)
     }
 }

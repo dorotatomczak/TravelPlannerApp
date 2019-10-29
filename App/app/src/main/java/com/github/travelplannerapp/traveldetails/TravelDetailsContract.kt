@@ -20,7 +20,8 @@ interface TravelDetailsContract {
         fun hideLoadingIndicator()
         fun setResult(travel: Travel)
         fun showSnackbar(messageCode: Int)
-        fun showPlanElementDetails(place: Place, rating: Int, placeId: Int)
+        fun showPlanElementDetails(placeId: Int, place: Place, placeTitle: String)
+        fun getAccommodationName(isCheckIn: Boolean, placeTitle: String): String
     }
 
     interface PlanElementItemView : DeleteContract.ItemView {
@@ -65,6 +66,6 @@ interface TravelDetailsContract {
         fun loadFriendsWithoutAccessToTravel()
         fun getFriendWithoutAccessToTravel():ArrayList<UserInfo>
         fun saveRating(newRating: Int)
-        fun onPlanElementClicked(position: Int)
+        fun onPlanElementClicked(position: Int, placeTitle: String)
     }
 }

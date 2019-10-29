@@ -1,6 +1,7 @@
 package com.github.travelplannerapp.ServerApp.datamanagement
 
-import com.github.travelplannerapp.ServerApp.db.repositories.PlaceRepository
+import com.github.travelplannerapp.ServerApp.db.repositories.UserPlaceRepository
+import com.github.travelplannerapp.ServerApp.db.transactions.RatingTransaction
 import com.github.travelplannerapp.ServerApp.exceptions.RatePlaceException
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component
@@ -9,19 +10,18 @@ import org.springframework.stereotype.Component
 class RecommendationManagement : IRecommendationManagement {
 
     @Autowired
-    lateinit var placeRepository: PlaceRepository
+    lateinit var ratingTransaction: RatingTransaction
 
+    @Autowired
+    lateinit var userPlaceRepository: UserPlaceRepository
 
-    override fun ratePlace(placeId: Int, rating: Int): Boolean {
-        val placeDao = placeRepository.get(placeId)
-        if (placeDao != null) {
-            placeDao.averageRating =
-                (placeDao.averageRating!! * placeDao.ratesCount!! + rating) / (placeDao.ratesCount!! + 1.0)
-            placeDao.ratesCount = placeDao.ratesCount!! + 1
+    override fun ratePlace(userId: Int, placeId: Int, rating: Int): Boolean {
+        val placeRated = ratingTransaction.ratePlace(userId, placeId, rating)
+        if (placeRated) return true
+        else throw RatePlaceException("Cannot add new rating.")
+    }
 
-            return placeRepository.update(placeDao)
-        }
-
-        throw RatePlaceException("Cannot add new rating. Place doesn't exist in database")
+    override fun getPlaceRating(userId: Int, placeId: Int): Int? {
+        return userPlaceRepository.getUserPlaceByUserIdAndPlaceId(userId, placeId)?.rating
     }
 }

@@ -68,7 +68,7 @@ class FriendAdapter(val presenter: SearchFriendContract.Presenter) : RecyclerVie
         override fun setCheckbox() {
             if (actionMode != null) {
                 checkboxItemFriend.visibility = View.VISIBLE
-            }else {
+            } else {
                 checkboxItemFriend.visibility = View.GONE
             }
             checkboxItemFriend.isChecked = false

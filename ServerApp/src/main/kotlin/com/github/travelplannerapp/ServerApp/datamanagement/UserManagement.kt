@@ -37,7 +37,6 @@ class UserManagement : IUserManagement {
         return Jwts.parser().setSigningKey(SECRET_KEY).parseClaimsJws(token).body["id"].toString().toInt()
     }
 
-
     override fun verifyUser(token: String) {
         val expirationDate = Jwts.parser().setSigningKey(SECRET_KEY).parseClaimsJws(token).body.expiration
 
@@ -88,11 +87,11 @@ class UserManagement : IUserManagement {
         userRepository.update(updatedUser)
     }
 
-    override fun addFriend(userId: Int, friendId: Int): UserFriend {
+    override fun addFriend(userId: Int, friend: UserInfo): UserInfo {
         val userFriendId = userFriendRepository.getNextId()
-        val userFriend = UserFriend(userFriendId, userId, friendId)
+        val userFriend = UserFriend(userFriendId, userId, friend.id)
         if (userFriendRepository.add(userFriend)) {
-            return userFriend
+            return friend
         } else {
             throw AddFriendException("Error when adding friend")
         }
@@ -106,11 +105,11 @@ class UserManagement : IUserManagement {
         }
     }
 
-    override fun findMatchingEmails(query: String): MutableList<UserInfo> {
+    override fun findMatchingEmails(userId: Int, query: String): MutableList<UserInfo> {
         val userInfos = mutableListOf<UserInfo>()
-        val users = userRepository.findMatchingEmails(query)
-        users.forEach { user ->
-            userInfos.add(UserInfo(user.id!!, user.email!!))
+        val users = userRepository.findMatchingEmails(query, userId)
+        users.forEach { matchingUser ->
+            userInfos.add(UserInfo(matchingUser.id!!, matchingUser.email!!))
         }
         return userInfos
     }

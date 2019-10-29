@@ -82,9 +82,14 @@
     <string name="delete_friends">Usuń znajomych</string>
     <string name="delete_friends_confirmation">Czy na pewno chcesz usunąć wybranych znajomych?</string>
     <string name="no_selected_friends">Nie wybrałeś znajomych</string>
+    <string name="delete_friends_error">Wystąpił problem podczas usuwania znajomych</string>
+    <string name="add_friend_error">Wystąpił problem podczas dodawania znajomego</string>
 
     <string name="rate_place">Oceń miejsce!</string>
     <string name="rate_place_completed">Dzięki!</string>
+    <string name="check_in">Zakwaterowanie</string>
+    <string name="check_out">Wykwaterowanie</string>
+    <string name="wrong_dates_error">Data i czas \"Od\" muszą być przed datą i czasem \"Do\"</string>
 
     <string name="atm_bank_exchange">Bankomat</string>
     <string name="hospital_health_care_facility">Opieka zdrowotna</string>

@@ -7,9 +7,9 @@ import android.database.Cursor
 import android.database.MatrixCursor
 import android.net.Uri
 import com.github.travelplannerapp.communication.CommunicationService
+import com.github.travelplannerapp.utils.SharedPreferencesUtils
 
 class SearchFriendSuggestionProvider : ContentProvider() {
-
     override fun query(query: Uri, p1: Array<out String>?, p2: String?, p3: Array<out String>?, p4: String?): Cursor? {
         val searchString = query.lastPathSegment.toString()
         return createCursor(searchString)
@@ -36,12 +36,12 @@ class SearchFriendSuggestionProvider : ContentProvider() {
     }
 
     private fun createCursor(searchString: String): MatrixCursor {
-        val cursor = MatrixCursor(arrayOf("_id", SearchManager.SUGGEST_COLUMN_TEXT_1, SearchManager.SUGGEST_COLUMN_TEXT_2))
+        val cursor = MatrixCursor(arrayOf("_id", SearchManager.SUGGEST_COLUMN_TEXT_1))
 
         var list = CommunicationService.serverApi.findMatchingEmails(searchString)
 
-        for ((index, userInfo) in list.blockingGet().data.orEmpty().withIndex()) {
-            cursor.addRow(arrayOf(index, userInfo.email, userInfo.id))
+        list.blockingGet().data.orEmpty().forEach {
+            cursor.addRow(arrayOf(it.id, it.email))
         }
         return cursor
     }

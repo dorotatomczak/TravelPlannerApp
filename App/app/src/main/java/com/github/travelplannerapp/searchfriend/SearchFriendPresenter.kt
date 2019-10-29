@@ -93,8 +93,9 @@ class SearchFriendPresenter(view: SearchFriendContract.View) : BasePresenter<Sea
 
     private fun handleAddFriendResponse(friend: UserInfo) {
         friends.add(friend)
-        view.showFriends()
         view.onDataSetChanged()
+        view.setLoadingIndicatorVisibility(false)
+        view.showFriends()
         view.showSnackbar(R.string.friend_added)
     }
 
@@ -105,10 +106,8 @@ class SearchFriendPresenter(view: SearchFriendContract.View) : BasePresenter<Sea
     }
 
     private fun handleErrorResponse(error: Throwable) {
-        if (error is ApiException){
-            view.showSnackbar(error.getErrorMessageCode())
-        }else {
-            view.showSnackbar(R.string.server_connection_error)
-        }
+        view.setLoadingIndicatorVisibility(false)
+        if (error is ApiException) view.showSnackbar(error.getErrorMessageCode())
+        else view.showSnackbar(R.string.server_connection_error)
     }
 }

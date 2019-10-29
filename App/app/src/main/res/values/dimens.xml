@@ -7,7 +7,7 @@
     <dimen name="text_size_tile">24sp</dimen>
     <dimen name="text_size_info">24sp</dimen>
     <dimen name="text_size_edit_text">16sp</dimen>
-    <dimen name="text_size_title_small">20sp</dimen>
+    <dimen name="text_size_title_S">20sp</dimen>
     <dimen name="text_size_button">16sp</dimen>
 
     <!--button-->
@@ -15,7 +15,7 @@
     <dimen name="button_radius">20dp</dimen>
     <dimen name="button_stroke_width">2dp</dimen>
     <dimen name="button_width">200dp</dimen>
-    <dimen name="button_height">48dp</dimen>
+    <dimen name="button_height_L">48dp</dimen>
     <dimen name="button_height_S">20dp</dimen>
 
     <dimen name="margin_vertical">8dp</dimen>
@@ -23,8 +23,9 @@
     <dimen name="image_size_tile">100dp</dimen>
     <dimen name="edit_text_width">250dp</dimen>
     <dimen name="edit_text_height">48dp</dimen>
-    <dimen name="padding_small">8dp</dimen>
-    <dimen name="radius_small">8dp</dimen>
+    <dimen name="padding_XS">4dp</dimen>
+    <dimen name="padding_S">8dp</dimen>
+    <dimen name="radius_S">8dp</dimen>
     <dimen name="margin_add_travel">20dp</dimen>
     <dimen name="margin_plan_element_info">20dp</dimen>
     <dimen name="margin_element_detail">5dp</dimen>
@@ -33,4 +34,5 @@
     <dimen name="card_view_scan_height">160dp</dimen>
     <dimen name="sliding_up_panel_height">80dp</dimen>
     <dimen name="sliding_up_shadow_height">5dp</dimen>
+    
 </resources>
