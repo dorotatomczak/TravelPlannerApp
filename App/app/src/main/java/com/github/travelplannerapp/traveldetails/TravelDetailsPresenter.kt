@@ -284,23 +284,4 @@ class TravelDetailsPresenter(private var travel: Travel, view: TravelDetailsCont
     override fun getFriendWithoutAccessToTravel(): ArrayList<UserInfo> {
         return friendsWithoutAccessToTravel
     }
-
-    private fun updatePlanElement() {
-        val element = dayPlanItems[openedPlanElementDetailsId] as PlanElementItem
-        compositeDisposable.add(CommunicationService.serverApi.updatePlanElement(SharedPreferencesUtils.getUserId(), travel.id,
-                element.planElement)
-                .observeOn(SchedulerProvider.ui())
-                .subscribeOn(SchedulerProvider.io())
-                .map { if (it.responseCode == ResponseCode.OK) it.data!! else throw ApiException(it.responseCode) }
-                .subscribe(
-                        { handleUpdatePlanElementResponse() },
-                        { error -> handleErrorResponse(error) }
-                ))
-    }
-
-    private fun handleUpdatePlanElementResponse() {
-        val planElementItem = dayPlanItems[openedPlanElementDetailsId] as PlanElementItem
-        planElementItem.planElement.myRating = rating
-        openedPlanElementDetailsId = -1
-    }
 }

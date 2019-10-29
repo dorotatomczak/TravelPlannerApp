@@ -65,8 +65,6 @@ interface TravelDetailsContract {
         fun deletePlanElements()
         fun loadFriendsWithoutAccessToTravel()
         fun getFriendWithoutAccessToTravel():ArrayList<UserInfo>
-        fun saveRating(newRating: Int)
-        fun onPlanElementClicked(position: Int)
         fun onPlanElementClicked(position: Int, placeTitle: String)
     }
 }
