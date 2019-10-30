@@ -163,7 +163,25 @@
                 android:inputType="none"
                 android:focusable="false"/>
 
+
         </com.google.android.material.textfield.TextInputLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/editTextNotes"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_gravity="center_vertical|end"
+                android:hint="@string/your_notes"
+                android:inputType="none"
+                android:focusable="true"/>
+
+        </LinearLayout>
 
     </LinearLayout>
 

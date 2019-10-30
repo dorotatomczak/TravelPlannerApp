@@ -58,7 +58,7 @@ class SearchElementActivity : AppCompatActivity(), SearchElementContract.View {
 
             setOnSuggestionListener(object : androidx.appcompat.widget.SearchView.OnSuggestionListener {
                 override fun onSuggestionClick(position: Int): Boolean {
-                    closeKeyboard()
+                    hideKeyboard()
                     val city = CityObject(suggestionsAdapter.getItem(position) as Cursor)
                     searchViewCity.setQuery(city.name, false)
                     val geoCord = GeoCoordinate(city.x.toDouble(), city.y.toDouble(), 0.0)
@@ -180,7 +180,7 @@ class SearchElementActivity : AppCompatActivity(), SearchElementContract.View {
         }
     }
 
-    private fun closeKeyboard() {
+    private fun hideKeyboard() {
         val inputManager: InputMethodManager = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
         inputManager.hideSoftInputFromWindow(currentFocus?.windowToken, InputMethodManager.SHOW_FORCED)
     }

@@ -36,11 +36,12 @@ create table place (
 	rates_count integer
 );
 
-create table plan (
+create table plan_element (
 	id serial PRIMARY KEY,
 	from_date_time timestamp,
 	place_id integer references place(id),
 	travel_id integer references travel(id)
+	notes text
 );
 
 create table app_user_friend (

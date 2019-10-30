@@ -162,7 +162,8 @@ class AddPlanElementActivity : AppCompatActivity(), AddPlanElementContract.View 
                 editTextPlanFromTime.text.toString(),
                 coordinates,
                 editTextPlanLocation.text.toString(),
-                accommodationData
+                accommodationData,
+                editTextNotes.text.toString()
         )
         presenter.addPlanElement(placeData)
     }
