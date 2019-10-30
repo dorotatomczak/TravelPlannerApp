@@ -7,7 +7,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.DialogFragment
 import com.github.travelplannerapp.communication.commonmodel.UserInfo
 
-class ShareTravelDialog(private val dialogTitle: String, private var friends: ArrayList<UserInfo>) : DialogFragment() {
+class ShareTravelDialog(private val dialogTitle: String, private var friends: List<UserInfo>) : DialogFragment() {
 
     companion object {
         const val TAG = "SHARE TRAVEL DIALOG"
@@ -43,7 +43,7 @@ class ShareTravelDialog(private val dialogTitle: String, private var friends: Ar
                 }
 
         val dialog = builder.create()
-        dialog.window!!.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE)
+        dialog.window?.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE)
         return dialog
     }
 }

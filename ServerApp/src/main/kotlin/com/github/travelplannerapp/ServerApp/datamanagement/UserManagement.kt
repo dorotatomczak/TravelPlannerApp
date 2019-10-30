@@ -5,7 +5,6 @@ import com.github.travelplannerapp.ServerApp.db.dao.UserFriend
 import com.github.travelplannerapp.ServerApp.db.merge
 import com.github.travelplannerapp.ServerApp.db.repositories.UserFriendRepository
 import com.github.travelplannerapp.ServerApp.db.repositories.UserRepository
-import com.github.travelplannerapp.ServerApp.db.repositories.UserTravelRepository
 import com.github.travelplannerapp.ServerApp.exceptions.*
 import com.github.travelplannerapp.communication.commonmodel.SignInRequest
 import com.github.travelplannerapp.communication.commonmodel.SignUpRequest
@@ -25,8 +24,7 @@ class UserManagement : IUserManagement {
     lateinit var userRepository: UserRepository
     @Autowired
     lateinit var userFriendRepository: UserFriendRepository
-    @Autowired
-    lateinit var userTravelRepository: UserTravelRepository
+
     private val ACCESS_TOKEN_SUB = "AccessToken"
     private val ACCESS_TOKEN_ISSUER = "TravelApp_Server"
     private val SECRET_KEY =

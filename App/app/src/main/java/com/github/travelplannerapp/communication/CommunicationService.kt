@@ -94,7 +94,7 @@ interface ServerApi {
 
     //users - friends - travels
     @PUT("users/{userId}/travels/{travelId}/share")
-    fun shareTravel(@Path("userId") userId: Int, @Path("travelId") travelId: Int, @Body selectedFriendsIds: ArrayList<Int>): Single<Response<Boolean>>
+    fun shareTravel(@Path("userId") userId: Int, @Path("travelId") travelId: Int, @Body selectedFriendsIds: List<Int>): Single<Response<Boolean>>
 
     @GET("users/{userId}/travels/{travelId}/friends")
     fun getFriendsBySharedTravel(@Path("userId") userId: Int, @Path("travelId") travelId: Int,

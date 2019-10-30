@@ -6,9 +6,9 @@ import com.github.travelplannerapp.communication.ApiException
 import com.github.travelplannerapp.communication.CommunicationService
 import com.github.travelplannerapp.communication.appmodel.PlaceCategory
 import com.github.travelplannerapp.communication.appmodel.Travel
-import com.github.travelplannerapp.communication.commonmodel.UserInfo
 import com.github.travelplannerapp.communication.commonmodel.PlanElement
 import com.github.travelplannerapp.communication.commonmodel.ResponseCode
+import com.github.travelplannerapp.communication.commonmodel.UserInfo
 import com.github.travelplannerapp.utils.DateTimeUtils
 import com.github.travelplannerapp.utils.SchedulerProvider
 import com.github.travelplannerapp.utils.SharedPreferencesUtils
@@ -30,8 +30,6 @@ class TravelDetailsPresenter(private var travel: Travel, view: TravelDetailsCont
     private var planElements = TreeSet<PlanElement>()
     private var planElementIdsToDelete = mutableSetOf<Int>()
     private var friendsWithoutAccessToTravel = ArrayList<UserInfo>()
-    private var openedPlanElementDetailsId: Int = 0
-    private var rating: Int = 0
 
     override fun loadTravel() {
         view.setTitle(travel.name)
@@ -50,7 +48,7 @@ class TravelDetailsPresenter(private var travel: Travel, view: TravelDetailsCont
                 ))
     }
 
-    override fun shareTravel(selectedFriendsIds: ArrayList<Int>) {
+    override fun shareTravel(selectedFriendsIds: List<Int>) {
         compositeDisposable.add(CommunicationService.serverApi.shareTravel(SharedPreferencesUtils.getUserId(), travel.id, selectedFriendsIds)
                 .observeOn(SchedulerProvider.ui())
                 .subscribeOn(SchedulerProvider.io())
@@ -93,6 +91,10 @@ class TravelDetailsPresenter(private var travel: Travel, view: TravelDetailsCont
 
     override fun onAddPlanElementClicked() {
         view.showAddPlanElement(travel.id)
+    }
+
+    override fun onShareTravelClicked() {
+        view.showShareTravel(friendsWithoutAccessToTravel)
     }
 
     override fun onPlanElementAdded(planElement: PlanElement) {
@@ -207,6 +209,13 @@ class TravelDetailsPresenter(private var travel: Travel, view: TravelDetailsCont
         view.showNoActionMode()
     }
 
+    override fun onPlanElementClicked(position: Int, placeTitle: String) {
+        val planElementItem = dayPlanItems[position] as PlanElementItem
+        view.showPlanElementDetails(planElementItem.planElement.placeId,
+                planElementItem.planElement.place,
+                placeTitle)
+    }
+
     private fun planElementsToDayPlanItems() {
         dayPlanItems = ArrayList()
         var date = ""
@@ -219,13 +228,6 @@ class TravelDetailsPresenter(private var travel: Travel, view: TravelDetailsCont
             }
             dayPlanItems.add(PlanElementItem(plan))
         }
-    }
-
-    override fun onPlanElementClicked(position: Int, placeTitle: String) {
-        val planElementItem = dayPlanItems[position] as PlanElementItem
-        view.showPlanElementDetails(planElementItem.planElement.placeId,
-                planElementItem.planElement.place,
-                placeTitle)
     }
 
     inner class DateSeparatorItem(val date: String) : TravelDetailsContract.DayPlanItem {
@@ -280,9 +282,5 @@ class TravelDetailsPresenter(private var travel: Travel, view: TravelDetailsCont
     private fun handleErrorResponse(error: Throwable) {
         if (error is ApiException) view.showSnackbar(error.getErrorMessageCode())
         else view.showSnackbar(R.string.server_connection_error)
-    }
-
-    override fun getFriendWithoutAccessToTravel(): ArrayList<UserInfo> {
-        return friendsWithoutAccessToTravel
     }
 }

@@ -14,11 +14,12 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.request.RequestOptions
 import com.github.travelplannerapp.R
-import com.github.travelplannerapp.sharetraveldialog.ShareTravelDialog
 import com.github.travelplannerapp.communication.appmodel.Travel
 import com.github.travelplannerapp.communication.commonmodel.Place
 import com.github.travelplannerapp.communication.commonmodel.PlanElement
+import com.github.travelplannerapp.communication.commonmodel.UserInfo
 import com.github.travelplannerapp.planelementdetails.PlanElementDetailsActivity
+import com.github.travelplannerapp.sharetraveldialog.ShareTravelDialog
 import com.github.travelplannerapp.traveldetails.addplanelement.AddPlanElementActivity
 import com.github.travelplannerapp.traveldialog.TravelDialog
 import com.github.travelplannerapp.utils.DrawerUtils
@@ -79,15 +80,12 @@ class TravelDetailsActivity : AppCompatActivity(), TravelDetailsContract.View {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (item.itemId == R.id.menuSetPhoto) {
             showImageSelection()
-            return true
         } else if (item.itemId == R.id.menuEdit) {
             showEditTravel()
-            return true
         } else if (item.itemId == R.id.menuShareTravelItem) {
-            showShareTravel()
-            return true
+            presenter.onShareTravelClicked()
         }
-        return super.onOptionsItemSelected(item)
+        return true
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -220,8 +218,8 @@ class TravelDetailsActivity : AppCompatActivity(), TravelDetailsContract.View {
         editTravelDialog.show(supportFragmentManager, TravelDialog.TAG)
     }
 
-    override fun showShareTravel() {
-        val shareTravelDialog = ShareTravelDialog(getString(R.string.share_travel), presenter.getFriendWithoutAccessToTravel())
+    override fun showShareTravel(friendsWithoutAccessToTravel: ArrayList<UserInfo>) {
+        val shareTravelDialog = ShareTravelDialog(getString(R.string.share_travel), friendsWithoutAccessToTravel)
         shareTravelDialog.onOk = {
             val selectedFriendsIds = shareTravelDialog.selectedFriendsId
             if (selectedFriendsIds.size > 0) {
@@ -250,5 +248,4 @@ class TravelDetailsActivity : AppCompatActivity(), TravelDetailsContract.View {
         swipeRefreshLayoutTravelDetails.isRefreshing = true
         presenter.loadDayPlans()
     }
-
 }

@@ -7,4 +7,5 @@
         android:id="@+id/menuShareTravelItem"
         android:icon="@drawable/ic_mode_share"
         android:title="@string/share_travel" />
+
 </menu>

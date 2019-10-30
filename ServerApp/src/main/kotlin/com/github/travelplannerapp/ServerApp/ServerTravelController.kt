@@ -163,7 +163,7 @@ class ServerTravelController {
             @RequestHeader("authorization") token: String,
             @PathVariable userId: Int,
             @PathVariable travelId: Int,
-            @RequestBody selectedFriendsIds: ArrayList<Int>
+            @RequestBody selectedFriendsIds: List<Int>
     ): Response<Boolean> {
         userManagement.verifyUser(token)
         val shareTravel = travelManagement.shareTravel(travelId, selectedFriendsIds)

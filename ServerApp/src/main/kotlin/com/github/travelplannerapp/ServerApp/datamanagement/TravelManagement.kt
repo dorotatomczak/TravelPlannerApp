@@ -87,10 +87,10 @@ class TravelManagement : ITravelManagement {
             place.averageRating = placeDao.averageRating.toString()
 
             val planElement = PlanElement(
-                planElementDao.id!!,
-                planElementDao.fromDateTime!!.time,
-                planElementDao.placeId!!,
-                place
+                    planElementDao.id!!,
+                    planElementDao.fromDateTime!!.time,
+                    planElementDao.placeId!!,
+                    place
             )
             planElements.add(planElement)
         }
@@ -114,7 +114,7 @@ class TravelManagement : ITravelManagement {
         if (!result) throw DeletePlanElementsException("Error when deleting plan elements")
     }
 
-    override fun shareTravel(travelId: Int, selectedFriendsIds: ArrayList<Int>): Boolean {
+    override fun shareTravel(travelId: Int, selectedFriendsIds: List<Int>): Boolean {
         for (selectedFriendId in selectedFriendsIds) {
             val userTravelId = userTravelRepository.getNextId()
             if (!userTravelRepository.add(UserTravel(userTravelId, selectedFriendId, travelId))) {
