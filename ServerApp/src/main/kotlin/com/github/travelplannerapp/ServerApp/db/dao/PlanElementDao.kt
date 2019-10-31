@@ -12,18 +12,21 @@ class PlanElementDao(map: MutableMap<String, Any?>) {
     var fromDateTime: Timestamp? by defaultMap
     var travelId: Int? by defaultMap
     var placeId: Int? by defaultMap
+    var completion: Boolean? by defaultMap
 
     constructor(
             id: Int?,
             fromDateTime: Timestamp?,
             travelId: Int?,
-            placeId: Int?) :
+            placeId: Int?,
+            completion: Boolean?) :
             this(
                     mutableMapOf(
                             "id" to id,
                             "fromDateTime" to fromDateTime,
                             "travelId" to travelId,
-                            "placeId" to placeId)
+                            "placeId" to placeId,
+                            "completion" to completion)
             )
 
     constructor(result: ResultSet) :
@@ -32,7 +35,8 @@ class PlanElementDao(map: MutableMap<String, Any?>) {
                             "id" to result.getInt("id"),
                             "fromDateTime" to result.getTimestamp("from_date_time"),
                             "travelId" to result.getInt("travel_id"),
-                            "placeId" to result.getInt("place_id")
+                            "placeId" to result.getInt("place_id"),
+                            "completion" to result.getBoolean("completion")
                     )
             )
 
@@ -41,6 +45,7 @@ class PlanElementDao(map: MutableMap<String, Any?>) {
                     planElement.id,
                     Timestamp(planElement.fromDateTimeMs),
                     travelId,
-                    planElement.placeId
+                    planElement.placeId,
+                    planElement.completion
             )
 }

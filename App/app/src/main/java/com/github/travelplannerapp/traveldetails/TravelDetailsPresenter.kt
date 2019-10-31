@@ -6,9 +6,9 @@ import com.github.travelplannerapp.communication.ApiException
 import com.github.travelplannerapp.communication.CommunicationService
 import com.github.travelplannerapp.communication.appmodel.PlaceCategory
 import com.github.travelplannerapp.communication.appmodel.Travel
-import com.github.travelplannerapp.communication.commonmodel.UserInfo
 import com.github.travelplannerapp.communication.commonmodel.PlanElement
 import com.github.travelplannerapp.communication.commonmodel.ResponseCode
+import com.github.travelplannerapp.communication.commonmodel.UserInfo
 import com.github.travelplannerapp.utils.DateTimeUtils
 import com.github.travelplannerapp.utils.SchedulerProvider
 import com.github.travelplannerapp.utils.SharedPreferencesUtils
@@ -30,8 +30,6 @@ class TravelDetailsPresenter(private var travel: Travel, view: TravelDetailsCont
     private var planElements = TreeSet<PlanElement>()
     private var planElementIdsToDelete = mutableSetOf<Int>()
     private var friendsWithoutAccessToTravel = ArrayList<UserInfo>()
-    private var openedPlanElementDetailsId: Int = 0
-    private var rating: Int = 0
 
     override fun loadTravel() {
         view.setTitle(travel.name)
@@ -177,6 +175,29 @@ class TravelDetailsPresenter(private var travel: Travel, view: TravelDetailsCont
         planElementIdsToDelete.remove(planElementItem.planElement.id)
     }
 
+    override fun markPlanElementAsRealized(position: Int) {
+        val plan = (dayPlanItems[position] as PlanElementItem).planElement
+        plan.completion = true
+        updatePlanElement(plan)
+    }
+
+    override fun markPlanElementAsUnRealized(position: Int) {
+        val plan = (dayPlanItems[position] as PlanElementItem).planElement
+        plan.completion = false
+        updatePlanElement(plan)
+    }
+
+    override fun updatePlanElement(plan: PlanElement) {
+        compositeDisposable.add(CommunicationService.serverApi.updatePlanElement(SharedPreferencesUtils.getUserId(), travel.id, plan)
+                .observeOn(SchedulerProvider.ui())
+                .subscribeOn(SchedulerProvider.io())
+                .map { if (it.responseCode == ResponseCode.OK) it.data!! else throw ApiException(it.responseCode) }
+                .subscribe(
+                        { handleUpdatePlanElementResponse() },
+                        { error -> handleErrorResponse(error) }
+                ))
+    }
+
     override fun deletePlanElements() {
         compositeDisposable.add(CommunicationService.serverApi.deletePlanElements(
                 SharedPreferencesUtils.getUserId(),
@@ -268,6 +289,12 @@ class TravelDetailsPresenter(private var travel: Travel, view: TravelDetailsCont
         view.hideLoadingIndicator()
 
         if (this.dayPlanItems.isEmpty()) view.showNoDayPlans() else view.showDayPlans()
+    }
+
+    private fun handleUpdatePlanElementResponse() {
+        planElementsToDayPlanItems()
+        view.onDataSetChanged()
+        view.hideLoadingIndicator()
     }
 
     private fun handleDeletePlanElementsResponse() {

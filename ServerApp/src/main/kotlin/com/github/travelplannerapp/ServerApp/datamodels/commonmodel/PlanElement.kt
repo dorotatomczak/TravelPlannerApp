@@ -4,11 +4,12 @@ import java.io.Serializable
 import java.util.*
 
 data class PlanElement(
-    var id: Int,
-    var fromDateTimeMs: Long,
-    var placeId: Int,
-    var place: Place,
-    var myRating: Int = 0
+        var id: Int,
+        var fromDateTimeMs: Long,
+        var placeId: Int,
+        var place: Place,
+        var completion: Boolean = false,
+        var myRating: Int = 0
 ) : Serializable, Comparable<PlanElement> {
 
     override fun compareTo(other: PlanElement): Int {

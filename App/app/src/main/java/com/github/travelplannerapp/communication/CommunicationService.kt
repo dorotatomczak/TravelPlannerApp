@@ -100,7 +100,6 @@ interface ServerApi {
     fun getFriendsWithCheckAccessToTravel(@Path("userId") userId: Int, @Path("travelId") travelId: Int, @Path("ifHaveAccess") ifHaveAccess: Boolean): Single<Response<List<UserInfo>>>
 
     //users - plans
-
     @POST("users/{userId}/travels/{travelId}/plans")
     fun addPlanElement(@Path("userId") userId: Int, @Path("travelId") travelId: Int, @Body planElement: PlanElement): Single<Response<PlanElement>>
 

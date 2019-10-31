@@ -1,9 +1,9 @@
 package com.github.travelplannerapp.traveldetails
 
 import com.github.travelplannerapp.communication.appmodel.Travel
-import com.github.travelplannerapp.communication.commonmodel.UserInfo
 import com.github.travelplannerapp.communication.commonmodel.Place
 import com.github.travelplannerapp.communication.commonmodel.PlanElement
+import com.github.travelplannerapp.communication.commonmodel.UserInfo
 import com.github.travelplannerapp.deleteactionmode.DeleteContract
 import java.io.File
 
@@ -62,9 +62,12 @@ interface TravelDetailsContract {
         fun onBindDayPlanItemAtPosition(position: Int, itemView: DateSeparatorItemView)
         fun addPlanElementIdToDelete(position: Int)
         fun removePlanElementIdToDelete(position: Int)
+        fun markPlanElementAsRealized(position: Int)
+        fun markPlanElementAsUnRealized(position: Int)
+        fun updatePlanElement(plan: PlanElement)
         fun deletePlanElements()
         fun loadFriendsWithoutAccessToTravel()
-        fun getFriendWithoutAccessToTravel():ArrayList<UserInfo>
+        fun getFriendWithoutAccessToTravel(): ArrayList<UserInfo>
         fun onPlanElementClicked(position: Int, placeTitle: String)
     }
 }
