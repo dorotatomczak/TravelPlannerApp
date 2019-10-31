@@ -33,6 +33,7 @@ class ScansAdapter(val presenter: ScansContract.Presenter) : RecyclerView.Adapte
     }
 
     fun leaveActionMode() {
+        actionMode?.finish()
         actionMode = null
     }
 

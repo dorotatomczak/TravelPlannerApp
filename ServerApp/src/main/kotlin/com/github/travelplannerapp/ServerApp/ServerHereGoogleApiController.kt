@@ -88,12 +88,12 @@ class ServerHereGoogleApiController {
     @GetMapping("google-management/routes")
     fun getRoutes(
         @RequestHeader("authorization") token: String,
-        @RequestParam("origin_latitude") originLat: String,
-        @RequestParam("origin_longitude") originLng: String,
-        @RequestParam("destination_latitude") destinationLat: String,
-        @RequestParam("destination_longitude") destinationLng: String,
-        @RequestParam("travel_mode") travelMode: String,
-        @RequestParam("departure_time") departureTime: String
+        @RequestParam("origin-latitude") originLat: String,
+        @RequestParam("origin-longitude") originLng: String,
+        @RequestParam("destination-latitude") destinationLat: String,
+        @RequestParam("destination-longitude") destinationLng: String,
+        @RequestParam("travel-mode") travelMode: String,
+        @RequestParam("departure-time") departureTime: String
     ): Response<Routes> {
         val response = searchService.getRoutes(
             Pair(originLat, originLng),

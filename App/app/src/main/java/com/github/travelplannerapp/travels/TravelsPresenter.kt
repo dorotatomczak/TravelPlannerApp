@@ -120,6 +120,7 @@ class TravelsPresenter(view: TravelsContract.View) : BasePresenter<TravelsContra
     private fun handleDeleteTravelsResponse() {
         travelsToDeleteIds.clear()
         loadTravels()
+        leaveActionMode()
         view.showSnackbar(R.string.delete_travels_ok)
     }
 
