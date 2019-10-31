@@ -100,6 +100,10 @@ class TravelDetailsAdapter(val presenter: TravelDetailsContract.Presenter) : Rec
             return true
         }
 
+        override fun setCompletion(completion: Boolean) {
+            checkboxIsPlanElementDone.setChecked(completion)
+        }
+
         override fun setName(name: String) {
             textViewItemPlanName.text = name
         }

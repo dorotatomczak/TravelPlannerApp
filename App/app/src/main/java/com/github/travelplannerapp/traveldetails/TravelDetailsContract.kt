@@ -26,6 +26,7 @@ interface TravelDetailsContract {
 
     interface PlanElementItemView : DeleteContract.ItemView {
         fun setName(name: String)
+        fun setCompletion(completion: Boolean)
         fun setFromTime(time: String)
         fun setIcon(icon: Int)
         fun setLocation(location: String)

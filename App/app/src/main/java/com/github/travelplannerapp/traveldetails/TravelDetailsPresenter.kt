@@ -156,6 +156,7 @@ class TravelDetailsPresenter(private var travel: Travel, view: TravelDetailsCont
         itemView.setLocation(planElement.place.vicinity)
         itemView.setIcon(categoryIcon)
         itemView.setCheckbox()
+        itemView.setCompletion(planElement.completion)
     }
 
     override fun onBindDayPlanItemAtPosition(position: Int, itemView: TravelDetailsContract.DateSeparatorItemView) {
@@ -179,12 +180,14 @@ class TravelDetailsPresenter(private var travel: Travel, view: TravelDetailsCont
         val plan = (dayPlanItems[position] as PlanElementItem).planElement
         plan.completion = true
         updatePlanElement(plan)
+        view.showSnackbar(R.string.plan_element_realized)
     }
 
     override fun markPlanElementAsUnRealized(position: Int) {
         val plan = (dayPlanItems[position] as PlanElementItem).planElement
         plan.completion = false
         updatePlanElement(plan)
+        view.showSnackbar(R.string.plan_element_unrealized)
     }
 
     override fun updatePlanElement(plan: PlanElement) {
