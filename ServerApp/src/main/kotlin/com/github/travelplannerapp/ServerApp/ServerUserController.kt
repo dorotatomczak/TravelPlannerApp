@@ -72,7 +72,7 @@ class ServerUserController {
     fun deleteFriends(
             @RequestHeader("authorization") token: String,
             @PathVariable userId: Int,
-            @RequestParam friendsIds: MutableSet<Int>
+            @RequestParam("friends-ids") friendsIds: MutableSet<Int>
     ): Response<Unit> {
         userManagement.verifyUser(token)
         userManagement.deleteFriends(userId, friendsIds)

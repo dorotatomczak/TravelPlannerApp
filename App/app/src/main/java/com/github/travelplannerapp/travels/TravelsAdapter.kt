@@ -33,6 +33,7 @@ class TravelsAdapter(val presenter: TravelsContract.Presenter) : RecyclerView.Ad
     }
 
     fun leaveActionMode() {
+        actionMode?.finish()
         actionMode = null
     }
 

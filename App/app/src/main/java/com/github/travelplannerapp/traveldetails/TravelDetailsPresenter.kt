@@ -239,6 +239,7 @@ class TravelDetailsPresenter(private var travel: Travel, view: TravelDetailsCont
     private fun handleDeletePlanElementsResponse() {
         planElementIdsToDelete.clear()
         loadDayPlans()
+        leaveActionMode()
         view.showSnackbar(R.string.delete_plan_elements_ok)
     }
 

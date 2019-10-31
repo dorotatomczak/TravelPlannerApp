@@ -112,6 +112,7 @@ class ScansPresenter(view: ScansContract.View, private val travelId: Int) : Base
     private fun handleDeleteScansResponse() {
         scansToDelete.clear()
         loadScans()
+        leaveActionMode()
         view.showSnackbar(R.string.delete_scans_ok)
     }
 

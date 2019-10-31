@@ -74,20 +74,20 @@ interface ServerApi {
     //users - scans
     @Multipart
     @POST("users/{userId}/scans")
-    fun uploadScan(@Path("userId") userId: Int, @Part("travelId") travelId: RequestBody, @Part file: MultipartBody.Part): Single<Response<Scan>>
+    fun uploadScan(@Path("userId") userId: Int, @Part("travel-id") travelId: RequestBody, @Part file: MultipartBody.Part): Single<Response<Scan>>
 
     @HTTP(method = "DELETE", path = "users/{userId}/scans", hasBody = true)
     fun deleteScans(@Path("userId") userId: Int, @Body scans: MutableSet<Scan>): Single<Response<Unit>>
 
     @GET("users/{userId}/scans")
-    fun getScans(@Path("userId") userId: Int, @Query("travelId") travelId: Int): Single<Response<List<Scan>>>
+    fun getScans(@Path("userId") userId: Int, @Query("travel-id") travelId: Int): Single<Response<List<Scan>>>
 
     //users - friends
     @GET("users/{userId}/friends")
     fun getFriends(@Path("userId") userId: Int): Single<Response<List<UserInfo>>>
 
     @HTTP(method = "DELETE", path = "users/{userId}/friends", hasBody = false)
-    fun deleteFriends(@Path("userId") userId: Int, @Query("friendsIds") friendsIds: MutableSet<Int>): Single<Response<Unit>>
+    fun deleteFriends(@Path("userId") userId: Int, @Query("friends-ids") friendsIds: MutableSet<Int>): Single<Response<Unit>>
 
     @POST("users/{userId}/friends")
     fun addFriend(@Path("userId") userId: Int, @Body friend: UserInfo): Single<Response<UserInfo>>
@@ -120,12 +120,12 @@ interface ServerApi {
     fun getPlace(@Path("objectId") objectId: String, @Query("query") query: String): Single<Response<PlaceData>>
 
     @GET("google-management/routes")
-    fun getTransport(@Query("origin_latitude") originLat: String,
-                     @Query("origin_longitude") originLng: String,
-                     @Query("destination_latitude") destinationLat: String,
-                     @Query("destination_longitude") destinationLng: String,
-                     @Query("travel_mode") travelMode: String,
-                     @Query("departure_time") departureTime: String): Single<Response<Routes>>
+    fun getTransport(@Query("origin-latitude") originLat: String,
+                     @Query("origin-longitude") originLng: String,
+                     @Query("destination-latitude") destinationLat: String,
+                     @Query("destination-longitude") destinationLng: String,
+                     @Query("travel-mode") travelMode: String,
+                     @Query("departure-time") departureTime: String): Single<Response<Routes>>
 
     //recommendation - places
     @POST("users/{userId}/places/{placeId}/rating")
