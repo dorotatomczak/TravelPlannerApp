@@ -48,28 +48,6 @@ class TravelDetailsPresenter(private var travel: Travel, view: TravelDetailsCont
                 ))
     }
 
-    override fun shareTravel(selectedFriendsIds: ArrayList<Int>) {
-        compositeDisposable.add(CommunicationService.serverApi.shareTravel(SharedPreferencesUtils.getUserId(), travel.id, selectedFriendsIds)
-                .observeOn(SchedulerProvider.ui())
-                .subscribeOn(SchedulerProvider.io())
-                .map { if (it.responseCode == ResponseCode.OK) it.data!! else throw ApiException(it.responseCode) }
-                .subscribe(
-                        { handleShareTravelResponse() },
-                        { error -> handleErrorResponse(error) }
-                ))
-    }
-
-    override fun loadFriendsWithoutAccessToTravel() {
-        compositeDisposable.add(CommunicationService.serverApi.getFriendsWithCheckAccessToTravel(SharedPreferencesUtils.getUserId(), travel.id, false)
-                .observeOn(SchedulerProvider.ui())
-                .subscribeOn(SchedulerProvider.io())
-                .map { if (it.responseCode == ResponseCode.OK) it.data!! else throw ApiException(it.responseCode) }
-                .subscribe(
-                        { friends -> handleLoadFriendsResponse(friends) },
-                        { error -> handleErrorResponse(error) }
-                ))
-    }
-
     override fun uploadTravelImage(image: File) {
         val fileReqBody = image.asRequestBody("multipart/form-data".toMediaTypeOrNull())
         val filePart = MultipartBody.Part.createFormData("file", image.name, fileReqBody)
@@ -270,14 +248,6 @@ class TravelDetailsPresenter(private var travel: Travel, view: TravelDetailsCont
         view.showSnackbar(R.string.change_travel_name_ok)
     }
 
-    private fun handleShareTravelResponse() {
-        view.showSnackbar(R.string.share_travel_ok)
-    }
-
-    private fun handleLoadFriendsResponse(userFriends: List<UserInfo>) {
-        friendsWithoutAccessToTravel = ArrayList(userFriends)
-    }
-
     private fun handleUploadTravelImageResponse(travel: Travel) {
         this.travel = travel
         view.setResult(travel)
@@ -309,9 +279,5 @@ class TravelDetailsPresenter(private var travel: Travel, view: TravelDetailsCont
     private fun handleErrorResponse(error: Throwable) {
         if (error is ApiException) view.showSnackbar(error.getErrorMessageCode())
         else view.showSnackbar(R.string.server_connection_error)
-    }
-
-    override fun getFriendWithoutAccessToTravel(): ArrayList<UserInfo> {
-        return friendsWithoutAccessToTravel
     }
 }

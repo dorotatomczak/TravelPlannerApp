@@ -157,16 +157,4 @@ class ServerTravelController {
         travelManagement.deletePlanElements(planElementIds)
         return Response(ResponseCode.OK, Unit)
     }
-
-    @PutMapping("/users/{userId}/travels/{travelId}/share")
-    fun shareTravel(
-            @RequestHeader("authorization") token: String,
-            @PathVariable userId: Int,
-            @PathVariable travelId: Int,
-            @RequestBody selectedFriendsIds: ArrayList<Int>
-    ): Response<Boolean> {
-        userManagement.verifyUser(token)
-        val shareTravel = travelManagement.shareTravel(travelId, selectedFriendsIds)
-        return Response(ResponseCode.OK, shareTravel)
-    }
 }

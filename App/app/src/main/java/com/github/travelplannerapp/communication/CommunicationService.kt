@@ -92,13 +92,6 @@ interface ServerApi {
     @POST("users/{userId}/friends")
     fun addFriend(@Path("userId") userId: Int, @Body friend: UserInfo): Single<Response<UserInfo>>
 
-    //users - friends - travels
-    @PUT("users/{userId}/travels/{travelId}/share")
-    fun shareTravel(@Path("userId") userId: Int, @Path("travelId") travelId: Int, @Body selectedFriendsIds: ArrayList<Int>): Single<Response<Boolean>>
-
-    @GET("users/{userId}/travels/{travelId}/share/friends/{ifHaveAccess}")
-    fun getFriendsWithCheckAccessToTravel(@Path("userId") userId: Int, @Path("travelId") travelId: Int, @Path("ifHaveAccess") ifHaveAccess: Boolean): Single<Response<List<UserInfo>>>
-
     //users - plans
     @POST("users/{userId}/travels/{travelId}/plans")
     fun addPlanElement(@Path("userId") userId: Int, @Path("travelId") travelId: Int, @Body planElement: PlanElement): Single<Response<PlanElement>>

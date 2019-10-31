@@ -14,7 +14,6 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.request.RequestOptions
 import com.github.travelplannerapp.R
-import com.github.travelplannerapp.sharetraveldialog.ShareTravelDialog
 import com.github.travelplannerapp.communication.appmodel.Travel
 import com.github.travelplannerapp.communication.commonmodel.Place
 import com.github.travelplannerapp.communication.commonmodel.PlanElement
@@ -64,13 +63,10 @@ class TravelDetailsActivity : AppCompatActivity(), TravelDetailsContract.View {
         recyclerViewDayPlans.adapter = TravelDetailsAdapter(presenter)
 
         presenter.loadTravel()
-        presenter.loadFriendsWithoutAccessToTravel()
         refreshDayPlans()
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        menuInflater.inflate(R.menu.menu_share_travel, menu)
-        menu.findItem(R.id.menuShareTravelItem).setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS)
         menuInflater.inflate(R.menu.menu_travel_details, menu)
         menu.findItem(R.id.menuEdit).setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS)
         return true
@@ -82,9 +78,6 @@ class TravelDetailsActivity : AppCompatActivity(), TravelDetailsContract.View {
             return true
         } else if (item.itemId == R.id.menuEdit) {
             showEditTravel()
-            return true
-        } else if (item.itemId == R.id.menuShareTravelItem) {
-            showShareTravel()
             return true
         }
         return super.onOptionsItemSelected(item)
@@ -220,18 +213,6 @@ class TravelDetailsActivity : AppCompatActivity(), TravelDetailsContract.View {
         editTravelDialog.show(supportFragmentManager, TravelDialog.TAG)
     }
 
-    override fun showShareTravel() {
-        val shareTravelDialog = ShareTravelDialog(getString(R.string.share_travel), presenter.getFriendWithoutAccessToTravel())
-        shareTravelDialog.onOk = {
-            val selectedFriendsIds = shareTravelDialog.selectedFriendsId
-            if (selectedFriendsIds.size > 0)
-                presenter.shareTravel(selectedFriendsIds)
-            else
-                showSnackbar(R.string.no_selected_friends)
-        }
-        shareTravelDialog.show(supportFragmentManager, ShareTravelDialog.TAG)
-    }
-
     private fun showImageSelection() {
         val getIntent = Intent(Intent.ACTION_GET_CONTENT)
         getIntent.type = "image/*"
@@ -249,5 +230,4 @@ class TravelDetailsActivity : AppCompatActivity(), TravelDetailsContract.View {
         swipeRefreshLayoutTravelDetails.isRefreshing = true
         presenter.loadDayPlans()
     }
-
 }

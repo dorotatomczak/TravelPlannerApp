@@ -15,5 +15,4 @@ interface IUserManagement {
     fun deleteFriends(userId: Int, friendsIds: MutableSet<Int>)
     fun findMatchingEmails(userId: Int, query: String): MutableList<UserInfo>
     fun getAllFriendsByUserId(userId: Int): MutableList<UserInfo>
-    fun getFriendsWithCheckAccessToTravel(userId: Int, travelId: Int,ifHaveAccess:Boolean): MutableList<UserInfo>
 }
