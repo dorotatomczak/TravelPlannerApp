@@ -218,7 +218,7 @@ class TravelDetailsActivity : AppCompatActivity(), TravelDetailsContract.View {
         editTravelDialog.show(supportFragmentManager, TravelDialog.TAG)
     }
 
-    override fun showShareTravel(friendsWithoutAccessToTravel: ArrayList<UserInfo>) {
+    override fun showShareTravel(friendsWithoutAccessToTravel: List<UserInfo>) {
         val shareTravelDialog = ShareTravelDialog(getString(R.string.share_travel), friendsWithoutAccessToTravel)
         shareTravelDialog.onOk = {
             val selectedFriendsIds = shareTravelDialog.selectedFriendsId

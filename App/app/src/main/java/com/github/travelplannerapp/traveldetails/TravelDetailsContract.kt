@@ -15,7 +15,7 @@ interface TravelDetailsContract {
         fun showDayPlans()
         fun showNoDayPlans()
         fun showAddPlanElement(travelId: Int)
-        fun showShareTravel(friendsWithoutAccessToTravel: ArrayList<UserInfo>)
+        fun showShareTravel(friendsWithoutAccessToTravel: List<UserInfo>)
         fun onDataSetChanged()
         fun hideLoadingIndicator()
         fun setResult(travel: Travel)
