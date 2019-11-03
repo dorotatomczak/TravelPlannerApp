@@ -72,7 +72,7 @@ class ServerUserController {
     fun deleteFriends(
             @RequestHeader("authorization") token: String,
             @PathVariable userId: Int,
-            @RequestParam friendsIds: MutableSet<Int>
+            @RequestParam("friends-ids") friendsIds: MutableSet<Int>
     ): Response<Unit> {
         userManagement.verifyUser(token)
         userManagement.deleteFriends(userId, friendsIds)
@@ -83,7 +83,7 @@ class ServerUserController {
     fun getFriendsBySharedTravel(
             @PathVariable("userId") userId: Int,
             @PathVariable("travelId") travelId: Int,
-            @RequestParam("selectFriendsWithAccess") selectFriendsWithAccess: Boolean
+            @RequestParam("select-friends-with-access") selectFriendsWithAccess: Boolean
     ): Response<List<UserInfo>> {
         val friends = userManagement.getFriendsBySharedTravel(userId, travelId, selectFriendsWithAccess)
         return Response(ResponseCode.OK, friends)

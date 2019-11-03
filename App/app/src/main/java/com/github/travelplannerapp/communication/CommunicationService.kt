@@ -87,7 +87,7 @@ interface ServerApi {
     fun getFriends(@Path("userId") userId: Int): Single<Response<List<UserInfo>>>
 
     @HTTP(method = "DELETE", path = "users/{userId}/friends", hasBody = false)
-    fun deleteFriends(@Path("userId") userId: Int, @Query("friendsIds") friendsIds: MutableSet<Int>): Single<Response<Unit>>
+    fun deleteFriends(@Path("userId") userId: Int, @Query("friends-ids") friendsIds: MutableSet<Int>): Single<Response<Unit>>
 
     @POST("users/{userId}/friends")
     fun addFriend(@Path("userId") userId: Int, @Body friend: UserInfo): Single<Response<UserInfo>>
@@ -98,7 +98,7 @@ interface ServerApi {
 
     @GET("users/{userId}/travels/{travelId}/friends")
     fun getFriendsBySharedTravel(@Path("userId") userId: Int, @Path("travelId") travelId: Int,
-                                 @Query("selectFriendsWithAccess") selectFriendsWithAccess: Boolean): Single<Response<List<UserInfo>>>
+                                 @Query("select-friends-with-access") selectFriendsWithAccess: Boolean): Single<Response<List<UserInfo>>>
 
     //users - plans
 
