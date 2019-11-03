@@ -31,8 +31,8 @@
             android:buttonTint="@color/colorDivider"
             android:checked="false"
             android:visibility="invisible" />
-    </LinearLayout>
 
+    </LinearLayout>
 
     <TextView
         android:id="@+id/textViewItemPlanFromTime"

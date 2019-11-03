@@ -8,7 +8,7 @@ data class PlanElement(
         var fromDateTimeMs: Long,
         var placeId: Int,
         var place: Place,
-        var completion: Boolean = false,
+        var completed: Boolean = false,
         var myRating: Int = 0
 ) : Serializable, Comparable<PlanElement> {
 

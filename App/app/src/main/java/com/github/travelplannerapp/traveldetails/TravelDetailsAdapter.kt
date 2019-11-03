@@ -81,11 +81,7 @@ class TravelDetailsAdapter(val presenter: TravelDetailsContract.Presenter) : Rec
             ))
             checkboxIsPlanElementDone.setOnCheckedChangeListener(CompoundButton.OnCheckedChangeListener(
                     fun(_: CompoundButton, isChecked: Boolean) {
-                        if (isChecked) {
-                            presenter.markPlanElementAsRealized(adapterPosition)
-                        } else {
-                            presenter.markPlanElementAsUnRealized(adapterPosition)
-                        }
+                        presenter.markPlanElement(adapterPosition, isChecked)
                     }
             ))
         }
@@ -100,7 +96,7 @@ class TravelDetailsAdapter(val presenter: TravelDetailsContract.Presenter) : Rec
             return true
         }
 
-        override fun setCompletion(completion: Boolean) {
+        override fun setCompleted(completion: Boolean) {
             checkboxIsPlanElementDone.setChecked(completion)
         }
 

@@ -8,7 +8,6 @@ import com.github.travelplannerapp.communication.appmodel.PlaceCategory
 import com.github.travelplannerapp.communication.appmodel.Travel
 import com.github.travelplannerapp.communication.commonmodel.PlanElement
 import com.github.travelplannerapp.communication.commonmodel.ResponseCode
-import com.github.travelplannerapp.communication.commonmodel.UserInfo
 import com.github.travelplannerapp.utils.DateTimeUtils
 import com.github.travelplannerapp.utils.SchedulerProvider
 import com.github.travelplannerapp.utils.SharedPreferencesUtils
@@ -29,7 +28,6 @@ class TravelDetailsPresenter(private var travel: Travel, view: TravelDetailsCont
     private var dayPlanItems = ArrayList<TravelDetailsContract.DayPlanItem>()
     private var planElements = TreeSet<PlanElement>()
     private var planElementIdsToDelete = mutableSetOf<Int>()
-    private var friendsWithoutAccessToTravel = ArrayList<UserInfo>()
 
     override fun loadTravel() {
         view.setTitle(travel.name)
@@ -134,7 +132,7 @@ class TravelDetailsPresenter(private var travel: Travel, view: TravelDetailsCont
         itemView.setLocation(planElement.place.vicinity)
         itemView.setIcon(categoryIcon)
         itemView.setCheckbox()
-        itemView.setCompletion(planElement.completion)
+        itemView.setCompleted(planElement.completed)
     }
 
     override fun onBindDayPlanItemAtPosition(position: Int, itemView: TravelDetailsContract.DateSeparatorItemView) {
@@ -154,18 +152,11 @@ class TravelDetailsPresenter(private var travel: Travel, view: TravelDetailsCont
         planElementIdsToDelete.remove(planElementItem.planElement.id)
     }
 
-    override fun markPlanElementAsRealized(position: Int) {
+    override fun markPlanElement(position: Int, isCompleted: Boolean) {
         val plan = (dayPlanItems[position] as PlanElementItem).planElement
-        plan.completion = true
+        plan.completed = isCompleted
         updatePlanElement(plan)
-        view.showSnackbar(R.string.plan_element_realized)
-    }
-
-    override fun markPlanElementAsUnRealized(position: Int) {
-        val plan = (dayPlanItems[position] as PlanElementItem).planElement
-        plan.completion = false
-        updatePlanElement(plan)
-        view.showSnackbar(R.string.plan_element_unrealized)
+        view.showSnackbar(R.string.plan_element_completed)
     }
 
     override fun updatePlanElement(plan: PlanElement) {
@@ -267,7 +258,6 @@ class TravelDetailsPresenter(private var travel: Travel, view: TravelDetailsCont
     private fun handleUpdatePlanElementResponse() {
         planElementsToDayPlanItems()
         view.onDataSetChanged()
-        view.hideLoadingIndicator()
     }
 
     private fun handleDeletePlanElementsResponse() {

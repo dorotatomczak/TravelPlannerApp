@@ -71,8 +71,8 @@
     <string name="password_too_simple">Hasło musi co najmniej 8 znaków, zawierać 1 cyfrę, 1 małą i 1 wielką literę</string>
     <string name="snacks_fast_food">Fast food</string>
     <string name="delete_plan_elements_ok">Usunąłeś wybrane elementy planu</string>
-    <string name="plan_element_realized">Zrealizowałeś element planu</string>
-    <string name="plan_element_unrealized">Nie zrealizowałeś elementu planu</string>
+    <string name="plan_element_completed">Oznaczyłeś element planu jako ukończony</string>
+    <string name="plan_element_incompleted">Oznaczyłeś element planu jako nieukończony</string>
     <string name="delete_plan_elements_error">Wystąpił problem podczas usuwania wybranych elementów planu</string>
     <string name="my_friends">Moi znajomi</string>
     <string name="friend_added">Znajomy został dodany</string>

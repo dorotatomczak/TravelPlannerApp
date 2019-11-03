@@ -46,6 +46,6 @@ class PlanElementDao(map: MutableMap<String, Any?>) {
                     Timestamp(planElement.fromDateTimeMs),
                     travelId,
                     planElement.placeId,
-                    planElement.completion
+                    planElement.completed
             )
 }
