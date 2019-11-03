@@ -72,6 +72,8 @@
     <string name="snacks_fast_food">Fast food</string>
     <string name="delete_plan_elements_ok">Usunąłeś wybrane elementy planu</string>
     <string name="delete_plan_elements_error">Wystąpił problem podczas usuwania wybranych elementów planu</string>
+    <string name="share_using">Udostępnij poprzez</string>
+    <string name="plan_element_completed">Plan zrealizowany: </string>
     <string name="my_friends">Moi znajomi</string>
     <string name="friend_added">Znajomy został dodany</string>
     <string name="friend_deleted">Znajomy został usunięty</string>

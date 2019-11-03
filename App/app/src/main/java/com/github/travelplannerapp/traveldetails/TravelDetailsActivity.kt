@@ -204,6 +204,14 @@ class TravelDetailsActivity : AppCompatActivity(), TravelDetailsContract.View {
         return getString(resourceId) + ": " + placeTitle
     }
 
+    override fun sharePlanElement(planElementName: String) {
+        val intent = Intent(Intent.ACTION_SEND)
+        intent.type = "text/plain"
+        val body = getString(R.string.plan_element_completed) + planElementName
+        intent.putExtra(Intent.EXTRA_TEXT, body)
+        startActivity(Intent.createChooser(intent, getString(R.string.share_using)))
+    }
+
     private fun showEditTravel() {
         val editTravelDialog = TravelDialog(getString(R.string.change_travel_name))
         editTravelDialog.onOk = {

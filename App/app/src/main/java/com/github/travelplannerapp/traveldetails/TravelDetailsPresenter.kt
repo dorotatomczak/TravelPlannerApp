@@ -180,6 +180,10 @@ class TravelDetailsPresenter(private var travel: Travel, view: TravelDetailsCont
         view.showNoActionMode()
     }
 
+    override fun sharePlanElement(planElementName: String) {
+        view.sharePlanElement(planElementName)
+    }
+
     private fun planElementsToDayPlanItems() {
         dayPlanItems = ArrayList()
         var date = ""

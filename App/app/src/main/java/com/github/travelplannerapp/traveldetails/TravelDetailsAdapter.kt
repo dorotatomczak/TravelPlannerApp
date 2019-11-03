@@ -80,6 +80,9 @@ class TravelDetailsAdapter(val presenter: TravelDetailsContract.Presenter) : Rec
                         }
                     }
             ))
+            itemPlanShareButton.setOnClickListener {
+                presenter.sharePlanElement(textViewItemPlanName.text.toString())
+            }
         }
 
         override fun onClick(v: View?) {
