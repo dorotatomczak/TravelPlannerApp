@@ -92,6 +92,9 @@
     <string name="check_out">Check out</string>
     <string name="wrong_dates_error">\"From\" date and time must be before \"To\" date and time</string>
 
+    <string name="choose_option">Choose option</string>
+    <string name="mark_as_complete">Mark as complete</string>
+
     <!-- if you add category - add it in enum "Category" and array.xml -->
     <string name="restaurant">Restaurant</string>
     <string name="sights_museum">Sights and museum</string>

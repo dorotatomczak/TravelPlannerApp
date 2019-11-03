@@ -73,6 +73,8 @@
     <string name="delete_plan_elements_ok">Usunąłeś wybrane elementy planu</string>
     <string name="plan_element_completed">Oznaczyłeś element planu jako ukończony</string>
     <string name="plan_element_incompleted">Oznaczyłeś element planu jako nieukończony</string>
+    <string name="choose_option">Wybierz opcję</string>
+    <string name="mark_as_complete">Oznacz jako ukończony</string>
     <string name="delete_plan_elements_error">Wystąpił problem podczas usuwania wybranych elementów planu</string>
     <string name="my_friends">Moi znajomi</string>
     <string name="friend_added">Znajomy został dodany</string>

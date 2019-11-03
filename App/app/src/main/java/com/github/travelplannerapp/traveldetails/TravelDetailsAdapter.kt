@@ -1,15 +1,18 @@
 package com.github.travelplannerapp.traveldetails
 
+import android.content.DialogInterface
 import android.text.format.DateFormat
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.CompoundButton
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.view.ActionMode
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.github.travelplannerapp.R
+import com.github.travelplannerapp.R.layout
 import com.github.travelplannerapp.deleteactionmode.DeleteActionModeToolbar
 import com.github.travelplannerapp.utils.DateTimeUtils
 import kotlinx.android.extensions.LayoutContainer
@@ -25,10 +28,10 @@ class TravelDetailsAdapter(val presenter: TravelDetailsContract.Presenter) : Rec
         return when (viewType) {
 
             TravelDetailsContract.DayPlanItem.TYPE_PLAN -> PlanElementViewHolder(presenter, LayoutInflater.from(parent.context)
-                    .inflate(R.layout.item_plan_element, parent, false))
+                    .inflate(layout.item_plan_element, parent, false))
 
             TravelDetailsContract.DayPlanItem.TYPE_DATE -> DateSeparatorViewHolder(presenter, LayoutInflater.from(parent.context)
-                    .inflate(R.layout.item_plan_date_separator, parent, false))
+                    .inflate(layout.item_plan_date_separator, parent, false))
 
             else -> throw Exception("There is no ViewHolder that matches the type $viewType")
         }
@@ -79,11 +82,6 @@ class TravelDetailsAdapter(val presenter: TravelDetailsContract.Presenter) : Rec
                         }
                     }
             ))
-            checkboxIsPlanElementDone.setOnCheckedChangeListener(CompoundButton.OnCheckedChangeListener(
-                    fun(_: CompoundButton, isChecked: Boolean) {
-                        presenter.markPlanElement(adapterPosition, isChecked)
-                    }
-            ))
         }
 
         override fun onClick(v: View?) {
@@ -91,13 +89,31 @@ class TravelDetailsAdapter(val presenter: TravelDetailsContract.Presenter) : Rec
         }
 
         override fun onLongClick(v: View?): Boolean {
-            if (actionMode == null) actionMode = (containerView.context as AppCompatActivity)
-                    .startSupportActionMode(DeleteActionModeToolbar(presenter))
+            val c = v!!.context
+            val completeOption = c.getString(R.string.mark_as_complete)
+            val deleteOption = c.getString(R.string.menu_delete)
+            val options = arrayOf(completeOption, deleteOption)
+            val builder = AlertDialog.Builder(v!!.context)
+            builder.setTitle(R.string.choose_option)
+            builder.setItems(options, DialogInterface.OnClickListener { dialog, which ->
+                if (options[which] == completeOption) {
+                    presenter.markPlanElement(adapterPosition, true)
+                }
+                if (options[which] == deleteOption) {
+                    actionMode = (containerView.context as AppCompatActivity)
+                            .startSupportActionMode(DeleteActionModeToolbar(presenter))
+                }
+            })
+            builder.show()
             return true
         }
 
-        override fun setCompleted(completion: Boolean) {
-            checkboxIsPlanElementDone.setChecked(completion)
+        override fun setCompleted(completed: Boolean) {
+            if (completed) {
+                layoutPlanElementItem.alpha = 0.5F
+            } else {
+                layoutPlanElementItem.alpha = 1.0F
+            }
         }
 
         override fun setName(name: String) {
