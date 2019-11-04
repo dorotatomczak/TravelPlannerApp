@@ -78,4 +78,14 @@ class ServerUserController {
         userManagement.deleteFriends(userId, friendsIds)
         return Response(ResponseCode.OK, Unit)
     }
+
+    @GetMapping("users/{userId}/travels/{travelId}/friends")
+    fun getFriendsBySharedTravel(
+            @PathVariable("userId") userId: Int,
+            @PathVariable("travelId") travelId: Int,
+            @RequestParam("select-friends-with-access") selectFriendsWithAccess: Boolean
+    ): Response<List<UserInfo>> {
+        val friends = userManagement.getFriendsBySharedTravel(userId, travelId, selectFriendsWithAccess)
+        return Response(ResponseCode.OK, friends)
+    }
 }
