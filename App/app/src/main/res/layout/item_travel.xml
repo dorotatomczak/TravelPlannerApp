@@ -23,14 +23,14 @@
         android:paddingBottom="@dimen/padding_XS">
 
         <CheckBox
-        android:id="@+id/checkboxItemTravel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_vertical"
-        android:layout_marginEnd="@dimen/margin_horizontal"
-        android:buttonTint="@color/colorDivider"
-        android:checked="false"
-        android:visibility="gone" />
+            android:id="@+id/checkboxItemTravel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginEnd="@dimen/margin_horizontal"
+            android:buttonTint="@color/colorDivider"
+            android:checked="false"
+            android:visibility="gone" />
 
         <TextView
             android:id="@+id/textViewItemTravelName"
