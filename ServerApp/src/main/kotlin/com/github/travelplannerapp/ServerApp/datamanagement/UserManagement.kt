@@ -24,6 +24,7 @@ class UserManagement : IUserManagement {
     lateinit var userRepository: UserRepository
     @Autowired
     lateinit var userFriendRepository: UserFriendRepository
+
     private val ACCESS_TOKEN_SUB = "AccessToken"
     private val ACCESS_TOKEN_ISSUER = "TravelApp_Server"
     private val SECRET_KEY =
@@ -116,6 +117,15 @@ class UserManagement : IUserManagement {
         val friends = userRepository.getAllFriendsByUserId(userId)
         friends.forEach { user ->
             userInfos.add(UserInfo(user.id!!, user.email!!))
+        }
+        return userInfos
+    }
+
+    override fun getFriendsBySharedTravel(userId: Int, travelId: Int, selectFriendsWithAccess: Boolean): MutableList<UserInfo> {
+        val userInfos = mutableListOf<UserInfo>()
+        val friendsWithoutAccess = userRepository.getFriendsBySharedTravel(userId, travelId, selectFriendsWithAccess)
+        friendsWithoutAccess.forEach { friend ->
+            userInfos.add(UserInfo(friend.id!!, friend.email!!))
         }
         return userInfos
     }

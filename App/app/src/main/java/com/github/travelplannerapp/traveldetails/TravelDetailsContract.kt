@@ -3,6 +3,7 @@ package com.github.travelplannerapp.traveldetails
 import com.github.travelplannerapp.communication.appmodel.Travel
 import com.github.travelplannerapp.communication.commonmodel.Place
 import com.github.travelplannerapp.communication.commonmodel.PlanElement
+import com.github.travelplannerapp.communication.commonmodel.UserInfo
 import com.github.travelplannerapp.deleteactionmode.DeleteContract
 import java.io.File
 
@@ -14,6 +15,7 @@ interface TravelDetailsContract {
         fun showDayPlans()
         fun showNoDayPlans()
         fun showAddPlanElement(travelId: Int)
+        fun showShareTravel(friendsWithoutAccessToTravel: List<UserInfo>)
         fun onDataSetChanged()
         fun hideLoadingIndicator()
         fun setResult(travel: Travel)
@@ -49,6 +51,7 @@ interface TravelDetailsContract {
     interface Presenter : DeleteContract.Presenter {
         fun loadTravel()
         fun changeTravelName(travelName: String)
+        fun shareTravel(selectedFriendsIds: List<Int>)
         fun uploadTravelImage(image: File)
         fun onAddPlanElementClicked()
         fun onPlanElementAdded(planElement: PlanElement)
@@ -61,7 +64,9 @@ interface TravelDetailsContract {
         fun addPlanElementIdToDelete(position: Int)
         fun removePlanElementIdToDelete(position: Int)
         fun deletePlanElements()
+        fun loadFriendsWithoutAccessToTravel()
         fun onPlanElementClicked(position: Int, placeTitle: String)
         fun sharePlanElement(planElementName: String)
+        fun onShareTravelClicked()
     }
 }

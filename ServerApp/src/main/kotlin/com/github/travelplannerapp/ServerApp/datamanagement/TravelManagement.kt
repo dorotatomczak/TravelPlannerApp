@@ -1,9 +1,11 @@
 package com.github.travelplannerapp.ServerApp.datamanagement
 
 import com.github.travelplannerapp.ServerApp.db.dao.Travel
+import com.github.travelplannerapp.ServerApp.db.dao.UserTravel
 import com.github.travelplannerapp.ServerApp.db.merge
 import com.github.travelplannerapp.ServerApp.db.repositories.PlanElementRepository
 import com.github.travelplannerapp.ServerApp.db.repositories.TravelRepository
+import com.github.travelplannerapp.ServerApp.db.repositories.UserTravelRepository
 import com.github.travelplannerapp.ServerApp.db.transactions.PlanElementTransaction
 import com.github.travelplannerapp.ServerApp.db.transactions.TravelTransaction
 import com.github.travelplannerapp.ServerApp.exceptions.*
@@ -23,6 +25,8 @@ class TravelManagement : ITravelManagement {
     lateinit var planElementTransaction: PlanElementTransaction
     @Autowired
     lateinit var travelRepository: TravelRepository
+    @Autowired
+    lateinit var userTravelRepository: UserTravelRepository
     @Autowired
     lateinit var planElementRepository: PlanElementRepository
 
@@ -73,20 +77,20 @@ class TravelManagement : ITravelManagement {
             val planElementDao = pair.first
             val placeDao = pair.second
             val place = Place(
-                placeDao.hereId!!,
-                placeDao.title!!,
-                placeDao.vicinity!!,
-                emptyArray(),
-                placeDao.href!!,
-                placeDao.category!!
+                    placeDao.hereId!!,
+                    placeDao.title!!,
+                    placeDao.vicinity!!,
+                    emptyArray(),
+                    placeDao.href!!,
+                    placeDao.category!!
             )
             place.averageRating = placeDao.averageRating.toString()
 
             val planElement = PlanElement(
-                planElementDao.id!!,
-                planElementDao.fromDateTime!!.time,
-                planElementDao.placeId!!,
-                place
+                    planElementDao.id!!,
+                    planElementDao.fromDateTime!!.time,
+                    planElementDao.placeId!!,
+                    place
             )
             planElements.add(planElement)
         }
@@ -108,5 +112,15 @@ class TravelManagement : ITravelManagement {
     override fun deletePlanElements(planElementIds: List<Int>) {
         val result = planElementTransaction.deletePlanElements(planElementIds)
         if (!result) throw DeletePlanElementsException("Error when deleting plan elements")
+    }
+
+    override fun shareTravel(travelId: Int, selectedFriendsIds: List<Int>): Boolean {
+        for (selectedFriendId in selectedFriendsIds) {
+            val userTravelId = userTravelRepository.getNextId()
+            if (!userTravelRepository.add(UserTravel(userTravelId, selectedFriendId, travelId))) {
+                ShareTravelException("Error when sharing travel")
+            }
+        }
+        return true
     }
 }

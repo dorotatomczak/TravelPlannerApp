@@ -92,15 +92,24 @@ interface ServerApi {
     @POST("users/{userId}/friends")
     fun addFriend(@Path("userId") userId: Int, @Body friend: UserInfo): Single<Response<UserInfo>>
 
+    //users - friends - travels
+    @PUT("users/{userId}/travels/{travelId}/share")
+    fun shareTravel(@Path("userId") userId: Int, @Path("travelId") travelId: Int, @Body selectedFriendsIds: List<Int>): Single<Response<Boolean>>
+
+    @GET("users/{userId}/travels/{travelId}/friends")
+    fun getFriendsBySharedTravel(@Path("userId") userId: Int, @Path("travelId") travelId: Int,
+                                 @Query("select-friends-with-access") selectFriendsWithAccess: Boolean): Single<Response<List<UserInfo>>>
+
     //users - plans
-    @GET("users/{userId}/travels/{travelId}/plans")
-    fun getPlanElements(@Path("userId") userId: Int, @Path("travelId") travelId: Int): Single<Response<List<PlanElement>>>
 
     @POST("users/{userId}/travels/{travelId}/plans")
     fun addPlanElement(@Path("userId") userId: Int, @Path("travelId") travelId: Int, @Body planElement: PlanElement): Single<Response<PlanElement>>
 
     @HTTP(method = "DELETE", path = "users/{userId}/plans", hasBody = true)
     fun deletePlanElements(@Path("userId") userId: Int, @Body planElementIds: List<Int>): Single<Response<Unit>>
+
+    @GET("users/{userId}/travels/{travelId}/plans")
+    fun getPlanElements(@Path("userId") userId: Int, @Path("travelId") travelId: Int): Single<Response<List<PlanElement>>>
 
     @PUT("/users/{userId}/travels/{travelId}/plans")
     fun updatePlanElement(@Path("userId") userId: Int, @Path("travelId") travelId: Int, @Body planElement: PlanElement): Single<Response<Unit>>
