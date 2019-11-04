@@ -96,7 +96,7 @@ class TravelDetailsAdapter(val presenter: TravelDetailsContract.Presenter) : Rec
                 if (item?.title == context.getString(R.string.menu_delete)) {
                     actionMode = (containerView.context as AppCompatActivity)
                             .startSupportActionMode(DeleteActionModeToolbar(presenter))
-                } else if (item?.title == context.getString(R.string.mark_as_complete)) {
+                } else if (item?.title == context.getString(R.string.mark_as_completed)) {
                     presenter.markPlanElement(adapterPosition, true)
                 }
                 true

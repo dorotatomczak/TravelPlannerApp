@@ -44,7 +44,7 @@
     <string name="add_plan_error">Error when adding plan element</string>
     <string name="no_day_plans">You have no day plans for this travel</string>
     <string name="choose_option">Choose option</string>
-    <string name="mark_as_complete">Mark as complete</string>
+    <string name="mark_as_completed">Mark as completed</string>
     <string name="plan_element_completed">You marked plan as completed</string>
     <string name="plan_element_incompleted">You marked plan as incompleted</string>
     <string name="authorization_error">You are not authorized to perform this action</string>
