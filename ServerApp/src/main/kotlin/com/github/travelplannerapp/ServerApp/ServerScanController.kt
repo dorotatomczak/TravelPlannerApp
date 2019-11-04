@@ -30,7 +30,7 @@ class ServerScanController {
     fun uploadFile(
         @RequestHeader("authorization") token: String,
         @PathVariable userId: Int,
-        @RequestParam("travelId") travelId: Int,
+        @RequestParam("travel-id") travelId: Int,
         @RequestParam("file") file: MultipartFile
     ): Response<Scan> {
         userManagement.verifyUser(token)
@@ -49,7 +49,7 @@ class ServerScanController {
     fun getScans(
         @RequestHeader("authorization") token: String,
         @PathVariable userId: Int,
-        @RequestParam travelId: Int
+        @RequestParam("travel-id") travelId: Int
     ): Response<List<Scan>> {
         userManagement.verifyUser(token)
         val scans = scanManagement.getScans(userId, travelId)

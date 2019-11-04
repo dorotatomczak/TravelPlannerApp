@@ -12,7 +12,7 @@ class DeleteActionModeToolbar(private val presenter: DeleteContract.Presenter) :
                 presenter.onDeleteClicked()
             }
         }
-        return false
+        return true
     }
 
     override fun onCreateActionMode(mode: ActionMode, menu: Menu): Boolean {

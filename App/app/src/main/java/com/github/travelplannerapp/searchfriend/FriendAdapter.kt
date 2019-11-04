@@ -29,6 +29,7 @@ class FriendAdapter(val presenter: SearchFriendContract.Presenter) : RecyclerVie
     }
 
     fun leaveActionMode() {
+        actionMode?.finish()
         actionMode = null
     }
 

@@ -102,6 +102,7 @@ class SearchFriendPresenter(view: SearchFriendContract.View) : BasePresenter<Sea
     private fun handleDeleteFriendsResponse() {
         friendsToDeleteIds.clear()
         loadFriends()
+        leaveActionMode()
         view.showSnackbar(R.string.delete_friends_ok)
     }
 

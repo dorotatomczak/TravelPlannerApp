@@ -85,6 +85,7 @@
     <string name="add_friend">Dodaj znajomego</string>
     <string name="delete_friends">Usuń znajomych</string>
     <string name="delete_friends_confirmation">Czy na pewno chcesz usunąć wybranych znajomych?</string>
+    <string name="no_selected_friends">Nie wybrałeś znajomych</string>
     <string name="delete_friends_error">Wystąpił problem podczas usuwania znajomych</string>
     <string name="add_friend_error">Wystąpił problem podczas dodawania znajomego</string>
 
@@ -108,4 +109,7 @@
     <string name="shopping">Zakupy</string>
     <string name="natural_geographical">Natura</string>
     <string name="menu_set_photo">Ustaw zdjęcie</string>
+    <string name="share_travel_ok">Udostępniłeś podróż</string>
+    <string name="share_travel">Udostępnij podróż</string>
+    <string name="share_travel_error">Wystąpił błąd podczas udostępniania podróży</string>
 </resources>

@@ -55,6 +55,7 @@ class TravelDetailsAdapter(val presenter: TravelDetailsContract.Presenter) : Rec
     }
 
     fun leaveActionMode() {
+        actionMode?.finish()
         actionMode = null
     }
 

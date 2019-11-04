@@ -22,6 +22,19 @@ class UserTravelRepository : Repository<UserTravel>(), IUserTravelRepository {
     override val updateStatement = "UPDATE $tableName SET $columnUserId=?, $columnTravelId=?  WHERE $columnId=?"
     override val nextIdStatement = "SELECT nextval(pg_get_serial_sequence('$tableName', '$columnId')) AS new_id"
 
+    override fun doesUserTravelAccessExist(travelId: Int, userId: Int): Boolean {
+        val statement = DbConnection
+                .conn
+                .prepareStatement("SELECT $columnId FROM $tableName WHERE $columnTravelId=? AND $columnUserId=? ")
+        statement.setInt(1, travelId)
+        statement.setInt(2, userId)
+        val result: ResultSet = statement.executeQuery()
+        if (result.next()) {
+            return true
+        }
+        return false
+    }
+
     override fun deleteUserTravelBinding(userId: Int, travelId: Int): Boolean {
         val statement = DbConnection
                 .conn

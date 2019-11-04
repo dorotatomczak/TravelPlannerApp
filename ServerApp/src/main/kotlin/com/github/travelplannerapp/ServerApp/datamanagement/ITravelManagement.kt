@@ -13,4 +13,5 @@ interface ITravelManagement {
     fun addPlanElement(travelId: Int, planElement: PlanElement): PlanElement
     fun updatePlanElement(travelId: Int, planElement: PlanElement): PlanElement
     fun deletePlanElements(planElementIds: List<Int>)
+    fun shareTravel(travelId: Int, selectedFriendsIds: List<Int>): Boolean
 }
