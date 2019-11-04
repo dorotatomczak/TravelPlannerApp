@@ -41,7 +41,7 @@ create table plan (
 	from_date_time timestamp,
 	place_id integer references place(id),
 	travel_id integer references travel(id),
-	completion boolean
+	completed boolean
 );
 
 create table app_user_friend (

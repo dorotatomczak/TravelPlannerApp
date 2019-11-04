@@ -18,5 +18,5 @@ enum class ResponseCode {
     ADD_FRIEND_ERROR,
     DELETE_FRIENDS_ERROR,
     RATE_PLACE_ERROR,
-    OTHER_ERROR
+    OTHER_ERROR;
 }

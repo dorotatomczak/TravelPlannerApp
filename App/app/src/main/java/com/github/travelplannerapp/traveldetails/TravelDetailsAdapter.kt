@@ -89,13 +89,13 @@ class TravelDetailsAdapter(val presenter: TravelDetailsContract.Presenter) : Rec
         }
 
         override fun onLongClick(v: View?): Boolean {
-            val c = v!!.context
-            val completeOption = c.getString(R.string.mark_as_complete)
-            val deleteOption = c.getString(R.string.menu_delete)
+            val context = v!!.context
+            val completeOption = context.getString(R.string.mark_as_complete)
+            val deleteOption = context.getString(R.string.menu_delete)
             val options = arrayOf(completeOption, deleteOption)
             val builder = AlertDialog.Builder(v!!.context)
             builder.setTitle(R.string.choose_option)
-            builder.setItems(options, DialogInterface.OnClickListener { dialog, which ->
+            builder.setItems(options, DialogInterface.OnClickListener { _, which ->
                 if (options[which] == completeOption) {
                     presenter.markPlanElement(adapterPosition, true)
                 }

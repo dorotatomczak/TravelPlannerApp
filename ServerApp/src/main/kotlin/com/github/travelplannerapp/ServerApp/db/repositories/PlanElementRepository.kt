@@ -15,16 +15,16 @@ class PlanElementRepository : Repository<PlanElementDao>(), IPlanElementReposito
         const val columnFromDateTime = "from_date_time"
         const val columnPlaceId = "place_id"
         const val columnTravelId = "travel_id"
-        const val columnCompletion = "completion"
+        const val columnCompleted = "completed"
     }
 
     override val insertStatement = "INSERT INTO $tableName " +
-            "($columnId, $columnFromDateTime, $columnPlaceId, $columnTravelId,$columnCompletion) " +
+            "($columnId, $columnFromDateTime, $columnPlaceId, $columnTravelId,$columnCompleted) " +
             "VALUES (?, ?, ?, ?,?) "
     override val selectStatement = "SELECT * FROM $tableName "
     override val deleteStatement = "DELETE FROM $tableName "
     override val updateStatement = "UPDATE $tableName " +
-            "SET $columnFromDateTime=?, $columnPlaceId=?, $columnTravelId=?, $columnCompletion=? " +
+            "SET $columnFromDateTime=?, $columnPlaceId=?, $columnTravelId=?, $columnCompleted=? " +
             "WHERE $columnId=?"
     override val nextIdStatement = "SELECT nextval(pg_get_serial_sequence('$tableName', '$columnId')) AS new_id"
 
@@ -69,7 +69,7 @@ class PlanElementRepository : Repository<PlanElementDao>(), IPlanElementReposito
         statement.setTimestamp(2, obj.fromDateTime!!)
         statement.setInt(3, obj.placeId!!)
         statement.setInt(4, obj.travelId!!)
-        statement.setBoolean(5, obj.completion!!)
+        statement.setBoolean(5, obj.completed!!)
         return statement
     }
 
@@ -80,7 +80,7 @@ class PlanElementRepository : Repository<PlanElementDao>(), IPlanElementReposito
         statement.setTimestamp(1, obj.fromDateTime!!)
         statement.setInt(2, obj.placeId!!)
         statement.setInt(3, obj.travelId!!)
-        statement.setBoolean(4, obj.completion!!)
+        statement.setBoolean(4, obj.completed!!)
         statement.setInt(5, obj.id!!)
         return statement
     }

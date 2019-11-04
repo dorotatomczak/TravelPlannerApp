@@ -8,14 +8,14 @@
     android:paddingStart="@dimen/padding_S"
     android:paddingEnd="@dimen/padding_S">
 
-        <CheckBox
-            android:id="@+id/checkboxItemPlanElement"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="@dimen/margin_horizontal"
-            android:buttonTint="@color/colorDivider"
-            android:checked="false"
-            android:visibility="invisible" />
+    <CheckBox
+        android:id="@+id/checkboxItemPlanElement"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/margin_horizontal"
+        android:buttonTint="@color/colorDivider"
+        android:checked="false"
+        android:visibility="invisible" />
 
     <TextView
         android:id="@+id/textViewItemPlanFromTime"

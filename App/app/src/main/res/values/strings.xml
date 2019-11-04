@@ -40,8 +40,10 @@
     <string name="add_plan_ok">You added a new plan element</string>
     <string name="add_plan_error">Error when adding plan element</string>
     <string name="no_day_plans">You have no day plans for this travel</string>
-    <string name="plan_element_completed">You mark plan element as completed</string>
-    <string name="plan_element_incompleted">You mark plan element as incompleted</string>
+    <string name="choose_option">Choose option</string>
+    <string name="mark_as_complete">Mark as complete</string>
+    <string name="plan_element_completed">You marked plan as completed</string>
+    <string name="plan_element_incompleted">You marked plan as incompleted</string>
     <string name="authorization_error">You are not authorized to perform this action</string>
     <string name="no_scans">You have no scans</string>
     <string name="add_scan_error">Error when adding scan</string>
@@ -92,9 +94,6 @@
     <string name="check_out">Check out</string>
     <string name="wrong_dates_error">\"From\" date and time must be before \"To\" date and time</string>
 
-    <string name="choose_option">Choose option</string>
-    <string name="mark_as_complete">Mark as complete</string>
-
     <!-- if you add category - add it in enum "Category" and array.xml -->
     <string name="restaurant">Restaurant</string>
     <string name="sights_museum">Sights and museum</string>
@@ -111,5 +110,4 @@
     <string name="natural_geographical">Natural</string>
     <string name="snacks_fast_food">Fast food</string>
     <string name="menu_set_photo">Set photo</string>
-
 </resources>
