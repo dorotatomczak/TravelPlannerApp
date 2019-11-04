@@ -65,10 +65,13 @@ class TravelDetailsActivity : AppCompatActivity(), TravelDetailsContract.View {
         recyclerViewDayPlans.adapter = TravelDetailsAdapter(presenter)
 
         presenter.loadTravel()
+        presenter.loadFriendsWithoutAccessToTravel()
         refreshDayPlans()
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        menuInflater.inflate(R.menu.menu_share_travel, menu)
+        menu.findItem(R.id.menuShareTravelItem).setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS)
         menuInflater.inflate(R.menu.menu_travel_details, menu)
         menu.findItem(R.id.menuEdit).setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS)
         return true

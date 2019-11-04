@@ -68,7 +68,6 @@ interface TravelDetailsContract {
         fun deletePlanElements()
         fun onPlanElementClicked(position: Int, placeTitle: String)
         fun loadFriendsWithoutAccessToTravel()
-        fun onPlanElementClicked(position: Int, placeTitle: String)
         fun onShareTravelClicked()
     }
 }

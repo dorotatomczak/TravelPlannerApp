@@ -235,6 +235,14 @@ class TravelDetailsPresenter(private var travel: Travel, view: TravelDetailsCont
                 placeTitle)
     }
 
+    private fun handleShareTravelResponse() {
+        view.showSnackbar(R.string.share_travel_ok)
+    }
+
+    private fun handleLoadFriendsResponse(userFriends: List<UserInfo>) {
+        friendsWithoutAccessToTravel = ArrayList(userFriends)
+    }
+
     private fun planElementsToDayPlanItems() {
         dayPlanItems = ArrayList()
         var date = ""
