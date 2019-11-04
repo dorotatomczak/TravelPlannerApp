@@ -1,12 +1,9 @@
 package com.github.travelplannerapp.traveldetails
 
-import android.content.DialogInterface
 import android.text.format.DateFormat
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import android.widget.CompoundButton
-import androidx.appcompat.app.AlertDialog
+import android.widget.PopupMenu
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.view.ActionMode
 import androidx.core.content.ContextCompat
@@ -91,21 +88,20 @@ class TravelDetailsAdapter(val presenter: TravelDetailsContract.Presenter) : Rec
 
         override fun onLongClick(v: View?): Boolean {
             val context = v!!.context
-            val completeOption = context.getString(R.string.mark_as_complete)
-            val deleteOption = context.getString(R.string.menu_delete)
-            val options = arrayOf(completeOption, deleteOption)
-            val builder = AlertDialog.Builder(v!!.context)
-            builder.setTitle(R.string.choose_option)
-            builder.setItems(options, DialogInterface.OnClickListener { _, which ->
-                if (options[which] == completeOption) {
-                    presenter.markPlanElement(adapterPosition, true)
-                }
-                if (options[which] == deleteOption) {
+            val menu = PopupMenu(context, v, Gravity.RIGHT)
+            menu.getMenuInflater().inflate(R.menu.menu_plan_element, menu.getMenu())
+
+            menu.setOnMenuItemClickListener(PopupMenu.OnMenuItemClickListener() { item: MenuItem? ->
+
+                if (item?.title == context.getString(R.string.menu_delete)) {
                     actionMode = (containerView.context as AppCompatActivity)
                             .startSupportActionMode(DeleteActionModeToolbar(presenter))
+                } else if (item?.title == context.getString(R.string.mark_as_complete)) {
+                    presenter.markPlanElement(adapterPosition, true)
                 }
+                true
             })
-            builder.show()
+            menu.show()
             return true
         }
 
