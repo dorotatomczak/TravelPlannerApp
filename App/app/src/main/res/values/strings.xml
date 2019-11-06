@@ -69,7 +69,7 @@
     <string name="website">Website</string>
     <string name="phone">Phone</string>
     <string name="rating">Rating</string>
-    <string name="your_notes">Your notes</string>
+    <string name="notes">Notes</string>
     <string name="city">City</string>
     <string name="load_map_error">Can\'t load map</string>
     <string name="no_items_search_error">No items found</string>

@@ -8,6 +8,7 @@ interface PlanElementDetailsContract {
         fun showSnackbar(messageCode: Int)
         fun showInfoLayout(isVisible: Boolean)
         fun showProgressIndicator(isVisible: Boolean)
+        fun showSaveButtonVisibility(isVisible: Boolean)
 
         fun showTitle(title: String)
         fun showName(name: String)

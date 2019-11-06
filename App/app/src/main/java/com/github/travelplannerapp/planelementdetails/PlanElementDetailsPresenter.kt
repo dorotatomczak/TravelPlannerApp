@@ -46,7 +46,10 @@ class PlanElementDetailsPresenter(private val planElement: PlanElement, private 
                 .subscribeOn(SchedulerProvider.io())
                 .map { if (it.responseCode == ResponseCode.OK) it.data!! else throw ApiException(it.responseCode) }
                 .subscribe(
-                        { view.showSnackbar(R.string.update_plan_ok) },
+                        {
+                            view.showSaveButtonVisibility(false)
+                            view.showSnackbar(R.string.update_plan_ok)
+                        },
                         { error -> handleErrorResponse(error) }))
     }
 

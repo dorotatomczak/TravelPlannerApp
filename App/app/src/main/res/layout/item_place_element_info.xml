@@ -193,42 +193,34 @@
 
         </LinearLayout>
 
-
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/margin_plan_element_info"
             android:gravity="center"
-            android:text="@string/your_notes"
+            android:text="@string/notes"
             android:textSize="@dimen/text_size_item_S" />
 
-        <LinearLayout
+        <EditText
+            android:id="@+id/editTextNotesPlanElementInfo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:layout_gravity="center_vertical"
+            android:hint="@string/notes"
+            android:inputType="none"
+            android:focusable="true"/>
 
-            <EditText
-                android:id="@+id/editTextNotesPlanElementInfo"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:layout_gravity="center_vertical|end"
-                android:hint="@string/your_notes"
-                android:inputType="none"
-                android:focusable="true"/>
-
-            <Button
-                android:id="@+id/buttonSaveNotesPlanElementInfo"
-                android:layout_width="wrap_content"
-                android:layout_height="@dimen/button_height_S"
-                android:gravity="center"
-                android:layout_gravity="center_vertical|end"
-                android:background="@drawable/button_style"
-                android:text="@string/save"
-                android:textColor="@color/white"
-                android:textSize="@dimen/text_size_button" />
-
-        </LinearLayout>
+        <Button
+            android:id="@+id/buttonSaveNotesPlanElementInfo"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/button_height_S"
+            android:gravity="center"
+            android:visibility="gone"
+            android:layout_gravity="center_vertical|end"
+            android:background="@drawable/button_style"
+            android:text="@string/save"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_size_button" />
 
     </LinearLayout>
 

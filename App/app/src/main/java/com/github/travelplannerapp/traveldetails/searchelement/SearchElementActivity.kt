@@ -12,6 +12,7 @@ import com.github.travelplannerapp.R
 import com.github.travelplannerapp.communication.appmodel.CityObject
 import com.github.travelplannerapp.communication.commonmodel.Contacts
 import com.github.travelplannerapp.communication.commonmodel.Place
+import com.github.travelplannerapp.utils.ActivityUtils
 import com.google.android.material.snackbar.Snackbar
 import com.here.android.mpa.common.GeoCoordinate
 import com.here.android.mpa.common.OnEngineInitListener
@@ -58,7 +59,7 @@ class SearchElementActivity : AppCompatActivity(), SearchElementContract.View {
 
             setOnSuggestionListener(object : androidx.appcompat.widget.SearchView.OnSuggestionListener {
                 override fun onSuggestionClick(position: Int): Boolean {
-                    hideKeyboard()
+                    ActivityUtils.hideKeyboard(getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager, currentFocus)
                     val city = CityObject(suggestionsAdapter.getItem(position) as Cursor)
                     searchViewCity.setQuery(city.name, false)
                     val geoCord = GeoCoordinate(city.x.toDouble(), city.y.toDouble(), 0.0)
@@ -178,11 +179,6 @@ class SearchElementActivity : AppCompatActivity(), SearchElementContract.View {
                 return true
             }
         }
-    }
-
-    private fun hideKeyboard() {
-        val inputManager: InputMethodManager = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-        inputManager.hideSoftInputFromWindow(currentFocus?.windowToken, InputMethodManager.SHOW_FORCED)
     }
 
     private fun loadObjectsOnMap(geoCord: GeoCoordinate) {

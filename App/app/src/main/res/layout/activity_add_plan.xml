@@ -101,6 +101,7 @@
                 android:drawableTint="?android:textColorHint"/>
 
             </com.google.android.material.textfield.TextInputLayout>
+
         </LinearLayout>
 
         <LinearLayout
@@ -163,7 +164,6 @@
                 android:inputType="none"
                 android:focusable="false"/>
 
-
         </com.google.android.material.textfield.TextInputLayout>
 
         <LinearLayout
@@ -177,7 +177,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:layout_gravity="center_vertical|end"
-                android:hint="@string/your_notes"
+                android:hint="@string/notes"
                 android:inputType="none"
                 android:focusable="true"/>
 

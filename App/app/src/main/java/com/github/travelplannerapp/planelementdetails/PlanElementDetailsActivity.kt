@@ -3,6 +3,8 @@ package com.github.travelplannerapp.planelementdetails
 import android.app.Activity
 import android.content.Context
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.RatingBar
@@ -10,6 +12,7 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.github.travelplannerapp.R
 import com.github.travelplannerapp.communication.commonmodel.Contacts
+import com.github.travelplannerapp.utils.ActivityUtils
 import com.github.travelplannerapp.utils.DrawerUtils
 import com.google.android.material.snackbar.Snackbar
 import dagger.android.AndroidInjection
@@ -44,13 +47,32 @@ class PlanElementDetailsActivity : AppCompatActivity(), PlanElementDetailsContra
         DrawerUtils.getDrawer(this, toolbar)
 
         buttonSaveNotesPlanElementInfo.setOnClickListener {
-            hideKeyboard()
+            ActivityUtils.hideKeyboard(getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager, currentFocus)
+
             presenter.updatePlanElement(
                     editTextNotesPlanElementInfo.text.toString()
             )
         }
 
         presenter.loadPlace()
+        editTextNotesPlanElementInfo.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {
+                // pass
+            }
+
+            override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
+                showSaveButtonVisibility(true)
+            }
+
+            override fun afterTextChanged(s: Editable) {
+                // pass
+            }
+        })
+    }
+
+    override fun showSaveButtonVisibility(isVisible: Boolean) {
+        if (isVisible) buttonSaveNotesPlanElementInfo.visibility = View.VISIBLE
+        else buttonSaveNotesPlanElementInfo.visibility = View.GONE
     }
 
     override fun showNotes(notes: String) {
@@ -129,10 +151,5 @@ class PlanElementDetailsActivity : AppCompatActivity(), PlanElementDetailsContra
 
     override fun changeRatingTextToCompleted() {
         textViewRatePlace.text = getString(R.string.rate_place_completed)
-    }
-
-    private fun hideKeyboard() {
-        val inputManager: InputMethodManager = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-        inputManager.hideSoftInputFromWindow(currentFocus?.windowToken, InputMethodManager.SHOW_FORCED)
     }
 }
