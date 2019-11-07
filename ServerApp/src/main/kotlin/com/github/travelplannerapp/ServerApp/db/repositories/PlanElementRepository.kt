@@ -16,15 +16,16 @@ class PlanElementRepository : Repository<PlanElementDao>(), IPlanElementReposito
         const val columnPlaceId = "place_id"
         const val columnTravelId = "travel_id"
         const val columnCompleted = "completed"
+       const val columnNotes = "notes"
     }
 
     override val insertStatement = "INSERT INTO $tableName " +
-            "($columnId, $columnFromDateTime, $columnPlaceId, $columnTravelId,$columnCompleted) " +
-            "VALUES (?, ?, ?, ?,?) "
+            "($columnId, $columnFromDateTime, $columnPlaceId, $columnTravelId,$columnCompleted, $columnNotes) " +
+            "VALUES (?, ?, ?, ?,?,?) "
     override val selectStatement = "SELECT * FROM $tableName "
     override val deleteStatement = "DELETE FROM $tableName "
     override val updateStatement = "UPDATE $tableName " +
-            "SET $columnFromDateTime=?, $columnPlaceId=?, $columnTravelId=?, $columnCompleted=? " +
+            "SET $columnFromDateTime=?, $columnPlaceId=?, $columnTravelId=?, $columnCompleted=?, $columnNotes=? " +
             "WHERE $columnId=?"
     override val nextIdStatement = "SELECT nextval(pg_get_serial_sequence('$tableName', '$columnId')) AS new_id"
 
@@ -51,8 +52,8 @@ class PlanElementRepository : Repository<PlanElementDao>(), IPlanElementReposito
 
     override fun deletePlanElementsByTravelId(travelId: Int): Boolean {
         val statement = DbConnection
-                .conn
-                .prepareStatement(deleteStatement + "WHERE $columnTravelId=?")
+            .conn
+            .prepareStatement(deleteStatement + "WHERE $columnTravelId=?")
         statement.setInt(1, travelId)
         return statement.executeUpdate() > 0
     }
@@ -63,25 +64,27 @@ class PlanElementRepository : Repository<PlanElementDao>(), IPlanElementReposito
 
     override fun prepareInsertStatement(obj: PlanElementDao): PreparedStatement {
         val statement = DbConnection
-                .conn
-                .prepareStatement(insertStatement)
+            .conn
+            .prepareStatement(insertStatement)
         statement.setInt(1, obj.id!!)
         statement.setTimestamp(2, obj.fromDateTime!!)
         statement.setInt(3, obj.placeId!!)
         statement.setInt(4, obj.travelId!!)
         statement.setBoolean(5, obj.completed!!)
+        statement.setString(6, obj.notes!!)
         return statement
     }
 
     override fun prepareUpdateStatement(obj: PlanElementDao): PreparedStatement {
         val statement = DbConnection
-                .conn
-                .prepareStatement(updateStatement)
+            .conn
+            .prepareStatement(updateStatement)
         statement.setTimestamp(1, obj.fromDateTime!!)
         statement.setInt(2, obj.placeId!!)
         statement.setInt(3, obj.travelId!!)
         statement.setBoolean(4, obj.completed!!)
-        statement.setInt(5, obj.id!!)
+        statement.setString(5, obj.notes!!)
+        statement.setInt(6, obj.id!!)
         return statement
     }
 }

@@ -257,6 +257,12 @@ class TravelDetailsPresenter(private var travel: Travel, view: TravelDetailsCont
         }
     }
 
+    override fun onPlanElementClicked(position: Int, placeTitle: String) {
+        val planElementItem = dayPlanItems[position] as PlanElementItem
+        view.showPlanElementDetails(planElementItem.planElement,
+                placeTitle, travel.id)
+    }
+
     inner class DateSeparatorItem(val date: String) : TravelDetailsContract.DayPlanItem {
         override fun getType(): Int {
             return TravelDetailsContract.DayPlanItem.TYPE_DATE

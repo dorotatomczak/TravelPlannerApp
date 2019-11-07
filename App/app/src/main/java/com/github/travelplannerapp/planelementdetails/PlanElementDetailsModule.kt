@@ -1,5 +1,6 @@
 package com.github.travelplannerapp.planelementdetails
 
+import com.github.travelplannerapp.communication.commonmodel.PlanElement
 import dagger.Module
 import dagger.Provides
 
@@ -10,11 +11,13 @@ class PlanElementDetailsModule {
     internal fun providePlanElementDetailsPresenter(planElementDetailsActivity: PlanElementDetailsActivity,
                                                     planElementDetailsView: PlanElementDetailsContract.View): PlanElementDetailsContract.Presenter {
 
-        val placeId = planElementDetailsActivity.intent.getIntExtra(PlanElementDetailsActivity.EXTRA_PLACE_ID, -1)
+        val planElement = planElementDetailsActivity.intent.getSerializableExtra(PlanElementDetailsActivity.EXTRA_PLAN_ELEMENT) as PlanElement
+        val placeId = planElement.placeId
         val placeName = planElementDetailsActivity.intent.getStringExtra(PlanElementDetailsActivity.EXTRA_PLACE_NAME)
-        val placeHref = planElementDetailsActivity.intent.getStringExtra(PlanElementDetailsActivity.EXTRA_PLACE_HREF)
-        val placeAverageRating = planElementDetailsActivity.intent.getStringExtra(PlanElementDetailsActivity.EXTRA_AVERAGE_RATING)
+        val travelId = planElementDetailsActivity.intent.getIntExtra(PlanElementDetailsActivity.EXTRA_TRAVEL_ID, -1)
+        val placeHref = planElement.place.href
+        val placeAverageRating = planElement.place.averageRating
 
-        return PlanElementDetailsPresenter(placeId, placeName!!, placeHref!!, placeAverageRating!!, planElementDetailsView)
+        return PlanElementDetailsPresenter(planElement, placeId, placeName!!, placeHref, placeAverageRating!!, travelId, planElementDetailsView)
     }
 }

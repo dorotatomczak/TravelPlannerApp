@@ -5,13 +5,16 @@ import com.github.travelplannerapp.R
 import com.github.travelplannerapp.communication.ApiException
 import com.github.travelplannerapp.communication.CommunicationService
 import com.github.travelplannerapp.communication.commonmodel.PlaceData
+import com.github.travelplannerapp.communication.commonmodel.PlanElement
 import com.github.travelplannerapp.communication.commonmodel.ResponseCode
 import com.github.travelplannerapp.utils.SchedulerProvider
 import com.github.travelplannerapp.utils.SharedPreferencesUtils
 import io.reactivex.disposables.CompositeDisposable
 
-class PlanElementDetailsPresenter(private val placeId: Int, private val placeName: String, private val placeHref: String,
-                                  private val placeAverageRating: String, view: PlanElementDetailsContract.View)
+class PlanElementDetailsPresenter(private val planElement: PlanElement, private val placeId: Int,
+                                  private val placeName: String, private val placeHref: String,
+                                  private val placeAverageRating: String, private val travelId: Int,
+                                  view: PlanElementDetailsContract.View)
     : BasePresenter<PlanElementDetailsContract.View>(view), PlanElementDetailsContract.Presenter {
 
     private val compositeDisposable = CompositeDisposable()
@@ -19,6 +22,7 @@ class PlanElementDetailsPresenter(private val placeId: Int, private val placeNam
     override fun loadPlace() {
         view.showName(placeName)
         view.showAverageRating(placeAverageRating)
+        view.showNotes(planElement.notes ?: "")
 
         loadPlaceHereData()
         loadPlaceRating()
@@ -33,6 +37,20 @@ class PlanElementDetailsPresenter(private val placeId: Int, private val placeNam
                         { view.changeRatingTextToCompleted() },
                         { error -> handleErrorResponse(error) }
                 ))
+    }
+
+    override fun updatePlanElement(newNotes: String) {
+        planElement.notes = newNotes
+        compositeDisposable.add(CommunicationService.serverApi.updatePlanElement(SharedPreferencesUtils.getUserId(), travelId, planElement)
+                .observeOn(SchedulerProvider.ui())
+                .subscribeOn(SchedulerProvider.io())
+                .map { if (it.responseCode == ResponseCode.OK) it.data!! else throw ApiException(it.responseCode) }
+                .subscribe(
+                        {
+                            view.showSaveButtonVisibility(false)
+                            view.showSnackbar(R.string.update_plan_ok)
+                        },
+                        { error -> handleErrorResponse(error) }))
     }
 
     private fun loadPlaceHereData() {

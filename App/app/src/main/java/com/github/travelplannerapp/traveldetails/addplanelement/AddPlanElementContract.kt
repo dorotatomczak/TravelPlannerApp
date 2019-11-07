@@ -9,7 +9,7 @@ interface AddPlanElementContract {
 
     data class NewPlanElementData(val name: String, val fromDate: String, val fromTime: String,
                                   val coordinates: Coordinates, val location: String,
-                                  val accommodationData: AccommodationData?)
+                                  val accommodationData: AccommodationData?, val notes: String)
 
     data class AccommodationData(val toDate: String, val toTime: String)
 

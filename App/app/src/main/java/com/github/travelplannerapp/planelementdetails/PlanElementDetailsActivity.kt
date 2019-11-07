@@ -1,12 +1,18 @@
 package com.github.travelplannerapp.planelementdetails
 
 import android.app.Activity
+import android.content.Context
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.View
+import android.view.inputmethod.InputMethodManager
 import android.widget.RatingBar
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.github.travelplannerapp.R
 import com.github.travelplannerapp.communication.commonmodel.Contacts
+import com.github.travelplannerapp.utils.ActivityUtils
 import com.github.travelplannerapp.utils.DrawerUtils
 import com.google.android.material.snackbar.Snackbar
 import dagger.android.AndroidInjection
@@ -21,11 +27,10 @@ class PlanElementDetailsActivity : AppCompatActivity(), PlanElementDetailsContra
     lateinit var presenter: PlanElementDetailsContract.Presenter
 
     companion object {
-        const val EXTRA_PLACE_HREF = "place"
-        const val EXTRA_PLACE_ID = "place_id"
+        const val EXTRA_PLAN_ELEMENT = "plan_element"
         const val EXTRA_PLACE_NAME = "place_name"
-        const val EXTRA_AVERAGE_RATING = "average_rating"
         const val EXTRA_CAN_BE_RATED = "can_be_rated"
+        const val EXTRA_TRAVEL_ID = "travel_id"
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -41,7 +46,37 @@ class PlanElementDetailsActivity : AppCompatActivity(), PlanElementDetailsContra
         supportActionBar?.setHomeButtonEnabled(true)
         DrawerUtils.getDrawer(this, toolbar)
 
+        buttonSaveNotesPlanElementInfo.setOnClickListener {
+            ActivityUtils.hideKeyboard(getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager, currentFocus)
+
+            presenter.updatePlanElement(
+                    editTextNotesPlanElementInfo.text.toString()
+            )
+        }
+
         presenter.loadPlace()
+        editTextNotesPlanElementInfo.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {
+                // pass
+            }
+
+            override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
+                showSaveButtonVisibility(true)
+            }
+
+            override fun afterTextChanged(s: Editable) {
+                // pass
+            }
+        })
+    }
+
+    override fun showSaveButtonVisibility(isVisible: Boolean) {
+        if (isVisible) buttonSaveNotesPlanElementInfo.visibility = View.VISIBLE
+        else buttonSaveNotesPlanElementInfo.visibility = View.GONE
+    }
+
+    override fun showNotes(notes: String) {
+        editTextNotesPlanElementInfo.setText(notes, TextView.BufferType.EDITABLE)
     }
 
     override fun showTitle(title: String) {
