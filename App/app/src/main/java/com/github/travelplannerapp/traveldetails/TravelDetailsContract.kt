@@ -25,6 +25,7 @@ interface TravelDetailsContract {
 
     interface PlanElementItemView : DeleteContract.ItemView {
         fun setName(name: String)
+        fun setCompleted(completed: Boolean)
         fun setFromTime(time: String)
         fun setIcon(icon: Int)
         fun setLocation(location: String)
@@ -61,9 +62,11 @@ interface TravelDetailsContract {
         fun onBindDayPlanItemAtPosition(position: Int, itemView: DateSeparatorItemView)
         fun addPlanElementIdToDelete(position: Int)
         fun removePlanElementIdToDelete(position: Int)
+        fun markPlanElement(position: Int, isCompleted: Boolean)
+        fun updatePlanElement(plan: PlanElement)
         fun deletePlanElements()
-        fun loadFriendsWithoutAccessToTravel()
         fun onPlanElementClicked(position: Int, placeTitle: String)
+        fun loadFriendsWithoutAccessToTravel()
         fun onShareTravelClicked()
     }
 }

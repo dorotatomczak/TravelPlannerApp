@@ -7,8 +7,8 @@ data class PlanElement(
         var id: Int,
         var fromDateTimeMs: Long,
         var placeId: Int,
-        var place: Place,
-        var notes: String?
+        var completed: Boolean,
+        var notes: String?,
 ) : Serializable, Comparable<PlanElement> {
 
     override fun compareTo(other: PlanElement): Int {

@@ -36,15 +36,15 @@ class PlanElementRepositoryTest {
     }
 
     @Test
-    fun `When add called expect one row returned`(){
-        val result = planElementRepository.add(PlanElementDao(0, Timestamp(1111),1,1,""))
+    fun `When add called expect one row returned`() {
+        val result = planElementRepository.add(PlanElementDao(0, Timestamp(1111), 1, 1, ,""))
         Assert.assertTrue(result)
         planElementRepository.delete(0)
     }
 
     @Test
     fun `When delete called on existing id expect true returned`() {
-        planElementRepository.add(PlanElementDao(0, Timestamp(1111),1,1,""))
+        planElementRepository.add(PlanElementDao(0, Timestamp(1111), 1, 1, false,""))
         val result = planElementRepository.delete(0)
         Assert.assertTrue(result)
     }
@@ -56,14 +56,14 @@ class PlanElementRepositoryTest {
     }
 
     @Test
-    fun `When update called on existing PlanElementDao expect true returned`(){
-        val result = planElementRepository.update(PlanElementDao(1, Timestamp(1111),1,1,""))
+    fun `When update called on existing PlanElementDao expect true returned`() {
+        val result = planElementRepository.update(PlanElementDao(1, Timestamp(1111), 1, 1, false,""))
         Assert.assertTrue(result)
     }
 
     @Test
-    fun `When update called on non existing PlanElementDao expect false returned`(){
-        val result = planElementRepository.update(PlanElementDao(0, Timestamp(1111),1,1,""))
+    fun `When update called on non existing PlanElementDao expect false returned`() {
+        val result = planElementRepository.update(PlanElementDao(0, Timestamp(1111), 1, 1, false,""))
         Assert.assertTrue(!result)
     }
 }

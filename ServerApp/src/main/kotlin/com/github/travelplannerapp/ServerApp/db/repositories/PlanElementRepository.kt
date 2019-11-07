@@ -15,29 +15,30 @@ class PlanElementRepository : Repository<PlanElementDao>(), IPlanElementReposito
         const val columnFromDateTime = "from_date_time"
         const val columnPlaceId = "place_id"
         const val columnTravelId = "travel_id"
-        const val columnNotes = "notes"
+        const val columnCompleted = "completed"
+       const val columnNotes = "notes"
     }
 
     override val insertStatement = "INSERT INTO $tableName " +
-            "($columnId, $columnFromDateTime, $columnPlaceId, $columnTravelId, $columnNotes) " +
-            "VALUES (?, ?, ?, ?, ?) "
+            "($columnId, $columnFromDateTime, $columnPlaceId, $columnTravelId,$columnCompleted, $columnNotes) " +
+            "VALUES (?, ?, ?, ?,?,?) "
     override val selectStatement = "SELECT * FROM $tableName "
     override val deleteStatement = "DELETE FROM $tableName "
     override val updateStatement = "UPDATE $tableName " +
-            "SET $columnFromDateTime=?, $columnPlaceId=?, $columnTravelId=?, $columnNotes=? " +
+            "SET $columnFromDateTime=?, $columnPlaceId=?, $columnTravelId=?, $columnCompleted=?, $columnNotes=? " +
             "WHERE $columnId=?"
     override val nextIdStatement = "SELECT nextval(pg_get_serial_sequence('$tableName', '$columnId')) AS new_id"
 
     override fun getPlanElementsByTravelId(travelId: Int): List<Pair<PlanElementDao, PlaceDao>> {
         val planElementDaoPlaceDao = mutableListOf<Pair<PlanElementDao, PlaceDao>>()
         val statement = DbConnection
-            .conn
-            .prepareStatement(
-                    "SELECT *" +
-                            "FROM $tableName INNER JOIN ${PlaceRepository.tableName} " +
-                            "ON $tableName.$columnPlaceId = ${PlaceRepository.tableName}.${PlaceRepository.columnId} " +
-                            "WHERE $columnTravelId = ? ORDER BY $columnFromDateTime ASC"
-            )
+                .conn
+                .prepareStatement(
+                        "SELECT *" +
+                                "FROM $tableName INNER JOIN ${PlaceRepository.tableName} " +
+                                "ON $tableName.$columnPlaceId = ${PlaceRepository.tableName}.${PlaceRepository.columnId} " +
+                                "WHERE $columnTravelId = ? ORDER BY $columnFromDateTime ASC"
+                )
         statement.setInt(1, travelId)
         val result = statement.executeQuery()
         while (result.next()) {
@@ -69,7 +70,8 @@ class PlanElementRepository : Repository<PlanElementDao>(), IPlanElementReposito
         statement.setTimestamp(2, obj.fromDateTime!!)
         statement.setInt(3, obj.placeId!!)
         statement.setInt(4, obj.travelId!!)
-        statement.setString(5, obj.notes!!)
+        statement.setBoolean(5, obj.completed!!)
+        statement.setString(6, obj.notes!!)
         return statement
     }
 
@@ -80,8 +82,9 @@ class PlanElementRepository : Repository<PlanElementDao>(), IPlanElementReposito
         statement.setTimestamp(1, obj.fromDateTime!!)
         statement.setInt(2, obj.placeId!!)
         statement.setInt(3, obj.travelId!!)
-        statement.setString(4, obj.notes!!)
-        statement.setInt(5, obj.id!!)
+        statement.setBoolean(4, obj.completed!!)
+        statement.setString(5, obj.notes!!)
+        statement.setInt(6, obj.id!!)
         return statement
     }
 }

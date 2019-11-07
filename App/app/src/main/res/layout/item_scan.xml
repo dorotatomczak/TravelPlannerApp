@@ -16,6 +16,7 @@
         android:id="@+id/checkboxItemScan"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:buttonTint="@color/colorDivider"
         android:checked="false"
         android:visibility="gone" />
 
