@@ -1,7 +1,6 @@
 package com.github.travelplannerapp.traveldetails
 
 import com.github.travelplannerapp.communication.appmodel.Travel
-import com.github.travelplannerapp.communication.commonmodel.Place
 import com.github.travelplannerapp.communication.commonmodel.PlanElement
 import com.github.travelplannerapp.communication.commonmodel.UserInfo
 import com.github.travelplannerapp.deleteactionmode.DeleteContract
@@ -20,7 +19,7 @@ interface TravelDetailsContract {
         fun hideLoadingIndicator()
         fun setResult(travel: Travel)
         fun showSnackbar(messageCode: Int)
-        fun showPlanElementDetails(placeId: Int, place: Place, placeTitle: String)
+        fun showPlanElementDetails(planElement: PlanElement, placeTitle: String, travelId: Int)
         fun getAccommodationName(isCheckIn: Boolean, placeTitle: String): String
     }
 

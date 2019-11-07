@@ -8,6 +8,7 @@ interface PlanElementDetailsContract {
         fun showSnackbar(messageCode: Int)
         fun showInfoLayout(isVisible: Boolean)
         fun showProgressIndicator(isVisible: Boolean)
+        fun showSaveButtonVisibility(isVisible: Boolean)
 
         fun showTitle(title: String)
         fun showName(name: String)
@@ -15,6 +16,7 @@ interface PlanElementDetailsContract {
         fun showOpeningHours(openingHours: String?)
         fun showAverageRating(rating: String)
         fun showContacts(contacts: Contacts)
+        fun showNotes(notes: String)
 
         fun showRatingOnRatingBar(rating: Int)
         fun changeRatingTextToCompleted()
@@ -23,5 +25,6 @@ interface PlanElementDetailsContract {
     interface Presenter {
         fun loadPlace()
         fun onRatingChanged(rating: Int)
+        fun updatePlanElement(newNotes: String)
     }
 }

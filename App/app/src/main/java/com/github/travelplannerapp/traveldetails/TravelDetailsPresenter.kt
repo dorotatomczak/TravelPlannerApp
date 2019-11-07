@@ -209,13 +209,6 @@ class TravelDetailsPresenter(private var travel: Travel, view: TravelDetailsCont
         view.showNoActionMode()
     }
 
-    override fun onPlanElementClicked(position: Int, placeTitle: String) {
-        val planElementItem = dayPlanItems[position] as PlanElementItem
-        view.showPlanElementDetails(planElementItem.planElement.placeId,
-                planElementItem.planElement.place,
-                placeTitle)
-    }
-
     private fun planElementsToDayPlanItems() {
         dayPlanItems = ArrayList()
         var date = ""
@@ -228,6 +221,12 @@ class TravelDetailsPresenter(private var travel: Travel, view: TravelDetailsCont
             }
             dayPlanItems.add(PlanElementItem(plan))
         }
+    }
+
+    override fun onPlanElementClicked(position: Int, placeTitle: String) {
+        val planElementItem = dayPlanItems[position] as PlanElementItem
+        view.showPlanElementDetails(planElementItem.planElement,
+                placeTitle, travel.id)
     }
 
     inner class DateSeparatorItem(val date: String) : TravelDetailsContract.DayPlanItem {

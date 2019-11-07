@@ -42,6 +42,8 @@
     <string name="share_travel">Share travel</string>
     <string name="add_plan_ok">You added a new plan element</string>
     <string name="add_plan_error">Error when adding plan element</string>
+    <string name="update_plan_ok">You updated a plan element</string>
+    <string name="update_plan_error">Error when updating plan element</string>
     <string name="no_day_plans">You have no day plans for this travel</string>
     <string name="authorization_error">You are not authorized to perform this action</string>
     <string name="no_scans">You have no scans</string>
@@ -63,10 +65,11 @@
     <string name="delete_confirmation">Are you sure you want to delete selected %1$s?</string>
     <string name="travels">travels</string>
     <string name="choose_category">Choose category</string>
-    <string name="openingHours">Opening hours</string>
+    <string name="opening_hours">Opening hours</string>
     <string name="website">Website</string>
     <string name="phone">Phone</string>
     <string name="rating">Rating</string>
+    <string name="notes">Notes</string>
     <string name="city">City</string>
     <string name="load_map_error">Can\'t load map</string>
     <string name="no_items_search_error">No items found</string>

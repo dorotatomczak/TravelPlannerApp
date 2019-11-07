@@ -15,7 +15,6 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.request.RequestOptions
 import com.github.travelplannerapp.R
 import com.github.travelplannerapp.communication.appmodel.Travel
-import com.github.travelplannerapp.communication.commonmodel.Place
 import com.github.travelplannerapp.communication.commonmodel.PlanElement
 import com.github.travelplannerapp.communication.commonmodel.UserInfo
 import com.github.travelplannerapp.planelementdetails.PlanElementDetailsActivity
@@ -111,15 +110,10 @@ class TravelDetailsActivity : AppCompatActivity(), TravelDetailsContract.View {
                     showSnackbar(messageCode)
                     val plan = data.getSerializableExtra(AddPlanElementActivity.REQUEST_ADD_PLAN_ELEMENT_RESULT_PLAN) as PlanElement
                     presenter.onPlanElementAdded(plan)
-                    refreshDayPlans()
-                }
-            }
-            REQUEST_SHOW_DETAILS -> {
-                if (resultCode == Activity.RESULT_OK) {
-                    refreshDayPlans()
                 }
             }
         }
+        refreshDayPlans()
     }
 
     override fun setTitle(title: String) {
@@ -188,12 +182,11 @@ class TravelDetailsActivity : AppCompatActivity(), TravelDetailsContract.View {
                 .show()
     }
 
-    override fun showPlanElementDetails(placeId: Int, place: Place, placeTitle: String) {
+    override fun showPlanElementDetails(planElement: PlanElement, placeTitle: String, travelId: Int) {
         val intent = Intent(this, PlanElementDetailsActivity::class.java)
-        intent.putExtra(PlanElementDetailsActivity.EXTRA_PLACE_HREF, place.href)
-        intent.putExtra(PlanElementDetailsActivity.EXTRA_AVERAGE_RATING, place.averageRating)
+        intent.putExtra(PlanElementDetailsActivity.EXTRA_PLAN_ELEMENT, planElement)
+        intent.putExtra(PlanElementDetailsActivity.EXTRA_TRAVEL_ID, travelId)
         intent.putExtra(PlanElementDetailsActivity.EXTRA_PLACE_NAME, placeTitle)
-        intent.putExtra(PlanElementDetailsActivity.EXTRA_PLACE_ID, placeId)
 
         val checkInString = getString(R.string.check_in)
         intent.putExtra(PlanElementDetailsActivity.EXTRA_CAN_BE_RATED, !placeTitle.startsWith(checkInString))
