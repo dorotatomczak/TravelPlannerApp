@@ -2,7 +2,6 @@ package com.github.travelplannerapp.traveldetails
 
 import android.app.Activity
 import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
@@ -203,23 +202,21 @@ class TravelDetailsActivity : AppCompatActivity(), TravelDetailsContract.View {
         return getString(resourceId) + ": " + placeTitle
     }
 
-    override fun sharePlanElement(planElementName: String) {
+    override fun sharePlanElement(urlToShare: String) {
         var intent = Intent(Intent.ACTION_SEND)
         intent.type = "text/plain"
         var isFacebookAppFound = false
         var appMatches = packageManager.queryIntentActivities(intent, 0)
-        var ser=planElementName.replace("\\s".toRegex(), "").decapitalize()
-        var urlToShare="https://www.google.com/search?tbm=isch&q="+ser
 
-       appMatches.forEach {
-           if (it.activityInfo.packageName.toLowerCase().startsWith("com.facebook.katana")) {
-               isFacebookAppFound = true
-               intent.setPackage(it.activityInfo.packageName)
-               intent.putExtra(Intent.EXTRA_TEXT, urlToShare)
-               startActivity(intent)
-           }
-       }
-        if(!isFacebookAppFound){
+        appMatches.forEach {
+            if (it.activityInfo.packageName.toLowerCase().startsWith("com.facebook.katana")) {
+                isFacebookAppFound = true
+                intent.setPackage(it.activityInfo.packageName)
+                intent.putExtra(Intent.EXTRA_TEXT, urlToShare)
+                startActivity(intent)
+            }
+        }
+        if (!isFacebookAppFound) {
             showSnackbar(R.string.missing_facebook_app)
         }
     }

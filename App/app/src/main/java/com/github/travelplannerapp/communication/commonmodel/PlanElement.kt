@@ -7,8 +7,9 @@ data class PlanElement(
         var id: Int,
         var fromDateTimeMs: Long,
         var placeId: Int,
-        var completed: Boolean,
-        var notes: String?,
+        var place: Place,
+        var completed: Boolean = false,
+        var notes: String
 ) : Serializable, Comparable<PlanElement> {
 
     override fun compareTo(other: PlanElement): Int {
@@ -25,4 +26,3 @@ data class PlanElement(
         return calendar
     }
 }
-

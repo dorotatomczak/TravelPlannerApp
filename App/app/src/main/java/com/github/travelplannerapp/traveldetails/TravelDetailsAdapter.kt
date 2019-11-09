@@ -80,9 +80,6 @@ class TravelDetailsAdapter(val presenter: TravelDetailsContract.Presenter) : Rec
                         }
                     }
             ))
-            itemPlanShareButton.setOnClickListener {
-                presenter.sharePlanElement(textViewItemPlanName.text.toString())
-            }
         }
 
         override fun onClick(v: View?) {
@@ -101,6 +98,8 @@ class TravelDetailsAdapter(val presenter: TravelDetailsContract.Presenter) : Rec
                             .startSupportActionMode(DeleteActionModeToolbar(presenter))
                 } else if (item?.title == context.getString(R.string.mark_as_completed)) {
                     presenter.markPlanElement(adapterPosition, true)
+                } else if (item?.title == context.getString(R.string.plan_element_share)) {
+                    presenter.sharePlanElement(textViewItemPlanName.text.toString())
                 }
                 true
             })

@@ -9,4 +9,9 @@
         android:id="@+id/menuCompletedPlan"
         android:title="@string/mark_as_completed"/>
 
+    <item
+        android:id="@+id/menuSharePlan"
+        android:title="@string/plan_element_share"
+        />
+
 </menu>

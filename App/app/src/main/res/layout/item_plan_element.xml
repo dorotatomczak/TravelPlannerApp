@@ -46,25 +46,6 @@
             android:contentDescription="@null"
             android:src="@drawable/ic_circle_plane" />
 
-            <ImageView
-                android:id="@+id/imageViewItemPlan"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:contentDescription="@null"
-                android:src="@drawable/ic_circle_plane" />
-
-            <ImageView
-                android:id="@+id/itemPlanShareButton"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:adjustViewBounds="false"
-                android:baselineAlignBottom="false"
-                android:clickable="true"
-                android:cropToPadding="false"
-                android:scaleType="centerInside"
-                android:src="@drawable/ic_share"
-                android:textAlignment="viewEnd" />
-        </LinearLayout>
     </FrameLayout>
 
     <LinearLayout

@@ -21,7 +21,7 @@ interface TravelDetailsContract {
         fun showSnackbar(messageCode: Int)
         fun showPlanElementDetails(planElement: PlanElement, placeTitle: String, travelId: Int)
         fun getAccommodationName(isCheckIn: Boolean, placeTitle: String): String
-        fun sharePlanElement(planElementName: String)
+        fun sharePlanElement(urlToShare: String)
     }
 
     interface PlanElementItemView : DeleteContract.ItemView {
