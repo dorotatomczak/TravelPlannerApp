@@ -20,7 +20,7 @@ object CommunicationService {
     //localhost via emulator is emulator itself
     //remote server: https://journello.herokuapp.com/
 
-    private const val serverUrl: String = "http://10.0.2.2:8080/"
+    private const val serverUrl: String = "http://192.168.1.9:8080/"
     val serverApi: ServerApi = Retrofit.Builder()
             .baseUrl(serverUrl)
             .addConverterFactory(ScalarsConverterFactory.create())

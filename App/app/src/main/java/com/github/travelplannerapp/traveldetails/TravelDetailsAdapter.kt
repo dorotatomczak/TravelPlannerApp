@@ -1,5 +1,6 @@
 package com.github.travelplannerapp.traveldetails
 
+import android.content.Context
 import android.text.format.DateFormat
 import android.view.*
 import android.widget.CompoundButton
@@ -68,6 +69,10 @@ class TravelDetailsAdapter(val presenter: TravelDetailsContract.Presenter) : Rec
     inner class PlanElementViewHolder(val presenter: TravelDetailsContract.Presenter, override val containerView: View) : RecyclerView.ViewHolder(containerView),
             LayoutContainer, TravelDetailsContract.PlanElementItemView, View.OnClickListener, View.OnLongClickListener {
 
+
+        var menu: PopupMenu
+        var context: Context
+
         init {
             containerView.setOnClickListener(this)
             containerView.setOnLongClickListener(this)
@@ -80,6 +85,10 @@ class TravelDetailsAdapter(val presenter: TravelDetailsContract.Presenter) : Rec
                         }
                     }
             ))
+            val view = this.itemView
+            context = view.context
+            menu = PopupMenu(context, view, Gravity.RIGHT)
+            menu.getMenuInflater().inflate(R.menu.menu_plan_element, menu.getMenu())
         }
 
         override fun onClick(v: View?) {
@@ -87,10 +96,6 @@ class TravelDetailsAdapter(val presenter: TravelDetailsContract.Presenter) : Rec
         }
 
         override fun onLongClick(v: View?): Boolean {
-            val context = v!!.context
-            val menu = PopupMenu(context, v, Gravity.RIGHT)
-            menu.getMenuInflater().inflate(R.menu.menu_plan_element, menu.getMenu())
-
             menu.setOnMenuItemClickListener(PopupMenu.OnMenuItemClickListener() { item: MenuItem? ->
 
                 if (item?.title == context.getString(R.string.menu_delete)) {
@@ -98,9 +103,9 @@ class TravelDetailsAdapter(val presenter: TravelDetailsContract.Presenter) : Rec
                             .startSupportActionMode(DeleteActionModeToolbar(presenter))
                 } else if (item?.title == context.getString(R.string.mark_as_completed)) {
                     presenter.markPlanElement(adapterPosition, true)
-                } else if (item?.title == context.getString(R.string.plan_element_share)) {
-                    presenter.sharePlanElement(textViewItemPlanName.text.toString())
-                }
+                } else if (item?.title == context.getString(R.string.mark_as_incompleted)) {
+                    presenter.markPlanElement(adapterPosition, false)
+                } 
                 true
             })
             menu.show()
@@ -108,10 +113,13 @@ class TravelDetailsAdapter(val presenter: TravelDetailsContract.Presenter) : Rec
         }
 
         override fun setCompleted(completed: Boolean) {
+            var a = menu.menu.getItem(1)
             if (completed) {
                 layoutPlanElementItem.alpha = 0.5F
+                a.title = context.getString(R.string.mark_as_incompleted)
             } else {
                 layoutPlanElementItem.alpha = 1.0F
+                a.title = context.getString(R.string.mark_as_completed)
             }
         }
 

@@ -12,16 +12,12 @@ import com.github.travelplannerapp.communication.commonmodel.UserInfo
 import com.github.travelplannerapp.utils.DateTimeUtils
 import com.github.travelplannerapp.utils.SchedulerProvider
 import com.github.travelplannerapp.utils.SharedPreferencesUtils
-import com.google.gson.JsonParser
 import io.reactivex.disposables.CompositeDisposable
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody.Companion.asRequestBody
 import okhttp3.RequestBody.Companion.toRequestBody
 import java.io.File
-import java.io.InputStream
-import java.io.InputStreamReader
-import java.net.URL
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -189,7 +185,11 @@ class TravelDetailsPresenter(private var travel: Travel, view: TravelDetailsCont
         val plan = (dayPlanItems[position] as PlanElementItem).planElement
         plan.completed = isCompleted
         updatePlanElement(plan)
-        view.showSnackbar(R.string.plan_element_completed)
+        if (isCompleted) {
+            view.showSnackbar(R.string.plan_element_completed)
+        } else {
+            view.showSnackbar(R.string.plan_element_incompleted)
+        }
     }
 
     override fun updatePlanElement(plan: PlanElement) {
@@ -230,25 +230,6 @@ class TravelDetailsPresenter(private var travel: Travel, view: TravelDetailsCont
     override fun leaveActionMode() {
         view.onDataSetChanged()
         view.showNoActionMode()
-    }
-
-    override fun sharePlanElement(planElementName: String) {
-        var urlToShare = ""
-        planElements.forEach {
-            if (it.place.title === planElementName) {
-                urlToShare = it.place.href
-            }
-        }
-        if (urlToShare != "") {
-            var thread = Thread(Runnable {
-                val connection = URL(urlToShare).openConnection()
-                connection.connect()
-                val root = JsonParser().parse(InputStreamReader(connection.content as InputStream))
-                urlToShare = root.asJsonObject.get("view").asString
-                view.sharePlanElement(urlToShare)
-            })
-            thread.start()
-        }
     }
 
     private fun handleShareTravelResponse() {
