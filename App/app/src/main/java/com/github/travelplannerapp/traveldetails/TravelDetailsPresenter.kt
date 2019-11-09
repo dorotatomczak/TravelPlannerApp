@@ -161,6 +161,7 @@ class TravelDetailsPresenter(private var travel: Travel, view: TravelDetailsCont
         itemView.setLocation(planElement.place.vicinity)
         itemView.setIcon(categoryIcon)
         itemView.setCheckbox()
+        itemView.setCompleted(planElement.completed)
     }
 
     override fun onBindDayPlanItemAtPosition(position: Int, itemView: TravelDetailsContract.DateSeparatorItemView) {
@@ -178,6 +179,24 @@ class TravelDetailsPresenter(private var travel: Travel, view: TravelDetailsCont
     override fun removePlanElementIdToDelete(position: Int) {
         val planElementItem = dayPlanItems[position] as PlanElementItem
         planElementIdsToDelete.remove(planElementItem.planElement.id)
+    }
+
+    override fun markPlanElement(position: Int, isCompleted: Boolean) {
+        val plan = (dayPlanItems[position] as PlanElementItem).planElement
+        plan.completed = isCompleted
+        updatePlanElement(plan)
+        view.showSnackbar(R.string.plan_element_completed)
+    }
+
+    override fun updatePlanElement(plan: PlanElement) {
+        compositeDisposable.add(CommunicationService.serverApi.updatePlanElement(SharedPreferencesUtils.getUserId(), travel.id, plan)
+                .observeOn(SchedulerProvider.ui())
+                .subscribeOn(SchedulerProvider.io())
+                .map { if (it.responseCode == ResponseCode.OK) it.data!! else throw ApiException(it.responseCode) }
+                .subscribe(
+                        { handleUpdatePlanElementResponse() },
+                        { error -> handleErrorResponse(error) }
+                ))
     }
 
     override fun deletePlanElements() {
@@ -219,6 +238,14 @@ class TravelDetailsPresenter(private var travel: Travel, view: TravelDetailsCont
     override fun sharePlanElement(planElementName: String) {
         view.sharePlanElement(planElementName)
     }
+    
+    private fun handleShareTravelResponse() {
+        view.showSnackbar(R.string.share_travel_ok)
+    }
+
+    private fun handleLoadFriendsResponse(userFriends: List<UserInfo>) {
+        friendsWithoutAccessToTravel = ArrayList(userFriends)
+    }
 
     private fun planElementsToDayPlanItems() {
         dayPlanItems = ArrayList()
@@ -232,6 +259,12 @@ class TravelDetailsPresenter(private var travel: Travel, view: TravelDetailsCont
             }
             dayPlanItems.add(PlanElementItem(plan))
         }
+    }
+
+    override fun onPlanElementClicked(position: Int, placeTitle: String) {
+        val planElementItem = dayPlanItems[position] as PlanElementItem
+        view.showPlanElementDetails(planElementItem.planElement,
+                placeTitle, travel.id)
     }
 
     inner class DateSeparatorItem(val date: String) : TravelDetailsContract.DayPlanItem {
@@ -253,14 +286,6 @@ class TravelDetailsPresenter(private var travel: Travel, view: TravelDetailsCont
         view.showSnackbar(R.string.change_travel_name_ok)
     }
 
-    private fun handleShareTravelResponse() {
-        view.showSnackbar(R.string.share_travel_ok)
-    }
-
-    private fun handleLoadFriendsResponse(userFriends: List<UserInfo>) {
-        friendsWithoutAccessToTravel = ArrayList(userFriends)
-    }
-
     private fun handleUploadTravelImageResponse(travel: Travel) {
         this.travel = travel
         view.setResult(travel)
@@ -275,6 +300,11 @@ class TravelDetailsPresenter(private var travel: Travel, view: TravelDetailsCont
         view.hideLoadingIndicator()
 
         if (this.dayPlanItems.isEmpty()) view.showNoDayPlans() else view.showDayPlans()
+    }
+
+    private fun handleUpdatePlanElementResponse() {
+        planElementsToDayPlanItems()
+        view.onDataSetChanged()
     }
 
     private fun handleDeletePlanElementsResponse() {

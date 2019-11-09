@@ -90,7 +90,9 @@ class TravelManagement : ITravelManagement {
                     planElementDao.id!!,
                     planElementDao.fromDateTime!!.time,
                     planElementDao.placeId!!,
-                    place
+                    place,
+                    planElementDao.completed!!,
+                    planElementDao.notes ?: ""
             )
             planElements.add(planElement)
         }

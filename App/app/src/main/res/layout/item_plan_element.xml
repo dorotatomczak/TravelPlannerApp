@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="horizontal"
+    android:id="@+id/layoutPlanElementItem"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:orientation="horizontal"
     android:paddingStart="@dimen/padding_S"
     android:paddingEnd="@dimen/padding_S">
 
@@ -12,6 +13,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="@dimen/margin_horizontal"
+        android:buttonTint="@color/colorDivider"
         android:checked="false"
         android:visibility="invisible" />
 
@@ -20,7 +22,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="@dimen/text_size_item_S"
-        tools:text="08:00 AM"/>
+        tools:text="08:00 AM" />
 
     <FrameLayout
         android:id="@+id/layoutImageAndLine"
@@ -33,16 +35,16 @@
             android:id="@+id/lineItemPlan"
             android:layout_width="4dp"
             android:layout_height="match_parent"
-            android:background="@color/colorAccent"
             android:layout_gravity="center"
-            android:visibility="gone"/>
+            android:background="@color/colorAccent"
+            android:visibility="gone" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/margin_vertical"
-            android:baselineAligned="false"
-            android:orientation="vertical">
+        <ImageView
+            android:id="@+id/imageViewItemPlan"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:contentDescription="@null"
+            android:src="@drawable/ic_circle_plane" />
 
             <ImageView
                 android:id="@+id/imageViewItemPlan"
@@ -68,22 +70,22 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_marginBottom="@dimen/margin_vertical">
+        android:layout_marginBottom="@dimen/margin_vertical"
+        android:orientation="vertical">
 
         <TextView
             android:id="@+id/textViewItemPlanName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="@dimen/text_size_item_S"
-            tools:text="Lorem ipsum"/>
+            tools:text="Lorem ipsum" />
 
         <TextView
             android:id="@+id/textViewItemPlanLocation"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="@dimen/text_size_item_XS"
-            tools:text="ac orci phasellus egestas tellus rutrum tellus pellentesque eu tincidunt"/>
+            tools:text="ac orci phasellus egestas tellus rutrum tellus pellentesque eu tincidunt" />
 
     </LinearLayout>
 </LinearLayout>

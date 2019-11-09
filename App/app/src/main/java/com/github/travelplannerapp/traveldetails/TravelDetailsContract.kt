@@ -1,7 +1,6 @@
 package com.github.travelplannerapp.traveldetails
 
 import com.github.travelplannerapp.communication.appmodel.Travel
-import com.github.travelplannerapp.communication.commonmodel.Place
 import com.github.travelplannerapp.communication.commonmodel.PlanElement
 import com.github.travelplannerapp.communication.commonmodel.UserInfo
 import com.github.travelplannerapp.deleteactionmode.DeleteContract
@@ -20,13 +19,14 @@ interface TravelDetailsContract {
         fun hideLoadingIndicator()
         fun setResult(travel: Travel)
         fun showSnackbar(messageCode: Int)
-        fun showPlanElementDetails(placeId: Int, place: Place, placeTitle: String)
+        fun showPlanElementDetails(planElement: PlanElement, placeTitle: String, travelId: Int)
         fun getAccommodationName(isCheckIn: Boolean, placeTitle: String): String
         fun sharePlanElement(planElementName: String)
     }
 
     interface PlanElementItemView : DeleteContract.ItemView {
         fun setName(name: String)
+        fun setCompleted(completed: Boolean)
         fun setFromTime(time: String)
         fun setIcon(icon: Int)
         fun setLocation(location: String)
@@ -63,10 +63,12 @@ interface TravelDetailsContract {
         fun onBindDayPlanItemAtPosition(position: Int, itemView: DateSeparatorItemView)
         fun addPlanElementIdToDelete(position: Int)
         fun removePlanElementIdToDelete(position: Int)
+        fun markPlanElement(position: Int, isCompleted: Boolean)
+        fun updatePlanElement(plan: PlanElement)
         fun deletePlanElements()
-        fun loadFriendsWithoutAccessToTravel()
         fun onPlanElementClicked(position: Int, placeTitle: String)
         fun sharePlanElement(planElementName: String)
+        fun loadFriendsWithoutAccessToTravel()
         fun onShareTravelClicked()
     }
 }

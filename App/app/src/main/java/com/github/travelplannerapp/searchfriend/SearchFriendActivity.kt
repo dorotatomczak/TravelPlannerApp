@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.github.travelplannerapp.R
 import com.github.travelplannerapp.communication.commonmodel.UserInfo
+import com.github.travelplannerapp.utils.ActivityUtils
 import com.github.travelplannerapp.utils.DrawerUtils
 import com.google.android.material.snackbar.Snackbar
 import dagger.android.AndroidInjection
@@ -92,11 +93,6 @@ class SearchFriendActivity : AppCompatActivity(), SearchFriendContract.View {
                 .show()
     }
 
-    private fun closeKeyboard() {
-        val inputManager: InputMethodManager = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-        inputManager.hideSoftInputFromWindow(currentFocus?.windowToken, InputMethodManager.SHOW_FORCED)
-    }
-
     private fun addSearchAbility() {
         val searchManager = getSystemService(Context.SEARCH_SERVICE) as SearchManager
         searchViewFriend.apply {
@@ -109,7 +105,7 @@ class SearchFriendActivity : AppCompatActivity(), SearchFriendContract.View {
                 }
 
                 override fun onSuggestionClick(position: Int): Boolean {
-                    closeKeyboard()
+                    ActivityUtils.hideKeyboard(getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager, currentFocus)
                     val cursor = suggestionsAdapter.getItem(position) as Cursor
                     val friendEmail = cursor.getString(cursor.getColumnIndex(SearchManager.SUGGEST_COLUMN_TEXT_1))
                     val friendId = suggestionsAdapter.getItemId(position).toInt()

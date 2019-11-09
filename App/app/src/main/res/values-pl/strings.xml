@@ -39,6 +39,8 @@
     <string name="delete_travels_error">Wystąpił problem podczas usuwania podróż/y</string>
     <string name="add_plan_ok">Dodałeś nowy element planu dnia</string>
     <string name="add_plan_error">Wystąpił problem podczas dodawania elementu planu dnia</string>
+    <string name="update_plan_ok">Zaktualizowałeś element planu dnia</string>
+    <string name="update_plan_error">Wystąpił problem podczas aktualizacji elementu planu dnia</string>
     <string name="no_day_plans">Nie masz żadnego planu dnia w tej podróży</string>
     <string name="authorization_error">Nie masz uprawnień na wykonanie tej akcji</string>
     <string name="no_scans">Nie masz żadnego skanu</string>
@@ -60,10 +62,11 @@
     <string name="delete_confirmation">Czy na pewno chcesz usunąć wybrane %1$s?</string>
     <string name="travels">Podróże</string>
     <string name="choose_category">Wybierz kategorię</string>
-    <string name="openingHours">Godziny otwarcia</string>
+    <string name="opening_hours">Godziny otwarcia</string>
     <string name="website">Strona internetowa</string>
     <string name="phone">Telefon</string>
     <string name="rating">Ocena</string>
+    <string name="notes">Notatki</string>
     <string name="city">Miasto</string>
     <string name="load_map_error">Nie udało się załadować mapy</string>
     <string name="no_items_search_error">Nic nie znaleziono</string>
@@ -71,6 +74,10 @@
     <string name="password_too_simple">Hasło musi co najmniej 8 znaków, zawierać 1 cyfrę, 1 małą i 1 wielką literę</string>
     <string name="snacks_fast_food">Fast food</string>
     <string name="delete_plan_elements_ok">Usunąłeś wybrane elementy planu</string>
+    <string name="choose_option">Wybierz opcję</string>
+    <string name="mark_as_completed">Oznacz jako ukończony</string>
+    <string name="plan_element_completed">Oznaczyłeś plan jako ukończony</string>
+    <string name="plan_element_incompleted">Oznaczyłeś plan jako nieukończony</string>
     <string name="delete_plan_elements_error">Wystąpił problem podczas usuwania wybranych elementów planu</string>
     <string name="share_using">Udostępnij poprzez</string>
     <string name="plan_element_completed">Plan zrealizowany: </string>

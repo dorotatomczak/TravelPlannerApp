@@ -1,15 +1,15 @@
 package com.github.travelplannerapp.traveldetails
 
 import android.text.format.DateFormat
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import android.widget.CompoundButton
+import android.widget.PopupMenu
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.view.ActionMode
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.github.travelplannerapp.R
+import com.github.travelplannerapp.R.layout
 import com.github.travelplannerapp.deleteactionmode.DeleteActionModeToolbar
 import com.github.travelplannerapp.utils.DateTimeUtils
 import kotlinx.android.extensions.LayoutContainer
@@ -25,10 +25,10 @@ class TravelDetailsAdapter(val presenter: TravelDetailsContract.Presenter) : Rec
         return when (viewType) {
 
             TravelDetailsContract.DayPlanItem.TYPE_PLAN -> PlanElementViewHolder(presenter, LayoutInflater.from(parent.context)
-                    .inflate(R.layout.item_plan_element, parent, false))
+                    .inflate(layout.item_plan_element, parent, false))
 
             TravelDetailsContract.DayPlanItem.TYPE_DATE -> DateSeparatorViewHolder(presenter, LayoutInflater.from(parent.context)
-                    .inflate(R.layout.item_plan_date_separator, parent, false))
+                    .inflate(layout.item_plan_date_separator, parent, false))
 
             else -> throw Exception("There is no ViewHolder that matches the type $viewType")
         }
@@ -90,9 +90,30 @@ class TravelDetailsAdapter(val presenter: TravelDetailsContract.Presenter) : Rec
         }
 
         override fun onLongClick(v: View?): Boolean {
-            if (actionMode == null) actionMode = (containerView.context as AppCompatActivity)
-                    .startSupportActionMode(DeleteActionModeToolbar(presenter))
+            val context = v!!.context
+            val menu = PopupMenu(context, v, Gravity.RIGHT)
+            menu.getMenuInflater().inflate(R.menu.menu_plan_element, menu.getMenu())
+
+            menu.setOnMenuItemClickListener(PopupMenu.OnMenuItemClickListener() { item: MenuItem? ->
+
+                if (item?.title == context.getString(R.string.menu_delete)) {
+                    actionMode = (containerView.context as AppCompatActivity)
+                            .startSupportActionMode(DeleteActionModeToolbar(presenter))
+                } else if (item?.title == context.getString(R.string.mark_as_completed)) {
+                    presenter.markPlanElement(adapterPosition, true)
+                }
+                true
+            })
+            menu.show()
             return true
+        }
+
+        override fun setCompleted(completed: Boolean) {
+            if (completed) {
+                layoutPlanElementItem.alpha = 0.5F
+            } else {
+                layoutPlanElementItem.alpha = 1.0F
+            }
         }
 
         override fun setName(name: String) {

@@ -101,7 +101,6 @@ interface ServerApi {
                                  @Query("select-friends-with-access") selectFriendsWithAccess: Boolean): Single<Response<List<UserInfo>>>
 
     //users - plans
-
     @POST("users/{userId}/travels/{travelId}/plans")
     fun addPlanElement(@Path("userId") userId: Int, @Path("travelId") travelId: Int, @Body planElement: PlanElement): Single<Response<PlanElement>>
 

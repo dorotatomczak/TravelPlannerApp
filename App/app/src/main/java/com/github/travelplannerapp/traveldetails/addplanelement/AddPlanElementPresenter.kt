@@ -26,7 +26,10 @@ class AddPlanElementPresenter(private val travelId: Int, view: AddPlanElementCon
             val planElement = PlanElement(-1,
                     DateTimeUtils.stringToDateTime(data.fromDate, data.fromTime).timeInMillis,
                     -1,
-                    place!!)
+                    place!!,
+                    false,
+                    data.notes)
+          
             requestAddPlanElement(planElement)
 
             if (data.accommodationData != null) {
@@ -35,7 +38,10 @@ class AddPlanElementPresenter(private val travelId: Int, view: AddPlanElementCon
                 val planElementEnd = PlanElement(-1,
                         DateTimeUtils.stringToDateTime(data.accommodationData.toDate, data.accommodationData.toTime).timeInMillis,
                         -1,
-                        place!!)
+                        place!!,
+                        false,
+                        data.notes)
+              
                 requestAddPlanElement(planElementEnd)
             }
         }
