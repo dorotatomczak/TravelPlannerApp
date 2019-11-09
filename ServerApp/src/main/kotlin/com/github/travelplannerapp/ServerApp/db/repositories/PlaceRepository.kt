@@ -29,6 +29,21 @@ class PlaceRepository : Repository<PlaceDao>(), IPlaceRepository {
         "UPDATE $tableName SET $columnHereId=?, $columnHref=?, $columnTitle=?, $columnVicinity=?, $columnCategory=?, $columnAverageRating=?, $columnRatesCount=? WHERE $columnId=?"
     override val nextIdStatement = "SELECT nextval(pg_get_serial_sequence('$tableName', '$columnId')) AS new_id"
 
+    override fun getPlacesByIds(placeIds: Array<Int>): List<PlaceDao> {
+        val statement = DbConnection.conn.prepareStatement(
+                selectStatement + "WHERE $columnId = ANY(?)"
+        )
+        val array = DbConnection.conn.createArrayOf("integer", placeIds)
+        statement.setArray(1, array)
+
+        val result = statement.executeQuery()
+        val places = mutableListOf<PlaceDao>()
+        while (result.next()) {
+            places.add(PlaceDao(result))
+        }
+        return places
+    }
+
     override fun getPlaceByHereId(hereId: String): PlaceDao? {
         val statement = DbConnection
                 .conn
