@@ -74,6 +74,7 @@
     <string name="delete_plan_elements_error">Wystąpił problem podczas usuwania wybranych elementów planu</string>
     <string name="share_using">Udostępnij poprzez</string>
     <string name="plan_element_completed">Plan zrealizowany: </string>
+    <string name="missing_facebook_app">Aplikacja Facebook nie jest zainstalowana</string>
     <string name="my_friends">Moi znajomi</string>
     <string name="friend_added">Znajomy został dodany</string>
     <string name="friend_deleted">Znajomy został usunięty</string>

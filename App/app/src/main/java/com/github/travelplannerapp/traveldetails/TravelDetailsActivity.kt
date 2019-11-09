@@ -215,20 +215,20 @@ class TravelDetailsActivity : AppCompatActivity(), TravelDetailsContract.View {
         intent.type = "text/plain"
         var isFacebookAppFound = false
         var appMatches = packageManager.queryIntentActivities(intent, 0)
-        appMatches.forEach {
-            if (it.activityInfo.packageName.toLowerCase().startsWith("com.facebook.katana")) {
-                intent.setPackage(it.activityInfo.packageName)
-                isFacebookAppFound = true
-            }
+        var ser=planElementName.replace("\\s".toRegex(), "").decapitalize()
+        var urlToShare="https://www.google.com/search?tbm=isch&q="+ser
+
+       appMatches.forEach {
+           if (it.activityInfo.packageName.toLowerCase().startsWith("com.facebook.katana")) {
+               isFacebookAppFound = true
+               intent.setPackage(it.activityInfo.packageName)
+               intent.putExtra(Intent.EXTRA_TEXT, urlToShare)
+               startActivity(intent)
+           }
+       }
+        if(!isFacebookAppFound){
+            showSnackbar(R.string.missing_facebook_app)
         }
-        if (!isFacebookAppFound) {
-            intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://www.facebook.com/sharer/sharer.php"))
-        }
-        val body = getString(R.string.plan_element_completed) + planElementName
-        intent.putExtra(Intent.EXTRA_TEXT, body)
-        startActivity(intent)
-        intent.addCategory(Intent.CATEGORY_LAUNCHER)
-        startActivity(Intent.createChooser(intent, getString(R.string.share_using)))
     }
 
     private fun showEditTravel() {
