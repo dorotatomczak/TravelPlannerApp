@@ -228,13 +228,6 @@ class TravelDetailsPresenter(private var travel: Travel, view: TravelDetailsCont
         view.showNoActionMode()
     }
 
-    override fun onPlanElementClicked(position: Int, placeTitle: String) {
-        val planElementItem = dayPlanItems[position] as PlanElementItem
-        view.showPlanElementDetails(planElementItem.planElement.placeId,
-                planElementItem.planElement.place,
-                placeTitle)
-    }
-
     private fun handleShareTravelResponse() {
         view.showSnackbar(R.string.share_travel_ok)
     }
