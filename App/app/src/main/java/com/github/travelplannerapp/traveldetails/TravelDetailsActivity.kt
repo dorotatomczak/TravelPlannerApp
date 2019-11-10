@@ -203,13 +203,14 @@ class TravelDetailsActivity : AppCompatActivity(), TravelDetailsContract.View {
     }
 
     override fun sharePlanElement(urlToShare: String) {
+        val regularFacebookApp="com.facebook.katana"
         var intent = Intent(Intent.ACTION_SEND)
         intent.type = "text/plain"
         var isFacebookAppFound = false
         var appMatches = packageManager.queryIntentActivities(intent, 0)
 
         appMatches.forEach {
-            if (it.activityInfo.packageName.toLowerCase().startsWith("com.facebook.katana")) {
+            if (it.activityInfo.packageName.toLowerCase().startsWith(regularFacebookApp)) {
                 isFacebookAppFound = true
                 intent.setPackage(it.activityInfo.packageName)
                 intent.putExtra(Intent.EXTRA_TEXT, urlToShare)

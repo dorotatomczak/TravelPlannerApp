@@ -80,8 +80,6 @@
     <string name="plan_element_incompleted">Oznaczyłeś plan jako nieukończony</string>
     <string name="plan_element_share">Udostępnij plan</string>
     <string name="delete_plan_elements_error">Wystąpił problem podczas usuwania wybranych elementów planu</string>
-    <string name="share_using">Udostępnij poprzez</string>
-    <string name="missing_facebook_app">Aplikacja Facebook nie jest zainstalowana</string>
     <string name="my_friends">Moi znajomi</string>
     <string name="friend_added">Znajomy został dodany</string>
     <string name="friend_deleted">Znajomy został usunięty</string>
@@ -94,6 +92,8 @@
     <string name="no_selected_friends">Nie wybrałeś znajomych</string>
     <string name="delete_friends_error">Wystąpił problem podczas usuwania znajomych</string>
     <string name="add_friend_error">Wystąpił problem podczas dodawania znajomego</string>
+    <string name="share_using">Udostępnij poprzez</string>
+    <string name="missing_facebook_app">Aplikacja Facebook nie jest zainstalowana</string>
 
     <string name="rate_place">Oceń miejsce!</string>
     <string name="rate_place_completed">Dzięki!</string>

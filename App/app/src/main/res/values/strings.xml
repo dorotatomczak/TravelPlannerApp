@@ -45,8 +45,6 @@
     <string name="update_plan_ok">You updated a plan element</string>
     <string name="update_plan_error">Error when updating plan element</string>
     <string name="no_day_plans">You have no day plans for this travel</string>
-    <string name="share_using">Share using</string>
-    <string name="missing_facebook_app">Facebook App isn\'t instaled</string>
     <string name="choose_option">Choose option</string>
     <string name="mark_as_completed">Mark as completed</string>
     <string name="plan_element_completed">You marked plan as completed</string>
@@ -97,6 +95,8 @@
     <string name="no_selected_friends">You didn\'t select any friends</string>
     <string name="delete_friends_error">Error when deleting friend(s)</string>
     <string name="add_friend_error">Error when adding friend</string>
+    <string name="share_using">Share using</string>
+    <string name="missing_facebook_app">Facebook App isn\'t installed</string>
 
     <string name="rate_place">Rate place!</string>
     <string name="rate_place_completed">Thanks!</string>
