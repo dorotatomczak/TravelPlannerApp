@@ -76,6 +76,7 @@ class PlanElementDetailsActivity : AppCompatActivity(), PlanElementDetailsContra
     }
 
     override fun showNotes(notes: String) {
+        linearLayoutNotesPlanElementInfo.visibility = View.VISIBLE
         editTextNotesPlanElementInfo.setText(notes, TextView.BufferType.EDITABLE)
     }
 

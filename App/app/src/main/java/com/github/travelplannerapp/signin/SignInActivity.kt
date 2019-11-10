@@ -2,19 +2,16 @@ package com.github.travelplannerapp.signin
 
 import android.app.Activity
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-
-import com.github.travelplannerapp.travels.TravelsActivity
+import androidx.appcompat.app.AppCompatActivity
 import com.github.travelplannerapp.R
 import com.github.travelplannerapp.signup.SignUpActivity
-
-import javax.inject.Inject
-
-import dagger.android.AndroidInjection
-import kotlinx.android.synthetic.main.activity_sign_in.*
+import com.github.travelplannerapp.travels.TravelsActivity
 import com.github.travelplannerapp.utils.SharedPreferencesUtils
 import com.google.android.material.snackbar.Snackbar
+import dagger.android.AndroidInjection
+import kotlinx.android.synthetic.main.activity_sign_in.*
+import javax.inject.Inject
 
 
 class SignInActivity : AppCompatActivity(), SignInContract.View {

@@ -25,13 +25,13 @@ class SearchService : ISearchService {
     }
 
     override fun getObjects(
-        category: String,
-        westSouthPoint: Pair<String, String>,
-        eastNorthPoint: Pair<String, String>
+            category: String,
+            westSouthPoint: Pair<String, String>,
+            eastNorthPoint: Pair<String, String>
     ): Array<Place> {
         val places = hereLoader.getObjects(
-            westSouthPoint.first, westSouthPoint.second,
-            eastNorthPoint.first, eastNorthPoint.second, category
+                westSouthPoint.first, westSouthPoint.second,
+                eastNorthPoint.first, eastNorthPoint.second, category
         ).results.items
 
         if (places.isEmpty()) throw SearchNoItemsException("No places found")
@@ -47,10 +47,6 @@ class SearchService : ISearchService {
         return places
     }
 
-    override fun getPage(request: String): SearchObjectsResponse {
-        return hereLoader.getPage(request)
-    }
-
     override fun getCities(query: String): Array<CityObject> {
         val cities = hereLoader.getCities(query)
 
@@ -63,27 +59,28 @@ class SearchService : ISearchService {
     }
 
     override fun getRoutes(
-        startCoordinates: Pair<String, String>,
-        destinationCoordinates: Pair<String, String>,
-        transportMode: String,
-        departureTime: String
+            startCoordinates: Pair<String, String>,
+            destinationCoordinates: Pair<String, String>,
+            transportMode: String,
+            departureTime: String
     ): Routes {
         return hereLoader.getRoutes(
-            startCoordinates.first,
-            startCoordinates.second,
-            destinationCoordinates.first,
-            destinationCoordinates.second,
-            transportMode,
-            departureTime
+                startCoordinates.first,
+                startCoordinates.second,
+                destinationCoordinates.first,
+                destinationCoordinates.second,
+                transportMode,
+                departureTime
         )
     }
 
-    fun getPlace(query: String) : PlaceData{
+    fun getPlace(query: String): PlaceData {
         val place = hereLoader.getPlace(query)
 
         if (place.name != null) place.name = escapeHtml(place.name!!)
         if (place.location != null) place.location!!.address.text = escapeHtml(place.location!!.address.text)
-        if (place.extended != null && place.extended!!.openingHours != null) place.extended!!.openingHours!!.text = escapeHtml(place.extended!!.openingHours!!.text)
+        if (place.extended != null && place.extended!!.openingHours != null) place.extended!!.openingHours!!.text =
+            escapeHtml(place.extended!!.openingHours!!.text)
 
         return place
     }
@@ -109,65 +106,58 @@ class SearchService : ISearchService {
 
         fun getPlaceByText(text: String, latitude: String, longitude: String): String {
             val request = "https://places.cit.api.here.com/places/v1/" +
-                          "autosuggest?at=$latitude,$longitude" +
-                          "&q=$text" +
-                          "&app_id=$MY_APP_HERE_ID" +
-                          "&app_code=$MY_APP_HERE_TOKEN"
+                    "autosuggest?at=$latitude,$longitude" +
+                    "&q=$text" +
+                    "&app_id=$MY_APP_HERE_ID" +
+                    "&app_code=$MY_APP_HERE_TOKEN"
 
             return executeHereRequest(request, jsonFilter)
         }
 
         fun getRoutes(
-            first_latitude: String, first_longitude: String, second_latitude: String,
-            second_longitude: String, transportMode: String, departure_time: String
+                first_latitude: String, first_longitude: String, second_latitude: String,
+                second_longitude: String, transportMode: String, departure_time: String
         ): Routes {
             val request = "https://maps.googleapis.com/maps/api/directions/json" +
-                          "?key=$MY_APP_GOOGLE_KEY" +
-                          "&origin=$first_latitude,$first_longitude" +
-                          "&destination=$second_latitude,$second_longitude" +
-                          "&departure_time=$departure_time" +
-                          "&mode=$transportMode" +
-                          "&alternatives=true"
+                    "?key=$MY_APP_GOOGLE_KEY" +
+                    "&origin=$first_latitude,$first_longitude" +
+                    "&destination=$second_latitude,$second_longitude" +
+                    "&departure_time=$departure_time" +
+                    "&mode=$transportMode" +
+                    "&alternatives=true"
             val routes = parseResponse<Routes>(executeGoogleRequest(request))
-            for(i in 0 until routes.routes[1].legs[0].steps.size){
+            for (i in 0 until routes.routes[1].legs[0].steps.size) {
                 println(routes.routes[1].legs[0].steps[i].html_instructions)
             }
             return routes
         }
 
         fun getObjects(
-            west: String,
-            north: String,
-            east: String,
-            south: String,
-            category: String
+                west: String,
+                north: String,
+                east: String,
+                south: String,
+                category: String
         ): SearchObjectsResponse {
             val request = "https://places.cit.api.here.com/places/v1/discover/explore" +
-                          "?app_id=$MY_APP_HERE_ID" +
-                          "&app_code=$MY_APP_HERE_TOKEN" +
-                          "&in=$west,$south,$east,$north" +
-                          "&cat=$category" +
-                          "&pretty"
+                    "?app_id=$MY_APP_HERE_ID" +
+                    "&app_code=$MY_APP_HERE_TOKEN" +
+                    "&in=$west,$south,$east,$north" +
+                    "&cat=$category" +
+                    "&pretty"
 
             val response = executeHereRequest(request, jsonFilter)
-            return parseResponse(response)
-        }
-
-        fun getPage(request: String): SearchObjectsResponse {
-            val response = executeHereRequest(request, "")
-
-            // if result is null: app doesn't show anything
             return parseResponse(response)
         }
 
         fun getCities(query: String): Array<CityObject> {
             val limit = 20
             val request = "https://transit.api.here.com/v3/coverage/search.json" +
-                          "?app_id=$MY_APP_HERE_ID" +
-                          "&app_code=$MY_APP_HERE_TOKEN" +
-                          "&name=$query" +
-                          "&max=$limit" +
-                          "&pretty"
+                    "?app_id=$MY_APP_HERE_ID" +
+                    "&app_code=$MY_APP_HERE_TOKEN" +
+                    "&name=$query" +
+                    "&max=$limit" +
+                    "&pretty"
             val response = executeHereRequest(request, "")
 
             // if result is null: app doesn't show anything
@@ -179,7 +169,7 @@ class SearchService : ISearchService {
             return parseResponse<PlaceContactInfo>(response).contacts
         }
 
-        fun getPlace(query: String) : PlaceData {
+        fun getPlace(query: String): PlaceData {
             val response = executeHereRequest(query, jsonFilter)
             return parseResponse(response)
         }

@@ -6,7 +6,6 @@ import com.github.travelplannerapp.ServerApp.db.repositories.PlaceRepository
 import com.github.travelplannerapp.ServerApp.db.repositories.UserPlaceRepository
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component
-import java.lang.Exception
 
 @Component
 class RatingTransaction {
