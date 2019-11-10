@@ -45,7 +45,7 @@
     <string name="update_plan_ok">You updated a plan element</string>
     <string name="update_plan_error">Error when updating plan element</string>
     <string name="no_day_plans">You have no day plans for this travel</string>
-    <string name="missing_facebook_app">Facebook App isn\'t instaled</string>
+    <string name="missing_facebook_app">Facebook App isn\'t installed</string>
     <string name="choose_option">Choose option</string>
     <string name="mark_as_completed">Mark as completed</string>
     <string name="mark_as_incompleted">Mark as incompleted</string>

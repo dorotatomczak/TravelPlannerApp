@@ -105,7 +105,7 @@ class TravelDetailsAdapter(val presenter: TravelDetailsContract.Presenter) : Rec
                     presenter.markPlanElement(adapterPosition, true)
                 } else if (item?.title == context.getString(R.string.mark_as_incompleted)) {
                     presenter.markPlanElement(adapterPosition, false)
-                } 
+                }
                 true
             })
             menu.show()
@@ -113,13 +113,13 @@ class TravelDetailsAdapter(val presenter: TravelDetailsContract.Presenter) : Rec
         }
 
         override fun setCompleted(completed: Boolean) {
-            var a = menu.menu.getItem(1)
+            var item = menu.menu.getItem(1)
             if (completed) {
                 layoutPlanElementItem.alpha = 0.5F
-                a.title = context.getString(R.string.mark_as_incompleted)
+                item.title = context.getString(R.string.mark_as_incompleted)
             } else {
                 layoutPlanElementItem.alpha = 1.0F
-                a.title = context.getString(R.string.mark_as_completed)
+                item.title = context.getString(R.string.mark_as_completed)
             }
         }
 
