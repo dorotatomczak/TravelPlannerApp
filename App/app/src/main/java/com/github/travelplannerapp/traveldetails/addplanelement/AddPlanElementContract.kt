@@ -5,7 +5,7 @@ import com.github.travelplannerapp.communication.commonmodel.PlanElement
 
 interface AddPlanElementContract {
 
-    data class Coordinates(var latitude: Double, var longitude: Double)
+    data class Coordinates(var latitude: Double = 0.0, var longitude: Double = 0.0)
 
     data class NewPlanElementData(val name: String, val fromDate: String, val fromTime: String,
                                   val coordinates: Coordinates, val location: String,

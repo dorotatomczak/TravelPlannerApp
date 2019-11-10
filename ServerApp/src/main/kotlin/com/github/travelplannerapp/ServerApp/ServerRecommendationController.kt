@@ -4,6 +4,7 @@ import com.github.travelplannerapp.ServerApp.datamanagement.RecommendationManage
 import com.github.travelplannerapp.ServerApp.datamanagement.UserManagement
 import com.github.travelplannerapp.ServerApp.db.dao.PlaceDao
 import com.github.travelplannerapp.ServerApp.exceptions.RatePlaceException
+import com.github.travelplannerapp.ServerApp.services.FirebaseService
 import com.github.travelplannerapp.communication.commonmodel.Response
 import com.github.travelplannerapp.communication.commonmodel.ResponseCode
 import org.springframework.beans.factory.annotation.Autowired
@@ -17,6 +18,9 @@ class ServerRecommendationController {
 
     @Autowired
     lateinit var userManagement: UserManagement
+
+    @Autowired
+    lateinit var firebaseService: FirebaseService
 
     @PostMapping("users/{userId}/places/{placeId}/rating")
     fun ratePlace(
@@ -41,13 +45,17 @@ class ServerRecommendationController {
         return Response(ResponseCode.OK, rating ?: 0)
     }
 
-    @GetMapping("users/{userId}/recommendations")
+    @PostMapping("users/{userId}/recommendations")
     fun getRecommendations(
             @RequestHeader("authorization") token: String,
-            @PathVariable("userId") userId: Int
-    ): Response<List<PlaceDao>> {
+            @PathVariable("userId") userId: Int,
+            @RequestBody firebaseToken: String
+    ): Response<Unit> {
         userManagement.verifyUser(token)
         val recommendedPlaces = recommendationManagement.getRecommendations(userId)
-        return Response(ResponseCode.OK, recommendedPlaces)
+        if (recommendedPlaces.isNotEmpty()) {
+            firebaseService.sendMessage(firebaseToken, recommendedPlaces)
+        }
+        return Response(ResponseCode.OK, Unit)
     }
 }

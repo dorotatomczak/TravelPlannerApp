@@ -73,6 +73,9 @@ dependencies {
     implementation "com.squareup.retrofit2:converter-scalars:$rootProject.converter_scalarsVersion"
     implementation "com.squareup.okhttp3:okhttp:$rootProject.okhttp3Version"
 
+    // Notifications
+    implementation "com.google.firebase:firebase-messaging:$rootProject.firebaseMessagingVersion"
+
     // Unit Testing
     testImplementation "junit:junit:$rootProject.junitVersion"
     testImplementation "io.mockk:mockk:$rootProject.mockkVersion"
@@ -94,3 +97,5 @@ repositories {
         dirs 'libs'
     }
 }
+
+apply plugin: 'com.google.gms.google-services'

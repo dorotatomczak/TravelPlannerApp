@@ -18,9 +18,9 @@ import com.github.travelplannerapp.communication.appmodel.Travel
 import com.github.travelplannerapp.communication.commonmodel.PlanElement
 import com.github.travelplannerapp.communication.commonmodel.UserInfo
 import com.github.travelplannerapp.planelementdetails.PlanElementDetailsActivity
-import com.github.travelplannerapp.sharetraveldialog.ShareTravelDialog
+import com.github.travelplannerapp.travels.dialogs.ShareTravelDialog
 import com.github.travelplannerapp.traveldetails.addplanelement.AddPlanElementActivity
-import com.github.travelplannerapp.traveldialog.TravelDialog
+import com.github.travelplannerapp.travels.dialogs.AddEditTravelDialog
 import com.github.travelplannerapp.utils.DrawerUtils
 import com.github.travelplannerapp.utils.copyInputStreamToFile
 import com.google.android.material.snackbar.Snackbar
@@ -203,12 +203,12 @@ class TravelDetailsActivity : AppCompatActivity(), TravelDetailsContract.View {
     }
 
     private fun showEditTravel() {
-        val editTravelDialog = TravelDialog(getString(R.string.change_travel_name))
+        val editTravelDialog = AddEditTravelDialog(getString(R.string.change_travel_name))
         editTravelDialog.onOk = {
             val travelName = editTravelDialog.travelName.text.toString()
             presenter.changeTravelName(travelName)
         }
-        editTravelDialog.show(supportFragmentManager, TravelDialog.TAG)
+        editTravelDialog.show(supportFragmentManager, AddEditTravelDialog.TAG)
     }
 
     override fun showShareTravel(friendsWithoutAccessToTravel: List<UserInfo>) {

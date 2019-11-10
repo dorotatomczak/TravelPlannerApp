@@ -117,4 +117,8 @@
     <string name="natural_geographical">Natural</string>
     <string name="snacks_fast_food">Fast food</string>
     <string name="menu_set_photo">Set photo</string>
+    <string name="notification_title">Places you might like</string>
+    <string name="notification_channel_name">Place recommendations</string>
+    <string name="recommended_places">Recommended places</string>
+    <string name="notification_text">Based on your ratings we\'ve found some places you might like</string>
 </resources>

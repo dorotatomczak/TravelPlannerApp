@@ -19,7 +19,7 @@ import com.github.travelplannerapp.utils.DrawerUtils
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.TextInputEditText
 import dagger.android.AndroidInjection
-import kotlinx.android.synthetic.main.activity_add_plan.*
+import kotlinx.android.synthetic.main.activity_add_plan_element.*
 import kotlinx.android.synthetic.main.fab_check.*
 import kotlinx.android.synthetic.main.toolbar.*
 import java.util.*
@@ -32,7 +32,7 @@ class AddPlanElementActivity : AppCompatActivity(), AddPlanElementContract.View 
     @Inject
     lateinit var presenter: AddPlanElementContract.Presenter
 
-    private var coordinates = AddPlanElementContract.Coordinates(0.0, 0.0)
+    private var coordinates = AddPlanElementContract.Coordinates()
 
     companion object {
         const val REQUEST_ADD_PLAN_ELEMENT_RESULT_MESSAGE = "REQUEST_ADD_PLAN_ELEMENT_RESULT_MESSAGE"
@@ -43,7 +43,7 @@ class AddPlanElementActivity : AppCompatActivity(), AddPlanElementContract.View 
     override fun onCreate(savedInstanceState: Bundle?) {
         AndroidInjection.inject(this)
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_add_plan)
+        setContentView(R.layout.activity_add_plan_element)
 
         // Set up toolbar
         setSupportActionBar(toolbar)
@@ -62,6 +62,21 @@ class AddPlanElementActivity : AppCompatActivity(), AddPlanElementContract.View 
 
         fabCheck.setOnClickListener { onFabFinishAddPlanClicked() }
         setOnSpinnerItemSelectListener()
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        when (requestCode) {
+            SearchElementActivity.REQUEST_SEARCH -> {
+                if (resultCode == Activity.RESULT_OK && data != null) {
+                    val place = data.getSerializableExtra(SearchElementActivity.EXTRA_PLACE) as Place
+                    place.categoryIcon = PlaceCategory.values()[dropdownCategoriesAddPlan.selectedItemPosition].ordinal
+                    presenter.onPlaceFound(place)
+                    editTextPlanName.setText(place.title, TextView.BufferType.EDITABLE)
+                    showLocation(place.vicinity)
+                }
+            }
+        }
     }
 
     override fun showLocation(location: String) {
@@ -167,20 +182,4 @@ class AddPlanElementActivity : AppCompatActivity(), AddPlanElementContract.View 
         )
         presenter.addPlanElement(placeData)
     }
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        when (requestCode) {
-            SearchElementActivity.REQUEST_SEARCH -> {
-                if (resultCode == Activity.RESULT_OK && data != null) {
-                    val place = data.getSerializableExtra(SearchElementActivity.EXTRA_PLACE) as Place
-                    place.categoryIcon = PlaceCategory.values()[dropdownCategoriesAddPlan.selectedItemPosition].ordinal
-                    presenter.onPlaceFound(place)
-                    editTextPlanName.setText(place.title, TextView.BufferType.EDITABLE)
-                    showLocation(place.vicinity)
-                }
-            }
-        }
-    }
-
 }
