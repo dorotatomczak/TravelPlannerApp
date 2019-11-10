@@ -1,12 +1,10 @@
 package com.github.travelplannerapp.di
 
 import com.github.travelplannerapp.App
-
-import javax.inject.Singleton
-
 import dagger.BindsInstance
 import dagger.Component
 import dagger.android.support.AndroidSupportInjectionModule
+import javax.inject.Singleton
 
 @Singleton
 @Component(modules = [AndroidSupportInjectionModule::class, AppModule::class, BuildersModule::class])

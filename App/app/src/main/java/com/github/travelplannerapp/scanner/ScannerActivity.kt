@@ -8,7 +8,6 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.github.travelplannerapp.R
 import com.github.travelplannerapp.communication.appmodel.Scan
-import com.github.travelplannerapp.utils.SharedPreferencesUtils
 import dagger.android.AndroidInjection
 import kotlinx.android.synthetic.main.activity_scanner.*
 import org.opencv.android.OpenCVLoader

@@ -24,6 +24,7 @@ class ApiException(private val responseCode: ResponseCode) : Throwable() {
             ResponseCode.OTHER_ERROR -> R.string.try_again
             ResponseCode.ADD_FRIEND_ERROR -> R.string.add_friend_error
             ResponseCode.DELETE_FRIENDS_ERROR -> R.string.delete_friends_error
+            ResponseCode.RATE_PLACE_ERROR -> R.string.rate_place_error
             else -> R.string.try_again
         }
     }

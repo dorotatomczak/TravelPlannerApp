@@ -1,8 +1,8 @@
 package com.github.travelplannerapp.signup
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import com.github.travelplannerapp.R
 import com.google.android.material.snackbar.Snackbar
 import dagger.android.AndroidInjection

@@ -20,38 +20,20 @@ class ServerHereGoogleApiController {
 
     @GetMapping("here-management/objects")
     fun getObjects(
-        @RequestHeader("authorization") token: String, @RequestParam("cat") category: String,
-        @RequestParam("west") west: String, @RequestParam("south") south: String,
-        @RequestParam("east") east: String, @RequestParam("north") north: String
+            @RequestHeader("authorization") token: String, @RequestParam("cat") category: String,
+            @RequestParam("west") west: String, @RequestParam("south") south: String,
+            @RequestParam("east") east: String, @RequestParam("north") north: String
     ): Response<Array<Place>> {
         userManagement.verifyUser(token)
 
-        try {
-            val items = searchService.getObjects(category, Pair(west, south), Pair(east, north))
-            return Response(ResponseCode.OK, items)
-        } catch (ex: Exception) {
-            throw SearchNoItemsException(ex.localizedMessage)
-        }
-    }
-
-    // eg. for getting next page
-    @GetMapping("here-management/objects-next-page")
-    fun findObjectsGetPage(
-        @RequestHeader("authorization") token: String,
-        @RequestParam("request") request: String
-    ): Response<SearchObjectsResponse> {
-        userManagement.verifyUser(token)
-
-        return Response(
-            ResponseCode.OK,
-            searchService.getPage(request)
-        )
+        val items = searchService.getObjects(category, Pair(west, south), Pair(east, north))
+        return Response(ResponseCode.OK, items)
     }
 
     @GetMapping("here-management/cities")
     fun findCities(
-        @RequestHeader("authorization") token: String,
-        @RequestParam("query") query: String
+            @RequestHeader("authorization") token: String,
+            @RequestParam("query") query: String
     ): Response<Array<CityObject>> {
         userManagement.verifyUser(token)
 
@@ -65,9 +47,9 @@ class ServerHereGoogleApiController {
 
     @GetMapping("here-management/objects/{objectId}/contacts")
     fun getContacts(
-        @RequestHeader("authorization") token: String,
-        @PathVariable objectId: String,
-        @RequestParam("query") query: String
+            @RequestHeader("authorization") token: String,
+            @PathVariable objectId: String,
+            @RequestParam("query") query: String
     ): Response<Contacts> {
         userManagement.verifyUser(token)
         val contacts = searchService.getContacts(query)
@@ -76,9 +58,9 @@ class ServerHereGoogleApiController {
 
     @GetMapping("here-management/objects/{objectId}")
     fun getPlace(
-        @RequestHeader("authorization") token: String,
-        @PathVariable objectId: String,
-        @RequestParam("query") query: String
+            @RequestHeader("authorization") token: String,
+            @PathVariable objectId: String,
+            @RequestParam("query") query: String
     ): Response<PlaceData> {
         userManagement.verifyUser(token)
         val place = searchService.getPlace(query)
@@ -87,19 +69,19 @@ class ServerHereGoogleApiController {
 
     @GetMapping("google-management/routes")
     fun getRoutes(
-        @RequestHeader("authorization") token: String,
-        @RequestParam("origin-latitude") originLat: String,
-        @RequestParam("origin-longitude") originLng: String,
-        @RequestParam("destination-latitude") destinationLat: String,
-        @RequestParam("destination-longitude") destinationLng: String,
-        @RequestParam("travel-mode") travelMode: String,
-        @RequestParam("departure-time") departureTime: String
+            @RequestHeader("authorization") token: String,
+            @RequestParam("origin-latitude") originLat: String,
+            @RequestParam("origin-longitude") originLng: String,
+            @RequestParam("destination-latitude") destinationLat: String,
+            @RequestParam("destination-longitude") destinationLng: String,
+            @RequestParam("travel-mode") travelMode: String,
+            @RequestParam("departure-time") departureTime: String
     ): Response<Routes> {
         val response = searchService.getRoutes(
-            Pair(originLat, originLng),
-            Pair(destinationLat, destinationLng),
-            travelMode,
-            departureTime
+                Pair(originLat, originLng),
+                Pair(destinationLat, destinationLng),
+                travelMode,
+                departureTime
         )
         return Response(ResponseCode.OK, response)
     }

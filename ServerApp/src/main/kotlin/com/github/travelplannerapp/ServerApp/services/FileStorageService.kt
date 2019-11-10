@@ -1,21 +1,17 @@
 package com.github.travelplannerapp.ServerApp.services
 
 import com.github.travelplannerapp.ServerApp.exceptions.FileStorageException
-import java.nio.file.StandardCopyOption
-import org.springframework.web.multipart.MultipartFile
 import com.github.travelplannerapp.ServerApp.properties.FileStorageProperties
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.core.io.Resource
+import org.springframework.core.io.UrlResource
 import org.springframework.stereotype.Service
 import org.springframework.util.StringUtils
-import java.nio.file.Files
-import java.nio.file.Path
-import java.nio.file.Paths
-import java.net.MalformedURLException
-import org.springframework.core.io.UrlResource
+import org.springframework.web.multipart.MultipartFile
 import org.tinylog.Logger
 import java.io.FileNotFoundException
-import java.nio.file.NoSuchFileException
+import java.net.MalformedURLException
+import java.nio.file.*
 
 
 @Service

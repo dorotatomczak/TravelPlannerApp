@@ -1,8 +1,8 @@
 package com.github.travelplannerapp.launcher
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import com.github.travelplannerapp.initializers.AppInitializer
 import com.github.travelplannerapp.signin.SignInActivity
 import com.github.travelplannerapp.travels.TravelsActivity

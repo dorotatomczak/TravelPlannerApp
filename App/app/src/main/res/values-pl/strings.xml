@@ -94,6 +94,7 @@
 
     <string name="rate_place">Oceń miejsce!</string>
     <string name="rate_place_completed">Dzięki!</string>
+    <string name="rate_place_error">Wystąpił problem podczas oceniania miejsca</string>
     <string name="check_in">Zakwaterowanie</string>
     <string name="check_out">Wykwaterowanie</string>
     <string name="wrong_dates_error">Data i czas \"Od\" muszą być przed datą i czasem \"Do\"</string>
