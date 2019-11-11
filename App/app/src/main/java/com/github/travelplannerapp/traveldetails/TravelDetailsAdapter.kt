@@ -97,14 +97,17 @@ class TravelDetailsAdapter(val presenter: TravelDetailsContract.Presenter) : Rec
 
         override fun onLongClick(v: View?): Boolean {
             menu.setOnMenuItemClickListener(PopupMenu.OnMenuItemClickListener() { item: MenuItem? ->
-
-                if (item?.title == context.getString(R.string.menu_delete)) {
-                    actionMode = (containerView.context as AppCompatActivity)
-                            .startSupportActionMode(DeleteActionModeToolbar(presenter))
-                } else if (item?.title == context.getString(R.string.mark_as_completed)) {
-                    presenter.markPlanElement(adapterPosition, true)
-                } else if (item?.title == context.getString(R.string.mark_as_incompleted)) {
-                    presenter.markPlanElement(adapterPosition, false)
+                when (item?.title) {
+                    context.getString(R.string.menu_delete) -> {
+                        actionMode = (containerView.context as AppCompatActivity)
+                                .startSupportActionMode(DeleteActionModeToolbar(presenter))
+                    }
+                    context.getString(R.string.mark_as_completed) -> {
+                        presenter.markPlanElement(adapterPosition, true)
+                    }
+                    context.getString(R.string.mark_as_incompleted) -> {
+                        presenter.markPlanElement(adapterPosition, false)
+                    }
                 }
                 true
             })
