@@ -34,19 +34,15 @@ class LauncherPresenter(view: LauncherContract.View) : BasePresenter<LauncherCon
                         return@OnCompleteListener
                     }
                     val token = task.result?.token
-                    token?.let { send(it) }
+                    token?.let { sendRecommendationsRequest(it) }
                 })
     }
 
-    private fun send(token: String) {
+    private fun sendRecommendationsRequest(token: String) {
         compositeDisposable.add(CommunicationService.serverApi.fetchRecommendations(SharedPreferencesUtils.getUserId(), token)
                 .observeOn(SchedulerProvider.ui())
                 .subscribeOn(SchedulerProvider.io())
-                .map { if (it.responseCode == ResponseCode.OK) it.data else throw ApiException(it.responseCode) }
-                .subscribe(
-                        {},
-                        {}
-                ))
+                .subscribe())
     }
 
     private fun verifyAccessToken() {

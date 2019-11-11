@@ -25,5 +25,4 @@ class RecommendedPlacesDialog(private val places: List<String>, private val dial
 
         return builder.create()
     }
-
 }

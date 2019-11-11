@@ -6,8 +6,6 @@ import com.google.firebase.messaging.Message
 import com.google.firebase.FirebaseApp
 import com.google.auth.oauth2.GoogleCredentials
 import com.google.firebase.FirebaseOptions
-import com.google.firebase.messaging.Notification
-import com.google.gson.JsonObject
 import org.springframework.stereotype.Service
 import org.tinylog.kotlin.Logger
 import java.io.FileInputStream
@@ -28,12 +26,11 @@ class FirebaseService {
 
             FirebaseApp.initializeApp(options)
         } catch (e: Exception) {
-            println(e.stackTrace)
+            Logger.error(e.stackTrace)
         }
     }
 
     fun sendMessage(firebaseToken: String, recommendedPlaces: List<PlaceDao>) {
-
         val data = recommendedPlaces.associate { "$it.id" to "${it.title}, ${it.vicinity}" }
 
         val message = Message.builder()

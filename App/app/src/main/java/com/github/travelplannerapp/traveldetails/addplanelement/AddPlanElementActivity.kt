@@ -38,6 +38,7 @@ class AddPlanElementActivity : AppCompatActivity(), AddPlanElementContract.View 
         const val REQUEST_ADD_PLAN_ELEMENT_RESULT_MESSAGE = "REQUEST_ADD_PLAN_ELEMENT_RESULT_MESSAGE"
         const val REQUEST_ADD_PLAN_ELEMENT_RESULT_PLAN = "REQUEST_ADD_PLAN_ELEMENT_RESULT_PLAN"
         const val EXTRA_TRAVEL_ID = "EXTRA_TRAVEL_ID"
+        const val REQUEST_SEARCH = 0
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -67,7 +68,7 @@ class AddPlanElementActivity : AppCompatActivity(), AddPlanElementContract.View 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         when (requestCode) {
-            SearchElementActivity.REQUEST_SEARCH -> {
+            REQUEST_SEARCH -> {
                 if (resultCode == Activity.RESULT_OK && data != null) {
                     val place = data.getSerializableExtra(SearchElementActivity.EXTRA_PLACE) as Place
                     place.categoryIcon = PlaceCategory.values()[dropdownCategoriesAddPlan.selectedItemPosition].ordinal
@@ -130,7 +131,7 @@ class AddPlanElementActivity : AppCompatActivity(), AddPlanElementContract.View 
         }
 
         intent.putExtra(SearchElementActivity.EXTRA_CATEGORY, categoryName)
-        startActivityForResult(intent, SearchElementActivity.REQUEST_SEARCH)
+        startActivityForResult(intent, REQUEST_SEARCH)
     }
 
     private fun openDatePicker(editText: TextInputEditText) {
