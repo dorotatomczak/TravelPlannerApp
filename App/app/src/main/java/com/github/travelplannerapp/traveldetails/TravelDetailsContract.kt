@@ -67,7 +67,7 @@ interface TravelDetailsContract {
         fun updatePlanElement(plan: PlanElement)
         fun deletePlanElements()
         fun onPlanElementClicked(position: Int, placeTitle: String)
-        fun sharePlanElement(planElementName: String)
+        fun sharePlanElement(position:Int)
         fun loadFriendsWithoutAccessToTravel()
         fun onShareTravelClicked()
     }

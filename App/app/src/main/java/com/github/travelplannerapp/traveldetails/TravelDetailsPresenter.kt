@@ -232,23 +232,19 @@ class TravelDetailsPresenter(private var travel: Travel, view: TravelDetailsCont
         view.showNoActionMode()
     }
 
-    override fun sharePlanElement(planElementName: String) {
-        var urlToShare = ""
-        planElements.forEach {
-            if (it.place.title === planElementName) {
-                urlToShare = it.place.href
-            }
-        }
-        if (urlToShare != "") {
-            var thread = Thread(Runnable {
-                val connection = URL(urlToShare).openConnection()
-                connection.connect()
-                val root = JsonParser().parse(InputStreamReader(connection.content as InputStream))
-                urlToShare = root.asJsonObject.get("view").asString
-                view.sharePlanElement(urlToShare)
-            })
-            thread.start()
-        }
+    override fun sharePlanElement(position:Int) {
+        val plan = (dayPlanItems[position] as PlanElementItem).planElement
+
+        var urlToShare = plan.place.href
+        var thread = Thread(Runnable {
+            val connection = URL(urlToShare).openConnection()
+            connection.connect()
+            val root = JsonParser().parse(InputStreamReader(connection.content as InputStream))
+            urlToShare = root.asJsonObject.get("view").asString
+            view.sharePlanElement(urlToShare)
+        })
+        thread.start()
+
     }
 
     private fun handleShareTravelResponse() {
