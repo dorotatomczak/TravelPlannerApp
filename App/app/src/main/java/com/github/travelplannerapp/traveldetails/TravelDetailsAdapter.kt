@@ -71,7 +71,6 @@ class TravelDetailsAdapter(val presenter: TravelDetailsContract.Presenter) : Rec
 
 
         var menu: PopupMenu
-        var context: Context
 
         init {
             containerView.setOnClickListener(this)
@@ -86,8 +85,7 @@ class TravelDetailsAdapter(val presenter: TravelDetailsContract.Presenter) : Rec
                     }
             ))
             val view = this.itemView
-            context = view.context
-            menu = PopupMenu(context, view, Gravity.RIGHT)
+            menu = PopupMenu(containerView.context, view, Gravity.RIGHT)
             menu.getMenuInflater().inflate(R.menu.menu_plan_element, menu.getMenu())
         }
 
@@ -98,14 +96,14 @@ class TravelDetailsAdapter(val presenter: TravelDetailsContract.Presenter) : Rec
         override fun onLongClick(v: View?): Boolean {
             menu.setOnMenuItemClickListener(PopupMenu.OnMenuItemClickListener() { item: MenuItem? ->
                 when (item?.title) {
-                    context.getString(R.string.menu_delete) -> {
+                    containerView.context.getString(R.string.menu_delete) -> {
                         actionMode = (containerView.context as AppCompatActivity)
                                 .startSupportActionMode(DeleteActionModeToolbar(presenter))
                     }
-                    context.getString(R.string.mark_as_completed) -> {
+                    containerView.context.getString(R.string.mark_as_completed) -> {
                         presenter.markPlanElement(adapterPosition, true)
                     }
-                    context.getString(R.string.mark_as_incompleted) -> {
+                    containerView.context.getString(R.string.mark_as_incompleted) -> {
                         presenter.markPlanElement(adapterPosition, false)
                     }
                 }
@@ -116,13 +114,14 @@ class TravelDetailsAdapter(val presenter: TravelDetailsContract.Presenter) : Rec
         }
 
         override fun setCompleted(completed: Boolean) {
-            var item = menu.menu.getItem(1)
+            val completePlanMenuItem = 1
+            var item = menu.menu.getItem(completePlanMenuItem)
             if (completed) {
                 layoutPlanElementItem.alpha = 0.5F
-                item.title = context.getString(R.string.mark_as_incompleted)
+                item.title = containerView.context.getString(R.string.mark_as_incompleted)
             } else {
                 layoutPlanElementItem.alpha = 1.0F
-                item.title = context.getString(R.string.mark_as_completed)
+                item.title = containerView.context.getString(R.string.mark_as_completed)
             }
         }
 
