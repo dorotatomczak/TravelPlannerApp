@@ -37,9 +37,13 @@ dependencies {
 
 	annotationProcessor("org.springframework.boot:spring-boot-configuration-processor")
 
-	implementation ("org.tinylog:tinylog-api-kotlin:2.0.0")
-	implementation ("org.tinylog:tinylog-impl:2.0.0")
+	implementation("org.tinylog:tinylog-api-kotlin:2.0.0")
+	implementation("org.tinylog:tinylog-impl:2.0.0")
 	implementation("org.json:json:20190722")
+
+	implementation("org.apache.mahout:mahout-mr:0.13.0")
+	implementation("org.apache.mahout:mahout-integration:0.13.0")
+	implementation("com.google.firebase:firebase-admin:6.11.0")
 }
 
 tasks.withType<KotlinCompile> {

@@ -141,4 +141,7 @@ interface ServerApi {
 
     @GET("users/{userId}/places/{placeId}/rating")
     fun getPlaceRating(@Path("userId") userId: Int, @Path("placeId") placeId: Int): Single<Response<Int>>
+
+    @POST("users/{userId}/recommendations")
+    fun fetchRecommendations(@Path("userId") userId: Int, @Body firebaseToken: String): Single<Response<Unit>>
 }

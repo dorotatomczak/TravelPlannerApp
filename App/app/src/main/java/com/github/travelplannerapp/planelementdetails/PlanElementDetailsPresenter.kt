@@ -22,7 +22,7 @@ class PlanElementDetailsPresenter(private val planElement: PlanElement, private 
     override fun loadPlace() {
         view.showName(placeName)
         view.showAverageRating(placeAverageRating)
-        view.showNotes(planElement.notes ?: "")
+        view.showNotes(planElement.notes)
 
         loadPlaceHereData()
         loadPlaceRating()

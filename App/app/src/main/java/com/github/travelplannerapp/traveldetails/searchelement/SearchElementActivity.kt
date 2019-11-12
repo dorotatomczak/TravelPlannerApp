@@ -38,7 +38,6 @@ class SearchElementActivity : AppCompatActivity(), SearchElementContract.View {
     companion object {
         const val EXTRA_PLACE = "place"
         const val EXTRA_CATEGORY = "category"
-        const val REQUEST_SEARCH = 1
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
