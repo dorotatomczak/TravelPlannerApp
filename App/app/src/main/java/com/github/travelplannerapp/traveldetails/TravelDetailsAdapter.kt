@@ -92,12 +92,17 @@ class TravelDetailsAdapter(val presenter: TravelDetailsContract.Presenter) : Rec
             menu.getMenuInflater().inflate(R.menu.menu_plan_element, menu.getMenu())
 
             menu.setOnMenuItemClickListener(PopupMenu.OnMenuItemClickListener() { item: MenuItem? ->
-
-                if (item?.title == context.getString(R.string.menu_delete)) {
-                    actionMode = (containerView.context as AppCompatActivity)
-                            .startSupportActionMode(DeleteActionModeToolbar(presenter))
-                } else if (item?.title == context.getString(R.string.mark_as_completed)) {
-                    presenter.markPlanElement(adapterPosition, true)
+                when(item?.title) {
+                    context.getString(R.string.menu_delete) -> {
+                        actionMode = (containerView.context as AppCompatActivity)
+                                .startSupportActionMode(DeleteActionModeToolbar(presenter))
+                    }
+                    context.getString(R.string.mark_as_completed) -> {
+                        presenter.markPlanElement(adapterPosition, true)
+                    }
+                    context.getString(R.string.plan_element_share) -> {
+                        presenter.sharePlanElement(adapterPosition)
+                    }
                 }
                 true
             })
