@@ -68,6 +68,9 @@ class TravelDetailsAdapter(val presenter: TravelDetailsContract.Presenter) : Rec
     inner class PlanElementViewHolder(val presenter: TravelDetailsContract.Presenter, override val containerView: View) : RecyclerView.ViewHolder(containerView),
             LayoutContainer, TravelDetailsContract.PlanElementItemView, View.OnClickListener, View.OnLongClickListener {
 
+
+        var menu: PopupMenu
+
         init {
             containerView.setOnClickListener(this)
             containerView.setOnLongClickListener(this)
@@ -80,6 +83,9 @@ class TravelDetailsAdapter(val presenter: TravelDetailsContract.Presenter) : Rec
                         }
                     }
             ))
+            val view = this.itemView
+            menu = PopupMenu(containerView.context, view, Gravity.RIGHT)
+            menu.getMenuInflater().inflate(R.menu.menu_plan_element, menu.getMenu())
         }
 
         override fun onClick(v: View?) {
@@ -87,20 +93,19 @@ class TravelDetailsAdapter(val presenter: TravelDetailsContract.Presenter) : Rec
         }
 
         override fun onLongClick(v: View?): Boolean {
-            val context = v!!.context
-            val menu = PopupMenu(context, v, Gravity.RIGHT)
-            menu.getMenuInflater().inflate(R.menu.menu_plan_element, menu.getMenu())
-
             menu.setOnMenuItemClickListener(PopupMenu.OnMenuItemClickListener() { item: MenuItem? ->
-                when(item?.title) {
-                    context.getString(R.string.menu_delete) -> {
+                when (item?.title) {
+                    containerView.context.getString(R.string.menu_delete) -> {
                         actionMode = (containerView.context as AppCompatActivity)
                                 .startSupportActionMode(DeleteActionModeToolbar(presenter))
                     }
-                    context.getString(R.string.mark_as_completed) -> {
+                    containerView.context.getString(R.string.mark_as_completed) -> {
                         presenter.markPlanElement(adapterPosition, true)
                     }
-                    context.getString(R.string.plan_element_share) -> {
+                    containerView.context.getString(R.string.mark_as_incompleted) -> {
+                        presenter.markPlanElement(adapterPosition, false)
+                    }
+                    containerView.context.getString(R.string.plan_element_share) -> {
                         presenter.sharePlanElement(adapterPosition)
                     }
                 }
@@ -111,10 +116,14 @@ class TravelDetailsAdapter(val presenter: TravelDetailsContract.Presenter) : Rec
         }
 
         override fun setCompleted(completed: Boolean) {
+            val completePlanMenuItem = 1
+            var item = menu.menu.getItem(completePlanMenuItem)
             if (completed) {
                 layoutPlanElementItem.alpha = 0.5F
+                item.title = containerView.context.getString(R.string.mark_as_incompleted)
             } else {
                 layoutPlanElementItem.alpha = 1.0F
+                item.title = containerView.context.getString(R.string.mark_as_completed)
             }
         }
 

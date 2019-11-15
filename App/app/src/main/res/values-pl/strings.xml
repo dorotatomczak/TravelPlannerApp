@@ -76,6 +76,7 @@
     <string name="delete_plan_elements_ok">Usunąłeś wybrane elementy planu</string>
     <string name="choose_option">Wybierz opcję</string>
     <string name="mark_as_completed">Oznacz jako ukończony</string>
+    <string name="mark_as_incompleted">Oznacz jako nieukończony</string>
     <string name="plan_element_completed">Oznaczyłeś plan jako ukończony</string>
     <string name="plan_element_incompleted">Oznaczyłeś plan jako nieukończony</string>
     <string name="plan_element_share">Udostępnij plan</string>

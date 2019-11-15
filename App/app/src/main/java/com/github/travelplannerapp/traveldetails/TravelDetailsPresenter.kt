@@ -189,7 +189,11 @@ class TravelDetailsPresenter(private var travel: Travel, view: TravelDetailsCont
         val plan = (dayPlanItems[position] as PlanElementItem).planElement
         plan.completed = isCompleted
         updatePlanElement(plan)
-        view.showSnackbar(R.string.plan_element_completed)
+        if (isCompleted) {
+            view.showSnackbar(R.string.plan_element_completed)
+        } else {
+            view.showSnackbar(R.string.plan_element_incompleted)
+        }
     }
 
     override fun updatePlanElement(plan: PlanElement) {

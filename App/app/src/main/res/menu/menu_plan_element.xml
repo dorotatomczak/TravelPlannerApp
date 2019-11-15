@@ -7,7 +7,7 @@
 
     <item
         android:id="@+id/menuCompletedPlan"
-        android:title="@string/mark_as_completed"/>
+        android:title="@string/mark_as_completed" />
 
     <item
         android:id="@+id/menuSharePlan"
