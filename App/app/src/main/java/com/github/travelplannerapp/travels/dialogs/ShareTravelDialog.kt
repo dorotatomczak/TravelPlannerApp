@@ -1,4 +1,4 @@
-package com.github.travelplannerapp.sharetraveldialog
+package com.github.travelplannerapp.travels.dialogs
 
 import android.app.Dialog
 import android.os.Bundle
@@ -19,17 +19,17 @@ class ShareTravelDialog(private val dialogTitle: String, private var friends: Li
 
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-        var friendsEmails = arrayOfNulls<String>(friends.size)
-        val ifFriendsChecked = BooleanArray(friends.size);
+        val friendsEmails = arrayOfNulls<String>(friends.size)
+        val ifFriendsChecked = BooleanArray(friends.size)
         friends.forEachIndexed { i, userInfo ->
-            friendsEmails.set(i, userInfo.email)
-            ifFriendsChecked.set(i, false)
+            friendsEmails[i] = userInfo.email
+            ifFriendsChecked[i] = false
         }
         val builder = AlertDialog.Builder(context!!)
                 .setTitle(dialogTitle)
                 .setPositiveButton(android.R.string.ok) { _, _ ->
                     friends.forEachIndexed { i, userInfo ->
-                        if (ifFriendsChecked[i].equals(true)) {
+                        if (ifFriendsChecked[i]) {
                             selectedFriendsId.add(userInfo.id)
                         }
                     }
@@ -38,7 +38,7 @@ class ShareTravelDialog(private val dialogTitle: String, private var friends: Li
                 .setNegativeButton(android.R.string.cancel) { _, _ ->
                     onCancel?.invoke()
                 }
-                .setMultiChoiceItems(friendsEmails, ifFriendsChecked) { dialog, which, isChecked ->
+                .setMultiChoiceItems(friendsEmails, ifFriendsChecked) { _, which, isChecked ->
                     ifFriendsChecked[which] = isChecked
                 }
 

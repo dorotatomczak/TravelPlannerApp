@@ -1,14 +1,11 @@
 package com.github.travelplannerapp
 
 import android.app.Application
-
 import com.github.travelplannerapp.di.DaggerAppComponent
-
-import javax.inject.Inject
-
 import dagger.android.AndroidInjector
 import dagger.android.DispatchingAndroidInjector
 import dagger.android.HasAndroidInjector
+import javax.inject.Inject
 
 class App : Application(), HasAndroidInjector {
 

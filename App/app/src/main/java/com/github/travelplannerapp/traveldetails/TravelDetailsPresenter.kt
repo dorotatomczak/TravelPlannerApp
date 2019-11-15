@@ -12,12 +12,16 @@ import com.github.travelplannerapp.communication.commonmodel.UserInfo
 import com.github.travelplannerapp.utils.DateTimeUtils
 import com.github.travelplannerapp.utils.SchedulerProvider
 import com.github.travelplannerapp.utils.SharedPreferencesUtils
+import com.google.gson.JsonParser
 import io.reactivex.disposables.CompositeDisposable
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody.Companion.asRequestBody
 import okhttp3.RequestBody.Companion.toRequestBody
 import java.io.File
+import java.io.InputStream
+import java.io.InputStreamReader
+import java.net.URL
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -230,6 +234,21 @@ class TravelDetailsPresenter(private var travel: Travel, view: TravelDetailsCont
     override fun leaveActionMode() {
         view.onDataSetChanged()
         view.showNoActionMode()
+    }
+
+    override fun sharePlanElement(position:Int) {
+        val plan = (dayPlanItems[position] as PlanElementItem).planElement
+
+        var urlToShare = plan.place.href
+        var thread = Thread(Runnable {
+            val connection = URL(urlToShare).openConnection()
+            connection.connect()
+            val root = JsonParser().parse(InputStreamReader(connection.content as InputStream))
+            urlToShare = root.asJsonObject.get("view").asString
+            view.sharePlanElement(urlToShare)
+        })
+        thread.start()
+
     }
 
     private fun handleShareTravelResponse() {

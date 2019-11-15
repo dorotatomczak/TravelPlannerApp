@@ -4,7 +4,6 @@ import com.github.travelplannerapp.ServerApp.datamodels.servermodel.CityObject
 import com.github.travelplannerapp.communication.commonmodel.Contacts
 import com.github.travelplannerapp.communication.commonmodel.Place
 import com.github.travelplannerapp.communication.commonmodel.Routes
-import com.github.travelplannerapp.communication.commonmodel.SearchObjectsResponse
 
 interface ISearchService {
     fun getExampleDataFromHere()
@@ -21,7 +20,6 @@ interface ISearchService {
         eastNorthPoint: Pair<String, String>
     ): Array<Place>
 
-    fun getPage(request: String): SearchObjectsResponse
     fun getCities(query: String): Array<CityObject>
     fun getContacts(href: String): Contacts
 }

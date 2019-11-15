@@ -79,6 +79,7 @@
     <string name="mark_as_incompleted">Oznacz jako nieukończony</string>
     <string name="plan_element_completed">Oznaczyłeś plan jako ukończony</string>
     <string name="plan_element_incompleted">Oznaczyłeś plan jako nieukończony</string>
+    <string name="plan_element_share">Udostępnij plan</string>
     <string name="delete_plan_elements_error">Wystąpił problem podczas usuwania wybranych elementów planu</string>
     <string name="my_friends">Moi znajomi</string>
     <string name="friend_added">Znajomy został dodany</string>
@@ -92,9 +93,12 @@
     <string name="no_selected_friends">Nie wybrałeś znajomych</string>
     <string name="delete_friends_error">Wystąpił problem podczas usuwania znajomych</string>
     <string name="add_friend_error">Wystąpił problem podczas dodawania znajomego</string>
+    <string name="share_using">Udostępnij poprzez</string>
+    <string name="missing_facebook_app">Aplikacja Facebook nie jest zainstalowana</string>
 
     <string name="rate_place">Oceń miejsce!</string>
     <string name="rate_place_completed">Dzięki!</string>
+    <string name="rate_place_error">Wystąpił problem podczas oceniania miejsca</string>
     <string name="check_in">Zakwaterowanie</string>
     <string name="check_out">Wykwaterowanie</string>
     <string name="wrong_dates_error">Data i czas \"Od\" muszą być przed datą i czasem \"Do\"</string>
@@ -116,4 +120,8 @@
     <string name="share_travel_ok">Udostępniłeś podróż</string>
     <string name="share_travel">Udostępnij podróż</string>
     <string name="share_travel_error">Wystąpił błąd podczas udostępniania podróży</string>
+    <string name="notification_title">Miejsca, które mogą Ci się spodobać</string>
+    <string name="notification_channel_name">Rekomendacje miejsc</string>
+    <string name="recommended_places">Polecane miejsca</string>
+    <string name="notification_text">Na podstawie Twoich ocen znaleźliśmy miejsca, które mogą Ci się spodobać</string>
 </resources>

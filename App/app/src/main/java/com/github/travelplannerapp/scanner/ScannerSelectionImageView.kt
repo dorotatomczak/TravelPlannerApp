@@ -2,12 +2,12 @@ package com.github.travelplannerapp.scanner
 
 import android.content.Context
 import android.graphics.*
-import androidx.core.content.ContextCompat
 import android.util.AttributeSet
 import android.view.MotionEvent
 import android.widget.ImageView
+import androidx.core.content.ContextCompat
 import com.github.travelplannerapp.R
-import java.util.ArrayList
+import java.util.*
 
 //TODO [Dorota] Add info on repo about https://github.com/jbttn/SimpleDocumentScanner-Android, MIT license
 

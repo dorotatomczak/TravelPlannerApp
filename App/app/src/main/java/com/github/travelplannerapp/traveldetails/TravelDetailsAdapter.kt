@@ -1,6 +1,5 @@
 package com.github.travelplannerapp.traveldetails
 
-import android.content.Context
 import android.text.format.DateFormat
 import android.view.*
 import android.widget.CompoundButton
@@ -105,6 +104,9 @@ class TravelDetailsAdapter(val presenter: TravelDetailsContract.Presenter) : Rec
                     }
                     containerView.context.getString(R.string.mark_as_incompleted) -> {
                         presenter.markPlanElement(adapterPosition, false)
+                    }
+                    containerView.context.getString(R.string.plan_element_share) -> {
+                        presenter.sharePlanElement(adapterPosition)
                     }
                 }
                 true
