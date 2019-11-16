@@ -20,7 +20,6 @@ class SignUpPresenter(view: SignUpContract.View) : BasePresenter<SignUpContract.
             return
         }
 
-        /*
         if(!verifyEmail(email)){
             view.showSnackbar(R.string.email_incorrect)
             return
@@ -30,7 +29,6 @@ class SignUpPresenter(view: SignUpContract.View) : BasePresenter<SignUpContract.
             view.showSnackbar(R.string.password_too_simple)
             return
         }
-        */
 
         val hashedPassword = PasswordUtils.hashPassword(password)
         if (hashedPassword == null) {
