@@ -249,10 +249,11 @@ class TravelDetailsActivity : AppCompatActivity(), TravelDetailsContract.View {
         shareTravelDialog.show(supportFragmentManager, ShareTravelDialog.TAG)
     }
 
-    override fun showAddTransport(travelId: Int, fromPlace: Place, toPlace: Place) {
+    override fun showAddTransport(travelId: Int, fromPlace: Place, toPlace: Place, departureDate: Long) {
         val intent = Intent(this, AddTransportActivity::class.java)
         intent.putExtra(AddTransportActivity.EXTRA_FROM, fromPlace)
         intent.putExtra(AddTransportActivity.EXTRA_TO, toPlace)
+        intent.putExtra(AddTransportActivity.EXTRA_DEPARTURE_DATE, departureDate)
         intent.putExtra(AddTransportActivity.EXTRA_TRAVEL_ID, travelId)
 
         startActivityForResult(intent, REQUEST_SHOW_ADD_TRANSPORT)
@@ -312,6 +313,7 @@ class TravelDetailsActivity : AppCompatActivity(), TravelDetailsContract.View {
         collapseFabMenu()
         fabAddExtended.visibility = View.GONE
         elementAddTransport.visibility = View.VISIBLE
+        scrollViewExtender.visibility = View.VISIBLE
 
         presenter.enterTransportMode()
     }
@@ -319,6 +321,7 @@ class TravelDetailsActivity : AppCompatActivity(), TravelDetailsContract.View {
     private fun hideChooseTransportPoints() {
         fabAddExtended.visibility = View.VISIBLE
         elementAddTransport.visibility = View.GONE
+        scrollViewExtender.visibility = View.GONE
 
         presenter.leaveTransportMode()
     }

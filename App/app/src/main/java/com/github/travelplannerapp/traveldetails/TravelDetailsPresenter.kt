@@ -39,6 +39,7 @@ class TravelDetailsPresenter(private var travel: Travel, view: TravelDetailsCont
     private var inTransportMode: Boolean = false
     private var fromPlace: Place? = null
     private var toPlace: Place? = null
+    private var departureDate: Long = 0
 
     override fun loadTravel() {
         view.setTitle(travel.name)
@@ -268,11 +269,12 @@ class TravelDetailsPresenter(private var travel: Travel, view: TravelDetailsCont
 
     override fun onNextClicked() {
         if (fromPlace != null && toPlace != null)
-            view.showAddTransport(travel.id, fromPlace!!, toPlace!!)
+            view.showAddTransport(travel.id, fromPlace!!, toPlace!!, departureDate)
     }
 
     override fun onTransportFromPointFilled(position: Int) {
         fromPlace = (dayPlanItems[position] as PlanElementItem).planElement.place
+        departureDate = (dayPlanItems[position] as PlanElementItem).planElement.fromDateTimeMs
     }
 
     override fun onTransportToPointFilled(position: Int) {

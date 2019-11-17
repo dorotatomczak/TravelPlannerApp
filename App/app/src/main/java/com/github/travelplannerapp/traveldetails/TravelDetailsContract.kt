@@ -23,7 +23,7 @@ interface TravelDetailsContract {
         fun showPlanElementDetails(planElement: PlanElement, placeTitle: String, travelId: Int)
         fun getAccommodationName(isCheckIn: Boolean, placeTitle: String): String
         fun sharePlanElement(urlToShare: String)
-        fun showAddTransport(travelId: Int, fromPlace: Place, toPlace: Place)
+        fun showAddTransport(travelId: Int, fromPlace: Place, toPlace: Place, departureDate: Long)
         fun fillTransportPoints(position: Int, placeTitle: String)
     }
 

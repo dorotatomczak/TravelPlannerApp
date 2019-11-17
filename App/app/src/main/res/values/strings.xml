@@ -128,4 +128,7 @@
     <string name="notification_text">Based on your ratings we\'ve found some places you might like</string>
     <string name="from">from</string>
     <string name="to">to</string>
+    <string name="driving">driving</string>
+    <string name="walking">walking</string>
+    <string name="transit">transit</string>
 </resources>

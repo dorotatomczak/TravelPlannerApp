@@ -126,4 +126,7 @@
     <string name="notification_text">Na podstawie Twoich ocen znaleźliśmy miejsca, które mogą Ci się spodobać</string>
     <string name="from">z</string>
     <string name="to">do</string>
+    <string name="driving">samochodem</string>
+    <string name="walking">pieszo</string>
+    <string name="transit">transportem publicznym</string>
 </resources>

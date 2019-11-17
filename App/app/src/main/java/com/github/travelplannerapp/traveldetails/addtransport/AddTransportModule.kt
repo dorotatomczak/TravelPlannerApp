@@ -12,7 +12,8 @@ class AddTransportModule {
         val from = addTransportActivity.intent.getSerializableExtra(AddTransportActivity.EXTRA_FROM) as Place
         val to = addTransportActivity.intent.getSerializableExtra(AddTransportActivity.EXTRA_TO) as Place
         val travelId = addTransportActivity.intent.getIntExtra(AddTransportActivity.EXTRA_TRAVEL_ID, -1)
+        val departureDate = addTransportActivity.intent.getLongExtra(AddTransportActivity.EXTRA_DEPARTURE_DATE, 0)
 
-        return AddTransportPresenter(from, to, travelId, addTransportView)
+        return AddTransportPresenter(from, to, departureDate, travelId, addTransportView)
     }
 }

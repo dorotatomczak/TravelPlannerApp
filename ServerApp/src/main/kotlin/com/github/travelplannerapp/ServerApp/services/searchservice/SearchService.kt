@@ -64,14 +64,23 @@ class SearchService : ISearchService {
             transportMode: String,
             departureTime: String
     ): Routes {
-        return hereLoader.getRoutes(
+        val routes = hereLoader.getRoutes(
                 startCoordinates.first,
                 startCoordinates.second,
                 destinationCoordinates.first,
                 destinationCoordinates.second,
                 transportMode,
-                departureTime
-        )
+                departureTime)
+        routes.routes.forEach { route ->
+            run {
+                route.legs[0].steps.forEach { step ->
+                    run {
+                        step.html_instructions = escapeHtml(step.html_instructions)
+                    }
+                }
+            }
+        }
+        return routes
     }
 
     fun getPlace(query: String): PlaceData {
@@ -80,13 +89,18 @@ class SearchService : ISearchService {
         if (place.name != null) place.name = escapeHtml(place.name!!)
         if (place.location != null) place.location!!.address.text = escapeHtml(place.location!!.address.text)
         if (place.extended != null && place.extended!!.openingHours != null) place.extended!!.openingHours!!.text =
-            escapeHtml(place.extended!!.openingHours!!.text)
+                escapeHtml(place.extended!!.openingHours!!.text)
 
         return place
     }
 
     private fun escapeHtml(str: String): String {
-        return StringEscapeUtils.unescapeHtml3(str).replace("<br/>", "\n")
+        var resultStr = StringEscapeUtils.unescapeHtml3(str).replace("<br/>", "\n")
+        resultStr = StringEscapeUtils.unescapeHtml3(resultStr).replace("<b>", "")
+        resultStr = StringEscapeUtils.unescapeHtml3(resultStr).replace("</b>", "")
+        resultStr = StringEscapeUtils.unescapeHtml3(resultStr).replace("<div style=\"font-size:0.9em\">", "")
+        resultStr = StringEscapeUtils.unescapeHtml3(resultStr).replace("</div>", "")
+        return resultStr
     }
 
     @Component
@@ -126,8 +140,8 @@ class SearchService : ISearchService {
                     "&mode=$transportMode" +
                     "&alternatives=true"
             val routes = parseResponse<Routes>(executeGoogleRequest(request))
-            for (i in 0 until routes.routes[1].legs[0].steps.size) {
-                println(routes.routes[1].legs[0].steps[i].html_instructions)
+            for (i in 0 until (routes.routes[0].legs[0].steps.size)) {
+                println(routes.routes[0].legs[0].steps[i].html_instructions)
             }
             return routes
         }

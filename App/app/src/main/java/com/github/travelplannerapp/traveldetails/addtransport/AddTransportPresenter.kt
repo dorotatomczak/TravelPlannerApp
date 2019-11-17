@@ -10,42 +10,65 @@ import com.github.travelplannerapp.communication.commonmodel.ResponseCode
 import com.github.travelplannerapp.communication.commonmodel.Routes
 import com.github.travelplannerapp.utils.SchedulerProvider
 import io.reactivex.disposables.CompositeDisposable
+import java.util.*
 
-class AddTransportPresenter(private var from: Place, private var to: Place, private val travelId: Int, view: AddTransportContract.View) : BasePresenter<AddTransportContract.View>(view), AddTransportContract.Presenter {
+class AddTransportPresenter(private var from: Place,
+                            private var to: Place,
+                            private var departureDate: Long,
+                            private val travelId: Int, view: AddTransportContract.View) : BasePresenter<AddTransportContract.View>(view), AddTransportContract.Presenter {
 
     private val compositeDisposable = CompositeDisposable()
-    private var departureTime: String = ""
+    private var travelMode = "driving"
 
     override fun initFromToTransport() {
         view.setFromTransport(from.title)
         from.position = arrayOf(0.0,0.0)
         view.setToTransport(to.title)
         to.position = arrayOf(0.0,0.0)
+        view.setDepartureDate(Date(departureDate).toString())
     }
 
-    override fun onAddTransportClicked(fromTime: String) {
-        departureTime = fromTime
-        loadPlaceHereData(from.href)
-        loadPlaceHereData(to.href)
+    override fun onAddTransportClicked() {
+        loadFromPlaceHereData(from.href)
+        loadToPlaceHereData(to.href)
     }
 
-    private fun loadPlaceHereData(href: String) {
+    override fun onTravelModeSelected(mode: String) {
+        travelMode = mode
+    }
+
+    private fun loadFromPlaceHereData(href: String) {
         compositeDisposable.add(CommunicationService.serverApi.getPlace("0", href)
                 .observeOn(SchedulerProvider.ui())
                 .subscribeOn(SchedulerProvider.io())
                 .map { if (it.responseCode == ResponseCode.OK) it.data!! else throw ApiException(it.responseCode) }
                 .subscribe(
-                        { place -> handleLoadPlaceHereDataResponse(place) },
+                        { place -> handleLoadFromPlaceHereDataResponse(place) },
                         { error -> handleErrorResponse(error) }
                 ))
     }
 
-    private fun handleLoadPlaceHereDataResponse(placeData: PlaceData) {
-        if (from.title == placeData.name) {
-            from.position = placeData.location!!.position
-        } else {
-            to.position = placeData.location!!.position
+    private fun handleLoadFromPlaceHereDataResponse(placeData: PlaceData) {
+        from.position = placeData.location!!.position
+
+        if (from.position[0] != 0.0 && to.position[0] != 0.0) {
+            loadTransport()
         }
+    }
+
+    private fun loadToPlaceHereData(href: String) {
+        compositeDisposable.add(CommunicationService.serverApi.getPlace("0", href)
+                .observeOn(SchedulerProvider.ui())
+                .subscribeOn(SchedulerProvider.io())
+                .map { if (it.responseCode == ResponseCode.OK) it.data!! else throw ApiException(it.responseCode) }
+                .subscribe(
+                        { place -> handleLoadToPlaceHereDataResponse(place) },
+                        { error -> handleErrorResponse(error) }
+                ))
+    }
+
+    private fun handleLoadToPlaceHereDataResponse(placeData: PlaceData) {
+        to.position = placeData.location!!.position
 
         if (from.position[0] != 0.0 && to.position[0] != 0.0) {
             loadTransport()
@@ -58,8 +81,8 @@ class AddTransportPresenter(private var from: Place, private var to: Place, priv
                 from.position[1].toString(),
                 to.position[0].toString(),
                 to.position[1].toString(),
-                "driving",
-                departureTime
+                travelMode,
+                departureDate.toString()
         )
                 .observeOn(SchedulerProvider.ui())
                 .subscribeOn(SchedulerProvider.io())

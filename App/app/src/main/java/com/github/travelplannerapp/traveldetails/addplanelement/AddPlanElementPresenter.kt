@@ -20,7 +20,6 @@ class AddPlanElementPresenter(private val travelId: Int, view: AddPlanElementCon
     private var place: Place? = null
     private var waitForSecondElement = false
 
-
     override fun addPlanElement(data: AddPlanElementContract.NewPlanElementData) {
         if (isPlanDataValid(data)) {
             val planElement = PlanElement(-1,
