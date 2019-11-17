@@ -124,4 +124,6 @@
     <string name="notification_channel_name">Rekomendacje miejsc</string>
     <string name="recommended_places">Polecane miejsca</string>
     <string name="notification_text">Na podstawie Twoich ocen znaleźliśmy miejsca, które mogą Ci się spodobać</string>
+    <string name="from">z</string>
+    <string name="to">do</string>
 </resources>

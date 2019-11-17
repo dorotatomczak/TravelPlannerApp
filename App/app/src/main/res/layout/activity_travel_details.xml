@@ -77,6 +77,8 @@
 
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
-    <include layout="@layout/fab_add" />
+    <include layout="@layout/element_add_transport" />
+
+    <include layout="@layout/fab_add_extended" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

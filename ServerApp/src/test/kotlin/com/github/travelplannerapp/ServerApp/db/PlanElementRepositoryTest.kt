@@ -37,7 +37,7 @@ class PlanElementRepositoryTest {
 
     @Test
     fun `When add called expect one row returned`() {
-        val result = planElementRepository.add(PlanElementDao(0, Timestamp(1111), 1, 1, ,""))
+        val result = planElementRepository.add(PlanElementDao(0, Timestamp(1111), 1, 1, true,""))
         Assert.assertTrue(result)
         planElementRepository.delete(0)
     }
