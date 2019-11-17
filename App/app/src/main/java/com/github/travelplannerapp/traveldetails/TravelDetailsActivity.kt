@@ -15,18 +15,23 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.request.RequestOptions
 import com.github.travelplannerapp.R
 import com.github.travelplannerapp.communication.appmodel.Travel
+import com.github.travelplannerapp.communication.commonmodel.Place
 import com.github.travelplannerapp.communication.commonmodel.PlanElement
 import com.github.travelplannerapp.communication.commonmodel.UserInfo
 import com.github.travelplannerapp.planelementdetails.PlanElementDetailsActivity
-import com.github.travelplannerapp.travels.dialogs.ShareTravelDialog
 import com.github.travelplannerapp.traveldetails.addplanelement.AddPlanElementActivity
+import com.github.travelplannerapp.traveldetails.addtransport.AddTransportActivity
 import com.github.travelplannerapp.travels.dialogs.AddEditTravelDialog
+import com.github.travelplannerapp.travels.dialogs.ShareTravelDialog
 import com.github.travelplannerapp.utils.DrawerUtils
 import com.github.travelplannerapp.utils.copyInputStreamToFile
 import com.google.android.material.snackbar.Snackbar
 import dagger.android.AndroidInjection
 import kotlinx.android.synthetic.main.activity_travel_details.*
-import kotlinx.android.synthetic.main.fab_add.*
+import kotlinx.android.synthetic.main.element_add_transport.*
+import kotlinx.android.synthetic.main.fab_add_extended.*
+import kotlinx.android.synthetic.main.fab_cancel.*
+import kotlinx.android.synthetic.main.fab_next.*
 import kotlinx.android.synthetic.main.toolbar.*
 import java.io.File
 import javax.inject.Inject
@@ -43,6 +48,7 @@ class TravelDetailsActivity : AppCompatActivity(), TravelDetailsContract.View {
         const val REQUEST_SELECT_IMAGE = 2
         const val REQUEST_ADD_PLAN = 3
         const val REQUEST_SHOW_DETAILS = 4
+        const val REQUEST_SHOW_ADD_TRANSPORT = 5
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -50,7 +56,12 @@ class TravelDetailsActivity : AppCompatActivity(), TravelDetailsContract.View {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_travel_details)
 
-        fabAdd.setOnClickListener { presenter.onAddPlanElementClicked() }
+        fabAddExtended.setOnClickListener { toggleFabMenu() }
+        fabPlanElement.setOnClickListener { presenter.onAddPlanElementClicked() }
+        fabTransport.setOnClickListener { showSelectTransportPoints() }
+
+        fabCancel.setOnClickListener { hideSelectTransportPoints() }
+        fabNext.setOnClickListener { presenter.onNextClicked() }
 
         swipeRefreshLayoutTravelDetails.setOnRefreshListener { presenter.loadDayPlans() }
 
@@ -63,6 +74,7 @@ class TravelDetailsActivity : AppCompatActivity(), TravelDetailsContract.View {
         recyclerViewDayPlans.layoutManager = LinearLayoutManager(this, RecyclerView.VERTICAL, false)
         recyclerViewDayPlans.adapter = TravelDetailsAdapter(presenter)
 
+        hideSelectTransportPoints()
         presenter.loadTravel()
         presenter.loadFriendsWithoutAccessToTravel()
         refreshDayPlans()
@@ -113,6 +125,8 @@ class TravelDetailsActivity : AppCompatActivity(), TravelDetailsContract.View {
                 }
             }
         }
+        hideSelectTransportPoints()
+        collapseFabMenu()
         refreshDayPlans()
     }
 
@@ -161,11 +175,11 @@ class TravelDetailsActivity : AppCompatActivity(), TravelDetailsContract.View {
     }
 
     override fun showActionMode() {
-        fabAdd.visibility = View.GONE
+        fabAddExtended.visibility = View.GONE
     }
 
     override fun showNoActionMode() {
-        fabAdd.visibility = View.VISIBLE
+        fabAddExtended.visibility = View.VISIBLE
         (recyclerViewDayPlans.adapter as TravelDetailsAdapter).leaveActionMode()
     }
 
@@ -203,7 +217,7 @@ class TravelDetailsActivity : AppCompatActivity(), TravelDetailsContract.View {
     }
 
     override fun sharePlanElement(urlToShare: String) {
-        val regularFacebookApp="com.facebook.katana"
+        val regularFacebookApp = "com.facebook.katana"
         var intent = Intent(Intent.ACTION_SEND)
         intent.type = "text/plain"
         var isFacebookAppFound = false
@@ -222,15 +236,6 @@ class TravelDetailsActivity : AppCompatActivity(), TravelDetailsContract.View {
         }
     }
 
-    private fun showEditTravel() {
-        val editTravelDialog = AddEditTravelDialog(getString(R.string.change_travel_name))
-        editTravelDialog.onOk = {
-            val travelName = editTravelDialog.travelName.text.toString()
-            presenter.changeTravelName(travelName)
-        }
-        editTravelDialog.show(supportFragmentManager, AddEditTravelDialog.TAG)
-    }
-
     override fun showShareTravel(friendsWithoutAccessToTravel: List<UserInfo>) {
         val shareTravelDialog = ShareTravelDialog(getString(R.string.share_travel), friendsWithoutAccessToTravel)
         shareTravelDialog.onOk = {
@@ -244,6 +249,53 @@ class TravelDetailsActivity : AppCompatActivity(), TravelDetailsContract.View {
         shareTravelDialog.show(supportFragmentManager, ShareTravelDialog.TAG)
     }
 
+    override fun showAddTransport(travelId: Int, fromPlace: Place, toPlace: Place, departureDate: Long) {
+        val intent = Intent(this, AddTransportActivity::class.java)
+        intent.putExtra(AddTransportActivity.EXTRA_FROM, fromPlace)
+        intent.putExtra(AddTransportActivity.EXTRA_TO, toPlace)
+        intent.putExtra(AddTransportActivity.EXTRA_DEPARTURE_DATE, departureDate)
+        intent.putExtra(AddTransportActivity.EXTRA_TRAVEL_ID, travelId)
+
+        startActivityForResult(intent, REQUEST_SHOW_ADD_TRANSPORT)
+    }
+
+    override fun fillTransportPoints(position: Int, placeTitle: String) {
+        if (editTextFrom.isFocused) {
+            editTextFrom.setText(placeTitle)
+            presenter.onTransportFromPointFilled(position)
+        } else if (editTextTo.isFocused) {
+            editTextTo.setText(placeTitle)
+            presenter.onTransportToPointFilled(position)
+        }
+    }
+
+    private fun toggleFabMenu() {
+        if (fabTransport.visibility == View.GONE) {
+            expandFabMenu()
+        } else {
+            collapseFabMenu()
+        }
+    }
+
+    private fun expandFabMenu() {
+        fabTransport.visibility = View.VISIBLE
+        fabPlanElement.visibility = View.VISIBLE
+    }
+
+    private fun collapseFabMenu() {
+        fabTransport.visibility = View.GONE
+        fabPlanElement.visibility = View.GONE
+    }
+
+    private fun showEditTravel() {
+        val editTravelDialog = AddEditTravelDialog(getString(R.string.change_travel_name))
+        editTravelDialog.onOk = {
+            val travelName = editTravelDialog.travelName.text.toString()
+            presenter.changeTravelName(travelName)
+        }
+        editTravelDialog.show(supportFragmentManager, AddEditTravelDialog.TAG)
+    }
+
     private fun showImageSelection() {
         val getIntent = Intent(Intent.ACTION_GET_CONTENT)
         getIntent.type = "image/*"
@@ -255,6 +307,23 @@ class TravelDetailsActivity : AppCompatActivity(), TravelDetailsContract.View {
         chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, arrayOf(pickIntent))
 
         startActivityForResult(chooserIntent, REQUEST_SELECT_IMAGE)
+    }
+
+    private fun showSelectTransportPoints() {
+        collapseFabMenu()
+        fabAddExtended.visibility = View.GONE
+        elementAddTransport.visibility = View.VISIBLE
+        scrollViewExtender.visibility = View.VISIBLE
+
+        presenter.enterTransportMode()
+    }
+
+    private fun hideSelectTransportPoints() {
+        fabAddExtended.visibility = View.VISIBLE
+        elementAddTransport.visibility = View.GONE
+        scrollViewExtender.visibility = View.GONE
+
+        presenter.leaveTransportMode()
     }
 
     private fun refreshDayPlans() {

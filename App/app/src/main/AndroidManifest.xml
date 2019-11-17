@@ -55,6 +55,10 @@
 
         <activity
             android:screenOrientation="portrait"
+            android:name="com.github.travelplannerapp.traveldetails.addtransport.AddTransportActivity" />
+
+        <activity
+            android:screenOrientation="portrait"
             android:name=".traveldetails.TravelDetailsActivity" />
 
         <activity android:name="com.github.travelplannerapp.searchfriend.SearchFriendActivity"

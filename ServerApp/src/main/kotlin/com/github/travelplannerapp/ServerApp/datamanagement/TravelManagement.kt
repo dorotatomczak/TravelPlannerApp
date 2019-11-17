@@ -59,9 +59,11 @@ class TravelManagement : ITravelManagement {
 
     override fun deleteTravels(userId: Int, travelIds: MutableSet<Int>) {
         for (travelId in travelIds) {
-            var result = planElementRepository.deletePlanElementsByTravelId(travelId)
-            if (!result) throw DeletePlanElementsException("Error when deleting plan elements")
-
+            var result: Boolean
+            if (planElementRepository.getPlanElementsByTravelId(travelId).isNotEmpty()) {
+                result = planElementRepository.deletePlanElementsByTravelId(travelId)
+                if (!result) throw DeletePlanElementsException("Error when deleting plan elements")
+            }
             val scans = scanManagement.getScans(userId, travelId)
             scanManagement.deleteScans(scans)
 

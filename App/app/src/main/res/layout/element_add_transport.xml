@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/elementAddTransport"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="bottom"
+    android:visibility="visible"
+    android:background="@color/white">
+
+    <View
+        android:id="@+id/viewLineTransport"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/line_width_L"
+        android:background="@color/colorPrimaryDark" />
+
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/editTextFrom"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/from"
+        android:inputType="none"
+        android:focusable="true"
+        android:layout_margin="@dimen/margin_horizontal" />
+
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/editTextTo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/to"
+        android:inputType="none"
+        android:focusable="true"
+        android:layout_margin="@dimen/margin_horizontal" />
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <include layout="@layout/fab_cancel" />
+
+        <include layout="@layout/fab_next" />
+
+    </FrameLayout>
+
+</LinearLayout>

@@ -1,6 +1,7 @@
 package com.github.travelplannerapp.traveldetails
 
 import com.github.travelplannerapp.communication.appmodel.Travel
+import com.github.travelplannerapp.communication.commonmodel.Place
 import com.github.travelplannerapp.communication.commonmodel.PlanElement
 import com.github.travelplannerapp.communication.commonmodel.UserInfo
 import com.github.travelplannerapp.deleteactionmode.DeleteContract
@@ -22,6 +23,8 @@ interface TravelDetailsContract {
         fun showPlanElementDetails(planElement: PlanElement, placeTitle: String, travelId: Int)
         fun getAccommodationName(isCheckIn: Boolean, placeTitle: String): String
         fun sharePlanElement(urlToShare: String)
+        fun showAddTransport(travelId: Int, fromPlace: Place, toPlace: Place, departureDate: Long)
+        fun fillTransportPoints(position: Int, placeTitle: String)
     }
 
     interface PlanElementItemView : DeleteContract.ItemView {
@@ -70,5 +73,10 @@ interface TravelDetailsContract {
         fun sharePlanElement(position:Int)
         fun loadFriendsWithoutAccessToTravel()
         fun onShareTravelClicked()
+        fun onNextClicked()
+        fun onTransportFromPointFilled(position: Int)
+        fun onTransportToPointFilled(position: Int)
+        fun enterTransportMode()
+        fun leaveTransportMode()
     }
 }

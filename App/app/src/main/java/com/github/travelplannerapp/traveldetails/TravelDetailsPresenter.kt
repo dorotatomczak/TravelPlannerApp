@@ -6,6 +6,7 @@ import com.github.travelplannerapp.communication.ApiException
 import com.github.travelplannerapp.communication.CommunicationService
 import com.github.travelplannerapp.communication.appmodel.PlaceCategory
 import com.github.travelplannerapp.communication.appmodel.Travel
+import com.github.travelplannerapp.communication.commonmodel.Place
 import com.github.travelplannerapp.communication.commonmodel.PlanElement
 import com.github.travelplannerapp.communication.commonmodel.ResponseCode
 import com.github.travelplannerapp.communication.commonmodel.UserInfo
@@ -34,6 +35,11 @@ class TravelDetailsPresenter(private var travel: Travel, view: TravelDetailsCont
     private var planElements = TreeSet<PlanElement>()
     private var planElementIdsToDelete = mutableSetOf<Int>()
     private var friendsWithoutAccessToTravel = ArrayList<UserInfo>()
+
+    private var inTransportMode: Boolean = false
+    private var fromPlace: Place? = null
+    private var toPlace: Place? = null
+    private var departureDate: Long = 0
 
     override fun loadTravel() {
         view.setTitle(travel.name)
@@ -236,7 +242,7 @@ class TravelDetailsPresenter(private var travel: Travel, view: TravelDetailsCont
         view.showNoActionMode()
     }
 
-    override fun sharePlanElement(position:Int) {
+    override fun sharePlanElement(position: Int) {
         val plan = (dayPlanItems[position] as PlanElementItem).planElement
 
         var urlToShare = plan.place.href
@@ -249,6 +255,38 @@ class TravelDetailsPresenter(private var travel: Travel, view: TravelDetailsCont
         })
         thread.start()
 
+    }
+
+    override fun onPlanElementClicked(position: Int, placeTitle: String) {
+        if (inTransportMode) {
+            view.fillTransportPoints(position, placeTitle)
+        } else {
+            val planElementItem = dayPlanItems[position] as PlanElementItem
+            view.showPlanElementDetails(planElementItem.planElement,
+                    placeTitle, travel.id)
+        }
+    }
+
+    override fun onNextClicked() {
+        if (fromPlace != null && toPlace != null)
+            view.showAddTransport(travel.id, fromPlace!!, toPlace!!, departureDate)
+    }
+
+    override fun onTransportFromPointFilled(position: Int) {
+        fromPlace = (dayPlanItems[position] as PlanElementItem).planElement.place
+        departureDate = (dayPlanItems[position] as PlanElementItem).planElement.fromDateTimeMs
+    }
+
+    override fun onTransportToPointFilled(position: Int) {
+        toPlace = (dayPlanItems[position] as PlanElementItem).planElement.place
+    }
+
+    override fun enterTransportMode() {
+        inTransportMode = true
+    }
+
+    override fun leaveTransportMode() {
+        inTransportMode = false
     }
 
     private fun handleShareTravelResponse() {
@@ -271,12 +309,6 @@ class TravelDetailsPresenter(private var travel: Travel, view: TravelDetailsCont
             }
             dayPlanItems.add(PlanElementItem(plan))
         }
-    }
-
-    override fun onPlanElementClicked(position: Int, placeTitle: String) {
-        val planElementItem = dayPlanItems[position] as PlanElementItem
-        view.showPlanElementDetails(planElementItem.planElement,
-                placeTitle, travel.id)
     }
 
     inner class DateSeparatorItem(val date: String) : TravelDetailsContract.DayPlanItem {
