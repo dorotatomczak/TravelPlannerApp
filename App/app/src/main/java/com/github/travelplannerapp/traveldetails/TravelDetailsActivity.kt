@@ -58,9 +58,9 @@ class TravelDetailsActivity : AppCompatActivity(), TravelDetailsContract.View {
 
         fabAddExtended.setOnClickListener { toggleFabMenu() }
         fabPlanElement.setOnClickListener { presenter.onAddPlanElementClicked() }
-        fabTransport.setOnClickListener { showChooseTransportPoints() }
+        fabTransport.setOnClickListener { showSelectTransportPoints() }
 
-        fabCancel.setOnClickListener { hideChooseTransportPoints() }
+        fabCancel.setOnClickListener { hideSelectTransportPoints() }
         fabNext.setOnClickListener { presenter.onNextClicked() }
 
         swipeRefreshLayoutTravelDetails.setOnRefreshListener { presenter.loadDayPlans() }
@@ -74,7 +74,7 @@ class TravelDetailsActivity : AppCompatActivity(), TravelDetailsContract.View {
         recyclerViewDayPlans.layoutManager = LinearLayoutManager(this, RecyclerView.VERTICAL, false)
         recyclerViewDayPlans.adapter = TravelDetailsAdapter(presenter)
 
-        hideChooseTransportPoints()
+        hideSelectTransportPoints()
         presenter.loadTravel()
         presenter.loadFriendsWithoutAccessToTravel()
         refreshDayPlans()
@@ -125,7 +125,7 @@ class TravelDetailsActivity : AppCompatActivity(), TravelDetailsContract.View {
                 }
             }
         }
-        hideChooseTransportPoints()
+        hideSelectTransportPoints()
         collapseFabMenu()
         refreshDayPlans()
     }
@@ -309,7 +309,7 @@ class TravelDetailsActivity : AppCompatActivity(), TravelDetailsContract.View {
         startActivityForResult(chooserIntent, REQUEST_SELECT_IMAGE)
     }
 
-    private fun showChooseTransportPoints() {
+    private fun showSelectTransportPoints() {
         collapseFabMenu()
         fabAddExtended.visibility = View.GONE
         elementAddTransport.visibility = View.VISIBLE
@@ -318,7 +318,7 @@ class TravelDetailsActivity : AppCompatActivity(), TravelDetailsContract.View {
         presenter.enterTransportMode()
     }
 
-    private fun hideChooseTransportPoints() {
+    private fun hideSelectTransportPoints() {
         fabAddExtended.visibility = View.VISIBLE
         elementAddTransport.visibility = View.GONE
         scrollViewExtender.visibility = View.GONE

@@ -11,7 +11,7 @@
     <View
         android:id="@+id/viewLineTransport"
         android:layout_width="match_parent"
-        android:layout_height="5dp"
+        android:layout_height="@dimen/line_width_L"
         android:background="@color/colorPrimaryDark" />
 
     <com.google.android.material.textfield.TextInputEditText
