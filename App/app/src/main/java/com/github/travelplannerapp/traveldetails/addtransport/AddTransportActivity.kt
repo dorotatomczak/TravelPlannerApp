@@ -10,7 +10,7 @@ import com.github.travelplannerapp.utils.DrawerUtils
 import com.google.android.material.snackbar.Snackbar
 import dagger.android.AndroidInjection
 import kotlinx.android.synthetic.main.activity_add_transport.*
-import kotlinx.android.synthetic.main.fab_check.*
+import kotlinx.android.synthetic.main.fab_search.*
 import kotlinx.android.synthetic.main.toolbar.*
 import javax.inject.Inject
 
@@ -40,7 +40,7 @@ class AddTransportActivity : AppCompatActivity(), AddTransportContract.View {
 
         presenter.initFromToTransport()
 
-        fabCheck.setOnClickListener { presenter.onAddTransportClicked() }
+        fabSearch.setOnClickListener { presenter.onSearchTransportClicked() }
 
         setOnSpinnerItemSelectListener()
     }

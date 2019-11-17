@@ -28,7 +28,7 @@ class AddTransportPresenter(private var from: Place,
         view.setDepartureDate(Date(departureDate).toString())
     }
 
-    override fun onAddTransportClicked() {
+    override fun onSearchTransportClicked() {
         loadFromPlaceHereData(from.href)
         loadToPlaceHereData(to.href)
     }

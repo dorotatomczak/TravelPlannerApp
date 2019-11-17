@@ -106,6 +106,6 @@
 
     </LinearLayout>
 
-    <include layout="@layout/fab_check" />
+    <include layout="@layout/fab_search" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

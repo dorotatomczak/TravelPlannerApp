@@ -14,7 +14,7 @@ interface AddTransportContract {
 
     interface Presenter {
         fun initFromToTransport()
-        fun onAddTransportClicked()
+        fun onSearchTransportClicked()
         fun onTravelModeSelected(mode: String)
     }
 }
