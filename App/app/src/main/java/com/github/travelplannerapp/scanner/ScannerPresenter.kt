@@ -5,8 +5,8 @@ import com.github.travelplannerapp.BasePresenter
 import com.github.travelplannerapp.R
 import com.github.travelplannerapp.communication.ApiException
 import com.github.travelplannerapp.communication.CommunicationService
-import com.github.travelplannerapp.communication.model.ResponseCode
-import com.github.travelplannerapp.communication.model.Scan
+import com.github.travelplannerapp.communication.appmodel.Scan
+import com.github.travelplannerapp.communication.commonmodel.ResponseCode
 import com.github.travelplannerapp.utils.SchedulerProvider
 import com.github.travelplannerapp.utils.SharedPreferencesUtils
 import io.reactivex.disposables.CompositeDisposable
@@ -26,7 +26,7 @@ class ScannerPresenter(view: ScannerContract.View, private val travelId: Int) : 
         else view.returnResultAndFinish(R.string.scanner_general_error)
     }
 
-    override fun uploadScan(scan: File?, token: String, userId: Int) {
+    override fun uploadScan(scan: File?) {
         if (scan == null) view.returnResultAndFinish(R.string.scan_upload_error)
         val fileReqBody = scan!!.asRequestBody("multipart/form-data".toMediaTypeOrNull())
         val filePart = MultipartBody.Part.createFormData("file", scan.name, fileReqBody)

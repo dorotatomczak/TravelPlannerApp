@@ -1,8 +1,8 @@
 package com.github.travelplannerapp.signup
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import com.github.travelplannerapp.R
 import com.google.android.material.snackbar.Snackbar
 import dagger.android.AndroidInjection
@@ -25,9 +25,9 @@ class SignUpActivity : AppCompatActivity(), SignUpContract.View {
         setContentView(R.layout.activity_sign_up)
 
         //set up buttons
-        buttonSignIn.setOnClickListener { presenter.signIn() }
+        buttonSignIn.setOnClickListener { presenter.onSignInClicked() }
         buttonSignUp.setOnClickListener {
-            presenter.signUp(editTextEmail.text.toString(),
+            presenter.onSignUpClicked(editTextEmail.text.toString(),
                     editTextPassword.text.toString(), editTextConfirmPassword.text.toString())
         }
     }

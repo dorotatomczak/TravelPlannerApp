@@ -11,7 +11,7 @@ class ScanRepository : Repository<Scan>(), IScanRepository {
     companion object {
         const val tableName = "scan"
         const val columnId = "id"
-        const val columnUserId = "user_id"
+        const val columnUserId = "app_user_id"
         const val columnTravelId = "travel_id"
         const val columnName = "name"
     }
@@ -24,7 +24,7 @@ class ScanRepository : Repository<Scan>(), IScanRepository {
             "WHERE $columnId=?"
     override val nextIdStatement = "SELECT nextval(pg_get_serial_sequence('$tableName', '$columnId')) AS new_id"
 
-    override fun getAll(userId: Int, travelId: Int): MutableList<Scan> {
+    override fun getAll(userId: Int, travelId: Int): List<Scan> {
         val scans = mutableListOf<Scan>()
         val statement = DbConnection
                 .conn
@@ -41,7 +41,8 @@ class ScanRepository : Repository<Scan>(), IScanRepository {
     }
 
     override fun T(result: ResultSet): Scan? {
-        return Scan(result)    }
+        return Scan(result)
+    }
 
     override fun prepareInsertStatement(obj: Scan): PreparedStatement {
         val statement = DbConnection

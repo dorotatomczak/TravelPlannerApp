@@ -12,12 +12,13 @@ class TravelRepository : Repository<Travel>(), ITravelRepository {
         const val tableName = "travel"
         const val columnId = "id"
         const val columnName = "name"
+        const val columnImageUrl = "image_url"
     }
 
     override val selectStatement = "SELECT * FROM $tableName "
-    override val insertStatement = "INSERT INTO $tableName (id, name) VALUES (?, ?)"
+    override val insertStatement = "INSERT INTO $tableName ($columnId, $columnName) VALUES (?, ?)"
     override val deleteStatement = "DELETE FROM $tableName "
-    override val updateStatement = "UPDATE $tableName SET name=? WHERE id=?"
+    override val updateStatement = "UPDATE $tableName SET $columnName=?, $columnImageUrl=? WHERE $columnId=?"
     override val nextIdStatement = "SELECT nextval(pg_get_serial_sequence('$tableName', '$columnId')) AS new_id"
 
     override fun getAllTravelsByUserId(id: Int): MutableList<Travel> {
@@ -25,31 +26,12 @@ class TravelRepository : Repository<Travel>(), ITravelRepository {
         val statement = DbConnection
                 .conn
                 .prepareStatement(
-                        "SELECT $tableName.$columnId, $tableName.$columnName " +
+                        "SELECT $tableName.$columnId, $tableName.$columnName, $tableName.$columnImageUrl " +
                                 "FROM $tableName INNER JOIN ${UserTravelRepository.tableName} " +
                                 "on $tableName.$columnId = ${UserTravelRepository.tableName}.${UserTravelRepository.columnTravelId} " +
                                 "where ${UserTravelRepository.tableName}.${UserTravelRepository.columnUserId} = ?"
                 )
         statement.setInt(1, id)
-        val result = statement.executeQuery()
-        while (result.next()) {
-            travels.add(Travel(result))
-        }
-        return travels
-    }
-
-    override fun getAllTravelsByUserEmail(email: String): MutableList<Travel> {
-        val travels = mutableListOf<Travel>()
-        val statement = DbConnection.conn
-                .prepareStatement(
-                        "SELECT $tableName.$columnId, $tableName.$columnName " +
-                                "FROM $tableName INNER JOIN ${UserTravelRepository.tableName} " +
-                                "ON $tableName.$columnId = ${UserTravelRepository.tableName}.${UserTravelRepository.columnTravelId} " +
-                                "INNER JOIN ${UserRepository.tableName} " +
-                                "ON ${UserTravelRepository.tableName}.${UserTravelRepository.columnUserId} = ${UserRepository.tableName}.${UserTravelRepository.columnId} " +
-                                "WHERE ${UserRepository.tableName}.${UserRepository.columnEmail} = ?"
-                )
-        statement.setString(1, email)
         val result = statement.executeQuery()
         while (result.next()) {
             travels.add(Travel(result))
@@ -75,7 +57,8 @@ class TravelRepository : Repository<Travel>(), ITravelRepository {
                 .conn
                 .prepareStatement(updateStatement)
         statement.setString(1, obj.name)
-        statement.setInt(2, obj.id!!)
+        statement.setString(2, obj.imageUrl)
+        statement.setInt(3, obj.id!!)
         return statement
     }
 }

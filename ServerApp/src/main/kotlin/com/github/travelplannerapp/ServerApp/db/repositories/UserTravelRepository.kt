@@ -22,28 +22,17 @@ class UserTravelRepository : Repository<UserTravel>(), IUserTravelRepository {
     override val updateStatement = "UPDATE $tableName SET $columnUserId=?, $columnTravelId=?  WHERE $columnId=?"
     override val nextIdStatement = "SELECT nextval(pg_get_serial_sequence('$tableName', '$columnId')) AS new_id"
 
-    override fun T(result: ResultSet): UserTravel? {
-        return UserTravel(result)
-    }
-
-    override fun prepareInsertStatement(obj: UserTravel): PreparedStatement {
+    override fun doesUserTravelAccessExist(travelId: Int, userId: Int): Boolean {
         val statement = DbConnection
                 .conn
-                .prepareStatement(insertStatement)
-        statement.setInt(1, obj.id!!)
-        statement.setInt(2, obj.userId!!)
-        statement.setInt(3, obj.travelId!!)
-        return statement
-    }
-
-    override fun prepareUpdateStatement(obj: UserTravel): PreparedStatement {
-        val statement = DbConnection
-                .conn
-                .prepareStatement(updateStatement)
-        statement.setInt(1, obj.userId!!)
-        statement.setInt(2, obj.travelId!!)
-        statement.setInt(3, obj.id!!)
-        return statement
+                .prepareStatement("SELECT $columnId FROM $tableName WHERE $columnTravelId=? AND $columnUserId=? ")
+        statement.setInt(1, travelId)
+        statement.setInt(2, userId)
+        val result: ResultSet = statement.executeQuery()
+        if (result.next()) {
+            return true
+        }
+        return false
     }
 
     override fun deleteUserTravelBinding(userId: Int, travelId: Int): Boolean {
@@ -66,5 +55,29 @@ class UserTravelRepository : Repository<UserTravel>(), IUserTravelRepository {
             return result.getInt("travel_bindings")
         }
         return 0
+    }
+
+    override fun T(result: ResultSet): UserTravel? {
+        return UserTravel(result)
+    }
+
+    override fun prepareInsertStatement(obj: UserTravel): PreparedStatement {
+        val statement = DbConnection
+                .conn
+                .prepareStatement(insertStatement)
+        statement.setInt(1, obj.id!!)
+        statement.setInt(2, obj.userId!!)
+        statement.setInt(3, obj.travelId!!)
+        return statement
+    }
+
+    override fun prepareUpdateStatement(obj: UserTravel): PreparedStatement {
+        val statement = DbConnection
+                .conn
+                .prepareStatement(updateStatement)
+        statement.setInt(1, obj.userId!!)
+        statement.setInt(2, obj.travelId!!)
+        statement.setInt(3, obj.id!!)
+        return statement
     }
 }

@@ -3,10 +3,10 @@ package com.github.travelplannerapp.ServerApp
 import com.github.travelplannerapp.ServerApp.datamanagement.ScanManagement
 import com.github.travelplannerapp.ServerApp.datamanagement.UserManagement
 import com.github.travelplannerapp.ServerApp.db.dao.Scan
-import com.github.travelplannerapp.ServerApp.exceptions.ResponseCode
 import com.github.travelplannerapp.ServerApp.exceptions.UploadScanException
-import com.github.travelplannerapp.ServerApp.datamodels.Response
 import com.github.travelplannerapp.ServerApp.services.FileStorageService
+import com.github.travelplannerapp.communication.commonmodel.Response
+import com.github.travelplannerapp.communication.commonmodel.ResponseCode
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.core.io.Resource
 import org.springframework.http.HttpHeaders
@@ -30,7 +30,7 @@ class ServerScanController {
     fun uploadFile(
         @RequestHeader("authorization") token: String,
         @PathVariable userId: Int,
-        @RequestParam("travelId") travelId: Int,
+        @RequestParam("travel-id") travelId: Int,
         @RequestParam("file") file: MultipartFile
     ): Response<Scan> {
         userManagement.verifyUser(token)
@@ -49,7 +49,7 @@ class ServerScanController {
     fun getScans(
         @RequestHeader("authorization") token: String,
         @PathVariable userId: Int,
-        @RequestParam travelId: Int
+        @RequestParam("travel-id") travelId: Int
     ): Response<List<Scan>> {
         userManagement.verifyUser(token)
         val scans = scanManagement.getScans(userId, travelId)
@@ -79,14 +79,12 @@ class ServerScanController {
     fun deleteScans(
         @RequestHeader("authorization") token: String,
         @PathVariable userId: Int,
-        @RequestBody scans: MutableSet<Scan>
+        @RequestBody scans: List<Scan>
     ): Response<Unit> {
         userManagement.verifyUser(token)
 
-        for (scan in scans) {
-            scanManagement.deleteScan(scan)
-            scan.name?.let { fileStorageService.deleteFile(it) }
-        }
+        scanManagement.deleteScans(scans)
+
         return Response(ResponseCode.OK, Unit)
     }
 }

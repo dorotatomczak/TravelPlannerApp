@@ -1,11 +1,12 @@
 package com.github.travelplannerapp.travels
 
+import com.github.travelplannerapp.communication.appmodel.Travel
 import com.github.travelplannerapp.deleteactionmode.DeleteContract
 
 interface TravelsContract {
     interface View : DeleteContract.View {
         fun showAddTravel()
-        fun showTravelDetails(travelId: Int, travelName: String)
+        fun showTravelDetails(travel: Travel)
         fun showTravels()
         fun showNoTravels()
         fun showSnackbar(messageCode: Int)
@@ -16,6 +17,7 @@ interface TravelsContract {
 
     interface TravelItemView : DeleteContract.ItemView {
         fun setName(name: String)
+        fun setImage(url: String)
     }
 
     interface Presenter : DeleteContract.Presenter {
@@ -28,6 +30,6 @@ interface TravelsContract {
         fun addTravelIdToDelete(position: Int)
         fun removeTravelIdToDelete(position: Int)
         fun unsubscribe()
-        fun updateTravelName(travelId: Int, travelName: String)
+        fun updateTravel(travel: Travel)
     }
 }

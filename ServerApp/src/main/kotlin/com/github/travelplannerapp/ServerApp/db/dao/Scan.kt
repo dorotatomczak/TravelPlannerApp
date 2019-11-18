@@ -1,6 +1,5 @@
 package com.github.travelplannerapp.ServerApp.db.dao
 
-import java.io.Serializable
 import java.sql.ResultSet
 
 class Scan(map: MutableMap<String, Any?>) {
@@ -30,7 +29,7 @@ class Scan(map: MutableMap<String, Any?>) {
             this(
                 mutableMapOf(
                     "id" to result.getInt("id"),
-                    "userId" to result.getInt("user_id"),
+                    "userId" to result.getInt("app_user_id"),
                     "travelId" to result.getInt("travel_id"),
                     "name" to result.getString("name")
                 )

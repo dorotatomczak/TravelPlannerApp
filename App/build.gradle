@@ -2,6 +2,8 @@
 
 buildscript {
     ext.kotlinVersion = '1.3.50'
+    ext.gradleVersion = '3.5.1'
+    ext.googleServicesVersion = '4.3.2'
     repositories {
         google()
         jcenter()
@@ -10,8 +12,9 @@ buildscript {
         }
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.5.0'
+        classpath "com.android.tools.build:gradle:$gradleVersion"
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion"
+        classpath "com.google.gms:google-services:$googleServicesVersion"
 
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
@@ -36,27 +39,46 @@ ext {
     compileSdkVersion = 29
 
     // App dependencies
-    appcompatVersion = '1.0.2'
+    appcompatVersion = '1.1.0'
+
+    // UI
     constraintlayoutVersion = '1.1.3'
     materialVersion = '1.1.0-alpha09'
     recyclerviewVersion = '1.1.0-beta03'
-    swiperefreshlayoutVersion = '1.0.0'
     cardviewVersion = '1.0.0'
-    junitVersion = '4.12'
-    runnerVersion = '1.0.2'
-    espressoVersion = '3.0.2'
+    materialdrawerVersion = '7.0.0-rc05'
+    swiperefreshlayoutVersion = '1.0.0'
+    slidinguppanelVersion = '3.4.0'
+
+    // Dagger
     daggerVersion = '2.24'
+
+    // Scanner and images
+    glideVersion = '4.9.0'
+    exifinterfaceVersion = '1.0.0'
+
+    // JSON and http
     retrofitVersion = '2.6.1'
     gsonVersion = '2.6.1'
-    rxJava2Version = '2.6.1'
     rxAndroidVersion = '2.1.1'
-    roomVersion = '2.1.0'
+    rxJava2Version = '2.6.1'
+
+    // Authentication and security
     converter_scalarsVersion = '2.6.1'
-    runnerVersion = '1.2.0'
-    exifinterfaceVersion = '1.0.0'
-    annotationVersion = '1.1.0'
-    materialdrawerVersion = '7.0.0-rc05'
-    glideVersion = '4.9.0'
     okhttp3Version = '4.0.1'
-    slidinguppanelVersion = '3.4.0'
+
+    // Notification
+    firebaseMessagingVersion = '20.0.0'
+
+    // Unit Testing
+    junitVersion = '4.12'
+    mockkVersion = '1.9.3'
+    junitParamsVersion = '1.1.1'
+
+    // UI testing
+    runnerVersion = '1.2.0'
+    annotationVersion = '1.1.0'
+    espressoVersion = '3.2.0'
+    coreVersion ='1.2.0'
+    extJUnitVersion = '1.1.1'
 }

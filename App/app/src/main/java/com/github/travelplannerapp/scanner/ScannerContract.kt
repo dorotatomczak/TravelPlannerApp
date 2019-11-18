@@ -2,7 +2,7 @@ package com.github.travelplannerapp.scanner
 
 import android.graphics.Bitmap
 import android.graphics.PointF
-import com.github.travelplannerapp.communication.model.Scan
+import com.github.travelplannerapp.communication.appmodel.Scan
 import java.io.File
 
 interface ScannerContract {
@@ -15,7 +15,7 @@ interface ScannerContract {
 
     interface Presenter {
         fun takeScan(photoPath: String, corners: List<PointF>, scaleRatio: Int)
-        fun uploadScan(scan: File?, token: String, userId: Int)
+        fun uploadScan(scan: File?)
     }
 
 }

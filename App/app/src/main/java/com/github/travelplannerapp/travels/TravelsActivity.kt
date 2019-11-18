@@ -9,8 +9,10 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.github.travelplannerapp.R
-import com.github.travelplannerapp.traveldialog.TravelDialog
+import com.github.travelplannerapp.communication.appmodel.Travel
 import com.github.travelplannerapp.traveldetails.TravelDetailsActivity
+import com.github.travelplannerapp.travels.dialogs.AddEditTravelDialog
+import com.github.travelplannerapp.travels.dialogs.RecommendedPlacesDialog
 import com.github.travelplannerapp.utils.DrawerUtils
 import com.google.android.material.snackbar.Snackbar
 import dagger.android.AndroidInjection
@@ -24,6 +26,10 @@ class TravelsActivity : AppCompatActivity(), TravelsContract.View {
     @Inject
     lateinit var presenter: TravelsContract.Presenter
 
+    companion object {
+        const val EXTRA_RECOMMENDED_PLACES = "EXTRA_RECOMMENDED_PLACES"
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         AndroidInjection.inject(this)
         super.onCreate(savedInstanceState)
@@ -31,6 +37,7 @@ class TravelsActivity : AppCompatActivity(), TravelsContract.View {
 
         // Set up toolbar
         setSupportActionBar(toolbar)
+        supportActionBar?.title = getString(R.string.travels)
         supportActionBar?.setHomeButtonEnabled(true)
         DrawerUtils.getDrawer(this, toolbar)
 
@@ -43,6 +50,11 @@ class TravelsActivity : AppCompatActivity(), TravelsContract.View {
         recyclerViewTravels.layoutManager = LinearLayoutManager(this, RecyclerView.VERTICAL, false)
         recyclerViewTravels.adapter = TravelsAdapter(presenter)
 
+        val recommendedPlaces: HashMap<String, String>? = intent.getSerializableExtra(EXTRA_RECOMMENDED_PLACES) as? HashMap<String, String>
+        if (recommendedPlaces != null) {
+            showRecommendedPlacesDialog(ArrayList(recommendedPlaces.values))
+        }
+
         presenter.loadTravels()
     }
 
@@ -52,18 +64,17 @@ class TravelsActivity : AppCompatActivity(), TravelsContract.View {
     }
 
     override fun showAddTravel() {
-        val addTravelDialog = TravelDialog(getString(R.string.new_travel))
+        val addTravelDialog = AddEditTravelDialog(getString(R.string.new_travel))
         addTravelDialog.onOk = {
             val travelName = addTravelDialog.travelName.text.toString()
             presenter.addTravel(travelName)
         }
-        addTravelDialog.show(supportFragmentManager, TravelDialog.TAG)
+        addTravelDialog.show(supportFragmentManager, AddEditTravelDialog.TAG)
     }
 
-    override fun showTravelDetails(travelId: Int, travelName: String) {
+    override fun showTravelDetails(travel: Travel) {
         val intent = Intent(this, TravelDetailsActivity::class.java)
-        intent.putExtra(TravelDetailsActivity.EXTRA_TRAVEL_ID, travelId)
-        intent.putExtra(TravelDetailsActivity.EXTRA_TRAVEL_NAME, travelName)
+        intent.putExtra(TravelDetailsActivity.EXTRA_TRAVEL, travel)
         startActivityForResult(intent, TravelDetailsActivity.REQUEST_TRAVEL_DETAILS)
     }
 
@@ -72,10 +83,8 @@ class TravelsActivity : AppCompatActivity(), TravelsContract.View {
         when (requestCode) {
             TravelDetailsActivity.REQUEST_TRAVEL_DETAILS -> {
                 if (resultCode == Activity.RESULT_OK && data != null) {
-                    val travelId = data.extras!!.getInt(TravelDetailsActivity.EXTRA_TRAVEL_ID, 0)
-                    val travelName = data.extras!!.getString(TravelDetailsActivity.EXTRA_TRAVEL_NAME)!!
-                    presenter.updateTravelName(travelId, travelName)
-                    onDataSetChanged()
+                    val travel = data.getSerializableExtra(TravelDetailsActivity.EXTRA_TRAVEL) as Travel
+                    presenter.updateTravel(travel)
                 }
             }
         }
@@ -127,5 +136,10 @@ class TravelsActivity : AppCompatActivity(), TravelsContract.View {
                 .setNegativeButton(android.R.string.no) { _, _ ->
                 }
                 .show()
+    }
+
+    private fun showRecommendedPlacesDialog(places: List<String>) {
+        val recommendedPlacesDialog = RecommendedPlacesDialog(places, getString(R.string.recommended_places))
+        recommendedPlacesDialog.show(supportFragmentManager, RecommendedPlacesDialog.TAG)
     }
 }

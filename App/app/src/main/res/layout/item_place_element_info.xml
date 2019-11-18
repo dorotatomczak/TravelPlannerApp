@@ -1,0 +1,236 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <LinearLayout
+        android:id="@+id/linearLayoutPlaceElementInfo"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="@dimen/margin_plan_element_info"
+        android:layout_weight="1"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="center_vertical|start"
+                android:text="@string/name"
+                android:textSize="@dimen/text_size_item_S" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="center_vertical|start"
+                android:text=": "
+                android:textSize="@dimen/text_size_item_S" />
+
+            <TextView
+                android:id="@+id/textViewNamePlanElementInfo"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_gravity="center_vertical|start"
+                android:layout_weight="1"
+                android:textSize="@dimen/text_size_item_S" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_plan_element_info"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="center_vertical|start"
+                android:text="@string/location"
+                android:textSize="@dimen/text_size_item_S" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="center_vertical|start"
+                android:text=": "
+                android:textSize="@dimen/text_size_item_S" />
+
+            <TextView
+                android:id="@+id/textViewLocationPlanElementInfo"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_gravity="center_vertical|start"
+                android:layout_weight="1"
+                android:textSize="@dimen/text_size_item_S" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/linearLayoutOpeningHours"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_plan_element_info"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="center_vertical|start"
+                android:text="@string/opening_hours"
+                android:textSize="@dimen/text_size_item_S" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="center_vertical|start"
+                android:text=": "
+                android:textSize="@dimen/text_size_item_S" />
+
+            <TextView
+                android:id="@+id/textViewOpeningHoursPlanElementInfo"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_gravity="center_vertical|start"
+                android:layout_weight="1"
+                android:textSize="@dimen/text_size_item_S" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_plan_element_info"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="center_vertical|start"
+                android:text="@string/rating"
+                android:textSize="@dimen/text_size_item_S" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="center_vertical|start"
+                android:text=": "
+                android:textSize="@dimen/text_size_item_S" />
+
+            <TextView
+                android:id="@+id/textViewRatingPlanElementInfo"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_gravity="center_vertical|start"
+                android:layout_weight="1"
+                android:textSize="@dimen/text_size_item_S" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/linearLayoutPhone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_plan_element_info"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="center_vertical|start"
+                android:text="@string/phone"
+                android:textSize="@dimen/text_size_item_S" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="center_vertical|start"
+                android:text=": "
+                android:textSize="@dimen/text_size_item_S" />
+
+            <TextView
+                android:id="@+id/textViewPhonePlanElementInfo"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_gravity="center_vertical|start"
+                android:layout_weight="1"
+                android:textSize="@dimen/text_size_item_S"
+                android:autoLink="phone"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/linearLayoutWebsite"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_plan_element_info"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="center_vertical|start"
+                android:text="@string/website"
+                android:textSize="@dimen/text_size_item_S" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="center_vertical|start"
+                android:text=": "
+                android:textSize="@dimen/text_size_item_S" />
+
+            <TextView
+                android:id="@+id/textViewWebsitePlanElementInfo"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_gravity="center_vertical|start"
+                android:layout_weight="1"
+                android:textSize="@dimen/text_size_item_S"
+                android:autoLink="web"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/linearLayoutNotesPlanElementInfo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_plan_element_info"
+                android:gravity="center"
+                android:text="@string/notes"
+                android:textSize="@dimen/text_size_item_S" />
+
+            <EditText
+                android:id="@+id/editTextNotesPlanElementInfo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:hint="@string/notes"
+                android:inputType="none"
+                android:focusable="true"/>
+
+            <Button
+                android:id="@+id/buttonSaveNotesPlanElementInfo"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/button_height_S"
+                android:gravity="center"
+                android:visibility="gone"
+                android:layout_gravity="center_vertical|end"
+                android:background="@drawable/button_style"
+                android:text="@string/save"
+                android:textColor="@color/white"
+                android:textSize="@dimen/text_size_button" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</merge>

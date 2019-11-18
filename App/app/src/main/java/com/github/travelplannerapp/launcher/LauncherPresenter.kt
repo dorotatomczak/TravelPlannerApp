@@ -3,17 +3,19 @@ package com.github.travelplannerapp.launcher
 import com.github.travelplannerapp.BasePresenter
 import com.github.travelplannerapp.communication.ApiException
 import com.github.travelplannerapp.communication.CommunicationService
-import com.github.travelplannerapp.communication.model.ResponseCode
+import com.github.travelplannerapp.communication.commonmodel.ResponseCode
 import com.github.travelplannerapp.utils.SchedulerProvider
 import com.github.travelplannerapp.utils.SharedPreferencesUtils
+import com.google.android.gms.tasks.OnCompleteListener
+import com.google.firebase.iid.FirebaseInstanceId
 import io.reactivex.disposables.CompositeDisposable
 
-class LauncherPresenter (view: LauncherContract.View) : BasePresenter<LauncherContract.View>(view), LauncherContract.Presenter {
+class LauncherPresenter(view: LauncherContract.View) : BasePresenter<LauncherContract.View>(view), LauncherContract.Presenter {
 
     private var compositeDisposable = CompositeDisposable()
 
     override fun redirect(credentials: SharedPreferencesUtils.Credentials) {
-        if (isLoggedIn(credentials)) {
+        if (isSignedIn(credentials)) {
             verifyAccessToken()
         } else view.showSignIn()
     }
@@ -22,8 +24,25 @@ class LauncherPresenter (view: LauncherContract.View) : BasePresenter<LauncherCo
         compositeDisposable.clear()
     }
 
-    private fun isLoggedIn(credentials: SharedPreferencesUtils.Credentials): Boolean {
-        return !(credentials.userId == -1 && credentials.email.isNullOrEmpty() && credentials.token.isNullOrEmpty())
+    private fun isSignedIn(credentials: SharedPreferencesUtils.Credentials): Boolean =
+            !(credentials.userId == -1 || credentials.email.isNullOrEmpty() || credentials.token.isNullOrEmpty())
+
+    private fun fetchRecommendedPlaces() {
+        FirebaseInstanceId.getInstance().instanceId
+                .addOnCompleteListener(OnCompleteListener { task ->
+                    if (!task.isSuccessful) {
+                        return@OnCompleteListener
+                    }
+                    val token = task.result?.token
+                    token?.let { sendRecommendationsRequest(it) }
+                })
+    }
+
+    private fun sendRecommendationsRequest(token: String) {
+        compositeDisposable.add(CommunicationService.serverApi.fetchRecommendations(SharedPreferencesUtils.getUserId(), token)
+                .observeOn(SchedulerProvider.ui())
+                .subscribeOn(SchedulerProvider.io())
+                .subscribe())
     }
 
     private fun verifyAccessToken() {
@@ -32,8 +51,12 @@ class LauncherPresenter (view: LauncherContract.View) : BasePresenter<LauncherCo
                 .subscribeOn(SchedulerProvider.io())
                 .map { if (it.responseCode == ResponseCode.OK) it.data else throw ApiException(it.responseCode) }
                 .subscribe(
-                        { view.showTravels() },
+                        {
+                            fetchRecommendedPlaces()
+                            view.showTravels()
+                        },
                         { view.showSignIn() }
                 ))
     }
+
 }

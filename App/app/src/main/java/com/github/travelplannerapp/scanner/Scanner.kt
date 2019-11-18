@@ -1,13 +1,15 @@
 package com.github.travelplannerapp.scanner
 
+import android.graphics.Bitmap
 import android.graphics.PointF
-import org.opencv.core.*
+import org.opencv.android.Utils
+import org.opencv.core.CvType
+import org.opencv.core.Mat
+import org.opencv.core.Point
+import org.opencv.core.Size
 import org.opencv.imgcodecs.Imgcodecs.imread
 import org.opencv.imgproc.Imgproc.*
 import java.util.*
-import android.graphics.Bitmap
-import org.opencv.android.Utils
-import org.opencv.core.Mat
 
 object Scanner {
 

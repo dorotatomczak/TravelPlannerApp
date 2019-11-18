@@ -1,7 +1,9 @@
 package com.github.travelplannerapp.communication
 
-import com.github.travelplannerapp.communication.model.*
-import io.reactivex.Observable
+import com.github.travelplannerapp.communication.appmodel.CityObject
+import com.github.travelplannerapp.communication.appmodel.Scan
+import com.github.travelplannerapp.communication.appmodel.Travel
+import com.github.travelplannerapp.communication.commonmodel.*
 import io.reactivex.Single
 import okhttp3.MultipartBody
 import okhttp3.OkHttpClient
@@ -20,59 +22,126 @@ object CommunicationService {
 
     private const val serverUrl: String = "http://10.0.2.2:8080/"
     val serverApi: ServerApi = Retrofit.Builder()
-                .baseUrl(serverUrl)
-                .addConverterFactory(ScalarsConverterFactory.create())
-                .addConverterFactory(GsonConverterFactory.create())
-                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-                .client(OkHttpClient.Builder().addInterceptor(AuthTokenInterceptor()).build())
-                .build()
-                .create(ServerApi::class.java)
+            .baseUrl(serverUrl)
+            .addConverterFactory(ScalarsConverterFactory.create())
+            .addConverterFactory(GsonConverterFactory.create())
+            .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+            .client(OkHttpClient.Builder().addInterceptor(AuthTokenInterceptor()).build())
+            .build()
+            .create(ServerApi::class.java)
 
     fun getScanUrl(name: String, userId: Int): String {
         return "$serverUrl/users/$userId/scans/$name"
+    }
+
+    fun getTravelImageUrl(name: String, userId: Int): String {
+        return "$serverUrl/users/$userId/travels/$name"
     }
 }
 
 interface ServerApi {
 
-    @POST("/user-management/authorize")
+    // user-management
+    @POST("user-management/authorize")
     fun authorize(): Single<Response<Unit>>
 
-    @POST("/user-management/authenticate")
+    @POST("user-management/authenticate")
     fun authenticate(@Body body: SignInRequest): Single<Response<SignInResponse>>
 
-    @POST("/user-management/register")
+    @POST("user-management/register")
     fun register(@Body body: SignUpRequest): Single<Response<Unit>>
 
-    @GET("/users/{userId}/travels")
-    fun getTravels(@Path("userId") userId: Int): Observable<Response<List<Travel>>>
+    @GET("user-management/usersemails")
+    fun findMatchingEmails(@Query("query") query: String): Single<Response<MutableList<UserInfo>>>
 
-    @POST("/users/{userId}/travels")
+    // users - travels
+    @GET("users/{userId}/travels")
+    fun getTravels(@Path("userId") userId: Int): Single<Response<List<Travel>>>
+
+    @POST("users/{userId}/travels")
     fun addTravel(@Path("userId") userId: Int, @Body travelName: String): Single<Response<Travel>>
 
-    @PUT("/users/{userId}/travels")
+    @PUT("users/{userId}/travels")
     fun changeTravelName(@Path("userId") userId: Int, @Body travel: Travel): Single<Response<Travel>>
 
-    @HTTP(method = "DELETE", path = "/users/{userId}/travels", hasBody = true)
+    @Multipart
+    @PUT("users/{userId}/travels")
+    fun uploadTravelImage(@Path("userId") userId: Int, @Part("travelId") travelId: RequestBody, @Part file: MultipartBody.Part): Single<Response<Travel>>
+
+    @HTTP(method = "DELETE", path = "users/{userId}/travels", hasBody = true)
     fun deleteTravels(@Path("userId") userId: Int, @Body travelIds: MutableSet<Int>): Single<Response<Unit>>
 
+    //users - scans
     @Multipart
-    @POST("/users/{userId}/scans")
-    fun uploadScan(@Path("userId") userId: Int, @Part("travelId") travelId: RequestBody, @Part file: MultipartBody.Part): Single<Response<Scan>>
+    @POST("users/{userId}/scans")
+    fun uploadScan(@Path("userId") userId: Int, @Part("travel-id") travelId: RequestBody, @Part file: MultipartBody.Part): Single<Response<Scan>>
 
-    @HTTP(method = "DELETE", path = "/users/{userId}/scans", hasBody = true)
+    @HTTP(method = "DELETE", path = "users/{userId}/scans", hasBody = true)
     fun deleteScans(@Path("userId") userId: Int, @Body scans: MutableSet<Scan>): Single<Response<Unit>>
 
-    @GET("/users/{userId}/scans")
-    fun getScans(@Path("userId") userId: Int, @Query("travelId") travelId: Int): Single<Response<List<Scan>>>
+    @GET("users/{userId}/scans")
+    fun getScans(@Path("userId") userId: Int, @Query("travel-id") travelId: Int): Single<Response<List<Scan>>>
 
-    @GET("/here-management/cities")
+    //users - friends
+    @GET("users/{userId}/friends")
+    fun getFriends(@Path("userId") userId: Int): Single<Response<List<UserInfo>>>
+
+    @HTTP(method = "DELETE", path = "users/{userId}/friends", hasBody = false)
+    fun deleteFriends(@Path("userId") userId: Int, @Query("friends-ids") friendsIds: MutableSet<Int>): Single<Response<Unit>>
+
+    @POST("users/{userId}/friends")
+    fun addFriend(@Path("userId") userId: Int, @Body friend: UserInfo): Single<Response<UserInfo>>
+
+    //users - friends - travels
+    @PUT("users/{userId}/travels/{travelId}/share")
+    fun shareTravel(@Path("userId") userId: Int, @Path("travelId") travelId: Int, @Body selectedFriendsIds: List<Int>): Single<Response<Boolean>>
+
+    @GET("users/{userId}/travels/{travelId}/friends")
+    fun getFriendsBySharedTravel(@Path("userId") userId: Int, @Path("travelId") travelId: Int,
+                                 @Query("select-friends-with-access") selectFriendsWithAccess: Boolean): Single<Response<List<UserInfo>>>
+
+    //users - plans
+    @POST("users/{userId}/travels/{travelId}/plans")
+    fun addPlanElement(@Path("userId") userId: Int, @Path("travelId") travelId: Int, @Body planElement: PlanElement): Single<Response<PlanElement>>
+
+    @HTTP(method = "DELETE", path = "users/{userId}/plans", hasBody = true)
+    fun deletePlanElements(@Path("userId") userId: Int, @Body planElementIds: List<Int>): Single<Response<Unit>>
+
+    @GET("users/{userId}/travels/{travelId}/plans")
+    fun getPlanElements(@Path("userId") userId: Int, @Path("travelId") travelId: Int): Single<Response<List<PlanElement>>>
+
+    @PUT("/users/{userId}/travels/{travelId}/plans")
+    fun updatePlanElement(@Path("userId") userId: Int, @Path("travelId") travelId: Int, @Body planElement: PlanElement): Single<Response<Unit>>
+
+    //here and google
+    @GET("here-management/cities")
     fun findCities(@Query("query") query: String): Single<Response<List<CityObject>>>
 
-    @GET("/here-management/objects")
+    @GET("here-management/objects")
     fun findObjects(@Query("cat") category: String, @Query("west") west: String, @Query("north") north: String,
                     @Query("east") east: String, @Query("south") south: String): Single<Response<Array<Place>>>
 
-    @GET("/here-management/objects/{objectId}/contacts")
+    @GET("here-management/objects/{objectId}/contacts")
     fun getContacts(@Path("objectId") objectId: String, @Query("query") query: String): Single<Response<Contacts>>
+
+    @GET("here-management/objects/{objectId}")
+    fun getPlace(@Path("objectId") objectId: String, @Query("query") query: String): Single<Response<PlaceData>>
+
+    @GET("google-management/routes")
+    fun getTransport(@Query("origin-latitude") originLat: String,
+                     @Query("origin-longitude") originLng: String,
+                     @Query("destination-latitude") destinationLat: String,
+                     @Query("destination-longitude") destinationLng: String,
+                     @Query("travel-mode") travelMode: String,
+                     @Query("departure-time") departureTime: String): Single<Response<Routes>>
+
+    //recommendation - places
+    @POST("users/{userId}/places/{placeId}/rating")
+    fun ratePlace(@Path("userId") userId: Int, @Path("placeId") placeId: Int, @Query("rating") rating: Int): Single<Response<Unit>>
+
+    @GET("users/{userId}/places/{placeId}/rating")
+    fun getPlaceRating(@Path("userId") userId: Int, @Path("placeId") placeId: Int): Single<Response<Int>>
+
+    @POST("users/{userId}/recommendations")
+    fun fetchRecommendations(@Path("userId") userId: Int, @Body firebaseToken: String): Single<Response<Unit>>
 }

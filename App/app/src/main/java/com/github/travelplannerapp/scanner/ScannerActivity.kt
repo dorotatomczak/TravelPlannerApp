@@ -7,8 +7,7 @@ import android.widget.ImageView
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.github.travelplannerapp.R
-import com.github.travelplannerapp.communication.model.Scan
-import com.github.travelplannerapp.utils.SharedPreferencesUtils
+import com.github.travelplannerapp.communication.appmodel.Scan
 import dagger.android.AndroidInjection
 import kotlinx.android.synthetic.main.activity_scanner.*
 import org.opencv.android.OpenCVLoader
@@ -79,11 +78,7 @@ class ScannerActivity : AppCompatActivity(), ScannerContract.View {
 
         dialog.setPositiveButton(R.string.save) { _, _ ->
             val scanFile = BitmapHelper.bitmapToFile(scan, cacheDir)
-            presenter.uploadScan(
-                    scanFile,
-                    SharedPreferencesUtils.getAccessToken()!!,
-                    SharedPreferencesUtils.getUserId()
-            )
+            presenter.uploadScan(scanFile)
         }
 
         dialog.setNegativeButton(R.string.cancel) { _, _ ->
