@@ -72,6 +72,7 @@ dziedzina, technika, …
 JSON - JavaScript Object Notation\\
 JWT - JSON Web Token\\
 API - Application Programming Interface\\
+MVP - Model View Presenter\\
 
 
 \chapter{Wstęp i cel pracy}  
@@ -563,6 +564,20 @@ Warunki końcowe:
 
 \chapter{Aplikacja mobilna}
 
+\section{Projekt i implementacja oparte na wzorcu MVP (Dorota Tomczak)}
+\par Pracę nad aplikacją mobilną rozpoczęto od stworzenia bazowego projektu składającego się na kilka pustych widoków, do których to następnie można było dodawać kolejne funkcjonalności. W celu zachowania najlepszych praktyk programistycznych zdecydowano się na oparciu projektu o wzorzec architektoniczny MVP (ang. model-view-presenter). Jest to wzorzec szczególnie nadający się do implementacji w aplikacjach mobilnych na systemy Android ze względu na aktywności (ang. activity), które pełnią funkcję środkowej warstwy – widoku (ang. view). W implementacji wzorca w tym projekcie widok jest pasywny (ang. passive view) tzn. widok powinien odpowiadać jedynie za wyświetlanie interfejsu i użycie bibliotek związanych z Androidem. Cała logika aplikacji ma być zawarta w prezenterze (ang. presenter), który pełni funkcję kontrolera.
+
+\par Zastosowanie wzorca MVP pozwoliło na zachowanie porządku w strukturze projektu i przejrzysty podział na warstwy. Do każdej aktywności, czyli nowego ekranu w aplikacji, utworzono interfejs zwany kontraktem (ang. contract) zawierający opis interakcji jakie mogą zajść pomiędzy prezenterem a widokiem, a w szczególnych przypadkach również między prezenterem a adapterem, który odpowiada za wyświetlanie listy obiektów. Klasy aktywności i prezentera implementują interfejsy zawarte w kontrakcie, prezenter jest wstrzykiwany do widoku a referencja widoku jest przekazywana do prezentera w konstruktorze.
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=\linewidth]{launcherContract}
+\caption{Prosty kontrakt widoku odpowiadający za przekierowanie do widoku logowania lub listy podróży.}
+\label{fig:launcherContract}
+\end{figure}
+
+\par Do wstrzykiwania zależności, w tym prezenterów do aktywności, wykorzystano popularny framework \textit{Dagger 2}\cite{Dagger 2}, co ostatecznie okazało się być nie najlepszym wyborem – należało dodać dwie dodatkowe klasy do każdej aktywności, co przy dużej ich liczbie wygenerowało wiele plików o bardzo podobnej strukturze. Ponadto niemalże jedynymi wstrzykiwanymi obiektami były obiekty klas prezenterów. 
+
 \section{Komunikacja z aplikacją serwerową (Anna Malizjusz)}
 \par Aplikacja mobilna musi komunikować się z RESTowym API udostępnianym przez serwer. W tym celu wykorzystano klienta o nazwie Retrofit 2 \cite{Retrofit library}. Dzięki niemu w łatwy sposób można zaimplementować interfejs odpowiedzialny za wysyłanie zapytań i odbieranie odpowiedzi.
 
@@ -659,6 +674,7 @@ Kolejna jest zawartość, którą tworzą określone przy generacji tokenu twier
   \bibitem{JWT library} https://mvnrepository.com/artifact/io.jsonwebtoken/jjwt
   \bibitem{Retrofit library} https://square.github.io/retrofit/
   \bibitem{OkHttpClient} https://square.github.io/okhttp/
+  \bibitem{Dagger 2} https://github.com/google/dagger
 \end{thebibliography}
 
 
