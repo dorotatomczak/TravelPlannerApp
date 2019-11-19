@@ -594,7 +594,27 @@ Warunki końcowe:
 
 \par Rezultatem każdego zapytania jest struktura \textit{Single<Response<T> >}, gdzie T jest oczekiwanym typem zwracanego obiektu. Obiekt \textit{Single} informuje o tym, że jest spodziewana pojedyncza odpowiedź. \textit{Response} jest strukturą zdefiniowaną w projekcie inżynierskim. Zawiera kod odpowiedzi opisywany szerzej przy sposobie implementacji błędów, a także także pole \textit{data} z przesłanymi przez serwer danymi.
 
+
+\section{Logika rejestracji i logowania (Anna Malizjusz)}
+\par Rejestracja użytkownika polega na podaniu trzech informacji: adresu email oraz dwukrotnym podaniu hasła. Każde z tych pól jest walidowane. Adres email powinien mieć formę xxx@yyy.zzz, gdzie xxx, yyy i zzz są dowolnymi ciągami znaków. Hasło nie powinno być trywialne. Musi zawierać co najmniej jedną cyfrę, jedną wielką i jedną małą literę, a także mieć przynajmniej 8 znaków długości. Poprawność walidacji została sprawdzona testami jednostkowymi.
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=\linewidth]{registerUnitTestResult}
+\caption{Testy jednostkowe sprawdzające poprawność sposobu walidacji formularza rejestracji}
+\label{fig:tokenPayload}
+\end{figure}
+
+
 \section{Wyszukiwanie atrakcji turystycznych i zakwaterowania (Anna Malizjusz)}
+\par Dodanie konkretnego miejsca do planu dnia jest możliwe po jego wyszukaniu. W tym celu stworzono ekran umożliwiający wybranie obiektu z mapy. Na wyświetlanym obszarze są widoczne pinezki odpowiadające obiektom w podanej okolicy.
+
+\par Głównym komponentem widoku wyszukiwania jest \textit{SearchView}\cite{SearchView}. Dzięki temu na ekranie widać pole, w które można wpisać nazwę lub początek nazwy miasta i wybrać je z listy. Mapa automatycznie przeniesie się do wskazanego miejsca. Implementacja mechanizmu podpowiedzi znajduje się w klasie \textit{CitySuggestionProvider}, dziedziczącej po \textit{ContentProvider}\cite{ContentProvider}. Kluczowym było nadpisanie metody \textit{query(Uri, String[], Bundle, CancellationSignal)}, która zwracała wynik do widoku. Używając interfejsu komunikacji z serwerem aplikacja pobierała listę proponowanych miast, a \textit{CitySuggestionProvider} zwracał je w formie kursorów.
+
+\par Po wybraniu pinezki jednego z wyświetlanych obiektów na ekranie pojawia się nazwa miejsca, a także możliwość pokazania jego szczegółów. Zostało to osiągnięte dzięki użyciu układowi o nazwie \textit{SlidingUpPanelLayout}\cite{SlidingUpPanelLayout}. Pozwala on na rozwinięcie i późniejsze ukrycie widocznego na dole obszaru ze szczegółowymi informacjami. Te same dane są w późniejszym etapie dostępne po wybraniu elementu z planu dnia. Z tego powodu postanowiono wyodrębnić układ pól z informacjami, zdefiniować go w osobnym pliku i wykorzystać go zarówno w widoku wyszukiwania, jak i widoku detali obiektu.
+
+\par Uwzględniono szczególny przypadek, jakim jest wyszukanie zakwaterowania. Jeżeli aplikacja wykryje, że dany obiekt jest miejscem noclegu, zaproponuje dodatkowo dodanie daty wykwaterowania. Końcowym efektem będzie pojawienie się dwóch elementów w planach dni. Pierwszy z nich jest podpisany jako zakwaterowanie (ang. check in), a drugi jako wykwaterowanie (ang. check out). Wystawienie oceny jest możliwe tylko dla elementu reprezentującego drugie z tych wydarzeń.
+
 
 \section{Tworzenie planów podróży (Dorota Tomczak)}
 
@@ -692,6 +712,22 @@ Kolejna jest zawartość, którą tworzą określone przy generacji tokenu twier
 
 
 \section{Komunikacja z zewnętrznym API (Anna Malizjusz)}
+\par Potrzeba wyszukiwania infromacji o miejscach na świecie wymusiła korzystanie z zewnętrznych dostawców danych. Po analizie przeprowadzonej na etapie tworzenia specyfikacji wymagań systemowych zdecydowano o użyciu Here API\cite{HereApi}. Próba implementacji rozwiązania zmusiła programistów do skorzystania zarówno z wybranego dostawcy, jak i z początkowo odrzuconego Google API\cite{GoogleApi}, które oferowało dużo bogatszą bazę sposobów transportu.
+
+\par Podstawowym problemem było odczytanie danych. Wynikiem wysłania zapytania do dostawcy informacji był ciąg znaków zawierający znaczą ilość danych nie tylko o temacie zapytania. W przypadku każdego typu żądania przeanalizowano wynik i zdefiniowane wspólną metodę wyszukującą oraz wybierającą niezbędne informacje. Następnie należało je dopasować do potrzeb - nie wszystkie informacje były potrzebne aplikacji. Napisano funkcję zmieniającą ciąg znaków na instancję klasy. Skorzystano z możliwości klasy \textit{JsonParser}\cite{JsonParser} oraz \textit{GsonBuilder}\cite{GsonBuilder}.
+
+\par Należało też uwzględnić sposób zapisanych informacji. Wiele znaków, np. "'" było zakodowanych, aby uniemożliwić wstrzykiwanie złośliwyego kodu. W celu rozwiązania tego problemu skorzystano z funkcji \textit{StringEscapeUtils.unescapeHtml3()}\cite{escapeUtils}, która zmieniła formę znaków z kodowej na graficzną.
+
+\section{Wspólne klasy serwera i aplikacji}
+\par Podczas implementacji napotkano problem klas powtarzających się w identycznej formie po stronie aplikacji i serwera. Stwarzało to kłopot przy edycji - obie wersje pliku musiały być zawsze identyczne. Spróbowano rozwiązać to w następujące sposoby.
+
+\subsection{Dorota}
+
+\subsection{Submoduły w repozytorium (Anna Malizjusz)}
+\par Podjęto próbę dodania repozytorium zawierającego tylko wspólne pliki, a następnie wstawienia go do głównego repozytorium jako submoduły. Stworzyło to kolejne problemy w postaci konieczności częstych aktualizacji submodułów.
+\par Zrezygnowano z submodułów i wykorzystano symboliczne powiązania.
+Git traktował powiązany folder jako istniejący, więc nie powodowało to dodatkowych problemów. Plik zmieniony i zapisany w jednej z lokalizacji był automatycznie odwzorowywany w drugiej. Rozwiązanie to, choć z pozoru skuteczne nie mogło być wykorzystane przez wszystkich członków zespołu ze względu na różnice w systemie operacyjnym. Używane były zarówno komputery z system Window, oparte na Linuxie oraz MacOS. Ostatecznie próby rozwiązania zarzucono.
+
 
 \section{Rekomendacja miejsc z wykorzystaniem Collaborative Filtering (Dorota Tomczak)}
 \par Po dodaniu elementu planu podróży można wejść w jego szczegóły i dokonać oceny miejsca, które znajduje się w planie. Oceny miejsc w skali od jednego do pięciu są przechowywane wraz z użytkownikami, którzy wystawili daną ocenę w osobnej tabeli bazy danych. Na podstawie tych ocen mogą być następnie obliczane rekomendacje przy użyciu techniki zwanej \textit{Collaborative-Filtering}, a w szczególności jej odmianą opartą na użytkowniku (ang. user-based).
@@ -716,6 +752,9 @@ Kolejna jest zawartość, którą tworzą określone przy generacji tokenu twier
   \bibitem{Here} developer.here.com
   \bibitem{gms.location} developers.google.com/android/reference/com/google/android/gms/location/package-summary
   \bibitem{Android usage} gs.statcounter.com/android-version-market-share/mobile-tablet/worldwide
+  \bibitem{SearchView} https://developer.android.com/reference/android/widget/SearchView
+  \bibitem{ContentProvider} https://developer.android.com/reference/android/content/ContentProvider
+  \bibitem{SlidingUpPanelLayout} https://github.com/umano/AndroidSlidingUpPanel
   \bibitem{Spring documentation} https://docs.spring.io/spring-boot/docs/current/reference/htmlsingle/
   \bibitem{JWT} https://tools.ietf.org/html/rfc7519
   \bibitem{JWT library} https://mvnrepository.com/artifact/io.jsonwebtoken/jjwt
@@ -728,6 +767,11 @@ Kolejna jest zawartość, którą tworzą określone przy generacji tokenu twier
   \bibitem{Apache Mahout} https://mahout.apache.org/
   \bibitem{Postman} https://www.getpostman.com/
   \bibitem{Firebase} https://firebase.google.com/docs/cloud-messaging
+  \bibitem{HereApi} https://developer.here.com/
+  \bibitem{GoogleApi} https://cloud.google.com/maps-platform/routes/
+  \bibitem{JsonParser} https://static.javadoc.io/com.google.code.gson/gson/2.8.5/com/google/gson/JsonParser.html
+  \bibitem{GsonBuilder} https://static.javadoc.io/com.google.code.gson/gson/2.8.0/com/google/gson/GsonBuilder.html
+  \bibitem{escapeUtils} https://commons.apache.org/proper/commons-lang/apidocs/org/apache/commons/lang3/StringEscapeUtils.html
 \end{thebibliography}
 
 
