@@ -596,12 +596,14 @@ Warunki końcowe:
 
 \section{Wyszukiwanie atrakcji turystycznych i zakwaterowania (Anna Malizjusz)}
 
+\section{Tworzenie planów podróży (Dorota Tomczak)}
+
 \section{Implementacja skanowania dokumentów z użyciem OpenCV (Dorota Tomczak)}
 \par Aplikacja umożliwia zrobienie zdjęcia, wybranie czworokątnego obszaru oraz takie przycięcie i modyfikację kolorów fotografii aby uzyskać efekt skanu. W początkowych założeniach zakładano skorzystanie z gotowej biblioteki, która poza wymienionymi wyżej funkcjonalnościami dokonywałaby automatycznej detekcji krawędzi, jednak ze względu na brak darmowych i dostosowanych do potrzeb rozwiązań zdecydowano stworzyć skaner od podstaw bazując na projekcie open-source \textit{SimpleDocumentScanner-Android}\cite{SimpleDocumentScanner-Android}.
 
 \par Wykonanie fotografii jest możliwe jeśli użytkownik nadał aplikacji odpowiednie uprawnienia. Są one weryfikowane przy każdej próbie dodania skanu. Jeśli aplikacja została do tego uprawniona, tworzony jest plik tymczasowy w pamięci urządzenia, a następnie otwierany jest widok kamery za pomocą intencji (ang. intent) utworzonej poprzez podanie do konstruktora nazwy odpowiedniej akcji. Zdjęcie wykonane przez użytkownika jest zapisywane w utworzonym wcześniej pliku tymczasowym a jego ścieżka przekazywana do aktywności (ang. activity) skanera, aby umożliwić w niej jego wyświetlenie i modyfikację.
 
-\par W celu zaimplementowania możliwości wyboru obszaru zdjęcia poprzez gesty użytkownika dodano specjalną klasę dziedziczącą po ImageView. Taka klasa mogła zostać następnie dodana do layoutu xml skanera, a zaimplementowane w niej metody pozwoliły na rysowanie i przeciąganie czterech linii złączonych końcami i tworzących czworokąt. Końce czworokątu są reprezentowane przez cztery zmienne typu \textit{PointF} zawierające informacje o ich położeniu na ekranie urządzenia. Po każdym wykryciu gestu przeciągnięcia linii łączącej punkty, obliczane jest ich nowe położenie, a następnie ponownie złączane są linią. Gdy użytkownik zatwierdzi zaznaczony obszar punkty transformowane są z ich współrzędnych na urządzeniu na współrzędne na zdjęciu.
+\par W celu zaimplementowania możliwości wyboru obszaru zdjęcia poprzez gesty użytkownika dodano specjalną klasę dziedziczącą po \textit{ImageView}. Taka klasa mogła zostać następnie dodana do layoutu xml skanera, a zaimplementowane w niej metody pozwoliły na rysowanie i przeciąganie czterech linii złączonych końcami i tworzących czworokąt. Końce czworokątu są reprezentowane przez cztery zmienne typu \textit{PointF} zawierające informacje o ich położeniu na ekranie urządzenia. Po każdym wykryciu gestu przeciągnięcia linii łączącej punkty, obliczane jest ich nowe położenie, a następnie ponownie złączane są linią. Gdy użytkownik zatwierdzi zaznaczony obszar punkty transformowane są z ich współrzędnych na urządzeniu na współrzędne na zdjęciu.
 
 \par Kolejnym etapem jest uzyskanie efektu zeskanowanego dokumentu. Aby móc to osiągnąć zastosowano bibliotekę \textit{OpenCV}\cite{OpenCV}, której pliki źródłowe musiały zostać dołączone do projektu aplikacji w postaci modułu. Aby ograniczyć rozmiar aplikacji wynikowej, który znacznie wzrósł po dodaniu biblioteki, usunięto jej klasy, które nie były potrzebne do realizacji funkcjonalności. Najważniejszymi operacjami, które dostarczyła OpenCV jest transformacja perspektywiczna (ang. perspective transform), która w ogólności zajmuje się przekształceniem trójwymiarowego świata do dwuwymiarowego obrazka, oraz progowanie obrazu (ang. thresholding), czyli metoda segmentacji obrazu, pozwalająca uzyskać obraz binarny z obrazu kolorowego. Otrzymany skan po zastosowaniu tych dwóch operacji i innych pomocniczych może być przez użytkownika zachowany lub odrzucony. W tym pierwszym przypadku zostaje on przesłany na serwer.
 
@@ -691,9 +693,19 @@ Kolejna jest zawartość, którą tworzą określone przy generacji tokenu twier
 
 \section{Komunikacja z zewnętrznym API (Anna Malizjusz)}
 
+\section{Rekomendacja miejsc z wykorzystaniem Collaborative Filtering (Dorota Tomczak)}
+\par Po dodaniu elementu planu podróży można wejść w jego szczegóły i dokonać oceny miejsca, które znajduje się w planie. Oceny miejsc w skali od jednego do pięciu są przechowywane wraz z użytkownikami, którzy wystawili daną ocenę w osobnej tabeli bazy danych. Na podstawie tych ocen mogą być następnie obliczane rekomendacje przy użyciu techniki zwanej \textit{Collaborative-Filtering}, a w szczególności jej odmianą opartą na użytkowniku (ang. user-based).
+\par Do implementacji wspomnianej metody wyznaczania poleceń wykorzystano bibliotekę \textit{Apache Mahout}\cite{Apache Mahout}, która oferuje wiele implementacji algorytmów opartych o uczenie maszynowe. Po wskazaniu źródła danych, czyli w tym przypadku tabeli w bazie, utworzono model danych, który posłużył do wykonania niezbędnych obliczeń. Wyznaczenie polecanych miejsc przebiega w następujący sposób: wyliczane jest podobieństwo między użytkownikami algorytmem współczynnika korelacji Pearsona, algorytm k – najbliższych sąsiadów dla k równego 2 wyznacza najbardziej polecane miejsca, a na koniec na podstawie otrzymanych wyników tworzony jest obiekt klasy \textit{GenericUserBasedRecommender}. Wywołanie metody \textit{recommend} na obiekcie z podanym identyfikatorem użytkownika i liczbą rekomendacji, które ma zwrócić, skutkuje otrzymaniem listy identyfikatorów polecanych miejsc, jeśli zostały jakieś znalezione.
+\par Testy przedstawionego rozwiązania aplikacją \textit{Postman}\cite{Postman} wykazały, że zwrócenie odpowiedzi trwa bardzo długo (nawet 20 s), a im większa liczba danych w bazie tym czas oczekiwania się wydłużał. Aby uniknąć konieczności oczekiwania na wynik po stronie aplikacji mobilnej, zdecydowano na prezentację polecanych miejsc w postaci powiadomień, czyli w momencie gdy serwer jest gotowy na wysłanie rekomendacji wysyła odpowiednie powiadomienie, a do tego czasu użytkownik może dalej swobodnie nawigować po aplikacji.
+\par W celu wysyłania powiadomień od serwera do aplikacji mobilnej skorzystano z usługi \textit{Firebase Cloud Messaging}\cite{Firebase}. Serwer po obliczeniu polecanych miejsc buduje wiadomość w postaci mapy, która ma zostać wysłana na urządzenie o określonym unikalnym tokenie. Za wysłanie odpowiada instancja klasy \textit{FirebaseMessaging}. W konsoli usługi można zobaczyć statystyki wysłanych wiadomości, które zawierają między innymi informacje o tym ile z nich zostało otwartych przez użytkowników. Do odbierania wiadomości po stronie aplikacji mobilnej zaimplementowano serwis, który dzięki temu, że dziedziczy po \textit{FirebaseMessagingService} może reagować na zdarzenia takie jak nadejście wiadomości oraz zmiana tokena.
+\par Gdy serwis odbierze wiadomość, odczytuje ją, a następnie tworzy powiadomienie, ustawiając jego parametry takie jak m.in. jego tytuł, priorytet, dźwięk. Powiadomienie jest następnie obsługiwane przez \textit{NotificationManager} i wyświetla się na ekranie urządzenia mobilnego. Użytkownik może powiadomienie od razu usunąć lub otworzyć. W drugim przypadku zostaje on przekierowany do aplikacji mobilnej, gdzie zostaje mu zaprezentowana lista polecanych miejsc wraz z nazwą i adresem.
+
+
 \chapter{Placeholder - baza danych}
 
 \chapter{Placeholder - testy}
+
+\section{Testy jednostkowe i instrumentalne aplikacji mobilnej (Dorota Tomczak)}
 
 \chapter{Placeholder - Podręcznik użytkownika}
 
@@ -713,6 +725,9 @@ Kolejna jest zawartość, którą tworzą określone przy generacji tokenu twier
   \bibitem{SimpleDocumentScanner-Android} https://github.com/jbttn/SimpleDocumentScanner-Android
   \bibitem{OpenCV} https://opencv.org/
   \bibitem{Glide} https://bumptech.github.io/glide/
+  \bibitem{Apache Mahout} https://mahout.apache.org/
+  \bibitem{Postman} https://www.getpostman.com/
+  \bibitem{Firebase} https://firebase.google.com/docs/cloud-messaging
 \end{thebibliography}
 
 
