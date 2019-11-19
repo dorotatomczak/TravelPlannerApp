@@ -622,6 +622,11 @@ Warunki końcowe:
 \label{fig:Eimage}
 \end{figure}
 
+\section{Obsługa przesyłania i pobierania plików (Dorota Tomczak)}
+\par Aby umożliwić użytkownikom korzystanie ze swoich kont na różnych urządzeniach oraz udostępnianie stworzonych przez siebie podróży, wynikła konieczność przesyłania dodanych zdjęć na serwer, zamiast przechowywania ich lokalnie na urządzeniach mobilnych. Zdjęciami w aplikacji mogą być wykonane skany lub fotografie dodane do poszczególnych podróży, a ich przesyłanie odbywa się przy pomocy RESTowego API udostępnianego przez serwer, jak zostało to opisane w podrozdziale 5.2. Zapytania za to odpowiadające są dodatkowo opatrzone adnotacją \textit{@Multipart}, aby umożliwić przesyłanie całych plików w ciele (ang. body) żądania, natomiast pliki przekształcane są na typ \textit{MultiPartBody.Part}. Gdy plik zostanie odebrany po stronie serwera następuje próba jego zapisu w ustawionym w konfiguracji folderze przez \textit{FileStorageService}, czyli serwis do przechowywania plików. Następnie ścieżka do pliku jest dodawana do bazy wraz z innymi niezbędnymi informacjami umożliwiającymi jego identyfikację.
+
+\par Ładowanie plików w aplikacji zostało zrealizowane dzięki bibliotece \textit{Glide}\cite{Glide}, która pozwala na zwiększenie efektywności tego procesu poprzez automatyczne cachowanie i optymalizację rozmiaru zdjęcia. Znając adres, pod którym znajduje się plik, użycie wspomnianej biblioteki jest bardzo proste, dlatego na większą uwagę zasługuje proces wysyłania fotografii przez serwer. Plik o wskazanej nazwie zostaje załadowany jako typ \textit{Resource} przez \textit{FileStorageService}, a następnie konstruowana jest odpowiedź serwera, która w ciele zawiera otrzymany zasób. Odpowiedź jest dodatkowo opatrzona nagłówkiem \textit{Content-Disposition}, który zawiera informację o tym, że plik ma zostać potraktowany jako załącznik. 
+
 
 \chapter{Serwer REST}
 \section{Implementacja serwera (Anna Malizjusz)}
@@ -707,6 +712,7 @@ Kolejna jest zawartość, którą tworzą określone przy generacji tokenu twier
   \bibitem{Dagger 2} https://github.com/google/dagger
   \bibitem{SimpleDocumentScanner-Android} https://github.com/jbttn/SimpleDocumentScanner-Android
   \bibitem{OpenCV} https://opencv.org/
+  \bibitem{Glide} https://bumptech.github.io/glide/
 \end{thebibliography}
 
 
