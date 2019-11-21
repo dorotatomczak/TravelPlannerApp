@@ -74,6 +74,7 @@ JSON (JavaScript Object Notation) - obiektowy sposób zapisu danych \\
 JWT (JSON Web Token) - token w formacie JSON używany w celu zabezpieczenia dostępu aplikacji \\
 API (Application Programming Interface) - interfejs aplikacji dostępny dla programisty \\
 MVP (Model View Presenter) - wzorzec architektoniczny\\
+IDE (Integrated Development Environment) - zintegrowane środowisko programistyczne\\
 
 
 \chapter{Wstęp i cel pracy}  
@@ -738,9 +739,10 @@ Kolejna jest zawartość, którą tworzą określone przy generacji tokenu twier
 \par Należało też uwzględnić sposób zapisanych informacji. Wiele znaków, np. "'" było zakodowanych, aby uniemożliwić wstrzykiwanie złośliwyego kodu. W celu rozwiązania tego problemu skorzystano z funkcji \textit{StringEscapeUtils.unescapeHtml3()}\cite{escapeUtils}, która zmieniła formę znaków z kodowej na graficzną.
 
 \section{Wspólne klasy serwera i aplikacji}
-\par Podczas implementacji napotkano problem klas powtarzających się w identycznej formie po stronie aplikacji i serwera. Stwarzało to kłopot przy edycji - obie wersje pliku musiały być zawsze identyczne. Spróbowano rozwiązać to w następujące sposoby.
+\par Podczas implementacji napotkano na problem powtarzających się klas w identycznej formie po stronie aplikacji i serwera. Stwarzało to kłopot przy edycji - obie wersje pliku musiały być zawsze identyczne. Spróbowano rozwiązać to na następujące sposoby.
 
 \subsection{Oddzielny projekt dodany jako moduł (Dorota Tomczak)}
+\par Pierwszym pomysłem na wydzielenie wspólnych klas z projektu aplikacji i serwera było utworzenie osobnego projektu, który by te klasy zawierał. Następnie nowy projekt mógłby być dołączony jako moduł do obu projektów, co jednak okazało się być nietrywialnym rozwiązaniem między innymi ze względu na różnice w plikach gradle - plik build.gradle w aplikacji mobilnej został napisany w języku Groovy, natomiast ten na serwerze w Kotlinie. Obie próby stworzenia takiego pliku dla wspólnego modułu w każdym ze wspomnianych języków nie powiodły się. Moduł mógł działać z określonym plikiem gradle tylko dla jednego z projektów jednocześnie. IDE na którym otwarty był serwer podpowiadało by usunąć wersję Kotlina w build.gradle, natomiast IDE aplikacji mobilnej podpowiadało wykonanie przeciwnej akcji. Po wielu próbach, ostatecznie porzucono zaproponowany pomysł na stworzenie osobnego projektu ze współdzielonymi klasami.
 
 \subsection{Submoduły w repozytorium (Anna Malizjusz)}
 \par Podjęto próbę dodania repozytorium zawierającego tylko wspólne pliki, a następnie wstawienia go do głównego repozytorium jako submoduły. Stworzyło to kolejne problemy w postaci konieczności częstych aktualizacji submodułów.
