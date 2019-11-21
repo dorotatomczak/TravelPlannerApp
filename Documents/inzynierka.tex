@@ -24,6 +24,7 @@
 
 \linespread{1.5}
 \usepackage[table]{xcolor}
+\usepackage{longtable}
 \usepackage{fourier} 
 \renewcommand\theadalign{bc}
 \renewcommand\theadfont{\bfseries}
@@ -68,11 +69,11 @@ dziedzina, technika, …
 
 \tableofcontents
 \chapter*{Wykaz najważniejszych oznaczeń i skrótów}
-\noindent REST - Representational State Transfer\\
-JSON - JavaScript Object Notation\\
-JWT - JSON Web Token\\
-API - Application Programming Interface\\
-MVP - Model View Presenter\\
+\noindent REST (Representational State Transfer) - transfer stanu przez reprezentację \\
+JSON (JavaScript Object Notation) - obiektowy sposób zapisu danych \\
+JWT (JSON Web Token) - token w formacie JSON używany w celu zabezpieczenia dostępu aplikacji \\
+API (Application Programming Interface) - interfejs aplikacji dostępny dla programisty \\
+MVP (Model View Presenter) - wzorzec architektoniczny\\
 
 
 \chapter{Wstęp i cel pracy}  
@@ -80,9 +81,9 @@ xxxxx
 \chapter{Przegląd podobnych rozwiązań} 
 Aplikacje do planowania podróży to często spotykane rozwiązanie ułatwiające organizowanie wyjazdów. Oferowane są dla systemów operacyjnych Android oraz iOS odpowiednio w serwisach Google Play i Apple Store. Przetestowano 4 przykładowe aplikacje, których podstawowe dane zawiera tabela~\ref{tab:porównianie}.
 
-\begin{table}[ht]
 \captionof{table}{Dane testowanych aplikacji\label{tab:porównianie}}
-\centering
+
+\begin{center}
 \begin{tabular}{ |c|c|c|c| }
 \hline
 \multirow{2}{6em}{\thead{\makecell{Nazwa \\ aplikacji}}} & \multicolumn{2}{c|}{\thead{Google Play}} & \thead{Apple Store}\\
@@ -98,7 +99,8 @@ Sygic Travel: Planuj Podróż & \makecell{4.2/5 \\ (10637 ocen)} & ponad 1 mln &
 Expedia & \makecell{4.2/5 \\ (172035 ocen)} & ponad 10 mln & 4.8/5 (551.9K ocen) \\
 \hline
 \end{tabular}
-\end{table}
+\end{center}
+
 \section{Aplikacja TripIt: Travel Planner (Dorota Tomczak)}
 \par TripIt to aplikacja do planowania podróży, którą przetestowano na urządzeniu z systemem operacyjnym iOS. Dostępna była jedynie w języku angielskim. Podstawowa wersja aplikacji była darmowa, natomiast wersję rozszerzoną (TripIt Pro) oferowano w formie subskrypcji, która kosztowała 49\$ rocznie. Oprócz tego istniała też opcja TripIt for Teams, która pozwalała na planowanie podróży grupy osób.
 \par Aby móc korzystać z aplikacji trzeba było najpierw założyć konto w serwisie TripIt, co jednak pozwalało na dostęp do wszystkich swoich planów podróży na różnych urządzeniach. Opcjonalne było natomiast zezwolenie na automatyczne przesyłanie wiadomości e-mail ze swojej skrzynki pocztowej na adres plans@tripit.com. Po umożliwieniu tej opcji, TripIt kilka razy dziennie sprawdzało skrzynkę użytkownika, by następnie pobrać z niej informacje o rezerwacjach lotów, hoteli, samochodów i dodać je do planu podróży.
@@ -739,13 +741,76 @@ Git traktował powiązany folder jako istniejący, więc nie powodowało to doda
 
 \chapter{Placeholder - baza danych}
 
-\chapter{Placeholder - testy}
+\chapter{Testy}
 
 \section{Testy jednostkowe i instrumentalne aplikacji mobilnej (Dorota Tomczak)}
 
 \chapter{Placeholder - Podręcznik użytkownika}
 
 \chapter{Podsumowanie}
+
+\chapter*{Podział zadań implementacyjnych}
+\addcontentsline{toc}{chapter}{Podział zadań implementacyjnych}
+
+\captionof{table}{Autorzy zaimplementowanych funkcji\label{tab:autorzy}}
+
+\centering
+\begin{longtable}{ |p{3.3cm}|p{3.3cm}|p{3.3cm}|p{3.3cm}| }
+\hline
+\thead{Dorota Tomczak} & \thead{Magdalena Solecka} & \thead{Anna Malizjusz} & \thead{Karolina Makuch}\\
+
+\hline
+Zaprojektowanie i implementacja bazowej aplikacji mobilnej (wzorzec MVP, wstrzykiwanie zależności Dagger2)
+& Wybór systemu zarządzania bazą danych Postgresql
+& Projekt i implementacja bazowej postaci serwera oparta o framework Spring Boot 
+& Implementacja wyświetlania znajomych oraz wyszukiwania użytkowników w celu dodania ich do znajomych \\
+
+\hline
+Obsługa sytuacji wyjątkowych na serwerze
+& Implementacja podstawowego dostępu do bazy wyznaczającego schemat dla kolejnych modeli przy użyciu repository pattern
+& Implementacja mechanizmów uwierzytelniania i autoryzacji na serwerze
+& Implementacja manualnej realizacji planu \\
+
+\hline
+Implementacja skanera z użyciem OpenCV
+& Pierwsza implementacja ekranu logowania i rejestracji
+& Wyszukiwanie obiektów w aplikacji - implementacja wyboru miejsca z mapy
+& Implementacja udostępniania planu podróży wybranym znajomym\\
+
+\hline
+Tworzenie planów podróży po stronie aplikacji (formularz dodawania i chronologiczne wyświetlanie listy)
+& Dodawanie planów podróży po stronie serwera
+& Wyświetlanie szczegółowych informacji o miejscu w planie dnia
+& Implementacja udostępniania planu dnia w medium społecznościowym (Facebook)\\
+
+\hline
+Obsługa pobierania i przesyłania plików (skany i zdjęcia podróży)
+& Implementacja testów automatycznych operacji dostępu do bazy danych
+& Odczytywanie i korzystanie z informacji otrzymanych z Here API i Google API
+& \\
+
+\hline
+Integracja w aplikacji komponentu \textit{Navigation drawer }
+& Implementacja trybu usuwania w aplikacji mobilnej
+& Komunikacja z serwerem w aplikacji mobilnej
+& \\
+
+\hline
+Implementacja rekomendacji miejsc i wysyłanie ich w formie powiadomień
+& Implementacja dodawania podróży oraz zmiany nazwy podróży
+& Implementacja logiki rejestracji i logowania w aplikacji
+& \\
+
+\hline
+Testy jednostkowe i instrumentalne dla logowania, rejestracji i komponentu \textit{launcher}
+& 
+& 
+& \\
+
+\hline
+\end{longtable}
+
+
 \bibliographystyle{plain}
 \begin{thebibliography}{1}
 \addcontentsline{toc}{chapter}{Bibliografia}
