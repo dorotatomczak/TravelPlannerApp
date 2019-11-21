@@ -740,7 +740,7 @@ Kolejna jest zawartość, którą tworzą określone przy generacji tokenu twier
 \section{Wspólne klasy serwera i aplikacji}
 \par Podczas implementacji napotkano problem klas powtarzających się w identycznej formie po stronie aplikacji i serwera. Stwarzało to kłopot przy edycji - obie wersje pliku musiały być zawsze identyczne. Spróbowano rozwiązać to w następujące sposoby.
 
-\subsection{Dorota}
+\subsection{Oddzielny projekt dodany jako moduł (Dorota Tomczak)}
 
 \subsection{Submoduły w repozytorium (Anna Malizjusz)}
 \par Podjęto próbę dodania repozytorium zawierającego tylko wspólne pliki, a następnie wstawienia go do głównego repozytorium jako submoduły. Stworzyło to kolejne problemy w postaci konieczności częstych aktualizacji submodułów.
@@ -761,6 +761,23 @@ Git traktował powiązany folder jako istniejący, więc nie powodowało to doda
 \chapter{Testy}
 
 \section{Testy jednostkowe i instrumentalne aplikacji mobilnej (Dorota Tomczak)}
+\par Dla aplikacji mobilnej napisano 23 testy jednostkowe oraz 9 instrumentalnych, które obejmują klasy i metody komponentów służących do logowania, rejestracji oraz przekierowania po starcie aplikacji. Testy jednostkowe, czyli takie które weryfikują poprawność realizacji pojedynczych funkcjonalności aplikacji, zostały zbudowane w oparciu o następujące zależności: \textit{JUnit 4}\cite{JUnit}, \textit{JUnitParams}\cite{JUnitParms} do tworzenia testów parametryzowanych oraz bibliotekę \textit{MockK}\cite{MockK} służącą do mockowania obiektów w języku Kotlin. Testy te służą do weryfikacji działania metod zdefiniowanych w prezenterach, z tego względu przed startem każdego z nich odpowiedni prezenter nie jest mockowany, ale inicjalizowany w sposób, który umożliwia jego „szpiegowanie”. Aby zasymulować asynchroniczną komunikację sieciową pomiędzy aplikacją a serwerem, która odbywa się poprzez zastosowanie biblioteki \textit{RxJava}\cite{RxJava}, stworzono klasę pomocniczą \textit{RxImmediateJavaSchedulerRule}, która ustawia wszystkie metody, rozpoczynające nowe wątki, aby korzystały zamiast tego z wątku obecnego.
+\par Testy instrumentalne, czyli takie które działają na emulatorze lub na fizycznym urządzeniu mobilnym, zostały zrealizowane dla dwóch aktywności – \textit{SignInActivity} oraz \textit{SignUpActivity} i testują, czy na ekranie wyświetlają się prawidłowe informacje, czy akcje użytkownika wywołują odpowiednie metody oraz czy aplikacja reaguje na nie w odpowiedni sposób. Wykorzystują wiele zależności, w tym między innymi \textit{Espresso}\cite{Espresso} i \textit{MockK-Android}\cite{MockK-Android}. W klasach testowych tworzone są role aktywności (\textit{activityScenarioRole}), na których następnie można wywoływać określone akcje np. wciśnięcie przycisku, czy wpisanie tekstu w polu do tego przeznaczonym. 
+\par Wszystkie testy, zarówno instrumentalne jak i jednostkowe zostały podzielone na trzy segmenty:
+\begin{itemize}
+\item \textit{given} -  definicja danych wejściowych oraz mockowanie wywołań metod i obiektów,
+\item \textit{when} - wywołanie testowanej metody lub wykonanie akcji,
+\item \textit{then} - weryfikacja otrzymanych rezultatów po wywołaniu metody lub wykonaniu akcji.
+\end{itemize}
+Do nazewnictwa testów przyjęto następującą konwencję: co powinno się stać, gdy zostaną spełnione określone warunki. Przykładowo "Should display snackBar with info message when given password in SignUp is incorrect", co w tłumaczeniu oznacza "Powinien się wyświetlić snackBar z komunikatem informacyjnym, gdy hasło podane w SignUp jest nieprawidłowe".
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=\linewidth]{instrumentationTest}
+\caption{Przykładowy test instrumentalny.}
+\label{fig:instrumentationTest}
+\end{figure}
+
 
 \chapter{Placeholder - Podręcznik użytkownika}
 
@@ -854,6 +871,12 @@ Testy jednostkowe i instrumentalne dla logowania, rejestracji i komponentu \text
   \bibitem{JsonParser} https://static.javadoc.io/com.google.code.gson/gson/2.8.5/com/google/gson/JsonParser.html
   \bibitem{GsonBuilder} https://static.javadoc.io/com.google.code.gson/gson/2.8.0/com/google/gson/GsonBuilder.html
   \bibitem{escapeUtils} https://commons.apache.org/proper/commons-lang/apidocs/org/apache/commons/lang3/StringEscapeUtils.html
+  \bibitem{JUnit} https://junit.org/junit4/
+  \bibitem{JUnitParams} https://github.com/Pragmatists/JUnitParams
+  \bibitem{MockK} https://mockk.io/
+  \bibitem{RxJava} https://github.com/ReactiveX/RxJava
+  \bibitem{Espresso} https://developer.android.com/training/testing/espresso
+  \bibitem{MockK-Android} https://mockk.io/ANDROID.html
 \end{thebibliography}
 
 
