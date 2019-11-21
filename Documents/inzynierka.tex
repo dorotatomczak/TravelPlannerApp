@@ -563,6 +563,9 @@ Warunki końcowe:
 \label{fig:whileTravelling}
 \end{figure}
 
+\chapter{Decyzje projektowe}
+
+\section{Kotlin <3}
 
 \chapter{Aplikacja mobilna}
 
@@ -619,6 +622,20 @@ Warunki końcowe:
 
 
 \section{Tworzenie planów podróży (Dorota Tomczak)}
+\par Tworzenie planów podróży jest kluczową funkcją aplikacji. Stworzenie takiego planu jest możliwe, gdy użytkownik ma przypisaną do swojego konta dowolną podróż. Dodawanie do niej kolejnego elementu planu zostało zrealizowane poprzez prosty formularz, który zawiera:
+\begin{itemize}
+\item rozwijaną listę z kategoriami miejsc odpowiadającą wybranym kategoriom z \textit{Here API}\cite{Here},
+\item pole z nazwą miejsca, które po dotknięciu przekierowuje do ekranu wyszukiwania, a po wybraniu obiektu wypełnia się automatycznie,
+\item pola od dnia i od godziny, po których dotknięciu otwierają się dialogi odpowiednio z kalendarzem i zegarem,
+\item pola analogiczne do dwóch powyższych, jeśli wybrano kategorię Zakwaterowanie, oznaczające dzień i godzinę wymeldowania,
+\item pole z adresem, które wypełnia się automatycznie po wyszukaniu obiektu,
+\item pole na notatki, które są potem możliwe do edycji.
+\end{itemize}
+
+\par Po zatwierdzeniu formularza zostaje on poddany walidacji – wszystkie pola oprócz notatek muszą być wypełnione, a dla kategorii \textit{Zakwaterowanie} (ang. \textit{Accommodation}) czas zakwaterowania nie może być przed czasem wykwaterowania. Jeśli formularz pomyślnie przejdzie próbę walidacji, nowy element planu podróży zostaje utworzony.
+Elementy planu dnia wyświetlają się w formie chronologicznej listy rozdzielonej separatorami z datami. Do implementacji tego rozwiązania posłużył adapter, który na podstawie typu elementu określa jaki układ xml (ang. layout xml) wyświetlić – czy ten dla elementu planu czy daty. Aby oba typy mogły być używane przez adapter, muszą dziedziczyć po wspólnym interfejsie, którym jest \textit{DayPlanItem} z jedną metodą, która zwraca typ obiektu.
+\par Jednak zanim nowy element planu dnia może zostać przekazany do adaptera i wyświetlony na ekranie jest najpierw dodawany do kolekcji typu \textit{TreeSet}, która sortuje znajdujące się w niej elementy po wyniku zwracanym przez metodę \textit{compareTo(other: PlanElement): Int}, zaimplementowaną w klasie dodawanych elementów. Następnie tworzona jest lista składająca się z separatorów oraz wspomnianych elementów – po sprawdzeniu pola \textit{fromDate} elementu, następuje decyzja, czy rozdzielić elementy nowym separatorem z dniem czy nie. Tak przygotowana lista trafia do adaptera i efektem jest widok posortowanych chronologicznie elementów planów dni w podróży.
+
 
 \section{Implementacja skanowania dokumentów z użyciem OpenCV (Dorota Tomczak)}
 \par Aplikacja umożliwia zrobienie zdjęcia, wybranie czworokątnego obszaru oraz takie przycięcie i modyfikację kolorów fotografii aby uzyskać efekt skanu. W początkowych założeniach zakładano skorzystanie z gotowej biblioteki, która poza wymienionymi wyżej funkcjonalnościami dokonywałaby automatycznej detekcji krawędzi, jednak ze względu na brak darmowych i dostosowanych do potrzeb rozwiązań zdecydowano stworzyć skaner od podstaw bazując na projekcie open-source \textit{SimpleDocumentScanner-Android}\cite{SimpleDocumentScanner-Android}.
