@@ -75,6 +75,7 @@ JWT (JSON Web Token) - token w formacie JSON używany w celu zabezpieczenia dost
 API (Application Programming Interface) - interfejs aplikacji dostępny dla programisty \\
 MVP (Model View Presenter) - wzorzec architektoniczny\\
 IDE (Integrated Development Environment) - zintegrowane środowisko programistyczne\\
+DTO (Data State Object) - wzorzec projektowy, rodzaj kontenera na dane\\
 
 
 \chapter{Wstęp i cel pracy}  
@@ -567,7 +568,22 @@ Warunki końcowe:
 
 \chapter{Decyzje projektowe}
 
-\section{Kotlin <3}
+\section{Wybór języka Kotlin}
+\par Przed rozpoczęciem prac implementacyjnych nad projektem należało podjąć decyzję, co do wyboru języka programowania. W przypadku aplikacji mobilnej na system Android, przy założeniu że miałaby to być aplikacja natywna, wybór ten ograniczał się do dwóch opcji – Java lub Kotlin. Ostatecznie zdecydowano o napisaniu aplikacji w Kotlinie, głównie ze względu na fakt, że 7 maja 2019 firma Google na konferencji Google I/O 2019 ogłosiła, że ten język jest obecnie preferowanym językiem do tworzenia aplikacji mobilnych na Androida\cite{Google I/O 2019}. Aby ułatwić jednoczesną pracę nad aplikacją serwerową podjęto decyzję o wykorzystaniu języka Kotlin również i w tym projekcie.
+\par Podczas pracy nad projektem oraz z perspektywy czasu po zakończeniu działań implementacyjnych, jednomyślnie stwierdzono, że wybór Kotlina był słuszny. Język ten zapewnia wiele przydatnych udogodnień i ulepszeń w stosunku do języka Java, które wpływają na jakość kodu i satysfakcję z pracy nad nim. Jedną z jego niezaprzeczalnych zalet jest minimalizacja tzw. kodu boilerplate, co przejawia się między innymi w takich jego cechach jak: 
+
+\begin{itemize}
+\item utworzenie klasy typu Singleton jest jednoznaczne z dodaniem klasy oznaczonej słowem kluczowym \textit{object},
+\item klasy oznaczone słowem kluczowym \textit{data} służące głównie jako obiekty DTO, do których to kompilator sam generuje konstruktory oraz metody dostępu do wszystkich pól,
+\item wyrażenia lambda i funkcje inline.
+\end{itemize}
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.7\textwidth]{dtoKotlin}
+\caption{Klasa DTO w Kotlinie - 5 linii kodu.}
+\label{fig:dtoKotlin}
+\end{figure}
 
 \chapter{Aplikacja mobilna}
 
@@ -906,6 +922,7 @@ Testy jednostkowe i instrumentalne dla logowania, rejestracji i komponentu \text
   \bibitem{RxJava} https://github.com/ReactiveX/RxJava
   \bibitem{Espresso} https://developer.android.com/training/testing/espresso
   \bibitem{MockK-Android} https://mockk.io/ANDROID.html
+  \bibitem{Google I/O 2019} https://techcrunch.com/2019/05/07/kotlin-is-now-googles-preferred-language-for-android-app-development/
 \end{thebibliography}
 
 
