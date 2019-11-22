@@ -82,9 +82,10 @@ xxxxx
 \chapter{Przegląd podobnych rozwiązań} 
 Aplikacje do planowania podróży to często spotykane rozwiązanie ułatwiające organizowanie wyjazdów. Oferowane są dla systemów operacyjnych Android oraz iOS odpowiednio w serwisach Google Play i Apple Store. Przetestowano 4 przykładowe aplikacje, których podstawowe dane zawiera tabela~\ref{tab:porównianie}.
 
-\captionof{table}{Dane testowanych aplikacji\label{tab:porównianie}}
 
-\begin{center}
+\begin{table}[ht]
+\captionof{table}{Dane testowanych aplikacji\label{tab:porównianie}}
+\centering
 \begin{tabular}{ |c|c|c|c| }
 \hline
 \multirow{2}{6em}{\thead{\makecell{Nazwa \\ aplikacji}}} & \multicolumn{2}{c|}{\thead{Google Play}} & \thead{Apple Store}\\
@@ -100,7 +101,7 @@ Sygic Travel: Planuj Podróż & \makecell{4.2/5 \\ (10637 ocen)} & ponad 1 mln &
 Expedia & \makecell{4.2/5 \\ (172035 ocen)} & ponad 10 mln & 4.8/5 (551.9K ocen) \\
 \hline
 \end{tabular}
-\end{center}
+\end{table}
 
 \section{Aplikacja TripIt: Travel Planner (Dorota Tomczak)}
 \par TripIt to aplikacja do planowania podróży, którą przetestowano na urządzeniu z systemem operacyjnym iOS. Dostępna była jedynie w języku angielskim. Podstawowa wersja aplikacji była darmowa, natomiast wersję rozszerzoną (TripIt Pro) oferowano w formie subskrypcji, która kosztowała 49\$ rocznie. Oprócz tego istniała też opcja TripIt for Teams, która pozwalała na planowanie podróży grupy osób.
@@ -323,27 +324,27 @@ Aplikacja posiadała także informacje na temat lokalnej kuchni (kafelek Food \&
 \item rejestracja i logowanie użytkownika,
 \item dodanie, przeglądanie i edycja planu podróży i planu dnia,
 \item wyszukanie elementu w pobliżu danej lokalizacji,
-\item wygenerowanie planu dnia/podróży,
+\item wyszukanie zakwaterowania,
 \item wyszukanie i zaproszenie innego użytkownika do wyświetlania lub edycji podróży,
 \item dodanie oceny do planu dnia, podróży lub odwiedzonego miejsca,
 \item otrzymanie propozycji na podstawie ocen,
 \item wyszukanie transportu między lokalizacjami,
 \item wyszukanie najkrótszej trasy,
-\item skanowanie biletów i innych dokumentów potrzebnych w trakcie podróży,
-\item zapisywanie podróży i dokumentów na urządzeniu, aby możliwe było korzystanie z nich bez dostępu do internetu.
+\item skanowanie biletów i innych dokumentów potrzebnych w trakcie podróży.
 \end{itemize}
 
 \par
 \noindent Wyróźniono dodatkowe wymagania, które nie były niezbędne do realizacji projektu, ale znacznie zwiększały możliwości aplikacji: 
 
 \begin{itemize}
-\item wyszukanie zakwaterowania,
+\item oznaczenie elementu z planu dnia jako wykonany,
+\item udostępnianie zrealizowanego punktu planu dnia w mediach społecznościowych,
+\item wygenerowanie planu dnia/podróży,
+\item zapisywanie podróży i dokumentów na urządzeniu, aby możliwe było korzystanie z nich bez dostępu do internetu,
 \item powiadomienie o obiekcie w okolicy,
 \item powiadomienie o opóźnieniu,
-\item oznaczenie elementu z planu dnia jako wykonany,
 \item powiadomienia dotyczące lotów,
-\item przeglądanie statystyk zrealizowanych podróży,
-\item udostępnianie zrealizowanego punktu planu dnia w mediach społecznościowych.
+\item przeglądanie statystyk zrealizowanych podróży.
 \end{itemize}
 
 \par Dodatkowo zostały określone wymagania jakościowe dotyczące aplikacji. Ze względu na RODO przetwarzanie danych użytkowników ograniczono do minimum i~zdecydowano o wyświetlaniu użytkownikom informacji o sposobie używania danych. Postanowiono skorzystać z bezpiecznych algorytmów szyfrowania i uwierzytelniania, aby zapewnić danym bezpieczeństwo. 
