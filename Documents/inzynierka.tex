@@ -71,11 +71,16 @@ dziedzina, technika, …
 \chapter*{Wykaz najważniejszych oznaczeń i skrótów}
 \noindent REST (Representational State Transfer) - transfer stanu przez reprezentację \\
 JSON (JavaScript Object Notation) - obiektowy sposób zapisu danych \\
+BJSON (binary JSON) - JSON kodowany binarnie \\
 JWT (JSON Web Token) - token w formacie JSON używany w celu zabezpieczenia dostępu aplikacji \\
 API (Application Programming Interface) - interfejs aplikacji dostępny dla programisty \\
 MVP (Model View Presenter) - wzorzec architektoniczny\\
 IDE (Integrated Development Environment) - zintegrowane środowisko programistyczne\\
 DTO (Data State Object) - wzorzec projektowy, rodzaj kontenera na dane\\
+CRUD – (create, read, update, delete) - zestaw czterech podstawowych funkcji dostępu do bazy danych
+DAO – (Data access object) - klasa będąca odzwierciedleniem tabeli bazodanowej
+SQL – (Standard Query Language) - język zapytań do niektórych baz danych (w tym PostgreSQL)
+JDBC - (Java Database Connectivity) - zestaw funkcji umożliwiających połączenie z bazą danych PostgreSQL
 
 
 \chapter{Wstęp i cel pracy}  
@@ -801,8 +806,20 @@ Git traktował powiązany folder jako istniejący, więc nie powodowało to doda
 \par W celu wysyłania powiadomień od serwera do aplikacji mobilnej skorzystano z usługi \textit{Firebase Cloud Messaging}\cite{Firebase}. Serwer po obliczeniu polecanych miejsc buduje wiadomość w postaci mapy, która ma zostać wysłana na urządzenie o określonym unikalnym tokenie. Za wysłanie odpowiada instancja klasy \textit{FirebaseMessaging}. W konsoli usługi można zobaczyć statystyki wysłanych wiadomości, które zawierają między innymi informacje o tym ile z nich zostało otwartych przez użytkowników. Do odbierania wiadomości po stronie aplikacji mobilnej zaimplementowano serwis, który dzięki temu, że dziedziczy po \textit{FirebaseMessagingService} może reagować na zdarzenia takie jak nadejście wiadomości oraz zmiana tokena.
 \par Gdy serwis odbierze wiadomość, odczytuje ją, a następnie tworzy powiadomienie, ustawiając jego parametry takie jak m.in. jego tytuł, priorytet, dźwięk. Powiadomienie jest następnie obsługiwane przez \textit{NotificationManager} i wyświetla się na ekranie urządzenia mobilnego. Użytkownik może powiadomienie od razu usunąć lub otworzyć. W drugim przypadku zostaje on przekierowany do aplikacji mobilnej, gdzie zostaje mu zaprezentowana lista polecanych miejsc wraz z nazwą i adresem.
 
+\section{Dostęp do bazy danych (Magdalena Solecka)}
+\par Do implementacji połączenia z bazą został wykorzystany PostgreSQL JDBC Driver. Zastosowano wzorzec Singleton, który w języku kotlin implementuje się używając słowa kluczowego \cite{object} zamiast \cite{class}.
+\par Zaimplementowano również wzorzec repozytorium (ang. repository pattern). Stworzono bazowy interfejs generyczny IRepository oraz jego implementację - Repository zawierajace operacje typu CRUD. Repozytoria dla poszczególnych modeli DAO dziedziczą po generycznej klasie bazowej Repository. Implementują również własny interfejs z funkcajmi wymaganymi dla danej tabeli. Problemem przy wykorzystaniu typu generycznego okazało się tworzenie nowego obiektu, dlatego postanowiono wymusić na programistach implementację dodatkowej funkcji T tworzący ten obiekt dodając ją do interfejsu IRepository. W celu zmniejszenia ilości powtarzającego się kodu wyodrębniono również stałe fragmenty tekstu z zapytań SQL takie jak na przykład \cite{SELECT * FROM tableName } w postaci stałej selectStatement. Stałe zostały dodane do klasy bazowej Repository jako abstrakcyjne. W podobny sposób rozwiązano problem powtarzających się nazw tabel i kolumn. Nie udało się jednak utworzyć stałej abstrakcyjnej, wynikiem prób była pusta wartość w zapytaniach w miejscu gdzie powinna była znaleźć się na przykład nazwa tabeli.
+	
 
-\chapter{Placeholder - baza danych}
+\chapter{Baza danych}
+\section{Wybór (Magdalena Solecka)}
+\par Przy wyborze systemu do zarządzania bazą danych były brane pod uwagę Neo4j oraz PostgreSQL. Pierwsza z wymienionych wzbudziła zainteresowanie ze względu na planowaną implementację algorytmu rekomendującego collaborative filtering. Jej zaletą, jako grafowej bazy danych, byłoby szybkie wydobycie podobieństw pomiędzy użytkownikami na podstawie ocenionych przez nich miejsc. Uznano jednak, że zespół pracował do tej pory z relacyjnymi bazami danych i językiem sql a dłuższe wykonanie algorytmu nie spowoduje problemów z wydajnym działaniem pozostałych funkcjonalności aplikacji, dlatego ostatecznie zdecydowano się na PostgreSQL chwalonego za wysoką wydajność, oferujacego wsparcie typu BJSON, który mógłby być przydatny przy  przechowywaniu większej ilości informacji o obiektach, a także znajomą zespołowi składnię zapytań. Bazę danych wdrożono w serwisie ElephantSQL z instancją \cite{tiny turtle}
+ która pozwalała na zapis 20 MB danych, 5 równoległych połączeń z bazą co było w zupełności wystarczające dla środowiska testowego.
+
+\section{placeholder - Schemat ERD (Magdalena Solecka)}
+
+\section{Praca z bazą danych (Magdalena Solecka)}
+\par Warstwę danych tworzono podejściem \cite{najpierw kod} (ang. code first), głównie z powodu trudności z przewidzeniem, które struktury dostarczane przez zewnętrzne API uda się otrzymać i które informacje są niezbędne, aby znacząco nie zmniejszyć szybkości aplikacji, a o które można zapytać źródło podczas ładowania elementów ekranu. Stwarzało to problemy z kompatybilnością wsteczną podczas rozwijania aplikacji, dodawania nowych kolumn, zmiany typów. Początkowe rozwiązanie wymagało powiadomienia wszystkich programistów w zespole o godzinach, w których baza danych może przestać działać poprawnie, a przed jakąkolwiek dalsza pracą konieczne było ściągnięcie najnowszych zmian z repozytorium github. Drugi w kolejności wprowadzonym sposobem było utworzenie tabeli tymczasowej - wykonanie kopii tabeli oraz wprowadzenie zmian w kopii. Podmiany dokonywano przy dołączaniu zmian z gałęzi podrzędnej do gałęzi develop w serwisie github. Nadal jednak wymagane było pobranie najnowszej wersji kodu. Z początku wymagało to zaplanowania pracy w ten sposób, aby lokalny kod nadawał się do zapisu (ang.commit) w chwili zmian w bazie, ale problem zakończył się odkryciem funkcji \cite{stash/unstash changes} oferowanej przez gita.
 
 \chapter{Testy}
 
