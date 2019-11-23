@@ -83,8 +83,28 @@ SQL – (Standard Query Language) - język zapytań do niektórych baz danych (w
 JDBC - (Java Database Connectivity) - zestaw funkcji umożliwiających połączenie z bazą danych PostgreSQL
 
 
-\chapter{Wstęp i cel pracy}  
-xxxxx
+\chapter{Wstęp i cel pracy (Karolina Makuch)}  
+\par Aplikacje mobline są coraz popularniejszym rozwiązaniem stosowanym w różnych dziedzinach. Rozwój technologiczny potęguje możliwości smartfonów. Przez co coraz więcej firm decyduje się na przenoszenie swoich aplikacji na platformy mobilne. Kilkanaście lat temu  służyły one głównie do komunikacji. Obecnie szeroka gama ich funkcjonalności zaczyna dorównywać ich "większym braciom" - komputerom.  
+\par Jednakże znaczącą przewagę zyskują dzięki swoim rozmiarom. Są znacznie wygodniejsze w codziennej obsłudze. Większość z nich zmieści się do kieszeni swojego właściciela. Dzięki temu coraz częściej są wykorzystywane w miejscach publicznych, nie zabierając przestrzeni innym osobom. Umożliwiają między innymi ustalanie szczegółów poprzez pisanie wiadomości mailowych, wyszukiwanie potrzebnych informacji jak również odpoczynek poprzez zagranie w grę mobilną.
+\par Zauważalny jest także rozwój smartfonów w kierunku fotografii. Nowsze modele posiadają znacznie większą ilość megapikseli (czasem nawet dwukrotnie) niż lustrzanki wyprodukowane kilka lat po dwutysięcznym roku. Posiadają dodatkowo coraz więcej obiektywów zwielokrotniając kontrolę nad finalnym efektem zdjęcia.    
+\par Uwzględniając wszystkie wspomniane powyżej zalety postanowiono połączyć swoje zainteresowanie podróżami z umiejętnościami zdobytymi podczas studiów informatycznych tworząc pożyteczną aplikację mobliną umożliwiającą planowanie podróży. 
+\par Zdecydowano się na implementację aplikacji dla systemu mobilnego Android, rozwijanego przez firmę Google. Opera się on na jądrze Linuxa oraz na oprogramowaniu posiadającym licencję GNU (ang. \textit{GNU General Public License}).
+ \par Od blisko dziesięciu lat smarfony z systemem Android od znajdują się na pierwszym miejscu w światowym rankingu najczęściej kupowanych telefonów. Podczas jednego roku (2017) sprzedano blisko 1,3 mln urządzeń z tym systemem. Jest on zdecydowanie bardziej otwarty ( dzięki mniejszym kosztom implementacji) oraz dostępny (przystępniejsze ceny urządzeń) niż konkurencja.  
+\par Potrzebne informacje są przechowywane poza aplikacją. Wykorzystano w tym celu bazę danych \textit{PostgreSQL}. Zaimplementowano również serwer umożliwiający komunikację pomiędzy bazą a aplikacją oraz z zewnętrznym API.
+\par Zdefiniowano również cele do osiągnięcia. Postawiono na zwiększenie zadowolenia użytkownika z podróży poprzez zmniejszenie poziomu stresu podczas jej organizacji. W tym celu dodano między innymi: 
+
+\begin{itemize}
+
+\item funkcjonalności umożliwiające znalezienie potrzebnych informacji na temat poszczególnych atrakcji oraz transportu (dzięki komunikacji z zewnętrznym API),
+
+\item  wyświetlenie rekomendacji na podstawie opinii innych użytkowników (wykorzystując algorytm \textit{Collaborative Filtering}),
+
+\item umożliwienie edycji jednego planu podróży poprzez kilku użytkowników,
+
+\item przechowywanie istotnych dokumentów w postaci skanów – odpowiednio przekształconych zdjęć wykonanych przez użytkownika (wykorzystując algorytmy z biblioteki \textit{OpenCV}),
+
+\end{itemize}
+
 \chapter{Przegląd podobnych rozwiązań} 
 Aplikacje do planowania podróży to często spotykane rozwiązanie ułatwiające organizowanie wyjazdów. Oferowane są dla systemów operacyjnych Android oraz iOS odpowiednio w serwisach Google Play i Apple Store. Przetestowano 4 przykładowe aplikacje, których podstawowe dane zawiera tabela~\ref{tab:porównianie}.
 
