@@ -869,7 +869,347 @@ Do nazewnictwa testów przyjęto następującą konwencję: co powinno się sta�
 \end{figure}
 
 
-\chapter{Placeholder - Podręcznik użytkownika}
+\chapter{Podręcznik użytkownika (Karolina Makuch)}
+\par W celu wytłumaczenia obsługi stworzonej aplikacji oraz zaprezentowaniu jej wizualnej strony przygotowano podręcznik użytkownika. Zawiera on poszczególne etapy wykonywania najważniejszych funkcjonalności.
+
+\section{Rejestracja oraz logowanie użytkownika}
+Użytkownik pierwszy raz uruchamiający aplikację pragnący z niej korzystać powinien stworzyć własne konto. W tym celu należy:
+
+\begin{enumerate}
+
+\item Kliknąć przycisk "Zarejestruj się"
+\item W widoku rejestracji podać swój adres mailowy oraz hasło
+\item Kliknąć "Zarejestruj się"
+\item Po pojawieniu się powiadomienia "Twoje konto zostało utworzone" następuje automatyczne przekierowanie do widoku logowania
+\item Uzupełnić pola widoku logowania tymi samymi danymi 
+\item Logowanie następuje w momencie uzupełnienia danych oraz kliknięcia „Zaloguj się”
+
+\end{enumerate}
+
+\begin{figure}[h]
+\begin{subfigure}{0.5\textwidth}
+\centering
+\includegraphics[width=0.6\linewidth, width=3cm]{loginView}
+\caption{Widok logowania}
+\label{fig:loginView}
+\end{subfigure}
+\begin{subfigure}{0.5\textwidth}
+\centering
+\includegraphics[width=0.6\linewidth, width=3cm]{registrationPage}
+\caption{Widok rejestracji}
+\label{fig:registrationPage}
+\end{subfigure}
+\caption{Logowanie i rejestracja użytkownika}
+\label{fig:podrecznik1}
+\end{figure}
+
+\section{Podróże}
+Pierwszy widok pojawiający się tuż po zalogowaniu zawiera listę dostępnych podróży.
+
+\noindent\newline
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.6\linewidth, width=3.5cm]{travelsView}
+\caption{Widok podróży użytkownika}
+\label{fig:travelsView}
+\end{figure}
+
+\subsection{Tworzenie podróży}
+W celu utworzenia podróży należy:
+\begin{enumerate}
+\item Nacisnąć przycisk oznaczony symbolem „+”
+\item Uzupełnić okno dialogowe nazwą podróży i kliknąć "OK"
+\item Utworzona podróż pojawi się na liście wraz z domyślnym zdjęciem
+\end{enumerate}
+
+\begin{figure}[h]
+\begin{subfigure}{0.5\textwidth}
+\centering
+\includegraphics[width=0.6\linewidth, width=3cm]{createNewTravel}
+\caption{Okno dialogowe}
+\label{fig:createNewTravel}
+\end{subfigure}
+\begin{subfigure}{0.5\textwidth}
+\centering
+\includegraphics[width=0.6\linewidth, width=3cm]{defaultImage}
+\caption{Domyślny obraz podróży}
+\label{fig:defaultImage}
+\end{subfigure}
+\caption{Tworzenie nowej podróży}
+\label{fig:podrecznik3}
+\end{figure}
+
+\section{Widok podróży}
+Po wybraniu danej podróży zostaje wyświetlony widok zawierający informacje na jej temat.
+
+\noindent\newline
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.6\linewidth, width=3.5cm]{newTravel}
+\caption{Widok danej podróży}
+\label{fig:newTravel}
+\end{figure}
+
+\subsection{Zmiana nazwy podróży}
+
+W celu zmiany nazwy podróży należy:
+\begin{enumerate}
+\item Nacisnąć przycisk oznaczony symbolem ołówka
+\item Uzupełnić okno dialogowe nową nazwą podróży i kliknąć "OK"
+\item Nazwa podróży zostanie zaktualizowana
+\end{enumerate}
+
+\subsection{Zmiana tła podróży}
+
+W celu zmiany tła podróży należy:
+\begin{enumerate}
+\item Nacisnąć przycisk oznaczony symbolem zdjęcia
+\item Wybrać odpowiednie zdjęcie z galerii urządzenia
+\item Zdjęcie zostanie zaktualizowane
+\end{enumerate}
+
+\subsection{Udostępnianie podróży znajomym}
+
+W celu udostępnienia podróży znajomym należy:
+\begin{enumerate}
+\item Nacisnąć przycisk oznaczony symbolem udostępniania
+\item Wybrać wszystkich znajomych, którym ma zostać udostępniona podróż
+\item Potwierdzić swój wybór poprzez naciśnięcie przycisku "OK"
+\item W przypadku potwierdzenia wykonania czynności pojawi się powiadomienie z odpowiednim komunikatem
+\end{enumerate}
+
+\noindent\newline
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.6\linewidth, width=3.5cm]{shareTravelDialog}
+\caption{Udostępnianie podróży znajomym}
+\label{fig:shareTravelDialog}
+\end{figure}
+
+\subsection{Dodanie elementu planu dnia}
+W celu dodania elementu planu dnia należy:
+\begin{enumerate}
+\item Nacisnąć przycisk oznaczony symbolem "+"
+\item Wybrać jedną z dwóch dostępnych opcji
+\end{enumerate} 
+\paragraph{Dodanie miejsca}
+Pierwsza z opcji jest oznaczona poprzez symbol budynku.
+Umożliwia on dodanie miejsca do planu dnia.
+
+\begin{enumerate}
+\item Należy wybrać kategorię spośród:
+\begin{itemize}
+\item Jedzenie i picie
+\item Restauracja
+\item Fast food
+\item Kawiarnia
+\item Rozrywka
+\item Zabytki i muzea
+\item Lotnisko
+\item Nocleg
+\item Zakupy
+\item Aktywny wypoczynek
+\item Natura
+\item Stacja paliw
+\item Bankomat
+\item Toaleta
+\item Opieka zdrowotna
+\end{itemize}
+\item Po naciśnięciu wyszukiwania miejsca po nazwie pojawia się widok mapy umożliwiającej wybranie konkretnego miejsca
+\item Po wybraniu pinezki pojawiają się dokładne informacje na temat miejsca
+\item Naciśnięcie przycisku zawierającego symbol „tick” przekierowuje użytkownika do pierwszego ekranu wyszukiwania
+\item Następnie należy wybrać datę oraz godzinę realizacji planu
+\item Opcjonalne jest dodanie własnych notatek
+\item Dodanie miejsca następuje po naciśnięciu przycisku oznaczonym symbolem "tick"
+\end{enumerate}
+
+\begin{figure}[h]
+\begin{subfigure}{0.25\textwidth}
+\centering
+\includegraphics[width=0.6\linewidth, width=3cm]{searchPlace}
+\caption{Uzupełnienie danych}
+\label{fig:searchPlace}
+\end{subfigure}
+\begin{subfigure}{0.25\textwidth}
+\centering
+\includegraphics[width=0.6\linewidth, width=3cm]{searchingPlace}
+\caption{Wyszukiwanie miejsca}
+\label{fig:searchingPlace}
+\end{subfigure}
+\begin{subfigure}{0.25\textwidth}
+\centering
+\includegraphics[width=0.6\linewidth, width=3cm]{placeDescription}
+\caption{Szczegółowe informacje na temat miejsca}
+\label{fig:placeDescription}
+\end{subfigure}
+\begin{subfigure}{0.5\textwidth}
+\centering
+\includegraphics[width=0.6\linewidth, width=3cm]{clock}
+\caption{Wybieranie godziny}
+\label{fig:clock}
+\end{subfigure}
+\begin{subfigure}{0.5\textwidth}
+\centering
+\includegraphics[width=0.6\linewidth, width=3cm]{calendar}
+\caption{Wybieranie daty}
+\label{fig:calendar}
+\end{subfigure}
+\caption{Tworzenie elementu planu dnia}
+\label{fig:podrecznik7}
+\end{figure}
+
+\paragraph{Dodanie transportu}
+W przypadku wybrania przycisku z symbolem samochodu użytkownik ma możliwość dodania transportu jako element planu dnia.
+\begin{enumerate}
+\item Należy uzupełnić miejsce startowe oraz miejsce docelowe poszukiwanego transportu
+\item Kliknąć na przycisk oznaczony symbolem strzałki w prawo
+\item do dokonczenia
+\end{enumerate} 
+
+\noindent\newline
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.6\linewidth, width=3.5cm]{searchTransport}
+\caption{Wyszukiwanie transportu}
+\label{fig:searchTransport}
+\end{figure}
+
+\section{Poszczególny element planu dnia}
+Aplikacja umożliwia wykonywanie kilku czynności związanych z poszczególnym elementem planu dnia. Oprócz możliwości odczytania szczegółowych informacji na jego temat można ocenić dane miejsce, oznaczyć plan jako ukończony oraz udostępnić go w medium społecznościowym.
+
+\noindent\newline
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.6\linewidth, width=3.5cm]{planElements}
+\caption{Widok planu podróży}
+\label{fig:planElement}
+\end{figure}
+
+\subsection{Kliknięcie elementu}
+Po kliknięciu na wybrany element pojawia się osobny widok zawierający dokładne informacje na temat wybranego miejsca. Istnieje możliwość wystawienia oceny.
+\noindent\newline
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.6\linewidth, width=3.5cm]{ratePlace2}
+\caption{Ocenianie elementu planu}
+\label{fig:ratePlace2}
+\end{figure}
+
+\subsection{Przytrzymanie elementu}
+Po przytrzymaniu palca na danym planu dnia pojawia się dymek z trzema opcjami do wyboru.
+
+\noindent\newline
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.6\linewidth, width=3.5cm]{popUpMenu2}
+\caption{Opcje elementu planu }
+\label{fig:popUpMenu2}
+\end{figure}
+
+\paragraph{Usuwanie elementu}
+Po wybraniu opcji "Usuń" zostaje włączony tryb usuwania.
+Jest on oznaczony jasnoszarym kolorem.
+W celu usunięcia elementu należy:
+\begin{enumerate}
+\item Zaznaczyć wszystkie elementy, które mają być usunięte
+\item Potwierdzić wykonanie czynności poprzez kliknięcie ikony kosza na śmieci
+\end{enumerate} 
+\textbf{UWAGA Przejście do trybu usuwania jest możliwe w każdym widoku zawierającym listę elementów. Przejście do niego jest wykonywane po dłuższym przytrzymaniu jednego z elementów.}
+
+\noindent\newline
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.6\linewidth, width=3.5cm]{deleteMode}
+\caption{Tryb usuwania }
+\label{fig:deleteMode}
+\end{figure}
+
+\paragraph{Manualna realizacja planu}
+\begin{enumerate}
+\item W przypadku ukończonego planu zawiera tekst "Oznacz jako nieukończony"
+\item W przypadku nieukończonego planu zawiera tekst "Oznacz plan jako ukończony"
+\end{enumerate} 
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.6\linewidth, width=3.5cm]{popUpMenu}
+\caption{Manualna realizacja planu}
+\label{fig:popUpMenu}
+\end{figure}
+Ukończone elementy planu dnia mają zmniejszoną intensywność kolorów.
+
+
+\paragraph{Udostępnianie w medium społecznościowym}
+Gdy użytkownik ma zainstalowaną aplikację Facebook posiada możliwość udostępnienia elementu planu na swojej "tablicy". W celu wykonania tej czynności należy:
+\begin{enumerate}
+\item Nacisnąć opcję "Udostępnij"
+\item Napisać treść post'a
+\end{enumerate} 
+Domyślna tekst zawiera link do wybranego miejsca na mapie HERE 
+
+\begin{figure}[h]
+\begin{subfigure}{0.3\textwidth}
+\centering
+\includegraphics[width=0.6\linewidth, width=3.5cm]{shareOnFacebook}
+\caption{Udostępnianie posta}
+\label{fig:shareOnFacebook}
+\end{subfigure}
+\begin{subfigure}{0.7\textwidth}
+\centering
+\includegraphics[width=0.9\linewidth, width=7cm]{hereMobile}
+\caption{Widok linku do map HERE}
+\label{fig:hereMobile}
+\end{subfigure}
+\caption{Udostępnianie elementu planu}
+\label{fig:podrecznik8}
+\end{figure}
+
+\section{Skanowanie dokumentów}
+Użytkownik posiadający plan podróży ma możliwość dodania skanu – czarno-białego zdjęcia z wyróżnionymi istotnymi informacjami.  
+W celu przechowania dokumentu w aplikacji należy:
+\begin{enumerate}
+\item Kliknąć na symbol hamburgera
+\item W bocznym menu wybrać "Skany"
+\item Nacisnąć przycisk zawierający symbol "+"
+\item Wyrazić zgodę na dostęp do aparatu
+\item Wykonać zdjęcie dokumentu
+\item Wybrać interesujący obszar (dowolny czworokąt)
+\item Zaakceptować przekształcenie obrazu klikając przycisk "Skanuj"
+\item Miniatura skanu pojawi się w galerii
+\end{enumerate}
+ 
+
+\begin{figure}[h]
+\begin{subfigure}{0.23\textwidth}
+\centering
+\includegraphics[width=0.4\linewidth, width=3cm]{sideBar}
+\caption{Boczne menu}
+\label{fig:sideBar}
+\end{subfigure}
+\begin{subfigure}{0.23\textwidth}
+\centering
+\includegraphics[width=0.4\linewidth, width=3cm]{scans}
+\caption{Galeria skanów}
+\label{fig:scans}
+\end{subfigure}
+\begin{subfigure}{0.23\textwidth}
+\centering
+\includegraphics[width=0.4\linewidth, width=3cm]{chooseScan}
+\caption{Wybranie ważnegych informacji}
+\label{fig:chooseScan}
+\end{subfigure}
+\begin{subfigure}{0.23\textwidth}
+\centering
+\includegraphics[width=0.4\linewidth, width=3cm]{scan}
+\caption{Obraz po przekształceniu}
+\label{fig:scan}
+\end{subfigure}
+\caption{Wykonanie skanu}
+\label{fig:podrecznik8}
+\end{figure}
+
+\section{Znajomi}
+
+\section{Rekomendacja miejsc}
 
 \chapter{Podsumowanie (Anna Malizjusz)}
 
