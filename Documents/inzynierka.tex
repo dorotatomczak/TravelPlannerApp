@@ -897,7 +897,7 @@ W trakcie implementacji została podjęta decyzja o zmianie wyglądu aplikacji. 
 \caption{Pierwszy design}
 \label{fig:podrecznik10}
 \end{figure}
-
+\FloatBarrier
 \section{Rejestracja oraz logowanie użytkownika}
 Użytkownik pierwszy raz uruchamiający aplikację pragnący z niej korzystać powinien stworzyć własne konto. W tym celu należy:
 
@@ -928,6 +928,7 @@ Użytkownik pierwszy raz uruchamiający aplikację pragnący z niej korzystać p
 \caption{Logowanie i rejestracja użytkownika}
 \label{fig:podrecznik1}
 \end{figure}
+\FloatBarrier
 
 \section{Podróże}
 Pierwszy widok pojawiający się tuż po zalogowaniu zawiera listę dostępnych podróży.
@@ -955,6 +956,7 @@ Pierwszy widok pojawiający się tuż po zalogowaniu zawiera listę dostępnych 
 \caption{Tworzenie nowej podróży}
 \label{fig:podrecznik3}
 \end{figure}
+\FloatBarrier
 
 \subsection{Tworzenie podróży}
 W celu utworzenia podróży należy:
@@ -985,7 +987,7 @@ Po wybraniu danej podróży zostaje wyświetlony widok zawierający informacje n
 \caption{Pojedyńcza podróż}
 \label{fig:podrecznik4}
 \end{figure}
-
+\FloatBarrier
 \subsection{Zmiana nazwy podróży}
 
 W celu zmiany nazwy podróży należy:
@@ -1070,35 +1072,50 @@ Umożliwia on dodanie miejsca do planu dnia.
 \caption{Szczegółowe informacje na temat miejsca}
 \label{fig:placeDescription}
 \end{subfigure}
-\begin{subfigure}{0.3\textwidth}
+\begin{subfigure}{0.5\textwidth}
 \centering
 \includegraphics[width=0.9\linewidth, width=5cm]{clock}
 \caption{Wybieranie godziny}
 \label{fig:clock}
 \end{subfigure}
-\begin{subfigure}{0.3\textwidth}
+\begin{subfigure}{0.5\textwidth}
 \centering
 \includegraphics[width=0.9\linewidth, width=5cm]{calendar}
 \caption{Wybieranie daty}
 \label{fig:calendar}
 \end{subfigure}
-\begin{subfigure}{0.3\textwidth}
-\centering
-\includegraphics[width=0.9\linewidth, width=5cm]{searchTransport}
-\caption{Wyszukiwanie transportu}
-\label{fig:searchTransport}
-\end{subfigure}
 \caption{Tworzenie elementu planu dnia}
 \label{fig:podrecznik7}
 \end{figure}
-
+\FloatBarrier
 \paragraph{Dodanie transportu}
 W przypadku wybrania przycisku z symbolem samochodu użytkownik ma możliwość dodania transportu jako element planu dnia.
 \begin{enumerate}
-\item Należy uzupełnić miejsce startowe oraz miejsce docelowe poszukiwanego transportu
+\item Należy kliknąć na na pole miejsca początkowego
+\item Następnie wybrać element planu dnia
+\item Kliknąć na pole miejsca docelowego
+\item Wybrać element planu dnia
 \item Kliknąć na przycisk oznaczony symbolem strzałki w prawo
-\item do dokonczenia
+\item Wybrać rodzaj transportu
+\item Kliknąć na przycisk oznaczony symbolem lupy
 \end{enumerate} 
+
+\begin{figure}[h]
+\centering
+\begin{subfigure}{0.4\textwidth}
+\centering
+\includegraphics[width=0.9\linewidth, width=5cm]{transport1}
+\label{fig:transport1}
+\end{subfigure}
+\begin{subfigure}{0.4\textwidth}
+\centering
+\includegraphics[width=0.9\linewidth, width=5cm]{transport2}
+\label{fig:transport2}
+\end{subfigure}
+\caption{Wyszukiwanie transportu}
+\label{fig:podrecznik12}
+\end{figure}
+\FloatBarrier
 
 
 \section{Poszczególny element planu dnia}
@@ -1121,6 +1138,7 @@ Aplikacja umożliwia wykonywanie kilku czynności związanych z poszczególnym e
 \caption{Pojedyńcza podróż}
 \label{fig:podrecznik4}
 \end{figure}
+\FloatBarrier
 
 
 \subsection{Kliknięcie elementu}
@@ -1152,6 +1170,7 @@ Po przytrzymaniu palca na danym planu dnia pojawia się dymek z trzema opcjami d
 \caption{Przytrzymanie elementu planu}
 \label{fig:podrecznik5}
 \end{figure}
+\FloatBarrier
 
 \paragraph{Usuwanie elementu}
 Po wybraniu opcji "Usuń" zostaje włączony tryb usuwania.
@@ -1197,6 +1216,7 @@ Domyślna tekst zawiera link do wybranego miejsca na mapie HERE
 \caption{Udostępnianie elementu planu}
 \label{fig:podrecznik8}
 \end{figure}
+\FloatBarrier
 
 \section{Skanowanie dokumentów}
 Użytkownik posiadający plan podróży ma możliwość dodania skanu – czarno-białego zdjęcia z wyróżnionymi istotnymi informacjami.  
@@ -1241,6 +1261,7 @@ W celu przechowania dokumentu w aplikacji należy:
 \caption{Wykonanie skanu}
 \label{fig:podrecznik8}
 \end{figure}
+\FloatBarrier
 
 \section{Znajomi}
 Pragnąc udostępnić innemu użytkownikowi podróży należy go wcześniej dodać do znajomych. Można to zrobić w następujących krokach:
@@ -1275,6 +1296,7 @@ Pragnąc udostępnić innemu użytkownikowi podróży należy go wcześniej doda
 \caption{Dodawanie znajomych}
 \label{fig:podrecznik9}
 \end{figure}
+\FloatBarrier
  
 
 \section{Rekomendacja miejsc}
@@ -1301,6 +1323,7 @@ Bazując na opiniach innych użytkowników aplikacja wyświetla listę polecanyc
 \caption{Rekomendacja atrakcji}
 \label{fig:podrecznik11}
 \end{figure}
+\FloatBarrier
 
 \chapter{Podsumowanie (Anna Malizjusz)}
 
