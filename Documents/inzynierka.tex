@@ -871,7 +871,33 @@ Do nazewnictwa testów przyjęto następującą konwencję: co powinno się sta�
 
 \chapter{Podręcznik użytkownika (Karolina Makuch)}
 \par W celu wytłumaczenia obsługi stworzonej aplikacji oraz zaprezentowaniu jej wizualnej strony przygotowano podręcznik użytkownika. Zawiera on poszczególne etapy wykonywania najważniejszych funkcjonalności.
+Aplikacja została zaimplementowana w dwóch wersjach językowych. Dostępny jest język polski oraz angielski.
+W trakcie implementacji została podjęta decyzja o zmianie wyglądu aplikacji. Zdecydowano się na weselsze kolory.
 
+\begin{figure}[h]
+\centering
+\begin{subfigure}{0.3\textwidth}
+\centering
+\includegraphics[width=0.8\linewidth, width=5cm]{firstDesign1}
+\caption{Widok logowania}
+\label{fig:firstDesign1}
+\end{subfigure}
+\begin{subfigure}{0.3\textwidth}
+\centering
+\includegraphics[width=0.8\linewidth, width=5cm]{firstDesign2}
+\caption{Widok podróży}
+\label{fig:firstDesign2}
+\end{subfigure}
+\begin{subfigure}{0.3\textwidth}
+\centering
+\includegraphics[width=0.8\linewidth, width=5cm]{firstDesign3}
+\caption{Plan podróży}
+\label{fig:firstDesign3}
+\end{subfigure}
+\caption{Pierwszy design}
+\label{fig:podrecznik10}
+\end{figure}
+\FloatBarrier
 \section{Rejestracja oraz logowanie użytkownika}
 Użytkownik pierwszy raz uruchamiający aplikację pragnący z niej korzystać powinien stworzyć własne konto. W tym celu należy:
 
@@ -889,30 +915,48 @@ Użytkownik pierwszy raz uruchamiający aplikację pragnący z niej korzystać p
 \begin{figure}[h]
 \begin{subfigure}{0.5\textwidth}
 \centering
-\includegraphics[width=0.6\linewidth, width=3cm]{loginView}
+\includegraphics[width=0.9\linewidth, width=5cm]{loginView}
 \caption{Widok logowania}
 \label{fig:loginView}
 \end{subfigure}
 \begin{subfigure}{0.5\textwidth}
 \centering
-\includegraphics[width=0.6\linewidth, width=3cm]{registrationPage}
+\includegraphics[width=0.9\linewidth, width=5cm]{registrationPage}
 \caption{Widok rejestracji}
 \label{fig:registrationPage}
 \end{subfigure}
 \caption{Logowanie i rejestracja użytkownika}
 \label{fig:podrecznik1}
 \end{figure}
+\FloatBarrier
 
 \section{Podróże}
 Pierwszy widok pojawiający się tuż po zalogowaniu zawiera listę dostępnych podróży.
 
-\noindent\newline
 \begin{figure}[h]
 \centering
-\includegraphics[width=0.6\linewidth, width=3.5cm]{travelsView}
+\begin{subfigure}{0.3\textwidth}
+\centering
+\includegraphics[width=0.8\linewidth, width=5cm]{travelsView}
 \caption{Widok podróży użytkownika}
 \label{fig:travelsView}
+\end{subfigure}
+\begin{subfigure}{0.3\textwidth}
+\centering
+\includegraphics[width=0.8\linewidth, width=5cm]{createNewTravel}
+\caption{Okno dialogowe}
+\label{fig:createNewTravel}
+\end{subfigure}
+\begin{subfigure}{0.3\textwidth}
+\centering
+\includegraphics[width=0.8\linewidth, width=5cm]{defaultImage}
+\caption{Domyślny obraz podróży}
+\label{fig:defaultImage}
+\end{subfigure}
+\caption{Tworzenie nowej podróży}
+\label{fig:podrecznik3}
 \end{figure}
+\FloatBarrier
 
 \subsection{Tworzenie podróży}
 W celu utworzenia podróży należy:
@@ -922,34 +966,28 @@ W celu utworzenia podróży należy:
 \item Utworzona podróż pojawi się na liście wraz z domyślnym zdjęciem
 \end{enumerate}
 
-\begin{figure}[h]
-\begin{subfigure}{0.5\textwidth}
-\centering
-\includegraphics[width=0.6\linewidth, width=3cm]{createNewTravel}
-\caption{Okno dialogowe}
-\label{fig:createNewTravel}
-\end{subfigure}
-\begin{subfigure}{0.5\textwidth}
-\centering
-\includegraphics[width=0.6\linewidth, width=3cm]{defaultImage}
-\caption{Domyślny obraz podróży}
-\label{fig:defaultImage}
-\end{subfigure}
-\caption{Tworzenie nowej podróży}
-\label{fig:podrecznik3}
-\end{figure}
 
 \section{Widok podróży}
 Po wybraniu danej podróży zostaje wyświetlony widok zawierający informacje na jej temat.
 
-\noindent\newline
 \begin{figure}[h]
 \centering
-\includegraphics[width=0.6\linewidth, width=3.5cm]{newTravel}
+\begin{subfigure}{0.4\textwidth}
+\centering
+\includegraphics[width=0.9\linewidth, width=5cm]{newTravel}
 \caption{Widok danej podróży}
 \label{fig:newTravel}
+\end{subfigure}
+\begin{subfigure}{0.4\textwidth}
+\centering
+\includegraphics[width=0.9\linewidth, width=5cm]{shareTravelDialog}
+\caption{Udostępnianie podróży znajomym}
+\label{fig:shareTravelDialog}
+\end{subfigure}
+\caption{Pojedyńcza podróż}
+\label{fig:podrecznik4}
 \end{figure}
-
+\FloatBarrier
 \subsection{Zmiana nazwy podróży}
 
 W celu zmiany nazwy podróży należy:
@@ -977,14 +1015,6 @@ W celu udostępnienia podróży znajomym należy:
 \item Potwierdzić swój wybór poprzez naciśnięcie przycisku "OK"
 \item W przypadku potwierdzenia wykonania czynności pojawi się powiadomienie z odpowiednim komunikatem
 \end{enumerate}
-
-\noindent\newline
-\begin{figure}[h]
-\centering
-\includegraphics[width=0.6\linewidth, width=3.5cm]{shareTravelDialog}
-\caption{Udostępnianie podróży znajomym}
-\label{fig:shareTravelDialog}
-\end{figure}
 
 \subsection{Dodanie elementu planu dnia}
 W celu dodania elementu planu dnia należy:
@@ -1024,87 +1054,123 @@ Umożliwia on dodanie miejsca do planu dnia.
 \end{enumerate}
 
 \begin{figure}[h]
-\begin{subfigure}{0.25\textwidth}
+\begin{subfigure}{0.3\textwidth}
 \centering
-\includegraphics[width=0.6\linewidth, width=3cm]{searchPlace}
+\includegraphics[width=0.9\linewidth, width=5cm]{searchPlace}
 \caption{Uzupełnienie danych}
 \label{fig:searchPlace}
 \end{subfigure}
-\begin{subfigure}{0.25\textwidth}
+\begin{subfigure}{0.3\textwidth}
 \centering
-\includegraphics[width=0.6\linewidth, width=3cm]{searchingPlace}
+\includegraphics[width=0.9\linewidth, width=5cm]{searchingPlace}
 \caption{Wyszukiwanie miejsca}
 \label{fig:searchingPlace}
 \end{subfigure}
-\begin{subfigure}{0.25\textwidth}
+\begin{subfigure}{0.3\textwidth}
 \centering
-\includegraphics[width=0.6\linewidth, width=3cm]{placeDescription}
+\includegraphics[width=0.9\linewidth, width=5cm]{placeDescription}
 \caption{Szczegółowe informacje na temat miejsca}
 \label{fig:placeDescription}
 \end{subfigure}
 \begin{subfigure}{0.5\textwidth}
 \centering
-\includegraphics[width=0.6\linewidth, width=3cm]{clock}
+\includegraphics[width=0.9\linewidth, width=5cm]{clock}
 \caption{Wybieranie godziny}
 \label{fig:clock}
 \end{subfigure}
 \begin{subfigure}{0.5\textwidth}
 \centering
-\includegraphics[width=0.6\linewidth, width=3cm]{calendar}
+\includegraphics[width=0.9\linewidth, width=5cm]{calendar}
 \caption{Wybieranie daty}
 \label{fig:calendar}
 \end{subfigure}
 \caption{Tworzenie elementu planu dnia}
 \label{fig:podrecznik7}
 \end{figure}
-
+\FloatBarrier
 \paragraph{Dodanie transportu}
 W przypadku wybrania przycisku z symbolem samochodu użytkownik ma możliwość dodania transportu jako element planu dnia.
 \begin{enumerate}
-\item Należy uzupełnić miejsce startowe oraz miejsce docelowe poszukiwanego transportu
+\item Należy kliknąć na na pole miejsca początkowego
+\item Następnie wybrać element planu dnia
+\item Kliknąć na pole miejsca docelowego
+\item Wybrać element planu dnia
 \item Kliknąć na przycisk oznaczony symbolem strzałki w prawo
-\item do dokonczenia
+\item Wybrać rodzaj transportu
+\item Kliknąć na przycisk oznaczony symbolem lupy
 \end{enumerate} 
 
-\noindent\newline
 \begin{figure}[h]
 \centering
-\includegraphics[width=0.6\linewidth, width=3.5cm]{searchTransport}
+\begin{subfigure}{0.4\textwidth}
+\centering
+\includegraphics[width=0.9\linewidth, width=5cm]{transport1}
+\label{fig:transport1}
+\end{subfigure}
+\begin{subfigure}{0.4\textwidth}
+\centering
+\includegraphics[width=0.9\linewidth, width=5cm]{transport2}
+\label{fig:transport2}
+\end{subfigure}
 \caption{Wyszukiwanie transportu}
-\label{fig:searchTransport}
+\label{fig:podrecznik12}
 \end{figure}
+\FloatBarrier
+
 
 \section{Poszczególny element planu dnia}
 Aplikacja umożliwia wykonywanie kilku czynności związanych z poszczególnym elementem planu dnia. Oprócz możliwości odczytania szczegółowych informacji na jego temat można ocenić dane miejsce, oznaczyć plan jako ukończony oraz udostępnić go w medium społecznościowym.
 
-\noindent\newline
 \begin{figure}[h]
 \centering
-\includegraphics[width=0.6\linewidth, width=3.5cm]{planElements}
+\begin{subfigure}{0.4\textwidth}
+\centering
+\includegraphics[width=0.9\linewidth, width=5cm]{planElements}
 \caption{Widok planu podróży}
-\label{fig:planElement}
+\label{fig:planElements}
+\end{subfigure}
+\begin{subfigure}{0.4\textwidth}
+\centering
+\includegraphics[width=0.9\linewidth, width=5cm]{ratePlace2}
+\caption{Ocenianie elementu planu}
+\label{fig:ratePlace2}
+\end{subfigure}
+\caption{Pojedyńcza podróż}
+\label{fig:podrecznik4}
 \end{figure}
+\FloatBarrier
+
 
 \subsection{Kliknięcie elementu}
 Po kliknięciu na wybrany element pojawia się osobny widok zawierający dokładne informacje na temat wybranego miejsca. Istnieje możliwość wystawienia oceny.
-\noindent\newline
-\begin{figure}[h]
-\centering
-\includegraphics[width=0.6\linewidth, width=3.5cm]{ratePlace2}
-\caption{Ocenianie elementu planu}
-\label{fig:ratePlace2}
-\end{figure}
 
 \subsection{Przytrzymanie elementu}
 Po przytrzymaniu palca na danym planu dnia pojawia się dymek z trzema opcjami do wyboru.
 
-\noindent\newline
 \begin{figure}[h]
 \centering
-\includegraphics[width=0.6\linewidth, width=3.5cm]{popUpMenu2}
+\begin{subfigure}{0.3\textwidth}
+\centering
+\includegraphics[width=0.9\linewidth, width=5cm]{popUpMenu2}
 \caption{Opcje elementu planu }
 \label{fig:popUpMenu2}
+\end{subfigure}
+\begin{subfigure}{0.3\textwidth}
+\centering
+\includegraphics[width=0.9\linewidth, width=5cm]{deleteMode}
+\caption{Tryb usuwania }
+\label{fig:deleteMode}
+\end{subfigure}
+\begin{subfigure}{0.3\textwidth}
+\centering
+\includegraphics[width=0.9\linewidth, width=5cm]{popUpMenu}
+\caption{Manualna realizacja planu}
+\label{fig:popUpMenu}
+\end{subfigure}
+\caption{Przytrzymanie elementu planu}
+\label{fig:podrecznik5}
 \end{figure}
+\FloatBarrier
 
 \paragraph{Usuwanie elementu}
 Po wybraniu opcji "Usuń" zostaje włączony tryb usuwania.
@@ -1116,25 +1182,13 @@ W celu usunięcia elementu należy:
 \end{enumerate} 
 \textbf{UWAGA Przejście do trybu usuwania jest możliwe w każdym widoku zawierającym listę elementów. Przejście do niego jest wykonywane po dłuższym przytrzymaniu jednego z elementów.}
 
-\noindent\newline
-\begin{figure}[h]
-\centering
-\includegraphics[width=0.6\linewidth, width=3.5cm]{deleteMode}
-\caption{Tryb usuwania }
-\label{fig:deleteMode}
-\end{figure}
+
 
 \paragraph{Manualna realizacja planu}
 \begin{enumerate}
 \item W przypadku ukończonego planu zawiera tekst "Oznacz jako nieukończony"
 \item W przypadku nieukończonego planu zawiera tekst "Oznacz plan jako ukończony"
 \end{enumerate} 
-\begin{figure}[h]
-\centering
-\includegraphics[width=0.6\linewidth, width=3.5cm]{popUpMenu}
-\caption{Manualna realizacja planu}
-\label{fig:popUpMenu}
-\end{figure}
 Ukończone elementy planu dnia mają zmniejszoną intensywność kolorów.
 
 
@@ -1149,19 +1203,20 @@ Domyślna tekst zawiera link do wybranego miejsca na mapie HERE
 \begin{figure}[h]
 \begin{subfigure}{0.3\textwidth}
 \centering
-\includegraphics[width=0.6\linewidth, width=3.5cm]{shareOnFacebook}
+\includegraphics[width=0.9\linewidth, width=5cm]{shareOnFacebook}
 \caption{Udostępnianie posta}
 \label{fig:shareOnFacebook}
 \end{subfigure}
 \begin{subfigure}{0.7\textwidth}
 \centering
-\includegraphics[width=0.9\linewidth, width=7cm]{hereMobile}
+\includegraphics[width=0.9\linewidth, width=9cm]{hereMobile}
 \caption{Widok linku do map HERE}
 \label{fig:hereMobile}
 \end{subfigure}
 \caption{Udostępnianie elementu planu}
 \label{fig:podrecznik8}
 \end{figure}
+\FloatBarrier
 
 \section{Skanowanie dokumentów}
 Użytkownik posiadający plan podróży ma możliwość dodania skanu – czarno-białego zdjęcia z wyróżnionymi istotnymi informacjami.  
@@ -1179,37 +1234,96 @@ W celu przechowania dokumentu w aplikacji należy:
  
 
 \begin{figure}[h]
-\begin{subfigure}{0.23\textwidth}
+\begin{subfigure}{0.5\textwidth}
 \centering
-\includegraphics[width=0.4\linewidth, width=3cm]{sideBar}
+\includegraphics[width=0.9\linewidth, width=5cm]{sideBar}
 \caption{Boczne menu}
 \label{fig:sideBar}
 \end{subfigure}
-\begin{subfigure}{0.23\textwidth}
+\begin{subfigure}{0.5\textwidth}
 \centering
-\includegraphics[width=0.4\linewidth, width=3cm]{scans}
+\includegraphics[width=0.9\linewidth, width=5cm]{scans}
 \caption{Galeria skanów}
 \label{fig:scans}
 \end{subfigure}
-\begin{subfigure}{0.23\textwidth}
+\begin{subfigure}{0.5\textwidth}
 \centering
-\includegraphics[width=0.4\linewidth, width=3cm]{chooseScan}
+\includegraphics[width=0.9\linewidth, width=5cm]{chooseScan}
 \caption{Wybranie ważnegych informacji}
 \label{fig:chooseScan}
 \end{subfigure}
-\begin{subfigure}{0.23\textwidth}
+\begin{subfigure}{0.5\textwidth}
 \centering
-\includegraphics[width=0.4\linewidth, width=3cm]{scan}
+\includegraphics[width=0.9\linewidth, width=5cm]{scan}
 \caption{Obraz po przekształceniu}
 \label{fig:scan}
 \end{subfigure}
 \caption{Wykonanie skanu}
 \label{fig:podrecznik8}
 \end{figure}
+\FloatBarrier
 
 \section{Znajomi}
+Pragnąc udostępnić innemu użytkownikowi podróży należy go wcześniej dodać do znajomych. Można to zrobić w następujących krokach:
+\begin{enumerate}
+\item Kliknąć na symbol hamburgera
+\item W bocznym menu wybrać "Znajomi"
+\item Wpisać w wyszukiwarce adres mailowy danego użytkownika
+\item Wybrać odpowiedni mail z podpowiedzi 
+\item Potwierdzić pragnienie dodania do znajomych, poprzez kliknięcie "OK"
+\item W przypadku prawidłowego wykonania czynności użytkownik zostanie automatycznie dodany do listy znajomych oraz pojawi się odpowiednie powiadomienie
+\end{enumerate}
+
+\begin{figure}[h]
+\begin{subfigure}{0.3\textwidth}
+\centering
+\includegraphics[width=0.9\linewidth, width=5cm]{friends2}
+\caption{Wyszukiwanie znajomych}
+\label{fig:friends2}
+\end{subfigure}
+\begin{subfigure}{0.3\textwidth}
+\centering
+\includegraphics[width=0.9\linewidth, width=5cm]{friends3}
+\caption{Potwierdzenie decyzji}
+\label{fig:friends3}
+\end{subfigure}
+\begin{subfigure}{0.3\textwidth}
+\centering
+\includegraphics[width=0.9\linewidth, width=5cm]{friends4}
+\caption{Wynik czynności}
+\label{fig:friends4}
+\end{subfigure}
+\caption{Dodawanie znajomych}
+\label{fig:podrecznik9}
+\end{figure}
+\FloatBarrier
+ 
 
 \section{Rekomendacja miejsc}
+Bazując na opiniach innych użytkowników aplikacja wyświetla listę polecanych miejsc. W trakcie korzystania z aplikacji użytkownik:
+\begin{enumerate}
+\item Dostaje powiadomienie o znalezieniu miejsc wartych jego uwagi
+\item Klika na powiadomienie od aplikacji
+\item Zostaje przekierowany do aplikacji z wyświetlonym oknem zawierającym listę rekomendowanych miejsc 
+\end{enumerate}
+\begin{figure}[h]
+\centering
+\begin{subfigure}{0.4\textwidth}
+\centering
+\includegraphics[width=0.9\linewidth, width=5cm]{recomendation1}
+\caption{Powiadomienie aplikacji}
+\label{fig:recomendation1}
+\end{subfigure}
+\begin{subfigure}{0.4\textwidth}
+\centering
+\includegraphics[width=0.9\linewidth, width=5cm]{recomendation2}
+\caption{Lista miejsc wartych uwagi}
+\label{fig:recomendation2}
+\end{subfigure}
+\caption{Rekomendacja atrakcji}
+\label{fig:podrecznik11}
+\end{figure}
+\FloatBarrier
 
 \chapter{Podsumowanie (Anna Malizjusz)}
 
