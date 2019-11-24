@@ -2,22 +2,15 @@
 <resources>
     <string-array name="place_categories">
         <!-- if you add something - add it in enum "PlacesCategory" -->
-        <item>@string/eat_drink</item>
         <item>@string/restaurant</item>
-        <item>@string/snacks_fast_food</item>
         <item>@string/coffee_tea</item>
         <item>@string/going_out</item>
         <item>@string/sights_museum</item>
         <item>@string/transport</item>
-        <item>@string/airport</item>
         <item>@string/accommodation</item>
         <item>@string/shopping</item>
         <item>@string/leisure_outdoor</item>
         <item>@string/natural_geographical</item>
-        <item>@string/petrol_station</item>
-        <item>@string/atm_bank_exchange</item>
-        <item>@string/toilet_rest_area</item>
-        <item>@string/hospital_health_care_facility</item>
     </string-array>
 
     <string-array name="travel_modes">

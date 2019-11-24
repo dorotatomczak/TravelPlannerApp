@@ -126,7 +126,7 @@ class AddPlanElementActivity : AppCompatActivity(), AddPlanElementContract.View 
         val categoryNameDropDown = dropdownCategoriesAddPlan.selectedItem.toString()
 
         for (category in PlaceCategory.values()) {
-            if (this.resources.getString(category.stringResurceId) == categoryNameDropDown)
+            if (this.resources.getString(category.stringResourceId) == categoryNameDropDown)
                 categoryName = category.categoryName
         }
 
