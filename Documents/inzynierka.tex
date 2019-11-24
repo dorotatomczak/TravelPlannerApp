@@ -75,12 +75,12 @@ BJSON (binary JSON) - JSON kodowany binarnie \\
 JWT (JSON Web Token) - token w formacie JSON używany w celu zabezpieczenia dostępu aplikacji \\
 API (Application Programming Interface) - interfejs aplikacji dostępny dla programisty \\
 MVP (Model View Presenter) - wzorzec architektoniczny\\
-IDE (Integrated Development Environment) - zintegrowane środowisko programistyczne\\
-DTO (Data State Object) - wzorzec projektowy, rodzaj kontenera na dane\\
-CRUD – (create, read, update, delete) - zestaw czterech podstawowych funkcji dostępu do bazy danych
-DAO – (Data access object) - klasa będąca odzwierciedleniem tabeli bazodanowej
-SQL – (Standard Query Language) - język zapytań do niektórych baz danych (w tym PostgreSQL)
-JDBC - (Java Database Connectivity) - zestaw funkcji umożliwiających połączenie z bazą danych PostgreSQL
+IDE (Integrated Development Environment) - zintegrowane środowisko programistyczne \\
+DTO (Data Transfer Object) - wzorzec projektowy, rodzaj kontenera na dane \\
+CRUD – (create, read, update, delete) - zestaw czterech podstawowych funkcji dostępu do bazy danych \\
+DAO – (Data Access Object) - klasa będąca odzwierciedleniem tabeli bazodanowej \\
+SQL – (Standard Query Language) - język zapytań do niektórych baz danych (w tym PostgreSQL) \\
+JDBC - (Java Database Connectivity) - zestaw funkcji umożliwiających połączenie z bazą danych PostgreSQL \\
 
 
 \chapter{Wstęp i cel pracy (Karolina Makuch)}  
@@ -110,7 +110,7 @@ Aplikacje do planowania podróży to często spotykane rozwiązanie ułatwiając
 
 
 \begin{table}[ht]
-\captionof{table}{Dane testowanych aplikacji\label{tab:porównianie}}
+\captionof{table}{Dane testowanych aplikacji z dnia 15.03.2019\label{tab:porównianie}}
 \centering
 \begin{tabular}{ |c|c|c|c| }
 \hline
@@ -593,7 +593,7 @@ Warunki końcowe:
 
 \chapter{Decyzje projektowe}
 
-\section{Wybór języka Kotlin}
+\section{Wybór języka Kotlin (Dorota Tomczak)}
 \par Przed rozpoczęciem prac implementacyjnych nad projektem należało podjąć decyzję, co do wyboru języka programowania. W przypadku aplikacji mobilnej na system Android, przy założeniu że miałaby to być aplikacja natywna, wybór ten ograniczał się do dwóch opcji – Java lub Kotlin. Ostatecznie zdecydowano o napisaniu aplikacji w Kotlinie, głównie ze względu na fakt, że 7 maja 2019 firma Google na konferencji Google I/O 2019 ogłosiła, że ten język jest obecnie preferowanym językiem do tworzenia aplikacji mobilnych na Androida\cite{Google I/O 2019}. Aby ułatwić jednoczesną pracę nad aplikacją serwerową podjęto decyzję o wykorzystaniu języka Kotlin również i w tym projekcie.
 \par Podczas pracy nad projektem oraz z perspektywy czasu po zakończeniu działań implementacyjnych, jednomyślnie stwierdzono, że wybór Kotlina był słuszny. Język ten zapewnia wiele przydatnych udogodnień i ulepszeń w stosunku do języka Java, które wpływają na jakość kodu i satysfakcję z pracy nad nim. Jedną z jego niezaprzeczalnych zalet jest minimalizacja tzw. kodu boilerplate, co przejawia się między innymi w takich jego cechach jak: 
 
