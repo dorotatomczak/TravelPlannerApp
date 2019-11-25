@@ -82,16 +82,42 @@ DAO – (Data access object) - klasa będąca odzwierciedleniem tabeli bazodanow
 SQL – (Standard Query Language) - język zapytań do niektórych baz danych (w tym PostgreSQL) \\
 JDBC - (Java Database Connectivity) - zestaw funkcji umożliwiających połączenie z bazą danych PostgreSQL \\
 ERD - Entity Relation Diagram - Diagram relacyjnej bazy danych \\
+IDE (Integrated Development Environment) - zintegrowane środowisko programistyczne \\
+DTO (Data Transfer Object) - wzorzec projektowy, rodzaj kontenera na dane \\
+CRUD – (create, read, update, delete) - zestaw czterech podstawowych funkcji dostępu do bazy danych \\
+DAO – (Data Access Object) - klasa będąca odzwierciedleniem tabeli bazodanowej \\
+SQL – (Standard Query Language) - język zapytań do niektórych baz danych (w tym PostgreSQL) \\
+JDBC - (Java Database Connectivity) - zestaw funkcji umożliwiających połączenie z bazą danych PostgreSQL \\
 
 
-\chapter{Wstęp i cel pracy}  
-xxxxx
+\chapter{Wstęp i cel pracy (Karolina Makuch)}
+\par Aplikacje mobline są coraz popularniejszym rozwiązaniem stosowanym w różnych dziedzinach. Rozwój technologiczny potęguje możliwości smartfonów. Przez co coraz więcej firm decyduje się na przenoszenie swoich aplikacji na platformy mobilne. Kilkanaście lat temu  służyły one głównie do komunikacji. Obecnie szeroka gama ich funkcjonalności zaczyna dorównywać ich "większym braciom" - komputerom.
+\par Jednakże znaczącą przewagę zyskują dzięki swoim rozmiarom. Są znacznie wygodniejsze w codziennej obsłudze. Większość z nich zmieści się do kieszeni swojego właściciela. Dzięki temu coraz częściej są wykorzystywane w miejscach publicznych, nie zabierając przestrzeni innym osobom. Umożliwiają między innymi ustalanie szczegółów poprzez pisanie wiadomości mailowych, wyszukiwanie potrzebnych informacji jak również odpoczynek poprzez zagranie w grę mobilną.
+\par Zauważalny jest także rozwój smartfonów w kierunku fotografii. Nowsze modele posiadają znacznie większą ilość megapikseli (czasem nawet dwukrotnie) niż lustrzanki wyprodukowane kilka lat po dwutysięcznym roku. Posiadają dodatkowo coraz więcej obiektywów zwielokrotniając kontrolę nad finalnym efektem zdjęcia.
+\par Uwzględniając wszystkie wspomniane powyżej zalety postanowiono połączyć swoje zainteresowanie podróżami z umiejętnościami zdobytymi podczas studiów informatycznych tworząc pożyteczną aplikację mobliną umożliwiającą planowanie podróży.
+\par Zdecydowano się na implementację aplikacji dla systemu mobilnego Android, rozwijanego przez firmę Google. Opera się on na jądrze Linuxa oraz na oprogramowaniu posiadającym licencję GNU (ang. \textit{GNU General Public License}).
+ \par Od blisko dziesięciu lat smarfony z systemem Android od znajdują się na pierwszym miejscu w światowym rankingu najczęściej kupowanych telefonów. Podczas jednego roku (2017) sprzedano blisko 1,3 mln urządzeń z tym systemem. Jest on zdecydowanie bardziej otwarty ( dzięki mniejszym kosztom implementacji) oraz dostępny (przystępniejsze ceny urządzeń) niż konkurencja.
+\par Potrzebne informacje są przechowywane poza aplikacją. Wykorzystano w tym celu bazę danych \textit{PostgreSQL}. Zaimplementowano również serwer umożliwiający komunikację pomiędzy bazą a aplikacją oraz z zewnętrznym API.
+\par Zdefiniowano również cele do osiągnięcia. Postawiono na zwiększenie zadowolenia użytkownika z podróży poprzez zmniejszenie poziomu stresu podczas jej organizacji. W tym celu dodano między innymi:
+
+\begin{itemize}
+
+\item funkcjonalności umożliwiające znalezienie potrzebnych informacji na temat poszczególnych atrakcji oraz transportu (dzięki komunikacji z zewnętrznym API),
+
+\item  wyświetlenie rekomendacji na podstawie opinii innych użytkowników (wykorzystując algorytm \textit{Collaborative Filtering}),
+
+\item umożliwienie edycji jednego planu podróży poprzez kilku użytkowników,
+
+\item przechowywanie istotnych dokumentów w postaci skanów – odpowiednio przekształconych zdjęć wykonanych przez użytkownika (wykorzystując algorytmy z biblioteki \textit{OpenCV}),
+
+\end{itemize}
+
 \chapter{Przegląd podobnych rozwiązań} 
 Aplikacje do planowania podróży to często spotykane rozwiązanie ułatwiające organizowanie wyjazdów. Oferowane są dla systemów operacyjnych Android oraz iOS odpowiednio w serwisach Google Play i Apple Store. Przetestowano 4 przykładowe aplikacje, których podstawowe dane zawiera tabela~\ref{tab:porównianie}.
 
 
 \begin{table}[ht]
-\captionof{table}{Dane testowanych aplikacji\label{tab:porównianie}}
+\captionof{table}{Dane testowanych aplikacji z dnia 15.03.2019\label{tab:porównianie}}
 \centering
 \begin{tabular}{ |c|c|c|c| }
 \hline
@@ -718,29 +744,36 @@ Elementy planu dnia wyświetlają się w formie chronologicznej listy rozdzielon
 \par Ładowanie plików w aplikacji zostało zrealizowane dzięki bibliotece \textit{Glide}\cite{Glide}, która pozwala na zwiększenie efektywności tego procesu poprzez automatyczne cachowanie i optymalizację rozmiaru zdjęcia. Znając adres, pod którym znajduje się plik, użycie wspomnianej biblioteki jest bardzo proste, dlatego na większą uwagę zasługuje proces wysyłania fotografii przez serwer. Plik o wskazanej nazwie zostaje załadowany jako typ \textit{Resource} przez \textit{FileStorageService}, a następnie konstruowana jest odpowiedź serwera, która w ciele zawiera otrzymany zasób. Odpowiedź jest dodatkowo opatrzona nagłówkiem \textit{Content-Disposition}, który zawiera informację o tym, że plik ma zostać potraktowany jako załącznik. 
 
 \section{Dodawanie użytkowników do znajomych oraz wyświetlanie listy znajomych (Karolina Makuch)}
-\par W celu umożliwienia użytkownikowi udostępniania planu podróży znajomym dodano do aplikacji funkcjonalność odpowiadającą za wyszukiwanie konkretnych użytkowników. Została ona zrealizowana poprzez  wykorzystanie komponentu SearchView (appcompat.widget.SearchView) zawierającego pole umożliwiające wpisanie ciągu znaków. Podczas wprowadzania kolejnych liter zostają wyświetlane podpowiedzi w czasie rzeczywistym. Aktualizują się  przy każdej zmianie wyrazu. Uwzględniają one wszystkie adresy mailowe zarejestrowanych w aplikacji użytkowników zawierające wpisane  litery.
-\par W tym celu została stworzona klasa implementująca abstrakcyjną klasę ContentProvider ( android.content.ContentProvider). Po wysłaniu odpowiedniego zapytania zostaje utworzony MatrixCursor zawierający dwie kolumny: identyfikator użytkownika oraz jego adres mailowy. Po otrzymaniu odpowiedzi od serwera dla każdego użytkownika zostaje utworzony wiersz, który następnie jest dodawany do kursora. Wyświetlana jest tylko kolumna zawierająca adres mailowy.
-\par Kursor został również wykorzystany w celu umożliwienia dodania wybranego użytkownika do znajomych. Podczas kliknięcia na wybrany wiersz zostaje wywoływana nadpisana metoda onSuggestionClick obiektu klasy SearchManager (android.app.SearchManager). Pobiera ona potrzebne dane wybranej pozycji z tablicy MatrixCursor’a.
-\par Do eliminacji przypadkowych działań zostało wykorzystane okno dialogowe wymagające potwierdzenia  zamiaru dodania wybranego użytkownika do znajomych. W tym celu została wykorzystana klasa AlertDialog (androidx.appcompat.app.AlertDialog). Po wyrażeniu zgody  oraz w przypadku poprawnego wykonania metody użytkownik otrzymuje powiadomienie stworzone poprzez wywołanie konstruktora klasy Snackbar (com.google.android.material.snackbar.Snackbar).
-\par W tym samym oknie pod polem do wyszukiwania znajduje się lista znajomych użytkownika. Została ona zaimplementowana jako liniowa warstwa (ang. LinearLayout) umożliwiająca odświeżanie widoku poprzez szybkie przesunięcie palcem po ekranie (ang. SwipeRefreshLayout). Implementuje ona tryb usuwania.
+\par W celu umożliwienia użytkownikowi udostępniania planu podróży znajomym dodano do aplikacji funkcjonalność odpowiadającą za wyszukiwanie konkretnych użytkowników. Została ona zrealizowana poprzez  wykorzystanie komponentu \textit{SearchView} (\textit{appcompat.widget.SearchView}) zawierającego pole umożliwiające wpisanie ciągu znaków. Podczas wprowadzania kolejnych liter zostają wyświetlane podpowiedzi w czasie rzeczywistym. Aktualizują się  przy każdej zmianie wyrazu. Uwzględniają one wszystkie adresy mailowe zarejestrowanych w aplikacji użytkowników zawierające wpisane  litery.
+\par W tym celu została stworzona klasa implementująca abstrakcyjną klasę \textit{ContentProvider} ( \textit{android.content.ContentProvider}). Po wysłaniu odpowiedniego zapytania zostaje utworzony \textit{MatrixCursor} zawierający dwie kolumny: identyfikator użytkownika oraz jego adres mailowy. Po otrzymaniu odpowiedzi od serwera dla każdego użytkownika zostaje utworzony wiersz, który następnie jest dodawany do kursora. Wyświetlana jest tylko kolumna zawierająca adres mailowy.
+\par Kursor został również wykorzystany w celu umożliwienia dodania wybranego użytkownika do znajomych. Podczas kliknięcia na wybrany wiersz zostaje wywoływana nadpisana metoda \textit{onSuggestionClick} obiektu klasy \textit{SearchManager} (\textit{android.app.SearchManager}). Pobiera ona potrzebne dane wybranej pozycji z tablicy \textit{MatrixCursor’a}.
+\par Do eliminacji przypadkowych działań zostało wykorzystane okno dialogowe wymagające potwierdzenia  zamiaru dodania wybranego użytkownika do znajomych. W tym celu została wykorzystana klasa \textit{AlertDialog} (\textit{androidx.appcompat.app.AlertDialog}). Po wyrażeniu zgody  oraz w przypadku poprawnego wykonania metody użytkownik otrzymuje powiadomienie stworzone poprzez wywołanie konstruktora klasy \textit{Snackbar} (\textit{com.google.android.material.snackbar.Snackbar}).
+\par W tym samym oknie pod polem do wyszukiwania znajduje się lista znajomych użytkownika. Została ona dodana jako liniowa warstwa (ang. \textit{LinearLayout}) umożliwiająca odświeżanie widoku poprzez szybkie przesunięcie palcem po ekranie (ang. \textit{SwipeRefreshLayout}). Implementuje ona tryb usuwania.
 \par Powiązanie dwóch użytkowników poprzez oznaczenie ich jako znajomych zostało zrealizowane poprzez dołączenie do bazy danych osobnej tabeli przechowującej potrzebne informacje. Dodawanie jest jednostronne. Znajomy danego użytkownika nie jest zobowiązany do posiadania go na swojej liście znajomych.
 \par Po stronie serwera zostały dodane pliki umożliwiające komunikację z wspomnianą powyżej tabelą oraz wykonywaniu potrzebnych zapytań. Oprócz bazowych, niezbędnych do komunikacji zostało również zaimplementowane w jednym zapytanie zwracające wszystkie adresy mailowe nieznajomych użytkowników zawierających wpisany ciąg znaków.
 
 \section{Udostępnianie podróży znajomym (Karolina Makuch)}
 
-\par  Udostępnianie podróży jest możliwe po dodaniu użytkownika do listy znajomych. W momencie wybrania ikony udostępnienia pojawia się okno dialogowe (androidx.fragment.app.DialogFragment) zawierające znajomych użytkownika w formie  listy wyboru (ang. Checkbox) nie mających dostępu do danego planu podróży. Podczas implementacji została nadpisana metoda setMultiChoiceItems w celu umożliwienia udostępnienia planu wielu znajomym podczas jednej czynności.
-\par  Po wybraniu osób, zatwierdzeniu decyzji oraz poprawnym wykonaniu metody użytkownik otrzymuje powiadomienie stworzone poprzez wywołanie konstruktora klasy Snackbar  (com.google.android.material.snackbar.Snackbar).  Odpowiednie powiadomienie zostaje również wyświetlone w sytuacji niewybrania ani jednego znajomego oraz potwierdzeniu wykonania czynności.
+\par  Udostępnianie podróży jest możliwe po dodaniu użytkownika do listy znajomych. W momencie wybrania ikony udostępnienia pojawia się okno dialogowe (\textit{androidx.fragment.app.DialogFragment}) zawierające znajomych użytkownika w formie  listy wyboru (ang. \textit{Checkbox}) nie mających dostępu do danego planu podróży. Podczas implementacji została nadpisana metoda \textit{setMultiChoiceItems} w celu umożliwienia udostępnienia planu wielu znajomym podczas jednej czynności.
+\par  Po wybraniu osób, zatwierdzeniu decyzji oraz poprawnym wykonaniu metody użytkownik otrzymuje powiadomienie stworzone poprzez wywołanie konstruktora klasy \textit{Snackbar}
+(\textit{com.google.android.material.snackbar.Snackbar}).  Odpowiednie powiadomienie zostaje również wyświetlone w sytuacji niewybrania ani jednego znajomego oraz potwierdzeniu wykonania czynności.
 \par  Każdy użytkownik mający dostęp do podróży posiada prawa do edycji jej planu. Podczas wykonywania czynności udostępniania wybranemu znajomemu zostaje przypisana dana podróż poprzez dodanie powiązania w odpowiedniej tabeli.
-\par  Dokonano również implementacji zapytania zwracającego listę adresów email znajomych danego użytkownika nieposiadających dostępu do wybranej podróży.  
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=\linewidth]{getFriendsBySharedTravel}
+\caption{Zapytanie zwracające listę adresów mailowych znajomych danego użytkownika nieposiadających dostępu do wybranej podróży}
+\label{fig:getFriendsBySharedTravel}
+\end{figure}
 
 \section{Udostępnianie planu dnia w medium społecznościowym (Karolina Makuch)}
-\par  Po dłuższym przytrzymaniu poszczególnego elementu planu pojawia się „dymek”  (android.widget.PopupMenu) zawierający trzy czynności do wyboru. Jedną z nich jest możliwość udostępnienia wybranego punktu w medium społecznościowym. Postanowiono wybrać jedno z najpopularniejszych – Facebook‘a. W tym celu wykorzystano akcję wysyłającą (ang. ACTION.SEND) za pomocą intencji (android.content.Intent). 
-\par  W przypadku znalezienia aplikacji Facebook na telefonie użytkownika, zostanie on automatycznie przekierowany do publikowania post’a na własnej „tablicy”. Domyślną treścią jest link do map HERE z wyszukanym miejscem z elementu planu dnia. W celu pobrania właściwego odnośnika  zostało zaimplementowane odczytywanie wartości parametru widoku (ang. View) znajdującego się w odpowiedzi w formacie JSON (z wykorzystaniem com.google.gson.JsonParser). Odsyłacz do wyników zapytania został pobrany z bazy danych. Z racji niemożliwości wykonania analizy (ang. parse) wyniku zapytania w głównym wątku aplikacji utworzono osobny wątek.
-\par Początkowo planowano inną domyślną treść. Miała ona zawierać najważniejsze informacje na temat wybranego elementu planu. Niestety zarówno wbudowany w Androidzie moduł  udostępniania, a także API Facebook’a nie udostępnia tej możliwości.  Problem ten został zgłoszony ponad 7 lat temu, lecz nie został rozwiązany. Pola "EXTRA SUBJECT" oraz "EXTRA TEXT" są pomijane w momencie próby udostępniania domyślnej zawartości w aplikacji Facebook. Z racji możliwości załączania zdjęć, linków oraz plików multimedialnych (np. video) rozważane było zamienienie tekstu na plik obrazu oraz załączenie go do akcji. Brane również pod uwagę było przeniesienie domyślnej wiadomości do schowka oraz wyświetlenie komunikatu informującego użytkownika z prośbą o wklejenie wiadomości.
-\par Jednakże stwierdzono, że takich akcji nie powinno się wymagać od użytkownika.  Ostatecznie postanowiono, że najlepszym rozwiązaniem będzie zdecydowanie się na wspomniany wcześniej odsyłacz do wyszukanego miejsca w mapy HERE (https://mobile.here.com/). Dzięki czemu  treść post’a zostanie utworzona przez użytkownika umożliwiając mu zachowanie własnego charakteru pisania.
+\par  Po dłuższym przytrzymaniu poszczególnego elementu planu pojawia się „dymek"  (\textit{android.widget.PopupMenu}) zawierający trzy czynności do wyboru. Jedną z nich jest możliwość udostępnienia wybranego punktu w medium społecznościowym. Postanowiono wybrać jedno z najpopularniejszych – \textit{Facebook‘a}. W tym celu wykorzystano akcję wysyłającą (ang. \textit{ACTION.SEND}) za pomocą intencji (\textit{android.content.Intent}).
+\par  W przypadku znalezienia aplikacji Facebook na telefonie użytkownika, zostanie on automatycznie przekierowany do publikowania post’a na własnej „tablicy”. Domyślną treścią jest link do map HERE z wyszukanym miejscem z elementu planu dnia. W celu pobrania właściwego odnośnika  zostało zaimplementowane odczytywanie wartości parametru widoku (ang. \textit{view}) znajdującego się w odpowiedzi w formacie JSON (z wykorzystaniem \textit{com.google.gson.JsonParser}). Odsyłacz do wyników zapytania został pobrany z bazy danych. Z racji niemożliwości wykonania analizy (ang. \textit{parse}) wyniku zapytania w głównym wątku aplikacji utworzono osobny wątek.
+\par Początkowo planowano inną domyślną treść. Miała ona zawierać najważniejsze informacje na temat wybranego elementu planu. Niestety zarówno wbudowany w Androidzie moduł  udostępniania, a także \textit{API Facebook’a} nie udostępnia tej możliwości.  Problem ten został zgłoszony ponad 7 lat temu, lecz nie został rozwiązany\cite{FacebookBug}. Pola \textit{"EXTRA SUBJECT"} oraz \textit{"EXTRA TEXT"} są pomijane w momencie próby udostępniania domyślnej zawartości w aplikacji Facebook. Z racji możliwości załączania zdjęć, linków oraz plików multimedialnych (np. video) rozważane było zamienienie tekstu na plik obrazu oraz dodanie go do akcji. Brane również pod uwagę było przeniesienie domyślnej wiadomości do schowka oraz wyświetlenie komunikatu informującego użytkownika z prośbą o wklejenie wiadomości.
+\par Jednakże stwierdzono, że takich akcji nie powinno się wymagać od użytkownika.  Ostatecznie postanowiono, że najlepszym rozwiązaniem będzie zdecydowanie się na wspomniany wcześniej odsyłacz do wyszukanego miejsca w mapy HERE\cite{mobileHere}. Dzięki czemu  treść post’a zostanie utworzona przez użytkownika umożliwiając mu zachowanie własnego charakteru pisania.
 
 \section{Manualna realizacja planu (Karolina Makuch)}
-\par  Kolejną akcją dostępną w „dymku” pojawiającym się po przytrzymaniu poszczególnego elementu jest manualna realizacja planu dnia. Początkowa treść akcji dla nowopowstałego nieukończonego jeszcze elementu planu dnia brzmi „Oznacz jako ukończony” (ang. „Mark as completed”). W przypadku oznaczenia części składowej planu jako zrealizowany tekst automatycznie zmienia się na „Oznacz jako nieukończony” (ang. Mark as incompleted”) oraz zwiększa się stopień przeźroczystości odpowiedniego elementu listy.  Postanowiono oznaczać zrealizowane plany poprzez wygaszenie kolorów elementów danego planu zmniejszając wartość kanału alfa (ang. Alpha).
+\par  Kolejną akcją dostępną w „dymku” pojawiającym się po przytrzymaniu poszczególnego elementu jest manualna realizacja planu dnia. Początkowa treść akcji dla nowopowstałego nieukończonego jeszcze elementu planu dnia brzmi \textit{„Oznacz jako ukończony”} (ang. \textit{„Mark as completed”}). W przypadku oznaczenia części składowej planu jako zrealizowany tekst automatycznie zmienia się na \textit{„Oznacz jako nieukończony”} (ang. \textit{„Mark as incompleted”}) oraz zwiększa się stopień przeźroczystości odpowiedniego elementu listy.  Postanowiono oznaczać zrealizowane plany poprzez wygaszenie kolorów elementów danego planu zmniejszając wartość kanału \textit{alfa} (ang. \textit{Alpha}).
  \par Zdecydowano się umożliwić użytkownikowi cofnięcie wprowadzonych zmian w przypadku wykonania niechcianego kliknięcia, świadomie rezygnując z wymagającego potwierdzenia okna dialogowego. Stwierdzono duże prawdopodobieństwo wykonywania tej akcji w pośpiechu. Dodatkowe kliknięcie wydłużyłoby czas wykonywania akcji oraz mogłoby to irytować użytkownika.
 \par  Oznaczenie planu jako wykonany zostało umożliwione dzięki dodaniu odpowiedniej kolumny do tabeli zawierającej plany dni. Dzięki temu każdy użytkownik mający dostęp do podróży ma możliwość wykonania tej czynności i jej efekty są widoczne dla wszystkich uczestników wyprawy.
 
@@ -883,7 +916,461 @@ Do nazewnictwa testów przyjęto następującą konwencję: co powinno się sta�
 \end{figure}
 
 
-\chapter{Placeholder - Podręcznik użytkownika}
+\chapter{Podręcznik użytkownika (Karolina Makuch)}
+\par W celu wytłumaczenia obsługi stworzonej aplikacji oraz zaprezentowaniu jej wizualnej strony przygotowano podręcznik użytkownika. Zawiera on poszczególne etapy wykonywania najważniejszych funkcjonalności.
+Aplikacja została zaimplementowana w dwóch wersjach językowych. Dostępny jest język polski oraz angielski.
+W trakcie implementacji została podjęta decyzja o zmianie wyglądu aplikacji. Zdecydowano się na weselsze kolory.
+
+\begin{figure}[h]
+\centering
+\begin{subfigure}{0.3\textwidth}
+\centering
+\includegraphics[width=0.8\linewidth, width=5cm]{firstDesign1}
+\caption{Widok logowania}
+\label{fig:firstDesign1}
+\end{subfigure}
+\begin{subfigure}{0.3\textwidth}
+\centering
+\includegraphics[width=0.8\linewidth, width=5cm]{firstDesign2}
+\caption{Widok podróży}
+\label{fig:firstDesign2}
+\end{subfigure}
+\begin{subfigure}{0.3\textwidth}
+\centering
+\includegraphics[width=0.8\linewidth, width=5cm]{firstDesign3}
+\caption{Plan podróży}
+\label{fig:firstDesign3}
+\end{subfigure}
+\caption{Pierwszy design}
+\label{fig:podrecznik10}
+\end{figure}
+\FloatBarrier
+\section{Rejestracja oraz logowanie użytkownika}
+Użytkownik pierwszy raz uruchamiający aplikację chcący z niej korzystać powinien stworzyć własne konto. W tym celu należy:
+
+\begin{enumerate}
+
+\item Kliknąć przycisk "Zarejestruj się"
+\item W widoku rejestracji podać swój adres mailowy oraz hasło
+\item Kliknąć "Zarejestruj się"
+\item Po pojawieniu się powiadomienia "Twoje konto zostało utworzone" następuje automatyczne przekierowanie do widoku logowania
+\item Uzupełnić pola widoku logowania tymi samymi danymi
+\item Logowanie następuje w momencie uzupełnienia danych oraz kliknięcia „Zaloguj się”
+
+\end{enumerate}
+
+\begin{figure}[h]
+\begin{subfigure}{0.5\textwidth}
+\centering
+\includegraphics[width=0.9\linewidth, width=5cm]{loginView}
+\caption{Widok logowania}
+\label{fig:loginView}
+\end{subfigure}
+\begin{subfigure}{0.5\textwidth}
+\centering
+\includegraphics[width=0.9\linewidth, width=5cm]{registrationPage}
+\caption{Widok rejestracji}
+\label{fig:registrationPage}
+\end{subfigure}
+\caption{Logowanie i rejestracja użytkownika}
+\label{fig:podrecznik1}
+\end{figure}
+\FloatBarrier
+
+\section{Podróże}
+Pierwszy widok pojawiający się tuż po zalogowaniu zawiera listę dostępnych podróży.
+
+\begin{figure}[h]
+\centering
+\begin{subfigure}{0.3\textwidth}
+\centering
+\includegraphics[width=0.8\linewidth, width=5cm]{travelsView}
+\caption{Widok podróży użytkownika}
+\label{fig:travelsView}
+\end{subfigure}
+\begin{subfigure}{0.3\textwidth}
+\centering
+\includegraphics[width=0.8\linewidth, width=5cm]{createNewTravel}
+\caption{Okno dialogowe}
+\label{fig:createNewTravel}
+\end{subfigure}
+\begin{subfigure}{0.3\textwidth}
+\centering
+\includegraphics[width=0.8\linewidth, width=5cm]{defaultImage}
+\caption{Domyślny obraz podróży}
+\label{fig:defaultImage}
+\end{subfigure}
+\caption{Tworzenie nowej podróży}
+\label{fig:podrecznik3}
+\end{figure}
+\FloatBarrier
+
+\subsection{Tworzenie podróży}
+W celu utworzenia podróży należy:
+\begin{enumerate}
+\item Nacisnąć przycisk oznaczony symbolem „+”
+\item Uzupełnić okno dialogowe nazwą podróży i kliknąć "OK"
+\item Utworzona podróż pojawi się na liście wraz z domyślnym zdjęciem
+\end{enumerate}
+
+
+\section{Widok podróży}
+Po wybraniu danej podróży zostaje wyświetlony widok zawierający informacje na jej temat.
+
+\begin{figure}[h]
+\centering
+\begin{subfigure}{0.4\textwidth}
+\centering
+\includegraphics[width=0.9\linewidth, width=5cm]{newTravel}
+\caption{Widok danej podróży}
+\label{fig:newTravel}
+\end{subfigure}
+\begin{subfigure}{0.4\textwidth}
+\centering
+\includegraphics[width=0.9\linewidth, width=5cm]{shareTravelDialog}
+\caption{Udostępnianie podróży znajomym}
+\label{fig:shareTravelDialog}
+\end{subfigure}
+\caption{Pojedyńcza podróż}
+\label{fig:podrecznik4}
+\end{figure}
+\FloatBarrier
+\subsection{Zmiana nazwy podróży}
+
+W celu zmiany nazwy podróży należy:
+\begin{enumerate}
+\item Nacisnąć przycisk oznaczony symbolem ołówka
+\item Uzupełnić okno dialogowe nową nazwą podróży i kliknąć "OK"
+\item Nazwa podróży zostanie zaktualizowana
+\end{enumerate}
+
+\subsection{Zmiana tła podróży}
+
+W celu zmiany tła podróży należy:
+\begin{enumerate}
+\item Nacisnąć przycisk oznaczony symbolem zdjęcia
+\item Wybrać odpowiednie zdjęcie z galerii urządzenia
+\item Zdjęcie zostanie zaktualizowane
+\end{enumerate}
+
+\subsection{Udostępnianie podróży znajomym}
+
+W celu udostępnienia podróży znajomym należy:
+\begin{enumerate}
+\item Nacisnąć przycisk oznaczony symbolem udostępniania
+\item Wybrać wszystkich znajomych, którym ma zostać udostępniona podróż
+\item Potwierdzić swój wybór poprzez naciśnięcie przycisku "OK"
+\item W przypadku potwierdzenia wykonania czynności pojawi się powiadomienie z odpowiednim komunikatem
+\end{enumerate}
+
+\subsection{Dodanie elementu planu dnia}
+W celu dodania elementu planu dnia należy:
+\begin{enumerate}
+\item Nacisnąć przycisk oznaczony symbolem "+"
+\item Wybrać jedną z dwóch dostępnych opcji
+\end{enumerate}
+\paragraph{Dodanie miejsca}
+Pierwsza z opcji jest oznaczona poprzez symbol budynku.
+Umożliwia on dodanie miejsca do planu dnia.
+
+\begin{enumerate}
+\item Należy wybrać kategorię spośród:
+\begin{itemize}
+\item Jedzenie i picie
+\item Restauracja
+\item Fast food
+\item Kawiarnia
+\item Rozrywka
+\item Zabytki i muzea
+\item Lotnisko
+\item Nocleg
+\item Zakupy
+\item Aktywny wypoczynek
+\item Natura
+\item Stacja paliw
+\item Bankomat
+\item Toaleta
+\item Opieka zdrowotna
+\end{itemize}
+\item Po naciśnięciu wyszukiwania miejsca po nazwie pojawia się widok mapy umożliwiającej wybranie konkretnego miejsca
+\item Po wybraniu pinezki pojawiają się dokładne informacje na temat miejsca
+\item Naciśnięcie przycisku zawierającego symbol „tick” przekierowuje użytkownika do pierwszego ekranu wyszukiwania
+\item Następnie należy wybrać datę oraz godzinę realizacji planu
+\item Opcjonalne jest dodanie własnych notatek
+\item Dodanie miejsca następuje po naciśnięciu przycisku oznaczonym symbolem "tick"
+\end{enumerate}
+
+\begin{figure}[h]
+\begin{subfigure}{0.3\textwidth}
+\centering
+\includegraphics[width=0.9\linewidth, width=5cm]{searchPlace}
+\caption{Uzupełnienie danych}
+\label{fig:searchPlace}
+\end{subfigure}
+\begin{subfigure}{0.3\textwidth}
+\centering
+\includegraphics[width=0.9\linewidth, width=5cm]{searchingPlace}
+\caption{Wyszukiwanie miejsca}
+\label{fig:searchingPlace}
+\end{subfigure}
+\begin{subfigure}{0.3\textwidth}
+\centering
+\includegraphics[width=0.9\linewidth, width=5cm]{placeDescription}
+\caption{Szczegółowe informacje na temat miejsca}
+\label{fig:placeDescription}
+\end{subfigure}
+\begin{subfigure}{0.5\textwidth}
+\centering
+\includegraphics[width=0.9\linewidth, width=5cm]{clock}
+\caption{Wybieranie godziny}
+\label{fig:clock}
+\end{subfigure}
+\begin{subfigure}{0.5\textwidth}
+\centering
+\includegraphics[width=0.9\linewidth, width=5cm]{calendar}
+\caption{Wybieranie daty}
+\label{fig:calendar}
+\end{subfigure}
+\caption{Tworzenie elementu planu dnia}
+\label{fig:podrecznik7}
+\end{figure}
+\FloatBarrier
+\paragraph{Dodanie transportu}
+W przypadku wybrania przycisku z symbolem samochodu użytkownik ma możliwość dodania transportu jako element planu dnia.
+\begin{enumerate}
+\item Należy kliknąć na na pole miejsca początkowego
+\item Następnie wybrać element planu dnia
+\item Kliknąć na pole miejsca docelowego
+\item Wybrać element planu dnia
+\item Kliknąć na przycisk oznaczony symbolem strzałki w prawo
+\item Wybrać rodzaj transportu
+\item Kliknąć na przycisk oznaczony symbolem lupy
+\end{enumerate}
+
+\begin{figure}[h]
+\centering
+\begin{subfigure}{0.4\textwidth}
+\centering
+\includegraphics[width=0.9\linewidth, width=5cm]{transport1}
+\label{fig:transport1}
+\end{subfigure}
+\begin{subfigure}{0.4\textwidth}
+\centering
+\includegraphics[width=0.9\linewidth, width=5cm]{transport2}
+\label{fig:transport2}
+\end{subfigure}
+\caption{Wyszukiwanie transportu}
+\label{fig:podrecznik12}
+\end{figure}
+\FloatBarrier
+
+
+\section{Poszczególny element planu dnia}
+Aplikacja umożliwia wykonywanie kilku czynności związanych z poszczególnym elementem planu dnia. Oprócz możliwości odczytania szczegółowych informacji na jego temat można ocenić dane miejsce, oznaczyć plan jako ukończony oraz udostępnić go w medium społecznościowym.
+
+\begin{figure}[h]
+\centering
+\begin{subfigure}{0.4\textwidth}
+\centering
+\includegraphics[width=0.9\linewidth, width=5cm]{planElements}
+\caption{Widok planu podróży}
+\label{fig:planElements}
+\end{subfigure}
+\begin{subfigure}{0.4\textwidth}
+\centering
+\includegraphics[width=0.9\linewidth, width=5cm]{ratePlace2}
+\caption{Ocenianie elementu planu}
+\label{fig:ratePlace2}
+\end{subfigure}
+\caption{Pojedyńcza podróż}
+\label{fig:podrecznik4}
+\end{figure}
+\FloatBarrier
+
+
+\subsection{Kliknięcie elementu}
+Po kliknięciu na wybrany element pojawia się osobny widok zawierający dokładne informacje na temat wybranego miejsca. Istnieje możliwość wystawienia oceny.
+
+\subsection{Przytrzymanie elementu}
+Po przytrzymaniu palca na danym planu dnia pojawia się dymek z trzema opcjami do wyboru.
+
+\begin{figure}[h]
+\centering
+\begin{subfigure}{0.3\textwidth}
+\centering
+\includegraphics[width=0.9\linewidth, width=5cm]{popUpMenu2}
+\caption{Opcje elementu planu }
+\label{fig:popUpMenu2}
+\end{subfigure}
+\begin{subfigure}{0.3\textwidth}
+\centering
+\includegraphics[width=0.9\linewidth, width=5cm]{deleteMode}
+\caption{Tryb usuwania }
+\label{fig:deleteMode}
+\end{subfigure}
+\begin{subfigure}{0.3\textwidth}
+\centering
+\includegraphics[width=0.9\linewidth, width=5cm]{popUpMenu}
+\caption{Manualna realizacja planu}
+\label{fig:popUpMenu}
+\end{subfigure}
+\caption{Przytrzymanie elementu planu}
+\label{fig:podrecznik5}
+\end{figure}
+\FloatBarrier
+
+\paragraph{Usuwanie elementu}
+Po wybraniu opcji "Usuń" zostaje włączony tryb usuwania.
+Jest on oznaczony jasnoszarym kolorem.
+W celu usunięcia elementu należy:
+\begin{enumerate}
+\item Zaznaczyć wszystkie elementy, które mają być usunięte
+\item Potwierdzić wykonanie czynności poprzez kliknięcie ikony kosza na śmieci
+\end{enumerate}
+\textbf{UWAGA Przejście do trybu usuwania jest możliwe w każdym widoku zawierającym listę elementów. Przejście do niego jest wykonywane po dłuższym przytrzymaniu jednego z elementów.}
+
+
+
+\paragraph{Manualna realizacja planu}
+\begin{enumerate}
+\item W przypadku ukończonego planu zawiera tekst "Oznacz jako nieukończony"
+\item W przypadku nieukończonego planu zawiera tekst "Oznacz plan jako ukończony"
+\end{enumerate}
+Ukończone elementy planu dnia mają zmniejszoną intensywność kolorów.
+
+
+\paragraph{Udostępnianie w medium społecznościowym}
+Gdy użytkownik ma zainstalowaną aplikację Facebook posiada możliwość udostępnienia elementu planu na swojej "tablicy". W celu wykonania tej czynności należy:
+\begin{enumerate}
+\item Nacisnąć opcję "Udostępnij"
+\item Napisać treść post'a
+\end{enumerate}
+Domyślna tekst zawiera link do wybranego miejsca na mapie HERE
+
+\begin{figure}[h]
+\begin{subfigure}{0.3\textwidth}
+\centering
+\includegraphics[width=0.9\linewidth, width=5cm]{shareOnFacebook}
+\caption{Udostępnianie posta}
+\label{fig:shareOnFacebook}
+\end{subfigure}
+\begin{subfigure}{0.7\textwidth}
+\centering
+\includegraphics[width=0.9\linewidth, width=9cm]{hereMobile}
+\caption{Widok linku do map HERE}
+\label{fig:hereMobile}
+\end{subfigure}
+\caption{Udostępnianie elementu planu}
+\label{fig:podrecznik8}
+\end{figure}
+\FloatBarrier
+
+\section{Skanowanie dokumentów}
+Użytkownik posiadający plan podróży ma możliwość dodania skanu – czarno-białego zdjęcia z wyróżnionymi istotnymi informacjami.
+W celu przechowania dokumentu w aplikacji należy:
+\begin{enumerate}
+\item Kliknąć na symbol hamburgera
+\item W bocznym menu wybrać "Skany"
+\item Nacisnąć przycisk zawierający symbol "+"
+\item Wyrazić zgodę na dostęp do aparatu
+\item Wykonać zdjęcie dokumentu
+\item Wybrać interesujący obszar (dowolny czworokąt)
+\item Zaakceptować przekształcenie obrazu klikając przycisk "Skanuj"
+\item Miniatura skanu pojawi się w galerii
+\end{enumerate}
+
+
+\begin{figure}[h]
+\begin{subfigure}{0.5\textwidth}
+\centering
+\includegraphics[width=0.9\linewidth, width=5cm]{sideBar}
+\caption{Boczne menu}
+\label{fig:sideBar}
+\end{subfigure}
+\begin{subfigure}{0.5\textwidth}
+\centering
+\includegraphics[width=0.9\linewidth, width=5cm]{scans}
+\caption{Galeria skanów}
+\label{fig:scans}
+\end{subfigure}
+\begin{subfigure}{0.5\textwidth}
+\centering
+\includegraphics[width=0.9\linewidth, width=5cm]{chooseScan}
+\caption{Wybranie ważnych informacji}
+\label{fig:chooseScan}
+\end{subfigure}
+\begin{subfigure}{0.5\textwidth}
+\centering
+\includegraphics[width=0.9\linewidth, width=5cm]{scan}
+\caption{Obraz po przekształceniu}
+\label{fig:scan}
+\end{subfigure}
+\caption{Wykonanie skanu}
+\label{fig:podrecznik8}
+\end{figure}
+\FloatBarrier
+
+\section{Znajomi}
+Chcąc udostępnić innemu użytkownikowi podróży należy go wcześniej dodać do znajomych. Można to zrobić w następujących krokach:
+\begin{enumerate}
+\item Kliknąć na symbol hamburgera
+\item W bocznym menu wybrać "Znajomi"
+\item Wpisać w wyszukiwarce adres mailowy danego użytkownika
+\item Wybrać odpowiedni mail z podpowiedzi
+\item Potwierdzić chęć dodania do znajomych, poprzez kliknięcie "OK"
+\item W przypadku prawidłowego wykonania czynności użytkownik zostanie automatycznie dodany do listy znajomych oraz pojawi się odpowiednie powiadomienie
+\end{enumerate}
+
+\begin{figure}[h]
+\begin{subfigure}{0.3\textwidth}
+\centering
+\includegraphics[width=0.9\linewidth, width=5cm]{friends1}
+\caption{Wyszukiwanie znajomych}
+\label{fig:friends1}
+\end{subfigure}
+\begin{subfigure}{0.3\textwidth}
+\centering
+\includegraphics[width=0.9\linewidth, width=5cm]{friends2}
+\caption{Potwierdzenie decyzji}
+\label{fig:friends2}
+\end{subfigure}
+\begin{subfigure}{0.3\textwidth}
+\centering
+\includegraphics[width=0.9\linewidth, width=5cm]{friends3}
+\caption{Wynik czynności}
+\label{fig:friends3}
+\end{subfigure}
+\caption{Dodawanie znajomych}
+\label{fig:podrecznik9}
+\end{figure}
+\FloatBarrier
+
+
+\section{Rekomendacja miejsc}
+Bazując na opiniach innych użytkowników aplikacja wyświetla listę polecanych miejsc. W trakcie korzystania z aplikacji użytkownik:
+\begin{enumerate}
+\item Dostaje powiadomienie o znalezieniu miejsc wartych jego uwagi
+\item Klika na powiadomienie od aplikacji
+\item Zostaje przekierowany do aplikacji z wyświetlonym oknem zawierającym listę rekomendowanych miejsc
+\end{enumerate}
+\begin{figure}[h]
+\centering
+\begin{subfigure}{0.4\textwidth}
+\centering
+\includegraphics[width=0.9\linewidth, width=5cm]{recomendation1}
+\caption{Powiadomienie aplikacji}
+\label{fig:recomendation1}
+\end{subfigure}
+\begin{subfigure}{0.4\textwidth}
+\centering
+\includegraphics[width=0.9\linewidth, width=5cm]{recomendation2}
+\caption{Lista miejsc wartych uwagi}
+\label{fig:recomendation2}
+\end{subfigure}
+\caption{Rekomendacja atrakcji}
+\label{fig:podrecznik11}
+\end{figure}
+\FloatBarrier
 
 \chapter{Podsumowanie (Anna Malizjusz)}
 
@@ -992,6 +1479,8 @@ Testy jednostkowe i instrumentalne dla logowania, rejestracji i komponentu \text
   \bibitem{Dagger 2} https://github.com/google/dagger
   \bibitem{SimpleDocumentScanner-Android} https://github.com/jbttn/SimpleDocumentScanner-Android
   \bibitem{OpenCV} https://opencv.org/
+  \bibitem{FacebookBug} https://developers.facebook.com/support/bugs/332619626816423/
+  \bibitem{mobileHere} https://mobile.here.com/
   \bibitem{Glide} https://bumptech.github.io/glide/
   \bibitem{Apache Mahout} https://mahout.apache.org/
   \bibitem{Postman} https://www.getpostman.com/
