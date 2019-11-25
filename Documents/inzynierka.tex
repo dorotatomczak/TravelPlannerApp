@@ -77,10 +77,11 @@ API (Application Programming Interface) - interfejs aplikacji dostępny dla prog
 MVP (Model View Presenter) - wzorzec architektoniczny\\
 IDE (Integrated Development Environment) - zintegrowane środowisko programistyczne\\
 DTO (Data State Object) - wzorzec projektowy, rodzaj kontenera na dane\\
-CRUD – (create, read, update, delete) - zestaw czterech podstawowych funkcji dostępu do bazy danych
-DAO – (Data access object) - klasa będąca odzwierciedleniem tabeli bazodanowej
-SQL – (Standard Query Language) - język zapytań do niektórych baz danych (w tym PostgreSQL)
-JDBC - (Java Database Connectivity) - zestaw funkcji umożliwiających połączenie z bazą danych PostgreSQL
+CRUD – (create, read, update, delete) - zestaw czterech podstawowych funkcji dostępu do bazy danych \\
+DAO – (Data access object) - klasa będąca odzwierciedleniem tabeli bazodanowej \\
+SQL – (Standard Query Language) - język zapytań do niektórych baz danych (w tym PostgreSQL) \\
+JDBC - (Java Database Connectivity) - zestaw funkcji umożliwiających połączenie z bazą danych PostgreSQL \\
+ERD - Entity Relation Diagram - Diagram relacyjnej bazy danych \\
 
 
 \chapter{Wstęp i cel pracy}  
@@ -416,6 +417,21 @@ Warunki końcowe:
 \begin{enumerate}
   \item Użytkownik stworzył plan dnia.
 \end{enumerate}
+
+\noindent\newline
+\begin{figure}[h]
+\centering
+\includegraphics[width=\linewidth]{dayPlan1}
+\caption{Tworzenie planu dnia(1)}
+\label{fig:dayPlan1}
+\end{figure}
+\begin{figure}[h]
+\centering
+\includegraphics[width=\linewidth]{dayPlan2}
+\caption{Tworzenie planu dnia(2).}
+\label{fig:dayPlan2}
+\end{figure}
+\FloatBarrier
 
 \subsection{Wygenerowanie planu dnia (Anna Malizjusz)}
 \par Martyna stworzyła wyjazd, lecz nie ma pomysłu na spędzenie dnia. Wybiera w aplikacji swoją podróż, po czym generuje przyciskiem plan dnia. Zostaje wyświetlony rezultat, który może dowolnie modyfikować. (rys.~\ref{fig:generateDayPlan}).
@@ -808,15 +824,25 @@ Git traktował powiązany folder jako istniejący, więc nie powodowało to doda
 
 \section{Dostęp do bazy danych (Magdalena Solecka)}
 \par Do implementacji połączenia z bazą został wykorzystany PostgreSQL JDBC Driver. Zastosowano wzorzec Singleton, który w języku kotlin implementuje się używając słowa kluczowego \cite{object} zamiast \cite{class}.
-\par Zaimplementowano również wzorzec repozytorium (ang. repository pattern). Stworzono bazowy interfejs generyczny IRepository oraz jego implementację - Repository zawierajace operacje typu CRUD. Repozytoria dla poszczególnych modeli DAO dziedziczą po generycznej klasie bazowej Repository. Implementują również własny interfejs z funkcajmi wymaganymi dla danej tabeli. Problemem przy wykorzystaniu typu generycznego okazało się tworzenie nowego obiektu, dlatego postanowiono wymusić na programistach implementację dodatkowej funkcji T tworzący ten obiekt dodając ją do interfejsu IRepository. W celu zmniejszenia ilości powtarzającego się kodu wyodrębniono również stałe fragmenty tekstu z zapytań SQL takie jak na przykład \cite{SELECT * FROM tableName } w postaci stałej selectStatement. Stałe zostały dodane do klasy bazowej Repository jako abstrakcyjne. W podobny sposób rozwiązano problem powtarzających się nazw tabel i kolumn. Nie udało się jednak utworzyć stałej abstrakcyjnej, wynikiem prób była pusta wartość w zapytaniach w miejscu gdzie powinna była znaleźć się na przykład nazwa tabeli.
+\par Zaimplementowano również wzorzec repozytorium (ang. repository pattern). Stworzono bazowy interfejs generyczny IRepository oraz jego implementację - Repository zawierajace operacje typu CRUD. Repozytoria dla poszczególnych modeli DAO dziedziczą po generycznej klasie bazowej Repository. Implementują również własny interfejs z funkcjami wymaganymi dla danej tabeli. Problemem przy wykorzystaniu typu generycznego okazało się tworzenie nowego obiektu, dlatego postanowiono wymusić na programistach implementację dodatkowej funkcji T tworzący ten obiekt dodając ją do interfejsu IRepository. W celu zmniejszenia ilości powtarzającego się kodu wyodrębniono również stałe fragmenty tekstu z zapytań SQL takie jak na przykład \cite{SELECT * FROM tableName } w postaci stałej selectStatement. Stałe zostały dodane do klasy bazowej Repository jako abstrakcyjne. W podobny sposób rozwiązano problem powtarzających się nazw tabel i kolumn. Nie udało się jednak utworzyć stałej abstrakcyjnej, wynikiem prób była pusta wartość w zapytaniach w miejscu gdzie powinna była znaleźć się na przykład nazwa tabeli.
 	
 
 \chapter{Baza danych}
 \section{Wybór (Magdalena Solecka)}
-\par Przy wyborze systemu do zarządzania bazą danych były brane pod uwagę Neo4j oraz PostgreSQL. Pierwsza z wymienionych wzbudziła zainteresowanie ze względu na planowaną implementację algorytmu rekomendującego collaborative filtering. Jej zaletą, jako grafowej bazy danych, byłoby szybkie wydobycie podobieństw pomiędzy użytkownikami na podstawie ocenionych przez nich miejsc. Uznano jednak, że zespół pracował do tej pory z relacyjnymi bazami danych i językiem sql a dłuższe wykonanie algorytmu nie spowoduje problemów z wydajnym działaniem pozostałych funkcjonalności aplikacji, dlatego ostatecznie zdecydowano się na PostgreSQL chwalonego za wysoką wydajność, oferujacego wsparcie typu BJSON, który mógłby być przydatny przy  przechowywaniu większej ilości informacji o obiektach, a także znajomą zespołowi składnię zapytań. Bazę danych wdrożono w serwisie ElephantSQL z instancją \cite{tiny turtle}
+\par Przy wyborze systemu do zarządzania bazą danych były brane pod uwagę Neo4j oraz PostgreSQL. Pierwsza z wymienionych wzbudziła zainteresowanie ze względu na planowaną implementację algorytmu rekomendującego collaborative filtering. Jej zaletą, jako grafowej bazy danych, byłoby szybkie wydobycie podobieństw pomiędzy użytkownikami na podstawie ocenionych przez nich miejsc. Uznano jednak, że zespół pracował do tej pory z relacyjnymi bazami danych i językiem sql a dłuższe wykonanie algorytmu nie spowoduje problemów z wydajnym działaniem pozostałych funkcjonalności aplikacji, dlatego ostatecznie zdecydowano się na PostgreSQL chwalonego za wysoką wydajność, oferującego wsparcie typu BJSON, który mógłby być przydatny przy  przechowywaniu większej ilości informacji o obiektach, a także znajomą zespołowi składnię zapytań. Bazę danych wdrożono w serwisie ElephantSQL z instancją \cite{tiny turtle}
  która pozwalała na zapis 20 MB danych, 5 równoległych połączeń z bazą co było w zupełności wystarczające dla środowiska testowego.
 
-\section{placeholder - Schemat ERD (Magdalena Solecka)}
+\section{Schemat ERD (Magdalena Solecka)}
+\par Stworzony przy użyciu narzędzia ERD Constructor.
+
+\noindent\newline
+\begin{figure}[h]
+\centering
+\includegraphics[width=\linewidth]{erd}
+\caption{Diagram ERD}
+\label{fig:erd}
+\end{figure}
+\FloatBarrier
 
 \section{Praca z bazą danych (Magdalena Solecka)}
 \par Warstwę danych tworzono podejściem \cite{najpierw kod} (ang. code first), głównie z powodu trudności z przewidzeniem, które struktury dostarczane przez zewnętrzne API uda się otrzymać i które informacje są niezbędne, aby znacząco nie zmniejszyć szybkości aplikacji, a o które można zapytać źródło podczas ładowania elementów ekranu. Stwarzało to problemy z kompatybilnością wsteczną podczas rozwijania aplikacji, dodawania nowych kolumn, zmiany typów. Początkowe rozwiązanie wymagało powiadomienia wszystkich programistów w zespole o godzinach, w których baza danych może przestać działać poprawnie, a przed jakąkolwiek dalsza pracą konieczne było ściągnięcie najnowszych zmian z repozytorium github. Drugi w kolejności wprowadzonym sposobem było utworzenie tabeli tymczasowej - wykonanie kopii tabeli oraz wprowadzenie zmian w kopii. Podmiany dokonywano przy dołączaniu zmian z gałęzi podrzędnej do gałęzi develop w serwisie github. Nadal jednak wymagane było pobranie najnowszej wersji kodu. Z początku wymagało to zaplanowania pracy w ten sposób, aby lokalny kod nadawał się do zapisu (ang.commit) w chwili zmian w bazie, ale problem zakończył się odkryciem funkcji \cite{stash/unstash changes} oferowanej przez gita.
