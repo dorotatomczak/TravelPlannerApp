@@ -77,21 +77,21 @@ API (Application Programming Interface) - interfejs aplikacji dostępny dla prog
 MVP (Model View Presenter) - wzorzec architektoniczny\\
 IDE (Integrated Development Environment) - zintegrowane środowisko programistyczne\\
 DTO (Data State Object) - wzorzec projektowy, rodzaj kontenera na dane\\
-CRUD – (create, read, update, delete) - zestaw czterech podstawowych funkcji dostępu do bazy danych \\
-DAO – (Data access object) - klasa będąca odzwierciedleniem tabeli bazodanowej \\
-SQL – (Standard Query Language) - język zapytań do niektórych baz danych (w tym PostgreSQL) \\
-JDBC - (Java Database Connectivity) - zestaw funkcji umożliwiających połączenie z bazą danych PostgreSQL \\
-ERD - Entity Relation Diagram - diagram relacyjnej bazy danych \\
+CRUD (create, read, update, delete) - zestaw czterech podstawowych funkcji dostępu do bazy danych \\
+DAO (Data access object) - klasa będąca odzwierciedleniem tabeli bazodanowej \\
+SQL (Standard Query Language) - język zapytań do niektórych baz danych (w tym PostgreSQL) \\
+JDBC (Java Database Connectivity) - zestaw funkcji umożliwiających połączenie z bazą danych PostgreSQL \\
+ERD (Entity Relation Diagram) - diagram relacyjnej bazy danych \\
 IDE (Integrated Development Environment) - zintegrowane środowisko programistyczne \\
 
 
 \chapter{Wstęp i cel pracy (Karolina Makuch)}
-\par Aplikacje mobline są coraz popularniejszym rozwiązaniem stosowanym w różnych dziedzinach. Rozwój technologiczny potęguje możliwości smartfonów przez co coraz więcej firm decyduje się na przenoszenie swoich aplikacji na platformy mobilne. Kilkanaście lat temu  służyły one głównie do komunikacji. Obecnie szeroka gama ich funkcjonalności zaczyna dorównywać ich "większym braciom" - komputerom.
-\par Jednakże znaczącą przewagę zyskują dzięki swoim rozmiarom. Są znacznie wygodniejsze w codziennej obsłudze. Większość z nich zmieści się do kieszeni swojego właściciela. Dzięki temu coraz częściej są wykorzystywane w miejscach publicznych, nie zabierając przestrzeni innym osobom. Umożliwiają między innymi ustalanie szczegółów poprzez pisanie wiadomości mailowych, wyszukiwanie potrzebnych informacji jak również odpoczynek poprzez zagranie w grę mobilną.
-\par Zauważalny jest także rozwój smartfonów w kierunku fotografii. Nowsze modele posiadają znacznie większą ilość megapikseli (czasem nawet dwukrotnie) niż lustrzanki wyprodukowane kilka lat po dwutysięcznym roku. Posiadają dodatkowo coraz więcej obiektywów zwielokrotniając kontrolę nad finalnym efektem zdjęcia.
+\par Aplikacje mobilne są coraz popularniejszym rozwiązaniem stosowanym w różnych dziedzinach. Rozwój technologiczny potęguje możliwości smartfonów przez co coraz więcej firm decyduje się na przenoszenie swoich aplikacji na platformy mobilne. Kilkanaście lat temu  służyły one głównie do komunikacji. Obecnie szeroka gama ich funkcjonalności zaczyna dorównywać ich "większym braciom" - komputerom.
+\par Znaczącą przewagę zyskują dzięki swoim rozmiarom. Są znacznie wygodniejsze w codziennej obsłudze. Większość z nich zmieści się do kieszeni swojego właściciela. Dzięki temu coraz częściej są wykorzystywane w miejscach publicznych, nie zabierając przestrzeni innym osobom. Umożliwiają między innymi ustalanie szczegółów poprzez pisanie wiadomości mailowych, wyszukiwanie potrzebnych informacji jak również odpoczynek poprzez zagranie w grę mobilną.
+\par Zauważalny jest także rozwój smartfonów w kierunku fotografii. Nowsze modele posiadają znacznie większą liczbę megapikseli (czasem nawet dwukrotnie) niż lustrzanki wyprodukowane kilka lat po dwutysięcznym roku. Posiadają dodatkowo coraz więcej obiektywów zwielokrotniając kontrolę nad finalnym efektem zdjęcia.
 \par Uwzględniając wszystkie wspomniane powyżej zalety postanowiono połączyć swoje zainteresowanie podróżami z umiejętnościami zdobytymi podczas studiów informatycznych tworząc pożyteczną aplikację mobilną umożliwiającą planowanie podróży.
-\par Zdecydowano się na implementację aplikacji dla systemu mobilnego Android, rozwijanego przez firmę Google. Opera się on na jądrze Linuxa oraz na oprogramowaniu posiadającym licencję GNU (ang. \textit{GNU General Public License}).
- \par Od blisko dziesięciu lat smarfony z systemem Android znajdują się na pierwszym miejscu w światowym rankingu najczęściej kupowanych telefonów. Podczas jednego roku (2017) sprzedano blisko 1,3 mln urządzeń z tym systemem. Jest on zdecydowanie bardziej otwarty ( dzięki mniejszym kosztom implementacji) oraz dostępny (przystępniejsze ceny urządzeń) niż konkurencja.
+\par Zdecydowano się na implementację aplikacji dla systemu mobilnego Android, rozwijanego przez firmę Google. Opera się on na jądrze systemu operacyjnego Linux oraz na oprogramowaniu posiadającym licencję GNU (ang. \textit{GNU General Public License}).
+ \par Od blisko dziesięciu lat smartfony z systemem Android znajdują się na pierwszym miejscu w światowym rankingu najczęściej kupowanych telefonów. Podczas jednego roku (2017) sprzedano blisko 1,3 mln urządzeń z tym systemem. Jest on zdecydowanie bardziej otwarty ( dzięki mniejszym kosztom implementacji) oraz dostępny (przystępniejsze ceny urządzeń) niż konkurencja.
 \par Potrzebne informacje są przechowywane poza aplikacją. Wykorzystano w tym celu system bazy danych \textit{PostgreSQL}. Zaimplementowano również serwer umożliwiający komunikację pomiędzy bazą a aplikacją oraz z zewnętrznym API.
 \par Zdefiniowano również cele do osiągnięcia. Postawiono na zwiększenie zadowolenia użytkownika z podróży poprzez zmniejszenie poziomu stresu podczas jej organizacji. W tym celu dodano między innymi:
 
@@ -607,6 +607,7 @@ Warunki końcowe:
 \caption{Otrzymywanie powiadomień podczas trwania podróży.}
 \label{fig:whileTravelling}
 \end{figure}
+\FloatBarrier
 
 \chapter{Decyzje projektowe}
 
@@ -626,23 +627,24 @@ Warunki końcowe:
 \caption{Klasa DTO w Kotlinie - 5 linii kodu.}
 \label{fig:dtoKotlin}
 \end{figure}
+\FloatBarrier
 
 \section{Narzędzia (Magdalena Solecka)}
 \subsection{Github}
-\par W celu łatwego zarządzania projektem wykorzystano System kontroli wersji \textit{Github}. Repozytorium zawierało trzy foldery: App (zawierający implementację aplikacji mobilnej), ServerApp (zawierający implementację serwera REST) oraz Documents (zawierający dokumentację projektu). Backlog produktu utworzono w postaci zadań (ang. issues) również na tej samej platformie.  Jako model pracy wybrano \textit{Gitflow}, a jako schemat nazwenictwa gałęzi funkcjonalności (ang. feature branches): \{nr\_zadania\}-skrócona-nazwa-zadania. Również w nazewnictwie zapisów zmian (ang. commits) zdecydowano się na skorzystanie ze wzoru: \#\{nr\_zadania\}: opis wprowadzonych zmian, w celu śledzenia postępów nad danym zadaniem.
+\par W celu łatwego zarządzania projektem wykorzystano System kontroli wersji \textit{Github}. Repozytorium zawierało trzy foldery: App (zawierający implementację aplikacji mobilnej), ServerApp (zawierający implementację serwera REST) oraz Documents (zawierający dokumentację projektu). Backlog produktu utworzono w postaci zadań (ang. issues) również na tej samej platformie.  Jako model pracy wybrano \textit{Gitflow}, a jako schemat nazewnictwa gałęzi funkcjonalności (ang. feature branches): \{nr\_zadania\}-skrócona-nazwa-zadania. Również w nazewnictwie zapisów zmian (ang. commits) zdecydowano się na skorzystanie ze wzoru: \#\{nr\_zadania\}: opis wprowadzonych zmian, w celu śledzenia postępów nad danym zadaniem.
 
 \subsection{Android Studio i Intellij IDEA}
 \par Środowiskiem programistycznym wykorzystywanym podczas implementacji zostały wybrane \textit{Android Studio} dla wytwarzania aplikacji mobilnej i \textit{Intellij IDEA} dla serwera. Są to narzędzia kompatybilne z systemem \textit{Git} co znacznie ułatwiło rozwiązywanie konfliktów podczas pobierania najnowszych zmian ze zdalnego repozytorium. Usprawniło również proces zapisu zmian. Konfiguracje systemów członków zespołu wymagały m.in. wykorzystania różnych portów oraz adresów IP. Praca z systemem \textit{Git} poprzez jeden z programów zamiast konsolę umożliwiała odznaczenie konkretnych linii kodu, więc przy każdym zapisie nie trzeba było ich zmieniać.
 
 \subsection{Heroku}
-\par Dla celów testowych oraz prezentacji aplikacji zdecydowano się na wdrożenie projektu na zdalny serwer. Skorzystano z darmowej oferty \textit{Heroku}. Skonfigurowano połączenie pomiędzy repozytorium na platformie \textit{Github} a instancją serwerową na platformie \textit{Heroku} tak, aby jakiekolwiek zmiany na gałęzi develop następowało automatyczne wdrożonie. W celu poprawnej kompilacji projektu na platformie dodano pakiety: https://github.com/timanovsky/subdir-heroku-buildpack (kompilacja projektu znajdującego się w podkatalogu repozytorium) i heroku/gradle (obsługa Gradle).
+\par Dla celów testowych oraz prezentacji aplikacji zdecydowano się na wdrożenie projektu na zdalny serwer. Skorzystano z darmowej oferty \textit{Heroku}. Skonfigurowano połączenie pomiędzy repozytorium na platformie \textit{Github} a instancją serwerową na platformie \textit{Heroku} tak, aby po jakiekolwiek zmianie na gałęzi develop następowało automatyczne wdrożenie. W celu poprawnej kompilacji projektu na platformie dodano pakiety: https://github.com/timanovsky/subdir-heroku-buildpack (kompilacja projektu znajdującego się w podkatalogu repozytorium) i heroku/gradle (obsługa Gradle).
 
 \chapter{Aplikacja mobilna}
 
 \section{Projekt i implementacja oparte na wzorcu MVP (Dorota Tomczak)}
 \par Pracę nad aplikacją mobilną rozpoczęto od stworzenia bazowego projektu składającego się z kilku pustych widoków, do których to następnie można było dodawać kolejne funkcjonalności. W celu zachowania najlepszych praktyk programistycznych zdecydowano się na oparciu projektu o wzorzec architektoniczny MVP (ang. model-view-presenter). Jest to wzorzec szczególnie nadający się do implementacji w aplikacjach mobilnych na systemy Android ze względu na aktywności (ang. activity), które pełnią funkcję środkowej warstwy – widoku (ang. view). W implementacji wzorca w tym projekcie widok jest pasywny (ang. passive view) tzn. widok powinien odpowiadać jedynie za wyświetlanie interfejsu i użycie bibliotek związanych z Androidem. Cała logika aplikacji ma być zawarta w prezenterze (ang. presenter), który pełni funkcję kontrolera.
 
-\par Zastosowanie wzorca MVP pozwoliło na zachowanie porządku w strukturze projektu i przejrzysty podział na warstwy. Do każdej aktywności, czyli nowego ekranu w aplikacji, utworzono interfejs zwany kontraktem (ang. contract) zawierający opis interakcji jakie mogą zajść pomiędzy prezenterem a widokiem, a w szczególnych przypadkach również między prezenterem a adapterem, który odpowiada za wyświetlanie listy obiektów. Klasy aktywności i prezentera implementują interfejsy zawarte w kontrakcie, prezenter jest wstrzykiwany do widoku a referencja widoku jest przekazywana do prezentera w konstruktorze.
+\par Zastosowanie wzorca MVP pozwoliło na zachowanie porządku w strukturze projektu i przejrzysty podział na warstwy. Do każdej aktywności, czyli nowego ekranu w aplikacji, utworzono interfejs zwany kontraktem (ang. contract) zawierający opis interakcji jakie mogą zajść pomiędzy prezenterem a widokiem, a w szczególnych przypadkach również między prezenterem a adapterem, który odpowiada za wyświetlanie listy obiektów. Klasy aktywności i prezentera implementują interfejsy zawarte w kontrakcie, prezenter jest wstrzykiwany do widoku, a referencja widoku jest przekazywana do prezentera w konstruktorze.
 
 \begin{figure}[h]
 \centering
@@ -650,13 +652,14 @@ Warunki końcowe:
 \caption{Prosty kontrakt widoku odpowiadający za przekierowanie do widoku logowania lub listy podróży.}
 \label{fig:launcherContract}
 \end{figure}
+\FloatBarrier
 
 \par Do wstrzykiwania zależności, w tym prezenterów do aktywności, wykorzystano popularny framework \textit{Dagger 2}\cite{Dagger 2}, co ostatecznie okazało się być nie najlepszym wyborem – należało dodać dwie dodatkowe klasy do każdej aktywności, co przy dużej ich liczbie wygenerowało wiele plików o bardzo podobnej strukturze. Ponadto niemalże jedynymi wstrzykiwanymi obiektami były obiekty klas prezenterów. 
 
 \section{Komunikacja z aplikacją serwerową (Anna Malizjusz)}
 \par Aplikacja mobilna musi komunikować się z RESTowym API udostępnianym przez serwer. W tym celu wykorzystano klienta o nazwie Retrofit 2 \cite{Retrofit library}. Dzięki niemu w łatwy sposób można zaimplementować interfejs odpowiedzialny za wysyłanie zapytań i odbieranie odpowiedzi.
 
-\par Napisano kilka klas, aby umożliwić prostą komunikację w aplikacji. Interfejs \textit{ServerApi} zawierał zbiór metod z odpowiednimi adnotacjami @PUT, @POST, @GET, @DELETE i nazwami punktów końcowych. Metody nie wymagały implementacji przez programistów, ponieważ należało to do odpowiedzialności klienta Retrofit 2.
+\par Napisano kilka klas, aby umożliwić prostą komunikację w aplikacji. Interfejs \textit{ServerApi} zawierał zbiór metod z odpowiednimi adnotacjami @PUT, @POST, @GET, @DELETE i nazwami punktów końcowych. Metody nie wymagały implementacji przez programistów, ponieważ ich obsługa należała do odpowiedzialności klienta Retrofit 2.
 
 \begin{figure}[h]
 \centering
@@ -664,8 +667,9 @@ Warunki końcowe:
 \caption{Przykładowa zawartość interfejsu używanego przez Retrofit 2.}
 \label{fig:tokenPayload}
 \end{figure}
+\FloatBarrier
 
-\par Dodatkowo zaimplementowano klasę pomocniczą konfigurującą klienta. Udostępniała ona zmienną (ang. property), która była przygotowanym interfejsem do komunikacji. Ustawiono w niej adres serwera REST, a także konwertery przeprowadzające serializację obiektów do formatu JSON oraz deserializację z otrzymanego ciągu znaków w formacie JSON do obiektu będącego instancją danej klasy. Skorzystano z klasy \textit{GsonConverter}, która jest oferowana przez Retrofit API. Wykorzystano wzorzec projektowy interceptor implementując klasę \textit{AuthTokenInterceptor}, którego rolą było dodanie do każdego zapytania nagłówka (ang. header) z lokalnie zapisanym tokenem identyfikującym użytkownika. Interceptor aplikacji jest wywoływany zawsze i tylko jeden raz, nie wpływają na to przekierowania ani ponawianie zapytań. Aby zintegrować interfejs używanego klienta z interceptorem, należało dodać dodatkowego klienta - \textit{OkHttpClient}\cite{OkHttpClient}. Pochodzi z biblioteki OkHTTP, którą można było wykorzystać do komunikacji aplikacji mobilnej z serwerem, jednak postawiono wybrać Retrofit 2 z uwagi na mniejszy poziom skomplikowania oferowanego API.
+\par Dodatkowo zaimplementowano klasę pomocniczą konfigurującą klienta. Udostępniała ona zmienną (ang. property), która była przygotowanym interfejsem do komunikacji. Ustawiono w niej adres serwera REST, a także konwertery przeprowadzające serializację obiektów do formatu JSON oraz deserializację z otrzymanego ciągu znaków w formacie JSON do obiektu będącego instancją danej klasy. Skorzystano z klasy \textit{GsonConverter}, która jest oferowana przez Retrofit API. Wykorzystano wzorzec projektowy interceptor implementując klasę \textit{AuthTokenInterceptor}, którego rolą było dodanie do każdego zapytania nagłówka (ang. header) z lokalnie zapisanym tokenem identyfikującym użytkownika. Interceptor aplikacji jest wywoływany zawsze i tylko jeden raz, nie wpływają na to przekierowania ani ponawianie zapytań. Aby zintegrować interfejs używanego klienta z interceptorem, należało dodać dodatkowego klienta - \textit{OkHttpClient}\cite{OkHttpClient}. Pochodzi z biblioteki OkHTTP, którą również można było wykorzystać do komunikacji aplikacji mobilnej z serwerem, jednak postawiono wybrać Retrofit 2 z uwagi na mniejszy poziom skomplikowania oferowanego API.
 
 \par Rezultatem każdego zapytania jest struktura \textit{Single<Response<T> >}, gdzie T jest oczekiwanym typem zwracanego obiektu. Obiekt \textit{Single} informuje o tym, że jest spodziewana pojedyncza odpowiedź. \textit{Response} jest strukturą zdefiniowaną w projekcie inżynierskim. Zawiera kod odpowiedzi opisywany szerzej przy sposobie implementacji błędów, a także także pole \textit{data} z przesłanymi przez serwer danymi.
 
@@ -679,6 +683,7 @@ Warunki końcowe:
 \caption{Testy jednostkowe sprawdzające poprawność sposobu walidacji formularza rejestracji}
 \label{fig:tokenPayload}
 \end{figure}
+\FloatBarrier
 
 
 \section{Wyszukiwanie atrakcji turystycznych i zakwaterowania (Anna Malizjusz)}
@@ -708,7 +713,7 @@ Elementy planu dnia wyświetlają się w formie chronologicznej listy rozdzielon
 
 
 \section{Implementacja skanowania dokumentów z użyciem OpenCV (Dorota Tomczak)}
-\par Aplikacja umożliwia zrobienie zdjęcia, wybranie czworokątnego obszaru oraz takie przycięcie i modyfikację kolorów fotografii aby uzyskać efekt skanu. W początkowych założeniach zakładano skorzystanie z gotowej biblioteki, która poza wymienionymi wyżej funkcjonalnościami dokonywałaby automatycznej detekcji krawędzi, jednak ze względu na brak darmowych i dostosowanych do potrzeb rozwiązań zdecydowano stworzyć skaner od podstaw bazując na projekcie open-source \textit{SimpleDocumentScanner-Android}\cite{SimpleDocumentScanner-Android}.
+\par Aplikacja umożliwia zrobienie zdjęcia, wybranie czworokątnego obszaru oraz takie przycięcie i modyfikację kolorów fotografii, aby uzyskać efekt skanu. W początkowych założeniach zakładano skorzystanie z gotowej biblioteki, która poza wymienionymi wyżej funkcjonalnościami dokonywałaby automatycznej detekcji krawędzi, jednak ze względu na brak darmowych i dostosowanych do potrzeb rozwiązań zdecydowano stworzyć skaner od podstaw bazując na projekcie open-source \textit{SimpleDocumentScanner-Android}\cite{SimpleDocumentScanner-Android}.
 
 \par Wykonanie fotografii jest możliwe jeśli użytkownik nadał aplikacji odpowiednie uprawnienia. Są one weryfikowane przy każdej próbie dodania skanu. Jeśli aplikacja została do tego uprawniona, tworzony jest plik tymczasowy w pamięci urządzenia, a następnie otwierany jest widok kamery za pomocą intencji (ang. intent) utworzonej poprzez podanie do konstruktora nazwy odpowiedniej akcji. Zdjęcie wykonane przez użytkownika jest zapisywane w utworzonym wcześniej pliku tymczasowym a jego ścieżka przekazywana do aktywności (ang. activity) skanera, aby umożliwić w niej jego wyświetlenie i modyfikację.
 
@@ -732,6 +737,7 @@ Elementy planu dnia wyświetlają się w formie chronologicznej listy rozdzielon
 \caption{Skanowane biletu.}
 \label{fig:Eimage}
 \end{figure}
+\FloatBarrier
 
 \section{Obsługa przesyłania i pobierania plików (Dorota Tomczak)}
 \par Aby umożliwić użytkownikom korzystanie ze swoich kont na różnych urządzeniach oraz udostępnianie stworzonych przez siebie podróży, wynikła konieczność przesyłania dodanych zdjęć na serwer, zamiast przechowywania ich lokalnie na urządzeniach mobilnych. Zdjęciami w aplikacji mogą być wykonane skany lub fotografie dodane do poszczególnych podróży, a ich przesyłanie odbywa się przy pomocy RESTowego API udostępnianego przez serwer, jak zostało to opisane w podrozdziale 5.2. Zapytania za to odpowiadające są dodatkowo opatrzone adnotacją \textit{@Multipart}, aby umożliwić przesyłanie całych plików w ciele (ang. body) żądania, natomiast pliki przekształcane są na typ \textit{MultiPartBody.Part}. Gdy plik zostanie odebrany po stronie serwera następuje próba jego zapisu w ustawionym w konfiguracji folderze przez \textit{FileStorageService}, czyli serwis do przechowywania plików. Następnie ścieżka do pliku jest dodawana do bazy wraz z innymi niezbędnymi informacjami umożliwiającymi jego identyfikację.
@@ -739,12 +745,19 @@ Elementy planu dnia wyświetlają się w formie chronologicznej listy rozdzielon
 \par Ładowanie plików w aplikacji zostało zrealizowane dzięki bibliotece \textit{Glide}\cite{Glide}, która pozwala na zwiększenie efektywności tego procesu poprzez automatyczne cachowanie i optymalizację rozmiaru zdjęcia. Znając adres, pod którym znajduje się plik, użycie wspomnianej biblioteki jest bardzo proste, dlatego na większą uwagę zasługuje proces wysyłania fotografii przez serwer. Plik o wskazanej nazwie zostaje załadowany jako typ \textit{Resource} przez \textit{FileStorageService}, a następnie konstruowana jest odpowiedź serwera, która w ciele zawiera otrzymany zasób. Odpowiedź jest dodatkowo opatrzona nagłówkiem \textit{Content-Disposition}, który zawiera informację o tym, że plik ma zostać potraktowany jako załącznik. 
 
 \section{Dodawanie użytkowników do znajomych oraz wyświetlanie listy znajomych (Karolina Makuch)}
+
 \par W celu umożliwienia użytkownikowi udostępniania planu podróży znajomym dodano do aplikacji funkcjonalność odpowiadającą za wyszukiwanie konkretnych użytkowników. Została ona zrealizowana poprzez  wykorzystanie komponentu \textit{SearchView} (\textit{appcompat.widget.SearchView}) zawierającego pole umożliwiające wpisanie ciągu znaków. Podczas wprowadzania kolejnych liter zostają wyświetlane podpowiedzi w czasie rzeczywistym. Aktualizują się  przy każdej zmianie wyrazu. Uwzględniają one wszystkie adresy mailowe zarejestrowanych w aplikacji użytkowników zaczynających się od podanego ciągu znaków.
-\par W tym celu została stworzona klasa implementująca abstrakcyjną klasę \textit{ContentProvider} ( \textit{android.content.ContentProvider}). Po wysłaniu odpowiedniego zapytania zostaje utworzony \textit{MatrixCursor} zawierający dwie kolumny: identyfikator użytkownika oraz jego adres mailowy. Po otrzymaniu odpowiedzi od serwera dla każdego użytkownika zostaje utworzony wiersz, który następnie jest dodawany do kursora. Wyświetlana jest tylko kolumna zawierająca adres mailowy.
+
+\par W tym celu została stworzona klasa implementująca abstrakcyjną klasę \textit{ContentProvider} (\cite{ContentProvider}). Po wysłaniu odpowiedniego zapytania zostaje utworzony \textit{MatrixCursor} zawierający dwie kolumny: identyfikator użytkownika oraz jego adres mailowy. Po otrzymaniu odpowiedzi od serwera dla każdego użytkownika zostaje utworzony wiersz, który następnie jest dodawany do kursora. Wyświetlana jest tylko kolumna zawierająca adres mailowy.
+
 \par Kursor został również wykorzystany w celu umożliwienia dodania wybranego użytkownika do znajomych. Podczas kliknięcia na wybrany wiersz zostaje wywoływana nadpisana metoda \textit{onSuggestionClick} obiektu klasy \textit{SearchManager} (\textit{android.app.SearchManager}). Pobiera ona potrzebne dane wybranej pozycji z tablicy \textit{MatrixCursor’a}.
+
 \par Do eliminacji przypadkowych działań zostało wykorzystane okno dialogowe wymagające potwierdzenia  zamiaru dodania wybranego użytkownika do znajomych. W tym celu została wykorzystana klasa \textit{AlertDialog} (\textit{androidx.appcompat.app.AlertDialog}). Po wyrażeniu zgody  oraz w przypadku poprawnego wykonania metody użytkownik otrzymuje powiadomienie stworzone poprzez wywołanie konstruktora klasy \textit{Snackbar} (\textit{com.google.android.material.snackbar.Snackbar}).
+
 \par W tym samym oknie pod polem do wyszukiwania znajduje się lista znajomych użytkownika. Została ona dodana jako liniowa warstwa (ang. \textit{LinearLayout}) umożliwiająca odświeżanie widoku poprzez szybkie przesunięcie palcem po ekranie (ang. \textit{SwipeRefreshLayout}). Implementuje ona tryb usuwania.
+
 \par Powiązanie dwóch użytkowników poprzez oznaczenie ich jako znajomych zostało zrealizowane poprzez dołączenie do bazy danych osobnej tabeli przechowującej potrzebne informacje. Dodawanie jest jednostronne. Znajomy danego użytkownika nie jest zobowiązany do posiadania go na swojej liście znajomych.
+
 \par Po stronie serwera zostały dodane pliki umożliwiające komunikację z wspomnianą powyżej tabelą oraz wykonywaniu potrzebnych zapytań. Oprócz bazowych, niezbędnych do komunikacji zostało również zaimplementowane w jednym zapytanie zwracające wszystkie adresy mailowe nieznajomych użytkowników zawierających wpisany ciąg znaków.
 
 \section{Udostępnianie podróży znajomym (Karolina Makuch)}
@@ -760,12 +773,13 @@ Elementy planu dnia wyświetlają się w formie chronologicznej listy rozdzielon
 \caption{Zapytanie zwracające listę adresów mailowych znajomych danego użytkownika nieposiadających dostępu do wybranej podróży}
 \label{fig:getFriendsBySharedTravel}
 \end{figure}
+\FloatBarrier
 
 \section{Udostępnianie planu dnia w medium społecznościowym (Karolina Makuch)}
-\par  Po dłuższym przytrzymaniu poszczególnego elementu planu pojawia się „dymek"  (\textit{android.widget.PopupMenu}) zawierający trzy czynności do wyboru. Jedną z nich jest możliwość udostępnienia wybranego punktu w medium społecznościowym. Postanowiono wybrać jedno z najpopularniejszych – \textit{Facebook‘a}. W tym celu wykorzystano akcję wysyłającą (ang. \textit{ACTION.SEND}) za pomocą intencji (\textit{android.content.Intent}).
-\par  W przypadku znalezienia aplikacji Facebook na telefonie użytkownika, zostanie on automatycznie przekierowany do publikowania posta na własnej „tablicy”. Domyślną treścią jest link do map HERE z wyszukanym miejscem z elementu planu dnia. W celu pobrania właściwego odnośnika  zostało zaimplementowane odczytywanie wartości parametru widoku (ang. \textit{view}) znajdującego się w odpowiedzi w formacie JSON (z wykorzystaniem \textit{com.google.gson.JsonParser}). Odsyłacz do wyników zapytania został pobrany z bazy danych. Z racji niemożliwości wykonania analizy (ang. \textit{parse}) wyniku zapytania w głównym wątku aplikacji utworzono osobny wątek.
-\par Początkowo planowano inną domyślną treść. Miała ona zawierać najważniejsze informacje na temat wybranego elementu planu. Niestety zarówno wbudowany w Androidzie moduł  udostępniania, a także \textit{API Facebook’a} nie udostępnia tej możliwości.  Problem ten został zgłoszony ponad 7 lat temu, lecz nie został rozwiązany\cite{FacebookBug}. Pola \textit{"EXTRA SUBJECT"} oraz \textit{"EXTRA TEXT"} są pomijane w momencie próby udostępniania domyślnej zawartości w aplikacji Facebook. Z racji możliwości załączania zdjęć, linków oraz plików multimedialnych (np. video) rozważane było zamienienie tekstu na plik obrazu oraz dodanie go do akcji. Brane również pod uwagę było przeniesienie domyślnej wiadomości do schowka oraz wyświetlenie komunikatu informującego użytkownika z prośbą o wklejenie wiadomości.
-\par Jednakże stwierdzono, że takich akcji nie powinno się wymagać od użytkownika. Ostatecznie postanowiono, że najlepszym rozwiązaniem będzie zdecydowanie się na wspomniany wcześniej odsyłacz do wyszukanego miejsca w mapy HERE\cite{mobileHere}. Dzięki czemu treść posta zostanie utworzona przez użytkownika umożliwiając mu zachowanie własnego charakteru pisania.
+\par  Po dłuższym przytrzymaniu poszczególnego elementu planu pojawia się „dymek"  (\textit{android.widget.PopupMenu}) zawierający trzy czynności do wyboru. Jedną z nich jest możliwość udostępnienia wybranego punktu w medium społecznościowym. Postanowiono wybrać jedno z najpopularniejszych – \textit{Facebooka}. W tym celu wykorzystano akcję wysyłającą (ang. \textit{ACTION.SEND}) za pomocą intencji (\textit{android.content.Intent}).
+\par  W przypadku znalezienia aplikacji Facebook na telefonie użytkownika, zostanie on automatycznie przekierowany do publikowania posta na własnej „tablicy”. Domyślną treścią jest link do map HERE \cite{mobileHere} z wyszukanym miejscem z elementu planu dnia. W celu pobrania właściwego odnośnika  zostało zaimplementowane odczytywanie wartości parametru widoku (ang. \textit{view}) znajdującego się w odpowiedzi w formacie JSON (z wykorzystaniem \textit{com.google.gson.JsonParser}). Odsyłacz do wyników zapytania został pobrany z bazy danych. Z racji niemożliwości wykonania analizy (ang. \textit{parse}) wyniku zapytania w głównym wątku aplikacji utworzono osobny wątek.
+\par Początkowo planowano inną domyślną treść. Miała ona zawierać najważniejsze informacje na temat wybranego elementu planu. Niestety zarówno wbudowany w Androidzie moduł  udostępniania, a także \textit{API Facebooka} nie udostępnia tej możliwości.  Problem ten został zgłoszony ponad 7 lat temu, lecz nie został rozwiązany\cite{FacebookBug}. Pola \textit{"EXTRA SUBJECT"} oraz \textit{"EXTRA TEXT"} są pomijane w momencie próby udostępniania domyślnej zawartości w aplikacji Facebook. Z racji możliwości załączania zdjęć, linków oraz plików multimedialnych (np. wideo) rozważane było zamienienie tekstu na plik obrazu oraz dodanie go do akcji. Brane również pod uwagę było przeniesienie domyślnej wiadomości do schowka oraz wyświetlenie komunikatu informującego użytkownika z prośbą o wklejenie wiadomości.
+\par Jednakże stwierdzono, że takich akcji nie powinno się wymagać od użytkownika. Ostatecznie postanowiono, że najlepszym rozwiązaniem będzie zdecydowanie się na wspomniany wcześniej odsyłacz do wyszukanego miejsca z mapy HERE \cite{mobileHere}. Dzięki czemu treść posta zostanie utworzona przez użytkownika umożliwiając mu zachowanie własnego charakteru pisania.
 
 \section{Manualna realizacja planu (Karolina Makuch)}
 \par  Kolejną akcją dostępną w „dymku” pojawiającym się po przytrzymaniu poszczególnego elementu jest manualna realizacja planu dnia. Początkowa treść akcji dla nowo powstałego nieukończonego jeszcze elementu planu dnia brzmi \textit{„Oznacz jako ukończony”} (ang. \textit{„Mark as completed”}). W przypadku oznaczenia części składowej planu jako zrealizowany tekst automatycznie zmienia się na \textit{„Oznacz jako nieukończony”} (ang. \textit{„Mark as incompleted”}) oraz zwiększa się stopień przeźroczystości odpowiedniego elementu listy. Postanowiono oznaczać zrealizowane plany poprzez wygaszenie kolorów elementów danego planu zmniejszając wartość kanału \textit{alfa} (ang. \textit{Alpha}).
@@ -803,7 +817,7 @@ Konfiguracja serwera zachodzi automatycznie na podstawie zależności, jeśli do
 \par Każde zapytanie powinno zawierać w nagłówku token użytkownika, który jest sprawdzany w celu weryfikacji źródła zapytania. Parametry ścieżki (ang. path parameters) punktów końcowych uszczegóławiają zasób, np. "userId" w powyższym przykładzie. Dodatkowe parametry zapytania (ang. query parameters) i ciało zapytania(ang. body) pozwala na sprecyzowanie żądania.
 
 \section{Obsługa sytuacji wyjątkowych (Dorota Tomczak)}
-\par Aplikacja mobilna komunikuje się z serwerem poprzez REST'owe API, jeśli więc po stronie serwera dojdzie do sytuacji wyjątkowej, aplikacja powinna otrzymać wiadomość o tym, co poszło nie tak i odpowiednio ją obsłużyć. W tym celu zdefiniowano kilkanaście własnych wyjątków, czyli klas dziedziczących po klasie java.lang.Exception oraz implementujących własny interfejs ApiException, który zawiera kod błędu wraz z wiadomością opisującą błąd. W celu uniknięcia tworzenia wielu bloków try-catch oraz powielania bloków kodu zaimplementowano globalny moduł obsługi wyjątków, czyli klasę opatrzoną adnotacją \textit{@RestControllerAdvice}, zawierającą dwie metody z adnotacjami \textit{@ExceptionHandler} – jedna służąca do obsługi nowo zdefiniowanych wyjątków, a druga do pozostałych. W obu tych metodach złapany wyjątek jest dodawany do logów serwera, a następnie zwracana jest odpowiedź z odpowiednim kodem błędu. Tak zdefiniowany moduł pozwala na obsługę wszystkich wyjątków występujących na serwerze po dowolnym żądaniu obsłużonym przez każdy z kontrolerów.
+\par Aplikacja mobilna komunikuje się z serwerem poprzez RESTowe API, jeśli więc po stronie serwera dojdzie do sytuacji wyjątkowej, aplikacja powinna otrzymać wiadomość o tym, co poszło nie tak i odpowiednio ją obsłużyć. W tym celu zdefiniowano kilkanaście własnych wyjątków, czyli klas dziedziczących po klasie java.lang.Exception oraz implementujących własny interfejs ApiException, który zawiera kod błędu wraz z wiadomością opisującą błąd. W celu uniknięcia tworzenia wielu bloków try-catch oraz powielania bloków kodu zaimplementowano globalny moduł obsługi wyjątków, czyli klasę opatrzoną adnotacją \textit{@RestControllerAdvice}, zawierającą dwie metody z adnotacjami \textit{@ExceptionHandler} – jedna służąca do obsługi nowo zdefiniowanych wyjątków, a druga do pozostałych. W obu tych metodach złapany wyjątek jest dodawany do logów serwera, a następnie zwracana jest odpowiedź z odpowiednim kodem błędu. Tak zdefiniowany moduł pozwala na obsługę wszystkich wyjątków występujących na serwerze po dowolnym żądaniu obsłużonym przez każdy z kontrolerów.
 
 \section{Uwierzytelnienie i autoryzacja użytkownika (Anna Malizjusz)}
 \par Podstawowy mechanizm uwierzytelnienia i autoryzacji opiera się na standardzie opisanym po raz pierwszy w 2010 roku jako JSON Web Token. Jest on "kompaktowym i bezpiecznym sposobem przesyłania informacji między dwiema stronami" (RFC 7519\cite{JWT}). Użyto biblioteki \textit{io.jsonwebtoken.jjwt}\cite{JWT library}, która dostarcza interfejs do generowania i odczytywania tokenów w przystępny sposób.
@@ -834,10 +848,11 @@ Kolejna jest zawartość, którą tworzą określone przy generacji tokenu twier
 \caption{Rozszyfrowana zawartość podanego powyżej tokenu.}
 \label{fig:tokenPayload}
 \end{figure}
+\FloatBarrier
 
 
 \section{Komunikacja z zewnętrznym API (Anna Malizjusz)}
-\par Potrzeba wyszukiwania infromacji o miejscach na świecie wymusiła korzystanie z zewnętrznych dostawców danych. Po analizie przeprowadzonej na etapie tworzenia specyfikacji wymagań systemowych zdecydowano o użyciu Here API\cite{HereApi}. Próba implementacji rozwiązania zmusiła programistów do skorzystania zarówno z wybranego dostawcy, jak i z początkowo odrzuconego Google API\cite{GoogleApi}, które oferowało dużo bogatszą bazę sposobów transportu.
+\par Potrzeba wyszukiwania infromacji o miejscach na świecie wymusiła korzystanie z zewnętrznych dostawców danych. Po analizie przeprowadzonej na etapie tworzenia specyfikacji wymagań systemowych zdecydowano o użyciu Here API \cite{HereApi}. Próba implementacji rozwiązania zmusiła programistów do skorzystania zarówno z wybranego dostawcy, jak i z początkowo odrzuconego Google API\cite{GoogleApi}, które oferowało dużo bogatszą bazę sposobów transportu.
 
 \par Podstawowym problemem było odczytanie danych. Wynikiem wysłania zapytania do dostawcy informacji był ciąg znaków zawierający znaczą ilość danych nie tylko o temacie zapytania. W przypadku każdego typu żądania przeanalizowano wynik i zdefiniowane wspólną metodę wyszukującą oraz wybierającą niezbędne informacje. Następnie należało je dopasować do potrzeb - nie wszystkie informacje były potrzebne aplikacji. Napisano funkcję zmieniającą ciąg znaków na instancję klasy. Skorzystano z możliwości klasy \textit{JsonParser}\cite{JsonParser} oraz \textit{GsonBuilder}\cite{GsonBuilder}.
 
@@ -847,23 +862,23 @@ Kolejna jest zawartość, którą tworzą określone przy generacji tokenu twier
 \par Podczas implementacji napotkano na problem powtarzających się klas w identycznej formie po stronie aplikacji i serwera. Stwarzało to kłopot przy edycji - obie wersje pliku musiały być zawsze identyczne. Spróbowano rozwiązać to na następujące sposoby.
 
 \subsection{Oddzielny projekt dodany jako moduł (Dorota Tomczak)}
-\par Pierwszym pomysłem na wydzielenie wspólnych klas z projektu aplikacji i serwera było utworzenie osobnego projektu, który by te klasy zawierał. Następnie nowy projekt mógłby być dołączony jako moduł do obu projektów, co jednak okazało się być nietrywialnym rozwiązaniem między innymi ze względu na różnice w plikach gradle - plik build.gradle w aplikacji mobilnej został napisany w języku Groovy, natomiast ten na serwerze w Kotlinie. Obie próby stworzenia takiego pliku dla wspólnego modułu w każdym ze wspomnianych języków nie powiodły się. Moduł mógł działać z określonym plikiem gradle tylko dla jednego z projektów jednocześnie. IDE na którym otwarty był serwer podpowiadało by usunąć wersję Kotlina w build.gradle, natomiast IDE aplikacji mobilnej podpowiadało wykonanie przeciwnej akcji. Po wielu próbach, ostatecznie porzucono zaproponowany pomysł na stworzenie osobnego projektu ze współdzielonymi klasami.
+\par Pierwszym pomysłem na wydzielenie wspólnych klas z projektu aplikacji i serwera było utworzenie osobnego projektu, który by te klasy zawierał. Następnie nowy projekt mógłby być dołączony jako moduł do obu projektów, co jednak okazało się być nietrywialnym rozwiązaniem między innymi ze względu na różnice w plikach gradle - plik build.gradle w aplikacji mobilnej został napisany w języku Groovy, natomiast ten na serwerze w Kotlinie. Obie próby stworzenia takiego pliku dla wspólnego modułu w każdym ze wspomnianych języków nie powiodły się. Moduł mógł działać z określonym plikiem gradle tylko dla jednego z projektów jednocześnie. IDE, na którym otwarty był serwer podpowiadało, by usunąć wersję Kotlina w build.gradle, natomiast IDE aplikacji mobilnej podpowiadało wykonanie przeciwnej akcji. Po wielu próbach, ostatecznie porzucono zaproponowany pomysł na stworzenie osobnego projektu ze współdzielonymi klasami.
 
 \subsection{Submoduły w repozytorium (Anna Malizjusz)}
 \par Podjęto próbę dodania repozytorium zawierającego tylko wspólne pliki, a następnie wstawienia go do głównego repozytorium jako submoduły. Stworzyło to kolejne problemy w postaci konieczności częstych aktualizacji submodułów.
 \par Zrezygnowano z submodułów i wykorzystano symboliczne powiązania.
-Git traktował powiązany folder jako istniejący, więc nie powodowało to dodatkowych problemów. Plik zmieniony i zapisany w jednej z lokalizacji był automatycznie odwzorowywany w drugiej. Rozwiązanie to, choć z pozoru skuteczne nie mogło być wykorzystane przez wszystkich członków zespołu ze względu na różnice w systemie operacyjnym. Używane były zarówno komputery z system Window, oparte na Linuxie oraz MacOS. Ostatecznie próby rozwiązania zarzucono.
+Git traktował powiązany folder jako istniejący, więc nie powodowało to dodatkowych problemów. Plik zmieniony i zapisany w jednej z lokalizacji był automatycznie odwzorowywany w drugiej. Rozwiązanie to, choć z pozoru skuteczne nie mogło być wykorzystane przez wszystkich członków zespołu ze względu na różnice w systemie operacyjnym. Używane były zarówno komputery z system Windows, Linux oraz MacOS. Ostatecznie próby rozwiązania zarzucono.
 
 
 \section{Rekomendacja miejsc z wykorzystaniem Collaborative Filtering (Dorota Tomczak)}
 \par Po dodaniu elementu planu podróży można wejść w jego szczegóły i dokonać oceny miejsca, które znajduje się w planie. Oceny miejsc w skali od jednego do pięciu są przechowywane wraz z użytkownikami, którzy wystawili daną ocenę w osobnej tabeli bazy danych. Na podstawie tych ocen mogą być następnie obliczane rekomendacje przy użyciu techniki zwanej \textit{Collaborative-Filtering}, a w szczególności jej odmianą opartą na użytkowniku (ang. user-based).
 \par Do implementacji wspomnianej metody wyznaczania poleceń wykorzystano bibliotekę \textit{Apache Mahout}\cite{Apache Mahout}, która oferuje wiele implementacji algorytmów opartych o uczenie maszynowe. Po wskazaniu źródła danych, czyli w tym przypadku tabeli w bazie, utworzono model danych, który posłużył do wykonania niezbędnych obliczeń. Wyznaczenie polecanych miejsc przebiega w następujący sposób: wyliczane jest podobieństwo między użytkownikami algorytmem współczynnika korelacji Pearsona, algorytm k – najbliższych sąsiadów dla k równego 2 wyznacza najbardziej polecane miejsca, a na koniec na podstawie otrzymanych wyników tworzony jest obiekt klasy \textit{GenericUserBasedRecommender}. Wywołanie metody \textit{recommend} na obiekcie z podanym identyfikatorem użytkownika i liczbą rekomendacji, które ma zwrócić, skutkuje otrzymaniem listy identyfikatorów polecanych miejsc, jeśli zostały jakieś znalezione.
-\par Testy przedstawionego rozwiązania aplikacją \textit{Postman}\cite{Postman} wykazały, że zwrócenie odpowiedzi trwa bardzo długo (nawet 20 s), a im większa liczba danych w bazie tym czas oczekiwania się wydłużał. Aby uniknąć konieczności oczekiwania na wynik po stronie aplikacji mobilnej, zdecydowano na prezentację polecanych miejsc w postaci powiadomień, czyli w momencie gdy serwer jest gotowy na wysłanie rekomendacji wysyła odpowiednie powiadomienie, a do tego czasu użytkownik może dalej swobodnie nawigować po aplikacji.
-\par W celu wysyłania powiadomień od serwera do aplikacji mobilnej skorzystano z usługi \textit{Firebase Cloud Messaging}\cite{Firebase}. Serwer po obliczeniu polecanych miejsc buduje wiadomość w postaci mapy, która ma zostać wysłana na urządzenie o określonym unikalnym tokenie. Za wysłanie odpowiada instancja klasy \textit{FirebaseMessaging}. W konsoli usługi można zobaczyć statystyki wysłanych wiadomości, które zawierają między innymi informacje o tym ile z nich zostało otwartych przez użytkowników. Do odbierania wiadomości po stronie aplikacji mobilnej zaimplementowano serwis, który dzięki temu, że dziedziczy po \textit{FirebaseMessagingService} może reagować na zdarzenia takie jak nadejście wiadomości oraz zmiana tokena.
+\par Testy przedstawionego rozwiązania aplikacją \textit{Postman}\cite{Postman} wykazały, że zwrócenie odpowiedzi trwa bardzo długo (nawet 20 s), a im większa liczba danych w bazie tym czas oczekiwania się wydłużał. Aby uniknąć konieczności oczekiwania na wynik po stronie aplikacji mobilnej, zdecydowano na prezentację polecanych miejsc w postaci powiadomień, czyli w momencie, gdy serwer jest gotowy na wysłanie rekomendacji wysyła odpowiednie powiadomienie, a do tego czasu użytkownik może dalej swobodnie nawigować po aplikacji.
+\par W celu wysyłania powiadomień od serwera do aplikacji mobilnej skorzystano z usługi \textit{Firebase Cloud Messaging}\cite{Firebase}. Serwer po obliczeniu polecanych miejsc buduje wiadomość w postaci mapy, która ma zostać wysłana na urządzenie o określonym unikalnym tokenie. Za wysłanie odpowiada instancja klasy \textit{FirebaseMessaging}. W konsoli usługi można zobaczyć statystyki wysłanych wiadomości, które zawierają między innymi informacje o tym, ile z nich zostało otwartych przez użytkowników. Do odbierania wiadomości po stronie aplikacji mobilnej zaimplementowano serwis, który dzięki temu, że dziedziczy po \textit{FirebaseMessagingService} może reagować na zdarzenia takie jak nadejście wiadomości oraz zmiana tokena.
 \par Gdy serwis odbierze wiadomość, odczytuje ją, a następnie tworzy powiadomienie, ustawiając jego parametry takie jak m.in. jego tytuł, priorytet, dźwięk. Powiadomienie jest następnie obsługiwane przez \textit{NotificationManager} i wyświetla się na ekranie urządzenia mobilnego. Użytkownik może powiadomienie od razu usunąć lub otworzyć. W drugim przypadku zostaje on przekierowany do aplikacji mobilnej, gdzie zostaje mu zaprezentowana lista polecanych miejsc wraz z nazwą i adresem.
 
 \section{Dodawanie podróży (Magdalena Solecka)}
-\par Podczas dodawania podróży tworzone są rekordy w dwóch tabelach bazy danych: \textit{travel} oraz \textit{app\_user\_travel}. Dodanie tylko jednego z nich powodowałoby zaśmiecanie bazy. W celu zapobiegnięcia takiej sytuacji wykorzystano transakcję. Zmienna autocommit zostaje ustawiona na false, co jest równoznaczne z wymuszeniem manualnego wykonania operacji zapisu (ang. commit). Dodawane są kolejno dwa rekordy. W przypadku błędu zapisu do bazy wykonywana jest operacja cofnięcia operacji (ang. rollback). Jeżeli nie nastąpił żaden błąd wykonywana jest operacja zapisu (ang. commit) a zmiennej autocommit przepisywana jest z powrotem wartość true.
+\par Podczas dodawania podróży tworzone są rekordy w dwóch tabelach bazy danych: \textit{travel} oraz \textit{app\_user\_travel}. Dodanie tylko jednego z nich powodowałoby zaśmiecanie bazy. W celu zapobiegnięcia takiej sytuacji wykorzystano transakcję. Zmienna autocommit zostaje ustawiona na false, co jest równoznaczne z wymuszeniem manualnego wykonania operacji zapisu (ang. commit). Dodawane są kolejno dwa rekordy. W przypadku błędu zapisu do bazy wykonywana jest operacja cofnięcia operacji (ang. rollback). Jeżeli nie nastąpił żaden błąd wykonywana jest operacja zapisu (ang. commit), a zmiennej autocommit przepisywana jest z powrotem wartość true.
 
 \section{Dostęp do bazy danych (Magdalena Solecka)}
 \par Do implementacji połączenia z bazą został wykorzystany PostgreSQL JDBC Driver. Zastosowano wzorzec Singleton, który w języku kotlin implementuje się używając słowa kluczowego \textit{object} zamiast \textit{class}.
@@ -888,12 +903,12 @@ Git traktował powiązany folder jako istniejący, więc nie powodowało to doda
 \FloatBarrier
 
 \section{Praca z bazą danych (Magdalena Solecka)}
-\par Warstwę danych tworzono podejściem \textit{najpierw kod} (ang. code first), głównie z powodu trudności z przewidzeniem, które struktury dostarczane przez zewnętrzne API uda się otrzymać i które informacje są niezbędne, aby znacząco nie zmniejszyć szybkości aplikacji, a o które można zapytać źródło podczas ładowania elementów ekranu. Stwarzało to problemy z kompatybilnością wsteczną podczas rozwijania aplikacji, dodawania nowych kolumn, zmiany typów. Początkowe rozwiązanie wymagało powiadomienia wszystkich programistów w zespole o godzinach, w których baza danych może przestać działać poprawnie, a przed jakąkolwiek dalsza pracą konieczne było ściągnięcie najnowszych zmian z repozytorium \textit{github}. Drugi w kolejności wprowadzonym sposobem było utworzenie tabeli tymczasowej - wykonanie kopii tabeli oraz wprowadzenie zmian w kopii. Podmiany dokonywano przy dołączaniu zmian z gałęzi podrzędnej do gałęzi develop w serwisie \textit{github}. Nadal jednak wymagane było pobranie najnowszej wersji kodu. Z początku wymagało to zaplanowania pracy w ten sposób, aby lokalny kod nadawał się do zapisu (ang.commit) w chwili zmian w bazie, ale problem zakończył się odkryciem funkcji \textit{stash/unstash changes} oferowanej przez gita.
+\par Warstwę danych tworzono podejściem \textit{najpierw kod} (ang. code first), głównie z powodu trudności z przewidzeniem, które struktury dostarczane przez zewnętrzne API uda się otrzymać i które informacje są niezbędne, aby znacząco nie zmniejszyć szybkości aplikacji, a o które można zapytać źródło podczas ładowania elementów ekranu. Stwarzało to problemy z kompatybilnością wsteczną podczas rozwijania aplikacji, dodawania nowych kolumn, zmiany typów. Początkowe rozwiązanie wymagało powiadomienia wszystkich programistów w zespole o godzinach, w których baza danych może przestać działać poprawnie, a przed jakąkolwiek dalsza pracą konieczne było ściągnięcie najnowszych zmian z repozytorium \textit{github}. Drugi w kolejności wprowadzonym sposobem było utworzenie tabeli tymczasowej - wykonanie kopii tabeli oraz wprowadzenie zmian w kopii. Podmiany dokonywano przy dołączaniu zmian z gałęzi podrzędnej do gałęzi develop w serwisie \textit{github}. Nadal jednak wymagane było pobranie najnowszej wersji kodu. Z początku wymagało to zaplanowania pracy w ten sposób, aby lokalny kod nadawał się do zapisu (ang. commit) w chwili zmian w bazie, ale problem zakończył się odkryciem funkcji \textit{stash / unstash changes} oferowanej przez gita.
 
 \chapter{Testy}
 
 \section{Testy jednostkowe i instrumentalne aplikacji mobilnej (Dorota Tomczak)}
-\par Dla aplikacji mobilnej napisano 23 testy jednostkowe oraz 9 instrumentalnych, które obejmują klasy i metody komponentów służących do logowania, rejestracji oraz przekierowania po starcie aplikacji. Testy jednostkowe, czyli takie które weryfikują poprawność realizacji pojedynczych funkcjonalności aplikacji, zostały zbudowane w oparciu o następujące zależności: \textit{JUnit 4}\cite{JUnit}, \textit{JUnitParams}\cite{JUnitParms} do tworzenia testów parametryzowanych oraz bibliotekę \textit{MockK}\cite{MockK} służącą do mockowania obiektów w języku Kotlin. Testy te służą do weryfikacji działania metod zdefiniowanych w prezenterach, z tego względu przed startem każdego z nich odpowiedni prezenter nie jest mockowany, ale inicjalizowany w sposób, który umożliwia jego „szpiegowanie”. Aby zasymulować asynchroniczną komunikację sieciową pomiędzy aplikacją a serwerem, która odbywa się poprzez zastosowanie biblioteki \textit{RxJava}\cite{RxJava}, stworzono klasę pomocniczą \textit{RxImmediateJavaSchedulerRule}, która ustawia wszystkie metody, rozpoczynające nowe wątki, aby korzystały zamiast tego z wątku obecnego.
+\par Dla aplikacji mobilnej napisano 23 testy jednostkowe oraz 9 instrumentalnych, które obejmują klasy i metody komponentów służących do logowania, rejestracji oraz przekierowania po starcie aplikacji. Testy jednostkowe, czyli takie które weryfikują poprawność realizacji pojedynczych funkcjonalności aplikacji, zostały zbudowane w oparciu o następujące zależności: \textit{JUnit 4}\cite{JUnit}, \textit{JUnitParams}\cite{JUnitParams} do tworzenia testów parametryzowanych oraz bibliotekę \textit{MockK}\cite{MockK} służącą do mockowania obiektów w języku Kotlin. Testy te służą do weryfikacji działania metod zdefiniowanych w prezenterach, z tego względu przed startem każdego z nich odpowiedni prezenter nie jest mockowany, ale inicjalizowany w sposób, który umożliwia jego „szpiegowanie”. Aby zasymulować asynchroniczną komunikację sieciową pomiędzy aplikacją a serwerem, która odbywa się poprzez zastosowanie biblioteki \textit{RxJava}\cite{RxJava}, stworzono klasę pomocniczą \textit{RxImmediateJavaSchedulerRule}, która ustawia wszystkie metody, rozpoczynające nowe wątki, aby korzystały zamiast tego z wątku obecnego.
 \par Testy instrumentalne, czyli takie które działają na emulatorze lub na fizycznym urządzeniu mobilnym, zostały zrealizowane dla dwóch aktywności – \textit{SignInActivity} oraz \textit{SignUpActivity} i testują, czy na ekranie wyświetlają się prawidłowe informacje, czy akcje użytkownika wywołują odpowiednie metody oraz czy aplikacja reaguje na nie w odpowiedni sposób. Wykorzystują wiele zależności, w tym między innymi \textit{Espresso}\cite{Espresso} i \textit{MockK-Android}\cite{MockK-Android}. W klasach testowych tworzone są role aktywności (\textit{activityScenarioRole}), na których następnie można wywoływać określone akcje np. wciśnięcie przycisku, czy wpisanie tekstu w polu do tego przeznaczonym. 
 \par Wszystkie testy, zarówno instrumentalne jak i jednostkowe zostały podzielone na trzy segmenty:
 \begin{itemize}
@@ -909,6 +924,7 @@ Do nazewnictwa testów przyjęto następującą konwencję: co powinno się sta�
 \caption{Przykładowy test instrumentalny.}
 \label{fig:instrumentationTest}
 \end{figure}
+\FloatBarrier
 
 
 \chapter{Podręcznik użytkownika (Karolina Makuch)}
@@ -940,8 +956,9 @@ W trakcie implementacji została podjęta decyzja o zmianie wyglądu aplikacji. 
 \label{fig:podrecznik10}
 \end{figure}
 \FloatBarrier
+
 \section{Rejestracja oraz logowanie użytkownika}
-Użytkownik pierwszy raz uruchamiający aplikację chcący z niej korzystać powinien stworzyć własne konto. W tym celu należy:
+Użytkownik pierwszy raz uruchamiający aplikację i chcący z niej korzystać powinien stworzyć własne konto. W tym celu należy:
 
 \begin{enumerate}
 
@@ -1238,7 +1255,7 @@ Ukończone elementy planu dnia mają zmniejszoną intensywność kolorów.
 Gdy użytkownik ma zainstalowaną aplikację Facebook posiada możliwość udostępnienia elementu planu na swojej "tablicy". W celu wykonania tej czynności należy:
 \begin{enumerate}
 \item Nacisnąć opcję "Udostępnij"
-\item Napisać treść post'a
+\item Napisać treść posta
 \end{enumerate}
 Domyślna tekst zawiera link do wybranego miejsca na mapie HERE
 
@@ -1484,7 +1501,7 @@ Testy jednostkowe i instrumentalne dla logowania, rejestracji i komponentu \text
   \bibitem{GoogleApi} https://cloud.google.com/maps-platform/routes/
   \bibitem{JsonParser} https://static.javadoc.io/com.google.code.gson/gson/2.8.5/com/google/gson/JsonParser.html
   \bibitem{GsonBuilder} https://static.javadoc.io/com.google.code.gson/gson/2.8.0/com/google/gson/GsonBuilder.html
-  \bibitem{escapeUtils} https://commons.apache.org/proper/commons-lang/apidocs/org/apache/commons/lang3/StringEscapeUtils.html
+  \bibitem{escapeUtils} https://commons.apache.org/proper/commons-lang/apidocs/org/apache/commons/lang3\\/StringEscapeUtils.html
   \bibitem{JUnit} https://junit.org/junit4/
   \bibitem{JUnitParams} https://github.com/Pragmatists/JUnitParams
   \bibitem{MockK} https://mockk.io/
