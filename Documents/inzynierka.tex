@@ -350,7 +350,7 @@ Aplikacja posiadała także informacje na temat lokalnej kuchni (kafelek Food \&
 
 \begin{itemize}
 \item rejestracja i logowanie użytkownika,
-\item dodanie, przeglądanie i edycja planu podróży i planu dnia,
+\item stworzenie, przeglądanie i edycja planu podróży i planu dnia,
 \item wyszukanie elementu w pobliżu danej lokalizacji,
 \item wyszukanie zakwaterowania,
 \item wyszukanie i zaproszenie innego użytkownika do wyświetlania lub edycji podróży,
@@ -631,7 +631,15 @@ Warunki końcowe:
 
 \section{Narzędzia (Magdalena Solecka)}
 \subsection{Github}
-\par W celu łatwego zarządzania projektem wykorzystano System kontroli wersji \textit{Github}. Repozytorium zawierało trzy foldery: App (zawierający implementację aplikacji mobilnej), ServerApp (zawierający implementację serwera REST) oraz Documents (zawierający dokumentację projektu). Backlog produktu utworzono w postaci zadań (ang. issues) również na tej samej platformie.  Jako model pracy wybrano \textit{Gitflow}, a jako schemat nazewnictwa gałęzi funkcjonalności (ang. feature branches): \{nr\_zadania\}-skrócona-nazwa-zadania. Również w nazewnictwie zapisów zmian (ang. commits) zdecydowano się na skorzystanie ze wzoru: \#\{nr\_zadania\}: opis wprowadzonych zmian, w celu śledzenia postępów nad danym zadaniem.
+\par W celu łatwego zarządzania projektem wykorzystano System kontroli wersji \textit{Github}\cite{github}. Repozytorium zawierało trzy foldery: App (zawierający implementację aplikacji mobilnej), ServerApp (zawierający implementację serwera w architekturze REST) oraz Documents (zawierający dokumentację projektu). Backlog produktu utworzono w postaci zadań (ang. issues) również na tej samej platformie.  Jako model pracy wybrano \textit{Gitflow}, a jako schemat nazewnictwa gałęzi funkcjonalności (ang. feature branches): \{nr\_zadania\}-skrócona-nazwa-zadania. Również w nazewnictwie zapisów zmian (ang. commits) zdecydowano się na skorzystanie ze wzoru: \#\{nr\_zadania\}: opis wprowadzonych zmian, w celu śledzenia postępów nad danym zadaniem.
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=\linewidth]{github}
+\caption{Lista zadań implementacyjnych na platformie Github.}
+\label{fig:github}
+\end{figure}
+\FloatBarrier
 
 \subsection{Android Studio i Intellij IDEA}
 \par Środowiskiem programistycznym wykorzystywanym podczas implementacji zostały wybrane \textit{Android Studio} dla wytwarzania aplikacji mobilnej i \textit{Intellij IDEA} dla serwera. Są to narzędzia kompatybilne z systemem \textit{Git} co znacznie ułatwiło rozwiązywanie konfliktów podczas pobierania najnowszych zmian ze zdalnego repozytorium. Usprawniło również proces zapisu zmian. Konfiguracje systemów członków zespołu wymagały m.in. wykorzystania różnych portów oraz adresów IP. Praca z systemem \textit{Git} poprzez jeden z programów zamiast konsolę umożliwiała odznaczenie konkretnych linii kodu, więc przy każdym zapisie nie trzeba było ich zmieniać.
@@ -713,7 +721,7 @@ Elementy planu dnia wyświetlają się w formie chronologicznej listy rozdzielon
 
 
 \section{Implementacja skanowania dokumentów z użyciem OpenCV (Dorota Tomczak)}
-\par Aplikacja umożliwia zrobienie zdjęcia, wybranie czworokątnego obszaru oraz takie przycięcie i modyfikację kolorów fotografii, aby uzyskać efekt skanu. W początkowych założeniach zakładano skorzystanie z gotowej biblioteki, która poza wymienionymi wyżej funkcjonalnościami dokonywałaby automatycznej detekcji krawędzi, jednak ze względu na brak darmowych i dostosowanych do potrzeb rozwiązań zdecydowano stworzyć skaner od podstaw bazując na projekcie open-source \textit{SimpleDocumentScanner-Android}\cite{SimpleDocumentScanner-Android}.
+\par Aplikacja umożliwia zrobienie zdjęcia, wybranie czworokątnego obszaru oraz takie przycięcie i modyfikację kolorów fotografii, aby uzyskać efekt skanu. W początkowych założeniach zakładano skorzystanie z gotowej biblioteki, która poza wymienionymi wyżej funkcjonalnościami dokonywałaby automatycznej detekcji krawędzi, jednak ze względu na brak darmowych i dostosowanych do potrzeb rozwiązań zdecydowano zaimplementować skaner od podstaw bazując na projekcie open-source \textit{SimpleDocumentScanner-Android}\cite{SimpleDocumentScanner-Android}.
 
 \par Wykonanie fotografii jest możliwe jeśli użytkownik nadał aplikacji odpowiednie uprawnienia. Są one weryfikowane przy każdej próbie dodania skanu. Jeśli aplikacja została do tego uprawniona, tworzony jest plik tymczasowy w pamięci urządzenia, a następnie otwierany jest widok kamery za pomocą intencji (ang. intent) utworzonej poprzez podanie do konstruktora nazwy odpowiedniej akcji. Zdjęcie wykonane przez użytkownika jest zapisywane w utworzonym wcześniej pliku tymczasowym a jego ścieżka przekazywana do aktywności (ang. activity) skanera, aby umożliwić w niej jego wyświetlenie i modyfikację.
 
@@ -788,7 +796,9 @@ Wykonanie tej operacji na głównym wątku zablokowałoby interfejs użytkownika
 \par  Oznaczenie planu jako wykonany zostało umożliwione dzięki dodaniu odpowiedniej kolumny do tabeli zawierającej plany dni. Dzięki temu każdy użytkownik mający dostęp do podróży ma możliwość wykonania tej czynności i jej efekty są widoczne dla wszystkich uczestników wyprawy.
 
 \section{Tryb usuwania (Magdalena Solecka)}
-\par Usuwanie podróży, skanów, elementów planu dnia oraz znajomych jest możliwe przez wybranie z menu kontekstowego, pojawiającego się po przytrzymaniu obiektu, opcji usuń. Powoduje to przejście do trybu usuwania zaimplementowanego z użyciem trybu akcji (ang. Contextual Action Mode) oferowanego przez Android. Na żądanie usunięcia wybranych elementów wysłane do serwera, odpowiada on listą identyfikatorów poprawnie usuniętych  obiektów, które następnie są usuwane z widoku aplikacji. Dzięki temu nie jest konieczne wysyłanie dodatkowego żądania w celu zaktualizowania listy po stronie klienta.
+\par Usuwanie podróży, skanów, elementów planu dnia oraz znajomych jest możliwe przez wybranie z menu kontekstowego, pojawiającego się po przytrzymaniu obiektu, opcji usuń. Powoduje to przejście do trybu usuwania zaimplementowanego z użyciem trybu akcji (ang. Contextual Action Mode)\cite{contextualActionMode} oferowanego przez Android. Na żądanie usunięcia wybranych elementów wysłane do serwera, odpowiada on listą identyfikatorów poprawnie usuniętych  obiektów, które następnie są usuwane z widoku aplikacji. Dzięki temu nie jest konieczne wysyłanie dodatkowego żądania w celu zaktualizowania listy po stronie klienta.
+\par Funkcje, które należy zaimplementować w celu poprawnego działania trybu usuwania zostały wyodrębnione do osobnych interfejsów zamkniętych w Kontrakcie DeleteContract. Uwspólniono również klasę DeleteActionModeToolbar odpowiadającą za inicjalizację i zniszczenie trybu usuwania. Ułatwiło to pracę nad funkcjonalnością usuwania obiektów dodanych na późniejszym etapie prac.
+
 
 \chapter{Serwer REST}
 \section{Implementacja serwera (Anna Malizjusz)}
@@ -881,18 +891,34 @@ Git traktował powiązany folder jako istniejący, więc nie powodowało to doda
 \section{Dodawanie podróży (Magdalena Solecka)}
 \par Podczas dodawania podróży tworzone są rekordy w dwóch tabelach bazy danych: \textit{travel} oraz \textit{app\_user\_travel}. Dodanie tylko jednego z nich powodowałoby zaśmiecanie bazy. W celu zapobiegnięcia takiej sytuacji wykorzystano transakcję. Zmienna autocommit zostaje ustawiona na false, co jest równoznaczne z wymuszeniem manualnego wykonania operacji zapisu (ang. commit). Dodawane są kolejno dwa rekordy. W przypadku błędu zapisu do bazy wykonywana jest operacja cofnięcia operacji (ang. rollback). Jeżeli nie nastąpił żaden błąd wykonywana jest operacja zapisu (ang. commit), a zmiennej autocommit przepisywana jest z powrotem wartość true.
 
+\begin{figure}[h]
+\centering
+\includegraphics[width=\linewidth]{travelTransaction}
+\caption{Transakcja dotycząca dodawania podróży.}
+\label{fig:travelTransaction}
+\end{figure}
+\FloatBarrier
+
 \section{Dostęp do bazy danych (Magdalena Solecka)}
-\par Do implementacji połączenia z bazą został wykorzystany PostgreSQL JDBC Driver. Zastosowano wzorzec Singleton, który w języku kotlin implementuje się używając słowa kluczowego \textit{object} zamiast \textit{class}.
-\par Zaimplementowano również wzorzec repozytorium (ang. repository pattern). Stworzono bazowy interfejs generyczny IRepository oraz jego implementację - Repository zawierajace operacje typu CRUD. Repozytoria dla poszczególnych modeli DAO dziedziczą po generycznej klasie bazowej Repository. Implementują również własny interfejs z funkcjami wymaganymi dla danej tabeli. Problemem przy wykorzystaniu typu generycznego okazało się tworzenie nowego obiektu, dlatego postanowiono wymusić na programistach implementację dodatkowej funkcji T tworzący ten obiekt dodając ją do interfejsu IRepository. W celu zmniejszenia ilości powtarzającego się kodu wyodrębniono również stałe fragmenty tekstu z zapytań SQL takie jak na przykład \textit{SELECT * FROM tableName } w postaci stałej selectStatement. Stałe zostały dodane do klasy bazowej Repository jako abstrakcyjne. W podobny sposób rozwiązano problem powtarzających się nazw tabel i kolumn. Nie udało się jednak utworzyć stałej abstrakcyjnej, wynikiem prób była pusta wartość w zapytaniach w miejscu gdzie powinna była znaleźć się na przykład nazwa tabeli.
-	
+\par Do implementacji połączenia z bazą został wykorzystany PostgreSQL JDBC Driver\cite{JDBC}. Zastosowano wzorzec Singleton, który w języku kotlin implementuje się używając słowa kluczowego \textit{object} zamiast \textit{class}.
+\par Zaimplementowano również wzorzec repozytorium (ang. repository pattern). Opracowano bazowy interfejs generyczny IRepository oraz jego implementację - Repository zawierające operacje typu CRUD - podstawowe operacje dostępu do bazy danych takie jak dodawanie, usuwanie, odczyt i aktualizacja wiersza danych. Repozytoria dla poszczególnych modeli DAO (klas, których obiekty przechowują dane odczytywane z bazy) dziedziczą po generycznej klasie bazowej Repository. Implementują również własny interfejs z funkcjami wymaganymi dla danej tabeli. Problemem przy wykorzystaniu typu generycznego okazało się tworzenie nowego obiektu, dlatego postanowiono wymusić na programistach implementację dodatkowej funkcji T tworzący ten obiekt dodając ją do interfejsu IRepository. W celu zmniejszenia ilości powtarzającego się kodu wyodrębniono również stałe fragmenty tekstu z zapytań SQL takie jak na przykład \textit{SELECT * FROM tableName } w postaci stałej selectStatement. Stałe zostały dodane do klasy bazowej Repository jako abstrakcyjne. W podobny sposób rozwiązano problem powtarzających się nazw tabel i kolumn. Nie udało się jednak utworzyć stałej abstrakcyjnej, wynikiem prób była pusta wartość w zapytaniach w miejscu gdzie powinna była znaleźć się na przykład nazwa tabeli.
+
+\noindent\newline
+\begin{figure}[h]
+\centering
+\includegraphics[width=\linewidth]{repository}
+\caption{Klasa nadrzędna Repository. }
+\label{fig:repository}
+\end{figure}
+\FloatBarrier
 
 \chapter{Baza danych}
 \section{Wybór (Magdalena Solecka)}
-\par Przy wyborze systemu do zarządzania bazą danych były brane pod uwagę \textit{Neo4j} oraz \textit{PostgreSQL}. Pierwsza z wymienionych wzbudziła zainteresowanie ze względu na planowaną implementację algorytmu rekomendującego Collaborative Filtering. Jej zaletą, jako grafowej bazy danych, byłoby szybkie wydobycie podobieństw pomiędzy użytkownikami na podstawie ocenionych przez nich miejsc. Uznano jednak, że zespół pracował do tej pory z relacyjnymi bazami danych i językiem sql a dłuższe wykonanie algorytmu nie spowoduje problemów z wydajnym działaniem pozostałych funkcjonalności aplikacji, dlatego ostatecznie zdecydowano się na \textit{PostgreSQL} chwalonego za wysoką wydajność, oferującego wsparcie typu BJSON, który mógłby być przydatny przy  przechowywaniu większej ilości informacji o obiektach, a także znajomą zespołowi składnię zapytań. Bazę danych wdrożono w serwisie \textit{ElephantSQL} z instancją \textit{tiny turtle}
+\par Przy wyborze systemu do zarządzania bazą danych były brane pod uwagę \textit{Neo4j}\cite{Neo4j} oraz \textit{PostgreSQL}\cite{PostreSQL}. Pierwsza z wymienionych wzbudziła zainteresowanie ze względu na planowaną implementację algorytmu rekomendującego Collaborative Filtering. Jej zaletą, jako grafowej bazy danych, byłoby szybkie wydobycie podobieństw pomiędzy użytkownikami na podstawie ocenionych przez nich miejsc. Uznano jednak, że zespół pracował do tej pory z relacyjnymi bazami danych i językiem SQL a dłuższe wykonanie algorytmu nie spowoduje problemów z wydajnym działaniem pozostałych funkcjonalności aplikacji, dlatego ostatecznie zdecydowano się na \textit{PostgreSQL} chwalonego za wysoką wydajność, oferującego wsparcie typu BJSON, który mógłby być przydatny przy  przechowywaniu większej ilości informacji o obiektach, a także znajomą zespołowi składnię zapytań. Bazę danych wdrożono w serwisie \textit{ElephantSQL} z instancją \textit{tiny turtle}
  która pozwalała na zapis 20 MB danych, 5 równoległych połączeń z bazą co było w zupełności wystarczające dla środowiska testowego.
 
 \section{Schemat ERD (Magdalena Solecka)}
-\par Stworzony przy użyciu narzędzia \textit{ERD Constructor}.
+\par Zaprojektowany przy użyciu narzędzia \textit{ERD Constructor}.
 
 \noindent\newline
 \begin{figure}[h]
@@ -927,6 +953,16 @@ Do nazewnictwa testów przyjęto następującą konwencję: co powinno się sta�
 \end{figure}
 \FloatBarrier
 
+\section{Testy dostępu do bazy danych (Magdalena Solecka)}
+\par Napisano 73 testy dostępu do bazy danych przy użyciu bibliotek JUnit\cite{JUnit} oraz MockK\cite{MockK}. Przyjęto założenie, że rekordy o indeksie 0 będą danymi stałymi wykorzystywanymi do testowania operacji odczytu (ang. select) oraz aktualizacji (ang. update). Problematyczne okazały się jednak funkcje testujące usuwanie i dodawanie danych do bazy. W tych przypadkach należało wykonać obie te operacje: najpierw wstawienie wartości, a następnie jej usunięcie ze sprawdzeniem poprawności za pomocą polecenia Assert.assertTrue jako polecenie następne po tym testowanym. Oznacza to jednak, że test nie jest w pełni testem jednostkowym, gdyż wykonuje więcej niż jedną operację. Dla każdej testowanej funkcji rozpatrzono wszystkie przypadki poprawnego jej wykonania, np. dla funkcji pobierającej rekord z bazy na podstawie id (get(id:Int)) było to zwrócenie obiektu typu User jeśli podane w bazie istniał wiersz z zadanym id oraz zwrócenie wartości null przy podaniu id które nie znajduje się w bazie. 
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=\linewidth]{dbTests}
+\caption{Test operacji dodawania obiektu User do bazy danych.}
+\label{fig:dbTests}
+\end{figure}
+\FloatBarrier
 
 \chapter{Podręcznik użytkownika (Karolina Makuch)}
 \par W celu wytłumaczenia obsługi stworzonej aplikacji oraz zaprezentowaniu jej wizualnej strony przygotowano podręcznik użytkownika. Zawiera on poszczególne etapy wykonywania najważniejszych funkcjonalności.
@@ -1408,7 +1444,7 @@ Bazując na opiniach innych użytkowników aplikacja wyświetla listę polecanyc
 
 \par Spotykano się z problemem braku pomocnych informacji w internecie. Część używanych rozwiązań zostało oznaczonych jako przestarzałe i należało samodzielnie znaleźć aktualniejsze. Czasem część znalezionych informacji była specyficzna dla języka Java i nie istniała banalna konwersja do używanego języka Kotlin.
 
-\par Podczas pracy nad aplikacją mobilną i serwerową zdefiniowano kolejne przydatne funkcjonalności lub ulepszenia istniejących. Postanowiono umożliwić użytkownikowi otrzymywanie powiadomień na adres email, a także umożliwić edycję planu dnia. Dodatkowo należy rozszerzyć aplikację o możliwość zmienienia oraz przypomnienia hasła. W serwisie GitHub stworzono nowe zadania odnośnie poprawienia jakości kodu obsługującego zapytania na serwerze, w bazie danych oraz w aplikacji mobilnej. Zdecydowano o przyszłej zmianie niektórych z elementów aplikacji, np. sposobu wyświetlania obiektów na mapie. Jednocześnie planowane jest zaimplementowanie kolejnych funkcjonalności, które zostały oznaczone jako mniej ważne.
+\par Podczas pracy nad aplikacją mobilną i serwerową zdefiniowano kolejne przydatne funkcjonalności lub ulepszenia istniejących. Postanowiono umożliwić użytkownikowi otrzymywanie powiadomień na adres email, a także umożliwić edycję planu dnia. Dodatkowo należy rozszerzyć aplikację o możliwość zmienienia oraz przypomnienia hasła. W serwisie GitHub dodano nowe zadania odnośnie poprawienia jakości kodu obsługującego zapytania na serwerze, w bazie danych oraz w aplikacji mobilnej. Zdecydowano o przyszłej zmianie niektórych z elementów aplikacji, np. sposobu wyświetlania obiektów na mapie. Jednocześnie planowane jest zaimplementowanie kolejnych funkcjonalności, które zostały oznaczone jako mniej ważne.
 
 \par Zdecydowano o późniejszym dokładniejszym pokryciu kodu testami jednostkowymi, a także o dodaniu większej liczby testów integracyjnych. W celu łatwiejszego i bezpieczniejszego rozwoju aplikacji zostaną zaimplementowane mechanizmy ciągłej integracji (ang. continous integration), które zapobiegną problemom z kompilacją oraz działaniem aplikacji na głównej gałęzi (ang. branch) repozytorium (master).
 
@@ -1522,6 +1558,11 @@ Testy jednostkowe i instrumentalne dla logowania, rejestracji i komponentu \text
   \bibitem{MockK-Android} https://mockk.io/ANDROID.html
   \bibitem{Google I/O 2019} https://techcrunch.com/2019/05/07/kotlin-is-now-googles-preferred-language-for-android-app-development/
   \bibitem{ImageView} https://developer.android.com/reference/android/widget/ImageView
+  \bibitem{PostgreSQL} https://www.postgresql.org/
+  \bibitem{Neo4j} https://neo4j.com/
+  \bibitem{JDBC} https://jdbc.postgresql.org/
+  \bibitem{contextualActionMode} https://developer.android.com/guide/topics/ui/menus
+  \bibitem{github} https://github.com/
 \end{thebibliography}
 
 
