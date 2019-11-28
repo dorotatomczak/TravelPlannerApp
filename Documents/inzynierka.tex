@@ -88,10 +88,10 @@ IDE (Integrated Development Environment) - zintegrowane środowisko programistyc
 \chapter{Wstęp i cel pracy (Karolina Makuch)}
 \par Aplikacje mobilne są coraz popularniejszym rozwiązaniem stosowanym w różnych dziedzinach. Rozwój technologiczny potęguje możliwości telefonów przez co coraz więcej firm decyduje się na przenoszenie swoich aplikacji na platformy mobilne. Kilkanaście lat temu  służyły one głównie do komunikacji. Obecnie szeroka gama ich funkcjonalności zaczyna dorównywać ich "większym braciom" - komputerom.
 \par Znaczącą przewagę zyskują dzięki swoim rozmiarom. Są znacznie wygodniejsze w codziennej obsłudze. Większość z nich zmieści się do kieszeni swojego właściciela. Dzięki temu coraz częściej są wykorzystywane w miejscach publicznych, nie zabierając przestrzeni innym osobom. Umożliwiają między innymi ustalanie szczegółów poprzez pisanie wiadomości mailowych, wyszukiwanie potrzebnych informacji jak również odpoczynek poprzez zagranie w grę mobilną.
-\par Zauważalny jest także rozwój telefonów w kierunku fotografii. Nowsze modele posiadają znacznie większą (czasem nawet dwukrotnie) liczbę megapikseli  niż lustrzanki wyprodukowane kilka lat po dwutysięcznym roku. Posiadają dodatkowo coraz więcej obiektywów zwielokrotniając kontrolę nad finalnym efektem zdjęcia.
-\par Uwzględniając wszystkie wspomniane powyżej zalety postanowiono połączyć swoje zainteresowanie podróżami z umiejętnościami zdobytymi podczas studiów informatycznych tworząc pożyteczną aplikację mobilną umożliwiającą planowanie podróży.
-\par Zdecydowano się na implementację aplikacji dla systemu mobilnego Android, rozwijanego przez firmę Google. Opera się on na jądrze systemu operacyjnego Linux oraz na oprogramowaniu posiadającym licencję GNU ( \textit{GNU General Public License} ).
- \par Od blisko dziesięciu lat smartfony z systemem Android znajdują się na pierwszym miejscu w światowym rankingu najczęściej kupowanych telefonów. Podczas jednego roku (2017) sprzedano blisko 1,3 mln urządzeń z tym systemem. Jest on zdecydowanie bardziej otwarty ( dzięki mniejszym kosztom implementacji) oraz dostępny (przystępniejsze ceny urządzeń) niż konkurencja.
+\par Celem pracy jest zaprojektowanie i zaimplementowanie aplikacji umożliwiającej zaplanowanie podróży poprzez integrację systemu z dostępnymi bazami danych informacji o atrakcjach turystycznych oraz możliwości transportu pomiędzy dwoma lokalizacjami. Postanowiono również zaimplementować algorytm rekomendujący plan podróży. Zdecydowano się także na dodanie mechanizmu skanowania dokumentów. 
+\par Przed przystąpieniem do fazy projektowania opracowano Specyfikację Wymagań Systemowych zawierający opis udziałowców, celów systemu (biznesowych oraz funkcjonalnych), otoczenie systemu (składające się na użytkowników oraz systemy zewnętrzne), przewidywalne komponenty systemu (sprzętowe, programowalne oraz podsystemy), wymagania (funkcjonalne, programowe, na dane, wydajnościowe, dodatkowe, w zakresie wiarygodności, elastyczności oraz satysfakcji), sytuacje wyjątkowe i kryteria akceptacyjne.
+\par Zdecydowano się na implementację aplikacji dla systemu mobilnego Android, rozwijanego przez firmę Google. Opiera się on na jądrze systemu operacyjnego Linux oraz na oprogramowaniu posiadającym licencję GNU (\textit{GNU General Public License}).
+ \par Od blisko dziesięciu lat smartfony z systemem Android znajdują się na pierwszym miejscu w światowym rankingu najczęściej kupowanych telefonów. Podczas jednego roku (2017) sprzedano blisko 1,3 mln urządzeń z tym systemem. Jest on zdecydowanie bardziej otwarty (dzięki mniejszym kosztom implementacji) oraz dostępny (przystępniejsze ceny urządzeń) niż konkurencja.
 \par Potrzebne informacje są przechowywane poza aplikacją. Wykorzystano w tym celu system bazy danych \textit{PostgreSQL}. Zaimplementowano również serwer umożliwiający komunikację pomiędzy bazą a aplikacją oraz z zewnętrznym API.
 \par Zdefiniowano również cele do osiągnięcia. Postawiono na zwiększenie zadowolenia użytkownika z podróży poprzez zmniejszenie czasu poświęconego na jej organizację. W tym celu dodano między innymi:
 
@@ -106,6 +106,25 @@ IDE (Integrated Development Environment) - zintegrowane środowisko programistyc
 \item przechowywanie istotnych dokumentów w postaci skanów – odpowiednio przekształconych zdjęć wykonanych przez użytkownika (wykorzystując algorytmy z biblioteki \textit{OpenCV}),
 
 \end{itemize}
+
+\par Rozdział 2 zawiera przegląd podobnych rozwiązań, które są dostępne na rynku aplikacji mobilnych. Pod uwagę wzięto TripIt: Travel Planner,Google Trips - Travel Planner, Sygic Travel: Planuj Podróż oraz Expedia. W przypadku każdej z nich zidentyfikowano główne wady i zalety.
+
+\par W rozdziale 3 przedstawiono ekstrakt Specyfikacji Wymagań systemowych opisujący udziałowców projektu, otoczenie systemu. Wyróżniono w nim również kluczowe wymagania oraz cele dla powstałej aplikacji.
+
+\par Rozdział 4 omawia projekt systemu aplikacji,wyróżniając podsystemy po stronie aplikacji mobilnej oraz po stronie serwera. Przygotowano także najistotniejsze scenariusze użycia określając sposoby korzystania z aplikacji przez użytkowników.
+
+\par Rozdział 5 opisuje najważniejsze decyzje projektowe, uzasadniając wybór języka Kotlin oraz opisując zalety wybranych środowisk programistycznych (Android Studio, Intellij IDEA), systemu kontroli wersji (Github) i zdalnego serwera (Heroku). 
+
+\par Rozdział 6 prezentuje projekt wzorca zastosowanego po stronie aplikacji mobilnej (model - widok - prezenter), sposób jej komunikacji z aplikacją serwerową oraz przybliża sposób implementacji poszczególnych funkcjonalności.
+
+\par Rozdział 7 zawiera informacje dotyczące implementacji serwera (RESTful Web Service),komunikacji z zewnętrznym API, dostępu do bazy danych, obsługi sytuacji wyjątkowych oraz mechanizmu rekomendacji wzorującym się na algorytmie Collaborative Filtering.
+
+\par Rozdział 8 uzasadnia wybór relacyjnej bazy danych (PostgreSQL) oraz pracy z nią związanej. Zawiera również schemat ERD (Entity Relationship Diagram).
+
+\par W rozdziale 9 wymieniono zaimplementowane testy jednostkowe, instrumentalne oraz dostępu do bazy danych. Wytłumaczono w nim także zasady ich działania.
+
+\par Rozdział 10 został zatytułowany Podręcznik użytkownika. Składa się z opisów poszczególnych czynności mających na celu skorzystanie z danej funkcjonalności. Oprócz tego prezentuje aktualny interfejs użytkownika.
+
 
 \chapter{Przegląd podobnych rozwiązań} 
 Aplikacje do planowania podróży to często spotykane rozwiązanie ułatwiające organizowanie wyjazdów. Oferowane są dla systemów operacyjnych Android oraz iOS odpowiednio w serwisach Google Play i Apple Store. Przetestowano 4 przykładowe aplikacje, których podstawowe dane zawarte zostały w tabeli~\ref{tab:porównianie}.
