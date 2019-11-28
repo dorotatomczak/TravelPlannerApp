@@ -88,9 +88,9 @@ IDE (Integrated Development Environment) - zintegrowane środowisko programistyc
 \chapter{Wstęp i cel pracy (Karolina Makuch)}
 \par Aplikacje mobilne są coraz popularniejszym rozwiązaniem stosowanym w różnych dziedzinach. Rozwój technologiczny potęguje możliwości telefonów przez co coraz więcej firm decyduje się na przenoszenie swoich aplikacji na platformy mobilne. Kilkanaście lat temu  służyły one głównie do komunikacji. Obecnie szeroka gama ich funkcjonalności zaczyna dorównywać ich "większym braciom" - komputerom.
 \par Znaczącą przewagę zyskują dzięki swoim rozmiarom. Są znacznie wygodniejsze w codziennej obsłudze. Większość z nich zmieści się do kieszeni swojego właściciela. Dzięki temu coraz częściej są wykorzystywane w miejscach publicznych, nie zabierając przestrzeni innym osobom. Umożliwiają między innymi ustalanie szczegółów poprzez pisanie wiadomości mailowych, wyszukiwanie potrzebnych informacji jak również odpoczynek poprzez zagranie w grę mobilną.
-\par Zauważalny jest także rozwój telefonów w kierunku fotografii. Nowsze modele posiadają znacznie większą liczbę megapikseli (czasem nawet dwukrotnie) niż lustrzanki wyprodukowane kilka lat po dwutysięcznym roku. Posiadają dodatkowo coraz więcej obiektywów zwielokrotniając kontrolę nad finalnym efektem zdjęcia.
+\par Zauważalny jest także rozwój telefonów w kierunku fotografii. Nowsze modele posiadają znacznie większą (czasem nawet dwukrotnie) liczbę megapikseli  niż lustrzanki wyprodukowane kilka lat po dwutysięcznym roku. Posiadają dodatkowo coraz więcej obiektywów zwielokrotniając kontrolę nad finalnym efektem zdjęcia.
 \par Uwzględniając wszystkie wspomniane powyżej zalety postanowiono połączyć swoje zainteresowanie podróżami z umiejętnościami zdobytymi podczas studiów informatycznych tworząc pożyteczną aplikację mobilną umożliwiającą planowanie podróży.
-\par Zdecydowano się na implementację aplikacji dla systemu mobilnego Android, rozwijanego przez firmę Google. Opera się on na jądrze systemu operacyjnego Linux oraz na oprogramowaniu posiadającym licencję GNU (ang. \textit{GNU General Public License}).
+\par Zdecydowano się na implementację aplikacji dla systemu mobilnego Android, rozwijanego przez firmę Google. Opera się on na jądrze systemu operacyjnego Linux oraz na oprogramowaniu posiadającym licencję GNU ( \textit{GNU General Public License} ).
  \par Od blisko dziesięciu lat smartfony z systemem Android znajdują się na pierwszym miejscu w światowym rankingu najczęściej kupowanych telefonów. Podczas jednego roku (2017) sprzedano blisko 1,3 mln urządzeń z tym systemem. Jest on zdecydowanie bardziej otwarty ( dzięki mniejszym kosztom implementacji) oraz dostępny (przystępniejsze ceny urządzeń) niż konkurencja.
 \par Potrzebne informacje są przechowywane poza aplikacją. Wykorzystano w tym celu system bazy danych \textit{PostgreSQL}. Zaimplementowano również serwer umożliwiający komunikację pomiędzy bazą a aplikacją oraz z zewnętrznym API.
 \par Zdefiniowano również cele do osiągnięcia. Postawiono na zwiększenie zadowolenia użytkownika z podróży poprzez zmniejszenie czasu poświęconego na jej organizację. W tym celu dodano między innymi:
@@ -721,7 +721,7 @@ Elementy planu dnia wyświetlają się w formie chronologicznej listy rozdzielon
 
 
 \section{Implementacja skanowania dokumentów z użyciem OpenCV (Dorota Tomczak)}
-\par Aplikacja umożliwia zrobienie zdjęcia, wybranie czworokątnego obszaru oraz takie przycięcie i modyfikację kolorów fotografii, aby uzyskać efekt skanu. W początkowych założeniach zakładano skorzystanie z gotowej biblioteki, która poza wymienionymi wyżej funkcjonalnościami dokonywałaby automatycznej detekcji krawędzi, jednak ze względu na brak darmowych i dostosowanych do potrzeb rozwiązań zdecydowano zaimplementować skaner od podstaw bazując na projekcie open-source \textit{SimpleDocumentScanner-Android}\cite{SimpleDocumentScanner-Android}.
+\par Aplikacja umożliwia zrobienie zdjęcia, wybranie czworokątnego obszaru oraz takie przycięcie i modyfikację kolorów fotografii, aby uzyskać efekt skanu. W początkowych założeniach zakładano skorzystanie z gotowej biblioteki, która poza wymienionymi wyżej funkcjonalnościami dokonywałaby automatycznej detekcji krawędzi, jednak ze względu na brak darmowych i dostosowanych do potrzeb rozwiązań zdecydowano zaimplementować skaner od podstaw bazując na projekcie open-source \newline \textit{SimpleDocumentScanner-Android}\cite{SimpleDocumentScanner-Android}.
 
 \par Wykonanie fotografii jest możliwe jeśli użytkownik nadał aplikacji odpowiednie uprawnienia. Są one weryfikowane przy każdej próbie dodania skanu. Jeśli aplikacja została do tego uprawniona, tworzony jest plik tymczasowy w pamięci urządzenia, a następnie otwierany jest widok kamery za pomocą intencji (ang. intent) utworzonej poprzez podanie do konstruktora nazwy odpowiedniej akcji. Zdjęcie wykonane przez użytkownika jest zapisywane w utworzonym wcześniej pliku tymczasowym a jego ścieżka przekazywana do aktywności (ang. activity) skanera, aby umożliwić w niej jego wyświetlenie i modyfikację.
 
@@ -762,9 +762,9 @@ Elementy planu dnia wyświetlają się w formie chronologicznej listy rozdzielon
 
 \par Do eliminacji przypadkowych działań zostało wykorzystane okno dialogowe wymagające potwierdzenia  zamiaru dodania wybranego użytkownika do znajomych. W tym celu została wykorzystana klasa \textit{AlertDialog} \cite{AlertDialog}. Po wyrażeniu zgody  oraz w przypadku poprawnego wykonania metody użytkownik otrzymuje powiadomienie stworzone poprzez wywołanie konstruktora klasy \textit{Snackbar} \cite{Snackbar}.
 
-\par W tym samym oknie pod polem do wyszukiwania znajduje się lista znajomych użytkownika. Została ona dodana jako liniowa warstwa \textit{LinearLayout} \cite{LinearLayout}  umożliwiająca odświeżanie widoku poprzez szybkie przesunięcie palcem po ekranie \textit{SwipeRefreshLayout} \cite{SwipeRefreshLayout}. Implementuje ona tryb usuwania.
+\par W tym samym oknie pod polem do wyszukiwania znajduje się lista znajomych użytkownika. Została ona dodana jako liniowa warstwa ( \textit{LinearLayout} \cite{LinearLayout} ) umożliwiająca odświeżanie widoku poprzez szybkie przesunięcie palcem po ekranie ( \textit{SwipeRefreshLayout} \cite{SwipeRefreshLayout} ). Implementuje ona tryb usuwania.
 
-\par Powiązanie dwóch użytkowników poprzez oznaczenie ich jako znajomych zostało zrealizowane poprzez dołączenie do bazy danych osobnej tabeli przechowującej potrzebne informacje. Dodawanie jest jednostronne. Znajomy danego użytkownika nie jest zobowiązany do posiadania go na swojej liście znajomych.
+\par Powiązanie dwóch użytkowników poprzez oznaczenie ich jako znajomych zostało zrealizowane poprzez dołączenie do bazy danych osobnej tabeli ( app user friend )  przechowującej potrzebne informacje (identyfikator użytkownika oraz identyfikator znajomego). Dodawanie jest jednostronne. Znajomy danego użytkownika nie jest zobowiązany do posiadania go na swojej liście znajomych.
 
 \par Po stronie serwera zostały dodane pliki umożliwiające komunikację z wspomnianą powyżej tabelą oraz wykonywaniu potrzebnych zapytań. Zostały zaimplementowane wszystkie bazowe, niezbędne do komunikacji z bazą danych zapytania. Oprócz nich przygotowano również zapytanie zwracające wszystkie adresy mailowe nieznajomych użytkowników zawierających wpisany ciąg znaków.
 
@@ -784,14 +784,14 @@ Elementy planu dnia wyświetlają się w formie chronologicznej listy rozdzielon
 \FloatBarrier
 
 \section{Udostępnianie planu dnia w medium społecznościowym (Karolina Makuch)}
-\par  Po dłuższym przytrzymaniu poszczególnego elementu planu pojawia się „dymek"  (\textit{PopupMenu} \cite{PopupMenu}) zawierający trzy czynności do wyboru. Jedną z nich jest możliwość udostępnienia wybranego punktu w medium społecznościowym. Postanowiono wybrać jedno z najpopularniejszych – \textit{Facebooka} \cite{Facebook}. W tym celu wykorzystano akcję wysyłającą ( \textit{ACTION.SEND}) za pomocą intencji (\textit{Intent} \cite{Intent}).
-\par  W przypadku znalezienia aplikacji Facebook na telefonie użytkownika, zostanie on automatycznie przekierowany do publikowania posta na własnej „tablicy”. Domyślną treścią jest link do map HERE \cite{mobileHere} z wyszukanym miejscem z elementu planu dnia. W celu pobrania właściwego odnośnika  zostało zaimplementowane odczytywanie wartości parametru widoku (ang. \textit{view}) znajdującego się w odpowiedzi w formacie JSON (z wykorzystaniem \textit{JsonParser} \cite{JsonParser}). Odsyłacz do wyników zapytania został pobrany z bazy danych. Wykonanie analizy (ang. parse) wyniku zapytania wymagało utworzenia osobnego wątku.
+\par  Po dłuższym przytrzymaniu poszczególnego elementu planu pojawia się "dymek"  (\textit{PopupMenu} \cite{PopupMenu}) zawierający trzy czynności do wyboru. Jedną z nich jest możliwość udostępnienia wybranego punktu w medium społecznościowym. Postanowiono wybrać jedno z najpopularniejszych – \textit{Facebooka} \cite{Facebook}. W tym celu wykorzystano akcję wysyłającą ( \textit{ACTION.SEND}) za pomocą intencji (\textit{Intent} \cite{Intent}).
+\par  W przypadku znalezienia aplikacji Facebook na telefonie użytkownika, zostanie on automatycznie przekierowany do publikowania posta na własnej "tablicy". Domyślną treścią jest link do map HERE \cite{mobileHere} z wyszukanym miejscem z elementu planu dnia. W celu pobrania właściwego odnośnika  zostało zaimplementowane odczytywanie wartości parametru widoku (ang. view) znajdującego się w odpowiedzi w formacie JSON (z wykorzystaniem \textit{JsonParser} \cite{JsonParser}). Odsyłacz do wyników zapytania został pobrany z bazy danych. Wykonanie analizy (ang. parse) wyniku zapytania wymagało utworzenia osobnego wątku.
 Wykonanie tej operacji na głównym wątku zablokowałoby interfejs użytkownika. 
 \par Początkowo planowano inną domyślną treść. Miała ona zawierać najważniejsze informacje na temat wybranego elementu planu. Niestety zarówno wbudowany w Androidzie moduł  udostępniania, a także \textit{API Facebooka} nie udostępnia tej możliwości.  Problem ten został zgłoszony ponad 7 lat temu, lecz nie został rozwiązany\cite{FacebookBug}. Pola \textit{"EXTRA SUBJECT"} oraz \textit{"EXTRA TEXT"} są pomijane w momencie próby udostępniania domyślnej zawartości w aplikacji Facebook. Z racji możliwości załączania zdjęć, linków oraz plików multimedialnych (np. wideo) rozważane było zamienienie tekstu na plik obrazu oraz dodanie go do akcji. Brane również pod uwagę było przeniesienie domyślnej wiadomości do schowka oraz wyświetlenie komunikatu informującego użytkownika z prośbą o wklejenie wiadomości.
 \par Jednakże stwierdzono, że takich akcji nie powinno się wymagać od użytkownika. Ostatecznie postanowiono, że najlepszym rozwiązaniem będzie zdecydowanie się na wspomniany wcześniej odsyłacz do wyszukanego miejsca z mapy HERE \cite{mobileHere}. Dzięki czemu treść posta zostanie utworzona przez użytkownika umożliwiając mu zachowanie własnego charakteru pisania.
 
 \section{Manualna realizacja planu (Karolina Makuch)}
-\par  Kolejną akcją dostępną w „dymku” pojawiającym się po przytrzymaniu poszczególnego elementu jest manualna realizacja planu dnia. Początkowa treść akcji dla nowo powstałego nieukończonego jeszcze elementu planu dnia brzmi „Oznacz jako ukończony” (ang.„Mark as completed”). W przypadku oznaczenia części składowej planu jako zrealizowany tekst automatycznie zmienia się na „Oznacz jako nieukończony” (ang. „Mark as incompleted”) oraz zwiększa się stopień przeźroczystości odpowiedniego elementu listy. Postanowiono oznaczać zrealizowane plany poprzez wygaszenie kolorów elementów danego planu zmniejszając wartość kanału \textit{alfa} (ang. alpha).
+\par  Kolejną akcją dostępną w "dymku" pojawiającym się po przytrzymaniu poszczególnego elementu jest manualna realizacja planu dnia. Początkowa treść akcji dla nowo powstałego nieukończonego jeszcze elementu planu dnia brzmi "Oznacz jako ukończony" (ang."Mark as completed"). W przypadku oznaczenia części składowej planu jako zrealizowany tekst automatycznie zmienia się na "Oznacz jako nieukończony" (ang. "Mark as incompleted") oraz zwiększa się stopień przeźroczystości odpowiedniego elementu listy. Postanowiono oznaczać zrealizowane plany poprzez wygaszenie kolorów elementów danego planu zmniejszając wartość kanału \textit{alfa} (ang. alpha).
  \par Zdecydowano się umożliwić użytkownikowi cofnięcie wprowadzonych zmian w przypadku wykonania niechcianego kliknięcia, świadomie rezygnując z wymagającego potwierdzenia okna dialogowego. Stwierdzono duże prawdopodobieństwo wykonywania tej akcji w pośpiechu. Dodatkowe kliknięcie wydłużyłoby czas wykonywania akcji oraz mogłoby to irytować użytkownika.
 \par  Oznaczenie planu jako wykonany zostało umożliwione dzięki dodaniu odpowiedniej kolumny do tabeli zawierającej plany dni. Dzięki temu każdy użytkownik mający dostęp do podróży ma możliwość wykonania tej czynności i jej efekty są widoczne dla wszystkich uczestników wyprawy.
 
@@ -1000,11 +1000,18 @@ Użytkownik pierwszy raz uruchamiający aplikację i chcący z niej korzystać p
 \begin{enumerate}
 
 \item Kliknąć przycisk "Zarejestruj się".
-\item W widoku rejestracji podać swój adres mailowy oraz hasło.
+\item W widoku rejestracji podać swój adres mailowy oraz hasło spełniające wymagania:
+\begin{itemize}
+\item przynajmniej 8 znaków długości,
+\item przynajmniej jedna cyfra,
+\item przynajmniej jedna duża litera,
+\item przynajmniej jedna mała litera,
+\end{itemize}
+
 \item Kliknąć "Zarejestruj się".
 \item Po pojawieniu się powiadomienia "Twoje konto zostało utworzone" następuje automatyczne przekierowanie do widoku logowania.
 \item Uzupełnić pola widoku logowania tymi samymi danymi.
-\item Logowanie następuje w momencie uzupełnienia danych oraz kliknięcia „Zaloguj się”.
+\item Logowanie następuje w momencie uzupełnienia danych oraz kliknięcia "Zaloguj się".
 
 \end{enumerate}
 
@@ -1057,7 +1064,7 @@ Pierwszy widok pojawiający się tuż po zalogowaniu zawiera listę dostępnych 
 \subsection{Tworzenie podróży}
 W celu utworzenia podróży należy:
 \begin{enumerate}
-\item Nacisnąć przycisk oznaczony symbolem „+”.
+\item Nacisnąć przycisk oznaczony symbolem "+".
 \item Uzupełnić okno dialogowe nazwą podróży i kliknąć "OK".
 \item Utworzona podróż pojawi się na liście wraz z domyślnym zdjęciem.
 \end{enumerate}
@@ -1143,10 +1150,10 @@ Umożliwia on dodanie miejsca do planu dnia.
 \end{itemize}
 \item Po naciśnięciu wyszukiwania miejsca po nazwie pojawia się widok mapy umożliwiającej wybranie konkretnego miejsca.
 \item Po wybraniu pinezki pojawiają się dokładne informacje na temat miejsca.
-\item Naciśnięcie przycisku zawierającego symbol „tick” przekierowuje użytkownika do pierwszego ekranu wyszukiwania.
+\item Naciśnięcie przycisku zawierającego symbol odhaczenia (ang.tick) przekierowuje użytkownika do pierwszego ekranu wyszukiwania.
 \item Następnie należy wybrać datę oraz godzinę realizacji planu.
 \item Opcjonalne jest dodanie własnych notatek.
-\item Dodanie miejsca następuje po naciśnięciu przycisku oznaczonym symbolem "tick".
+\item Dodanie miejsca następuje po naciśnięciu przycisku oznaczonym symbolem odhaczenia (ang.tick).
 \end{enumerate}
 
 \begin{figure}[h]
@@ -1362,7 +1369,7 @@ W celu przechowania dokumentu w aplikacji należy:
 \section{Znajomi}
 Chcąc udostępnić innemu użytkownikowi podróży należy go wcześniej dodać do znajomych. Można to zrobić w następujących krokach:
 \begin{enumerate}
-\item Kliknąć na symbol hamburgera.
+\item Kliknąć na symbol szuflady nawigacji (and. hamburger menu).
 \item W bocznym menu wybrać "Znajomi".
 \item Wpisać w wyszukiwarce adres mailowy danego użytkownika.
 \item Wybrać odpowiedni mail z podpowiedzi.
