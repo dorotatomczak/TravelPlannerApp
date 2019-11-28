@@ -863,7 +863,7 @@ Kolejna jest zawartość, którą tworzą określone przy generacji tokenu twier
 
 
 \section{Komunikacja z zewnętrznym API (Anna Malizjusz)}
-\par Potrzeba wyszukiwania infromacji o miejscach na świecie wymusiła korzystanie z zewnętrznych dostawców danych. Po analizie przeprowadzonej na etapie tworzenia specyfikacji wymagań systemowych zdecydowano o użyciu Here API \cite{HereApi}. Próba implementacji rozwiązania zmusiła programistów do skorzystania zarówno z wybranego dostawcy, jak i z początkowo odrzuconego Google API\cite{GoogleApi}, które oferowało dużo bogatszą bazę sposobów transportu.
+\par Potrzeba wyszukiwania infromacji o miejscach na świecie wymusiła korzystanie z zewnętrznych dostawców danych. Po analizie przeprowadzonej na etapie tworzenia specyfikacji wymagań systemowych zdecydowano o użyciu Here API \cite{Here}. Próba implementacji rozwiązania zmusiła programistów do skorzystania zarówno z wybranego dostawcy, jak i z początkowo odrzuconego Google API\cite{GoogleApi}, które oferowało dużo bogatszą bazę sposobów transportu.
 
 \par Podstawowym problemem było odczytanie danych. Wynikiem wysłania zapytania do dostawcy informacji był ciąg znaków zawierający znaczą ilość danych nie tylko o temacie zapytania. W przypadku każdego typu żądania przeanalizowano wynik i zdefiniowane wspólną metodę wyszukującą oraz wybierającą niezbędne informacje. Następnie należało je dopasować do potrzeb - nie wszystkie informacje były potrzebne aplikacji. Napisano funkcję zmieniającą ciąg znaków na instancję klasy. Skorzystano z możliwości klasy \textit{JsonParser}\cite{JsonParser} oraz \textit{GsonBuilder}\cite{GsonBuilder}.
 
@@ -1431,6 +1431,8 @@ Bazując na opiniach innych użytkowników aplikacja wyświetla listę polecanyc
 
 \chapter{Podsumowanie (Anna Malizjusz)}
 
+\par Celem pracy było napisanie aplikacji mobilnej, serwera w architekturze REST oraz przetestowanie obu komponentów. Dodatkowo należało zintegrować aplikację z bazą danych oraz zewnętrznym API dostarczonym przez serwisy Here oraz Google. Bazowe cele zdefiniowano w dokumencie SWS. 
+ 
 \par Wynikiem pracy inżynierskiej jest zaimplementowana, działająca w środowisku testowym aplikacja mobilna oraz serwer REST. Zrealizowane zostały wszystkie wymagania o wysokim priorytecie niezbędne do akceptacji projektu. Najważniejsze z nich to:
 \begin{itemize}
 \item rejestracja i logowanie użytkownika,
@@ -1447,7 +1449,7 @@ Bazując na opiniach innych użytkowników aplikacja wyświetla listę polecanyc
 
 \par Aplikację mobilną przetestował zespół programistów oraz kilku testerów. Nie stwierdzono rażących błędów, które uniemożliwiałyby korzystanie z zaimplementowanego rozwiązania. Interfejs okazał się łatwy w obsłudze dla młodych ludzi.
 
-\par W trakcie projektu inżynierskiego zespół doświadczył trudności w implementacji rozwiązania "od zera", bez bazowego kodu ani dokładnych. Brakowało również praktyki w prowadzeniu względnie obszernego i skomplikowanego przedsięwzięcia, jakim jest stworzenie działającej aplikacji w pół roku. Wielokrotnie wybrane rozwiązania były uznawane za niewystarczające i zmieniane na lepsze. Początkowo tryb pracy i stosowane konwencje często się zmieniały, jednak w pierwszym etapie projektu udało się ustabilizować wewnętrzne wymagania. Dzięki temu recenzje kodu przebiegały sprawniej.
+\par W trakcie projektu inżynierskiego zespół doświadczył trudności w implementacji rozwiązania "od zera", bez bazowego kodu ani dokładnych wytycznych. Brakowało również praktyki w prowadzeniu względnie obszernego i skomplikowanego przedsięwzięcia, jakim jest stworzenie działającej aplikacji w pół roku. Wielokrotnie wybrane rozwiązania były uznawane za niewystarczające i zmieniane na lepsze. Początkowo tryb pracy i stosowane konwencje często się zmieniały, jednak w pierwszym etapie projektu udało się ustabilizować wewnętrzne wymagania. Dzięki temu recenzje kodu przebiegały sprawniej.
 
 \par Spotykano się z problemem braku pomocnych informacji w internecie. Część używanych rozwiązań zostało oznaczonych jako przestarzałe i należało samodzielnie znaleźć aktualniejsze. Czasem część znalezionych informacji była specyficzna dla języka Java i nie istniała banalna konwersja do używanego języka Kotlin.
 
@@ -1455,14 +1457,105 @@ Bazując na opiniach innych użytkowników aplikacja wyświetla listę polecanyc
 
 \par Zdecydowano o późniejszym dokładniejszym pokryciu kodu testami jednostkowymi, a także o dodaniu większej liczby testów integracyjnych. W celu łatwiejszego i bezpieczniejszego rozwoju aplikacji zostaną zaimplementowane mechanizmy ciągłej integracji (ang. continous integration), które zapobiegną problemom z kompilacją oraz działaniem aplikacji na głównej gałęzi (ang. branch) repozytorium (master).
 
-\par Zaimplementowane rozwiązanie, dzięki zachowaniu dobrych praktyk programistycznych podczas pisania kodu, może być dalej rozwijane w ramach pracy magisterskiej. Dotychczasowa praca zespołu zwiększyła jego umiejętności, zarówno programistyczne, jak i zdolność do współpracy z innymi członkami grupy.
+\par Zaimplementowane rozwiązanie, dzięki zachowaniu dobrych praktyk programistycznych podczas pisania kodu, może być dalej rozwijane. Dotychczasowa praca zespołu zwiększyła jego umiejętności, zarówno programistyczne, jak i zdolność do współpracy z innymi członkami grupy.
 
-\chapter*{Podział zadań implementacyjnych}
-\addcontentsline{toc}{chapter}{Podział zadań implementacyjnych}
 
-\captionof{table}{Autorzy zaimplementowanych funkcji\label{tab:autorzy}}
+\bibliographystyle{plain}
+\begin{thebibliography}{1}
+\addcontentsline{toc}{chapter}{Bibliografia}
+  \bibitem{Here} Dokumentacja interfejsów programistycznych platformy HERE Maps, http://developer.here.com (dostęp: 01.05.2019 - 15.11.2019)
+  
+  \bibitem{gms.location} Dokumentacja interfejsu platformy Google API - biblioteka umożliwiająca lokalizację, https://developers.google.com/android/reference/com/google/android/gms/location/package-summary (dostęp: 10.10.2019)
+  
+  \bibitem{Android usage} gs.statcounter.com/android-version-market-share/mobile-tablet/worldwide
+  
+  \bibitem{SearchView} Dokumentacja klasy SearchView, https://developer.android.com/reference/android/widget/SearchView (dostęp: 07.08.2019)
+  
+  \bibitem{ContentProvider} Dokumentacja klasy ContentProvider, https://developer.android.com/reference/android/content/ContentProvider (dostęp: 07.08.2019)
+  
+  \bibitem {MatrixCursor} Dokumentacja klasy MatrixCursor, https://developer.android.com/reference/android/database/MatrixCursor (dostęp: 07.08.2019)
+  
+  \bibitem {SearchManager} Dokumentacja klasy SearchManager, https://developer.android.com/reference/android/app/SearchManager (dostęp: 07.08.2019)
+  
+  \bibitem {AlertDialog} https://developer.android.com/reference/android/app/AlertDialog.html
+  
+  \bibitem {Snackbar} https://developer.android.com/reference/android/support/design/widget/Snackbar
+  
+  \bibitem {LinearLayout} https://developer.android.com/guide/topics/ui/layout/linear
+  
+  \bibitem {SwipeRefreshLayout} Dokumentacja klasy SwipeRefreshLayout, https://developer.android.com/reference/android/support/v4/widget/SwipeRefreshLayout (dostęp: 28.08.2019)
+  
+  \bibitem {DialogFragment} https://developer.android.com/reference/android/app/DialogFragment
+  
+  \bibitem {PopupMenu} https://developer.android.com/reference/android/widget/PopupMenu
+  
+  \bibitem {Facebook} https://www.facebook.com/
+  
+  \bibitem {Intent} https://developer.android.com/reference/android/content/Intent
+  
+  \bibitem{SlidingUpPanelLayout} https://github.com/umano/AndroidSlidingUpPanel
+  
+  \bibitem{Spring documentation} https://docs.spring.io/spring-boot/docs/current/reference/htmlsingle/
+  
+  \bibitem{JWT} Dokumentacja standardu JSON Web Token, https://tools.ietf.org/html/rfc7519 (dostęp: 10.09.2019)
+  
+  \bibitem{JWT library} Dokumentacja biblioteki JJWT, https://mvnrepository.com/artifact/io.jsonwebtoken/jjwt (dostęp: 10.09.2019)
+  
+  \bibitem{Retrofit library} Dokumentacja biblioteki Retrofit2, https://square.github.io/retrofit/ (dostęp: 01.09.2019)
+  
+  \bibitem{OkHttpClient} Dokumentacja klasy OkHttpClient, https://square.github.io/okhttp/ (dostęp: 01.09.2019)
+  
+  \bibitem{Dagger 2} https://github.com/google/dagger
+  
+  \bibitem{SimpleDocumentScanner-Android} https://github.com/jbttn/SimpleDocumentScanner-Android
+  
+  \bibitem{OpenCV} https://opencv.org/
+  
+  \bibitem{FacebookBug} https://developers.facebook.com/support/bugs/332619626816423/
+  
+  \bibitem{mobileHere} https://mobile.here.com/
+  
+  \bibitem{Glide} https://bumptech.github.io/glide/
+  
+  \bibitem{Apache Mahout} https://mahout.apache.org/
+  
+  \bibitem{Postman} https://www.getpostman.com/
+  
+  \bibitem{Firebase} https://firebase.google.com/docs/cloud-messaging
+  
+  \bibitem{GoogleApi} Dokumentacja interfejsu wyszukiwania tras oferowana przez serwis Google, https://cloud.google.com/maps-platform/routes/ (dostęp: 23.10.2019)
+  
+  \bibitem{JsonParser} Dokumentacja klasy JsonParser umożiwiającej serializację i deserializację, https://static.javadoc.io/com.google.code.gson/gson/2.8.5/com/google/gson/JsonParser.html (dostęp: 30.09.2019)
+  
+  \bibitem{GsonBuilder} Dokumentacja klasy GsonBuilder, https://static.javadoc.io/com.google.code.gson/gson/2.8.0/com/google/gson/GsonBuilder.html (dostęp: 30.09.2019)
+  
+  \bibitem{escapeUtils} Dokumentacja klasy StringEscapeUtils, https://commons.apache.org/proper/commons-lang/apidocs/org/apache/commons/lang3\\/StringEscapeUtils.html (dostęp: 17.10.2019)
+  
+  \bibitem{JUnit} https://junit.org/junit4/
+  \bibitem{JUnitParams} https://github.com/Pragmatists/JUnitParams
+  \bibitem{MockK} https://mockk.io/
+  \bibitem{RxJava} https://github.com/ReactiveX/RxJava
+  \bibitem{Espresso} https://developer.android.com/training/testing/espresso
+  \bibitem{MockK-Android} https://mockk.io/ANDROID.html
+  \bibitem{Google I/O 2019} https://techcrunch.com/2019/05/07/kotlin-is-now-googles-preferred-language-for-android-app-development/
+  \bibitem{ImageView} https://developer.android.com/reference/android/widget/ImageView
+  \bibitem{PostgreSQL} https://www.postgresql.org/
+  \bibitem{Neo4j} https://neo4j.com/
+  \bibitem{JDBC} https://jdbc.postgresql.org/
+  \bibitem{contextualActionMode} https://developer.android.com/guide/topics/ui/menus
+  \bibitem{github} https://github.com/
+\end{thebibliography}
 
-\centering
+
+\listoffigures
+\listoftables
+
+
+\chapter*{Dodatek A: Podział zadań implementacyjnych}
+\addcontentsline{toc}{chapter}{Dodatek A: Podział zadań implementacyjnych}
+
+
+\begin{center}
 \begin{longtable}{ |p{3.3cm}|p{3.3cm}|p{3.3cm}|p{3.3cm}| }
 \hline
 \thead{Dorota Tomczak} & \thead{Magdalena Solecka} & \thead{Anna Malizjusz} & \thead{Karolina Makuch}\\
@@ -1518,62 +1611,15 @@ Testy jednostkowe i instrumentalne dla logowania, rejestracji i komponentu \text
 \hline
 \end{longtable}
 
+\end{center}
 
-\bibliographystyle{plain}
-\begin{thebibliography}{1}
-\addcontentsline{toc}{chapter}{Bibliografia}
-  \bibitem{Here} developer.here.com
-  \bibitem{gms.location} developers.google.com/android/reference/com/google/android/gms/location/package-summary
-  \bibitem{Android usage} gs.statcounter.com/android-version-market-share/mobile-tablet/worldwide
-  \bibitem{SearchView} https://developer.android.com/reference/android/widget/SearchView
-  \bibitem{ContentProvider} https://developer.android.com/reference/android/content/ContentProvider
-  \bibitem {MatrixCursor} https://developer.android.com/reference/android/database/MatrixCursor
-  \bibitem {SearchManager} https://developer.android.com/reference/android/app/SearchManager
-  \bibitem {AlertDialog} https://developer.android.com/reference/android/app/AlertDialog.html
-  \bibitem {Snackbar} https://developer.android.com/reference/android/support/design/widget/Snackbar
-  \bibitem {LinearLayout} https://developer.android.com/guide/topics/ui/layout/linear
-  \bibitem {SwipeRefreshLayout} https://developer.android.com/reference/android/support/v4/widget/SwipeRefreshLayout
-  \bibitem {DialogFragment} https://developer.android.com/reference/android/app/DialogFragment
-  \bibitem {PopupMenu} https://developer.android.com/reference/android/widget/PopupMenu
-  \bibitem {Facebook} https://www.facebook.com/
-  \bibitem {Intent} https://developer.android.com/reference/android/content/Intent
-  \bibitem{SlidingUpPanelLayout} https://github.com/umano/AndroidSlidingUpPanel
-  \bibitem{Spring documentation} https://docs.spring.io/spring-boot/docs/current/reference/htmlsingle/
-  \bibitem{JWT} https://tools.ietf.org/html/rfc7519
-  \bibitem{JWT library} https://mvnrepository.com/artifact/io.jsonwebtoken/jjwt
-  \bibitem{Retrofit library} https://square.github.io/retrofit/
-  \bibitem{OkHttpClient} https://square.github.io/okhttp/
-  \bibitem{Dagger 2} https://github.com/google/dagger
-  \bibitem{SimpleDocumentScanner-Android} https://github.com/jbttn/SimpleDocumentScanner-Android
-  \bibitem{OpenCV} https://opencv.org/
-  \bibitem{FacebookBug} https://developers.facebook.com/support/bugs/332619626816423/
-  \bibitem{mobileHere} https://mobile.here.com/
-  \bibitem{Glide} https://bumptech.github.io/glide/
-  \bibitem{Apache Mahout} https://mahout.apache.org/
-  \bibitem{Postman} https://www.getpostman.com/
-  \bibitem{Firebase} https://firebase.google.com/docs/cloud-messaging
-  \bibitem{HereApi} https://developer.here.com/
-  \bibitem{GoogleApi} https://cloud.google.com/maps-platform/routes/
-  \bibitem{JsonParser} https://static.javadoc.io/com.google.code.gson/gson/2.8.5/com/google/gson/JsonParser.html
-  \bibitem{GsonBuilder} https://static.javadoc.io/com.google.code.gson/gson/2.8.0/com/google/gson/GsonBuilder.html
-  \bibitem{escapeUtils} https://commons.apache.org/proper/commons-lang/apidocs/org/apache/commons/lang3\\/StringEscapeUtils.html
-  \bibitem{JUnit} https://junit.org/junit4/
-  \bibitem{JUnitParams} https://github.com/Pragmatists/JUnitParams
-  \bibitem{MockK} https://mockk.io/
-  \bibitem{RxJava} https://github.com/ReactiveX/RxJava
-  \bibitem{Espresso} https://developer.android.com/training/testing/espresso
-  \bibitem{MockK-Android} https://mockk.io/ANDROID.html
-  \bibitem{Google I/O 2019} https://techcrunch.com/2019/05/07/kotlin-is-now-googles-preferred-language-for-android-app-development/
-  \bibitem{ImageView} https://developer.android.com/reference/android/widget/ImageView
-  \bibitem{PostgreSQL} https://www.postgresql.org/
-  \bibitem{Neo4j} https://neo4j.com/
-  \bibitem{JDBC} https://jdbc.postgresql.org/
-  \bibitem{contextualActionMode} https://developer.android.com/guide/topics/ui/menus
-  \bibitem{github} https://github.com/
-\end{thebibliography}
-
-
-\listoffigures
-\listoftables
+\chapter*{Dodatek B. Płyta z oprogramowaniem}
+\addcontentsline{toc}{chapter}{Dodatek B. Płyta z oprogramowaniem}
+\par Do pracy dołączono płytę CD, która zawiera:
+\begin{itemize}
+\item pracę w wersji elektronicznej w formacie PDF,
+\item pełną Specyfikację Wymagań Systemowych dla zrealizowanego projektu,
+\item kody źródłowe opracowanej aplikacji mobilnej i serwerowej.
+\end{itemize}
 
 \end{document}
