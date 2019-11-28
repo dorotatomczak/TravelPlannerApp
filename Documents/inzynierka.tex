@@ -89,7 +89,7 @@ IDE (Integrated Development Environment) - zintegrowane środowisko programistyc
 \par Aplikacje mobilne są coraz popularniejszym rozwiązaniem stosowanym w różnych dziedzinach. Rozwój technologiczny potęguje możliwości telefonów przez co coraz więcej firm decyduje się na przenoszenie swoich aplikacji na platformy mobilne. Kilkanaście lat temu  służyły one głównie do komunikacji. Obecnie szeroka gama ich funkcjonalności zaczyna dorównywać ich "większym braciom" - komputerom.
 \par Znaczącą przewagę zyskują dzięki swoim rozmiarom. Są znacznie wygodniejsze w codziennej obsłudze. Większość z nich zmieści się do kieszeni swojego właściciela. Dzięki temu coraz częściej są wykorzystywane w miejscach publicznych, nie zabierając przestrzeni innym osobom. Umożliwiają między innymi ustalanie szczegółów poprzez pisanie wiadomości mailowych, wyszukiwanie potrzebnych informacji jak również odpoczynek poprzez zagranie w grę mobilną.
 \par Celem pracy jest zaprojektowanie i zaimplementowanie aplikacji umożliwiającej zaplanowanie podróży poprzez integrację systemu z dostępnymi bazami danych informacji o atrakcjach turystycznych oraz możliwości transportu pomiędzy dwoma lokalizacjami. Postanowiono również zaimplementować algorytm rekomendujący plan podróży. Zdecydowano się także na dodanie mechanizmu skanowania dokumentów. 
-\par Przed przystąpieniem do fazy projektowania opracowano Specyfikację Wymagań Systemowych zawierający opis udziałowców, celów systemu (biznesowych oraz funkcjonalnych), otoczenie systemu (składające się na użytkowników oraz systemy zewnętrzne), przewidywalne komponenty systemu (sprzętowe, programowalne oraz podsystemy), wymagania (funkcjonalne, programowe, na dane, wydajnościowe, dodatkowe, w zakresie wiarygodności, elastyczności oraz satysfakcji), sytuacje wyjątkowe i kryteria akceptacyjne.
+\par Przed przystąpieniem do fazy projektowania opracowano Specyfikację Wymagań Systemowych z uwzględnieniem udziałowców, celów systemu (biznesowych oraz funkcjonalnych), otoczenie systemu (składające się na użytkowników oraz systemy zewnętrzne), przewidywalne komponenty systemu (sprzętowe, programowalne oraz podsystemy), wymagania (funkcjonalne, programowe, na dane, wydajnościowe, dodatkowe, w zakresie wiarygodności, elastyczności oraz satysfakcji), sytuacje wyjątkowe i kryteria akceptacyjne.
 \par Zdecydowano się na implementację aplikacji dla systemu mobilnego Android, rozwijanego przez firmę Google. Opiera się on na jądrze systemu operacyjnego Linux oraz na oprogramowaniu posiadającym licencję GNU (\textit{GNU General Public License}).
  \par Od blisko dziesięciu lat smartfony z systemem Android znajdują się na pierwszym miejscu w światowym rankingu najczęściej kupowanych telefonów. Podczas jednego roku (2017) sprzedano blisko 1,3 mln urządzeń z tym systemem. Jest on zdecydowanie bardziej otwarty (dzięki mniejszym kosztom implementacji) oraz dostępny (przystępniejsze ceny urządzeń) niż konkurencja.
 \par Potrzebne informacje są przechowywane poza aplikacją. Wykorzystano w tym celu system bazy danych \textit{PostgreSQL}. Zaimplementowano również serwer umożliwiający komunikację pomiędzy bazą a aplikacją oraz z zewnętrznym API.
@@ -781,9 +781,9 @@ Elementy planu dnia wyświetlają się w formie chronologicznej listy rozdzielon
 
 \par Do eliminacji przypadkowych działań zostało wykorzystane okno dialogowe wymagające potwierdzenia  zamiaru dodania wybranego użytkownika do znajomych. W tym celu została wykorzystana klasa \textit{AlertDialog} \cite{AlertDialog}. Po wyrażeniu zgody  oraz w przypadku poprawnego wykonania metody użytkownik otrzymuje powiadomienie stworzone poprzez wywołanie konstruktora klasy \textit{Snackbar} \cite{Snackbar}.
 
-\par W tym samym oknie pod polem do wyszukiwania znajduje się lista znajomych użytkownika. Została ona dodana jako liniowa warstwa ( \textit{LinearLayout} \cite{LinearLayout} ) umożliwiająca odświeżanie widoku poprzez szybkie przesunięcie palcem po ekranie ( \textit{SwipeRefreshLayout} \cite{SwipeRefreshLayout} ). Implementuje ona tryb usuwania.
+\par W tym samym oknie pod polem do wyszukiwania znajduje się lista znajomych użytkownika. Została ona dodana jako liniowa warstwa (\textit{LinearLayout} \cite{LinearLayout}) umożliwiająca odświeżanie widoku poprzez szybkie przesunięcie palcem po ekranie (\textit{SwipeRefreshLayout} \cite{SwipeRefreshLayout}). Implementuje ona tryb usuwania.
 
-\par Powiązanie dwóch użytkowników poprzez oznaczenie ich jako znajomych zostało zrealizowane poprzez dołączenie do bazy danych osobnej tabeli ( app user friend )  przechowującej potrzebne informacje (identyfikator użytkownika oraz identyfikator znajomego). Dodawanie jest jednostronne. Znajomy danego użytkownika nie jest zobowiązany do posiadania go na swojej liście znajomych.
+\par Powiązanie dwóch użytkowników poprzez oznaczenie ich jako znajomych zostało zrealizowane poprzez dołączenie do bazy danych osobnej tabeli (app user friend)  przechowującej potrzebne informacje (identyfikator użytkownika oraz identyfikator znajomego). Dodawanie jest jednostronne. Znajomy danego użytkownika nie jest zobowiązany do posiadania go na swojej liście znajomych.
 
 \par Po stronie serwera zostały dodane pliki umożliwiające komunikację z wspomnianą powyżej tabelą oraz wykonywaniu potrzebnych zapytań. Zostały zaimplementowane wszystkie bazowe, niezbędne do komunikacji z bazą danych zapytania. Oprócz nich przygotowano również zapytanie zwracające wszystkie adresy mailowe nieznajomych użytkowników zawierających wpisany ciąg znaków.
 
@@ -803,14 +803,14 @@ Elementy planu dnia wyświetlają się w formie chronologicznej listy rozdzielon
 \FloatBarrier
 
 \section{Udostępnianie planu dnia w medium społecznościowym (Karolina Makuch)}
-\par  Po dłuższym przytrzymaniu poszczególnego elementu planu pojawia się "dymek"  (\textit{PopupMenu} \cite{PopupMenu}) zawierający trzy czynności do wyboru. Jedną z nich jest możliwość udostępnienia wybranego punktu w medium społecznościowym. Postanowiono wybrać jedno z najpopularniejszych – \textit{Facebooka} \cite{Facebook}. W tym celu wykorzystano akcję wysyłającą ( \textit{ACTION.SEND}) za pomocą intencji (\textit{Intent} \cite{Intent}).
+\par  Po dłuższym przytrzymaniu poszczególnego elementu planu pojawia się "dymek"  (\textit{PopupMenu} \cite{PopupMenu}) zawierający trzy czynności do wyboru. Jedną z nich jest możliwość udostępnienia wybranego punktu w medium społecznościowym. Postanowiono wybrać jedno z najpopularniejszych – \textit{Facebooka} \cite{Facebook}. W tym celu wykorzystano akcję wysyłającą (\textit{ACTION.SEND}) za pomocą intencji (\textit{Intent} \cite{Intent}).
 \par  W przypadku znalezienia aplikacji Facebook na telefonie użytkownika, zostanie on automatycznie przekierowany do publikowania posta na własnej "tablicy". Domyślną treścią jest link do map HERE \cite{mobileHere} z wyszukanym miejscem z elementu planu dnia. W celu pobrania właściwego odnośnika  zostało zaimplementowane odczytywanie wartości parametru widoku (ang. view) znajdującego się w odpowiedzi w formacie JSON (z wykorzystaniem \textit{JsonParser} \cite{JsonParser}). Odsyłacz do wyników zapytania został pobrany z bazy danych. Wykonanie analizy (ang. parse) wyniku zapytania wymagało utworzenia osobnego wątku.
 Wykonanie tej operacji na głównym wątku zablokowałoby interfejs użytkownika. 
 \par Początkowo planowano inną domyślną treść. Miała ona zawierać najważniejsze informacje na temat wybranego elementu planu. Niestety zarówno wbudowany w Androidzie moduł  udostępniania, a także \textit{API Facebooka} nie udostępnia tej możliwości.  Problem ten został zgłoszony ponad 7 lat temu, lecz nie został rozwiązany\cite{FacebookBug}. Pola \textit{"EXTRA SUBJECT"} oraz \textit{"EXTRA TEXT"} są pomijane w momencie próby udostępniania domyślnej zawartości w aplikacji Facebook. Z racji możliwości załączania zdjęć, linków oraz plików multimedialnych (np. wideo) rozważane było zamienienie tekstu na plik obrazu oraz dodanie go do akcji. Brane również pod uwagę było przeniesienie domyślnej wiadomości do schowka oraz wyświetlenie komunikatu informującego użytkownika z prośbą o wklejenie wiadomości.
 \par Jednakże stwierdzono, że takich akcji nie powinno się wymagać od użytkownika. Ostatecznie postanowiono, że najlepszym rozwiązaniem będzie zdecydowanie się na wspomniany wcześniej odsyłacz do wyszukanego miejsca z mapy HERE \cite{mobileHere}. Dzięki czemu treść posta zostanie utworzona przez użytkownika umożliwiając mu zachowanie własnego charakteru pisania.
 
 \section{Manualna realizacja planu (Karolina Makuch)}
-\par  Kolejną akcją dostępną w "dymku" pojawiającym się po przytrzymaniu poszczególnego elementu jest manualna realizacja planu dnia. Początkowa treść akcji dla nowo powstałego nieukończonego jeszcze elementu planu dnia brzmi "Oznacz jako ukończony" (ang."Mark as completed"). W przypadku oznaczenia części składowej planu jako zrealizowany tekst automatycznie zmienia się na "Oznacz jako nieukończony" (ang. "Mark as incompleted") oraz zwiększa się stopień przeźroczystości odpowiedniego elementu listy. Postanowiono oznaczać zrealizowane plany poprzez wygaszenie kolorów elementów danego planu zmniejszając wartość kanału \textit{alfa} (ang. alpha).
+\par  Kolejną akcją dostępną w "dymku" pojawiającym się po przytrzymaniu poszczególnego elementu jest manualna realizacja planu dnia. Początkowa treść akcji dla nowo powstałego nieukończonego jeszcze elementu planu dnia brzmi "Oznacz jako ukończony" (ang. "Mark as completed"). W przypadku oznaczenia części składowej planu jako zrealizowany tekst automatycznie zmienia się na "Oznacz jako nieukończony" (ang. "Mark as incompleted") oraz zwiększa się stopień przeźroczystości odpowiedniego elementu listy. Postanowiono oznaczać zrealizowane plany poprzez wygaszenie kolorów elementów danego planu zmniejszając wartość kanału \textit{alfa} (ang. alpha).
  \par Zdecydowano się umożliwić użytkownikowi cofnięcie wprowadzonych zmian w przypadku wykonania niechcianego kliknięcia, świadomie rezygnując z wymagającego potwierdzenia okna dialogowego. Stwierdzono duże prawdopodobieństwo wykonywania tej akcji w pośpiechu. Dodatkowe kliknięcie wydłużyłoby czas wykonywania akcji oraz mogłoby to irytować użytkownika.
 \par  Oznaczenie planu jako wykonany zostało umożliwione dzięki dodaniu odpowiedniej kolumny do tabeli zawierającej plany dni. Dzięki temu każdy użytkownik mający dostęp do podróży ma możliwość wykonania tej czynności i jej efekty są widoczne dla wszystkich uczestników wyprawy.
 
@@ -1017,7 +1017,6 @@ W trakcie implementacji została podjęta decyzja o zmianie wyglądu aplikacji. 
 Użytkownik pierwszy raz uruchamiający aplikację i chcący z niej korzystać powinien stworzyć własne konto. W tym celu należy:
 
 \begin{enumerate}
-
 \item Kliknąć przycisk "Zarejestruj się".
 \item W widoku rejestracji podać swój adres mailowy oraz hasło spełniające wymagania:
 \begin{itemize}
@@ -1144,8 +1143,8 @@ W celu dodania elementu planu dnia należy:
 \item Nacisnąć przycisk oznaczony symbolem "+".
 \item Wybrać jedną z dwóch dostępnych opcji.
 \end{enumerate}
-\paragraph{Dodanie miejsca}
-Pierwsza z opcji jest oznaczona poprzez symbol budynku.
+
+\par Pierwsza z opcji jest oznaczona poprzez symbol budynku.
 Umożliwia on dodanie miejsca do planu dnia.
 
 \begin{enumerate}
@@ -1210,7 +1209,7 @@ Umożliwia on dodanie miejsca do planu dnia.
 \label{fig:podrecznik7}
 \end{figure}
 \FloatBarrier
-\paragraph{Dodanie transportu}
+
 W przypadku wybrania przycisku z symbolem samochodu użytkownik ma możliwość dodania transportu jako element planu dnia.
 \begin{enumerate}
 \item Należy kliknąć na na pole miejsca początkowego.
@@ -1263,10 +1262,8 @@ Aplikacja umożliwia wykonywanie kilku czynności związanych z poszczególnym e
 \FloatBarrier
 
 
-\subsection{Kliknięcie elementu}
-Po kliknięciu na wybrany element pojawia się osobny widok zawierający dokładne informacje na temat wybranego miejsca. Istnieje możliwość wystawienia oceny.
 
-\subsection{Przytrzymanie elementu}
+\par Po kliknięciu na wybrany element pojawia się osobny widok zawierający dokładne informacje na temat wybranego miejsca. Istnieje możliwość wystawienia oceny.
 Po przytrzymaniu palca na danym planu dnia pojawia się dymek z trzema opcjami do wyboru.
 
 \begin{figure}[h]
@@ -1294,7 +1291,7 @@ Po przytrzymaniu palca na danym planu dnia pojawia się dymek z trzema opcjami d
 \end{figure}
 \FloatBarrier
 
-\paragraph{Usuwanie elementu}
+
 Po wybraniu opcji "Usuń" zostaje włączony tryb usuwania.
 Jest on oznaczony jasnoszarym kolorem.
 W celu usunięcia elementu należy:
@@ -1306,7 +1303,7 @@ W celu usunięcia elementu należy:
 
 
 
-\paragraph{Manualna realizacja planu}
+\par Manualna realizacja planu wygląda następująco:
 \begin{enumerate}
 \item W przypadku ukończonego planu zawiera tekst "Oznacz jako nieukończony".
 \item W przypadku nieukończonego planu zawiera tekst "Oznacz plan jako ukończony".
@@ -1314,8 +1311,7 @@ W celu usunięcia elementu należy:
 Ukończone elementy planu dnia mają zmniejszoną intensywność kolorów.
 
 
-\paragraph{Udostępnianie w medium społecznościowym}
-Gdy użytkownik ma zainstalowaną aplikację Facebook posiada możliwość udostępnienia elementu planu na swojej "tablicy". W celu wykonania tej czynności należy:
+\par Gdy użytkownik ma zainstalowaną aplikację Facebook posiada możliwość udostępnienia elementu planu na swojej "tablicy". W celu wykonania tej czynności należy:
 \begin{enumerate}
 \item Nacisnąć opcję "Udostępnij".
 \item Napisać treść posta.
