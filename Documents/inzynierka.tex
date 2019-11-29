@@ -69,24 +69,24 @@ dziedzina, technika, …
 
 \tableofcontents
 \chapter*{Wykaz najważniejszych oznaczeń i skrótów}
-\noindent REST (Representational State Transfer) - transfer stanu przez reprezentację \\
-JSON (JavaScript Object Notation) - obiektowy sposób zapisu danych \\
-BJSON (binary JSON) - JSON kodowany binarnie \\
-JWT (JSON Web Token) - token w formacie JSON używany w celu zabezpieczenia dostępu aplikacji \\
-API (Application Programming Interface) - interfejs aplikacji dostępny dla programisty \\
-MVP (Model View Presenter) - wzorzec architektoniczny\\
-IDE (Integrated Development Environment) - zintegrowane środowisko programistyczne\\
-DTO (Data State Object) - wzorzec projektowy, rodzaj kontenera na dane\\
-CRUD (create, read, update, delete) - zestaw czterech podstawowych funkcji dostępu do bazy danych \\
-DAO (Data access object) - klasa będąca odzwierciedleniem tabeli bazodanowej \\
-SQL (Standard Query Language) - język zapytań do niektórych baz danych (w tym PostgreSQL) \\
-JDBC (Java Database Connectivity) - zestaw funkcji umożliwiających połączenie z bazą danych PostgreSQL \\
-ERD (Entity Relation Diagram) - diagram relacyjnej bazy danych \\
-IDE (Integrated Development Environment) - zintegrowane środowisko programistyczne \\
+\noindent REST (Representational State Transfer) -- transfer stanu przez reprezentację \\
+JSON (JavaScript Object Notation) -- obiektowy sposób zapisu danych \\
+BJSON (binary JSON) -- JSON kodowany binarnie \\
+JWT (JSON Web Token) -- token w formacie JSON używany w celu zabezpieczenia dostępu aplikacji \\
+API (Application Programming Interface) -- interfejs aplikacji dostępny dla programisty \\
+MVP (Model View Presenter) -- wzorzec architektoniczny\\
+IDE (Integrated Development Environment) -- zintegrowane środowisko programistyczne\\
+DTO (Data State Object) -- wzorzec projektowy, rodzaj kontenera na dane\\
+CRUD (create, read, update, delete) -- zestaw czterech podstawowych funkcji dostępu do bazy danych \\
+DAO (Data access object) -- klasa będąca odzwierciedleniem tabeli bazodanowej \\
+SQL (Standard Query Language) -- język zapytań do niektórych baz danych (w tym PostgreSQL) \\
+JDBC (Java Database Connectivity) -- zestaw funkcji umożliwiających połączenie z bazą danych PostgreSQL \\
+ERD (Entity Relation Diagram) -- diagram relacyjnej bazy danych \\
+IDE (Integrated Development Environment) -- zintegrowane środowisko programistyczne \\
 
 
 \chapter{Wstęp i cel pracy (Karolina Makuch)}
-\par Aplikacje mobilne są coraz popularniejszym rozwiązaniem stosowanym w różnych dziedzinach. Rozwój technologiczny potęguje możliwości telefonów przez co coraz więcej firm decyduje się na przenoszenie swoich aplikacji na platformy mobilne. Kilkanaście lat temu  służyły one głównie do komunikacji. Obecnie szeroka gama ich funkcjonalności zaczyna dorównywać ich "większym braciom" - komputerom.
+\par Aplikacje mobilne są coraz popularniejszym rozwiązaniem stosowanym w różnych dziedzinach. Rozwój technologiczny potęguje możliwości telefonów przez co coraz więcej firm decyduje się na przenoszenie swoich aplikacji na platformy mobilne. Kilkanaście lat temu  służyły one głównie do komunikacji. Obecnie szeroka gama ich funkcjonalności zaczyna dorównywać ich "większym braciom" -- komputerom.
 \par Znaczącą przewagę zyskują dzięki swoim rozmiarom. Są znacznie wygodniejsze w codziennej obsłudze. Większość z nich zmieści się do kieszeni swojego właściciela. Dzięki temu coraz częściej są wykorzystywane w miejscach publicznych, nie zabierając przestrzeni innym osobom. Umożliwiają między innymi ustalanie szczegółów poprzez pisanie wiadomości mailowych, wyszukiwanie potrzebnych informacji jak również odpoczynek poprzez zagranie w grę mobilną.
 \par Celem pracy jest zaprojektowanie i zaimplementowanie aplikacji umożliwiającej zaplanowanie podróży poprzez integrację systemu z dostępnymi bazami danych informacji o atrakcjach turystycznych oraz możliwości transportu pomiędzy dwoma lokalizacjami. Postanowiono również zaimplementować algorytm rekomendujący plan podróży. Zdecydowano się także na dodanie mechanizmu skanowania dokumentów. 
 \par Przed przystąpieniem do fazy projektowania opracowano Specyfikację Wymagań Systemowych z uwzględnieniem udziałowców, celów systemu (biznesowych oraz funkcjonalnych), otoczenie systemu (składające się na użytkowników oraz systemy zewnętrzne), przewidywalne komponenty systemu (sprzętowe, programowalne oraz podsystemy), wymagania (funkcjonalne, programowe, na dane, wydajnościowe, dodatkowe, w zakresie wiarygodności, elastyczności oraz satysfakcji), sytuacje wyjątkowe i kryteria akceptacyjne.
@@ -107,7 +107,7 @@ IDE (Integrated Development Environment) - zintegrowane środowisko programistyc
 
 \end{itemize}
 
-\par Rozdział 2 zawiera przegląd podobnych rozwiązań, które są dostępne na rynku aplikacji mobilnych. Pod uwagę wzięto TripIt: Travel Planner,Google Trips - Travel Planner, Sygic Travel: Planuj Podróż oraz Expedia. W przypadku każdej z nich zidentyfikowano główne wady i zalety.
+\par Rozdział 2 zawiera przegląd podobnych rozwiązań, które są dostępne na rynku aplikacji mobilnych. Pod uwagę wzięto TripIt: Travel Planner,Google Trips -- Travel Planner, Sygic Travel: Planuj Podróż oraz Expedia. W przypadku każdej z nich zidentyfikowano główne wady i zalety.
 
 \par W rozdziale 3 przedstawiono ekstrakt Specyfikacji Wymagań systemowych opisujący udziałowców projektu, otoczenie systemu. Wyróżniono w nim również kluczowe wymagania oraz cele dla powstałej aplikacji.
 
@@ -115,7 +115,7 @@ IDE (Integrated Development Environment) - zintegrowane środowisko programistyc
 
 \par Rozdział 5 opisuje najważniejsze decyzje projektowe, uzasadniając wybór języka Kotlin oraz opisując zalety wybranych środowisk programistycznych (Android Studio, Intellij IDEA), systemu kontroli wersji (Github) i zdalnego serwera (Heroku). 
 
-\par Rozdział 6 prezentuje projekt wzorca zastosowanego po stronie aplikacji mobilnej (model - widok - prezenter), sposób jej komunikacji z aplikacją serwerową oraz przybliża sposób implementacji poszczególnych funkcjonalności.
+\par Rozdział 6 prezentuje projekt wzorca zastosowanego po stronie aplikacji mobilnej (model -- widok -- prezenter), sposób jej komunikacji z aplikacją serwerową oraz przybliża sposób implementacji poszczególnych funkcjonalności.
 
 \par Rozdział 7 zawiera informacje dotyczące implementacji serwera (RESTful Web Service),komunikacji z zewnętrznym API, dostępu do bazy danych, obsługi sytuacji wyjątkowych oraz mechanizmu rekomendacji wzorującym się na algorytmie Collaborative Filtering.
 
@@ -141,7 +141,7 @@ Aplikacje do planowania podróży to często spotykane rozwiązanie ułatwiając
 \hline
 TripIt: Travel Planner & \makecell{4.4/5 \\ (53217 ocen)} & ponad 1 mln & 4.8/5 (122.9K ocen) \\
 \hline
-Google Trips - Travel Planner & \makecell{4.1/5 \\ (30473 ocen)} & ponad 5 mln & 4.4/5 (3100 ocen) \\
+Google Trips -- Travel Planner & \makecell{4.1/5 \\ (30473 ocen)} & ponad 5 mln & 4.4/5 (3100 ocen) \\
 \hline
 Sygic Travel: Planuj Podróż & \makecell{4.2/5 \\ (10637 ocen)} & ponad 1 mln & 4.6/5 (1600 ocen) \\
 \hline
@@ -202,7 +202,7 @@ Po dodaniu nowego elementu do planu podróży można go było edytować, usuną�
 
 \par Aplikacja TripIt oferowała wiele możliwości w planowaniu swoich podróży, co pozwalało na stworzenie bardzo szczegółowych planów. Wiele informacji trzeba było wprowadzać samodzielnie, jednak aplikacja często podpowiadała jakie słowa mógł mieć na myśli użytkownik, co znacznie ułatwiało i przyspieszało ten proces. Dodatkowym ułatwieniem była funkcja automatycznego dodawania danych o rezerwacjach, które mogły być pobierane ze skrzynki pocztowej. Dużą zaletą aplikacji była również opcja wyznaczania trasy między dwoma punktami, jednak koszt takiej wyprawy podawany był tylko w dolarach amerykańskich bez względu na kraj, w którym odbywała się podróż i miejsce zamieszkania użytkownika. TripIt pozwalała w łatwy sposób wyszukać sąsiednie obiekty, takie jak restauracje, czy parkingi, jednak brakowało tu atrakcji turystycznych, a odległość od tych obiektów podawana była w stopach (ft) i nie dało się tego zmienić. Z pewnością przydatną funkcją była możliwość udostępnienia stworzonego przez siebie planu innym osobom, jednak by wysłać link ze sformatowanym planem można było to zrobić jedynie na adres mailowy, a nie przez inne środki komunikacji, gdzie wysłany plan był dostępny wyłącznie w formie tekstowej. Wadą aplikacji była jej dostępność jedynie w języku angielskim. Ponadto cena wersji PRO, która wprowadzała szereg dodatkowych udogodnień, była wysoka i mogła odstraszać potencjalnego użytkownika.
 
-\section{Aplikacja Google Trips - Travel Planner (Karolina Makuch)}
+\section{Aplikacja Google Trips -- Travel Planner (Karolina Makuch)}
 
 \par Aplikacja Google Trips – Travel Planner była dostępna na urządzenia mobilne z systemem iOS oraz Android. Była jedną z popularniejszych aplikacji w Sklepie PLAY. Google Trips była także dostępne w Apple Store. 
 \par W celu korzystania z Google Trips należało posiadać konto Google. Umożliwiło to dostęp do planu podróży z różnych urządzeń. Niestety aplikacja miała jeden wariant językowy (język angielski).
@@ -221,7 +221,7 @@ Po dodaniu nowego elementu do planu podróży można go było edytować, usuną�
 \caption{Przeglądanie mapy z polecanymi obiektami}
 \label{fig:GTsubim2}
 \end{subfigure}
-\caption{Google Trips - Travel Planner.}
+\caption{Google Trips -- Travel Planner.}
 \label{fig:GTimage1}
 \end{figure}
 
@@ -245,7 +245,7 @@ Po dodaniu nowego elementu do planu podróży można go było edytować, usuną�
 \caption{Przeglądanie informacji na temat regionalnej kuchni}
 \label{fig:GTsubim4}
 \end{subfigure}
-\caption{Google Trips - Travel Planner.}
+\caption{Google Trips -- Travel Planner.}
 \label{fig:GTimage2}
 \end{figure}
 
@@ -267,14 +267,14 @@ Aplikacja posiadała także informacje na temat lokalnej kuchni (kafelek Food \&
 \caption{Przeglądanie przydatnych informacji}
 \label{fig:GTsubim6}
 \end{subfigure}
-\caption{Google Trips - Travel Planner.}
+\caption{Google Trips -- Travel Planner.}
 \label{fig:GTimage3}
 \end{figure}
 
 \par Zaplanowana przez użytkownika wycieczka została automatycznie przypisana do konta Google. Istniała możliwość udostępnienia jej znajomym. Można było połączyć kilka wycieczek. Po pobraniu informacji na temat danej wycieczki, istniała możliwość powrotu do planu, gdy telefon nie miał dostępu do internetu.
 \par Niestety aplikacja była dostępna tylko w języku angielskim. Posiadała także kilka innych wad. Przykładowo podczas wyszukiwania odpowiedniego hotelu aplikacja wyświetla listę miejsc, na której mógł znajdować się sklep meblowy. Brakowało także podpowiedzi przy niektórych polach np. cartype. Aplikacja nie zawsze dodawała informacje z serwisu gmail. Nie można było samemu dodać atrakcji za pomocą informacji z Google Maps, a także dodać ręcznie maili z rezerwacjami.
 
-\section{Sygic Travel - Planuj podróż (Anna Malizjusz)}
+\section{Sygic Travel -- Planuj podróż (Anna Malizjusz)}
 
 \par Planowanie podróży umożliwia również aplikacja \textit{Sygic Travel: Planuj Podróż}, która została pobrana z serwisu Google Play. Jej duża zaleta to możliwość korzystania z większości funkcji w języku polskim oraz brak konieczności tworzenia konta. Jedyną opcją niedostępną dla niezalogowanego użytkownika była synchronizacja z innymi urządzeniami.
 \par Podstawowymi informacjami potrzebnymi do rozpoczęcia planowania podróży były cel, data rozpoczęcia oraz data zakończenia (rys.~\ref{fig:STsubim1}). Opcjonalnie można było podać miejsce przybycia oraz zakwaterowania. Wygodny wybór daty umożliwił wyświetlany kalendarz, a miejsca należało wybrać z podanej listy. Istniała również możliwość filtrowania podanych miejsc po nazwie.
@@ -292,7 +292,7 @@ Aplikacja posiadała także informacje na temat lokalnej kuchni (kafelek Food \&
 \caption{Menu główne.}
 \label{fig:STsubim2}
 \end{subfigure}
-\caption{Sygic Travel - Planuj podróż.}
+\caption{Sygic Travel -- Planuj podróż.}
 \label{fig:STimage}
 \end{figure}
 \par Innego typu funkcjami aplikacji były wycieczki i aktywności oraz wynajem samochodów. Pierwsza opcja umożliwiała wyszukiwanie wycieczek, a także ich rezerwację oraz płatność. Druga wyszukiwała oferty wynajmu samochodów, wyświetlała wszystkie dostępne informacje oraz umożliwiała rezerwację. W obu funkcjach udostępniono możliwość filtrowania wyników. Poważną wadą wyszukiwarki samochodów do wynajęcia stanowił niejasny komunikat o błędzie w przypadku podania dat z przeszłości, który sugerował sprawdzenie zaznaczonych pól nie wskazując możliwego rozwiązania problemu.
@@ -326,7 +326,7 @@ Aplikacja posiadała także informacje na temat lokalnej kuchni (kafelek Food \&
 \par Ostatnia funkcjonalność, wyszukiwanie atrakcji, zabytków, ciekawych wydarzeń. Wymagane ramy czasowe oraz lokalizacja. Rezultaty mogły być przeglądane po cenie lub popularności. Nie umożliwiono użytkownikowi oceny odległości między zaproponowanymi miejscami tak jak w przypadku noclegu, ale pomocny był przybliżony czas, który należy przeznaczyć na każdą z atrakcji.
 \par Wszystkie rezerwacje wykonane za pomocą aplikacji \textit{Expedia}, można było przeglądać w zakładce Wycieczki (ang. Trips) i takim zestawem dzielić się ze współtowarzyszami podróży również korzystających z aplikacji.
 
-\chapter{Specyfikacja wymagań systemowych - ekstrakt (Anna Malizjusz)}
+\chapter{Specyfikacja wymagań systemowych -- ekstrakt (Anna Malizjusz)}
 \par W celu lepszego zrozumienia wymagań projektu inżynierskiego przygotowano dokument SWS (Specyfikacji Wymagań Systemowych) w całości umieszczony na załączonej do pracy płycie~CD. Dokonano identyfikacji udziałowców projektu i otoczenia systemu z uwzględnieniem użytkowników oraz systemów zewnętrznych. Wyróżniono cele projektu oraz wymagania, których spełnienie będzie kluczowe dla końcowej akceptacji systemu. Poniżej przedstawiono najistotniejsze elementy SWS, które miały największy wpływ na projekt i~implementację systemu.
 \newline
 \newline
@@ -406,19 +406,19 @@ Zobowiązano się do zapewnienia autentyczności proponowanych podróży, tj. su
 \begin{itemize}
 \item Po stronie serwera:
 \begin{itemize}
-\item Podsystem planowania (ang. Planning subsystem)
-\item Podsystem wyszukiwania (ang. Search subsystem)
-\item Podsystem zarządzania danymi użytkownika (ang. User Data Management Subsystem)
-\item Podsystem polecający (ang. Recommendation Subsystem)
-\item Podsystem usług społecznościowych (ang. Social Services Subsystem)
-\item Podsystem zarządzania (ang. Management Subsystem)
+\item podsystem planowania (ang. Planning subsystem),
+\item podsystem wyszukiwania (ang. Search subsystem),
+\item podsystem zarządzania danymi użytkownika (ang. User Data Management Subsystem),
+\item podsystem polecający (ang. Recommendation Subsystem),
+\item podsystem usług społecznościowych (ang. Social Services Subsystem),
+\item podsystem zarządzania (ang. Management Subsystem).
 \end{itemize}
 \item Po stronie aplikacji mobilnej:
 \begin{itemize}
-\item GUI
-\item Prezenter (ang. Presenter)
-\item Podsystem zarządzania plikami (ang. File Management Subsystem)
-\item Podsystem skanowania (ang. Scanning Subsystem)
+\item GUI,
+\item prezenter (ang. Presenter),
+\item podsystem zarządzania plikami (ang. File Management Subsystem),
+\item podsystem skanowania (ang. Scanning Subsystem).
 \end{itemize}
 \end{itemize}
 \par Kontakt klienta mobilnego z aplikacją serwerową zaplanowano poprzez interfejs komunikacji (ang. communication interface). Zależności pomiędzy podsystemami zostały przedstawione na diagramie (rys.~\ref{fig:subsystems}).
@@ -442,7 +442,7 @@ Zobowiązano się do zapewnienia autentyczności proponowanych podróży, tj. su
 \end{enumerate}
 
 \subsection{Stworzenie planu dnia (Magdalena Solecka)}
-\par Martyna widzi pusty ekran planu dnia. Wpisuje miasto docelowe wyjazdu - Paryż. Wybiera przycisk "+" i wybiera atrakcje. Ukazuje się przed nią ekran wyszukiwania ze znakiem wyszukiwania, a po chwili z wynikami wyszukiwania w formie listy atrakcji. Wybiera jeden z elementów listy – katedra Notre Dame i czyta jej opis. Wybiera przycisk "Dodaj". Widzi ponownie ekran planu Dnia z dodaną przez siebie atrakcją. Wybiera w ten sposób kilka kolejnych atrakcji. Ponownie wybiera przycisk "+" i wybiera restauracje. Ponownie widzi ekran wyszukiwania z listą restauracji. Wybiera pasujący jej obiekt i przy użyciu przycisku "Dodaj" zostaje on dodany do  planu dnia który ponownie wyświetla się przed nią. Użytkownik wybiera przycisk "Ułóż" i czeka aż aplikacja zakończy obliczanie najbardziej optymalnej trasy. Po kilku sekundach plan dnia jest już gotowy. Martyna stwierdza jednak że potrzebuje w ciągu dnia odpoczynku dlatego postanawia przesunąć zwiedzanie katedry Notre Dame na następny dzień. Wybiera element z katedrą i przycisk "Przenieś", a następnie numer dnia podróży. Następnie stwierdza, że właściwie nie interesuje jej sztuka sakralna, więc usuwa element z planu przesuwając go w prawo.
+\par Martyna widzi pusty ekran planu dnia. Wpisuje miasto docelowe wyjazdu -- Paryż. Wybiera przycisk "+" i wybiera atrakcje. Ukazuje się przed nią ekran wyszukiwania ze znakiem wyszukiwania, a po chwili z wynikami wyszukiwania w formie listy atrakcji. Wybiera jeden z elementów listy – katedra Notre Dame i czyta jej opis. Wybiera przycisk "Dodaj". Widzi ponownie ekran planu Dnia z dodaną przez siebie atrakcją. Wybiera w ten sposób kilka kolejnych atrakcji. Ponownie wybiera przycisk "+" i wybiera restauracje. Ponownie widzi ekran wyszukiwania z listą restauracji. Wybiera pasujący jej obiekt i przy użyciu przycisku "Dodaj" zostaje on dodany do  planu dnia który ponownie wyświetla się przed nią. Użytkownik wybiera przycisk "Ułóż" i czeka aż aplikacja zakończy obliczanie najbardziej optymalnej trasy. Po kilku sekundach plan dnia jest już gotowy. Martyna stwierdza jednak że potrzebuje w ciągu dnia odpoczynku dlatego postanawia przesunąć zwiedzanie katedry Notre Dame na następny dzień. Wybiera element z katedrą i przycisk "Przenieś", a następnie numer dnia podróży. Następnie stwierdza, że właściwie nie interesuje jej sztuka sakralna, więc usuwa element z planu przesuwając go w prawo.
 
 \noindent\newline Warunki początkowe:
 \begin{enumerate}
@@ -643,7 +643,7 @@ Warunki końcowe:
 \begin{figure}[h]
 \centering
 \includegraphics[width=0.7\textwidth]{dtoKotlin}
-\caption{Klasa DTO w Kotlinie - 5 linii kodu.}
+\caption{Klasa DTO w Kotlinie -- 5 linii kodu.}
 \label{fig:dtoKotlin}
 \end{figure}
 \FloatBarrier
@@ -696,7 +696,7 @@ Warunki końcowe:
 \end{figure}
 \FloatBarrier
 
-\par Dodatkowo zaimplementowano klasę pomocniczą konfigurującą klienta. Udostępniała ona zmienną (ang. property), która była przygotowanym interfejsem do komunikacji. Ustawiono w niej adres serwera REST, a także konwertery przeprowadzające serializację obiektów do formatu JSON oraz deserializację z otrzymanego ciągu znaków w formacie JSON do obiektu będącego instancją danej klasy. Skorzystano z klasy \textit{GsonConverter}, która jest oferowana przez Retrofit API. Wykorzystano wzorzec projektowy interceptor implementując klasę \textit{AuthTokenInterceptor}, którego rolą było dodanie do każdego zapytania nagłówka (ang. header) z lokalnie zapisanym tokenem identyfikującym użytkownika. Interceptor aplikacji jest wywoływany zawsze i tylko jeden raz, nie wpływają na to przekierowania ani ponawianie zapytań. Aby zintegrować interfejs używanego klienta z interceptorem, należało dodać dodatkowego klienta - \textit{OkHttpClient}\cite{OkHttpClient}. Pochodzi z biblioteki OkHTTP, którą również można było wykorzystać do komunikacji aplikacji mobilnej z serwerem, jednak postawiono wybrać Retrofit 2 z uwagi na mniejszy poziom skomplikowania oferowanego API.
+\par Dodatkowo zaimplementowano klasę pomocniczą konfigurującą klienta. Udostępniała ona zmienną (ang. property), która była przygotowanym interfejsem do komunikacji. Ustawiono w niej adres serwera REST, a także konwertery przeprowadzające serializację obiektów do formatu JSON oraz deserializację z otrzymanego ciągu znaków w formacie JSON do obiektu będącego instancją danej klasy. Skorzystano z klasy \textit{GsonConverter}, która jest oferowana przez Retrofit API. Wykorzystano wzorzec projektowy interceptor implementując klasę \textit{AuthTokenInterceptor}, którego rolą było dodanie do każdego zapytania nagłówka (ang. header) z lokalnie zapisanym tokenem identyfikującym użytkownika. Interceptor aplikacji jest wywoływany zawsze i tylko jeden raz, nie wpływają na to przekierowania ani ponawianie zapytań. Aby zintegrować interfejs używanego klienta z interceptorem, należało dodać dodatkowego klienta -- \textit{OkHttpClient}\cite{OkHttpClient}. Pochodzi z biblioteki OkHTTP, którą również można było wykorzystać do komunikacji aplikacji mobilnej z serwerem, jednak postawiono wybrać Retrofit 2 z uwagi na mniejszy poziom skomplikowania oferowanego API.
 
 \par Rezultatem każdego zapytania jest struktura \textit{Single<Response<T> >}, gdzie T jest oczekiwanym typem zwracanego obiektu. Obiekt \textit{Single} informuje o tym, że jest spodziewana pojedyncza odpowiedź. \textit{Response} jest strukturą zdefiniowaną w projekcie inżynierskim. Zawiera kod odpowiedzi opisywany szerzej przy sposobie implementacji błędów, a także także pole \textit{data} z przesłanymi przez serwer danymi.
 
@@ -854,11 +854,11 @@ Konfiguracja serwera zachodzi automatycznie na podstawie zależności, jeśli do
 
 \par Uwierzytelnienie użytkownika odbywa się podczas logowania. Serwer porównuje podany adres e-mail oraz zmodyfikowane funkcją mieszającą hasło z danymi zapisanymi w bazie danych. Jeżeli informacje są zgodne, na ich podstawie jest generowany token. JWT pozwala na dodanie twierdzeń (ang. claims) i ustawienie czasu ważności, które zostaną zaszyfrowane przy pomocy algorytmu HS256 i sekretnego klucza. Używane są następujące twierdzenia określające podane cechy tokenu:
 \begin{itemize}
-\item \textit{iss} - wydawca tokenu (ang. issuer),
-\item \textit{sub} - podmiot (ang. subject),
-\item \textit{email} - adres e-mail użytkownika,
-\item \textit{id} - id użytkownika,
-\item \textit{generatedTimestamp} - czas wygenerowania tokenu.
+\item \textit{iss} -- wydawca tokenu (ang. issuer),
+\item \textit{sub} -- podmiot (ang. subject),
+\item \textit{email} -- adres e-mail użytkownika,
+\item \textit{id} -- id użytkownika,
+\item \textit{generatedTimestamp} -- czas wygenerowania tokenu.
 \end{itemize}
 \par Przykładowy token zapisany składający się z 3 części XXX.YYY.ZZZ zaprezentowano poniżej:\\eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJBY2Nlc3NUb2tlbiIsImdlbmVyYXRlZFRpbWVzdGFtcCI6eyJ5Z\\WFyIjoyMDE5LCJtb250aCI6Ik5PVkVNQkVSIiwibW9udGhWYWx1ZSI6MTEsImRheU9mTW9udG\\
 giOjE3LCJjaHJvbm9sb2d5Ijp7ImlkIjoiSVNPIiwiY2FsZW5kYXJUeXBlIjoiaXNvODYwMSJ9LCJkYXl\\
@@ -869,7 +869,7 @@ JDRSJ9LCJpc3MiOiJUcmF2ZWxBcHBfU2VydmVyIiwiaWQiOjEwLCJleHAiOjE1NzQxMDc4NTksI\\mVt
 Kolejna jest zawartość, którą tworzą określone przy generacji tokenu twierdzenia. Ostatnia część to podpis. Użyto w nim znanego tylko serwerowi sekretnego klucza, niezbędnego do odszyfrowania otrzymanego od klienta tokenu.
 \par Użytkownik aplikacji mobilnej przechowuje swój token i każdorazowo dołącza go do wysyłanych zapytań. Aplikacja serwerowa przy użyciu klucza odczytuje go i weryfikuje otrzymane dane, w szczególności datę ważności tokenu oraz id użytkownika.
 
-\par Rozszyfrowany token jest zapisywany w formacie JSON w postaci, która jest czytelna i zrozumiała dla człowieka. Dzięki użytej bibliotece \textit{io.jsonwebtoken.jjwt} z tokenu w formacie JSON można odczytywać dane jak ze słownika, np.
+\par Rozszyfrowany token jest zapisywany w formacie JSON w postaci, która jest czytelna i zrozumiała dla człowieka. Dzięki użytej bibliotece \textit{io.jsonwebtoken.jjwt} z tokenu w formacie JSON można odczytywać dane jak ze słownika, np. 
 \textit{Jwts.parser().setSigningKey(SECRET\_KEY).parseClaimsJws(token).body["id"].toString()}, aby odczytać wartość twierdzenia o nazwie "id".
 
 \begin{figure}[h]
@@ -884,15 +884,15 @@ Kolejna jest zawartość, którą tworzą określone przy generacji tokenu twier
 \section{Komunikacja z zewnętrznym API (Anna Malizjusz)}
 \par Potrzeba wyszukiwania infromacji o miejscach na świecie wymusiła korzystanie z zewnętrznych dostawców danych. Po analizie przeprowadzonej na etapie tworzenia specyfikacji wymagań systemowych zdecydowano o użyciu Here API \cite{HereApi}. Próba implementacji rozwiązania zmusiła programistów do skorzystania zarówno z wybranego dostawcy, jak i z początkowo odrzuconego Google API\cite{GoogleApi}, które oferowało dużo bogatszą bazę sposobów transportu.
 
-\par Podstawowym problemem było odczytanie danych. Wynikiem wysłania zapytania do dostawcy informacji był ciąg znaków zawierający znaczą ilość danych nie tylko o temacie zapytania. W przypadku każdego typu żądania przeanalizowano wynik i zdefiniowane wspólną metodę wyszukującą oraz wybierającą niezbędne informacje. Następnie należało je dopasować do potrzeb - nie wszystkie informacje były potrzebne aplikacji. Napisano funkcję zmieniającą ciąg znaków na instancję klasy. Skorzystano z możliwości klasy \textit{JsonParser}\cite{JsonParser} oraz \textit{GsonBuilder}\cite{GsonBuilder}.
+\par Podstawowym problemem było odczytanie danych. Wynikiem wysłania zapytania do dostawcy informacji był ciąg znaków zawierający znaczą ilość danych nie tylko o temacie zapytania. W przypadku każdego typu żądania przeanalizowano wynik i zdefiniowane wspólną metodę wyszukującą oraz wybierającą niezbędne informacje. Następnie należało je dopasować do potrzeb -- nie wszystkie informacje były potrzebne aplikacji. Napisano funkcję zmieniającą ciąg znaków na instancję klasy. Skorzystano z możliwości klasy \textit{JsonParser}\cite{JsonParser} oraz \textit{GsonBuilder}\cite{GsonBuilder}.
 
 \par Należało też uwzględnić sposób zapisanych informacji. Wiele znaków, np. "'" było zakodowanych, aby uniemożliwić wstrzykiwanie złośliwego kodu. W celu rozwiązania tego problemu skorzystano z funkcji \textit{StringEscapeUtils.unescapeHtml3()}\cite{escapeUtils}, która zmieniła formę znaków z kodowej na graficzną.
 
 \section{Wspólne klasy serwera i aplikacji}
-\par Podczas implementacji napotkano na problem powtarzających się klas w identycznej formie po stronie aplikacji i serwera. Stwarzało to kłopot przy edycji - obie wersje pliku musiały być zawsze identyczne. Spróbowano rozwiązać to na następujące sposoby.
+\par Podczas implementacji napotkano na problem powtarzających się klas w identycznej formie po stronie aplikacji i serwera. Stwarzało to kłopot przy edycji -- obie wersje pliku musiały być zawsze identyczne. Spróbowano rozwiązać to na następujące sposoby.
 
 \subsection{Oddzielny projekt dodany jako moduł (Dorota Tomczak)}
-\par Pierwszym pomysłem na wydzielenie wspólnych klas z projektu aplikacji i serwera było utworzenie osobnego projektu, który by te klasy zawierał. Następnie nowy projekt mógłby być dołączony jako moduł do obu projektów, co jednak okazało się być nietrywialnym rozwiązaniem między innymi ze względu na różnice w plikach gradle - plik build.gradle w aplikacji mobilnej został napisany w języku Groovy, natomiast ten na serwerze w Kotlinie. Obie próby stworzenia takiego pliku dla wspólnego modułu w każdym ze wspomnianych języków nie powiodły się. Moduł mógł działać z określonym plikiem gradle tylko dla jednego z projektów jednocześnie. IDE, na którym otwarty był serwer podpowiadało, by usunąć wersję Kotlina w build.gradle, natomiast IDE aplikacji mobilnej podpowiadało wykonanie przeciwnej akcji. Po wielu próbach, ostatecznie porzucono zaproponowany pomysł na stworzenie osobnego projektu ze współdzielonymi klasami.
+\par Pierwszym pomysłem na wydzielenie wspólnych klas z projektu aplikacji i serwera było utworzenie osobnego projektu, który by te klasy zawierał. Następnie nowy projekt mógłby być dołączony jako moduł do obu projektów, co jednak okazało się być nietrywialnym rozwiązaniem między innymi ze względu na różnice w plikach gradle -- plik build.gradle w aplikacji mobilnej został napisany w języku Groovy, natomiast ten na serwerze w Kotlinie. Obie próby stworzenia takiego pliku dla wspólnego modułu w każdym ze wspomnianych języków nie powiodły się. Moduł mógł działać z określonym plikiem gradle tylko dla jednego z projektów jednocześnie. IDE, na którym otwarty był serwer podpowiadało, by usunąć wersję Kotlina w build.gradle, natomiast IDE aplikacji mobilnej podpowiadało wykonanie przeciwnej akcji. Po wielu próbach, ostatecznie porzucono zaproponowany pomysł na stworzenie osobnego projektu ze współdzielonymi klasami.
 
 \subsection{Submoduły w repozytorium (Anna Malizjusz)}
 \par Podjęto próbę dodania repozytorium zawierającego tylko wspólne pliki, a następnie wstawienia go do głównego repozytorium jako submoduły. Stworzyło to kolejne problemy w postaci konieczności częstych aktualizacji submodułów.
@@ -920,7 +920,7 @@ Git traktował powiązany folder jako istniejący, więc nie powodowało to doda
 
 \section{Dostęp do bazy danych (Magdalena Solecka)}
 \par Do implementacji połączenia z bazą został wykorzystany PostgreSQL JDBC Driver\cite{JDBC}. Zastosowano wzorzec Singleton, który w języku kotlin implementuje się używając słowa kluczowego \textit{object} zamiast \textit{class}.
-\par Zaimplementowano również wzorzec repozytorium (ang. repository pattern). Opracowano bazowy interfejs generyczny IRepository oraz jego implementację - Repository zawierające operacje typu CRUD - podstawowe operacje dostępu do bazy danych takie jak dodawanie, usuwanie, odczyt i aktualizacja wiersza danych. Repozytoria dla poszczególnych modeli DAO (klas, których obiekty przechowują dane odczytywane z bazy) dziedziczą po generycznej klasie bazowej Repository. Implementują również własny interfejs z funkcjami wymaganymi dla danej tabeli. Problemem przy wykorzystaniu typu generycznego okazało się tworzenie nowego obiektu, dlatego postanowiono wymusić na programistach implementację dodatkowej funkcji T tworzący ten obiekt dodając ją do interfejsu IRepository. W celu zmniejszenia ilości powtarzającego się kodu wyodrębniono również stałe fragmenty tekstu z zapytań SQL takie jak na przykład \textit{SELECT * FROM tableName } w postaci stałej selectStatement. Stałe zostały dodane do klasy bazowej Repository jako abstrakcyjne. W podobny sposób rozwiązano problem powtarzających się nazw tabel i kolumn. Nie udało się jednak utworzyć stałej abstrakcyjnej, wynikiem prób była pusta wartość w zapytaniach w miejscu gdzie powinna była znaleźć się na przykład nazwa tabeli.
+\par Zaimplementowano również wzorzec repozytorium (ang. repository pattern). Opracowano bazowy interfejs generyczny IRepository oraz jego implementację  Repository zawierające operacje typu CRUD -- podstawowe operacje dostępu do bazy danych takie jak dodawanie, usuwanie, odczyt i aktualizacja wiersza danych. Repozytoria dla poszczególnych modeli DAO (klas, których obiekty przechowują dane odczytywane z bazy) dziedziczą po generycznej klasie bazowej Repository. Implementują również własny interfejs z funkcjami wymaganymi dla danej tabeli. Problemem przy wykorzystaniu typu generycznego okazało się tworzenie nowego obiektu, dlatego postanowiono wymusić na programistach implementację dodatkowej funkcji T tworzący ten obiekt dodając ją do interfejsu IRepository. W celu zmniejszenia ilości powtarzającego się kodu wyodrębniono również stałe fragmenty tekstu z zapytań SQL takie jak na przykład \textit{SELECT * FROM tableName } w postaci stałej selectStatement. Stałe zostały dodane do klasy bazowej Repository jako abstrakcyjne. W podobny sposób rozwiązano problem powtarzających się nazw tabel i kolumn. Nie udało się jednak utworzyć stałej abstrakcyjnej, wynikiem prób była pusta wartość w zapytaniach w miejscu gdzie powinna była znaleźć się na przykład nazwa tabeli.
 
 \noindent\newline
 \begin{figure}[h]
@@ -949,18 +949,18 @@ Git traktował powiązany folder jako istniejący, więc nie powodowało to doda
 \FloatBarrier
 
 \section{Praca z bazą danych (Magdalena Solecka)}
-\par Warstwę danych tworzono podejściem \textit{najpierw kod} (ang. code first), głównie z powodu trudności z przewidzeniem, które struktury dostarczane przez zewnętrzne API uda się otrzymać i które informacje są niezbędne, aby znacząco nie zmniejszyć szybkości aplikacji, a o które można zapytać źródło podczas ładowania elementów ekranu. Stwarzało to problemy z kompatybilnością wsteczną podczas rozwijania aplikacji, dodawania nowych kolumn, zmiany typów. Początkowe rozwiązanie wymagało powiadomienia wszystkich programistów w zespole o godzinach, w których baza danych może przestać działać poprawnie, a przed jakąkolwiek dalsza pracą konieczne było ściągnięcie najnowszych zmian z repozytorium \textit{github}. Drugi w kolejności wprowadzonym sposobem było utworzenie tabeli tymczasowej - wykonanie kopii tabeli oraz wprowadzenie zmian w kopii. Podmiany dokonywano przy dołączaniu zmian z gałęzi podrzędnej do gałęzi develop w serwisie \textit{github}. Nadal jednak wymagane było pobranie najnowszej wersji kodu. Z początku wymagało to zaplanowania pracy w ten sposób, aby lokalny kod nadawał się do zapisu (ang. commit) w chwili zmian w bazie, ale problem zakończył się odkryciem funkcji \textit{stash / unstash changes} oferowanej przez gita.
+\par Warstwę danych tworzono podejściem \textit{najpierw kod} (ang. code first), głównie z powodu trudności z przewidzeniem, które struktury dostarczane przez zewnętrzne API uda się otrzymać i które informacje są niezbędne, aby znacząco nie zmniejszyć szybkości aplikacji, a o które można zapytać źródło podczas ładowania elementów ekranu. Stwarzało to problemy z kompatybilnością wsteczną podczas rozwijania aplikacji, dodawania nowych kolumn, zmiany typów. Początkowe rozwiązanie wymagało powiadomienia wszystkich programistów w zespole o godzinach, w których baza danych może przestać działać poprawnie, a przed jakąkolwiek dalsza pracą konieczne było ściągnięcie najnowszych zmian z repozytorium \textit{github}. Drugi w kolejności wprowadzonym sposobem było utworzenie tabeli tymczasowej -- wykonanie kopii tabeli oraz wprowadzenie zmian w kopii. Podmiany dokonywano przy dołączaniu zmian z gałęzi podrzędnej do gałęzi develop w serwisie \textit{github}. Nadal jednak wymagane było pobranie najnowszej wersji kodu. Z początku wymagało to zaplanowania pracy w ten sposób, aby lokalny kod nadawał się do zapisu (ang. commit) w chwili zmian w bazie, ale problem zakończył się odkryciem funkcji \textit{stash / unstash changes} oferowanej przez gita.
 
-\chapter{Testy}
+\chapter{Testy i ocena aplikacji}
 
 \section{Testy jednostkowe i instrumentalne aplikacji mobilnej (Dorota Tomczak)}
 \par Dla aplikacji mobilnej napisano 23 testy jednostkowe oraz 9 instrumentalnych, które obejmują klasy i metody komponentów służących do logowania, rejestracji oraz przekierowania po starcie aplikacji. Testy jednostkowe, czyli takie które weryfikują poprawność realizacji pojedynczych funkcjonalności aplikacji, zostały zbudowane w oparciu o następujące zależności: \textit{JUnit 4}\cite{JUnit}, \textit{JUnitParams}\cite{JUnitParams} do tworzenia testów parametryzowanych oraz bibliotekę \textit{MockK}\cite{MockK} służącą do tworzenia atrap obiektów (ang. mock object) w języku Kotlin. Testy te służą do weryfikacji działania metod zdefiniowanych w prezenterach, z tego względu przed startem każdego z nich odpowiedni prezenter nie jest atrapą, ale jest inicjalizowany w sposób, który umożliwia jego „szpiegowanie”. Aby zasymulować asynchroniczną komunikację sieciową pomiędzy aplikacją a serwerem, która odbywa się poprzez zastosowanie biblioteki \textit{RxJava}\cite{RxJava}, stworzono klasę pomocniczą \textit{RxImmediateJavaSchedulerRule}, która ustawia wszystkie metody, rozpoczynające nowe wątki, aby korzystały zamiast tego z wątku obecnego.
 \par Testy instrumentalne, czyli takie które działają na emulatorze lub na fizycznym urządzeniu mobilnym, zostały zrealizowane dla dwóch aktywności – \textit{SignInActivity} oraz \textit{SignUpActivity} i testują, czy na ekranie wyświetlają się prawidłowe informacje, czy akcje użytkownika wywołują odpowiednie metody oraz czy aplikacja reaguje na nie w odpowiedni sposób. Wykorzystują wiele zależności, w tym między innymi \textit{Espresso}\cite{Espresso} i \textit{MockK-Android}\cite{MockK-Android}. W klasach testowych tworzone są role aktywności (\textit{activityScenarioRole}), na których następnie można wywoływać określone akcje np. wciśnięcie przycisku, czy wpisanie tekstu w polu do tego przeznaczonym. 
 \par Wszystkie testy, zarówno instrumentalne jak i jednostkowe zostały podzielone na trzy segmenty:
 \begin{itemize}
-\item \textit{given} - definicja danych wejściowych oraz symulowanie wywołań metod i tworzenie atrap obiektów,
-\item \textit{when} - wywołanie testowanej metody lub wykonanie akcji,
-\item \textit{then} - weryfikacja otrzymanych rezultatów po wywołaniu metody lub wykonaniu akcji.
+\item \textit{given} -- definicja danych wejściowych oraz symulowanie wywołań metod i tworzenie atrap obiektów,
+\item \textit{when} -- wywołanie testowanej metody lub wykonanie akcji,
+\item \textit{then} -- weryfikacja otrzymanych rezultatów po wywołaniu metody lub wykonaniu akcji.
 \end{itemize}
 Do nazewnictwa testów przyjęto następującą konwencję: co powinno się stać, gdy zostaną spełnione określone warunki. Przykładowo "Should display snackBar with info message when given password in SignUp is incorrect", co w tłumaczeniu oznacza "Powinien się wyświetlić snackBar z komunikatem informacyjnym, gdy hasło podane w SignUp jest nieprawidłowe".
 
@@ -982,6 +982,8 @@ Do nazewnictwa testów przyjęto następującą konwencję: co powinno się sta�
 \label{fig:dbTests}
 \end{figure}
 \FloatBarrier
+
+\section{Placeholder - Ocena aplikacji}
 
 \chapter{Podręcznik użytkownika (Karolina Makuch)}
 \par W celu wytłumaczenia obsługi stworzonej aplikacji oraz zaprezentowaniu jej wizualnej strony przygotowano podręcznik użytkownika. Zawiera on poszczególne etapy wykonywania najważniejszych funkcjonalności.
@@ -1023,7 +1025,7 @@ Użytkownik pierwszy raz uruchamiający aplikację i chcący z niej korzystać p
 \item przynajmniej 8 znaków długości,
 \item przynajmniej jedna cyfra,
 \item przynajmniej jedna duża litera,
-\item przynajmniej jedna mała litera,
+\item przynajmniej jedna mała litera.
 \end{itemize}
 
 \item Kliknąć "Zarejestruj się".
@@ -1472,7 +1474,7 @@ Bazując na opiniach innych użytkowników aplikacja wyświetla listę polecanyc
 
 \par Zaimplementowane rozwiązanie, dzięki zachowaniu dobrych praktyk programistycznych podczas pisania kodu, może być dalej rozwijane w ramach pracy magisterskiej. Dotychczasowa praca zespołu zwiększyła jego umiejętności, zarówno programistyczne, jak i zdolność do współpracy z innymi członkami grupy.
 
-\chapter*{Podział zadań implementacyjnych}
+\chapter*{ Dodatek A. Podział zadań implementacyjnych}
 \addcontentsline{toc}{chapter}{Podział zadań implementacyjnych}
 
 \captionof{table}{Autorzy zaimplementowanych funkcji\label{tab:autorzy}}
@@ -1497,7 +1499,7 @@ Obsługa sytuacji wyjątkowych na serwerze
 \hline
 Implementacja skanera z użyciem OpenCV
 & Pierwsza implementacja ekranu logowania i rejestracji
-& Wyszukiwanie obiektów w aplikacji - implementacja wyboru miejsca z mapy
+& Wyszukiwanie obiektów w aplikacji -- implementacja wyboru miejsca z mapy
 & Implementacja udostępniania planu podróży wybranym znajomym\\
 
 \hline
@@ -1533,58 +1535,68 @@ Testy jednostkowe i instrumentalne dla logowania, rejestracji i komponentu \text
 \hline
 \end{longtable}
 
+\chapter*{Dodatek B. Płyta z oprogramowaniem}
+\par\begin{flushleft}
+Do pracy dołączono płytę CD, która zawiera:
+\end{flushleft}
+\begin{itemize}
+\item pracę w wersji elektronicznej w formacie PDF,
+\item pełną Specyfikację Wymagań Systemowych dla zrealizowanego projektu,
+\item kody źródłowe opracowanej aplikacji.
+\end{itemize}
 
 \bibliographystyle{plain}
 \begin{thebibliography}{1}
 \addcontentsline{toc}{chapter}{Bibliografia}
-  \bibitem{Here} developer.here.com
-  \bibitem{gms.location} developers.google.com/android/reference/com/google/android/gms/location/package-summary
-  \bibitem{Android usage} gs.statcounter.com/android-version-market-share/mobile-tablet/worldwide
-  \bibitem{SearchView} https://developer.android.com/reference/android/widget/SearchView
-  \bibitem{ContentProvider} https://developer.android.com/reference/android/content/ContentProvider
-  \bibitem {MatrixCursor} https://developer.android.com/reference/android/database/MatrixCursor
-  \bibitem {SearchManager} https://developer.android.com/reference/android/app/SearchManager
-  \bibitem {AlertDialog} https://developer.android.com/reference/android/app/AlertDialog.html
-  \bibitem {Snackbar} https://developer.android.com/reference/android/support/design/widget/Snackbar
-  \bibitem {LinearLayout} https://developer.android.com/guide/topics/ui/layout/linear
-  \bibitem {SwipeRefreshLayout} https://developer.android.com/reference/android/support/v4/widget/SwipeRefreshLayout
-  \bibitem {DialogFragment} https://developer.android.com/reference/android/app/DialogFragment
+  \bibitem{Here} http://developer.here.com (dostęp: 20.05.2019 r.)
+  \bibitem{gms.location} http://developers.google.com/android/reference/com/google/android/gms/location/package-summary (dostęp: 20.05.2019 r.)
+  \bibitem{Android usage} http://gs.statcounter.com/android-version-market-share/mobile-tablet/worldwide (dostęp: 20.05.2019 r.)
+  \bibitem{SearchView} https://developer.android.com/reference/android/widget/SearchView (dostęp: 10.08.2019 r.)
+  \bibitem{ContentProvider} https://developer.android.com/reference/android/content/ContentProvider (dostęp: 10.08.2019 r.)
+  \bibitem {MatrixCursor} https://developer.android.com/reference/android/database/MatrixCursor (dostęp: 10.08.2019 r.)
+  \bibitem {SearchManager} https://developer.android.com/reference/android/app/SearchManager (dostęp: 10.08.2019 r.)
+  \bibitem {AlertDialog} https://developer.android.com/reference/android/app/AlertDialog.html (dostęp: 15.07.2019 r.)
+  \bibitem {Snackbar} https://developer.android.com/reference/android/support/design/widget/Snackbar (dostęp: 15.06.2019 r.)
+  \bibitem {LinearLayout} https://developer.android.com/guide/topics/ui/layout/linear (dostęp: 1.06.2019 r.)
+  \bibitem {SwipeRefreshLayout} https://developer.android.com/reference/android/support/v4/widget/SwipeRefreshLayout (dostęp: 10.07.2019 r.)
+  \bibitem {DialogFragment} https://developer.android.com/reference/android/app/DialogFragment (dostęp: 20.10.2019 r.)
   \bibitem {PopupMenu} https://developer.android.com/reference/android/widget/PopupMenu
-  \bibitem {Facebook} https://www.facebook.com/
-  \bibitem {Intent} https://developer.android.com/reference/android/content/Intent
-  \bibitem{SlidingUpPanelLayout} https://github.com/umano/AndroidSlidingUpPanel
-  \bibitem{Spring documentation} https://docs.spring.io/spring-boot/docs/current/reference/htmlsingle/
-  \bibitem{JWT} https://tools.ietf.org/html/rfc7519
-  \bibitem{JWT library} https://mvnrepository.com/artifact/io.jsonwebtoken/jjwt
-  \bibitem{Retrofit library} https://square.github.io/retrofit/
-  \bibitem{OkHttpClient} https://square.github.io/okhttp/
-  \bibitem{Dagger 2} https://github.com/google/dagger
-  \bibitem{SimpleDocumentScanner-Android} https://github.com/jbttn/SimpleDocumentScanner-Android
-  \bibitem{OpenCV} https://opencv.org/
-  \bibitem{FacebookBug} https://developers.facebook.com/support/bugs/332619626816423/
-  \bibitem{mobileHere} https://mobile.here.com/
-  \bibitem{Glide} https://bumptech.github.io/glide/
-  \bibitem{Apache Mahout} https://mahout.apache.org/
-  \bibitem{Postman} https://www.getpostman.com/
-  \bibitem{Firebase} https://firebase.google.com/docs/cloud-messaging
-  \bibitem{HereApi} https://developer.here.com/
-  \bibitem{GoogleApi} https://cloud.google.com/maps-platform/routes/
-  \bibitem{JsonParser} https://static.javadoc.io/com.google.code.gson/gson/2.8.5/com/google/gson/JsonParser.html
-  \bibitem{GsonBuilder} https://static.javadoc.io/com.google.code.gson/gson/2.8.0/com/google/gson/GsonBuilder.html
-  \bibitem{escapeUtils} https://commons.apache.org/proper/commons-lang/apidocs/org/apache/commons/lang3\\/StringEscapeUtils.html
-  \bibitem{JUnit} https://junit.org/junit4/
-  \bibitem{JUnitParams} https://github.com/Pragmatists/JUnitParams
-  \bibitem{MockK} https://mockk.io/
-  \bibitem{RxJava} https://github.com/ReactiveX/RxJava
-  \bibitem{Espresso} https://developer.android.com/training/testing/espresso
-  \bibitem{MockK-Android} https://mockk.io/ANDROID.html
-  \bibitem{Google I/O 2019} https://techcrunch.com/2019/05/07/kotlin-is-now-googles-preferred-language-for-android-app-development/
-  \bibitem{ImageView} https://developer.android.com/reference/android/widget/ImageView
-  \bibitem{PostgreSQL} https://www.postgresql.org/
-  \bibitem{Neo4j} https://neo4j.com/
-  \bibitem{JDBC} https://jdbc.postgresql.org/
-  \bibitem{contextualActionMode} https://developer.android.com/guide/topics/ui/menus
-  \bibitem{github} https://github.com/
+  (dostęp: 20.10.2019 r.)
+  \bibitem {Facebook} https://www.facebook.com/ (dostęp: 20.10.2019 r.)
+  \bibitem {Intent} https://developer.android.com/reference/android/content/Intent (dostęp: 20.10.2019 r.)
+  \bibitem{SlidingUpPanelLayout} https://github.com/umano/AndroidSlidingUpPanel (dostęp: 1.09.2019 r.)
+  \bibitem{Spring documentation} https://docs.spring.io/spring-boot/docs/current/reference/htmlsingle/ (dostęp: 20.06.2019 r.)
+  \bibitem{JWT} https://tools.ietf.org/html/rfc7519 (dostęp: 20.06.2019 r.)
+  \bibitem{JWT library} https://mvnrepository.com/artifact/io.jsonwebtoken/jjwt (dostęp: 20.06.2019 r.)
+  \bibitem{Retrofit library} https://square.github.io/retrofit/ (dostęp: 20.06.2019 r.)
+  \bibitem{OkHttpClient} https://square.github.io/okhttp/ (dostęp: 1.07.2019 r.)
+  \bibitem{Dagger 2} https://github.com/google/dagger (dostęp: 1.06.2019 r.)
+  \bibitem{SimpleDocumentScanner-Android} https://github.com/jbttn/SimpleDocumentScanner-Android (dostęp: 28.07.2019 r.)
+  \bibitem{OpenCV} https://opencv.org/ (dostęp: 28.07.2019 r.)
+  \bibitem{FacebookBug} https://developers.facebook.com/support/bugs/332619626816423/(dostęp: 28.10.2019 r.)
+  \bibitem{mobileHere} https://mobile.here.com/ (dostęp: 2.09.2019 r.)
+  \bibitem{Glide} https://bumptech.github.io/glide/ (dostęp: 15.10.2019 r.)
+  \bibitem{Apache Mahout} https://mahout.apache.org/ (dostęp: 3.11.2019 r.)
+  \bibitem{Postman} https://www.getpostman.com/ (dostęp: 3.11.2019 r.)
+  \bibitem{Firebase} https://firebase.google.com/docs/cloud-messaging (dostęp: 3.11.2019 r.)
+  \bibitem{HereApi} https://developer.here.com/ (dostęp: 10.08.2019 r.)
+  \bibitem{GoogleApi} https://cloud.google.com/maps-platform/routes/ (dostęp: 10.08.2019 r.)
+  \bibitem{JsonParser} https://static.javadoc.io/com.google.code.gson/gson/2.8.5/com/google/gson/JsonParser.html (dostęp: 10.07.2019 r.)
+  \bibitem{GsonBuilder} https://static.javadoc.io/com.google.code.gson/gson/2.8.0/com/google/gson/GsonBuilder.html (dostęp: 10.07.2019 r.)
+  \bibitem{escapeUtils} https://commons.apache.org/proper/commons-lang/apidocs/org/apache/commons/lang3\\/StringEscapeUtils.html (dostęp: 10.08.2019 r.)
+  \bibitem{JUnit} https://junit.org/junit4/ (dostęp: 14.09.2019 r.)
+  \bibitem{JUnitParams} https://github.com/Pragmatists/JUnitParams (dostęp: 14.09.2019 r.)
+  \bibitem{MockK} https://mockk.io/ (dostęp: 14.09.2019 r.)
+  \bibitem{RxJava} https://github.com/ReactiveX/RxJava (dostęp: 14.09.2019 r.) 
+  \bibitem{Espresso} https://developer.android.com/training/testing/espresso (dostęp: 14.09.2019 r.)
+  \bibitem{MockK-Android} https://mockk.io/ANDROID.html (dostęp: 14.09.2019 r.)
+  \bibitem{Google I/O 2019} https://techcrunch.com/2019/05/07/kotlin-is-now-googles-preferred-language-for-android-app-development/ (dostęp: 9.05.2019 r.)
+  \bibitem{ImageView} https://developer.android.com/reference/android/widget/ImageView (dostęp: 20.09.2019 r.)
+  \bibitem{PostgreSQL} https://www.postgresql.org/ (dostęp: 28.06.2019 r.)
+  \bibitem{Neo4j} https://neo4j.com/ (dostęp: 28.06.2019 r.)
+  \bibitem{JDBC} https://jdbc.postgresql.org/ (dostęp: 30.06.2019 r.)
+  \bibitem{contextualActionMode} https://developer.android.com/guide/topics/ui/menus (dostęp: 5.08.2019 r.)
+  \bibitem{github} https://github.com/ (dostęp: 28.05.2019 r.)
 \end{thebibliography}
 
 
