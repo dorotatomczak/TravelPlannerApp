@@ -55,8 +55,27 @@ Użytkownik pierwszy raz uruchamiający aplikację i chcący z niej korzystać p
 \section{Podróże}
 Pierwszy widok pojawiający się tuż po zalogowaniu zawiera listę dostępnych podróży.
 
-\begin{figure}[h]
+\subsection{Tworzenie podróży}
+W celu utworzenia podróży należy:
+\begin{enumerate}
+\item Nacisnąć przycisk oznaczony symbolem "+".
+\item Uzupełnić okno dialogowe nazwą podróży i kliknąć "OK".
+\item Utworzona podróż pojawi się na liście wraz z domyślnym zdjęciem.
+\end{enumerate}
 
+\section{Widok podróży}
+Po wybraniu danej podróży zostaje wyświetlony widok zawierający informacje na jej temat.
+
+\subsection{Zmiana nazwy podróży}
+
+W celu zmiany nazwy podróży należy:
+\begin{enumerate}
+\item Nacisnąć przycisk oznaczony symbolem ołówka.
+\item Uzupełnić okno dialogowe nową nazwą podróży i kliknąć "OK".
+\item Nazwa podróży zostanie zaktualizowana.
+\end{enumerate}
+
+\begin{figure}[h]
 \centering
 \null\hfill
 \subfloat[Widok podróży użytkownika.\label{fig:travelsView}]{\includegraphics[width=0.32\textwidth]{travelsView}}
@@ -70,18 +89,6 @@ Pierwszy widok pojawiający się tuż po zalogowaniu zawiera listę dostępnych 
 \label{fig:podrecznik2}
 \end{figure}
 \FloatBarrier
-
-\subsection{Tworzenie podróży}
-W celu utworzenia podróży należy:
-\begin{enumerate}
-\item Nacisnąć przycisk oznaczony symbolem "+".
-\item Uzupełnić okno dialogowe nazwą podróży i kliknąć "OK".
-\item Utworzona podróż pojawi się na liście wraz z domyślnym zdjęciem.
-\end{enumerate}
-
-
-\section{Widok podróży}
-Po wybraniu danej podróży zostaje wyświetlony widok zawierający informacje na jej temat.
 
 \begin{figure}[h]
 \centering
@@ -97,14 +104,6 @@ Po wybraniu danej podróży zostaje wyświetlony widok zawierający informacje n
 \label{fig:podrecznik3}
 \end{figure}
 \FloatBarrier
-\subsection{Zmiana nazwy podróży}
-
-W celu zmiany nazwy podróży należy:
-\begin{enumerate}
-\item Nacisnąć przycisk oznaczony symbolem ołówka.
-\item Uzupełnić okno dialogowe nową nazwą podróży i kliknąć "OK".
-\item Nazwa podróży zostanie zaktualizowana.
-\end{enumerate}
 
 \subsection{Zmiana tła podróży}
 
@@ -207,6 +206,9 @@ W przypadku wybrania przycisku z symbolem samochodu użytkownik ma możliwość 
 \section{Czynności związane z elementami planu}
 Aplikacja umożliwia wykonywanie kilku czynności związanych z poszczególnym elementem planu dnia. Oprócz możliwości odczytania szczegółowych informacji na jego temat można ocenić dane miejsce, oznaczyć plan jako ukończony oraz udostępnić go w medium społecznościowym.
 
+\par Po kliknięciu na wybrany element pojawia się osobny widok zawierający dokładne informacje na temat wybranego miejsca. Istnieje możliwość wystawienia oceny.
+Po przytrzymaniu palca na danym planu dnia pojawia się dymek z trzema opcjami do wyboru.
+
 \begin{figure}[h]
 
 \centering
@@ -220,11 +222,6 @@ Aplikacja umożliwia wykonywanie kilku czynności związanych z poszczególnym e
 \label{fig:podrecznik4}
 \end{figure}
 \FloatBarrier
-
-
-
-\par Po kliknięciu na wybrany element pojawia się osobny widok zawierający dokładne informacje na temat wybranego miejsca. Istnieje możliwość wystawienia oceny.
-Po przytrzymaniu palca na danym planu dnia pojawia się dymek z trzema opcjami do wyboru.
 
 \begin{figure}[h]
 
@@ -283,21 +280,6 @@ Domyślna tekst zawiera link do wybranego miejsca na mapie HERE.
 \end{figure}
 \FloatBarrier
 
-\section{Skanowanie dokumentów}
-Użytkownik posiadający plan podróży ma możliwość dodania skanu – czarno-białego zdjęcia po progowaniu.
-W celu przechowania dokumentu w aplikacji należy:
-\begin{enumerate}
-\item Kliknąć na symbol szuflady nawigacji (ang. hamburger).
-\item W bocznym menu wybrać "Skany".
-\item Nacisnąć przycisk zawierający symbol "+".
-\item Wyrazić zgodę na dostęp do aparatu.
-\item Wykonać zdjęcie dokumentu.
-\item Wybrać interesujący obszar (dowolny czworokąt).
-\item Zaakceptować przekształcenie obrazu klikając przycisk "Skanuj".
-\item Miniatura skanu pojawi się w galerii.
-\end{enumerate}
-
-
 \begin{figure}[h]
 
 \centering
@@ -317,6 +299,20 @@ W celu przechowania dokumentu w aplikacji należy:
 \label{fig:podrecznik8}
 \end{figure}
 \FloatBarrier
+
+\section{Skanowanie dokumentów}
+Użytkownik posiadający plan podróży ma możliwość dodania skanu – czarno-białego zdjęcia po progowaniu.
+W celu przechowania dokumentu w aplikacji należy:
+\begin{enumerate}
+\item Kliknąć na symbol szuflady nawigacji (ang. hamburger).
+\item W bocznym menu wybrać "Skany".
+\item Nacisnąć przycisk zawierający symbol "+".
+\item Wyrazić zgodę na dostęp do aparatu.
+\item Wykonać zdjęcie dokumentu.
+\item Wybrać interesujący obszar (dowolny czworokąt).
+\item Zaakceptować przekształcenie obrazu klikając przycisk "Skanuj".
+\item Miniatura skanu pojawi się w galerii.
+\end{enumerate}
 
 \section{Znajomi}
 Chcąc udostępnić innemu użytkownikowi podróży należy go wcześniej dodać do znajomych. Można to zrobić w następujących krokach:
