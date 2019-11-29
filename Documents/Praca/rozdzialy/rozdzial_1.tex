@@ -1,8 +1,8 @@
 \chapter{Wstęp i cel pracy (Karolina Makuch)}
 \par Aplikacje mobilne są coraz popularniejszym rozwiązaniem stosowanym w różnych dziedzinach. Rozwój technologiczny potęguje możliwości telefonów przez co coraz więcej firm decyduje się na przenoszenie swoich aplikacji na platformy mobilne. Kilkanaście lat temu  służyły one głównie do komunikacji. Obecnie szeroka gama ich funkcjonalności zaczyna dorównywać ich "większym braciom" -- komputerom.
 \par Znaczącą przewagę zyskują dzięki swoim rozmiarom. Są znacznie wygodniejsze w codziennej obsłudze. Większość z nich zmieści się do kieszeni swojego właściciela. Dzięki temu coraz częściej są wykorzystywane w miejscach publicznych, nie zabierając przestrzeni innym osobom. Umożliwiają między innymi ustalanie szczegółów poprzez pisanie wiadomości mailowych, wyszukiwanie potrzebnych informacji jak również odpoczynek poprzez zagranie w grę mobilną.
-\par Celem pracy jest zaprojektowanie i zaimplementowanie aplikacji umożliwiającej zaplanowanie podróży poprzez integrację systemu z dostępnymi bazami danych informacji o atrakcjach turystycznych oraz możliwości transportu pomiędzy dwoma lokalizacjami. Postanowiono również zaimplementować algorytm rekomendujący plan podróży. Zdecydowano się także na dodanie mechanizmu skanowania dokumentów. 
-\par Przed przystąpieniem do fazy projektowania opracowano Specyfikację Wymagań Systemowych z uwzględnieniem udziałowców, celów systemu (biznesowych oraz funkcjonalnych), otoczenie systemu (składające się na użytkowników oraz systemy zewnętrzne), przewidywalne komponenty systemu (sprzętowe, programowalne oraz podsystemy), wymagania (funkcjonalne, programowe, na dane, wydajnościowe, dodatkowe, w zakresie wiarygodności, elastyczności oraz satysfakcji), sytuacje wyjątkowe i kryteria akceptacyjne.
+\par Celem pracy było zaprojektowanie i zaimplementowanie aplikacji umożliwiającej zaplanowanie podróży poprzez integrację systemu z dostępnymi bazami danych o atrakcjach turystycznych oraz możliwości transportu pomiędzy dwoma lokalizacjami. Postanowiono również zaimplementować algorytm rekomendujący plan podróży. Zdecydowano się także na dodanie mechanizmu skanowania dokumentów. 
+\par Przed przystąpieniem do fazy projektowania opracowano specyfikację wymagań systemowych z uwzględnieniem udziałowców, celów systemu (biznesowych oraz funkcjonalnych), otoczenie systemu (użytkownicy oraz systemy zewnętrzne), przewidywalne komponenty systemu (sprzętowe, programowalne oraz podsystemy), wymagania (funkcjonalne, programowe, na dane, wydajnościowe, dodatkowe, w zakresie wiarygodności, elastyczności oraz satysfakcji), sytuacje wyjątkowe i kryteria akceptacyjne.
 \par Zdecydowano się na implementację aplikacji dla systemu mobilnego Android, rozwijanego przez firmę Google. Opiera się on na jądrze systemu operacyjnego Linux oraz na oprogramowaniu posiadającym licencję GNU (\textit{GNU General Public License}).
  \par Od blisko dziesięciu lat smartfony z systemem Android znajdują się na pierwszym miejscu w światowym rankingu najczęściej kupowanych telefonów. Podczas jednego roku (2017) sprzedano blisko 1,3 mln urządzeń z tym systemem. Jest on zdecydowanie bardziej otwarty (dzięki mniejszym kosztom implementacji) oraz dostępny (przystępniejsze ceny urządzeń) niż konkurencja.
 \par Potrzebne informacje są przechowywane poza aplikacją. Wykorzystano w tym celu system bazy danych \textit{PostgreSQL}. Zaimplementowano również serwer umożliwiający komunikację pomiędzy bazą a aplikacją oraz z zewnętrznym API.
@@ -22,7 +22,7 @@
 
 \par Rozdział 2 zawiera przegląd podobnych rozwiązań, które są dostępne na rynku aplikacji mobilnych. Pod uwagę wzięto TripIt: Travel Planner,Google Trips -- Travel Planner, Sygic Travel: Planuj Podróż oraz Expedia. W przypadku każdej z nich zidentyfikowano główne wady i zalety.
 
-\par W rozdziale 3 przedstawiono ekstrakt Specyfikacji Wymagań systemowych opisujący udziałowców projektu, otoczenie systemu. Wyróżniono w nim również kluczowe wymagania oraz cele dla powstałej aplikacji.
+\par W rozdziale 3 przedstawiono ekstrakt specyfikacji wymagań systemowych opisujący udziałowców projektu oraz otoczenie systemu. Wyróżniono w nim również kluczowe wymagania oraz cele dla powstałej aplikacji.
 
 \par Rozdział 4 omawia projekt systemu aplikacji,wyróżniając podsystemy po stronie aplikacji mobilnej oraz po stronie serwera. Przygotowano także najistotniejsze scenariusze użycia określając sposoby korzystania z aplikacji przez użytkowników.
 
@@ -30,9 +30,9 @@
 
 \par Rozdział 6 prezentuje projekt wzorca zastosowanego po stronie aplikacji mobilnej (model -- widok -- prezenter), sposób jej komunikacji z aplikacją serwerową oraz przybliża sposób implementacji poszczególnych funkcjonalności.
 
-\par Rozdział 7 zawiera informacje dotyczące implementacji serwera (RESTful Web Service),komunikacji z zewnętrznym API, dostępu do bazy danych, obsługi sytuacji wyjątkowych oraz mechanizmu rekomendacji wzorującym się na algorytmie Collaborative Filtering.
+\par Rozdział 7 zawiera informacje dotyczące implementacji serwera (RESTful Web Service),komunikacji z zewnętrznym API,opis dostępu do bazy danych, obsługi sytuacji wyjątkowych oraz mechanizmu rekomendacji wzorującym się na algorytmie Collaborative Filtering.
 
-\par Rozdział 8 uzasadnia wybór relacyjnej bazy danych (PostgreSQL) oraz pracy z nią związanej. Zawiera również schemat ERD (Entity Relationship Diagram).
+\par Rozdział 8 uzasadnia wybór relacyjnej bazy danych (PostgreSQL) oraz opis pracy z nią związanej. Zawiera również schemat ERD (Entity Relationship Diagram).
 
 \par W rozdziale 9 wymieniono zaimplementowane testy jednostkowe, instrumentalne oraz dostępu do bazy danych. Wytłumaczono w nim także zasady ich działania.
 
