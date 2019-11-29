@@ -1,0 +1,28 @@
+\chapter{Podsumowanie (Anna Malizjusz)}
+
+\par Celem pracy było napisanie aplikacji mobilnej, serwera w architekturze REST oraz przetestowanie obu komponentów. Dodatkowo należało zintegrować aplikację z bazą danych oraz zewnętrznym API dostarczonym przez serwisy Here oraz Google. Bazowe cele zdefiniowano w dokumencie SWS. 
+
+\par Wynikiem pracy inżynierskiej jest zaimplementowana, działająca w środowisku testowym aplikacja mobilna oraz serwer REST. Zrealizowane zostały wszystkie wymagania o wysokim priorytecie niezbędne do akceptacji projektu. Najważniejsze z nich to:
+\begin{itemize}
+\item rejestracja i logowanie użytkownika,
+\item dodanie, przeglądanie i edycja planu podróży i planu dnia,
+\item wyszukanie elementu w pobliżu danej lokalizacji, w szczególności zakwaterowania,
+\item wyszukanie innego użytkownika i udostępnienie mu podróży,
+\item dodanie oceny do odwiedzonego miejsca,
+\item otrzymanie propozycji na podstawie ocen,
+\item wyszukanie transportu między lokalizacjami,
+\item skanowanie biletów.
+\end{itemize}
+
+\par Zaimplementowano też kilka dodatkowych funkcji, takich jak udostępnienie odwiedzonego miejsca w serwisie Facebook oraz oznaczenie planu dnia jako wykonany. Uwzględniano ostrzeżenia o użyciach przestarzałych funkcji, aby w aplikacji korzystano z najnowszych i najbezpieczniejszych praktyk.
+
+\par Aplikację mobilną przetestował zespół programistów oraz kilku testerów. Nie stwierdzono rażących błędów, które uniemożliwiałyby korzystanie z zaimplementowanego rozwiązania. Interfejs okazał się łatwy w obsłudze dla młodych ludzi.
+
+\par W trakcie projektu inżynierskiego zespół doświadczył trudności w implementacji rozwiązania "od zera", bez bazowego kodu ani dokładnych, zewnętrznych wytycznych. Brakowało również praktyki w prowadzeniu względnie obszernego i skomplikowanego przedsięwzięcia, jakim jest stworzenie działającej aplikacji w pół roku. Wielokrotnie wybrane rozwiązania były uznawane za niewystarczające i zmieniane na lepsze. Początkowo tryb pracy i stosowane konwencje często się zmieniały, jednak w pierwszym etapie projektu udało się ustabilizować wewnętrzne wymagania. Dzięki temu recenzje kodu przebiegały sprawniej.
+
+\par Spotykano się z problemem braku pomocnych informacji w internecie. Część używanych rozwiązań zostało oznaczonych jako przestarzałe i należało samodzielnie znaleźć aktualniejsze. Czasem część znalezionych informacji była specyficzna dla języka Java i nie istniała banalna konwersja do używanego języka Kotlin.
+
+\par Podczas pracy nad aplikacją mobilną i serwerową zdefiniowano kolejne przydatne funkcjonalności lub ulepszenia istniejących. Postanowiono umożliwić użytkownikowi otrzymywanie powiadomień na adres email, a także umożliwić edycję planu dnia. Dodatkowo należy rozszerzyć aplikację o możliwość zmienienia oraz przypomnienia hasła. W serwisie GitHub dodano nowe zadania odnośnie poprawienia jakości kodu obsługującego zapytania na serwerze, w bazie danych oraz w aplikacji mobilnej. Zdecydowano o przyszłej zmianie niektórych z elementów aplikacji, np. sposobu wyświetlania obiektów na mapie. Jednocześnie planowane jest zaimplementowanie kolejnych funkcjonalności, które zostały oznaczone jako mniej ważne.
+
+\par Zdecydowano o późniejszym dokładniejszym pokryciu kodu testami jednostkowymi, a także o dodaniu większej liczby testów integracyjnych. W celu łatwiejszego i bezpieczniejszego rozwoju aplikacji zostaną zaimplementowane mechanizmy ciągłej integracji (ang. continous integration), które zapobiegną problemom z kompilacją oraz działaniem aplikacji na głównej gałęzi (ang. branch) repozytorium (master).
+\par Zaimplementowane rozwiązanie, dzięki zachowaniu dobrych praktyk programistycznych podczas pisania kodu, może być dalej rozwijane. Dotychczasowa praca zespołu zwiększyła jego umiejętności, zarówno programistyczne, jak i zdolność do współpracy z innymi członkami grupy.

@@ -1,0 +1,177 @@
+
+\NeedsTeXFormat{LaTeX2e}[1994/06/01]
+
+\ProvidesPackage{listing_schemat}
+
+\RequirePackage{tikz} 			% Pakiet do rysowania schemat�w blokowych
+\RequirePackage{textcomp}		% Pakiet pomocniczy do tikz
+\usetikzlibrary{shapes,arrows}  % Pakiet pomocniczy do tikz
+\RequirePackage{listings} 		% do prezentowania listingu kodu
+\RequirePackage{makecell}
+\RequirePackage{multirow}
+\RequirePackage{array}
+\RequirePackage{longtable}
+\RequirePackage{subfig}
+\RequirePackage{placeins}
+\graphicspath{ {./images/} }
+
+%------------------------------------------------------------
+% Konfiguracja listing�w - zdefiniowa� mo�na tak�e dodatkowe
+% style dla nowych j�zyk�w, wed�ug zapotrzebowania
+%------------------------------------------------------------
+
+% Definicje kolor�w dla listing�w
+\definecolor{WhitePG}{RGB}{250, 250, 250}
+\definecolor{BluePG}{RGB}{10, 55,100}
+\definecolor{RedPG}{RGB}{227,27,35}
+\definecolor{GreenPG}{RGB}{0,153,0}
+
+
+\lstdefinestyle{matlab}{
+  backgroundcolor=\color{WhitePG},   % kolor t�a dla listingu
+  basicstyle=\linespread{1}\footnotesize,  % rozmiar czcionki dla kodu w listingu
+  breakatwhitespace=false,         % ustawienie bia�ej spacji
+  breaklines=true,                 % automatyczne �amanie linii
+  captionpos=b,                    % opis listingu pod ramk�
+  commentstyle=\color{GreenPG},    % ustawienia komentarzy, (kolor)
+  deletekeywords={...},            % usuwane s�owa kluczowe z danego j�zyka
+  escapeinside={\%*}{*)},          % znaki pozwalaj�ce na zamieszczenie kodu LaTeX w kodzie listingu
+  extendedchars=true,              % u�ywanie znak�w non-ASCII
+  firstnumber=1,                   % pocz�tkowy numer linii
+  frame=single,	                   % styl ramki wok�� kodu
+  keepspaces=true,                 % zachowywanie sformatowania kodu w listingu
+  keywordstyle=\color{BluePG}\bfseries,      % ustawienia dla wygl�du s��w kluczowych w kodzie (kolor)
+  language=Matlab,                 % wyb�r j�zyka kodu w listingu
+  morekeywords={*,...},            % dodatkowe s�owa kluczowe dla danego j�zyka
+  numbers=left,                    % umiejscowienie numeracji linii kodu (po lewej, prawie)
+  numbersep=5pt,                   % odleg�o�� numeracji linii od ramki
+  numberstyle=\tiny\color{black},  % ustawienia rozmiaru itp, dla numeracji linii
+  rulecolor=\color{black},         % zmiana koloru ramki przy �amaniu wiersza
+  showspaces=false,                % 
+  showstringspaces=false,          % 
+  showtabs=false,                  % 
+  stepnumber=1,                    % odst�p pomi�dzy liniami listingu
+  stringstyle=\color{RedPG},       % ustawienie wygl�du na �a�cuch�w znak�w
+  tabsize=2,	                   % ustawienie rozmiaru tabulatora
+  title=\lstname                   % tytu� listingu na podstawie nazwy pliku kodu
+}
+
+
+\lstdefinestyle{cpp}{
+  backgroundcolor=\color{WhitePG},   % kolor t�a dla listingu
+  basicstyle=\linespread{1}\footnotesize,        % rozmiar czcionki dla kodu w listingu
+  breakatwhitespace=false,         % ustawienie bia�ej spacji
+  breaklines=true,                 % automatyczne �amanie linii
+  captionpos=b,                    % opis listingu pod ramk�
+  commentstyle=\color{GreenPG},    % ustawienia komentarzy, (kolor)
+  deletekeywords={...},            % usuwane s�owa kluczowe z danego j�zyka
+  escapeinside={\%*}{*)},          % znaki pozwalaj�ce na zamieszczenie kodu LaTeX w kodzie listingu
+  extendedchars=true,              % u�ywanie znak�w non-ASCII
+  firstnumber=1,                   % pocz�tkowy numer linii
+  frame=single,	                   % styl ramki wok�� kodu
+  keepspaces=true,                 % zachowywanie sformatowania kodu w listingu
+  keywordstyle=\color{BluePG}\bfseries,      % ustawienia dla wygl�du s��w kluczowych w kodzie (kolor)
+  language=C++,                    % wyb�r j�zyka kodu w listingu
+  morekeywords={*,...},            % dodatkowe s�owa kluczowe dla danego j�zyka
+  numbers=left,                    % umiejscowienie numeracji linii kodu (po lewej, prawie)
+  numbersep=5pt,                   % odleg�o�� numeracji linii od ramki
+  numberstyle=\tiny\color{black},  % ustawienia rozmiaru itp, dla numeracji linii
+  rulecolor=\color{black},         % zmiana koloru ramki przy �amaniu wiersza
+  showspaces=false,                % 
+  showstringspaces=false,          % 
+  showtabs=false,                  % 
+  stepnumber=1,                    % odst�p pomi�dzy liniami listingu
+  stringstyle=\color{RedPG},       % ustawienie wygl�du na �a�cuch�w znak�w
+  tabsize=2,	                   % ustawienie rozmiaru tabulatora
+  title=\lstname                   % tytu� listingu na podstawie nazwy pliku kodu
+}
+
+\lstdefinestyle{java}{
+  backgroundcolor=\color{WhitePG},   % kolor t�a dla listingu
+  basicstyle=\linespread{1}\footnotesize,        % rozmiar czcionki dla kodu w listingu
+  breakatwhitespace=false,         % ustawienie bia�ej spacji
+  breaklines=true,                 % automatyczne �amanie linii
+  captionpos=b,                    % opis listingu pod ramk�
+  commentstyle=\color{GreenPG},    % ustawienia komentarzy, (kolor)
+  deletekeywords={...},            % usuwane s�owa kluczowe z danego j�zyka
+  escapeinside={\%*}{*)},          % znaki pozwalaj�ce na zamieszczenie kodu LaTeX w kodzie listingu
+  extendedchars=true,              % u�ywanie znak�w non-ASCII
+  firstnumber=1,                   % pocz�tkowy numer linii
+  frame=single,	                   % styl ramki wok�� kodu
+  keepspaces=true,                 % zachowywanie sformatowania kodu w listingu
+  keywordstyle=\color{BluePG}\bfseries,      % ustawienia dla wygl�du s��w kluczowych w kodzie (kolor)
+  language=Java,                 % wyb�r j�zyka kodu w listingu
+  morekeywords={*,...},            % dodatkowe s�owa kluczowe dla danego j�zyka
+  numbers=left,                    % umiejscowienie numeracji linii kodu (po lewej, prawie)
+  numbersep=5pt,                   % odleg�o�� numeracji linii od ramki
+  numberstyle=\tiny\color{black},  % ustawienia rozmiaru itp, dla numeracji linii
+  rulecolor=\color{black},         % zmiana koloru ramki przy �amaniu wiersza
+  showspaces=false,                % 
+  showstringspaces=false,          % 
+  showtabs=false,                  % 
+  stepnumber=1,                    % odst�p pomi�dzy liniami listingu
+  stringstyle=\color{RedPG},       % ustawienie wygl�du na �a�cuch�w znak�w
+  tabsize=2,	                   % ustawienie rozmiaru tabulatora
+  title=\lstname                   % tytu� listingu na podstawie nazwy pliku kodu
+}
+
+\lstdefinestyle{vhdl}{
+backgroundcolor=\color{WhitePG},   % kolor t�a dla listingu
+  basicstyle=\linespread{1}\footnotesize,        % rozmiar czcionki dla kodu w listingu
+  breakatwhitespace=false,         % ustawienie bia�ej spacji
+  breaklines=true,                 % automatyczne �amanie linii
+  captionpos=b,                    % opis listingu pod ramk�
+  commentstyle=\color{GreenPG},    % ustawienia komentarzy, (kolor)
+  deletekeywords={...},            % usuwane s�owa kluczowe z danego j�zyka
+  escapeinside={\%*}{*)},          % znaki pozwalaj�ce na zamieszczenie kodu LaTeX w kodzie listingu
+  extendedchars=true,              % u�ywanie znak�w non-ASCII
+  firstnumber=1,                   % pocz�tkowy numer linii
+  frame=single,	                   % styl ramki wok�� kodu
+  keepspaces=true,                 % zachowywanie sformatowania kodu w listingu
+  keywordstyle=\color{BluePG}\bfseries,      % ustawienia dla wygl�du s��w kluczowych w kodzie (kolor)
+  language=VHDL,                 % wyb�r j�zyka kodu w listingu
+  morekeywords={*,...},            % dodatkowe s�owa kluczowe dla danego j�zyka
+  numbers=left,                    % umiejscowienie numeracji linii kodu (po lewej, prawie)
+  numbersep=5pt,                   % odleg�o�� numeracji linii od ramki
+  numberstyle=\tiny\color{black},  % ustawienia rozmiaru itp, dla numeracji linii
+  rulecolor=\color{black},         % zmiana koloru ramki przy �amaniu wiersza
+  showspaces=false,                % 
+  showstringspaces=false,          % 
+  showtabs=false,                  % 
+  stepnumber=1,                    % odst�p pomi�dzy liniami listingu
+  stringstyle=\color{RedPG},       % ustawienie wygl�du na �a�cuch�w znak�w
+  tabsize=2,	                   % ustawienie rozmiaru tabulatora
+  title=\lstname                   % tytu� listingu na podstawie nazwy pliku kodu
+}
+
+
+\lstdefinestyle{python}{
+  backgroundcolor=\color{WhitePG},   % kolor t�a dla listingu
+  basicstyle=\linespread{1}\footnotesize,        % rozmiar czcionki dla kodu w listingu
+  breakatwhitespace=false,         % ustawienie bia�ej spacji
+  breaklines=true,                 % automatyczne �amanie linii
+  captionpos=b,                    % opis listingu pod ramk�
+  commentstyle=\color{GreenPG},    % ustawienia komentarzy, (kolor)
+  deletekeywords={...},            % usuwane s�owa kluczowe z danego j�zyka
+  escapeinside={\%*}{*)},          % znaki pozwalaj�ce na zamieszczenie kodu LaTeX w kodzie listingu
+  extendedchars=true,              % u�ywanie znak�w non-ASCII
+  firstnumber=1,                   % pocz�tkowy numer linii
+  frame=single,	                   % styl ramki wok�� kodu
+  keepspaces=true,                 % zachowywanie sformatowania kodu w listingu
+  keywordstyle=\color{BluePG}\bfseries,      % ustawienia dla wygl�du s��w kluczowych w kodzie (kolor)
+  language=Python,                 % wyb�r j�zyka kodu w listingu
+  morekeywords={*,...},            % dodatkowe s�owa kluczowe dla danego j�zyka
+  numbers=left,                    % umiejscowienie numeracji linii kodu (po lewej, prawie)
+  numbersep=5pt,                   % odleg�o�� numeracji linii od ramki
+  numberstyle=\tiny\color{black},  % ustawienia rozmiaru itp, dla numeracji linii
+  rulecolor=\color{black},         % zmiana koloru ramki przy �amaniu wiersza
+  showspaces=false,                % 
+  showstringspaces=false,          % 
+  showtabs=false,                  % 
+  stepnumber=1,                    % odst�p pomi�dzy liniami listingu
+  stringstyle=\color{RedPG},       % ustawienie wygl�du na �a�cuch�w znak�w
+  tabsize=2,	                   % ustawienie rozmiaru tabulatora
+  title=\lstname                   % tytu� listingu na podstawie nazwy pliku kodu
+}
+
+\endinput
