@@ -86,7 +86,7 @@ IDE (Integrated Development Environment) -- zintegrowane środowisko programisty
 
 
 \chapter{Wstęp i cel pracy (Karolina Makuch)}
-\par Aplikacje mobilne są coraz popularniejszym rozwiązaniem stosowanym w różnych dziedzinach. Rozwój technologiczny potęguje możliwości telefonów przez co coraz więcej firm decyduje się na przenoszenie swoich aplikacji na platformy mobilne. Kilkanaście lat temu  służyły one głównie do komunikacji. Obecnie szeroka gama ich funkcjonalności zaczyna dorównywać ich "większym braciom" -- komputerom.
+\par Aplikacje mobilne są coraz popularniejszym rozwiązaniem stosowanym w różnych dziedzinach. Rozwój technologiczny potęguje możliwości telefonów przez co coraz więcej firm decyduje się na przenoszenie swoich aplikacji na platformy mobilne. Kilkanaście lat temu  służyły one głównie do komunikacji. Obecnie szeroka gama ich funkcjonalności zaczyna dorównywać ich \textit{większym braciom} -- komputerom.
 \par Znaczącą przewagę zyskują dzięki swoim rozmiarom. Są znacznie wygodniejsze w codziennej obsłudze. Większość z nich zmieści się do kieszeni swojego właściciela. Dzięki temu coraz częściej są wykorzystywane w miejscach publicznych, nie zabierając przestrzeni innym osobom. Umożliwiają między innymi ustalanie szczegółów poprzez pisanie wiadomości mailowych, wyszukiwanie potrzebnych informacji jak również odpoczynek poprzez zagranie w grę mobilną.
 \par Celem pracy jest zaprojektowanie i zaimplementowanie aplikacji umożliwiającej zaplanowanie podróży poprzez integrację systemu z dostępnymi bazami danych informacji o atrakcjach turystycznych oraz możliwości transportu pomiędzy dwoma lokalizacjami. Postanowiono również zaimplementować algorytm rekomendujący plan podróży. Zdecydowano się także na dodanie mechanizmu skanowania dokumentów. 
 \par Przed przystąpieniem do fazy projektowania opracowano Specyfikację Wymagań Systemowych z uwzględnieniem udziałowców, celów systemu (biznesowych oraz funkcjonalnych), otoczenie systemu (składające się na użytkowników oraz systemy zewnętrzne), przewidywalne komponenty systemu (sprzętowe, programowalne oraz podsystemy), wymagania (funkcjonalne, programowe, na dane, wydajnościowe, dodatkowe, w zakresie wiarygodności, elastyczności oraz satysfakcji), sytuacje wyjątkowe i kryteria akceptacyjne.
@@ -303,7 +303,7 @@ Aplikacja posiadała także informacje na temat lokalnej kuchni (kafelek Food \&
 \par \textit{Sygic Travel} to spełniające podstawowe funkcje narzędzie ułatwiające planowanie podróży. Nie oferowała wielu możliwości, jednak warto zauważyć, że większość z nich była dostępna w wersji podstawowej i nie zmuszała użytkownika do zakupu stosunkowo drogiej wersji premium. Udostępniała bogaty wybór możliwych do odwiedzenia miejsc w wybranym celu podróży, a sam cel mógł należeć do egzotycznych, np. Udaipur w Indiach. Podstawowe informacje, takie jak mapa, atrakcje turystyczne czy prognoza pogody były zawsze dostępne. 
 
 \section{Expedia (Magdalena Solecka)}
-\par Kolejna aplikacja do planowania podróży to \textit{Expedia}, dostępna na urządzeniach z systemem iOS oraz Android. Korzystanie z niej było możliwe po założeniu konta użytkownika. Wśród dostępnych tłumaczeń nie znajdował się język polski. Aplikacja składała się z czterech głównych funkcjonalności: rezerwacja noclegu (ang. Hotels), rezerwacja lotu (ang. Flights), rezerwacja samochodu (ang. Cars) oraz wyszukiwanie ciekawych miejsc w okolicy (ang. Thing to Do). Nie było możliwości wyszukania restauracji w rejonie ani transportu naziemnego, koleją lub autobusem.
+\par Kolejna aplikacja do planowania podróży to \textit{Expedia}, dostępna na urządzeniach z systemem iOS oraz Android. Korzystanie z niej było możliwe po założeniu konta użytkownika. Wśród dostępnych tłumaczeń nie znajdował się język polski. Aplikacja składała się z czterech głównych funkcjonalności \ref{fig:Esubim1}: rezerwacja noclegu (ang. Hotels), rezerwacja lotu (ang. Flights), rezerwacja samochodu (ang. Cars) oraz wyszukiwanie ciekawych miejsc w okolicy (ang. Thing to Do). Nie było możliwości wyszukania restauracji w rejonie ani transportu naziemnego, koleją lub autobusem.
 \begin{figure}[h]
 \begin{subfigure}{0.5\textwidth}
 \centering
@@ -320,7 +320,7 @@ Aplikacja posiadała także informacje na temat lokalnej kuchni (kafelek Food \&
 \caption{Expedia.}
 \label{fig:Eimage}
 \end{figure}
-\par W celu wyszukania noclegu należało podać następujące dane: datę zameldowania i wymeldowania, miasto docelowe podróży, liczbę pokoi oraz osób do zakwaterowania. Zaprezentowane przez aplikację wyniki mogły zostać posortowane po cenie lub recenzjach użytkowników, a także przefiltrowane względem darmowego anulowania rezerwacji, śniadaniu wliczonym w cenę pobytu, klimatyzacją czy Wi-Fi. Wygodnym rozwiązaniem była mapka z naniesionymi na nią punktami z ceną w miejscu, w którym znajdował się oferowany pokój, co umożliwiało łatwiejszą ocenę odległości od centrum.
+\par W celu wyszukania noclegu należało podać następujące dane: datę zameldowania i wymeldowania, miasto docelowe podróży, liczbę pokoi oraz osób do zakwaterowania. Zaprezentowane przez aplikację wyniki mogły zostać posortowane po cenie lub recenzjach użytkowników, a także przefiltrowane względem darmowego anulowania rezerwacji, śniadaniu wliczonym w cenę pobytu, klimatyzacją czy Wi-Fi. Wygodnym rozwiązaniem była mapka (rys.~\ref{fig:Esubim2}) z naniesionymi na nią punktami z ceną w miejscu, w którym znajdował się oferowany pokój, co umożliwiało łatwiejszą ocenę odległości od centrum.
 \par W przypadku rezerwacji miejsca w samolocie można było wyszukać lot w jedną lub obie strony. Należało podać miejsce wylotu i przylotu oraz daty. Przedstawione wyniki można było porządkować według rosnącego kosztu. Aplikacja nie dawała możliwości porównania cen w różnych dniach np. w formie kalendarza uzupełnionego najniższymi cenami w danym dniu, co przy podróżowaniu z niskim budżetem byłoby pomocne. Możliwe było równoczesne wyszukanie lotów oraz noclegu (ang. Bundle Deals).
 \par Aplikacja oferowała również możliwość wypożyczenia samochodu. Tak jak w poprzednich dwóch przypadkach należało podać przedział czasu korzystania z pojazdu, miejsce odbioru i pozostawienia. Wyświetlone informacje o pojazdach były przydatne przy dokonywaniu wyboru, automatyczna czy manualna skrzynia biegów, ilość pasażerów.Dostępne sortowanie po cenie.
 \par Ostatnia funkcjonalność, wyszukiwanie atrakcji, zabytków, ciekawych wydarzeń. Wymagane ramy czasowe oraz lokalizacja. Rezultaty mogły być przeglądane po cenie lub popularności. Nie umożliwiono użytkownikowi oceny odległości między zaproponowanymi miejscami tak jak w przypadku noclegu, ale pomocny był przybliżony czas, który należy przeznaczyć na każdą z atrakcji.
@@ -442,7 +442,7 @@ Zobowiązano się do zapewnienia autentyczności proponowanych podróży, tj. su
 \end{enumerate}
 
 \subsection{Stworzenie planu dnia (Magdalena Solecka)}
-\par Martyna widzi pusty ekran planu dnia. Wpisuje miasto docelowe wyjazdu -- Paryż. Wybiera przycisk "+" i wybiera atrakcje. Ukazuje się przed nią ekran wyszukiwania ze znakiem wyszukiwania, a po chwili z wynikami wyszukiwania w formie listy atrakcji. Wybiera jeden z elementów listy – katedra Notre Dame i czyta jej opis. Wybiera przycisk "Dodaj". Widzi ponownie ekran planu Dnia z dodaną przez siebie atrakcją. Wybiera w ten sposób kilka kolejnych atrakcji. Ponownie wybiera przycisk "+" i wybiera restauracje. Ponownie widzi ekran wyszukiwania z listą restauracji. Wybiera pasujący jej obiekt i przy użyciu przycisku "Dodaj" zostaje on dodany do  planu dnia który ponownie wyświetla się przed nią. Użytkownik wybiera przycisk "Ułóż" i czeka aż aplikacja zakończy obliczanie najbardziej optymalnej trasy. Po kilku sekundach plan dnia jest już gotowy. Martyna stwierdza jednak że potrzebuje w ciągu dnia odpoczynku dlatego postanawia przesunąć zwiedzanie katedry Notre Dame na następny dzień. Wybiera element z katedrą i przycisk "Przenieś", a następnie numer dnia podróży. Następnie stwierdza, że właściwie nie interesuje jej sztuka sakralna, więc usuwa element z planu przesuwając go w prawo.
+\par Martyna widzi pusty ekran planu dnia. Wpisuje miasto docelowe wyjazdu -- Paryż. Wybiera przycisk \textit{+} i wybiera atrakcje. Ukazuje się przed nią ekran wyszukiwania ze znakiem wyszukiwania, a po chwili z wynikami wyszukiwania w formie listy atrakcji. Wybiera jeden z elementów listy – katedra Notre Dame i czyta jej opis. Wybiera przycisk \textit{Dodaj}. Widzi ponownie ekran planu Dnia z dodaną przez siebie atrakcją. Wybiera w ten sposób kilka kolejnych atrakcji. Ponownie wybiera przycisk \textit{+} i wybiera restauracje. Ponownie widzi ekran wyszukiwania z listą restauracji. Wybiera pasujący jej obiekt i przy użyciu przycisku \textit{Dodaj} zostaje on dodany do  planu dnia który ponownie wyświetla się przed nią. Użytkownik wybiera przycisk \textit{Ułóż} i czeka aż aplikacja zakończy obliczanie najbardziej optymalnej trasy. Po kilku sekundach plan dnia jest już gotowy. Martyna stwierdza jednak że potrzebuje w ciągu dnia odpoczynku dlatego postanawia przesunąć zwiedzanie katedry Notre Dame na następny dzień. Wybiera element z katedrą i przycisk \textit{Przenieś}, a następnie numer dnia podróży. Następnie stwierdza, że właściwie nie interesuje jej sztuka sakralna, więc usuwa element z planu przesuwając go w prawo.
 
 \noindent\newline Warunki początkowe:
 \begin{enumerate}
@@ -534,7 +534,7 @@ Warunki końcowe:
 \begin{enumerate}
   \item Użytkownik jest zalogowany.
   \item Aplikacja ma dostęp do internetu.
-  \item Użytkownik wybrał z menu opcję "Znajomi".
+  \item Użytkownik wybrał z menu opcję \textit{Znajomi}.
 \end{enumerate}
 \par
 \noindent\newline
@@ -558,7 +558,7 @@ Warunki końcowe:
 \begin{enumerate}
   \item Użytkownik jest zalogowany.
   \item Aplikacja ma dostęp do internetu.
-  \item Użytkownik wybrał z menu opcję "Znajomi".
+  \item Użytkownik wybrał z menu opcję \textit{Znajomi}.
 \end{enumerate}
 \par
 \noindent\newline
@@ -650,7 +650,7 @@ Warunki końcowe:
 
 \section{Narzędzia (Magdalena Solecka)}
 \subsection{Github}
-\par W celu łatwego zarządzania projektem wykorzystano System kontroli wersji \textit{Github}\cite{github}. Repozytorium zawierało trzy foldery: App (zawierający implementację aplikacji mobilnej), ServerApp (zawierający implementację serwera w architekturze REST) oraz Documents (zawierający dokumentację projektu). Backlog produktu utworzono w postaci zadań (ang. issues) również na tej samej platformie.  Jako model pracy wybrano \textit{Gitflow}, a jako schemat nazewnictwa gałęzi funkcjonalności (ang. feature branches): \{nr\_zadania\}-skrócona-nazwa-zadania. Również w nazewnictwie zapisów zmian (ang. commits) zdecydowano się na skorzystanie ze wzoru: \#\{nr\_zadania\}: opis wprowadzonych zmian, w celu śledzenia postępów nad danym zadaniem.
+\par W celu łatwego zarządzania projektem wykorzystano System kontroli wersji \textit{Github}\cite{github}. Repozytorium zawierało trzy foldery: App (zawierający implementację aplikacji mobilnej), ServerApp (zawierający implementację serwera w architekturze REST) oraz Documents (zawierający dokumentację projektu). Backlog produktu utworzono w postaci zadań (ang. issues) również na tej samej platformie(rys.~\ref{fig:github}).  Jako model pracy wybrano \textit{Gitflow}, a jako schemat nazewnictwa gałęzi funkcjonalności (ang. feature branches): \{nr\_zadania\}-skrócona-nazwa-zadania. Również w nazewnictwie zapisów zmian (ang. commits) zdecydowano się na skorzystanie ze wzoru: \#\{nr\_zadania\}: opis wprowadzonych zmian, w celu śledzenia postępów nad danym zadaniem.
 
 \begin{figure}[h]
 \centering
@@ -803,14 +803,14 @@ Elementy planu dnia wyświetlają się w formie chronologicznej listy rozdzielon
 \FloatBarrier
 
 \section{Udostępnianie planu dnia w medium społecznościowym (Karolina Makuch)}
-\par  Po dłuższym przytrzymaniu poszczególnego elementu planu pojawia się "dymek"  (\textit{PopupMenu} \cite{PopupMenu}) zawierający trzy czynności do wyboru. Jedną z nich jest możliwość udostępnienia wybranego punktu w medium społecznościowym. Postanowiono wybrać jedno z najpopularniejszych – \textit{Facebooka} \cite{Facebook}. W tym celu wykorzystano akcję wysyłającą (\textit{ACTION.SEND}) za pomocą intencji (\textit{Intent} \cite{Intent}).
-\par  W przypadku znalezienia aplikacji Facebook na telefonie użytkownika, zostanie on automatycznie przekierowany do publikowania posta na własnej "tablicy". Domyślną treścią jest link do map HERE \cite{mobileHere} z wyszukanym miejscem z elementu planu dnia. W celu pobrania właściwego odnośnika  zostało zaimplementowane odczytywanie wartości parametru widoku (ang. view) znajdującego się w odpowiedzi w formacie JSON (z wykorzystaniem \textit{JsonParser} \cite{JsonParser}). Odsyłacz do wyników zapytania został pobrany z bazy danych. Wykonanie analizy (ang. parse) wyniku zapytania wymagało utworzenia osobnego wątku.
+\par  Po dłuższym przytrzymaniu poszczególnego elementu planu pojawia się \textit{dymek} (\textit{PopupMenu} \cite{PopupMenu}) zawierający trzy czynności do wyboru. Jedną z nich jest możliwość udostępnienia wybranego punktu w medium społecznościowym. Postanowiono wybrać jedno z najpopularniejszych – \textit{Facebooka} \cite{Facebook}. W tym celu wykorzystano akcję wysyłającą (\textit{ACTION.SEND}) za pomocą intencji (\textit{Intent} \cite{Intent}).
+\par  W przypadku znalezienia aplikacji Facebook na telefonie użytkownika, zostanie on automatycznie przekierowany do publikowania posta na własnej \textit{tablicy}. Domyślną treścią jest link do map HERE \cite{mobileHere} z wyszukanym miejscem z elementu planu dnia. W celu pobrania właściwego odnośnika  zostało zaimplementowane odczytywanie wartości parametru widoku (ang. view) znajdującego się w odpowiedzi w formacie JSON (z wykorzystaniem \textit{JsonParser} \cite{JsonParser}). Odsyłacz do wyników zapytania został pobrany z bazy danych. Wykonanie analizy (ang. parse) wyniku zapytania wymagało utworzenia osobnego wątku.
 Wykonanie tej operacji na głównym wątku zablokowałoby interfejs użytkownika. 
 \par Początkowo planowano inną domyślną treść. Miała ona zawierać najważniejsze informacje na temat wybranego elementu planu. Niestety zarówno wbudowany w Androidzie moduł  udostępniania, a także \textit{API Facebooka} nie udostępnia tej możliwości.  Problem ten został zgłoszony ponad 7 lat temu, lecz nie został rozwiązany\cite{FacebookBug}. Pola \textit{"EXTRA SUBJECT"} oraz \textit{"EXTRA TEXT"} są pomijane w momencie próby udostępniania domyślnej zawartości w aplikacji Facebook. Z racji możliwości załączania zdjęć, linków oraz plików multimedialnych (np. wideo) rozważane było zamienienie tekstu na plik obrazu oraz dodanie go do akcji. Brane również pod uwagę było przeniesienie domyślnej wiadomości do schowka oraz wyświetlenie komunikatu informującego użytkownika z prośbą o wklejenie wiadomości.
 \par Jednakże stwierdzono, że takich akcji nie powinno się wymagać od użytkownika. Ostatecznie postanowiono, że najlepszym rozwiązaniem będzie zdecydowanie się na wspomniany wcześniej odsyłacz do wyszukanego miejsca z mapy HERE \cite{mobileHere}. Dzięki czemu treść posta zostanie utworzona przez użytkownika umożliwiając mu zachowanie własnego charakteru pisania.
 
 \section{Manualna realizacja planu (Karolina Makuch)}
-\par  Kolejną akcją dostępną w "dymku" pojawiającym się po przytrzymaniu poszczególnego elementu jest manualna realizacja planu dnia. Początkowa treść akcji dla nowo powstałego nieukończonego jeszcze elementu planu dnia brzmi "Oznacz jako ukończony" (ang. "Mark as completed"). W przypadku oznaczenia części składowej planu jako zrealizowany tekst automatycznie zmienia się na "Oznacz jako nieukończony" (ang. "Mark as incompleted") oraz zwiększa się stopień przeźroczystości odpowiedniego elementu listy. Postanowiono oznaczać zrealizowane plany poprzez wygaszenie kolorów elementów danego planu zmniejszając wartość kanału \textit{alfa} (ang. alpha).
+\par  Kolejną akcją dostępną w \textit{dymku} pojawiającym się po przytrzymaniu poszczególnego elementu jest manualna realizacja planu dnia. Początkowa treść akcji dla nowo powstałego nieukończonego jeszcze elementu planu dnia brzmi \textit{Oznacz jako ukończony} (ang. \textit{Mark as completed}). W przypadku oznaczenia części składowej planu jako zrealizowany tekst automatycznie zmienia się na \textit{Oznacz jako nieukończony} (ang. \textit{Mark as incompleted}) oraz zwiększa się stopień przeźroczystości odpowiedniego elementu listy. Postanowiono oznaczać zrealizowane plany poprzez wygaszenie kolorów elementów danego planu zmniejszając wartość kanału \textit{alfa} (ang. alpha).
  \par Zdecydowano się umożliwić użytkownikowi cofnięcie wprowadzonych zmian w przypadku wykonania niechcianego kliknięcia, świadomie rezygnując z wymagającego potwierdzenia okna dialogowego. Stwierdzono duże prawdopodobieństwo wykonywania tej akcji w pośpiechu. Dodatkowe kliknięcie wydłużyłoby czas wykonywania akcji oraz mogłoby to irytować użytkownika.
 \par  Oznaczenie planu jako wykonany zostało umożliwione dzięki dodaniu odpowiedniej kolumny do tabeli zawierającej plany dni. Dzięki temu każdy użytkownik mający dostęp do podróży ma możliwość wykonania tej czynności i jej efekty są widoczne dla wszystkich uczestników wyprawy.
 
@@ -823,11 +823,11 @@ Wykonanie tej operacji na głównym wątku zablokowałoby interfejs użytkownika
 \section{Implementacja serwera (Anna Malizjusz)}
 \par Serwer dla aplikacji mobilnej został zaimplementowany w języku Kotlin. Celem było stworzenie bezstanowego API zgodnego z tzw. RESTful Web Service. Oznacza to, że na serwerze nie jest utrzymywana sesja użytkownika, a każde zapytanie jest niezależne od poprzednich. Każdorazowo należy podać wszystkie niezbędne informacje niezbędne do realizacji żądania, m. in. token, który potwierdza tożsamość użytkownika i uprawnia go do określonych akcji.
 \par Wykorzystano framework Spring Boot\cite{Spring documentation}. Jest on oparty na platformie Spring, która dostarcza mechanizmów wstrzykiwania zależności, możliwości użycia wzorca MVC (ang. model-view-controller), a także modułów do implementacji testów jednostkowych. Celem obu frameworków jest ułatwienie implementacji serwera. Jedną z zalet użytego niniejszej pracy frameworka jest prosta konfiguracja, która nie wymaga tworzenia plików w formacie xml. Wynika to z zastosowania reguły \textit{konwencja ponad konfigurację} (ang. convention over configuration). Programista nie musi definiować wszystkich ustawień, jeśli stosuje się do przyjętych konwencji. W przypadku technologii Spring Boot kluczowe są adnotacje nad klasami pełniącymi określone role. 
-Konfiguracja serwera zachodzi automatycznie na podstawie zależności, jeśli dodano adnotację "@EnableAutoConfiguration" do klasy uruchamiającej serwer. Framework dostarcza również narzędzi do tworzenia punktów końcowych (ang. endpoints).
+Konfiguracja serwera zachodzi automatycznie na podstawie zależności, jeśli dodano adnotację \textit{@EnableAutoConfiguration} do klasy uruchamiającej serwer. Framework dostarcza również narzędzi do tworzenia punktów końcowych (ang. endpoints).
 
 \par Skorzystano z mechanizmu wstrzykiwania zależności. Klasy mogą być oznaczone jako komponenty (@Component), serwisy (@Service). Serwis jest szczególnym typem komponentu. Komponenty są zarządzalnymi obiektami w aplikacji oraz mogą być wstrzykiwane do pól odpowiedniego typu, które są oznaczone adnotacją @Autowired. Serwisy to elementy, które należą do logiki biznesowej.
  
-\par Definicję punktów końcowych umieszczono w klasach kontrolerów oznaczonych adnotacją "@RestController". Zdefiniowano kilka rodzajów kontrolerów, aby rozdzielić odpowiedzialność za poszczególne zadania:
+\par Definicję punktów końcowych umieszczono w klasach kontrolerów oznaczonych adnotacją \textit{@RestController}. Zdefiniowano kilka rodzajów kontrolerów, aby rozdzielić odpowiedzialność za poszczególne zadania:
 \begin{itemize}
 \item kontroler użytkowników jako \textit{ServerUserController}
 \item kontroler podróży jako \textit{ServerTravelController}
@@ -844,13 +844,13 @@ Konfiguracja serwera zachodzi automatycznie na podstawie zależności, jeśli do
 \item \textit{@DeleteMapping("users/{userId}/travels")} umożliwia usunięcie listy podróży, która została wysłana w ciele zapytania.
 \end{itemize}
 
-\par Każde zapytanie powinno zawierać w nagłówku token użytkownika, który jest sprawdzany w celu weryfikacji źródła zapytania. Parametry ścieżki (ang. path parameters) punktów końcowych uszczegóławiają zasób, np. "userId" w powyższym przykładzie. Dodatkowe parametry zapytania (ang. query parameters) i ciało zapytania(ang. body) pozwala na sprecyzowanie żądania.
+\par Każde zapytanie powinno zawierać w nagłówku token użytkownika, który jest sprawdzany w celu weryfikacji źródła zapytania. Parametry ścieżki (ang. path parameters) punktów końcowych uszczegóławiają zasób, np. \textit{userId} w powyższym przykładzie. Dodatkowe parametry zapytania (ang. query parameters) i ciało zapytania(ang. body) pozwala na sprecyzowanie żądania.
 
 \section{Obsługa sytuacji wyjątkowych (Dorota Tomczak)}
 \par Aplikacja mobilna komunikuje się z serwerem poprzez RESTowe API, jeśli więc po stronie serwera dojdzie do sytuacji wyjątkowej, aplikacja powinna otrzymać wiadomość o tym, co poszło nie tak i odpowiednio ją obsłużyć. W tym celu zdefiniowano kilkanaście własnych wyjątków, czyli klas dziedziczących po klasie java.lang.Exception oraz implementujących własny interfejs ApiException, który zawiera kod błędu wraz z wiadomością opisującą błąd. W celu uniknięcia tworzenia wielu bloków try-catch oraz powielania bloków kodu zaimplementowano globalny moduł obsługi wyjątków, czyli klasę opatrzoną adnotacją \textit{@RestControllerAdvice}, zawierającą dwie metody z adnotacjami \textit{@ExceptionHandler} – jedna służąca do obsługi nowo zdefiniowanych wyjątków, a druga do pozostałych. W obu tych metodach złapany wyjątek jest dodawany do logów serwera, a następnie zwracana jest odpowiedź z odpowiednim kodem błędu. Tak zdefiniowany moduł pozwala na obsługę wszystkich wyjątków występujących na serwerze po dowolnym żądaniu obsłużonym przez każdy z kontrolerów.
 
 \section{Uwierzytelnienie i autoryzacja użytkownika (Anna Malizjusz)}
-\par Podstawowy mechanizm uwierzytelnienia i autoryzacji opiera się na standardzie opisanym po raz pierwszy w 2010 roku jako JSON Web Token. Jest on "kompaktowym i bezpiecznym sposobem przesyłania informacji między dwiema stronami" (RFC 7519\cite{JWT}). Użyto biblioteki \textit{io.jsonwebtoken.jjwt}\cite{JWT library}, która dostarcza interfejs do generowania i odczytywania tokenów w przystępny sposób.
+\par Podstawowy mechanizm uwierzytelnienia i autoryzacji opiera się na standardzie opisanym po raz pierwszy w 2010 roku jako JSON Web Token. Jest on \textit{kompaktowym i bezpiecznym sposobem przesyłania informacji między dwiema stronami} (RFC 7519\cite{JWT}). Użyto biblioteki \textit{io.jsonwebtoken.jjwt}\cite{JWT library}, która dostarcza interfejs do generowania i odczytywania tokenów w przystępny sposób.
 
 \par Uwierzytelnienie użytkownika odbywa się podczas logowania. Serwer porównuje podany adres e-mail oraz zmodyfikowane funkcją mieszającą hasło z danymi zapisanymi w bazie danych. Jeżeli informacje są zgodne, na ich podstawie jest generowany token. JWT pozwala na dodanie twierdzeń (ang. claims) i ustawienie czasu ważności, które zostaną zaszyfrowane przy pomocy algorytmu HS256 i sekretnego klucza. Używane są następujące twierdzenia określające podane cechy tokenu:
 \begin{itemize}
@@ -870,7 +870,7 @@ Kolejna jest zawartość, którą tworzą określone przy generacji tokenu twier
 \par Użytkownik aplikacji mobilnej przechowuje swój token i każdorazowo dołącza go do wysyłanych zapytań. Aplikacja serwerowa przy użyciu klucza odczytuje go i weryfikuje otrzymane dane, w szczególności datę ważności tokenu oraz id użytkownika.
 
 \par Rozszyfrowany token jest zapisywany w formacie JSON w postaci, która jest czytelna i zrozumiała dla człowieka. Dzięki użytej bibliotece \textit{io.jsonwebtoken.jjwt} z tokenu w formacie JSON można odczytywać dane jak ze słownika, np. 
-\textit{Jwts.parser().setSigningKey(SECRET\_KEY).parseClaimsJws(token).body["id"].toString()}, aby odczytać wartość twierdzenia o nazwie "id".
+\textit{Jwts.parser().setSigningKey(SECRET\_KEY).parseClaimsJws(token).body["id"].toString()}, aby odczytać wartość twierdzenia o nazwie \textit{id}.
 
 \begin{figure}[h]
 \centering
@@ -908,7 +908,7 @@ Git traktował powiązany folder jako istniejący, więc nie powodowało to doda
 \par Gdy serwis odbierze wiadomość, odczytuje ją, a następnie tworzy powiadomienie, ustawiając jego parametry takie jak m.in. jego tytuł, priorytet, dźwięk. Powiadomienie jest następnie obsługiwane przez \textit{NotificationManager} i wyświetla się na ekranie urządzenia mobilnego. Użytkownik może powiadomienie od razu usunąć lub otworzyć. W drugim przypadku zostaje on przekierowany do aplikacji mobilnej, gdzie zostaje mu zaprezentowana lista polecanych miejsc wraz z nazwą i adresem.
 
 \section{Dodawanie podróży (Magdalena Solecka)}
-\par Podczas dodawania podróży tworzone są rekordy w dwóch tabelach bazy danych: \textit{travel} oraz \textit{app\_user\_travel}. Dodanie tylko jednego z nich powodowałoby zaśmiecanie bazy. W celu zapobiegnięcia takiej sytuacji wykorzystano transakcję. Zmienna autocommit zostaje ustawiona na false, co jest równoznaczne z wymuszeniem manualnego wykonania operacji zapisu (ang. commit). Dodawane są kolejno dwa rekordy. W przypadku błędu zapisu do bazy wykonywana jest operacja cofnięcia operacji (ang. rollback). Jeżeli nie nastąpił żaden błąd wykonywana jest operacja zapisu (ang. commit), a zmiennej autocommit przepisywana jest z powrotem wartość true.
+\par Podczas dodawania podróży tworzone są rekordy w dwóch tabelach bazy danych: \textit{travel} oraz \textit{app\_user\_travel}. Dodanie tylko jednego z nich powodowałoby zaśmiecanie bazy. W celu zapobiegnięcia takiej sytuacji wykorzystano transakcję (rys.~\ref{fig:travelTransaction}). Zmienna autocommit zostaje ustawiona na false, co jest równoznaczne z wymuszeniem manualnego wykonania operacji zapisu (ang. commit). Dodawane są kolejno dwa rekordy. W przypadku błędu zapisu do bazy wykonywana jest operacja cofnięcia operacji (ang. rollback). Jeżeli nie nastąpił żaden błąd wykonywana jest operacja zapisu (ang. commit), a zmiennej autocommit przepisywana jest z powrotem wartość true.
 
 \begin{figure}[h]
 \centering
@@ -920,7 +920,7 @@ Git traktował powiązany folder jako istniejący, więc nie powodowało to doda
 
 \section{Dostęp do bazy danych (Magdalena Solecka)}
 \par Do implementacji połączenia z bazą został wykorzystany PostgreSQL JDBC Driver\cite{JDBC}. Zastosowano wzorzec Singleton, który w języku kotlin implementuje się używając słowa kluczowego \textit{object} zamiast \textit{class}.
-\par Zaimplementowano również wzorzec repozytorium (ang. repository pattern). Opracowano bazowy interfejs generyczny IRepository oraz jego implementację  Repository zawierające operacje typu CRUD -- podstawowe operacje dostępu do bazy danych takie jak dodawanie, usuwanie, odczyt i aktualizacja wiersza danych. Repozytoria dla poszczególnych modeli DAO (klas, których obiekty przechowują dane odczytywane z bazy) dziedziczą po generycznej klasie bazowej Repository. Implementują również własny interfejs z funkcjami wymaganymi dla danej tabeli. Problemem przy wykorzystaniu typu generycznego okazało się tworzenie nowego obiektu, dlatego postanowiono wymusić na programistach implementację dodatkowej funkcji T tworzący ten obiekt dodając ją do interfejsu IRepository. W celu zmniejszenia ilości powtarzającego się kodu wyodrębniono również stałe fragmenty tekstu z zapytań SQL takie jak na przykład \textit{SELECT * FROM tableName } w postaci stałej selectStatement. Stałe zostały dodane do klasy bazowej Repository jako abstrakcyjne. W podobny sposób rozwiązano problem powtarzających się nazw tabel i kolumn. Nie udało się jednak utworzyć stałej abstrakcyjnej, wynikiem prób była pusta wartość w zapytaniach w miejscu gdzie powinna była znaleźć się na przykład nazwa tabeli.
+\par Zaimplementowano również wzorzec repozytorium (ang. repository pattern). Opracowano bazowy interfejs generyczny IRepository oraz jego implementację  Repository zawierające operacje typu CRUD -- podstawowe operacje dostępu do bazy danych takie jak dodawanie, usuwanie, odczyt i aktualizacja wiersza danych. Repozytoria dla poszczególnych modeli DAO (klas, których obiekty przechowują dane odczytywane z bazy) dziedziczą po generycznej klasie bazowej Repository (rys.~\ref{fig:repository}). Implementują również własny interfejs z funkcjami wymaganymi dla danej tabeli. Problemem przy wykorzystaniu typu generycznego okazało się tworzenie nowego obiektu, dlatego postanowiono wymusić na programistach implementację dodatkowej funkcji T tworzący ten obiekt dodając ją do interfejsu IRepository. W celu zmniejszenia ilości powtarzającego się kodu wyodrębniono również stałe fragmenty tekstu z zapytań SQL takie jak na przykład \textit{SELECT * FROM tableName } w postaci stałej selectStatement. Stałe zostały dodane do klasy bazowej Repository jako abstrakcyjne. W podobny sposób rozwiązano problem powtarzających się nazw tabel i kolumn. Nie udało się jednak utworzyć stałej abstrakcyjnej, wynikiem prób była pusta wartość w zapytaniach w miejscu gdzie powinna była znaleźć się na przykład nazwa tabeli.
 
 \noindent\newline
 \begin{figure}[h]
@@ -962,7 +962,7 @@ Git traktował powiązany folder jako istniejący, więc nie powodowało to doda
 \item \textit{when} -- wywołanie testowanej metody lub wykonanie akcji,
 \item \textit{then} -- weryfikacja otrzymanych rezultatów po wywołaniu metody lub wykonaniu akcji.
 \end{itemize}
-Do nazewnictwa testów przyjęto następującą konwencję: co powinno się stać, gdy zostaną spełnione określone warunki. Przykładowo "Should display snackBar with info message when given password in SignUp is incorrect", co w tłumaczeniu oznacza "Powinien się wyświetlić snackBar z komunikatem informacyjnym, gdy hasło podane w SignUp jest nieprawidłowe".
+Do nazewnictwa testów przyjęto następującą konwencję: co powinno się stać, gdy zostaną spełnione określone warunki. Przykładowo \textit{Should display snackBar with info message when given password in SignUp is incorrect}, co w tłumaczeniu oznacza \textit{Powinien się wyświetlić snackBar z komunikatem informacyjnym, gdy hasło podane w SignUp jest nieprawidłowe}.
 
 \begin{figure}[h]
 \centering
@@ -973,7 +973,7 @@ Do nazewnictwa testów przyjęto następującą konwencję: co powinno się sta�
 \FloatBarrier
 
 \section{Testy dostępu do bazy danych (Magdalena Solecka)}
-\par Napisano 73 testy dostępu do bazy danych przy użyciu bibliotek JUnit\cite{JUnit} oraz MockK\cite{MockK}. Przyjęto założenie, że rekordy o indeksie 0 będą danymi stałymi wykorzystywanymi do testowania operacji odczytu (ang. select) oraz aktualizacji (ang. update). Problematyczne okazały się jednak funkcje testujące usuwanie i dodawanie danych do bazy. W tych przypadkach należało wykonać obie te operacje: najpierw wstawienie wartości, a następnie jej usunięcie ze sprawdzeniem poprawności za pomocą polecenia Assert.assertTrue jako polecenie następne po tym testowanym. Oznacza to jednak, że test nie jest w pełni testem jednostkowym, gdyż wykonuje więcej niż jedną operację. Dla każdej testowanej funkcji rozpatrzono wszystkie przypadki poprawnego jej wykonania, np. dla funkcji pobierającej rekord z bazy na podstawie id (get(id:Int)) było to zwrócenie obiektu typu User jeśli podane w bazie istniał wiersz z zadanym id oraz zwrócenie wartości null przy podaniu id które nie znajduje się w bazie. 
+\par Napisano 73 testy dostępu do bazy danych przy użyciu bibliotek JUnit\cite{JUnit} oraz MockK\cite{MockK}. Przyjęto założenie, że rekordy o indeksie 0 będą danymi stałymi wykorzystywanymi do testowania operacji odczytu (ang. select) oraz aktualizacji (ang. update). Problematyczne okazały się jednak funkcje testujące usuwanie i dodawanie danych do bazy (rys.~\ref{fig:dbTests}). W tych przypadkach należało wykonać obie te operacje: najpierw wstawienie wartości, a następnie jej usunięcie ze sprawdzeniem poprawności za pomocą polecenia Assert.assertTrue jako polecenie następne po tym testowanym. Oznacza to jednak, że test nie jest w pełni testem jednostkowym, gdyż wykonuje więcej niż jedną operację. Dla każdej testowanej funkcji rozpatrzono wszystkie przypadki poprawnego jej wykonania, np. dla funkcji pobierającej rekord z bazy na podstawie id (get(id:Int)) było to zwrócenie obiektu typu User jeśli podane w bazie istniał wiersz z zadanym id oraz zwrócenie wartości null przy podaniu id które nie znajduje się w bazie. 
 
 \begin{figure}[h]
 \centering
@@ -983,7 +983,23 @@ Do nazewnictwa testów przyjęto następującą konwencję: co powinno się sta�
 \end{figure}
 \FloatBarrier
 
-\section{Placeholder - Ocena aplikacji}
+\section{Ocena aplikacji (Magdalena Solecka)}
+\par Wszystkie wymagania funkcjonalne o priorytecie wysokim zdefiniowane w specyfikacji 
+wymagań systemowych zostały zrealizowane. Jest to jednoznaczne ze spełnieniem przyjętego 
+na etapie planowania projektu kryterium akceptacyjnego. 
+\par Dodatkowymi zaletami aplikacji 
+są spełnione częściowo wymagania wiarygodności. Spośród sześciu wymagań o priorytecie 
+średnim zostały zrealizowane trzy: skanowanie biletów, przeglądanie ofert 
+zakwaterowania/hoteli i oznaczanie elementu planu dnia jako ukończony. Zrealizowano 
+również jedno z dwóch zdefiniowanych wymagań funkcjonalnych o priorytecie niskim: 
+udostępnienie elementu planu dnia w medium społecznościowym. Zgodnie z wymaganiami 
+wiarygodności nie wymaga się od użytkownika podawania danych wrażliwych (ochrona danych 
+użytkownika: priorytet wysoki), a hasła przechowywane są w postaci zaszyfrowanej 
+(szyfrowanie przesyłanych danych priorytet średni). Nie można ocenić realizacji wymagań 
+wydajnościowych ze względu na brak jakichkolwiek testów tego rodzaju. Z wymagań w 
+zakresie elastyczności o priorytecie wysokim spełniono możliwość uruchomienia aplikacji 
+w systemie Android. Program przetestowano m.in. w systemie Android wersji 9 Pie (API 
+28)[przypis].
 
 \chapter{Podręcznik użytkownika (Karolina Makuch)}
 \par W celu wytłumaczenia obsługi stworzonej aplikacji oraz zaprezentowaniu jej wizualnej strony przygotowano podręcznik użytkownika. Zawiera on poszczególne etapy wykonywania najważniejszych funkcjonalności.
@@ -1019,7 +1035,7 @@ W trakcie implementacji została podjęta decyzja o zmianie wyglądu aplikacji. 
 Użytkownik pierwszy raz uruchamiający aplikację i chcący z niej korzystać powinien stworzyć własne konto. W tym celu należy:
 
 \begin{enumerate}
-\item Kliknąć przycisk "Zarejestruj się".
+\item Kliknąć przycisk \textit{Zarejestruj się}.
 \item W widoku rejestracji podać swój adres mailowy oraz hasło spełniające wymagania:
 \begin{itemize}
 \item przynajmniej 8 znaków długości,
@@ -1028,10 +1044,10 @@ Użytkownik pierwszy raz uruchamiający aplikację i chcący z niej korzystać p
 \item przynajmniej jedna mała litera.
 \end{itemize}
 
-\item Kliknąć "Zarejestruj się".
-\item Po pojawieniu się powiadomienia "Twoje konto zostało utworzone" następuje automatyczne przekierowanie do widoku logowania.
+\item Kliknąć \textit{Zarejestruj się}.
+\item Po pojawieniu się powiadomienia \textit{Twoje konto zostało utworzone} następuje automatyczne przekierowanie do widoku logowania.
 \item Uzupełnić pola widoku logowania tymi samymi danymi.
-\item Logowanie następuje w momencie uzupełnienia danych oraz kliknięcia "Zaloguj się".
+\item Logowanie następuje w momencie uzupełnienia danych oraz kliknięcia \textit{"Zaloguj się"}.
 
 \end{enumerate}
 
@@ -1084,8 +1100,8 @@ Pierwszy widok pojawiający się tuż po zalogowaniu zawiera listę dostępnych 
 \subsection{Tworzenie podróży}
 W celu utworzenia podróży należy:
 \begin{enumerate}
-\item Nacisnąć przycisk oznaczony symbolem "+".
-\item Uzupełnić okno dialogowe nazwą podróży i kliknąć "OK".
+\item Nacisnąć przycisk oznaczony symbolem \textit{+}.
+\item Uzupełnić okno dialogowe nazwą podróży i kliknąć \textit{OK}.
 \item Utworzona podróż pojawi się na liście wraz z domyślnym zdjęciem.
 \end{enumerate}
 
@@ -1116,7 +1132,7 @@ Po wybraniu danej podróży zostaje wyświetlony widok zawierający informacje n
 W celu zmiany nazwy podróży należy:
 \begin{enumerate}
 \item Nacisnąć przycisk oznaczony symbolem ołówka.
-\item Uzupełnić okno dialogowe nową nazwą podróży i kliknąć "OK".
+\item Uzupełnić okno dialogowe nową nazwą podróży i kliknąć \textit{OK}.
 \item Nazwa podróży zostanie zaktualizowana.
 \end{enumerate}
 
@@ -1135,14 +1151,14 @@ W celu udostępnienia podróży znajomym należy:
 \begin{enumerate}
 \item Nacisnąć przycisk oznaczony symbolem udostępniania.
 \item Wybrać wszystkich znajomych, którym ma zostać udostępniona podróż.
-\item Potwierdzić swój wybór poprzez naciśnięcie przycisku "OK".
+\item Potwierdzić swój wybór poprzez naciśnięcie przycisku \textit{OK}.
 \item W przypadku potwierdzenia wykonania czynności pojawi się powiadomienie z odpowiednim komunikatem.
 \end{enumerate}
 
 \subsection{Dodanie elementu planu dnia}
 W celu dodania elementu planu dnia należy:
 \begin{enumerate}
-\item Nacisnąć przycisk oznaczony symbolem "+".
+\item Nacisnąć przycisk oznaczony symbolem \textit{+}.
 \item Wybrać jedną z dwóch dostępnych opcji.
 \end{enumerate}
 
@@ -1294,7 +1310,7 @@ Po przytrzymaniu palca na danym planu dnia pojawia się dymek z trzema opcjami d
 \FloatBarrier
 
 
-Po wybraniu opcji "Usuń" zostaje włączony tryb usuwania.
+Po wybraniu opcji \textit{Usuń} zostaje włączony tryb usuwania.
 Jest on oznaczony jasnoszarym kolorem.
 W celu usunięcia elementu należy:
 \begin{enumerate}
@@ -1307,15 +1323,15 @@ W celu usunięcia elementu należy:
 
 \par Manualna realizacja planu wygląda następująco:
 \begin{enumerate}
-\item W przypadku ukończonego planu zawiera tekst "Oznacz jako nieukończony".
-\item W przypadku nieukończonego planu zawiera tekst "Oznacz plan jako ukończony".
+\item W przypadku ukończonego planu zawiera tekst \textit{Oznacz jako nieukończony}.
+\item W przypadku nieukończonego planu zawiera tekst \textit{Oznacz plan jako ukończony}.
 \end{enumerate}
 Ukończone elementy planu dnia mają zmniejszoną intensywność kolorów.
 
 
-\par Gdy użytkownik ma zainstalowaną aplikację Facebook posiada możliwość udostępnienia elementu planu na swojej "tablicy". W celu wykonania tej czynności należy:
+\par Gdy użytkownik ma zainstalowaną aplikację Facebook posiada możliwość udostępnienia elementu planu na swojej \textit{tablicy}. W celu wykonania tej czynności należy:
 \begin{enumerate}
-\item Nacisnąć opcję "Udostępnij".
+\item Nacisnąć opcję \textit{Udostępnij}.
 \item Napisać treść posta.
 \end{enumerate}
 Domyślna tekst zawiera link do wybranego miejsca na mapie HERE.
@@ -1343,12 +1359,12 @@ Użytkownik posiadający plan podróży ma możliwość dodania skanu – czarno
 W celu przechowania dokumentu w aplikacji należy:
 \begin{enumerate}
 \item Kliknąć na symbol szuflady nawigacji (ang. hamburger).
-\item W bocznym menu wybrać "Skany".
-\item Nacisnąć przycisk zawierający symbol "+".
+\item W bocznym menu wybrać \textit{Skany}.
+\item Nacisnąć przycisk zawierający symbol \textit{+}.
 \item Wyrazić zgodę na dostęp do aparatu.
 \item Wykonać zdjęcie dokumentu.
 \item Wybrać interesujący obszar (dowolny czworokąt).
-\item Zaakceptować przekształcenie obrazu klikając przycisk "Skanuj".
+\item Zaakceptować przekształcenie obrazu klikając przycisk \textit{Skanuj}.
 \item Miniatura skanu pojawi się w galerii.
 \end{enumerate}
 
@@ -1387,10 +1403,10 @@ W celu przechowania dokumentu w aplikacji należy:
 Chcąc udostępnić innemu użytkownikowi podróży należy go wcześniej dodać do znajomych. Można to zrobić w następujących krokach:
 \begin{enumerate}
 \item Kliknąć na symbol szuflady nawigacji (and. hamburger menu).
-\item W bocznym menu wybrać "Znajomi".
+\item W bocznym menu wybrać \textit{Znajomi}.
 \item Wpisać w wyszukiwarce adres mailowy danego użytkownika.
 \item Wybrać odpowiedni mail z podpowiedzi.
-\item Potwierdzić chęć dodania do znajomych, poprzez kliknięcie "OK".
+\item Potwierdzić chęć dodania do znajomych, poprzez kliknięcie \textit{OK}.
 \item W przypadku prawidłowego wykonania czynności użytkownik zostanie automatycznie dodany do listy znajomych oraz pojawi się odpowiednie powiadomienie.
 \end{enumerate}
 
@@ -1466,7 +1482,7 @@ Bazując na opiniach innych użytkowników aplikacja wyświetla listę polecanyc
 
 \par Aplikację mobilną przetestował zespół programistów oraz kilku testerów. Nie stwierdzono rażących błędów, które uniemożliwiałyby korzystanie z zaimplementowanego rozwiązania. Interfejs okazał się łatwy w obsłudze dla młodych ludzi.
 
-\par W trakcie projektu inżynierskiego zespół doświadczył trudności w implementacji rozwiązania "od zera", bez bazowego kodu ani dokładnych wytycznych. Brakowało również praktyki w prowadzeniu względnie obszernego i skomplikowanego przedsięwzięcia, jakim jest stworzenie działającej aplikacji w pół roku. Wielokrotnie wybrane rozwiązania były uznawane za niewystarczające i zmieniane na lepsze. Początkowo tryb pracy i stosowane konwencje często się zmieniały, jednak w pierwszym etapie projektu udało się ustabilizować wewnętrzne wymagania. Dzięki temu recenzje kodu przebiegały sprawniej.
+\par W trakcie projektu inżynierskiego zespół doświadczył trudności w implementacji rozwiązania \textit{od zera}, bez bazowego kodu ani dokładnych wytycznych. Brakowało również praktyki w prowadzeniu względnie obszernego i skomplikowanego przedsięwzięcia, jakim jest stworzenie działającej aplikacji w pół roku. Wielokrotnie wybrane rozwiązania były uznawane za niewystarczające i zmieniane na lepsze. Początkowo tryb pracy i stosowane konwencje często się zmieniały, jednak w pierwszym etapie projektu udało się ustabilizować wewnętrzne wymagania. Dzięki temu recenzje kodu przebiegały sprawniej.
 
 \par Spotykano się z problemem braku pomocnych informacji w internecie. Część używanych rozwiązań zostało oznaczonych jako przestarzałe i należało samodzielnie znaleźć aktualniejsze. Czasem część znalezionych informacji była specyficzna dla języka Java i nie istniała banalna konwersja do używanego języka Kotlin.
 
@@ -1560,15 +1576,15 @@ Bazując na opiniach innych użytkowników aplikacja wyświetla listę polecanyc
   
   \bibitem{ImageView} https://developer.android.com/reference/android/widget/ImageView (dostęp: 20.09.2019~r.)
   
-  \bibitem{PostgreSQL} https://www.postgresql.org/ (dostęp: 28.06.2019~r.)
+  \bibitem{PostgreSQL} Platforma udostępniająca PostgreSQL wraz z dokumentacją, https://www.postgresql.org/ (dostęp: 28.06.2019~r.)
   
-  \bibitem{Neo4j} https://neo4j.com/ (dostęp: 28.06.2019~r.)
+  \bibitem{Neo4j} Platforma udostępniająca Neo4j wraz z dokumentacją, https://neo4j.com/ (dostęp: 28.06.2019~r.)
   
-  \bibitem{JDBC} https://jdbc.postgresql.org/ (dostęp: 30.06.2019~r.)
+  \bibitem{JDBC}Dokumentacja PostgreSQL JDBC Driver, https://jdbc.postgresql.org/ (dostęp: 30.06.2019~r.)
   
-  \bibitem{contextualActionMode} https://developer.android.com/guide/topics/ui/menus (dostęp: 5.08.2019~r.)
+  \bibitem{contextualActionMode} Dokumentacja klasy ActionMode, https://developer.android.com/guide/topics/ui/menus (dostęp: 5.08.2019~r.)
   
-  \bibitem{github} https://github.com/ (dostęp: 28.05.2019~r.)
+  \bibitem{github} Platforma systemu kontroli wersji Github, https://github.com/ (dostęp: 28.05.2019~r.)
 \end{thebibliography}
 
 

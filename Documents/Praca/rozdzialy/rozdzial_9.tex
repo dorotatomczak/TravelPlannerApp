@@ -17,12 +17,12 @@
 \item \textit{when} -- wywołanie testowanej metody lub wykonanie akcji,
 \item \textit{then} -- weryfikacja otrzymanych rezultatów po wywołaniu metody lub wykonaniu akcji.
 \end{itemize}
-Do nazewnictwa testów przyjęto następującą konwencję: co powinno się stać, gdy zostaną spełnione określone warunki. Przykładowo "Should display snackBar with info message when given password in SignUp is incorrect", co w tłumaczeniu oznacza "Powinien się wyświetlić snackBar z komunikatem informacyjnym, gdy hasło podane w SignUp jest nieprawidłowe".
+Do nazewnictwa testów przyjęto następującą konwencję: co powinno się stać, gdy zostaną spełnione określone warunki. Przykładowo \textit{Should display snackBar with info message when given password in SignUp is incorrect}, co w tłumaczeniu oznacza \textit{Powinien się wyświetlić snackBar z komunikatem informacyjnym, gdy hasło podane w SignUp jest nieprawidłowe}.
 
 \FloatBarrier
 
 \section{Testy dostępu do bazy danych (Magdalena Solecka)}
-\par Napisano 73 testy dostępu do bazy danych przy użyciu bibliotek JUnit\cite{JUnit} oraz MockK\cite{MockK}. Przyjęto założenie, że rekordy o indeksie 0 będą danymi stałymi wykorzystywanymi do testowania operacji odczytu (ang. select) oraz aktualizacji (ang. update). Problematyczne okazały się jednak funkcje testujące usuwanie i dodawanie danych do bazy. W tych przypadkach należało wykonać obie te operacje: najpierw wstawienie wartości, a następnie jej usunięcie ze sprawdzeniem poprawności za pomocą polecenia Assert.assertTrue jako polecenie następne po tym testowanym. Oznacza to jednak, że test nie jest w pełni testem jednostkowym, gdyż wykonuje więcej niż jedną operację. Dla każdej testowanej funkcji rozpatrzono wszystkie przypadki poprawnego jej wykonania, np. dla funkcji pobierającej rekord z bazy na podstawie id (get(id:Int)) było to zwrócenie obiektu typu User jeśli podane w bazie istniał wiersz z zadanym id oraz zwrócenie wartości null przy podaniu numeru id, które nie znajduje się w bazie. 
+\par Napisano 73 testy dostępu do bazy danych przy użyciu bibliotek JUnit\cite{JUnit} oraz MockK\cite{MockK}. Przyjęto założenie, że rekordy o indeksie 0 będą danymi stałymi wykorzystywanymi do testowania operacji odczytu (ang. select) oraz aktualizacji (ang. update). Problematyczne okazały się jednak funkcje testujące usuwanie i dodawanie danych do bazy (rys.~\ref{fig:dbTests}). W tych przypadkach należało wykonać obie te operacje: najpierw wstawienie wartości, a następnie jej usunięcie ze sprawdzeniem poprawności za pomocą polecenia Assert.assertTrue jako polecenie następne po tym testowanym. Oznacza to jednak, że test nie jest w pełni testem jednostkowym, gdyż wykonuje więcej niż jedną operację. Dla każdej testowanej funkcji rozpatrzono wszystkie przypadki poprawnego jej wykonania, np. dla funkcji pobierającej rekord z bazy na podstawie id (get(id:Int)) było to zwrócenie obiektu typu User jeśli podane w bazie istniał wiersz z zadanym id oraz zwrócenie wartości null przy podaniu numeru id, które nie znajduje się w bazie. 
 
 \begin{figure}[h]
 \centering
@@ -32,4 +32,16 @@ Do nazewnictwa testów przyjęto następującą konwencję: co powinno się sta�
 \end{figure}
 \FloatBarrier
 
-\section{Placeholder - Ocena aplikacji}
+\section{Ocena aplikacji (Magdalena Solecka)}
+\par Wszystkie wymagania funkcjonalne o priorytecie wysokim zdefiniowane w specyfikacji 
+wymagań systemowych zostały zrealizowane. Jest to jednoznaczne ze spełnieniem przyjętego 
+na etapie planowania projektu kryterium akceptacyjnego. 
+
+\par Dodatkowymi zaletami aplikacji są spełnione częściowo wymagania wiarygodności. Spośród sześciu wymagań o priorytecie średnim zostały zrealizowane trzy: skanowanie biletów, przeglądanie ofert zakwaterowania/hoteli i oznaczanie elementu planu dnia jako ukończony. Zrealizowano również jedno z dwóch zdefiniowanych wymagań funkcjonalnych o priorytecie niskim: udostępnienie elementu planu dnia w medium społecznościowym. Zgodnie z wymaganiami 
+wiarygodności nie wymaga się od użytkownika podawania danych wrażliwych (ochrona danych 
+użytkownika: priorytet wysoki), a hasła przechowywane są w postaci zaszyfrowanej 
+(szyfrowanie przesyłanych danych priorytet średni). Nie można ocenić realizacji wymagań 
+wydajnościowych ze względu na brak jakichkolwiek testów tego rodzaju. Z wymagań w 
+zakresie elastyczności o priorytecie wysokim spełniono możliwość uruchomienia aplikacji 
+w systemie Android. Program przetestowano m.in. w systemie Android wersji 9 Pie (API 
+28).
