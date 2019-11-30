@@ -131,7 +131,7 @@
 \titlecontents{chapter}
     [0em] % no indentation
     {}
-    {\contentslabel[\thecontentslabel.]{1em}} 
+    {\contentslabel[\thecontentslabel.]{2em}} 
     {\hspace*{-1em}}                         
     {\dotfill\contentspage}
     
@@ -139,7 +139,7 @@
 \titlecontents{section}
     [2em] % ie, 1.5em (chapter) + 0.5em
     {}
-    {\contentslabel[\thecontentslabel.]{2em}}  
+    {\contentslabel[\thecontentslabel.]{3em}}  
     {\hspace*{-2.3em}}                          
     {\dotfill\contentspage}
 
@@ -147,7 +147,7 @@
 \titlecontents{subsection}
     [5em] % ie, 2em (section) + 3em
     {}
-    {\contentslabel[\thecontentslabel.]{3em}}  
+    {\contentslabel[\thecontentslabel.]{4em}}  
     {\hspace*{-2.3em}}                        
     {\dotfill\contentspage}
 %--------------------------------------------------------------------
