@@ -236,7 +236,7 @@
 \renewcommand\bibname{Wykaz literatury} % Zamiana na tytu� "Wykaz literatury"
 
 % Zmiana na tytu� "Wykaz rysunk�w"
-\renewcommand{\listfigurename}{Wykaz rysunk�w}
+\renewcommand{\listfigurename}{Wykaz rysunków}
 
 % Zmiana na tytu� "Wykaz tabel"
 \renewcommand{\listtablename}{Wykaz tabel}
